@@ -6244,6 +6244,53 @@ owner_hints:
 - Plans/Automated_Testing_System.md
 ```
 
+## Ledger Compile Addendum - pldg-20260622-001-fff
+
+### EP-106 - Executor Discovery Orientation And Verification Handoff
+
+```yaml
+plan_unit_id: EP-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Executor Builder and Verifier actors may use discover_paths for file orientation when implementation or verification requires locating files without exact path evidence. Builder uses ranked discovery candidates for read orientation only, while Verifier may use discovery to locate verification-relevant files. Ranking never substitutes for exact evidence, tests, AST/LSP, grep/codesearch/Instant Grep, domain checks, or verifier pass criteria; discovery receipts feed attempt evidence only when linked to exact verification receipts before edits, test claims, completion, or verifier pass.
+gui_related: false
+gui_classification_reason: This is Executor protocol and verification handoff behavior, not GUI presentation.
+depends_on: [T-161, T-162, OSI-429, CV-291]
+unblocks: [ATS-011]
+acceptance_criteria:
+  - Builder uses discovery only for orientation when exact paths are absent.
+  - Verifier may use discovery to find evidence targets but still requires exact evidence.
+  - Discovery output cannot satisfy verifier pass criteria without exact verification.
+validation_surfaces:
+  - Future Builder no-path orientation test.
+  - Future Verifier exact evidence follow-up test.
+  - Future SSH no-local-checkout Executor task test.
+risk_class: executor_evidence_drift
+reasoning_tier: standard
+context_scope: executor_discovery_handoff
+implementation_surfaces: [Plans/Executor_Protocol.md, future Executor Builder/Verifier routes]
+node_compile_hint: {mode: executor_discovery_orientation, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260622-001-fff:atom-0041
+  - pldg-20260622-001-fff:atom-0027
+  - pldg-20260622-001-fff:atom-0030
+  - pldg-20260622-001-fff:atom-0037
+  - pldg-20260622-001-fff:atom-0043
+  - pldg-20260622-001-fff:atom-0058
+  - pldg-20260622-001-fff:atom-0059
+  - pldg-20260622-001-fff:atom-0092
+  - pldg-20260622-001-fff:atom-0094
+  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#executor_builder_verifier
+source_atom_ids: [atom-0027, atom-0030, atom-0037, atom-0041, atom-0043, atom-0058, atom-0059, atom-0092, atom-0094]
+preserved_exact_tokens: ["Builder", "Verifier", "orientation only", "ranking never substitutes", "exact evidence", "AST/LSP", "grep/codesearch/Instant Grep", "verifier pass"]
+negative_constraints:
+  - Do not let ranking substitute for verifier evidence.
+  - Do not claim root cause, completion, or verifier pass from discovery candidates alone.
+owner_hints: [Plans/Executor_Protocol.md, Plans/Tools.md, Plans/Automated_Testing_System.md]
+```
+
 ### EP-105 - Runtime WorkNodeRecord Identity, Receipts, And Activation Consumers
 
 ```yaml

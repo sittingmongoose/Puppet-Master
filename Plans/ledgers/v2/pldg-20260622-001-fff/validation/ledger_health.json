@@ -47,47 +47,82 @@
       "summary": "Fresh OpenCode current HEAD c5a4a8288cbe115f673f3f9933fe217402c85406 was cloned, inspected, and deleted; fff usage was recorded as FileSystem/Search and file-discovery surfaces, with model-facing grep/glob tools still using ripgrep directly."
     },
     {
-      "check_id": "implementation-readiness-0010",
+      "check_id": "gap-resolution-defaults-0010",
       "status": "pass",
-      "summary": "Assessed that there is enough substance for an implementation-ready ledger tightening pass, provided it remains ledger-only and makes service/API, invocation policy, conformance, fallback, lifecycle, and validation details explicit."
+      "summary": "Jared accepted q-0006 through q-0009 defaults: path/context discovery scope, remote/cache discovery, project-local frecency privacy, and DiscoveryService/discover_paths vocabulary."
     },
     {
-      "check_id": "implementation-ready-tightening-0011",
+      "check_id": "ssh-discovery-0011",
       "status": "pass",
-      "summary": "Jared said `ok lets get to it`; the ledger-only implementation-ready packet captures DiscoveryService contract, request/result/provenance shapes, ambient agent invocation policy, consumer conformance, policy envelope, ranking model, exact verification handoff, lifecycle/fallback, validation scenarios, non-goals, and owner hints."
+      "summary": "Jared required discovery to work over SSH too. SSH-backed project roots are first-class discovery sources with explicit remote identity, freshness/fallback state, policy envelope, no silent unrelated local fallback, and SSH-specific acceptance validation."
     },
     {
-      "check_id": "pre-compile-gap-review-0012",
-      "status": "needs_resolution",
-      "summary": "Pre-compile review found underspecified details that should be resolved before conversion to canonical Plans."
+      "check_id": "assistant-chat-visibility-toggle-0012",
+      "status": "pass",
+      "summary": "Jared required Assistant Chat discovery visibility by default and a GUI setting to turn off routine inline discovery activity while preserving safety prompts, durable receipts, exact-verification linkage, and auditability."
     },
     {
-      "check_id": "gap-resolution-candidates-0013",
-      "status": "needs_confirmation",
-      "summary": "Candidate resolutions were proposed for q-0006 through q-0009. Assistant Chat thread discovery visibility was accepted as a GUI requirement."
+      "check_id": "pre-compile-matrices-0013",
+      "status": "pass",
+      "summary": "state/doc_impact_matrix.json and state/consumer_conformance_matrix.json are materialized in ledger-only form before compile."
+    },
+    {
+      "check_id": "post-matrix-gap-review-0014",
+      "status": "pass",
+      "summary": "Post-matrix review found no blocking product, owner-routing, GUI-classification, or consumer-conformance gaps; remaining precision items are compile/implementation obligations."
+    },
+    {
+      "check_id": "precision-contract-0015",
+      "status": "pass",
+      "summary": "state/precision_contract.json resolves exact schema/enum values, performance/resource budgets, deterministic ranking weights and tie-breakers, SSH manifest-adapter MVP topology, and Assistant Chat discovery visibility setting placement/copy."
+    },
+    {
+      "check_id": "second-order-defaults-accepted-0017",
+      "status": "pass",
+      "summary": "Jared accepted atom-0081 through atom-0087 as second-order implementation defaults and q-0010 through q-0016 are answered."
+    },
+    {
+      "check_id": "subagent-compile-proposals-0018",
+      "status": "pass",
+      "summary": "Four read-only compile-placement proposals were preserved as source-lineage guidance in state/subagent_compile_proposals.json without adding new product blockers, open questions, contradictions, compile permission, or queue items."
+    },
+    {
+      "check_id": "ledger-to-plans-compile-0019",
+      "status": "pass",
+      "summary": "Accepted native discovery atoms were compiled into live Plans PlanUnits and allowed Plans/.plan_index outputs; forbidden governance/build artifacts were not updated."
+    },
+    {
+      "check_id": "final-validation-0020",
+      "status": "pass_with_external_refresh_pending",
+      "summary": "Bootstrap ledger validator, PlanUnit index validator, git diff --check, and forbidden-artifact diff checks pass. Plan migration validator reports stale generated metadata after live Plan edits, requiring a separate explicit migration/governance refresh lane."
     }
   ],
-  "last_validated_at_utc": "2026-06-22T19:39:56Z",
+  "last_validated_at_utc": "2026-06-22T22:45:29Z",
   "ledger_id": "pldg-20260622-001-fff",
-  "notes": "Gap-resolution workshop is active. Candidate resolutions exist for q-0006 through q-0009, but they remain open until Jared confirms or revises them. Compile queue stays empty.",
+  "notes": "Ledger compiled to live Plans docs and allowed Plans/.plan_index outputs. Final bootstrap/index/diff validations pass. Migration validation is pending refresh because generated migration metadata is stale after live Plan edits. canonical_plan_targets is restricted to the governance-covered queue target; compiled_owner_docs records all touched owner docs pending explicit governance seal.",
   "schema_id": "pm.bootstrap_ledger_health.v1",
-  "status": "pass_initialized_with_open_questions",
+  "status": "pass_compiled_pending_governance_and_migration_refresh",
   "summary": {
     "blockers": 0,
-    "candidate_atoms": 4,
-    "compile_queue_items": 0,
+    "candidate_atoms": 0,
+    "compile_queue_items": 1,
+    "compiled_atoms": 83,
+    "compiled_plan_units": 25,
     "corrections": 0,
-    "decisions": 9,
+    "decisions": 16,
     "deferred_questions": 0,
-    "design_atoms": 65,
-    "events": 14,
+    "design_atoms": 95,
+    "events": 27,
+    "governance_status": "pending_seal",
+    "migration_refresh_status": "pending_explicit_refresh_lane",
+    "not_for_plan_atoms": 11,
     "open_blockers": 0,
-    "open_questions": 4
+    "open_questions": 0
   },
-  "updated_at_utc": "2026-06-22T19:39:56Z",
+  "updated_at_utc": "2026-06-22T22:45:29Z",
   "warnings": [
-    "Open questions q-0006 through q-0009 should be resolved or explicitly assumption-locked before compile.",
-    "Doc-impact and exact consumer-conformance matrices should be materialized before compile.",
-    "No canonical Plans or generated governance/build artifacts have been updated."
+    "Governance seal remains pending because live Plans docs and Plans/.plan_index changed.",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits has stale generated hashes/counts after live Plan edits; refresh only in an explicit migration/governance lane.",
+    "state/doc_impact_matrix.json, state/consumer_conformance_matrix.json, state/precision_contract.json, state/implementation_gap_defaults.json, and state/deep_audit_report.json are manual/source-lineage artifacts not yet covered by the bootstrap ledger validator."
   ]
 }

@@ -1,55 +1,161 @@
 {
-  "accepted_decisions_count": 9,
-  "candidate_atoms_count": 4,
-  "canonical_plan_targets": [],
-  "compiled_owner_docs": [],
-  "compiled_plan_outputs": [],
+  "accepted_decisions_count": 16,
+  "audit_artifacts": [
+    "state/deep_audit_report.json"
+  ],
+  "candidate_atoms_count": 0,
+  "canonical_plan_targets": [
+    "Plans/00-plans-index.md"
+  ],
+  "compile_disposition_artifacts": [
+    "state/compile_disposition_matrix.json"
+  ],
+  "compile_proposal_artifacts": [
+    "state/subagent_compile_proposals.json"
+  ],
+  "compiled_atoms_count": 83,
+  "compiled_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Tools.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/FileSafe.md",
+    "Plans/Permissions_System.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/FileManager.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/PRD_Builder.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Runtime_Artifacts_Panel.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/00-plans-index.md",
+    "Plans/Tools.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/FileSafe.md",
+    "Plans/Permissions_System.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/FileManager.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/PRD_Builder.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "compiled_plan_units_count": 25,
+  "cursor": {
+    "last_decision_id": "dec-0016",
+    "last_event_id": "evt-0027",
+    "last_question_id": "q-0016",
+    "next_action": "No further ledger product/design work is open. Await explicit governance seal or migration-refresh instruction; do not seal governance in this lane.",
+    "next_atom_id": "atom-0096",
+    "next_decision_id": "dec-0017",
+    "next_event_id": "evt-0028",
+    "next_question_id": "q-0017"
+  },
   "deferred_questions_count": 0,
-  "design_atoms_total": 65,
-  "governance_status": "not_started",
-  "last_event_id": "evt-0014",
+  "design_atoms_total": 95,
+  "governance_status": "pending_seal",
+  "last_completed_action": "Compiled accepted native discovery atoms into live canonical PlanUnits, regenerated allowed Plans/.plan_index outputs, recorded atom dispositions, and completed final validation checks.",
+  "last_event_id": "evt-0027",
+  "last_known_good_state": "Live Plans docs contain canonical PlanUnits for native PM-owned fff-inspired DiscoveryService behavior across compiled_owner_docs. Bootstrap ledger validator, PlanUnit index validator, git diff --check, and forbidden-artifact diff checks pass. Plan migration validation is pending refresh because generated migration metadata is stale after live Plan edits. Governance remains pending_seal; Spec Lock, shards, evidence, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, runtime launches, implementation files, and production build tasks remain untouched.",
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260622-001-fff/state/deep_audit_report.json",
+  "latest_audit_status": "reconciled_ledger_only_with_external_governance_caveat",
   "ledger_id": "pldg-20260622-001-fff",
+  "matrix_artifacts": [
+    "state/doc_impact_matrix.json",
+    "state/consumer_conformance_matrix.json"
+  ],
   "must_not_do": [
     "Do not write canonical Plans until Jared explicitly asks to compile the ledger.",
-    "Do not compile while q-0006 through q-0009 remain open unless Jared explicitly accepts assumptions for them.",
     "Do not create or update Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions.",
     "Do not treat this conversational design/spec thread as a Goal run.",
     "Do not recreate the removed legacy Iced app.",
     "Do not ask Jared to label GUI work; infer gui_related true/false."
   ],
-  "next_safe_action": "Ask Jared to confirm or revise the candidate defaults for q-0006 through q-0009; then materialize doc-impact and exact consumer-conformance matrices before compile.",
+  "next_action": "No further ledger product/design work is open. Await explicit governance seal or migration-refresh instruction; do not seal governance in this lane.",
+  "next_safe_action": "No further ledger product/design work is open. Await explicit governance seal or migration-refresh instruction; do not seal governance in this lane.",
+  "not_for_plan_atoms_count": 11,
+  "open_blockers": [],
   "open_blockers_count": 0,
-  "open_questions_count": 4,
-  "phase": "gap_resolution_workshop_active",
+  "open_questions": [],
+  "open_questions_count": 0,
+  "phase": "compiled_to_plans_pending_governance_seal",
+  "precision_artifacts": [
+    "state/precision_contract.json",
+    "state/implementation_gap_defaults.json"
+  ],
   "ready_for_plan_compile_atoms": 0,
   "schema_id": "pm.bootstrap_ledger_current_state.v1",
   "title": "Feature <fff>",
-  "updated_at_utc": "2026-06-22T19:39:56Z",
+  "updated_at_utc": "2026-06-22T22:45:29Z",
   "validation_state": {
-    "ledger_health": "pass_initialized",
-    "safe_content_checks": [
-      "Initialized only under Plans/ledgers/v2/pldg-20260622-001-fff/ and Plans/ledgers/v2/ledger_registry.json.",
-      "Cursor-style indexed regex search has been confirmed as already documented in live Plans under Instant Grep / SparseNgramIndex.",
-      "Jared selected native PM-owned fff-inspired file discovery as the product direction; direct fff is reference/evidence/prototype-only unless direction changes.",
-      "Jared selected one shared substrate for both agent tools and GUI surfaces from day one.",
-      "Jared clarified that Orchestrator, Executor, WorkNodes, Planning Wizard, PRDBuilder, Assistant Chat, and anything that uses an agent should be able to discover files through the shared substrate.",
-      "Jared agreed this requires a conformance contract: every agent-bearing surface must prove it can call the substrate, receive ranked/fresh/fallback-aware results, and respect FileSafe, permissions, ignore, freshness, fallback, and policy.",
-      "Jared clarified that agents should use the substrate during ordinary work such as bug fixing to locate the right section of code before exact verification.",
-      "Fresh OpenCode current HEAD c5a4a8288cbe115f673f3f9933fe217402c85406 was cloned into /tmp, inspected, and deleted; current usage is FileSystem/Search and file-discovery surfaces, while model-facing grep/glob tools still call Ripgrep.Service directly.",
-      "Pre-compile gap review found underspecified items that should be resolved before conversion to canonical Plans.",
-      "Candidate resolutions were proposed for content-search scope, remote/cache/worktree MVP behavior, frecency persistence/privacy defaults, and public tool/event vocabulary.",
-      "Jared's GUI requirement was accepted: Assistant Chat threads must show what discovery is doing, including discovery, fallback, policy, candidate selection, and exact verification activity.",
-      "No canonical Plans, Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or updated."
-    ]
-  },
-  "cursor": {
-    "last_decision_id": "dec-0009",
-    "last_event_id": "evt-0014",
-    "last_question_id": "q-0009",
-    "next_action": "Ask Jared whether to accept atoms atom-0060 through atom-0063 as the resolution for q-0006 through q-0009.",
-    "next_atom_id": "atom-0066",
-    "next_decision_id": "dec-0010",
-    "next_event_id": "evt-0015",
-    "next_question_id": "q-0010"
+    "bootstrap_ledger_validator": "pass",
+    "canonical_target_policy": "canonical_plan_targets restricted to governance-covered queue target; compiled_owner_docs lists all touched owner docs pending explicit governance seal.",
+    "caveats": [
+      "Governance seal remains pending because live Plans docs and Plans/.plan_index changed.",
+      "Plan migration generated metadata is stale after live Plan edits and must be refreshed only in an explicit migration/governance refresh lane.",
+      "Readiness artifacts are manual/source-lineage and not yet bootstrap-validator-backed."
+    ],
+    "followup_checks": [
+      "bootstrap ledger validator pass",
+      "PlanUnit index validator pass",
+      "git diff --check pass",
+      "forbidden governance/build artifact diff check clean",
+      "migration validator run and failure classified as stale generated metadata only"
+    ],
+    "forbidden_artifact_diff_check": "pass",
+    "git_diff_check": "pass",
+    "governance_status": "pending_seal",
+    "ledger_health": "pass_compiled_pending_governance_and_migration_refresh",
+    "migration_refresh_status": "pending_explicit_refresh_lane",
+    "plan_index": "generated_and_validated_pass",
+    "plan_index_validate": "pass",
+    "plan_migration_failure_summary": {
+      "distinct_errors": [
+        "complete_final_summary_live_plan_unit_count_stale",
+        "stale_batch_report_sha256_after"
+      ],
+      "error_count": 101,
+      "stale_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Permissions_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    "plan_migration_validate": "fail_expected_stale_generated_metadata_after_live_plan_edits",
+    "safe_content_checks": "Updated live non-pipeline Plans owner docs, Plans/.plan_index generated outputs, and ledger state only; forbidden governance/build artifacts remain untouched."
   }
 }

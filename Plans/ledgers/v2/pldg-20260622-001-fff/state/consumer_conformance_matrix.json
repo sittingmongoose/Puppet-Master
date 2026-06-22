@@ -1,0 +1,665 @@
+{
+  "schema_id": "pm.bootstrap_consumer_conformance_matrix.v1",
+  "ledger_id": "pldg-20260622-001-fff",
+  "status": "ledger_only_pre_compile_matrix",
+  "updated_at_utc": "2026-06-22T21:38:11Z",
+  "source_event_id": "evt-0022",
+  "precision_contract_ref": "state/precision_contract.json",
+  "compile_permission": false,
+  "summary": "Deep-audit-reconciled conformance matrix for native PM-owned fff-inspired DiscoveryService consumers. This matrix is source-lineage only and does not create WorkNodes, tools, queues, or canonical Plans.",
+  "common_conformance_requirements": [
+    "Consumer calls the shared DiscoveryService substrate or an approved route that delegates to it.",
+    "Request includes consumer_id, surface_type, project/worktree or remote/SSH identity, query_text, intent, target_kind, limit/budget, current_context when available, and policy_context.",
+    "Request, result, freshness, fallback_state, policy_decision, error_code, and receipt_event enum fields use the exact registry in state/precision_contract.json; fallback_denied_stale_cases use either exact enum values or exact_value_registry.conformance_case_label.",
+    "Results carry rank, score/provenance, freshness_state, fallback_state, policy_decision, source_index_generation, and requires_exact_verification.",
+    "Consumers honor the performance/resource budgets and over_budget/fallback behavior in state/precision_contract.json.",
+    "Denied and hidden-by-policy states are not converted into success-shaped fallbacks.",
+    "GUI consumers preserve shared ranking order unless they disclose a local sort/filter.",
+    "Agent consumers perform exact verification before edits or root-cause claims.",
+    "Remote/cache/SSH consumers disclose requested/effective remote identity and never silently substitute unrelated local results.",
+    "Receipts link discovery, selected candidates, fallback, and exact verification.",
+    "candidate_count means visible post-policy count only; blocked/hidden counts are omitted, bucketed, or redacted.",
+    "selected_result_ids are opaque/redaction-profiled ids and must not leak raw unauthorized paths.",
+    "Assistant Chat discovery visibility settings suppress only routine progress cards, never permission prompts, approval cards, safety messages, trust-affecting fallback/stale disclosures, durable receipts, or exact-verification linkage.",
+    "Remote/SSH rows carry permission_snapshot_id, approval_scope_key, host_trust_state/known-host outcome, credential_handle_ref without secret material, and redaction_profile where applicable.",
+    "Ambient agent discovery uses trigger/skip rules and is not search-everything-every-turn behavior."
+  ],
+  "rows": [
+    {
+      "consumer_id": "assistant_chat_agent_thread",
+      "surface": "Assistant Chat ordinary agent thread",
+      "gui_related": true,
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Tools.md"
+      ],
+      "required_call_path": "Agent thread invokes discover_paths through DiscoveryService when no exact verified path is available or when module ownership is ambiguous.",
+      "request_context_required": [
+        "consumer_id=assistant_chat_agent_thread",
+        "surface_type=assistant_chat_thread",
+        "agent_run_id",
+        "thread_id",
+        "project/worktree or remote/SSH identity",
+        "intent such as bug_fix or context_acquisition",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Show discovery activity in the Assistant Chat thread by default.",
+        "Respect Settings > Assistant Chat > Activity > `Show file discovery activity in chat` for routine inline activity while preserving safety prompts and durable receipts.",
+        "Select candidates for reading, then exact verification."
+      ],
+      "fallback_denied_stale_cases": [
+        "no_results",
+        "stale_index",
+        "fallback_scan",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "denied",
+        "hidden_by_policy"
+      ],
+      "exact_verification_handoff": "Must verify with grep/codesearch/Instant Grep, AST/LSP, tests, or domain-specific checks before edit/root-cause claim.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected",
+        "discovery.fallback when applicable",
+        "discovery.verified"
+      ],
+      "validation_scenarios": [
+        "ordinary no-path bug-fix workflow",
+        "exact-path skip",
+        "visibility setting on",
+        "visibility setting off",
+        "setting path and label match the precision contract",
+        "denied/hidden-by-policy no-leak",
+        "ambient trigger and skip rules",
+        "permission prompt not suppressed by chat visibility setting"
+      ],
+      "negative_constraints": [
+        "Do not hide discovery only in backend logs.",
+        "Do not leak blocked path names through thread activity."
+      ]
+    },
+    {
+      "consumer_id": "assistant_chat_file_mentions",
+      "surface": "Assistant Chat @file / file mention autocomplete",
+      "gui_related": true,
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "required_call_path": "File mention autocomplete queries DiscoveryService for file/directory/mixed target kinds and preserves service ranking order.",
+      "request_context_required": [
+        "consumer_id=assistant_chat_file_mentions",
+        "surface_type=assistant_chat_file_mention",
+        "thread_id",
+        "project/worktree or remote/SSH identity",
+        "query_text",
+        "target_kind=file or mixed",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Display candidates in DiscoveryService order.",
+        "Expose stale/fallback/remote/SSH state compactly when relevant.",
+        "Do not show blocked paths as candidates."
+      ],
+      "fallback_denied_stale_cases": [
+        "stale_index",
+        "fallback_scan",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "hidden_by_policy",
+        "no_results"
+      ],
+      "exact_verification_handoff": "Mention selection attaches a source candidate; later agent use still verifies exact content before edits.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected when user selects a candidate"
+      ],
+      "validation_scenarios": [
+        "same query as agent discover_paths returns compatible order",
+        "hidden-by-policy path not leaked",
+        "remote/SSH project mention autocomplete"
+      ],
+      "negative_constraints": [
+        "Do not run a second undisclosed fuzzysort that changes shared ranking.",
+        "Do not conflate hidden-by-policy with ordinary no-results when safety disclosure is required."
+      ]
+    },
+    {
+      "consumer_id": "quick_open_command_palette",
+      "surface": "Quick Open / command palette file search",
+      "gui_related": true,
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "required_call_path": "Quick Open routes path queries through DiscoveryService while keeping existing GUI command names.",
+      "request_context_required": [
+        "consumer_id=quick_open_command_palette",
+        "surface_type=quick_open",
+        "project/worktree or remote/SSH identity",
+        "query_text",
+        "target_kind=file or mixed",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Preserve service order by default.",
+        "If local sort/filter is available, disclose that it is local UI filtering.",
+        "Show index/fallback state without leaking hidden paths."
+      ],
+      "fallback_denied_stale_cases": [
+        "indexing",
+        "stale_index",
+        "fallback_scan",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "denied",
+        "hidden_by_policy",
+        "no_results"
+      ],
+      "exact_verification_handoff": "Opening a file does not prove content correctness; agent edits still require exact verification.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected"
+      ],
+      "validation_scenarios": [
+        "local project quick open",
+        "SSH project quick open",
+        "policy-hidden file absent from results"
+      ],
+      "negative_constraints": [
+        "Do not rename established Quick Open UI unnecessarily.",
+        "Do not show blocked result counts."
+      ]
+    },
+    {
+      "consumer_id": "search_panel_path_narrowing",
+      "surface": "Search panel path narrowing",
+      "gui_related": true,
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Tools.md"
+      ],
+      "required_call_path": "Search panel may use DiscoveryService for path narrowing while regex/content search remains Instant Grep / grep / codesearch.",
+      "request_context_required": [
+        "consumer_id=search_panel_path_narrowing",
+        "surface_type=search_path_filter",
+        "project/worktree or remote/SSH identity",
+        "query_text",
+        "target_kind=file or content_candidate",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Use discovery only to narrow path/context candidates.",
+        "Run content regex through Instant Grep / grep / codesearch for correctness.",
+        "Display fallback/stale state inherited from both discovery and content-search paths."
+      ],
+      "fallback_denied_stale_cases": [
+        "discovery_stale",
+        "grep_index_stale",
+        "discovery_fallback",
+        "raw_grep_fallback",
+        "denied",
+        "hidden_by_policy"
+      ],
+      "exact_verification_handoff": "Final content results come from content-search owner, not DiscoveryService ranking.",
+      "receipts_required": [
+        "discovery.invoked when path narrowing is used",
+        "discovery.candidates_returned",
+        "grep/codesearch verification receipt"
+      ],
+      "validation_scenarios": [
+        "regex search with path narrowing",
+        "content_candidate does not bypass grep",
+        "remote/SSH fallback disclosure"
+      ],
+      "negative_constraints": [
+        "Do not make DiscoveryService the content regex correctness owner."
+      ]
+    },
+    {
+      "consumer_id": "file_manager_typeahead",
+      "surface": "File Manager type-ahead / editor file navigation",
+      "gui_related": true,
+      "owner_docs": [
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "required_call_path": "File Manager path type-ahead delegates fuzzy/frecency ranking to DiscoveryService.",
+      "request_context_required": [
+        "consumer_id=file_manager_typeahead",
+        "surface_type=file_manager",
+        "project/worktree or remote/SSH identity",
+        "query_text",
+        "target_kind=file or directory",
+        "current_context",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Display path and directory candidates with policy-safe labels.",
+        "Respect shared ranking and local UI filters if disclosed.",
+        "Show stale/fallback state for remote/cache/SSH projects."
+      ],
+      "fallback_denied_stale_cases": [
+        "stale_index",
+        "fallback_scan",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "denied",
+        "hidden_by_policy",
+        "no_results"
+      ],
+      "exact_verification_handoff": "Navigation is not semantic verification; downstream agent edits verify content separately.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected"
+      ],
+      "validation_scenarios": [
+        "directory candidate search",
+        "remote/SSH file navigation",
+        "hidden path no-leak"
+      ],
+      "negative_constraints": [
+        "Do not bypass worktree/remote identity boundaries."
+      ]
+    },
+    {
+      "consumer_id": "planning_wizard_source_picker",
+      "surface": "Planning Wizard context/source picker",
+      "gui_related": true,
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "required_call_path": "Planning Wizard source/context picking uses DiscoveryService to find relevant project files without creating WorkNodes.",
+      "request_context_required": [
+        "consumer_id=planning_wizard_source_picker",
+        "surface_type=planning_wizard_source_picker",
+        "planning_run_id",
+        "project/worktree or remote/SSH identity",
+        "query_text",
+        "intent=planning_context",
+        "target_kind=file or content_candidate",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Preserve ranked candidates and provenance in Planning Context Capsules when selected.",
+        "Expose stale/fallback/denied/no-results states in the picker.",
+        "Do not copy unbounded transcripts or unrelated source context."
+      ],
+      "fallback_denied_stale_cases": [
+        "stale_index",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "denied",
+        "hidden_by_policy",
+        "no_results"
+      ],
+      "exact_verification_handoff": "Selected sources are references for planning; later implementation still verifies exact content before edits.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected"
+      ],
+      "validation_scenarios": [
+        "Planning Wizard source pick on local project",
+        "Planning Wizard source pick over SSH",
+        "policy-hidden source no-leak"
+      ],
+      "negative_constraints": [
+        "Do not revive Chain Wizard terminology.",
+        "Do not create WorkNodes from discovery selection."
+      ]
+    },
+    {
+      "consumer_id": "prd_builder_source_picker",
+      "surface": "PRD Builder source picker / source ingestion",
+      "gui_related": true,
+      "owner_docs": [
+        "Plans/PRD_Builder.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "required_call_path": "PRD Builder uses DiscoveryService for project source discovery during source ingestion or PRD source selection.",
+      "request_context_required": [
+        "consumer_id=prd_builder_source_picker",
+        "surface_type=prd_builder_source_picker",
+        "prd_run_id or intake_id",
+        "project/worktree or remote/SSH identity",
+        "query_text",
+        "target_kind=file or content_candidate",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Preserve selected candidate provenance in PRD source references.",
+        "Expose denied/stale/fallback states without leaking blocked paths.",
+        "Route selected sources into PRD pack lineage rather than runtime execution."
+      ],
+      "fallback_denied_stale_cases": [
+        "stale_index",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "denied",
+        "hidden_by_policy",
+        "no_results"
+      ],
+      "exact_verification_handoff": "PRD source references remain planning evidence; exact implementation verification occurs later.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected"
+      ],
+      "validation_scenarios": [
+        "PRD Builder source pick over SSH",
+        "source picker uses same ranking as Assistant Chat for same context",
+        "hidden-by-policy source no-leak"
+      ],
+      "negative_constraints": [
+        "Do not use raw Assistant Chat transcript as the sole source selection proof."
+      ]
+    },
+    {
+      "consumer_id": "orchestrator_agent_context",
+      "surface": "Orchestrator agent context acquisition",
+      "gui_related": false,
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Tools.md"
+      ],
+      "required_call_path": "Orchestrator routes agent file-discovery needs through discover_paths rather than ad hoc repo scans.",
+      "request_context_required": [
+        "consumer_id=orchestrator_agent_context",
+        "surface_type=orchestrator_agent",
+        "goal_run_id or orchestration_run_id",
+        "project/worktree or remote/SSH identity",
+        "intent=bug_fix or context_acquisition",
+        "target_kind=file or content_candidate",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Use ranked candidates to guide reads.",
+        "Record fallback and selected candidates.",
+        "Link discovery to exact verification and runtime receipts."
+      ],
+      "fallback_denied_stale_cases": [
+        "stale_index",
+        "fallback_scan",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "denied",
+        "hidden_by_policy"
+      ],
+      "exact_verification_handoff": "Must verify before assigning edits, claiming root cause, or passing context to Executor.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected",
+        "discovery.fallback when applicable",
+        "discovery.verified"
+      ],
+      "validation_scenarios": [
+        "orchestrated no-path bug-fix",
+        "SSH-backed project context discovery",
+        "denied path remains blocked"
+      ],
+      "negative_constraints": [
+        "Do not silently bypass shared discovery with broad local scans when discovery should apply."
+      ]
+    },
+    {
+      "consumer_id": "executor_builder_verifier",
+      "surface": "Executor Builder/Verifier file orientation",
+      "gui_related": false,
+      "owner_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Tools.md"
+      ],
+      "required_call_path": "Executor actors use discover_paths when locating files for implementation or verification without exact path evidence.",
+      "request_context_required": [
+        "consumer_id=executor_builder_verifier",
+        "surface_type=executor_agent",
+        "attempt_id",
+        "project/worktree or remote/SSH identity",
+        "intent=implementation or verification",
+        "target_kind=file or content_candidate",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Builder uses candidates for read orientation only.",
+        "Verifier can use discovery to locate verification-relevant files but must verify exact evidence.",
+        "Receipts feed attempt evidence without becoming the correctness proof."
+      ],
+      "fallback_denied_stale_cases": [
+        "stale_index",
+        "fallback_scan",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "denied",
+        "hidden_by_policy"
+      ],
+      "exact_verification_handoff": "Required before edits, test claims, completion, or verifier pass.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected",
+        "discovery.verified"
+      ],
+      "validation_scenarios": [
+        "Builder no-path orientation",
+        "Verifier exact evidence follow-up",
+        "SSH no-local-checkout task"
+      ],
+      "negative_constraints": [
+        "Do not let ranking substitute for verifier evidence."
+      ]
+    },
+    {
+      "consumer_id": "worknode_intake_future_contract",
+      "surface": "Future WorkNode intake / PlanCompile context materialization",
+      "gui_related": false,
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "required_call_path": "Future WorkNode intake may reference DiscoveryService conformance as a future_boundary_only input contract, but this ledger and compile do not create WorkNodes or NodeSeeds and do not require current runtime conformance proof for the disabled compiler boundary.",
+      "request_context_required": [
+        "consumer_id=worknode_intake_future_contract",
+        "surface_type=worknode_intake",
+        "planunit_ref when future compiler exists",
+        "project/worktree or remote/SSH identity",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Record readiness/conformance expectations only.",
+        "Do not enqueue executable work.",
+        "Do not create NodeSeed candidates before compiler contract exists."
+      ],
+      "fallback_denied_stale_cases": [
+        "not_applicable_until_future_compiler",
+        "runtime_disabled"
+      ],
+      "exact_verification_handoff": "Future compiler must preserve exact verification requirements inherited from source PlanUnits.",
+      "receipts_required": [
+        "future compiler contract only; no runtime receipt in this phase"
+      ],
+      "validation_scenarios": [
+        "PlanUnit index can describe discovery conformance without creating WorkNodes"
+      ],
+      "negative_constraints": [
+        "Do not create WorkNodes, NodeSeeds, executable queues, or final node manifests.",
+        "Do not treat this row as current runtime readiness or WorkNode creation permission."
+      ],
+      "future_boundary_only": true
+    },
+    {
+      "consumer_id": "shared_agent_tool_discover_paths",
+      "surface": "Shared agent tool route discover_paths",
+      "gui_related": false,
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "required_call_path": "discover_paths is the agent-facing operation that delegates to DiscoveryService.",
+      "request_context_required": [
+        "consumer_id",
+        "surface_type",
+        "agent_run_id/session_id when applicable",
+        "project/worktree or remote/SSH identity",
+        "query_text",
+        "intent",
+        "target_kind",
+        "limit/budget_ms",
+        "enum values from state/precision_contract.json",
+        "policy_context"
+      ],
+      "result_handling": [
+        "Return ranked candidates with provenance and requires_exact_verification=true unless explicitly exact path verified.",
+        "Expose fallback/freshness/policy state.",
+        "Use exact result fields from state/precision_contract.json including score_breakdown, source_index_generation, elapsed_ms in receipts, and verification_handoff.",
+        "Do not return blocked paths to unauthorized consumers."
+      ],
+      "fallback_denied_stale_cases": [
+        "disabled",
+        "unsupported",
+        "index_cold",
+        "stale_index",
+        "over_budget",
+        "fallback_scan",
+        "remote_cache_fallback",
+        "ssh_remote_fallback",
+        "denied",
+        "hidden_by_policy"
+      ],
+      "exact_verification_handoff": "Tool output is discovery guidance only; caller must verify content with the appropriate exact mechanism.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.fallback when applicable"
+      ],
+      "validation_scenarios": [
+        "local query",
+        "remote/cache query",
+        "SSH query",
+        "denied scope",
+        "over-budget fallback",
+        "disabled or unsupported discovery fallback receipt",
+        "backpressure receipt",
+        "ambient skip for verified exact path"
+      ],
+      "negative_constraints": [
+        "Do not make discover_paths a grep replacement.",
+        "Do not expose raw frecency history to agents."
+      ]
+    },
+    {
+      "consumer_id": "remote_ssh_discovery_adapter",
+      "surface": "Remote/cache/SSH discovery adapter",
+      "gui_related": false,
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Permissions_System.md"
+      ],
+      "required_call_path": "Remote/cache/SSH adapter resolves requested/effective project identity and supplies safe file manifests, remote filesystem queries, Git cache inputs, or SSH remote manifest adapter inputs to DiscoveryService.",
+      "request_context_required": [
+        "requested_project_identity",
+        "effective_project_identity",
+        "remote_host_or_cache_ref when applicable",
+        "worktree_or_branch_ref",
+        "remote identity fields from state/precision_contract.json",
+        "policy_context",
+        "freshness_budget",
+        "permission_snapshot_id",
+        "approval_scope_key when approval-gated",
+        "host_trust_state or known-host outcome",
+        "credential_handle_ref without secret material",
+        "redaction_profile"
+      ],
+      "result_handling": [
+        "Carry remote/cache/SSH freshness and fallback state into every result.",
+        "For SSH MVP, use local DiscoveryService plus SSH remote manifest adapter; no persistent PM remote daemon is required.",
+        "Prevent local unrelated fallback.",
+        "Keep branch/worktree/SSH identities separate."
+      ],
+      "fallback_denied_stale_cases": [
+        "remote_unavailable",
+        "ssh_unavailable",
+        "cache_stale",
+        "manifest_missing",
+        "policy_denied",
+        "hidden_by_policy"
+      ],
+      "exact_verification_handoff": "Verification must read authorized remote/cache content corresponding to the selected identity, not an unrelated local file.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.fallback when remote/cache/SSH fallback is used",
+        "discovery.verified when exact remote verification completes"
+      ],
+      "validation_scenarios": [
+        "SSH project with no local checkout",
+        "SSH manifest adapter with no remote daemon installed",
+        "remote cache stale disclosure",
+        "branch switch does not reuse stale wrong-branch index",
+        "SSH auth failure/passphrase prompt",
+        "known-host change",
+        "remote command denial",
+        "secret material absent from receipts"
+      ],
+      "negative_constraints": [
+        "Do not collapse remote and local identities.",
+        "Do not silently use stale cache as fresh remote truth."
+      ]
+    },
+    {
+      "consumer_id": "runtime_artifacts_and_audit",
+      "surface": "Runtime Artifacts / audit receipt browsing",
+      "gui_related": true,
+      "owner_docs": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "required_call_path": "Receipt browsing consumes persisted discovery receipts if promoted; it does not own DiscoveryService behavior.",
+      "request_context_required": [
+        "artifact_id or receipt_ref",
+        "project/worktree or remote/SSH identity",
+        "redaction_profile",
+        "policy_context",
+        "permission_snapshot_id when permission-gated"
+      ],
+      "result_handling": [
+        "Show discovery receipts, fallback summaries, and verification linkage after the fact.",
+        "Respect redaction and no-leak policy.",
+        "Remain available even when Assistant Chat inline activity is hidden."
+      ],
+      "fallback_denied_stale_cases": [
+        "receipt_redacted",
+        "receipt_missing",
+        "policy_denied",
+        "hidden_by_policy"
+      ],
+      "exact_verification_handoff": "Browse linkage from discovery receipts to exact verification receipts.",
+      "receipts_required": [
+        "discovery.invoked",
+        "discovery.candidates_returned",
+        "discovery.selected",
+        "discovery.fallback",
+        "discovery.verified"
+      ],
+      "validation_scenarios": [
+        "Assistant Chat inline display off but receipts remain browseable",
+        "redacted hidden-by-policy receipt",
+        "SSH discovery receipt shows remote identity"
+      ],
+      "negative_constraints": [
+        "Do not make receipt browsing the source of product behavior truth.",
+        "Do not bypass redaction."
+      ]
+    }
+  ],
+  "audit_ref": "state/deep_audit_report.json"
+}

@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.bootstrap_subagent_compile_proposals.v1",
+  "ledger_id": "pldg-20260622-001-fff",
+  "status": "read_only_compile_placement_guidance_preserved",
+  "updated_at_utc": "2026-06-22T22:15:15Z",
+  "summary": "All four read-only compile-placement subagent proposals were received after the fresh status check. They add owner placement and PlanUnit guidance for a later explicit compile, but do not introduce new product blockers, open questions, contradictions, or compile permission.",
+  "compile_permission": false,
+  "canonical_plans_updated": false,
+  "proposal_reports": [
+    {
+      "agent": "pm_owner_adjudicator",
+      "agent_path": "019ef160-cbae-75e0-89ff-89b6d8b4818b",
+      "nickname": "Helmholtz",
+      "scope": "core service/schema owner proposal",
+      "status": "completed_read_only_no_files_edited",
+      "owner_set": [
+        "Plans/Tools.md owns DiscoveryService, discover_paths, ranking/fallback/freshness behavior, agent use, and the content-search boundary.",
+        "Plans/Contracts_V0.md owns promoted shared enum/event/receipt schema terms.",
+        "Plans/00-plans-index.md is owner-map only and should not re-own behavior."
+      ],
+      "planunit_proposals": [
+        {"action": "create", "plan_unit_id": "T-160", "title": "Native DiscoveryService Shared Substrate", "owner_doc": "Plans/Tools.md", "source_atom_ids": ["atom-0019", "atom-0026", "atom-0031", "atom-0034", "atom-0046", "atom-0047", "atom-0048"], "gui_related": false, "canonical_obligations": "PM-owned native substrate, one shared agent plus GUI discovery layer, no direct fff dependency, no separate agent/GUI rankers, same FileSafe/permissions/ignore/freshness/fallback policy envelope."},
+        {"action": "create", "plan_unit_id": "T-161", "title": "discover_paths Operation And Request/Result Behavior", "owner_doc": "Plans/Tools.md", "source_atom_ids": ["atom-0035", "atom-0036", "atom-0063", "atom-0076", "atom-0088", "atom-0092"], "gui_related": false, "canonical_obligations": "discover_paths is the agent-facing operation delegating to DiscoveryService; ambient invocation is bounded to materially useful repo/source-location tasks and skipped for exact verified paths, pure chat, denial, disabled/unsupported, or backpressure cases."},
+        {"action": "create", "plan_unit_id": "T-162", "title": "Path Discovery Versus Content Search Boundary", "owner_doc": "Plans/Tools.md", "source_atom_ids": ["atom-0031", "atom-0050", "atom-0060", "atom-0063", "atom-0076", "atom-0088"], "gui_related": false, "canonical_obligations": "Discovery is path/context discovery, not a second content regex engine. content_candidate is a handoff hint only. Exact verification stays with Instant Grep, grep, codesearch, AST/LSP, tests, or domain checks."},
+        {"action": "update", "plan_unit_id": "T-072", "title": "Tool Event Payload And Index Used Disclosure", "owner_doc": "Plans/Tools.md", "source_atom_ids": ["atom-0063", "atom-0076"], "gui_related": false, "canonical_obligations": "Add a negative constraint: do not use tool.invoked.index_used for fuzzy/path discovery. It remains only grep/Search sparse-n-gram disclosure."},
+        {"action": "create", "plan_unit_id": "CV-291", "title": "Discovery Schema, Enums, Events, And Receipt Payloads", "owner_doc": "Plans/Contracts_V0.md", "source_atom_ids": ["atom-0035", "atom-0036", "atom-0063", "atom-0076", "atom-0088", "atom-0090", "atom-0091", "atom-0095"], "gui_related": false, "canonical_obligations": "Own exact enum/value sets and shared receipt payload fields: surface_type, intent, target_kind, path_kind, match_type, freshness_state, fallback_state, policy_decision, error_code, receipt_event; events include discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, discovery.disabled, discovery.unsupported, discovery.backpressure."},
+        {"action": "create", "plan_unit_id": "0PI-060", "title": "Native Discovery Owner Split And Non-Goals", "owner_doc": "Plans/00-plans-index.md", "source_atom_ids": ["atom-0019", "atom-0026", "atom-0031", "atom-0034", "atom-0035", "atom-0036", "atom-0046", "atom-0047", "atom-0048", "atom-0050", "atom-0060", "atom-0063", "atom-0076", "atom-0088", "atom-0090", "atom-0091", "atom-0092", "atom-0093", "atom-0094", "atom-0095"], "gui_related": false, "canonical_obligations": "Index records routing only: Tools owns discovery behavior, Contracts owns promoted shared schema/event terms, Instant Grep remains content regex owner, fff/OpenCode are lineage/reference only, no WorkNodes/NodeSeeds/queues/governance artifacts."}
+      ],
+      "exact_field_obligations": {
+        "target_kind": ["file", "directory", "file_or_directory", "module", "test", "doc", "config", "content_candidate", "mixed"],
+        "fallback_state": ["none", "index_cold", "stale_index", "fallback_scan", "remote_cache", "ssh_manifest", "over_budget", "disabled", "unsupported", "backpressure"],
+        "policy_decision": ["allowed", "redacted", "hidden_by_policy", "denied", "requires_approval"]
+      },
+      "namespace_caveat": "DiscoveryRequest.target_kind is discovery-local and must not alter route_target.target_kind in Contracts_V0.md.",
+      "negative_constraints": [
+        "Do not compile OpenCode/fff prose as product canon.",
+        "Do not use tool.invoked.index_used for fuzzy/path discovery.",
+        "Do not merge discovery target_kind with route/open target_kind."
+      ]
+    },
+    {
+      "agent": "pm_owner_adjudicator",
+      "agent_path": "019ef160-e5f5-7531-b88d-9cca2e5579d7",
+      "nickname": "Copernicus",
+      "scope": "persistence/remote/policy owner proposal",
+      "status": "completed_read_only_no_files_edited",
+      "owner_set": [
+        "Plans/storage-plan.md owns discovery index persistence, cache identity, lifecycle, frecency/history boundaries, remote manifest cache storage.",
+        "Plans/WorktreeGitImprovement.md owns repo/worktree/branch/remote authority and no local substitution.",
+        "Plans/FileSafe.md owns no-leak guard inputs and pre/post-policy path safety.",
+        "Plans/Permissions_System.md owns permission snapshot, approval scope, SSH trust, credential handle, redaction fields.",
+        "Plans/GitHub_Integration.md is supporting only for remote Git/non-Git cache transport/disclosure and no-silent-local-fallback alignment."
+      ],
+      "planunit_proposals": [
+        {"plan_unit_id": "SP-217", "title": "Discovery Index Persistence, Cache Identity, And History Boundaries", "owner_doc": "Plans/storage-plan.md", "source_atom_ids": ["atom-0042", "atom-0053", "atom-0062", "atom-0078", "atom-0081", "atom-0082", "atom-0083", "atom-0086", "atom-0089"], "gui_related": true, "canonical_obligations": "per-project/per-worktree/per-remote index identity, warm/reindex/teardown/freshness/fallback states, canonical_path_identity separate from display_path, cache schema/ranking/policy/ignore/identity/manifest generation fields, project/worktree-local frecency, reset/disable future ranking use, sanitized score breakdowns."},
+        {"plan_unit_id": "SP-218", "title": "Remote SSH Discovery Manifest Cache And Verification Handoff", "owner_doc": "Plans/storage-plan.md", "source_atom_ids": ["atom-0054", "atom-0061", "atom-0069", "atom-0070", "atom-0079", "atom-0083", "atom-0085", "atom-0091"], "gui_related": false, "canonical_obligations": "local DiscoveryService plus SSH remote manifest adapter, git ls-files or allowed remote walk inside authorized root, normalize/policy-filter/annotate/index remote entries locally, remote identity hash cache keys with no secrets, exact verification through authorized remote identity/path or provenance-equivalent remote cache, no silent local substitution."},
+        {"plan_unit_id": "W-074", "title": "Discovery Remote Worktree Authority And No Local Substitution", "owner_doc": "Plans/WorktreeGitImprovement.md", "source_atom_ids": ["atom-0054", "atom-0061", "atom-0069", "atom-0070", "atom-0079", "atom-0085", "atom-0091"], "gui_related": false, "canonical_obligations": "keep local worktrees, branches, SSH roots, remote project identities, requested/effective remote identity, host/root/repo/branch/worktree refs separate; SSH discovery must pass with no local checkout; no download-edit-upload authority; exact verification cannot use unrelated local paths."},
+        {"plan_unit_id": "F2-191", "title": "Discovery FileSafe No-Leak Indexing And Result Guards", "owner_doc": "Plans/FileSafe.md", "source_atom_ids": ["atom-0039", "atom-0057", "atom-0069", "atom-0082", "atom-0083", "atom-0090", "atom-0091"], "gui_related": false, "canonical_obligations": "filter before scoring; no blocked filename/count/rank-gap/explanation/diagnostic leakage; candidate_count is visible post-policy only; selected_result_ids are opaque/redaction-profiled."},
+        {"plan_unit_id": "PS-118", "title": "Discovery Permission Snapshot, Host-Trust, And Redaction Fields", "owner_doc": "Plans/Permissions_System.md", "source_atom_ids": ["atom-0057", "atom-0069", "atom-0085", "atom-0090", "atom-0091"], "gui_related": false, "canonical_obligations": "request/result/receipt fields carry permission_snapshot_id, approval_scope_key, requested/effective remote identity, host_trust_state or known-host outcome, credential_handle_ref without secret material, remote command policy result, and redaction_profile."},
+        {"plan_unit_id": "GI-033", "title": "Remote Git Cache Discovery Transport And Disclosure", "owner_doc": "Plans/GitHub_Integration.md", "source_atom_ids": ["atom-0054", "atom-0061", "atom-0069", "atom-0079", "atom-0085", "atom-0091"], "gui_related": true, "canonical_obligations": "GitHub Integration consumes storage/worktree/FileSafe/permission contracts for remote Git/non-Git cache transport, remote cache/admin disclosure, SSH/reconnect behavior, verification paths, staging/re-anchor, and no-silent-local-fallback. It must not define alternate discovery/search layout or become the discovery owner."}
+      ],
+      "validation_cases": ["SSH project with no local checkout", "stale remote cache disclosure", "wrong-branch cache invalidation", "known-host/auth/remote-command denial", "no secret material in receipts", "path identity versus display path", "denied/hidden-by-policy no-leak behavior"],
+      "negative_constraints": [
+        "Do not claim full ledger compile coverage from this focused owner set.",
+        "Direct fff/OpenCode details remain lineage/reference only, not product authority."
+      ]
+    },
+    {
+      "agent": "pm_fidelity_auditor",
+      "agent_path": "019ef160-ffde-76e3-b14c-c6598e6c9fb4",
+      "nickname": "Pascal",
+      "scope": "GUI surface proposal",
+      "status": "completed_read_only_no_files_edited",
+      "planunit_proposals": [
+        {"plan_unit_id": "ACD-422", "title": "Assistant Chat Discovery Activity And Toggle", "owner_doc": "Plans/assistant-chat-design.md", "source_atom_ids": ["atom-0064", "atom-0065", "atom-0066", "atom-0067", "atom-0068", "atom-0080", "atom-0093"], "gui_related": true, "exact_setting_path": "Settings > Assistant Chat > Activity", "exact_setting_label": "Show file discovery activity in chat", "default": "on", "description": "Show when assistants look for candidate files, use stale or fallback indexes, select files, and verify them.", "scope": "hides only routine inline discovery progress cards; never suppress permission prompts, approval cards, denied/hidden-by-policy safety messages, trust-affecting fallback/stale disclosures, exact-verification linkage, durable receipts, or final relevant summaries."},
+        {"plan_unit_id": "ACD-423", "title": "Assistant Chat File Mention Discovery Routing", "owner_doc": "Plans/assistant-chat-design.md", "source_atom_ids": ["atom-0021", "atom-0056", "atom-0059", "atom-0078", "atom-0087", "atom-0090"], "gui_related": true, "canonical_obligations": "@file/file mention autocomplete queries DiscoveryService for file/directory/mixed targets, preserves service rank order, shows stale/fallback/remote/SSH state compactly, and avoids blocked-path leakage."},
+        {"plan_unit_id": "F3-399", "title": "Shared Discovery GUI States And Route Migration", "owner_doc": "Plans/FinalGUISpec.md", "source_atom_ids": ["atom-0013", "atom-0021", "atom-0044", "atom-0056", "atom-0059", "atom-0063", "atom-0078", "atom-0081", "atom-0084", "atom-0087", "atom-0089", "atom-0090", "atom-0093"], "gui_related": true, "user_visible_states": ["loading", "indexing/warming", "stale", "fallback", "denied", "no-results", "hidden-by-policy", "disabled", "unsupported", "over-budget/backpressure", "rank explanation", "local sort/filter disclosed", "settings/reset"], "preserve_command_names_and_shortcuts": ["Quick Open", "command palette fuzzy search", "Search path narrowing", "Assistant Chat file mentions", "File Manager type-ahead", "Planning Wizard source picker", "PRD Builder source picker"]},
+        {"plan_unit_id": "UCC-099", "title": "Discovery-Routed Search And Picker Command Compatibility", "owner_doc": "Plans/UI_Command_Catalog.md", "source_atom_ids": ["atom-0056", "atom-0063", "atom-0066", "atom-0078", "atom-0080", "atom-0081", "atom-0087", "atom-0090"], "gui_related": true, "canonical_obligations": "Do not rename existing GUI commands or add a parallel cmd.discovery.* GUI family. cmd.search.* remains Search/content command canon; DiscoveryService is path/context routing for compatible surfaces."},
+        {"plan_unit_id": "F-072", "title": "File Manager Type-Ahead Discovery Consumer", "owner_doc": "Plans/FileManager.md", "source_atom_ids": ["atom-0013", "atom-0021", "atom-0056", "atom-0059", "atom-0087", "atom-0090"], "gui_related": true, "canonical_obligations": "File Manager type-ahead delegates fuzzy/frecency ranking to DiscoveryService, shows policy-safe file/directory candidates, discloses stale/fallback/remote/SSH state, and preserves local filter disclosure without becoming semantic/content search."},
+        {"plan_unit_id": "PWIZ-015", "title": "Planning Wizard Source Picker Discovery Consumer", "owner_doc": "Plans/Planning_Wizard.md", "source_atom_ids": ["atom-0027", "atom-0038", "atom-0044", "atom-0045", "atom-0059", "atom-0087", "atom-0088", "atom-0090"], "gui_related": true, "canonical_obligations": "Planning Wizard source/context picker uses DiscoveryService for relevant project files, stores selected provenance in Planning Context Capsules, exposes stale/fallback/denied/no-results states, and does not create WorkNodes or revive Chain Wizard terms."},
+        {"plan_unit_id": "PRDB-009", "title": "PRD Builder Source Picker Discovery Consumer", "owner_doc": "Plans/PRD_Builder.md", "source_atom_ids": ["atom-0027", "atom-0038", "atom-0044", "atom-0045", "atom-0059", "atom-0087", "atom-0088", "atom-0090"], "gui_related": true, "canonical_obligations": "PRD Builder source picker/source ingestion uses DiscoveryService for project source discovery, stores selected candidate provenance in PRD source refs, shows denied/stale/fallback states without leaks, and does not use raw Assistant Chat transcript as sole source proof."}
+      ],
+      "owner_boundary_notes": ["Tools owns DiscoveryService/discover_paths behavior.", "Contracts owns shared enum/event/receipt envelopes if promoted.", "FileSafe/Permissions own no-leak and policy filtering.", "storage owns index lifecycle, frecency, and retention.", "Runtime Artifacts owns durable receipt browsing.", "Search remains content-search owner.", "Direct fff/OpenCode lineage remains reference/evidence/prototype-only, not product authority.", "PRDBuilder is internal id only; visible prose remains PRD Builder.", "WorkNode mentions remain future_boundary_only."]
+    },
+    {
+      "agent": "pm_special_lane_auditor",
+      "agent_path": "019ef161-20d2-7ef1-99d8-1d15611810f9",
+      "nickname": "Noether",
+      "scope": "runtime/testing/receipts/Plan-to-Node proposal",
+      "status": "completed_read_only_no_files_edited",
+      "planunit_proposals": [
+        {"plan_unit_id": "OSI-429", "title": "Ambient Orchestrator Discovery For Agent Context", "owner_doc": "Plans/orchestrator-subagent-integration.md", "source_atom_ids": ["atom-0027", "atom-0030", "atom-0037", "atom-0043", "atom-0058", "atom-0059", "atom-0092", "atom-0094"], "gui_related": false, "canonical_obligations": "Orchestrator agent context acquisition routes no-exact-path bug fixes, ambiguous module ownership, read/search misses, broad-scan avoidance, and planning/source context assembly through discover_paths, then exact verification before root-cause claims, Executor handoff, or edits."},
+        {"plan_unit_id": "EP-106", "title": "Executor Discovery Orientation And Verification Handoff", "owner_doc": "Plans/Executor_Protocol.md", "source_atom_ids": ["atom-0027", "atom-0030", "atom-0037", "atom-0043", "atom-0058", "atom-0059", "atom-0092", "atom-0094"], "gui_related": false, "canonical_obligations": "Builder may use discovery for orientation only; Verifier may use it to locate evidence targets, but ranking never substitutes for exact evidence, tests, AST/LSP/grep, or verifier pass criteria."},
+        {"plan_unit_id": "PNC-020", "title": "Discovery WorkNode Intake Future Boundary", "owner_doc": "Plans/Plan_To_Node_Compilation.md", "source_atom_ids": ["atom-0027", "atom-0030", "atom-0037", "atom-0043", "atom-0058", "atom-0059", "atom-0092", "atom-0094"], "gui_related": false, "future_boundary_only": true, "exact_boundary_language": "WorkNode and Plan-to-Node discovery references are future_boundary_only. They may provide a backlink and future conformance expectation for Plans/Plan_To_Node_Compilation.md, but they are excluded from current runtime conformance proof and compile readiness. This compile creates no WorkNodes, NodeSeeds, executable queues, final node manifests, runtime launches, implementation files, or production build tasks."},
+        {"plan_unit_id": "ATS-011", "title": "Discovery Testing And Consumer Conformance", "owner_doc": "Plans/Automated_Testing_System.md", "source_atom_ids": ["atom-0025", "atom-0043", "atom-0044", "atom-0045", "atom-0055", "atom-0059", "atom-0065", "atom-0068", "atom-0070", "atom-0077", "atom-0078", "atom-0079", "atom-0080", "atom-0081", "atom-0082", "atom-0083", "atom-0084", "atom-0085", "atom-0086", "atom-0087", "atom-0089", "atom-0090", "atom-0091", "atom-0092", "atom-0093", "atom-0094", "atom-0095"], "gui_related": true, "canonical_obligations": "Testing owns validation, not service semantics. It should encode consumer conformance rows, exact-verification handoff, performance budgets, deterministic ranking, SSH/no-local-fallback, denied/hidden no-leak behavior, Assistant Chat visibility on/off, backpressure/disabled/unsupported receipts, retention cases, and the future-only WorkNode intake non-creation test."},
+        {"plan_unit_id": "RAP-031", "title": "Discovery Receipt Browsing, Redaction, And Retention Projection", "owner_doc": "Plans/Runtime_Artifacts_Panel.md", "source_atom_ids": ["atom-0043", "atom-0045", "atom-0058", "atom-0063", "atom-0067", "atom-0086", "atom-0090", "atom-0093"], "gui_related": true, "canonical_obligations": "Runtime Artifacts may browse persisted discovery receipts, fallback summaries, selected opaque ids, and exact-verification links, but it does not own DiscoveryService behavior. Assistant Chat visibility settings never delete or hide durable audit receipts."}
+      ],
+      "testing_scenarios": ["no-exact-path bug fix", "Builder orientation", "Verifier exact-evidence follow-up", "SSH project with no local checkout", "denied/hidden-by-policy no-leak", "disabled/unsupported/backpressure/over-budget fallback receipts", "deterministic ranking for identical request/index/frecency state", "GUI parity without silent re-sort", "Assistant Chat visibility on/off", "frecency reset versus durable receipt retention", "PlanUnit index describing discovery conformance without WorkNodes"],
+      "receipt_obligations": ["Persist/browse discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, plus disabled/unsupported/backpressure where applicable.", "Receipt payloads must preserve visible post-policy candidate_count, opaque/redaction-profiled selected_result_ids, freshness/fallback/policy state, source index generation, remote/SSH identity, permission snapshot, host trust state, elapsed/budget fields, and verification_receipt_ref when available."],
+      "dispositions": ["shared_agent_tool_discover_paths belongs primarily to Plans/Tools.md and Plans/Contracts_V0.md; OSI/EP/ATS/RAP/PNC consume the route name and conformance expectations, not re-own the service schema.", "DIM-014 is cross-cutting guardrail material here, not a standalone target-doc PlanUnit except where folded into ATS/RAP/PNC/OSI/EP acceptance and negative constraints.", "No Goal_Runtime_System.md or Orchestrator_Page.md update is necessary for this slice.", "No Personas-adjacent unlock: atom-0003 stays ledger setup/persona lane source memory.", "No P6/deferred unlock found.", "Future WorkNode intake remains future-boundary-only, and governance evidence drift remains a separate explicit governance lane."]
+    }
+  ],
+  "reconciliation": {
+    "new_product_gap_found": false,
+    "new_open_question_found": false,
+    "new_blocker_found": false,
+    "new_contradiction_found": false,
+    "compile_guidance_effect": "Use these reports as source-lineage owner placement guidance when Jared explicitly requests compile to canonical Plans.",
+    "unchanged_caveats": [
+      "Generated governance evidence drift belongs to a separate explicit governance seal/refresh lane.",
+      "Readiness artifacts remain manual/source-lineage until validator/schema support is added.",
+      "Canonical Plans edits, PlanUnit index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, and auto_decisions remain unauthorized until Jared explicitly requests the relevant phase."
+    ]
+  }
+}

@@ -1,20 +1,237 @@
 {
-  "build_order_blockers": [],
+  "build_order_blockers": [
+    {
+      "blocker_type": "dependency_cycles",
+      "items": [
+        {
+          "plan_unit_id": "0PI-060",
+          "remaining_depends_on": [
+            "CV-291",
+            "T-160",
+            "T-161",
+            "T-162"
+          ]
+        },
+        {
+          "plan_unit_id": "CV-291",
+          "remaining_depends_on": [
+            "T-161"
+          ]
+        },
+        {
+          "plan_unit_id": "F2-191",
+          "remaining_depends_on": [
+            "SP-217",
+            "SP-218"
+          ]
+        },
+        {
+          "plan_unit_id": "PS-118",
+          "remaining_depends_on": [
+            "F2-191"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-218",
+          "remaining_depends_on": [
+            "F2-191",
+            "PS-118",
+            "SP-217",
+            "W-074"
+          ]
+        },
+        {
+          "plan_unit_id": "T-160",
+          "remaining_depends_on": [
+            "0PI-060"
+          ]
+        },
+        {
+          "plan_unit_id": "T-161",
+          "remaining_depends_on": [
+            "CV-291",
+            "T-160"
+          ]
+        },
+        {
+          "plan_unit_id": "T-162",
+          "remaining_depends_on": [
+            "T-160",
+            "T-161"
+          ]
+        },
+        {
+          "plan_unit_id": "W-074",
+          "remaining_depends_on": [
+            "F2-191",
+            "PS-118",
+            "SP-218"
+          ]
+        }
+      ]
+    },
+    {
+      "blocker_type": "dependency_cycle_downstream_blocked_nodes",
+      "items": [
+        {
+          "plan_unit_id": "ACD-422",
+          "remaining_depends_on": [
+            "CV-291",
+            "F2-191",
+            "PS-118",
+            "T-161"
+          ]
+        },
+        {
+          "plan_unit_id": "ACD-423",
+          "remaining_depends_on": [
+            "F2-191",
+            "F3-399",
+            "T-160",
+            "T-161"
+          ]
+        },
+        {
+          "plan_unit_id": "ATS-011",
+          "remaining_depends_on": [
+            "ACD-422",
+            "CV-291",
+            "EP-106",
+            "F2-191",
+            "F3-399",
+            "OSI-429",
+            "PNC-020",
+            "PS-118",
+            "RAP-031",
+            "SP-217",
+            "SP-218",
+            "T-160",
+            "T-161",
+            "T-162",
+            "T-163"
+          ]
+        },
+        {
+          "plan_unit_id": "EP-106",
+          "remaining_depends_on": [
+            "CV-291",
+            "OSI-429",
+            "T-161",
+            "T-162"
+          ]
+        },
+        {
+          "plan_unit_id": "F-072",
+          "remaining_depends_on": [
+            "F2-191",
+            "F3-399",
+            "T-160"
+          ]
+        },
+        {
+          "plan_unit_id": "F3-399",
+          "remaining_depends_on": [
+            "CV-291",
+            "F2-191",
+            "SP-217",
+            "T-160",
+            "T-161",
+            "T-163"
+          ]
+        },
+        {
+          "plan_unit_id": "GI-033",
+          "remaining_depends_on": [
+            "F2-191",
+            "PS-118",
+            "SP-218",
+            "W-074"
+          ]
+        },
+        {
+          "plan_unit_id": "OSI-429",
+          "remaining_depends_on": [
+            "CV-291",
+            "T-160",
+            "T-161",
+            "T-162"
+          ]
+        },
+        {
+          "plan_unit_id": "PNC-020",
+          "remaining_depends_on": [
+            "OSI-429",
+            "T-161"
+          ]
+        },
+        {
+          "plan_unit_id": "PRDB-009",
+          "remaining_depends_on": [
+            "F2-191",
+            "F3-399",
+            "SP-217",
+            "T-161"
+          ]
+        },
+        {
+          "plan_unit_id": "PWIZ-015",
+          "remaining_depends_on": [
+            "F2-191",
+            "F3-399",
+            "SP-217",
+            "T-161"
+          ]
+        },
+        {
+          "plan_unit_id": "RAP-031",
+          "remaining_depends_on": [
+            "ACD-422",
+            "CV-291",
+            "F2-191",
+            "PS-118",
+            "SP-217"
+          ]
+        },
+        {
+          "plan_unit_id": "SP-217",
+          "remaining_depends_on": [
+            "T-160"
+          ]
+        },
+        {
+          "plan_unit_id": "T-163",
+          "remaining_depends_on": [
+            "CV-291",
+            "T-160",
+            "T-161"
+          ]
+        },
+        {
+          "plan_unit_id": "UCC-099",
+          "remaining_depends_on": [
+            "F3-399",
+            "SP-217",
+            "T-160"
+          ]
+        }
+      ]
+    }
+  ],
   "dependency_graph_summary": {
-    "build_order_available": true,
-    "build_order_blocked_node_count": 0,
-    "cycle_blocker_count": 0,
-    "depends_on_edge_count": 10758,
-    "downstream_blocked_node_count": 0,
-    "edge_count": 12408,
-    "node_count": 5173,
-    "true_cycle_component_count": 0,
-    "unblocks_edge_count": 1650,
+    "build_order_available": false,
+    "build_order_blocked_node_count": 24,
+    "cycle_blocker_count": 9,
+    "depends_on_edge_count": 10885,
+    "downstream_blocked_node_count": 15,
+    "edge_count": 12591,
+    "node_count": 5197,
+    "true_cycle_component_count": 2,
+    "unblocks_edge_count": 1706,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-22T07:08:43Z",
+  "generated_at_utc": "2026-06-22T22:36:11Z",
   "gui_related_units": {
-    "count": 2198,
+    "count": 2210,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3009,6 +3226,28 @@
         }
       },
       {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-422",
+        "source_location": {
+          "heading": "ACD-422 - Assistant Chat Discovery Activity And Toggle",
+          "heading_level": 3,
+          "heading_line": 22364,
+          "line": 22366,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-423",
+        "source_location": {
+          "heading": "ACD-423 - Assistant Chat File Mention Discovery Routing",
+          "heading_level": 3,
+          "heading_line": 22407,
+          "line": 22409,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Architecture_Invariants.md",
         "plan_unit_id": "AI-007",
         "source_location": {
@@ -3456,6 +3695,17 @@
           "heading_level": 3,
           "heading_line": 566,
           "line": 568,
+          "path": "Plans/Automated_Testing_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Automated_Testing_System.md",
+        "plan_unit_id": "ATS-011",
+        "source_location": {
+          "heading": "ATS-011 - Discovery Testing And Consumer Conformance",
+          "heading_level": 3,
+          "heading_line": 719,
+          "line": 721,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -7783,6 +8033,17 @@
         }
       },
       {
+        "owner_doc": "Plans/FileManager.md",
+        "plan_unit_id": "F-072",
+        "source_location": {
+          "heading": "F-072 - File Manager Type-Ahead Discovery Consumer",
+          "heading_level": 3,
+          "heading_line": 4440,
+          "line": 4442,
+          "path": "Plans/FileManager.md"
+        }
+      },
+      {
         "owner_doc": "Plans/FileSafe.md",
         "plan_unit_id": "F2-003",
         "source_location": {
@@ -12029,6 +12290,17 @@
         }
       },
       {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-399",
+        "source_location": {
+          "heading": "F3-399 - Shared Discovery GUI States And Route Migration",
+          "heading_level": 3,
+          "heading_line": 25377,
+          "line": 25379,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/feature-list.md",
         "plan_unit_id": "FL-008",
         "source_location": {
@@ -12663,6 +12935,17 @@
           "heading_level": 3,
           "heading_line": 1860,
           "line": 1862,
+          "path": "Plans/GitHub_Integration.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/GitHub_Integration.md",
+        "plan_unit_id": "GI-033",
+        "source_location": {
+          "heading": "GI-033 - Remote Git Cache Discovery Transport And Disclosure",
+          "heading_level": 3,
+          "heading_line": 1949,
+          "line": 1951,
           "path": "Plans/GitHub_Integration.md"
         }
       },
@@ -18299,6 +18582,17 @@
         }
       },
       {
+        "owner_doc": "Plans/PRD_Builder.md",
+        "plan_unit_id": "PRDB-009",
+        "source_location": {
+          "heading": "PRDB-009 - PRD Builder Source Picker Discovery Consumer",
+          "heading_level": 3,
+          "heading_line": 602,
+          "line": 604,
+          "path": "Plans/PRD_Builder.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Permissions_System.md",
         "plan_unit_id": "PS-002",
         "source_location": {
@@ -18970,6 +19264,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-015",
+        "source_location": {
+          "heading": "PWIZ-015 - Planning Wizard Source Picker Discovery Consumer",
+          "heading_level": 3,
+          "heading_line": 1139,
+          "line": 1141,
+          "path": "Plans/Planning_Wizard.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
         "plan_unit_id": "RAP-002",
         "source_location": {
@@ -19186,6 +19491,17 @@
           "heading_level": 3,
           "heading_line": 804,
           "line": 806,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-031",
+        "source_location": {
+          "heading": "RAP-031 - Discovery Receipt Browsing, Redaction, And Retention Projection",
+          "heading_level": 3,
+          "heading_line": 861,
+          "line": 863,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -21269,6 +21585,17 @@
         }
       },
       {
+        "owner_doc": "Plans/storage-plan.md",
+        "plan_unit_id": "SP-217",
+        "source_location": {
+          "heading": "SP-217 - Discovery Index Persistence, Cache Identity, And History Boundaries",
+          "heading_level": 3,
+          "heading_line": 15168,
+          "line": 15170,
+          "path": "Plans/storage-plan.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Skills_System.md",
         "plan_unit_id": "SS-002",
         "source_location": {
@@ -21395,8 +21722,8 @@
         "source_location": {
           "heading": "T-001 - Adding Tool Support Generated Artifact Residual",
           "heading_level": 3,
-          "heading_line": 10513,
-          "line": 10515,
+          "heading_line": 10518,
+          "line": 10520,
           "path": "Plans/Tools.md"
         }
       },
@@ -21406,8 +21733,8 @@
         "source_location": {
           "heading": "T-003 - Tool GUI Settings And Usage Visibility",
           "heading_level": 3,
-          "heading_line": 2318,
-          "line": 2320,
+          "heading_line": 2319,
+          "line": 2321,
           "path": "Plans/Tools.md"
         }
       },
@@ -21417,8 +21744,8 @@
         "source_location": {
           "heading": "T-007 - Central Policy Engine And Result Taxonomy",
           "heading_level": 3,
-          "heading_line": 2518,
-          "line": 2520,
+          "heading_line": 2519,
+          "line": 2521,
           "path": "Plans/Tools.md"
         }
       },
@@ -21428,8 +21755,8 @@
         "source_location": {
           "heading": "T-008 - Tool Routing Audit Gap Carry-Through",
           "heading_level": 3,
-          "heading_line": 2579,
-          "line": 2581,
+          "heading_line": 2580,
+          "line": 2582,
           "path": "Plans/Tools.md"
         }
       },
@@ -21439,8 +21766,8 @@
         "source_location": {
           "heading": "T-010 - Tool Widgets Scope And Node-Native Evidence",
           "heading_level": 3,
-          "heading_line": 2692,
-          "line": 2694,
+          "heading_line": 2693,
+          "line": 2695,
           "path": "Plans/Tools.md"
         }
       },
@@ -21450,8 +21777,8 @@
         "source_location": {
           "heading": "T-011 - Cross-Plan Tool Permission Reference Map",
           "heading_level": 3,
-          "heading_line": 2743,
-          "line": 2745,
+          "heading_line": 2744,
+          "line": 2746,
           "path": "Plans/Tools.md"
         }
       },
@@ -21461,8 +21788,8 @@
         "source_location": {
           "heading": "T-012 - Built-In Tool Registry Target Set",
           "heading_level": 3,
-          "heading_line": 2793,
-          "line": 2795,
+          "heading_line": 2794,
+          "line": 2796,
           "path": "Plans/Tools.md"
         }
       },
@@ -21472,8 +21799,8 @@
         "source_location": {
           "heading": "T-016 - LSP MVP Tool Operations And Compatibility Aliases",
           "heading_level": 3,
-          "heading_line": 3004,
-          "line": 3006,
+          "heading_line": 3005,
+          "line": 3007,
           "path": "Plans/Tools.md"
         }
       },
@@ -21483,8 +21810,8 @@
         "source_location": {
           "heading": "T-017 - Shared Built-In Tool Contract Envelope",
           "heading_level": 3,
-          "heading_line": 3064,
-          "line": 3066,
+          "heading_line": 3065,
+          "line": 3067,
           "path": "Plans/Tools.md"
         }
       },
@@ -21494,8 +21821,8 @@
         "source_location": {
           "heading": "T-020 - Read View Tool Runtime Contract",
           "heading_level": 3,
-          "heading_line": 3222,
-          "line": 3224,
+          "heading_line": 3223,
+          "line": 3225,
           "path": "Plans/Tools.md"
         }
       },
@@ -21505,8 +21832,8 @@
         "source_location": {
           "heading": "T-026 - Question Card Flow And Headless Outcome",
           "heading_level": 3,
-          "heading_line": 3543,
-          "line": 3545,
+          "heading_line": 3544,
+          "line": 3546,
           "path": "Plans/Tools.md"
         }
       },
@@ -21516,8 +21843,8 @@
         "source_location": {
           "heading": "T-028 - TODO Execution Tracker UI Boundary",
           "heading_level": 3,
-          "heading_line": 3664,
-          "line": 3666,
+          "heading_line": 3665,
+          "line": 3667,
           "path": "Plans/Tools.md"
         }
       },
@@ -21527,8 +21854,8 @@
         "source_location": {
           "heading": "T-030 - Web Permission And Support-Tier Visibility",
           "heading_level": 3,
-          "heading_line": 3775,
-          "line": 3777,
+          "heading_line": 3776,
+          "line": 3778,
           "path": "Plans/Tools.md"
         }
       },
@@ -21538,8 +21865,8 @@
         "source_location": {
           "heading": "T-033 - Agent Web Activity And Audit Evidence Surface",
           "heading_level": 3,
-          "heading_line": 3947,
-          "line": 3949,
+          "heading_line": 3948,
+          "line": 3950,
           "path": "Plans/Tools.md"
         }
       },
@@ -21549,8 +21876,8 @@
         "source_location": {
           "heading": "T-034 - WebAction Browser Action And Safety Contract",
           "heading_level": 3,
-          "heading_line": 4001,
-          "line": 4003,
+          "heading_line": 4002,
+          "line": 4004,
           "path": "Plans/Tools.md"
         }
       },
@@ -21560,8 +21887,8 @@
         "source_location": {
           "heading": "T-036 - Web Formats Firecrawl Mapping And Retired Claims",
           "heading_level": 3,
-          "heading_line": 4114,
-          "line": 4116,
+          "heading_line": 4115,
+          "line": 4117,
           "path": "Plans/Tools.md"
         }
       },
@@ -21571,8 +21898,8 @@
         "source_location": {
           "heading": "T-040 - Site Reader Product Boundary And Vocabulary",
           "heading_level": 3,
-          "heading_line": 4343,
-          "line": 4345,
+          "heading_line": 4344,
+          "line": 4346,
           "path": "Plans/Tools.md"
         }
       },
@@ -21582,8 +21909,8 @@
         "source_location": {
           "heading": "T-042 - Webfetch Binary Attachment And Output Contract",
           "heading_level": 3,
-          "heading_line": 4456,
-          "line": 4458,
+          "heading_line": 4457,
+          "line": 4459,
           "path": "Plans/Tools.md"
         }
       },
@@ -21593,8 +21920,8 @@
         "source_location": {
           "heading": "T-051 - Grep Indexing And Search GUI Consumers",
           "heading_level": 3,
-          "heading_line": 4966,
-          "line": 4968,
+          "heading_line": 4967,
+          "line": 4969,
           "path": "Plans/Tools.md"
         }
       },
@@ -21604,8 +21931,8 @@
         "source_location": {
           "heading": "T-059 - Task Delegation Transparency Surface",
           "heading_level": 3,
-          "heading_line": 5397,
-          "line": 5399,
+          "heading_line": 5398,
+          "line": 5400,
           "path": "Plans/Tools.md"
         }
       },
@@ -21615,8 +21942,8 @@
         "source_location": {
           "heading": "T-070 - GUI Tool Catalog And MCP Settings Surfaces",
           "heading_level": 3,
-          "heading_line": 5956,
-          "line": 5958,
+          "heading_line": 5957,
+          "line": 5959,
           "path": "Plans/Tools.md"
         }
       },
@@ -21626,8 +21953,8 @@
         "source_location": {
           "heading": "T-085 - Tool Usage Widget Freshness And Runtime Identity",
           "heading_level": 3,
-          "heading_line": 6744,
-          "line": 6746,
+          "heading_line": 6749,
+          "line": 6751,
           "path": "Plans/Tools.md"
         }
       },
@@ -21637,8 +21964,8 @@
         "source_location": {
           "heading": "T-087 - MCP Name Wildcard Permission Layering",
           "heading_level": 3,
-          "heading_line": 6845,
-          "line": 6847,
+          "heading_line": 6850,
+          "line": 6852,
           "path": "Plans/Tools.md"
         }
       },
@@ -21648,8 +21975,8 @@
         "source_location": {
           "heading": "T-089 - MCP Degraded User Surface",
           "heading_level": 3,
-          "heading_line": 6947,
-          "line": 6949,
+          "heading_line": 6952,
+          "line": 6954,
           "path": "Plans/Tools.md"
         }
       },
@@ -21659,8 +21986,8 @@
         "source_location": {
           "heading": "T-090 - Tool Gap Risk Register",
           "heading_level": 3,
-          "heading_line": 6997,
-          "line": 6999,
+          "heading_line": 7002,
+          "line": 7004,
           "path": "Plans/Tools.md"
         }
       },
@@ -21670,8 +21997,8 @@
         "source_location": {
           "heading": "T-091 - Optional Tool Enhancement Backlog",
           "heading_level": 3,
-          "heading_line": 7055,
-          "line": 7057,
+          "heading_line": 7060,
+          "line": 7062,
           "path": "Plans/Tools.md"
         }
       },
@@ -21681,8 +22008,8 @@
         "source_location": {
           "heading": "T-092 - Permissions Implementation SSOT Boundary",
           "heading_level": 3,
-          "heading_line": 7108,
-          "line": 7110,
+          "heading_line": 7113,
+          "line": 7115,
           "path": "Plans/Tools.md"
         }
       },
@@ -21692,8 +22019,8 @@
         "source_location": {
           "heading": "T-094 - Default Policy Table Consumer Summary",
           "heading_level": 3,
-          "heading_line": 7201,
-          "line": 7203,
+          "heading_line": 7206,
+          "line": 7208,
           "path": "Plans/Tools.md"
         }
       },
@@ -21703,8 +22030,8 @@
         "source_location": {
           "heading": "T-097 - Permission GUI Config Serialization",
           "heading_level": 3,
-          "heading_line": 7354,
-          "line": 7356,
+          "heading_line": 7359,
+          "line": 7361,
           "path": "Plans/Tools.md"
         }
       },
@@ -21714,8 +22041,8 @@
         "source_location": {
           "heading": "T-099 - Assistant Ask Pending Approval Notice",
           "heading_level": 3,
-          "heading_line": 7448,
-          "line": 7450,
+          "heading_line": 7453,
+          "line": 7455,
           "path": "Plans/Tools.md"
         }
       },
@@ -21725,8 +22052,8 @@
         "source_location": {
           "heading": "T-101 - Web Operation Approval Summary Rules",
           "heading_level": 3,
-          "heading_line": 7544,
-          "line": 7546,
+          "heading_line": 7549,
+          "line": 7551,
           "path": "Plans/Tools.md"
         }
       },
@@ -21736,8 +22063,8 @@
         "source_location": {
           "heading": "T-104 - Tools Owner Consumer Reference Map",
           "heading_level": 3,
-          "heading_line": 7694,
-          "line": 7696,
+          "heading_line": 7699,
+          "line": 7701,
           "path": "Plans/Tools.md"
         }
       },
@@ -21747,8 +22074,8 @@
         "source_location": {
           "heading": "T-105 - Tool Implementation Readiness Checklist",
           "heading_level": 3,
-          "heading_line": 7749,
-          "line": 7751,
+          "heading_line": 7754,
+          "line": 7756,
           "path": "Plans/Tools.md"
         }
       },
@@ -21758,8 +22085,8 @@
         "source_location": {
           "heading": "T-107 - Tool Blocked Recovery Metadata",
           "heading_level": 3,
-          "heading_line": 7858,
-          "line": 7860,
+          "heading_line": 7863,
+          "line": 7865,
           "path": "Plans/Tools.md"
         }
       },
@@ -21769,8 +22096,8 @@
         "source_location": {
           "heading": "T-108 - Tool Denied Event Runtime Fields",
           "heading_level": 3,
-          "heading_line": 7905,
-          "line": 7907,
+          "heading_line": 7910,
+          "line": 7912,
           "path": "Plans/Tools.md"
         }
       },
@@ -21780,8 +22107,8 @@
         "source_location": {
           "heading": "T-109 - Tool Denial Canonical Action Alignment",
           "heading_level": 3,
-          "heading_line": 7954,
-          "line": 7956,
+          "heading_line": 7959,
+          "line": 7961,
           "path": "Plans/Tools.md"
         }
       },
@@ -21791,8 +22118,8 @@
         "source_location": {
           "heading": "T-110 - Tool Denial Payload Consolidation",
           "heading_level": 3,
-          "heading_line": 8004,
-          "line": 8006,
+          "heading_line": 8009,
+          "line": 8011,
           "path": "Plans/Tools.md"
         }
       },
@@ -21802,8 +22129,8 @@
         "source_location": {
           "heading": "T-122 - Firecrawl Browser Capability Endpoint Boundary",
           "heading_level": 3,
-          "heading_line": 8625,
-          "line": 8627,
+          "heading_line": 8630,
+          "line": 8632,
           "path": "Plans/Tools.md"
         }
       },
@@ -21813,8 +22140,8 @@
         "source_location": {
           "heading": "T-125 - Firecrawl Progress Cancellation Activity",
           "heading_level": 3,
-          "heading_line": 8765,
-          "line": 8767,
+          "heading_line": 8770,
+          "line": 8772,
           "path": "Plans/Tools.md"
         }
       },
@@ -21824,8 +22151,8 @@
         "source_location": {
           "heading": "T-127 - Firecrawl ZDR And Billing Disclosure",
           "heading_level": 3,
-          "heading_line": 8867,
-          "line": 8869,
+          "heading_line": 8872,
+          "line": 8874,
           "path": "Plans/Tools.md"
         }
       },
@@ -21835,8 +22162,8 @@
         "source_location": {
           "heading": "T-128 - Firecrawl Interact Session Lifecycle",
           "heading_level": 3,
-          "heading_line": 8921,
-          "line": 8923,
+          "heading_line": 8926,
+          "line": 8928,
           "path": "Plans/Tools.md"
         }
       },
@@ -21846,8 +22173,8 @@
         "source_location": {
           "heading": "T-130 - Firecrawl Permission And Deployment Disclosure",
           "heading_level": 3,
-          "heading_line": 9045,
-          "line": 9047,
+          "heading_line": 9050,
+          "line": 9052,
           "path": "Plans/Tools.md"
         }
       },
@@ -21857,8 +22184,8 @@
         "source_location": {
           "heading": "T-132 - Provider Stack And Firecrawl Defaults",
           "heading_level": 3,
-          "heading_line": 9169,
-          "line": 9171,
+          "heading_line": 9174,
+          "line": 9176,
           "path": "Plans/Tools.md"
         }
       },
@@ -21868,8 +22195,8 @@
         "source_location": {
           "heading": "T-134 - Exa Same-Operation Fallback Disclosure",
           "heading_level": 3,
-          "heading_line": 9273,
-          "line": 9275,
+          "heading_line": 9278,
+          "line": 9280,
           "path": "Plans/Tools.md"
         }
       },
@@ -21879,8 +22206,8 @@
         "source_location": {
           "heading": "T-135 - DDG And Google Adapter Boundary",
           "heading_level": 3,
-          "heading_line": 9324,
-          "line": 9326,
+          "heading_line": 9329,
+          "line": 9331,
           "path": "Plans/Tools.md"
         }
       },
@@ -21890,8 +22217,8 @@
         "source_location": {
           "heading": "T-136 - Provider Settings Capability Disclosure",
           "heading_level": 3,
-          "heading_line": 9378,
-          "line": 9380,
+          "heading_line": 9383,
+          "line": 9385,
           "path": "Plans/Tools.md"
         }
       },
@@ -21901,8 +22228,8 @@
         "source_location": {
           "heading": "T-137 - Tavily Settings Controls",
           "heading_level": 3,
-          "heading_line": 9428,
-          "line": 9430,
+          "heading_line": 9433,
+          "line": 9435,
           "path": "Plans/Tools.md"
         }
       },
@@ -21912,8 +22239,8 @@
         "source_location": {
           "heading": "T-141 - Model-Native Auth And Tool-Key Boundary",
           "heading_level": 3,
-          "heading_line": 9635,
-          "line": 9637,
+          "heading_line": 9640,
+          "line": 9642,
           "path": "Plans/Tools.md"
         }
       },
@@ -21923,8 +22250,8 @@
         "source_location": {
           "heading": "T-143 - Site Reader Identity And Browser Labels",
           "heading_level": 3,
-          "heading_line": 9744,
-          "line": 9746,
+          "heading_line": 9749,
+          "line": 9751,
           "path": "Plans/Tools.md"
         }
       },
@@ -21934,8 +22261,8 @@
         "source_location": {
           "heading": "T-144 - Web Provenance And Citation Strength",
           "heading_level": 3,
-          "heading_line": 9796,
-          "line": 9798,
+          "heading_line": 9801,
+          "line": 9803,
           "path": "Plans/Tools.md"
         }
       },
@@ -21945,8 +22272,8 @@
         "source_location": {
           "heading": "T-145 - Cost-Aware Routing And Completion Audit",
           "heading_level": 3,
-          "heading_line": 9855,
-          "line": 9857,
+          "heading_line": 9860,
+          "line": 9862,
           "path": "Plans/Tools.md"
         }
       },
@@ -21956,8 +22283,8 @@
         "source_location": {
           "heading": "T-149 - Batch Permission Session Grant",
           "heading_level": 3,
-          "heading_line": 10086,
-          "line": 10088,
+          "heading_line": 10091,
+          "line": 10093,
           "path": "Plans/Tools.md"
         }
       },
@@ -21967,8 +22294,8 @@
         "source_location": {
           "heading": "T-153 - Tools Web Owner Consumer Boundary",
           "heading_level": 3,
-          "heading_line": 10304,
-          "line": 10306,
+          "heading_line": 10309,
+          "line": 10311,
           "path": "Plans/Tools.md"
         }
       },
@@ -21978,8 +22305,19 @@
         "source_location": {
           "heading": "T-159 - Automated Test Tool Capability Discovery Consumer",
           "heading_level": 3,
-          "heading_line": 10879,
-          "line": 10881,
+          "heading_line": 10884,
+          "line": 10886,
+          "path": "Plans/Tools.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Tools.md",
+        "plan_unit_id": "T-163",
+        "source_location": {
+          "heading": "T-163 - Discovery Rollout Scheduler And Backpressure Guardrails",
+          "heading_level": 3,
+          "heading_line": 11072,
+          "line": 11074,
           "path": "Plans/Tools.md"
         }
       },
@@ -22838,6 +23176,17 @@
           "heading_level": 3,
           "heading_line": 6929,
           "line": 6931,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-099",
+        "source_location": {
+          "heading": "UCC-099 - Discovery-Routed Search And Picker Command Compatibility",
+          "heading_level": 3,
+          "heading_line": 6990,
+          "line": 6992,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -24202,12 +24551,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5173,
+  "plan_unit_count": 5197,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 960,
+      "high": 965,
       "low": 5,
-      "standard": 4208
+      "standard": 4227
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -24293,6 +24642,7 @@
       "agents_promotion_guard": 1,
       "alias_or_default_drift": 1,
       "allowed_action_identity_drift": 1,
+      "ambient_agent_overreach": 1,
       "ambiguity_classification_drift": 1,
       "annotation_mutation_boundary": 1,
       "annotation_recovery": 1,
@@ -24544,6 +24894,7 @@
       "change_tracking_loss": 1,
       "chat_command_boundary_drift": 1,
       "chat_evidence_media_render_order": 1,
+      "chat_file_mention_drift": 1,
       "chat_gap": 2,
       "chat_goal_boundary_drift": 1,
       "chat_history_search": 1,
@@ -24714,6 +25065,7 @@
       "consumer_lineage_boundary": 1,
       "containers_registry_unraid_owner_scope": 1,
       "content_loss": 3,
+      "content_search_boundary_drift": 1,
       "context_assembly_acceptance": 1,
       "context_aware_launch_drift": 1,
       "context_breakdown_usage_view": 1,
@@ -24741,6 +25093,7 @@
       "contract_driven_code_generation": 1,
       "contract_owner_drift": 1,
       "contract_pack_index_drift": 1,
+      "contract_schema_drift": 1,
       "contract_ssot_drift": 1,
       "contracts_precedence_drift": 1,
       "controller_split": 1,
@@ -24939,6 +25292,7 @@
       "disabled_variants_visibility": 1,
       "discovery_choice_goals": 1,
       "discovery_determinism": 1,
+      "discovery_validation_gap": 1,
       "dispatcher_integrity": 1,
       "distribution_target_confusion": 1,
       "docker_access_intelligence_gap": 1,
@@ -25046,7 +25400,7 @@
       "evidence_visibility_drift": 1,
       "execution_approval_boundary": 1,
       "execution_authority_drift": 1,
-      "execution_boundary": 11,
+      "execution_boundary": 12,
       "execution_config_wiring_checklist": 1,
       "execution_handoff": 1,
       "execution_mode_authority_drift": 1,
@@ -25061,6 +25415,7 @@
       "executor_boundary": 1,
       "executor_boundary_bypass": 1,
       "executor_consumer_drift": 1,
+      "executor_evidence_drift": 1,
       "executor_intake_bypass": 1,
       "executor_protocol_drift": 94,
       "executor_usage_owner_boundary_drift": 1,
@@ -25120,6 +25475,7 @@
       "filelock_and_conflict_detection_example": 1,
       "filemanager_adjunct_session_drift": 1,
       "filemanager_degraded_state_drift": 1,
+      "filemanager_discovery_consumer_drift": 1,
       "filemanager_mutation_bypass": 1,
       "filemanager_navigation_overclaim": 1,
       "files_being_modified_prompt_aggregation": 1,
@@ -25127,6 +25483,7 @@
       "filesafe_block_semantics_drift": 1,
       "filesafe_block_ui_drift": 1,
       "filesafe_drift": 181,
+      "filesafe_no_leak": 1,
       "filesafe_safe_point_owner_split": 1,
       "filtered_coordination_context_example": 1,
       "final_review_gate_boundary_drift": 1,
@@ -25246,6 +25603,7 @@
       "gui_config_wiring_permissions_commands_skills": 1,
       "gui_config_wiring_plugins_models_formatters": 1,
       "gui_cross_reference_ambiguity": 1,
+      "gui_discovery_route_drift": 1,
       "gui_extract_semantic_loss": 1,
       "gui_framework_detection_gap": 1,
       "gui_framework_detection_state": 1,
@@ -25658,7 +26016,7 @@
       "owner_consumer_map_loss": 1,
       "owner_contract_bridge": 1,
       "owner_demotion_drift": 1,
-      "owner_drift": 44,
+      "owner_drift": 45,
       "owner_first_consumer_drift_blocking": 1,
       "owner_hint_effective_trigger_drift": 1,
       "owner_identity_drift": 2,
@@ -25716,11 +26074,13 @@
       "permission_persistence_wildcard_reject_cascade_delta": 1,
       "permission_resolution_algorithm": 1,
       "permission_system_drift": 111,
+      "permission_trust_leak": 1,
       "permissioned_interview_chat_owner_drift": 1,
       "permissions": 1,
       "permissions_upstream_pointers_and_next_preference": 1,
       "persisted_canonical_tool_events": 1,
       "persistence_and_event_emission": 1,
+      "persistence_identity_drift": 1,
       "persistence_owner_schema_drift": 1,
       "persistence_scope": 1,
       "persona_acceptance": 1,
@@ -25802,6 +26162,7 @@
       "planning_escalation": 1,
       "planning_intensity": 1,
       "planning_model": 1,
+      "planning_source_context_drift": 1,
       "planning_ui_projection": 1,
       "planning_wizard_runtime_drift": 1,
       "platform_acceptance_drift": 1,
@@ -25850,6 +26211,7 @@
       "pr_start_drift": 1,
       "prd_builder_legacy_runtime_drift": 1,
       "prd_execution_acceptance_criteria": 1,
+      "prd_source_provenance_drift": 1,
       "prd_tool_task_injection_path": 1,
       "pre_dispatch_tool_validation": 1,
       "pre_execution_clarification_bypass": 1,
@@ -26044,6 +26406,7 @@
       "read_tool_permission_drift": 1,
       "receipt_bridge_drift": 1,
       "receipt_projection_authority_drift": 2,
+      "receipt_redaction_retention_drift": 1,
       "record_anchor_discovery_drift": 1,
       "record_envelope_drift": 1,
       "record_envelope_join_loss": 1,
@@ -26080,10 +26443,13 @@
       "remediation_trigger_placement_summary": 1,
       "remote_attachment_and_lazy_module_activation": 1,
       "remote_binary_integrity": 1,
+      "remote_cache_consumer_drift": 1,
+      "remote_identity_drift": 1,
       "remote_provider": 1,
       "remote_side_effect_bypass": 1,
       "remote_side_effect_conflation": 1,
       "remote_worktree": 1,
+      "remote_worktree_authority_drift": 1,
       "renderer_accessibility_drift": 1,
       "renderer_taxonomy": 1,
       "reopen_revocation_policy_gap": 1,
@@ -26173,6 +26539,7 @@
       "rewrite_ui_auth_account_carry_through": 1,
       "risk_resolution": 4,
       "role_ordering_cancellation_tool_storage_drift": 1,
+      "rollout_scheduler_drift": 1,
       "root_state_git_clean_excludes_drift": 1,
       "route_activation_shell_state_boundary_drift": 1,
       "route_aware_context": 1,
@@ -26369,6 +26736,7 @@
       "shared_contract_gap": 1,
       "shared_mutable_state_lock_invariant": 1,
       "shared_rust_core_ownership": 1,
+      "shared_tool_contract_drift": 1,
       "shell_binding_drift": 1,
       "shell_integration_degradation": 1,
       "shell_integration_fabrication": 1,
@@ -26673,6 +27041,7 @@
       "tool_payload_extension_owner_drift": 1,
       "tool_provider_storage_message_ssot_map": 1,
       "tool_registry_drift": 1,
+      "tool_schema_drift": 1,
       "tool_selection_ui_reuse": 1,
       "toolcontext_and_tool_lifecycle_pointers": 1,
       "tools_extract_semantic_loss": 1,
@@ -26697,6 +27066,7 @@
       "ui_boundary_drift": 1,
       "ui_command_business_logic_boundary": 1,
       "ui_command_catalog_drift": 94,
+      "ui_command_compatibility_drift": 1,
       "ui_command_dispatch_rule_one": 1,
       "ui_command_ssot_map_and_contractrefs": 1,
       "ui_readiness_parallel_status_drift": 1,
@@ -26757,6 +27127,7 @@
       "user_reorders_queued_crew_execution": 1,
       "user_visible_config_drift": 2,
       "user_visible_settings": 1,
+      "user_visible_transparency_drift": 1,
       "vague_compile_output": 1,
       "validation_artifact_lineage_drift": 1,
       "validation_bypass": 1,
@@ -26883,7 +27254,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 4988,
+      "accepted": 5012,
       "deferred": 7,
       "retired": 178
     },
@@ -26899,7 +27270,7 @@
       "capability_matrix": 1,
       "compatibility_disposition": 118,
       "compatibility_note": 2,
-      "constraint": 575,
+      "constraint": 580,
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,
@@ -26915,6 +27286,7 @@
       "gui_surface_rule": 1,
       "implementation_reference": 1,
       "optional_requirement": 1,
+      "owner_map": 1,
       "pricing_contract": 1,
       "provider_adapter_contract": 5,
       "provider_compatibility": 2,
@@ -26923,7 +27295,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4291,
+      "requirement": 4308,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -26939,7 +27311,7 @@
       "structural_anchor": 5,
       "surface_default_policy": 1,
       "validation": 3,
-      "validation_criterion": 2,
+      "validation_criterion": 3,
       "validation_rule": 21,
       "variant_contract": 2
     }

@@ -1,20 +1,73 @@
 {
-  "active_ledgers": [
+  "active_ledgers": [],
+  "compiled_ledgers": [
     {
-      "canonical_plan_targets": [],
+      "canonical_plan_targets": [
+        "Plans/00-plans-index.md"
+      ],
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "compiled_plan_outputs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
       "created_at_utc": "2026-06-22T07:40:19Z",
-      "last_updated_at": "2026-06-22T19:39:56Z",
-      "last_updated_at_utc": "2026-06-22T19:39:56Z",
+      "governance_status": "pending_seal",
+      "last_event_id": "evt-0027",
+      "last_updated_at": "2026-06-22T22:37:17Z",
+      "last_updated_at_utc": "2026-06-22T22:37:17Z",
       "ledger_id": "pldg-20260622-001-fff",
-      "notes": "Conversational design/spec ledger is in gap-resolution workshop. `<fff>` means evaluating dmtrKovalenko/fff, OpenCode's fff integration, and Cursor-style fast regex search for possible Puppet Master benefit. Cursor-style regex acceleration is already covered as Instant Grep / SparseNgramIndex. Jared selected native PM-owned fff-inspired file discovery and one shared substrate for both agent tools and GUI surfaces from day one; Orchestrator, Executor, WorkNodes, Planning Wizard, PRDBuilder, Assistant Chat, and anything that uses an agent should discover files through it, with a conformance contract proving shared-substrate access and shared policy compliance. First acceptance workflow is ordinary agent bug-fix/code-orientation: agents use shared discovery to locate relevant code before exact verification. Fresh OpenCode current HEAD c5a4a8288cbe115f673f3f9933fe217402c85406 was inspected and deleted; fff usage is narrower than PM's requirement. Candidate resolutions now exist for q-0006 through q-0009: MVP path/context discovery with exact content handoff, local full-fidelity plus degraded remote/cache path discovery, project/worktree-local frecency with GUI reset/disable and sanitized agent use, and internal DiscoveryService plus discover_paths/discovery-specific receipts. Jared's GUI requirement is accepted: Assistant Chat threads must show what discovery is doing. Direct fff remains reference/evidence/prototype-only unless direction changes. No canonical Plans, PlanUnit index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or updated.",
-      "phase": "gap_resolution_workshop_active",
+      "migration_refresh_status": "pending_explicit_refresh_lane",
+      "notes": "Compiled and final-validated. Bootstrap/index/diff checks pass; migration generated metadata refresh and governance seal remain explicit separate lanes.",
+      "phase": "compiled_to_plans_pending_governance_seal",
       "primary_goal": "Collaboratively clarify and shape the placeholder feature `<fff>` into clear, complete, testable project intent before any canonical Plans edits.",
       "resume_file": "Plans/ledgers/v2/pldg-20260622-001-fff/state/handoff.json",
-      "status": "active",
-      "title": "Feature <fff>"
-    }
-  ],
-  "compiled_ledgers": [
+      "status": "compiled",
+      "title": "Feature <fff>",
+      "updated_at_utc": "2026-06-22T22:45:29Z"
+    },
     {
       "canonical_plan_targets": [
         "Plans/Contracts_V0.md",
@@ -523,5 +576,5 @@
       "updated_at_utc": "2026-06-19T17:19:04Z"
     }
   ],
-  "updated_at_utc": "2026-06-22T19:39:56Z"
+  "updated_at_utc": "2026-06-22T22:37:17Z"
 }

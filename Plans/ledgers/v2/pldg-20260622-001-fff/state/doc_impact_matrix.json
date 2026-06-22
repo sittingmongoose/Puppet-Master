@@ -1,0 +1,651 @@
+{
+  "schema_id": "pm.bootstrap_doc_impact_matrix.v1",
+  "ledger_id": "pldg-20260622-001-fff",
+  "status": "ledger_only_pre_compile_matrix",
+  "updated_at_utc": "2026-06-22T21:38:11Z",
+  "source_event_id": "evt-0022",
+  "precision_contract_ref": "state/precision_contract.json",
+  "compile_permission": false,
+  "summary": "Deep-audit-reconciled doc-impact matrix for later explicit compile of native PM-owned fff-inspired discovery. This matrix is source-lineage only and does not write canonical Plans.",
+  "global_negative_constraints": [
+    "Do not write canonical Plans until Jared explicitly asks to compile.",
+    "Do not update Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions from this matrix pass.",
+    "Do not treat direct fff or OpenCode implementation details as PM product authority.",
+    "Do not create a second regex/content-search canon beside Instant Grep / grep / codesearch.",
+    "Do not revive Chain Wizard, Plan Wizard, Requirements Doc Builder, or Start Chain as current product terms."
+  ],
+  "no_change_docs_unless_new_evidence": [
+    "Plans/chain-wizard.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/Spec_Lock.json",
+    "Plans/auto_decisions.jsonl",
+    "Plans/plan_graph.json"
+  ],
+  "rows": [
+    {
+      "row_id": "DIM-001",
+      "future_planunit_slug": "native-discovery-owner-map-and-non-goals",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0019",
+        "atom-0026",
+        "atom-0031",
+        "atom-0046",
+        "atom-0047",
+        "atom-0048"
+      ],
+      "primary_owner_docs": [
+        "Plans/00-plans-index.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "consumer_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "compile_obligations": [
+        "Add a concise owner-map entry for native path/context discovery.",
+        "State that Cursor-style regex acceleration remains Instant Grep / SparseNgramIndex.",
+        "State that direct fff is reference/evidence/prototype-only unless Jared changes direction.",
+        "Route current product terms to PRD Builder and Planning Wizard, not legacy Chain Wizard names."
+      ],
+      "backlink_obligations": [
+        "Reference ledger pldg-20260622-001-fff as source-lineage only.",
+        "Reference source atoms for native direction, shared substrate, and OpenCode/fff non-goals."
+      ],
+      "do_not_touch": [
+        "Plans/_shards/**",
+        "Plans/.evidence/**",
+        "Plans/Spec_Lock.json"
+      ]
+    },
+    {
+      "row_id": "DIM-002",
+      "future_planunit_slug": "discovery-service-and-discover-paths-tool-contract",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0034",
+        "atom-0035",
+        "atom-0036",
+        "atom-0063",
+        "atom-0076",
+        "atom-0088"
+      ],
+      "primary_owner_docs": [
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/storage-plan.md"
+      ],
+      "consumer_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "compile_obligations": [
+        "Define internal DiscoveryService as the shared substrate.",
+        "Define agent-facing discover_paths operation and exact target_kind values from state/precision_contract.json: file, directory, file_or_directory, module, test, doc, config, content_candidate, mixed.",
+        "Define DiscoveryRequest context fields including consumer_id, surface_type, agent_run_id/session_id, project_root/worktree_root or remote identity, query_text, intent, target_kind, current_context, limit/budget, and policy_context.",
+        "Define DiscoveryResult fields including path, kind, rank, score_total, score_breakdown, match_type, matched_ranges when available, freshness_state, fallback_state, policy_decision, source_index_generation, requires_exact_verification, and provenance/explanation.",
+        "Define discovery-specific receipts/events: discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified.",
+        "Compile exact values for surface_type, intent, target_kind, path_kind, match_type, freshness_state, fallback_state, policy_decision, error_code, request fields, result fields, and receipt payload fields from state/precision_contract.json.",
+        "Tools.md owns DiscoveryService and discover_paths behavior; Contracts_V0.md owns shared enum/event/receipt envelope terms if promoted during compile."
+      ],
+      "backlink_obligations": [
+        "Do not reuse tool.invoked.index_used for fuzzy/path discovery.",
+        "Point content verification back to grep/codesearch/Instant Grep ownership."
+      ],
+      "do_not_touch": [
+        "Existing grep/codesearch result correctness semantics except to add cross-reference"
+      ]
+    },
+    {
+      "row_id": "DIM-003",
+      "future_planunit_slug": "path-context-discovery-versus-content-search-boundary",
+      "gui_related": false,
+      "source_atom_ids": [
+        "atom-0050",
+        "atom-0060",
+        "atom-0088"
+      ],
+      "primary_owner_docs": [
+        "Plans/Tools.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/LSPSupport.md"
+      ],
+      "consumer_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "compile_obligations": [
+        "Lock MVP native discovery to file, directory, mixed path, symbol-adjacent, and content_candidate discovery.",
+        "State that content_candidate is a handoff hint, not verified content search output.",
+        "Preserve Instant Grep / grep / codesearch as content regex and content verification owners.",
+        "Require exact verification with grep/codesearch/Instant Grep, AST/LSP, tests, or domain-specific checks before edits or root-cause claims."
+      ],
+      "backlink_obligations": [
+        "Backlink to the Instant Grep owner map in Plans/00-plans-index.md.",
+        "Backlink to LSPSupport only for symbol/navigation verification handoff, not discovery ownership."
+      ],
+      "do_not_touch": [
+        "Do not add fff grep/content indexing as a canonical replacement for Instant Grep."
+      ]
+    },
+    {
+      "row_id": "DIM-004",
+      "future_planunit_slug": "discovery-index-lifecycle-persistence-and-frecency",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0042",
+        "atom-0053",
+        "atom-0062",
+        "atom-0078"
+      ],
+      "primary_owner_docs": [
+        "Plans/storage-plan.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/Tools.md",
+        "Plans/Permissions_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "consumer_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "compile_obligations": [
+        "Define per-project/per-worktree discovery index identity and lifecycle.",
+        "Define warm, reindex, teardown, progress, health, stale, and fallback states.",
+        "Define frecency/query/open history as on-device, user-scoped, project/worktree-local by default.",
+        "Define GUI reset/disable controls for frecency and discovery history.",
+        "Define sanitized agent use of score breakdowns while withholding raw private query/open history unless policy explicitly allows it.",
+        "Use the ranking privacy rule from state/precision_contract.json: agents receive sanitized score_breakdown and ranking effects, not raw private frecency/query/open history by default."
+      ],
+      "backlink_obligations": [
+        "Connect usage-feature only if analytics or user-facing usage projections consume discovery receipts.",
+        "Do not make usage-feature the freshness or persistence owner."
+      ],
+      "do_not_touch": [
+        "Do not persist frecency globally across unrelated projects by default."
+      ]
+    },
+    {
+      "row_id": "DIM-005",
+      "future_planunit_slug": "remote-cache-ssh-and-worktree-discovery",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0054",
+        "atom-0061",
+        "atom-0069",
+        "atom-0070",
+        "atom-0079",
+        "atom-0085",
+        "atom-0091"
+      ],
+      "primary_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Permissions_System.md",
+        "Plans/FileSafe.md",
+        "Plans/Tools.md"
+      ],
+      "consumer_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "compile_obligations": [
+        "Support full-fidelity local worktree discovery.",
+        "Support PM-managed remote/cache-backed path discovery when a safe remote filesystem path, project file manifest, or Git cache is available.",
+        "Support SSH-backed project roots as first-class discovery sources.",
+        "Use the MVP SSH topology from state/precision_contract.json: local DiscoveryService plus SSH remote manifest adapter, no persistent PM remote daemon required for MVP.",
+        "Keep multiple worktrees, branches, SSH roots, and remote project identities separate.",
+        "Expose requested/effective remote identity, freshness_state, fallback_state, and cache provenance.",
+        "Forbid silent fallback from SSH or remote projects to unrelated local filesystem paths.",
+        "Define SSH identity fields and cache key rules from the precision contract, including project_id, remote_kind, host alias or host fingerprint, user/account alias, remote_root, repo_id when available, branch/worktree ref, and index_generation."
+      ],
+      "backlink_obligations": [
+        "Backlink to Instant Grep remote/cache behavior without re-owning regex-index semantics.",
+        "Backlink to WorktreeGitImprovement for project identity/path rebinding."
+      ],
+      "do_not_touch": [
+        "Do not imply SSH discovery requires a local checkout to pass."
+      ]
+    },
+    {
+      "row_id": "DIM-006",
+      "future_planunit_slug": "discovery-policy-filesafe-permissions-and-no-leak",
+      "gui_related": false,
+      "source_atom_ids": [
+        "atom-0039",
+        "atom-0057",
+        "atom-0069",
+        "atom-0090",
+        "atom-0091"
+      ],
+      "primary_owner_docs": [
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/Tools.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "consumer_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "compile_obligations": [
+        "Apply FileSafe, Permissions_System, ignore rules, secret exclusions, worktree/project boundaries, symlink policy, root/home scan guardrails, and no-leak rules before and during indexing/querying.",
+        "Specify filtering-before-scoring or equivalent no-leak behavior.",
+        "Suppress or generalize denied result counts, rank gaps, explanations, and diagnostics that could reveal blocked path identity.",
+        "Apply the same policy envelope to local, remote/cache, and SSH-backed paths.",
+        "Define candidate_count as visible post-policy count only and selected_result_ids as opaque/redaction-profiled ids.",
+        "Require permission_snapshot_id, approval_scope_key, host trust outcome, credential handle reference without secret material, and redaction_profile where remote/SSH discovery is permission or trust gated."
+      ],
+      "backlink_obligations": [
+        "Backlink to Tools denied/fallback behavior for no success-shaped denied results.",
+        "Backlink to GUI surfaces only for policy-visible states, not policy ownership."
+      ],
+      "do_not_touch": [
+        "Do not leak blocked filenames through fallback summaries, health diagnostics, counts, or GUI rows."
+      ]
+    },
+    {
+      "row_id": "DIM-007",
+      "future_planunit_slug": "assistant-chat-discovery-visibility-and-toggle",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0064",
+        "atom-0065",
+        "atom-0066",
+        "atom-0067",
+        "atom-0068",
+        "atom-0080",
+        "atom-0093"
+      ],
+      "primary_owner_docs": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Permissions_System.md"
+      ],
+      "consumer_docs": [
+        "Plans/Tools.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "compile_obligations": [
+        "Assistant Chat threads show discovery activity by default.",
+        "Visible activity covers discovery start, index readiness, candidate ranking, fallback/degraded path, denied/hidden-by-policy outcomes, selected candidate handoff, and exact verification follow-up.",
+        "Provide the exact GUI setting Settings > Assistant Chat > Activity > `Show file discovery activity in chat`, default on.",
+        "Use setting description copy: `Show when assistants look for candidate files, use stale or fallback indexes, select files, and verify them.`",
+        "The setting controls presentation only: it must not hide permission prompts, safety messages, durable receipts, final relevant summaries, exact-verification linkage, or auditability.",
+        "State that the Assistant Chat setting controls routine discovery progress only; permission prompts, approval cards, safety messages, trust-affecting fallback/stale disclosures, durable receipts, and exact-verification linkage are never suppressible."
+      ],
+      "backlink_obligations": [
+        "Backlink to Runtime_Artifacts_Panel only for receipt browsing and retention.",
+        "Backlink to UI_Command_Catalog if the setting or thread action becomes a typed UICommand."
+      ],
+      "do_not_touch": [
+        "Do not make Assistant Chat the evidence store."
+      ]
+    },
+    {
+      "row_id": "DIM-008",
+      "future_planunit_slug": "gui-surface-discovery-states-and-routing",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0013",
+        "atom-0021",
+        "atom-0044",
+        "atom-0056",
+        "atom-0059",
+        "atom-0063",
+        "atom-0078",
+        "atom-0087"
+      ],
+      "primary_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/FileManager.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md"
+      ],
+      "consumer_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md"
+      ],
+      "compile_obligations": [
+        "Define GUI discovery states: loading, indexing, stale, fallback, denied, no-results, hidden-by-policy, rank explanation, local sort/filter, settings/reset.",
+        "State that GUI commands may route through DiscoveryService without being renamed.",
+        "Preserve service ranking order unless local sort/filter is explicitly disclosed.",
+        "Use deterministic ranking weights and tie-breakers from state/precision_contract.json and expose coarse rank explanations without leaking private raw frecency history.",
+        "Apply the same policy/freshness/fallback semantics across Assistant Chat file mention, Quick Open/command palette, Search path narrowing, File Manager type-ahead, Planning Wizard source/context picker, and PRD Builder source picker.",
+        "Preserve existing command names and shortcuts while routing path discovery through DiscoveryService; reconcile search index command IDs separately before adding discovery/frecency reset controls."
+      ],
+      "backlink_obligations": [
+        "Backlink individual surface owners rather than duplicating all GUI details in Tools."
+      ],
+      "do_not_touch": [
+        "Do not conflate hidden-by-policy with ordinary no-results."
+      ]
+    },
+    {
+      "row_id": "DIM-009",
+      "future_planunit_slug": "prd-builder-and-planning-wizard-discovery-consumers",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0027",
+        "atom-0038",
+        "atom-0044",
+        "atom-0045",
+        "atom-0059",
+        "atom-0087"
+      ],
+      "primary_owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "consumer_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "compile_obligations": [
+        "Planning Wizard context/source pickers use the shared DiscoveryService substrate.",
+        "PRD Builder source picker and source ingestion flows use the shared substrate when discovering project files.",
+        "Both surfaces preserve request context, policy/freshness/fallback semantics, and visible denied/stale/no-results states.",
+        "Both surfaces record enough provenance for later Plan/source references without copying unbounded transcripts."
+      ],
+      "backlink_obligations": [
+        "Preserve current PRD Builder and Planning Wizard ownership split from Plans/00-plans-index.md.",
+        "Do not route current product behavior through legacy Chain Wizard docs."
+      ],
+      "do_not_touch": [
+        "Plans/chain-wizard.md",
+        "Plans/chain-wizard-flexibility.md"
+      ]
+    },
+    {
+      "row_id": "DIM-010",
+      "future_planunit_slug": "agent-runtime-discovery-consumers",
+      "gui_related": false,
+      "source_atom_ids": [
+        "atom-0027",
+        "atom-0030",
+        "atom-0037",
+        "atom-0043",
+        "atom-0058",
+        "atom-0059",
+        "atom-0092",
+        "atom-0094"
+      ],
+      "primary_owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "consumer_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "compile_obligations": [
+        "Orchestrator, Executor, and shared agent tool routes must prove DiscoveryService access; WorkNode intake remains future_boundary_only and excluded from current runtime conformance proof.",
+        "Agents invoke discovery for no-exact-path bug fixes, ambiguous module ownership, read/search misses, broad repo scan avoidance, and planning/source context assembly.",
+        "Agents skip discovery when an exact user-provided path is already verified, the user forbids discovery, or policy blocks it.",
+        "Discovery receipts must link to exact verification receipts before edits or root-cause claims.",
+        "WorkNode references remain conformance specification only; no WorkNodes, NodeSeeds, or executable queues are created by compile.",
+        "Ambient agent discovery uses explicit trigger/skip rules and does not mean search-everything-every-turn.",
+        "WorkNode references are PNC backlinks and future conformance expectations only; they do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or runtime launches."
+      ],
+      "backlink_obligations": [
+        "Backlink to Plan_To_Node_Compilation for readiness boundary and future compiler input.",
+        "Backlink to Runtime_Artifacts_Panel for receipts, not product behavior ownership."
+      ],
+      "do_not_touch": [
+        "Do not create WorkNodes, NodeSeeds, or executable queues."
+      ],
+      "future_boundary_only": true
+    },
+    {
+      "row_id": "DIM-011",
+      "future_planunit_slug": "discovery-testing-and-conformance",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0025",
+        "atom-0043",
+        "atom-0044",
+        "atom-0045",
+        "atom-0055",
+        "atom-0059",
+        "atom-0065",
+        "atom-0068",
+        "atom-0070",
+        "atom-0077",
+        "atom-0078",
+        "atom-0079",
+        "atom-0080",
+        "atom-0081",
+        "atom-0082",
+        "atom-0083",
+        "atom-0084",
+        "atom-0085",
+        "atom-0086",
+        "atom-0087",
+        "atom-0089",
+        "atom-0090",
+        "atom-0091",
+        "atom-0092",
+        "atom-0093",
+        "atom-0094",
+        "atom-0095"
+      ],
+      "primary_owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/Tools.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "consumer_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md"
+      ],
+      "compile_obligations": [
+        "Define tests for ordinary no-path bug-fix agent discovery, GUI/agent parity, consumer conformance, Assistant Chat visibility and toggle, SSH-backed discovery, no-leak side channels, denied/fallback/stale cases, root/home refusal, ignore/symlink policy, and no local fallback leak.",
+        "Define performance/resource validation using exact budgets from state/precision_contract.json for local warm query, GUI query, agent discover_paths, cold local index, remote/SSH manifest query and refresh, watcher/reindex, cancellation, memory, disk, timeout, and over-budget fallback.",
+        "Define validation for deterministic ranking weights/tie-breakers, SSH manifest-adapter topology, and Assistant Chat setting on/off behavior.",
+        "Require receipts or telemetry sufficient to audit discovery behavior.",
+        "Add validation cases for each accepted second-order implementation default atom-0081 through atom-0087 and the deep-audit guardrails atom-0090 through atom-0094."
+      ],
+      "backlink_obligations": [
+        "Testing owns validation defaults and evidence requirements, not service semantics."
+      ],
+      "do_not_touch": [
+        "Do not claim implementation-ready pass without denied, stale, fallback, SSH, GUI, and exact-verification cases."
+      ]
+    },
+    {
+      "row_id": "DIM-012",
+      "future_planunit_slug": "runtime-artifact-and-receipt-browsing",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0043",
+        "atom-0045",
+        "atom-0058",
+        "atom-0063",
+        "atom-0067",
+        "atom-0086",
+        "atom-0090",
+        "atom-0093"
+      ],
+      "primary_owner_docs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "consumer_docs": [
+        "Plans/Tools.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "compile_obligations": [
+        "Register discovery receipts as browseable runtime artifacts only if receipt persistence is promoted.",
+        "Ensure Assistant Chat visibility toggle does not delete or hide durable receipts.",
+        "Link discovery receipts to exact verification receipts and final summaries when relevant."
+      ],
+      "backlink_obligations": [
+        "Contracts_V0 only owns shared event/envelope shape if promoted.",
+        "storage-plan owns durable projection if persisted."
+      ],
+      "do_not_touch": [
+        "Do not make Runtime Artifacts Panel the DiscoveryService behavior owner."
+      ]
+    },
+    {
+      "row_id": "DIM-013",
+      "future_planunit_slug": "discovery-implementation-defaults-and-adoption-guardrails",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0081",
+        "atom-0082",
+        "atom-0083",
+        "atom-0084",
+        "atom-0085",
+        "atom-0086",
+        "atom-0087",
+        "atom-0089"
+      ],
+      "primary_owner_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "consumer_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md"
+      ],
+      "compile_obligations": [
+        "Compile rollout, project/user discovery.enabled, developer/operator kill switch, and discovery.disabled/discovery.unsupported behavior without creating a parallel discovery canon.",
+        "Compile canonical_path_identity, display_path, normalization_profile, case_sensitivity, symlink_policy, identity_scope, and exact-verification/cache-key rules.",
+        "Compile cache_schema_version, ranking_policy_version, policy_hash, ignore_hash, identity_hash, manifest generation, rebuild/downgrade/discard behavior, and best-effort compatible migration only.",
+        "Compile shared scheduler rules for dedupe, GUI cancellation, bounded index refresh concurrency, GUI/background fairness, over_budget/backpressure receipts, and thundering-herd prevention.",
+        "Compile SSH auth/error UX and remote host authority alignment, including passphrase prompts, known-host changes, remote command denial, host unavailable, and no download-edit-upload/local-substitution authority.",
+        "Compile frecency/query/open-history reset semantics separately from durable redacted discovery receipt retention/deletion/export owners.",
+        "Compile GUI fuzzy/file-search migration through DiscoveryService while preserving command names, shortcuts, owner boundaries, disclosed local filters, and no undisclosed duplicate ranking."
+      ],
+      "backlink_obligations": [
+        "Backlink to state/implementation_gap_defaults.json and state/precision_contract.json as source-lineage only.",
+        "Backlink to exact source atoms atom-0081 through atom-0087."
+      ],
+      "do_not_touch": [
+        "Do not create Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions from this row."
+      ]
+    },
+    {
+      "row_id": "DIM-014",
+      "future_planunit_slug": "deep-audit-reconciliation-and-precompile-caveats",
+      "gui_related": true,
+      "source_atom_ids": [
+        "atom-0088",
+        "atom-0090",
+        "atom-0091",
+        "atom-0092",
+        "atom-0093",
+        "atom-0094",
+        "atom-0095"
+      ],
+      "primary_owner_docs": [
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "supporting_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "consumer_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md"
+      ],
+      "compile_obligations": [
+        "Normalize exact enum/case labels before canonical compile and keep PRD Builder prose separate from prd_builder_source_picker internal ids.",
+        "Compile no-leak count/id/redaction semantics for GUI rows, summaries, diagnostics, receipts, and rank explanations.",
+        "Compile remote/SSH permission, host-trust, credential-handle, approval-scope, and redaction fields without exposing secrets.",
+        "Compile ambient invocation trigger/skip rules so discovery is used when materially needed and skipped when exact paths, pure chat, user denial, policy blocks, disabled/kill switch, unsupported surfaces, or backpressure apply.",
+        "Compile Assistant Chat visibility toggle as routine-progress-only and never suppressing permission, approval, safety, trust-affecting fallback/stale, durable receipt, or exact-verification information.",
+        "Compile WorkNode references as future_boundary_only backlinks with no current WorkNode/NodeSeed/queue creation.",
+        "State that this ledger is source-prepared, not gate-clean certified; matrix artifacts are manual/source-lineage until validators are updated."
+      ],
+      "backlink_obligations": [
+        "Backlink to state/deep_audit_report.json and dec-0016.",
+        "Preserve subagent audit findings as source-lineage, not canonical Plans prose."
+      ],
+      "do_not_touch": [
+        "Do not hand-edit generated evidence drift.",
+        "Do not claim governance certification from this ledger-only audit."
+      ]
+    }
+  ],
+  "audit_ref": "state/deep_audit_report.json"
+}
