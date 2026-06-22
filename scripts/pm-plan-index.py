@@ -12,7 +12,9 @@ import argparse
 import hashlib
 import json
 import re
+from bisect import bisect_left
 from collections import Counter, defaultdict, deque
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -59,6 +61,19 @@ REQUIRED_NEW_PLAN_BASE_HEADINGS = [
     "7. Deferred, Retired, Compatibility, And Non-Goals",
     "8. Source Lineage And Governance",
 ]
+
+
+@dataclass(frozen=True)
+class CachedPlanDoc:
+    path: Path
+    text: str
+    lines: list[str]
+    headings: list[dict[str, Any]]
+    newline_offsets: list[int]
+    sha256: str
+
+    def line_no_for_offset(self, offset: int) -> int:
+        return bisect_left(self.newline_offsets, offset) + 1
 
 
 class UniqueKeySafeLoader(yaml.SafeLoader):
@@ -135,10 +150,10 @@ def top_level_plan_docs() -> list[Path]:
     return sorted(PLANS.glob("*.md"), key=lambda path: path.name.lower())
 
 
-def markdown_headings(text: str) -> list[dict[str, Any]]:
+def markdown_headings_from_lines(lines: list[str]) -> list[dict[str, Any]]:
     headings: list[dict[str, Any]] = []
     fence: str | None = None
-    for line_no, line in enumerate(text.splitlines(), 1):
+    for line_no, line in enumerate(lines, 1):
         stripped = line.lstrip()
         if stripped.startswith("```") or stripped.startswith("~~~"):
             marker = stripped[:3]
@@ -150,6 +165,31 @@ def markdown_headings(text: str) -> list[dict[str, Any]]:
         if match:
             headings.append({"line": line_no, "level": len(match.group(1)), "title": match.group(2).strip()})
     return headings
+
+
+def markdown_headings(text: str) -> list[dict[str, Any]]:
+    return markdown_headings_from_lines(text.splitlines())
+
+
+def normalized_markdown_text(raw: bytes) -> str:
+    text = raw.decode("utf-8")
+    if "\r" in text:
+        text = text.replace("\r\n", "\n").replace("\r", "\n")
+    return text
+
+
+def cached_plan_doc(path: Path) -> CachedPlanDoc:
+    raw = path.read_bytes()
+    text = normalized_markdown_text(raw)
+    lines = text.splitlines()
+    return CachedPlanDoc(
+        path=path,
+        text=text,
+        lines=lines,
+        headings=markdown_headings_from_lines(lines),
+        newline_offsets=[index for index, char in enumerate(text) if char == "\n"],
+        sha256=hashlib.sha256(raw).hexdigest(),
+    )
 
 
 def authority_preamble_lines(text: str) -> list[str]:
@@ -244,10 +284,10 @@ def heading_for_line(headings: list[dict[str, Any]], line_no: int) -> dict[str, 
     return current
 
 
-def adjacent_heading_before_line(text: str, line_no: int, max_blank_gap: int = 3) -> dict[str, Any] | None:
+def adjacent_heading_before_line(text_or_lines: str | list[str], line_no: int, max_blank_gap: int = 3) -> dict[str, Any] | None:
     """Return a markdown heading immediately above a PlanUnit fence, even in legacy docs with stale fences."""
     blank_gap = 0
-    lines = text.splitlines()
+    lines = text_or_lines.splitlines() if isinstance(text_or_lines, str) else text_or_lines
     for index in range(line_no - 2, -1, -1):
         line = lines[index]
         if not line.strip():
@@ -276,6 +316,7 @@ def normalize_unit(
     line_no: int,
     headings: list[dict[str, Any]],
     adjacent_heading: dict[str, Any] | None = None,
+    source_doc_sha256: str | None = None,
 ) -> dict[str, Any]:
     heading = heading_for_line(headings, line_no)
     if adjacent_heading and (heading is None or adjacent_heading["line"] > heading["line"]):
@@ -292,7 +333,7 @@ def normalize_unit(
         {
             "schema_id": "pm.plan_index.plan_unit.v1",
             "source_location": source_location,
-            "source_doc_sha256": sha256_file(path),
+            "source_doc_sha256": source_doc_sha256 or sha256_file(path),
         }
     )
     return row
@@ -304,14 +345,13 @@ def extract_plan_units() -> tuple[list[dict[str, Any]], list[dict[str, Any]], li
     docs: list[dict[str, Any]] = []
 
     for path in top_level_plan_docs():
-        text = path.read_text(encoding="utf-8")
-        headings = markdown_headings(text)
+        doc = cached_plan_doc(path)
         doc_units: list[dict[str, Any]] = []
-        for match in PLAN_UNIT_FENCE_PATTERN.finditer(text):
+        for match in PLAN_UNIT_FENCE_PATTERN.finditer(doc.text):
             block = match.group(1)
             if "plan_unit_id:" not in block:
                 continue
-            line_no = text[: match.start()].count("\n") + 1
+            line_no = doc.line_no_for_offset(match.start())
             try:
                 data = yaml.load(block, Loader=UniqueKeySafeLoader)
             except Exception as exc:  # noqa: BLE001 - validator reports exact source.
@@ -320,17 +360,24 @@ def extract_plan_units() -> tuple[list[dict[str, Any]], list[dict[str, Any]], li
             if not isinstance(data, dict) or not data.get("plan_unit_id"):
                 errors.append({"path": rel(path), "line": line_no, "error": "plan_unit_block_not_mapping"})
                 continue
-            unit = normalize_unit(data, path, line_no, headings, adjacent_heading_before_line(text, line_no))
+            unit = normalize_unit(
+                data,
+                path,
+                line_no,
+                doc.headings,
+                adjacent_heading_before_line(doc.lines, line_no),
+                source_doc_sha256=doc.sha256,
+            )
             doc_units.append(unit)
             units.append(unit)
 
         docs.append(
             {
                 "path": rel(path),
-                "title": doc_title(path, headings),
-                "sha256": sha256_file(path),
-                "line_count": len(text.splitlines()),
-                "heading_count": len(headings),
+                "title": doc_title(path, doc.headings),
+                "sha256": doc.sha256,
+                "line_count": len(doc.lines),
+                "heading_count": len(doc.headings),
                 "plan_unit_ids": [str(unit.get("plan_unit_id", "")) for unit in doc_units],
             }
         )

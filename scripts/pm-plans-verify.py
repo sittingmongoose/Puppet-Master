@@ -1069,6 +1069,33 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
                 failures.append({"path": rel(schema_path), "error": error, "def": def_name, "detail": "nonterminal_route_does_not_force_stage_name", "route_kinds": sorted(kind_values)})
 
     stage_values = set(defs.get("stage_name", {}).get("enum", []))
+    expected_stage_values = {
+        "preflight_currentness",
+        "scope_selection",
+        "planunit_normalization",
+        "test_repository_discovery",
+        "typed_dependency_analysis",
+        "implementation_surface_mapping",
+        "work_risk_classification",
+        "nodeseed_candidate_drafting",
+        "split_merge_sizing",
+        "candidate_review",
+        "workgraph_construction",
+        "worknode_request_construction",
+        "final_compile_audit_repair",
+        "executor_handoff_certification",
+        "activation_transaction",
+        "orchestrator_projection",
+    }
+    if stage_values != expected_stage_values:
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "plan_compile_stage_registry_drift",
+                "expected": sorted(expected_stage_values),
+                "actual": sorted(stage_values),
+            }
+        )
 
     route_policies = {
         "stage_success_route": {
@@ -1140,7 +1167,10 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
         "authority",
         "sizing",
         "item_boundaries",
+        "compile_parallelism_policy",
         "compile_wave_contract",
+        "compile_wave_assignment_receipt",
+        "compile_wave_completion_receipt",
         "compile_worklist_item",
         "test_oracle",
         "source_control_context",
@@ -1164,8 +1194,10 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     plan_compile_props = plan_compile_def.get("properties", {}) if isinstance(plan_compile_def, dict) else {}
     if plan_compile_props.get("automatic_launch_enabled", {}).get("type") != "boolean":
         failures.append({"path": rel(schema_path), "error": "plan_compile_run_automatic_launch_not_mode_split_boolean"})
-    if plan_compile_props.get("native_plan_wizard_launch_enabled", {}).get("type") != "boolean":
-        failures.append({"path": rel(schema_path), "error": "plan_compile_run_native_launch_not_mode_split_boolean"})
+    if "native_plan_wizard_launch_enabled" in plan_compile_props:
+        failures.append({"path": rel(schema_path), "error": "plan_compile_run_retired_plan_wizard_field_active"})
+    if plan_compile_props.get("planning_wizard_launch_enabled", {}).get("type") != "boolean":
+        failures.append({"path": rel(schema_path), "error": "plan_compile_run_planning_wizard_launch_not_mode_split_boolean"})
     if plan_compile_props.get("codex_bootstrap_launch_enabled", {}).get("const") is not False:
         failures.append({"path": rel(schema_path), "error": "plan_compile_run_codex_bootstrap_launch_not_const_false"})
 
@@ -1185,9 +1217,11 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     else:
         expected_design_only = {
             "launch_policy": "disabled",
+            "launch_source": "codex_bootstrap",
+            "runtime_adapter": "codex_bootstrap_adapter",
             "status": "design_only_disabled",
             "automatic_launch_enabled": False,
-            "native_plan_wizard_launch_enabled": False,
+            "planning_wizard_launch_enabled": False,
             "codex_bootstrap_launch_enabled": False,
         }
         for key, expected in expected_design_only.items():
@@ -1204,9 +1238,10 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     else:
         expected_native_runtime = {
             "launch_policy": "automatic_after_approval",
+            "launch_source": "native_planning_wizard",
             "runtime_adapter": "native_puppet_master_adapter",
             "automatic_launch_enabled": True,
-            "native_plan_wizard_launch_enabled": True,
+            "planning_wizard_launch_enabled": True,
             "codex_bootstrap_launch_enabled": False,
         }
         for key, expected in expected_native_runtime.items():
@@ -1234,10 +1269,12 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     expect_prop_ref("stage_card", "assignment_contract", "#/$defs/compile_wave_contract", "stage_card_assignment_contract_not_strict")
     expect_prop_ref("stage_card", "success_route", "#/$defs/stage_success_route", "stage_card_success_route_not_strict")
     expect_prop_ref("stage_card", "blocked_route", "#/$defs/stage_blocked_route", "stage_card_blocked_route_not_strict")
-    require_schema_keys("compile_worklist", ["wave_assignments", "blocked_route"], "compile_worklist_missing_route_or_wave_assignments")
+    require_schema_keys("compile_worklist", ["parallelism_policy", "wave_assignments", "blocked_route"], "compile_worklist_missing_route_or_wave_assignments")
     expect_array_items_ref("compile_worklist", "items", "#/$defs/compile_worklist_item", "compile_worklist_items_not_strict")
+    expect_prop_ref("compile_worklist", "parallelism_policy", "#/$defs/compile_parallelism_policy", "compile_worklist_parallelism_policy_not_strict")
     expect_prop_ref("compile_worklist", "blocked_route", "#/$defs/compile_worklist_blocked_route", "compile_worklist_blocked_route_not_strict")
     expect_prop_ref("compile_wave_contract", "retry_route", "#/$defs/compile_wave_retry_route", "compile_wave_retry_route_not_strict")
+    expect_prop_ref("compile_wave_contract", "assignment_receipt", "#/$defs/compile_wave_assignment_receipt", "compile_wave_assignment_receipt_not_strict")
     require_schema_keys("node_seed_review", ["reviewer_role"], "node_seed_review_missing_reviewer_role")
     expect_prop_ref("node_seed_review", "decision", "#/$defs/node_seed_review_decision", "node_seed_review_decision_not_enum")
     expect_prop_ref("node_seed_review", "reviewer_role", "#/$defs/node_seed_reviewer_role", "node_seed_reviewer_role_not_enum")
