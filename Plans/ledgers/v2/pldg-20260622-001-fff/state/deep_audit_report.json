@@ -1,0 +1,172 @@
+{
+  "schema_id": "pm.bootstrap_deep_audit_report.v1",
+  "ledger_id": "pldg-20260622-001-fff",
+  "status": "reconciled_ledger_only",
+  "source_event_id": "evt-0022",
+  "source_decision_id": "dec-0016",
+  "compile_permission": false,
+  "updated_at_utc": "2026-06-22T21:38:11Z",
+  "gui_related": true,
+  "audit_request_exact": "Do one last deeper audit, use multiple subagents. Look for gaps, under specced details, stubs, any potential risks. Once you think you found everything, do another sweep",
+  "auditors": [
+    {
+      "agent": "main-thread",
+      "scope": "first sweep, reconciliation, second sweep"
+    },
+    {
+      "agent": "pm_owner_adjudicator",
+      "id": "019ef13d-d83a-7690-88be-ea4bad38e893",
+      "nickname": "Volta"
+    },
+    {
+      "agent": "pm_fidelity_auditor",
+      "id": "019ef13d-d907-71b3-a177-66cb79937d47",
+      "nickname": "Nash"
+    },
+    {
+      "agent": "pm_governance_auditor",
+      "id": "019ef13d-d994-7480-87e3-b1ca573e4dae",
+      "nickname": "Galileo"
+    },
+    {
+      "agent": "pm_special_lane_auditor",
+      "id": "019ef13d-da62-70f2-a725-793606b4f97f",
+      "nickname": "Bacon"
+    },
+    {
+      "agent": "explorer",
+      "id": "019ef13d-db04-7140-bac8-f95b4a02fa70",
+      "nickname": "Einstein"
+    }
+  ],
+  "findings": [
+    {
+      "severity": "high",
+      "finding": "Exact enum/case drift between state/precision_contract.json and state/consumer_conformance_matrix.json.",
+      "disposition": "reconciled",
+      "updates": [
+        "normalized canonical surface_type and target_kind strings",
+        "added implementation and verification intents",
+        "added conformance_case_label registry",
+        "added discovery.disabled, discovery.unsupported, and discovery.backpressure receipt events"
+      ]
+    },
+    {
+      "severity": "high",
+      "finding": "atom-0081 through atom-0087 were accepted after matrix materialization and were not reachable from doc-impact, conformance, or precision acceptance artifacts.",
+      "disposition": "reconciled",
+      "updates": [
+        "added DIM-013 and DIM-014",
+        "expanded precision validation_acceptance_cases",
+        "linked implementation_gap_defaults to the audit reconciliation"
+      ]
+    },
+    {
+      "severity": "medium",
+      "finding": "Shared schema/event ownership was routed too narrowly through Tools.md.",
+      "disposition": "reconciled",
+      "updates": [
+        "DIM-002 now makes Tools.md and Contracts_V0.md primary for behavior versus shared enum/event/receipt envelope split"
+      ]
+    },
+    {
+      "severity": "medium",
+      "finding": "No-leak semantics around candidate counts, selected ids, matched ranges, display paths, diagnostics, and rank explanations were underspecified.",
+      "disposition": "reconciled",
+      "updates": [
+        "added atom-0090",
+        "added visibility_and_redaction_policy",
+        "expanded doc-impact/conformance obligations"
+      ]
+    },
+    {
+      "severity": "medium",
+      "finding": "SSH/remote/cache authority needed explicit permission, trust, approval, credential-handle, and redaction fields.",
+      "disposition": "reconciled",
+      "updates": [
+        "added atom-0091",
+        "expanded precision request/result/receipt fields and ssh_topology",
+        "expanded remote_ssh_discovery_adapter conformance row"
+      ]
+    },
+    {
+      "severity": "medium",
+      "finding": "Ambient invocation could be overread as search-everything-every-turn behavior.",
+      "disposition": "reconciled",
+      "updates": [
+        "added atom-0092",
+        "added ambient_invocation_policy and conformance requirements"
+      ]
+    },
+    {
+      "severity": "medium",
+      "finding": "Assistant Chat visibility setting needed owner-boundary wording so permission/safety cards are not suppressible routine progress.",
+      "disposition": "reconciled",
+      "updates": [
+        "added atom-0093",
+        "expanded assistant_chat_setting.scope_boundary and DIM-007"
+      ]
+    },
+    {
+      "severity": "medium",
+      "finding": "Future WorkNode intake row could be overread as current readiness or creation permission.",
+      "disposition": "reconciled",
+      "updates": [
+        "added atom-0094",
+        "marked WorkNode row future_boundary_only in doc-impact and conformance matrix"
+      ]
+    },
+    {
+      "severity": "medium",
+      "finding": "Compile-readiness wording was stronger than validation and governance state supports.",
+      "disposition": "reconciled_with_caveat",
+      "updates": [
+        "added atom-0095",
+        "updated current/handoff/compile_queue/registry/health to source-prepared wording"
+      ]
+    },
+    {
+      "severity": "medium",
+      "finding": "Bootstrap ledger validator does not validate readiness artifacts doc_impact_matrix, consumer_conformance_matrix, precision_contract, or implementation_gap_defaults.",
+      "disposition": "recorded_caveat",
+      "updates": [
+        "added manual/source-lineage validator caveat to health, compile queue, current, handoff, and precision contract"
+      ]
+    },
+    {
+      "severity": "low",
+      "finding": "atom-0005 had stale atom_type open_question despite answered projections.",
+      "disposition": "reconciled",
+      "updates": [
+        "reclassified atom-0005 as requirement and preserved its exact tokens/source refs"
+      ]
+    },
+    {
+      "severity": "low",
+      "finding": "PRDBuilder prose drift from canonical PRD Builder owner term.",
+      "disposition": "reconciled",
+      "updates": [
+        "normalized prose to PRD Builder while preserving prd_builder_source_picker internal id"
+      ]
+    },
+    {
+      "severity": "external_caveat",
+      "finding": "Governance gates are red from generated evidence hash drift unrelated to this ledger lane.",
+      "disposition": "recorded_not_repaired",
+      "updates": [
+        "recorded explicit governance-seal-only caveat; no generated evidence hand edits"
+      ]
+    }
+  ],
+  "second_sweep_result": {
+    "status": "completed_after_reconciliation",
+    "result": "No additional unresolved product questions found after applying ledger-only reconciliation. Remaining caveats are explicit: generated governance evidence drift requires a separate governance lane, and readiness artifacts are manual/source-lineage until validator/schema support is added.",
+    "no_forbidden_writes": true
+  },
+  "negative_constraints": [
+    "Do not treat this audit report as canonical Plans prose.",
+    "Do not compile to canonical Plans until Jared explicitly requests compile.",
+    "Do not hand-edit generated evidence drift.",
+    "Do not create Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions from this audit."
+  ]
+}

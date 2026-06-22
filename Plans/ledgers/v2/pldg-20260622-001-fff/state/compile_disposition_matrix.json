@@ -1,0 +1,1460 @@
+{
+  "schema_id": "pm.bootstrap_compile_disposition_matrix.v1",
+  "ledger_id": "pldg-20260622-001-fff",
+  "status": "compiled_to_live_plans",
+  "updated_at_utc": "2026-06-22T22:37:17Z",
+  "summary": "Every accepted atom received a compile disposition. Product-direction atoms with live PlanUnit evidence were marked compiled_to_plan; ledger setup/research/process atoms were marked not_for_plan with non_applicable or consumer_reference_only dispositions; superseded atom-0029 remains superseded/obsolete.",
+  "compiled_atom_count": 83,
+  "not_for_plan_atom_count": 11,
+  "superseded_atom_count": 1,
+  "plan_units_created_or_updated": [
+    "0PI-060",
+    "T-072",
+    "T-160",
+    "T-161",
+    "T-162",
+    "T-163",
+    "CV-291",
+    "SP-217",
+    "SP-218",
+    "W-074",
+    "F2-191",
+    "PS-118",
+    "GI-033",
+    "ACD-422",
+    "ACD-423",
+    "F3-399",
+    "UCC-099",
+    "F-072",
+    "PWIZ-015",
+    "PRDB-009",
+    "OSI-429",
+    "EP-106",
+    "PNC-020",
+    "ATS-011",
+    "RAP-031"
+  ],
+  "owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Tools.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/FileSafe.md",
+    "Plans/Permissions_System.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/FileManager.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/PRD_Builder.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Runtime_Artifacts_Panel.md"
+  ],
+  "rows": [
+    {
+      "atom_id": "atom-0001",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "non_applicable",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0002",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "non_applicable",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0003",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "non_applicable",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0004",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "non_applicable",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0005",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "non_applicable",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0006",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "consumer_reference_only",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0007",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0008",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "consumer_reference_only",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0009",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "consumer_reference_only",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0010",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "consumer_reference_only",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0011",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0012",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-160",
+        "OSI-429"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0013",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "F3-399",
+        "F-072"
+      ],
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0014",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0015",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0016",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0017",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0018",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0019",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0020",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0021",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-423",
+        "F3-399",
+        "F-072"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0022",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0023",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-161",
+        "SP-217"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0024",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-163",
+        "SP-217"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0025",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0026",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0027",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "PWIZ-015",
+        "PRDB-009",
+        "OSI-429",
+        "EP-106",
+        "PNC-020"
+      ],
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0028",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0029",
+      "previous_status": "superseded",
+      "status": "superseded",
+      "disposition": "obsolete",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0030",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "OSI-429",
+        "EP-106",
+        "PNC-020"
+      ],
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0031",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160",
+        "T-162"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0032",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "OSI-429"
+      ],
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0033",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "non_applicable",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0034",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0035",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-161",
+        "CV-291"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0036",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-161",
+        "CV-291"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0037",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "OSI-429",
+        "EP-106",
+        "PNC-020"
+      ],
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0038",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "PWIZ-015",
+        "PRDB-009"
+      ],
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0039",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "F2-191"
+      ],
+      "owner_docs": [
+        "Plans/FileSafe.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0040",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-217"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0041",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-162",
+        "EP-106"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/Executor_Protocol.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0042",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-217"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0043",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "OSI-429",
+        "EP-106",
+        "PNC-020",
+        "ATS-011",
+        "RAP-031"
+      ],
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0044",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "F3-399",
+        "PWIZ-015",
+        "PRDB-009",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0045",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "PWIZ-015",
+        "PRDB-009",
+        "ATS-011",
+        "RAP-031"
+      ],
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0046",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0047",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0048",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-160"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0049",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0050",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-162"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0051",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-161",
+        "CV-291"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0052",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0053",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-217"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0054",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-218",
+        "W-074",
+        "GI-033"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0055",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0056",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-423",
+        "F3-399",
+        "UCC-099",
+        "F-072"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0057",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "F2-191",
+        "PS-118"
+      ],
+      "owner_docs": [
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0058",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "OSI-429",
+        "EP-106",
+        "PNC-020",
+        "RAP-031"
+      ],
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0059",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-423",
+        "F3-399",
+        "F-072",
+        "PWIZ-015",
+        "PRDB-009",
+        "OSI-429",
+        "EP-106",
+        "PNC-020",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0060",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-162"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0061",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-218",
+        "W-074",
+        "GI-033"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0062",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-217"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0063",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-072",
+        "T-161",
+        "T-162",
+        "CV-291",
+        "F3-399",
+        "UCC-099",
+        "RAP-031"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0064",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-422"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0065",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-422",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0066",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-422",
+        "UCC-099"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/UI_Command_Catalog.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0067",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-422",
+        "RAP-031"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0068",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-422",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0069",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-218",
+        "W-074",
+        "F2-191",
+        "PS-118",
+        "GI-033"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/GitHub_Integration.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0070",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-218",
+        "W-074",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0071",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0072",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0073",
+      "previous_status": "accepted",
+      "status": "not_for_plan",
+      "disposition": "non_applicable",
+      "plan_unit_ids": [],
+      "owner_docs": []
+    },
+    {
+      "atom_id": "atom-0074",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0075",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0076",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-072",
+        "T-161",
+        "T-162",
+        "CV-291"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0077",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0078",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-217",
+        "ACD-423",
+        "F3-399",
+        "UCC-099",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0079",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-218",
+        "W-074",
+        "GI-033",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0080",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-422",
+        "UCC-099",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0081",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-163",
+        "SP-217",
+        "F3-399",
+        "UCC-099",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0082",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-217",
+        "F2-191",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FileSafe.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0083",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-217",
+        "SP-218",
+        "F2-191",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FileSafe.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0084",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-163",
+        "F3-399",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0085",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-218",
+        "W-074",
+        "PS-118",
+        "GI-033",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Permissions_System.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0086",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "SP-217",
+        "ATS-011",
+        "RAP-031"
+      ],
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0087",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "ACD-423",
+        "F3-399",
+        "UCC-099",
+        "F-072",
+        "PWIZ-015",
+        "PRDB-009",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0088",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-161",
+        "T-162",
+        "CV-291",
+        "PWIZ-015",
+        "PRDB-009"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0089",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "T-163",
+        "SP-217",
+        "F3-399",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0090",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "CV-291",
+        "F2-191",
+        "PS-118",
+        "ACD-423",
+        "F3-399",
+        "UCC-099",
+        "F-072",
+        "PWIZ-015",
+        "PRDB-009",
+        "ATS-011",
+        "RAP-031"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0091",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "CV-291",
+        "SP-218",
+        "W-074",
+        "F2-191",
+        "PS-118",
+        "GI-033",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0092",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "T-161",
+        "T-163",
+        "OSI-429",
+        "EP-106",
+        "PNC-020",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0093",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "ACD-422",
+        "F3-399",
+        "ATS-011",
+        "RAP-031"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0094",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "OSI-429",
+        "EP-106",
+        "PNC-020",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "atom_id": "atom-0095",
+      "previous_status": "accepted",
+      "status": "compiled_to_plan",
+      "disposition": "create_new_planunit",
+      "plan_unit_ids": [
+        "0PI-060",
+        "CV-291",
+        "ATS-011"
+      ],
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,447 @@
+{
+  "schema_id": "pm.bootstrap_discovery_precision_contract.v1",
+  "ledger_id": "pldg-20260622-001-fff",
+  "status": "accepted_ledger_source_only",
+  "source_event_id": "evt-0022",
+  "compile_permission": false,
+  "updated_at_utc": "2026-06-22T21:38:11Z",
+  "summary": "Deep-audit-reconciled precision obligations for native PM-owned fff-inspired discovery. This contract is source-lineage for a later explicit compile and is not canonical Plans prose or gate-clean certification.",
+  "gui_related": true,
+  "exact_value_registry": {
+    "surface_type": [
+      "assistant_chat_thread",
+      "assistant_chat_file_mention",
+      "quick_open",
+      "search_path_filter",
+      "file_manager",
+      "planning_wizard_source_picker",
+      "prd_builder_source_picker",
+      "orchestrator_agent",
+      "executor_agent",
+      "worknode_intake",
+      "runtime_artifacts",
+      "agent_tool"
+    ],
+    "intent": [
+      "context_acquisition",
+      "bug_fix",
+      "feature_work",
+      "refactor",
+      "test_repair",
+      "code_review",
+      "planning_context",
+      "source_selection",
+      "quick_open",
+      "file_navigation",
+      "mention_autocomplete",
+      "search_path_narrowing",
+      "audit_trace",
+      "implementation",
+      "verification"
+    ],
+    "target_kind": [
+      "file",
+      "directory",
+      "file_or_directory",
+      "module",
+      "test",
+      "doc",
+      "config",
+      "content_candidate",
+      "mixed"
+    ],
+    "path_kind": [
+      "file",
+      "directory",
+      "symlink",
+      "virtual_cache_entry",
+      "remote_entry"
+    ],
+    "match_type": [
+      "exact_path",
+      "prefix_path",
+      "fuzzy_path",
+      "basename",
+      "path_segment",
+      "extension",
+      "abbreviation",
+      "symbol_adjacent",
+      "frecency_boost",
+      "context_proximity",
+      "git_manifest",
+      "remote_manifest",
+      "fallback_scan"
+    ],
+    "freshness_state": [
+      "fresh",
+      "warming",
+      "stale",
+      "snapshot",
+      "unknown"
+    ],
+    "fallback_state": [
+      "none",
+      "index_cold",
+      "stale_index",
+      "fallback_scan",
+      "remote_cache",
+      "ssh_manifest",
+      "over_budget",
+      "disabled",
+      "unsupported",
+      "backpressure"
+    ],
+    "policy_decision": [
+      "allowed",
+      "redacted",
+      "hidden_by_policy",
+      "denied",
+      "requires_approval"
+    ],
+    "error_code": [
+      "no_results",
+      "invalid_query",
+      "unsupported_target_kind",
+      "project_identity_missing",
+      "index_unavailable",
+      "timeout",
+      "over_budget",
+      "permission_denied",
+      "policy_denied",
+      "remote_unavailable",
+      "ssh_auth_failed",
+      "stale_remote_cache",
+      "cancelled",
+      "backpressure",
+      "discovery_disabled",
+      "discovery_unsupported",
+      "ssh_unavailable",
+      "known_host_changed",
+      "remote_command_denied",
+      "manifest_missing",
+      "receipt_missing"
+    ],
+    "receipt_event": [
+      "discovery.invoked",
+      "discovery.candidates_returned",
+      "discovery.selected",
+      "discovery.fallback",
+      "discovery.verified",
+      "discovery.disabled",
+      "discovery.unsupported",
+      "discovery.backpressure"
+    ],
+    "conformance_case_label": [
+      "no_results",
+      "stale_index",
+      "fallback_scan",
+      "remote_cache_fallback",
+      "ssh_remote_fallback",
+      "denied",
+      "hidden_by_policy",
+      "indexing",
+      "discovery_stale",
+      "grep_index_stale",
+      "discovery_fallback",
+      "raw_grep_fallback",
+      "not_applicable_until_future_compiler",
+      "runtime_disabled",
+      "disabled",
+      "unsupported",
+      "index_cold",
+      "over_budget",
+      "remote_unavailable",
+      "ssh_unavailable",
+      "cache_stale",
+      "manifest_missing",
+      "policy_denied",
+      "receipt_redacted",
+      "receipt_missing",
+      "backpressure",
+      "permission_prompt",
+      "approval_required",
+      "known_host_changed",
+      "remote_command_denied",
+      "cache_migration_required",
+      "cache_discarded",
+      "frecency_reset",
+      "gui_local_filter_disclosed"
+    ]
+  },
+  "discovery_request_required_fields": [
+    "request_id",
+    "consumer_id",
+    "surface_type",
+    "project_identity",
+    "worktree_identity or remote_identity",
+    "query_text",
+    "intent",
+    "target_kind",
+    "limit",
+    "budget_ms",
+    "current_context",
+    "policy_context",
+    "permission_snapshot_id when permission-gated",
+    "approval_scope_key when approval-gated",
+    "redaction_profile",
+    "requested_remote_identity when applicable",
+    "effective_remote_identity when applicable",
+    "host_trust_state when SSH-backed",
+    "credential_handle_ref without secret material when SSH-backed"
+  ],
+  "discovery_result_required_fields": [
+    "result_id",
+    "rank",
+    "canonical_path_identity",
+    "identity_scope",
+    "path",
+    "display_path",
+    "normalization_profile",
+    "case_sensitivity",
+    "symlink_policy",
+    "path_kind",
+    "target_kind",
+    "score_total",
+    "score_breakdown",
+    "match_type",
+    "matched_ranges after policy/redaction filtering",
+    "provenance",
+    "freshness_state",
+    "fallback_state",
+    "policy_decision",
+    "source_index_generation",
+    "cache_schema_version when cached",
+    "policy_hash when cached",
+    "ignore_hash when cached",
+    "identity_hash when cached",
+    "remote_identity when applicable",
+    "permission_snapshot_id when permission-gated",
+    "redaction_profile",
+    "requires_exact_verification",
+    "verification_handoff"
+  ],
+  "receipt_payload_required_fields": [
+    "request_id",
+    "consumer_id",
+    "surface_type",
+    "project_identity",
+    "worktree_identity or remote_identity",
+    "intent",
+    "target_kind",
+    "query_digest",
+    "candidate_count visible post-policy only",
+    "selected_result_ids as opaque/redaction-profiled ids when applicable",
+    "freshness_state",
+    "fallback_state",
+    "policy_decision",
+    "source_index_generation",
+    "cache_schema_version when cached",
+    "ranking_policy_version when ranked",
+    "policy_hash when cached",
+    "ignore_hash when cached",
+    "identity_hash when cached",
+    "permission_snapshot_id when permission-gated",
+    "approval_scope_key when approval-gated",
+    "redaction_profile",
+    "host_trust_state when SSH-backed",
+    "budget_ms",
+    "elapsed_ms",
+    "error_code when applicable",
+    "verification_receipt_ref when applicable"
+  ],
+  "performance_resource_budgets": {
+    "local_warm_query": {
+      "target_corpus": "250k indexed paths",
+      "p95_ms": 75,
+      "p99_ms": 150,
+      "result_limit_default": 50
+    },
+    "gui_query": {
+      "first_visual_response_ms": 100,
+      "soft_budget_ms": 750,
+      "hard_timeout_ms": 2000,
+      "over_budget_behavior": "return partial, stale, or fallback results with freshness_state and fallback_state disclosed"
+    },
+    "agent_discover_paths": {
+      "soft_budget_ms": 3000,
+      "hard_timeout_ms": 10000,
+      "over_budget_behavior": "return partial, stale, or fallback results with receipts and requires_exact_verification"
+    },
+    "cold_local_index": {
+      "partial_results_target_ms": 1000,
+      "full_index_target_ms_per_250k_paths": 10000,
+      "behavior": "index in background and expose warming/index_cold state instead of blocking the UI"
+    },
+    "remote_or_ssh": {
+      "cached_manifest_query_p95_ms": 150,
+      "first_usable_cached_results_ms": 2000,
+      "live_manifest_refresh_target_ms_per_250k_paths": 30000,
+      "over_budget_behavior": "return stale remote_cache or ssh_manifest results only with explicit freshness/fallback disclosure"
+    },
+    "watcher_and_reindex": {
+      "debounce_ms": 250,
+      "batch_flush_target_ms": 2000,
+      "cancellation_target_ms": 100
+    },
+    "resource_caps": {
+      "memory_target_mb_per_250k_paths": 128,
+      "disk_target_mb_per_project_worktree": 256,
+      "cap_behavior": "compact, evict, or degrade with over_budget/fallback receipt before exceeding configured limits"
+    }
+  },
+  "ranking_policy": {
+    "policy_filter_before_ranking": true,
+    "score_weights_percent": {
+      "lexical_fuzzy_path_match": 45,
+      "basename_segment_prefix_match": 15,
+      "current_context_proximity": 15,
+      "project_local_frecency": 10,
+      "freshness_and_identity_confidence": 10,
+      "intent_file_kind_boost": 5
+    },
+    "penalties": [
+      "stale or fallback results are penalized but may remain visible with disclosed freshness/fallback state",
+      "generated/vendor/ignored paths are downranked or excluded according to FileSafe and ignore policy",
+      "denied and hidden_by_policy candidates are not success-shaped ranked results"
+    ],
+    "tie_breakers_in_order": [
+      "exact basename or prefix match",
+      "lower fuzzy edit distance",
+      "more query-matched path segments",
+      "current worktree/branch/remote identity over adjacent identities",
+      "shorter normalized path depth",
+      "source files before generated/vendor/cache files when policy allows both",
+      "lexicographic normalized path"
+    ],
+    "privacy": [
+      "Agents receive sanitized score_breakdown and ranking effects, not raw private frecency/query/open history by default.",
+      "GUI rank explanations may show coarse reasons such as path match, recent in this project, current context, stale cache, or fallback."
+    ]
+  },
+  "ssh_topology": {
+    "mvp_topology": "local DiscoveryService plus SSH remote manifest adapter",
+    "remote_manifest_strategy": [
+      "Use Git-tracked file manifests such as git ls-files when available.",
+      "Use an allowed remote directory walk fallback only inside the authorized remote project root.",
+      "Normalize, policy-filter, and annotate remote entries before they enter the local DiscoveryIndex."
+    ],
+    "remote_helper_policy": "No persistent PM remote daemon is required for MVP. A later optional remote helper may be added only if it implements the same request/result/policy/freshness contract.",
+    "identity_fields": [
+      "project_id",
+      "remote_kind",
+      "host_alias_or_host_fingerprint",
+      "user_or_account_alias",
+      "remote_root",
+      "repo_id when available",
+      "branch_or_worktree_ref",
+      "index_generation"
+    ],
+    "cache_key_rule": "Cache/index keys are derived from a normalized remote identity hash and must not include secrets or merge unrelated local paths.",
+    "verification_rule": "Exact verification for SSH results reads through the authorized remote identity/path or a provenance-equivalent remote cache entry; it must not verify an unrelated local checkout as if it were the SSH result.",
+    "fallback_rule": "Allowed fallback order is fresh remote manifest, stale remote manifest with disclosure, explicit remote_cache/ssh_manifest fallback with disclosure, then no-results or error. Silent local substitution is forbidden.",
+    "permission_and_trust_fields": [
+      "permission_snapshot_id",
+      "approval_scope_key",
+      "requested_remote_identity",
+      "effective_remote_identity",
+      "host_trust_state",
+      "known_host_outcome",
+      "credential_handle_ref without secret material",
+      "remote_command_policy_result",
+      "redaction_profile"
+    ],
+    "auth_error_behavior": "SSH auth failures, passphrase prompts, known-host changes, remote command denial, host unavailable, and manifest missing states emit explicit fallback/error receipts and user-visible prompts or degraded states where appropriate; they never silently become fresh local success results."
+  },
+  "assistant_chat_setting": {
+    "primary_location": "Settings > Assistant Chat > Activity",
+    "label": "Show file discovery activity in chat",
+    "default": true,
+    "description": "Show when assistants look for candidate files, use stale or fallback indexes, select files, and verify them.",
+    "thread_shortcut": "Assistant Chat thread overflow may link to this setting, but MVP does not need separate per-thread semantics.",
+    "when_on": [
+      "Show routine discovery.invoked, discovery.candidates_returned, discovery.selected, fallback/degraded path, and discovery.verified activity in the thread."
+    ],
+    "when_off": [
+      "Hide routine inline discovery progress cards in Assistant Chat threads.",
+      "Still show permission prompts, denied or hidden-by-policy safety messages, fallback/stale disclosures that affect user trust, final relevant summaries, exact-verification linkage, and auditability."
+    ],
+    "receipt_policy": "Durable receipts remain available in Runtime Artifacts / audit views regardless of the chat visibility setting.",
+    "scope_boundary": "The setting controls routine discovery progress presentation only. Permission prompts, approval cards, denied/hidden-by-policy safety messages, fallback/stale disclosures that affect user trust, exact-verification linkage, durable receipts, and final relevant summaries are never suppressible by this setting."
+  },
+  "validation_acceptance_cases": [
+    "Local 250k-path warm query meets p95/p99 targets or emits over_budget/fallback receipts.",
+    "GUI query cancellation completes within 100 ms when a newer query supersedes it.",
+    "Agent bug-fix with no exact path uses discover_paths, then exact verification before edits.",
+    "Ranking is deterministic for identical request/index/frecency state.",
+    "Assistant Chat setting on shows routine discovery activity; setting off hides routine progress while preserving safety and audit-visible information.",
+    "SSH project with no local checkout returns remote candidates with identity/freshness/fallback provenance and never uses unrelated local paths.",
+    "Denied and hidden_by_policy candidates do not leak blocked filenames through candidate rows, summaries, counts, or fallback diagnostics.",
+    "Disabled or unsupported discovery emits discovery.disabled or discovery.unsupported receipt behavior and falls back to existing exact-path/grep/codesearch/Instant Grep/Quick Open/FileManager behavior without silent behavior drift.",
+    "Path identity tests prove canonical_path_identity is separate from display_path across separator, Unicode, symlink, case-sensitivity, worktree, and remote identity variants.",
+    "Cache invalidation tests prove schema_version, ranking_policy_version, policy_hash, ignore_hash, identity_hash, and manifest generation changes rebuild, downgrade with disclosure, or discard unsafe cache state.",
+    "Scheduler tests prove dedupe, superseded GUI cancellation, bounded refresh concurrency, GUI/background fairness, and discovery.backpressure or over_budget receipts.",
+    "SSH auth tests cover passphrase prompt, known-host change, remote command denial, host unavailable, and no secret/path leakage in receipts or prompts.",
+    "Retention tests prove frecency/query/open-history reset stops future ranking use for the selected identity without deleting durable Runtime Artifacts receipts by default.",
+    "GUI route migration tests prove Quick Open, command palette fuzzy file search, Assistant Chat file mentions, Search path narrowing, and FileManager type-ahead route path discovery through DiscoveryService without undisclosed duplicate ranking or command rename churn.",
+    "Ambient invocation tests prove agents use discovery only when repo/source location is materially needed and skip it for verified exact paths, pure chat tasks, user-forbidden discovery, policy-blocked contexts, disabled/kill-switch states, unsupported surfaces, or backpressure states."
+  ],
+  "negative_constraints": [
+    "Do not treat this contract as permission to edit canonical Plans.",
+    "Do not create Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions from this ledger turn.",
+    "Do not replace Instant Grep / grep / codesearch content verification with DiscoveryService ranking.",
+    "Do not add a direct fff runtime dependency as the product direction.",
+    "Do not weaken SSH remote identity, freshness disclosure, FileSafe/permission policy, or no-local-fallback behavior."
+  ],
+  "source_decision_ids": [
+    "dec-0014",
+    "dec-0015",
+    "dec-0016"
+  ],
+  "cache_identity_contract_required_fields": [
+    "canonical_path_identity",
+    "identity_scope",
+    "normalization_profile",
+    "case_sensitivity",
+    "symlink_policy",
+    "cache_schema_version",
+    "ranking_policy_version",
+    "policy_hash",
+    "ignore_hash",
+    "identity_hash",
+    "source_manifest_generation",
+    "source_index_generation",
+    "remote_identity when applicable"
+  ],
+  "visibility_and_redaction_policy": {
+    "candidate_count": "Visible post-policy count only. Blocked or hidden counts are omitted, bucketed, or redacted; they are never used to create rank gaps or diagnostics that reveal blocked path identity.",
+    "selected_result_ids": "Opaque identifiers scoped to the request/receipt and redaction_profile, not raw path strings for unauthorized consumers.",
+    "display_path": "User-visible display_path is emitted only after policy filtering and may be generalized or redacted.",
+    "matched_ranges": "Matched ranges are omitted or redacted when they would reveal hidden path segments.",
+    "diagnostics": "Fallback summaries, stale notices, health messages, and rank explanations must not leak blocked filenames, blocked counts, secret material, or unauthorized remote identities."
+  },
+  "ambient_invocation_policy": {
+    "triggers": [
+      "no-exact-path bug fixes",
+      "ambiguous module ownership",
+      "read/search misses where path discovery is materially useful",
+      "broad repo scan avoidance",
+      "planning/source context assembly",
+      "remote or SSH project orientation when exact path is absent"
+    ],
+    "skips": [
+      "pure chat tasks",
+      "already verified exact user-provided path",
+      "user-forbidden discovery",
+      "policy-blocked context",
+      "discovery disabled or kill switch active",
+      "unsupported surface",
+      "over-budget/backpressure state where existing exact tools are safer"
+    ],
+    "boundary": "Ambient discovery means agents use discover_paths when locating repo code is materially needed; it does not mean search everything every turn."
+  },
+  "compile_readiness_caveats": [
+    "This ledger is source-prepared for an explicit compile request; it is not gate-clean compile certification.",
+    "state/doc_impact_matrix.json, state/consumer_conformance_matrix.json, state/precision_contract.json, and state/implementation_gap_defaults.json are manual/source-lineage artifacts not yet covered by the bootstrap ledger validator.",
+    "Generated evidence hash drift in existing governance artifacts must be handled only in an explicit governance seal/refresh lane, not by hand edits in this ledger conversation."
+  ]
+}

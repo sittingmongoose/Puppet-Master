@@ -1,0 +1,64 @@
+{
+  "schema_id": "pm.bootstrap_discovery_implementation_gap_defaults.v1",
+  "ledger_id": "pldg-20260622-001-fff",
+  "status": "accepted_ledger_source_only",
+  "source_event_id": "evt-0021",
+  "source_decision_id": "dec-0015",
+  "compile_permission": false,
+  "updated_at_utc": "2026-06-22T21:38:11Z",
+  "summary": "Accepted second-order implementation defaults for native PM-owned fff-inspired DiscoveryService. This is source-lineage for a later explicit compile and is not canonical Plans prose.",
+  "accepted_defaults": [
+    {
+      "question_id": "q-0010",
+      "atom_id": "atom-0081",
+      "summary": "rollout, kill switch, and explicit disabled/unsupported fallback receipts"
+    },
+    {
+      "question_id": "q-0011",
+      "atom_id": "atom-0082",
+      "summary": "canonical path identity and safe display_path normalization"
+    },
+    {
+      "question_id": "q-0012",
+      "atom_id": "atom-0083",
+      "summary": "index/cache schema versioning plus rebuild/migration policy"
+    },
+    {
+      "question_id": "q-0013",
+      "atom_id": "atom-0084",
+      "summary": "shared request scheduler, dedupe, cancellation, fairness, and backpressure receipts"
+    },
+    {
+      "question_id": "q-0014",
+      "atom_id": "atom-0085",
+      "summary": "SSH auth/error UX and remote host authority alignment"
+    },
+    {
+      "question_id": "q-0015",
+      "atom_id": "atom-0086",
+      "summary": "frecency/history reset semantics and durable receipt retention/deletion boundaries"
+    },
+    {
+      "question_id": "q-0016",
+      "atom_id": "atom-0087",
+      "summary": "migration of existing GUI fuzzy/file-search routes through DiscoveryService without duplicate ranking"
+    }
+  ],
+  "negative_constraints": [
+    "Do not treat this artifact as permission to edit canonical Plans.",
+    "Do not create Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions from this ledger turn.",
+    "Do not create a second discovery canon or bypass the shared DiscoveryService substrate."
+  ],
+  "post_audit_reconciled_at_utc": "2026-06-22T21:38:11Z",
+  "post_audit_reconciliation": {
+    "source_event_id": "evt-0022",
+    "source_decision_id": "dec-0016",
+    "audit_ref": "state/deep_audit_report.json",
+    "matrix_refs": [
+      "state/doc_impact_matrix.json#DIM-013",
+      "state/doc_impact_matrix.json#DIM-014"
+    ],
+    "precision_contract_ref": "state/precision_contract.json",
+    "note": "Deep audit routed atom-0081 through atom-0087 into doc impact, conformance, precision fields, and validation acceptance cases."
+  }
+}
