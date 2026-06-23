@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "011cd6f0f3e091ef219b31fea2d56308a0d634209e30c6664fe3647dde43f9c1"
+      "sha256": "2f39c0dd2a9c9eaba187a0722c40c7387f2ba5b6567b088ffd66bb2982635d06"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "4adff728c9570a90ab9951afc0c4fbc2b6f8e1603a1027b5cae250117fd98832"
+      "sha256": "d14ee0c57e5fff5523fc3589a3951cd8bd3fcb8def85f714cf2c2ae5ed003b52"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "367dee18c18064da8e7a51205d0f85589141ad0abc53e6acf34ce462b75331da"
+      "sha256": "638242a0d4e967f6d67b827b989d4974dfbf724ef8ad8400f55269d5639eaa68"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "644d83ced42147d6b57bddfc2ff0ee556cf60d1d2db24be4755aa6464ca3297d"
+      "sha256": "9e21b700b6287db298eb7aa0d892af4fabcd9b8d09d8e7dc8cecfb7e2150c802"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "4c48ebe3c302fff5496cf87f8e799498f40bafdb45936ba1da9e8f56d1a6e6ec"
+      "sha256": "f6c3e24a097baedc704e31275ee71b928ee597144cb39f071905e2a78d3030a5"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "c1982854f8bffb04dbf3172d50b1e922f0eb1523abc3b655172737a1fdda453e"
+      "sha256": "3642ba1715643d4f35010dcf23073af1cacccb0611510821476459a94e320b04"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "f21b95c5dfdfd9ad8818074e2bc49f15bdd64d697c0d0cc31314e2160a20bd67"
+      "sha256": "a20d8fafb3315bf31cce3bf546ad97aac74756af1b903fe0548e89c0a847ce38"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "d9ca4080f86fe5b06d3c52689db8cfa91a9f243a357e9ee427cea494c59699b1"
+      "sha256": "a8152762d79bbd7a1333865a56cc73019a881f4d3876876bd0d0a0ea65e8307b"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "9ee54337392daa337d1a98782369a09a0f33b35a23b60d9e8fc415b8076ca58b"
+      "sha256": "98bc465565e96024f8aee2169b213a7c5aa0279ebe71d4247c6a15046d2bb559"
     }
   ],
   "checks": [
@@ -80,7 +80,7 @@
       "result": "PASS"
     },
     {
-      "details": "Plan index validate passed with plan_unit_count=5197, acceptance_unit_count=18557, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete.",
+      "details": "Plan index generate/validate passed with plan_unit_count=5197, acceptance_unit_count=18558, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -223,6 +223,16 @@
       "name": "audit-20260619-009-repair",
       "result": "PASS",
       "details": "Bounded repair closes five audit-009 actionable rows without WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks."
+    },
+    {
+      "name": "audit-20260623-002-fff-schema-registry-repair",
+      "result": "PASS",
+      "details": "CV-291 now owns atom-0076's exact DiscoveryService value registry; T-161 now consumes CV-291 instead of a ledger precision-contract dependency."
+    },
+    {
+      "name": "audit-20260623-002-fff-evidence-refresh",
+      "result": "PASS",
+      "details": "Evidence hashes refreshed after CV-291/T-161 repair, plan-index regeneration, migration summary refresh, and shard regeneration."
     }
   ],
   "commands_run": [
@@ -237,7 +247,7 @@
       "stdout_excerpt": "status=pass; plan_unit_count=5036; acceptance_unit_count=17890; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
-      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
@@ -276,7 +286,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
       "exit_code": 0
     },
     {
@@ -296,7 +306,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
       "exit_code": 0
     },
     {
@@ -386,6 +396,42 @@
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py refresh-final-summary --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --seal-state postseal --ledger-id pldg-20260622-001-fff",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py validate-evidence",
       "exit_code": 0
     }
   ],

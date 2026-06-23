@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "011cd6f0f3e091ef219b31fea2d56308a0d634209e30c6664fe3647dde43f9c1"
+      "sha256": "2f39c0dd2a9c9eaba187a0722c40c7387f2ba5b6567b088ffd66bb2982635d06"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -217,6 +217,11 @@
       "name": "node-readiness-boundary",
       "result": "PASS",
       "details": "node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
+    },
+    {
+      "name": "audit-20260623-002-fff-spec-lock-refresh",
+      "result": "PASS",
+      "details": "Spec Lock hash refreshed for CV-291 schema registry repair."
     }
   ],
   "commands_run": [
@@ -355,6 +360,10 @@
     },
     {
       "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py verify-spec-lock",
       "exit_code": 0
     }
   ],

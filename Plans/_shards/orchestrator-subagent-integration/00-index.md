@@ -1,6 +1,6 @@
 # Shard Index: Plans/orchestrator-subagent-integration.md
 
-Generated: 2026-06-23T05:51:04Z
+Generated: 2026-06-23T07:59:48Z
 
 Source SHA256: `523722d68883b82be4f685d79b5845b4b78405c1d122d9925d9e7fa902c0def6`
 

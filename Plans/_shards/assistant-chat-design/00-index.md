@@ -1,6 +1,6 @@
 # Shard Index: Plans/assistant-chat-design.md
 
-Generated: 2026-06-23T05:51:04Z
+Generated: 2026-06-23T07:59:48Z
 
 Source SHA256: `e890bf5d876ad0bc69ec7ad7781c87f2070ee3893c4b3db87f31054c6b189e67`
 
