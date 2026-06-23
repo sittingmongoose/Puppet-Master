@@ -1,5 +1,5 @@
 {
-  "agent_task": "compiled_validated_pending_governance_and_migration_refresh",
+  "agent_task": "compiled_validated_governance_sealed_no_open_work",
   "allowed_reads_default": [
     "state/current.json",
     "state/handoff.json",
@@ -33,7 +33,7 @@
     "missing_gui_related_classification",
     "worknode_creation_requested_before_contract"
   ],
-  "current_phase": "compiled_to_plans_pending_governance_seal",
+  "current_phase": "compiled_to_plans_governance_sealed",
   "forbidden_until_explicit_compile_or_governance_seal": [
     "Plans/.plan_index/**",
     "WorkNodes",
@@ -50,7 +50,7 @@
   ],
   "governance_status": "sealed",
   "last_compiled_at_utc": "2026-06-22T22:37:17Z",
-  "last_validated_at_utc": "2026-06-22T22:45:29Z",
+  "last_validated_at_utc": "2026-06-23T07:07:51Z",
   "ledger_id": "pldg-20260622-001-fff",
   "ledger_profile": "bootstrap_planning",
   "must_not_read_by_default": [
