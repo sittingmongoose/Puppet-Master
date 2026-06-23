@@ -1,0 +1,316 @@
+{
+  "audit_id": "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity",
+  "bounded_repair_summary": [
+    "Mapped exactly four repair-required audit rows in repair_impact_matrix.jsonl.",
+    "Synchronized only the stale operating capsule phase/task/validation timestamp fields for the sealed ledger projection.",
+    "Added four repair_closure_matrix.jsonl rows and four matching semantic closure registry rows.",
+    "Refreshed closure registry evidence hashes with scripts/pm-audit-closure.py refresh-hashes.",
+    "Left canonical Plan prose, PlanUnit indexes, shards, Spec Lock, evidence bundles, plan graph, auto-decisions, WorkNodes, NodeSeeds, runtime dispatch, implementation files, and production build tasks untouched."
+  ],
+  "closed_findings": [
+    {
+      "closure_status": "repaired",
+      "finding_family": "worktree_currentness",
+      "finding_key": "sfk-cc34ce26231d63bcfd452fdd",
+      "registry_closure_id": "closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-001",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": "1"
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "ledger_projection_drift",
+      "finding_key": "sfk-e2d145fdce3e754060317dcd",
+      "registry_closure_id": "closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-002",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": "2"
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "closure_registry_currentness",
+      "finding_key": "sfk-e1fcd45c960c7c2508038375",
+      "registry_closure_id": "closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-003",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": "3"
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "validator_failure",
+      "finding_key": "sfk-003b63f2385d012c589fe4bf",
+      "registry_closure_id": "closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-004",
+      "source_artifact": "validator_results.json",
+      "source_row": "results.closure"
+    }
+  ],
+  "files_changed_by_repair": [
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/ledgers/v2/pldg-20260622-001-fff/state/operating_capsule.json",
+    "Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/REPAIR_CERTIFICATION.md",
+    "Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/REPAIR_REPORT.md",
+    "Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/post_repair_audit_report.json",
+    "Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/repair_closure_matrix.jsonl",
+    "Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/repair_impact_matrix.jsonl",
+    "Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/repair_report.json"
+  ],
+  "generated_at_utc": "2026-06-23T07:14:54Z",
+  "governance": {
+    "governance_seal_refreshed": false,
+    "plan_index_regenerated": false,
+    "reason": "No canonical Plan docs, PlanUnit index outputs, shards, Spec Lock, evidence bundles, plan graph, or auto_decisions changed in this bounded repair."
+  },
+  "ledger_id": "pldg-20260622-001-fff",
+  "repair_required_count_after": 0,
+  "repair_required_count_before": 4,
+  "result": "pass_certified",
+  "schema_id": "pm.semantic_repair_report.v1",
+  "validator_summary": {
+    "command_count": 22,
+    "commands": [
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
+        "elapsed_seconds": 7.27,
+        "exit_code": 0,
+        "name": "target-ledger",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/01-target-ledger.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/01-target-ledger.out",
+        "stdout_sha256": "d37cb98d03178ca601114cf9859530966b6b58b43f91faa799eb74d14b83524e"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+        "elapsed_seconds": 14.618,
+        "exit_code": 0,
+        "name": "plan-index",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/02-plan-index.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/02-plan-index.out",
+        "stdout_sha256": "ef0e51a2779cd1e32e8375607d29d8c2420dc3fbd7cdb342556bddef82219583"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "elapsed_seconds": 13.9,
+        "exit_code": 0,
+        "name": "plan-migration",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/03-plan-migration.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/03-plan-migration.out",
+        "stdout_sha256": "b049c701fb19aee0f69fe6a98931f11b1ac551b208341fcf5f8cbe4bcd9e2926"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py run-gates",
+        "elapsed_seconds": 5.807,
+        "exit_code": 0,
+        "name": "run-gates",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/04-run-gates.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/04-run-gates.out",
+        "stdout_sha256": "54e5eee59ccf3f30ba1cff6e0ee284bfe7d130476215a4ff0b2c518803fb79cd"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py audit-governance",
+        "elapsed_seconds": 4.988,
+        "exit_code": 0,
+        "name": "audit-governance",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/05-audit-governance.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/05-audit-governance.out",
+        "stdout_sha256": "c09d7ad25a4db6996095c38d702c1398270ea106ac025eb8cad281f30ac4b923"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-shard-plans.py --check",
+        "elapsed_seconds": 0.461,
+        "exit_code": 0,
+        "name": "shard-check",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/06-shard-check.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/06-shard-check.out",
+        "stdout_sha256": "3ab2cfc9bad1005271dda52f8dfbf9d353cce40bdafbd5eca29941e1a60e3515"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "elapsed_seconds": 0.06,
+        "exit_code": 0,
+        "name": "validate-auto-decisions",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/07-validate-auto-decisions.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/07-validate-auto-decisions.out",
+        "stdout_sha256": "5fbe2b17fbcafcd46d25e38c58ac9a7c432a98d3e7b47d935e94ed6c63165108"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "elapsed_seconds": 0.066,
+        "exit_code": 0,
+        "name": "verify-spec-lock",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/08-verify-spec-lock.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/08-verify-spec-lock.out",
+        "stdout_sha256": "1a0778352c5aca3a5d49f28106add92f91be1e00c25b84fb52ab0fec9cd8f619"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py validate-evidence",
+        "elapsed_seconds": 0.58,
+        "exit_code": 0,
+        "name": "validate-evidence",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/09-validate-evidence.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/09-validate-evidence.out",
+        "stdout_sha256": "29b7c04c0173553afeb5ee4f81338cd8e02f3b1932adc6da123aee0f405d3248"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py validate-plan-graph",
+        "elapsed_seconds": 0.517,
+        "exit_code": 0,
+        "name": "validate-plan-graph",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/10-validate-plan-graph.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/10-validate-plan-graph.out",
+        "stdout_sha256": "c5b6adf31542b4545523701389bf9082f11e48228be14e64ee5bacc35e80df54"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py json-syntax",
+        "elapsed_seconds": 0.569,
+        "exit_code": 0,
+        "name": "json-syntax",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/11-json-syntax.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/11-json-syntax.out",
+        "stdout_sha256": "29bb014aa744d8e31e8cf6e8503a188fc28c547939cd46403278d85d75b95746"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py lint-contractrefs",
+        "elapsed_seconds": 3.5,
+        "exit_code": 0,
+        "name": "lint-contractrefs",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/12-lint-contractrefs.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/12-lint-contractrefs.out",
+        "stdout_sha256": "3d6c2360e3fa303db66657532c18fea860e44c9368ae4a094b5836ccfd77bcb8"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py lint-banned-phrases",
+        "elapsed_seconds": 0.071,
+        "exit_code": 0,
+        "name": "lint-banned-phrases",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/13-lint-banned-phrases.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/13-lint-banned-phrases.out",
+        "stdout_sha256": "6fcda92eb78c97f74e2e4d51f3e3835198b35ddcfed1474a191e55a08ef6cee9"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py check-project-artifacts",
+        "elapsed_seconds": 0.055,
+        "exit_code": 0,
+        "name": "check-project-artifacts",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/14-check-project-artifacts.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/14-check-project-artifacts.out",
+        "stdout_sha256": "674d25c0a4cd7b6bb19f7e51dbebc4f2f6162f3cb7d0ce5e90e7674b8b59cbf7"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
+        "elapsed_seconds": 0.111,
+        "exit_code": 0,
+        "name": "prd-planning-runtime-contracts",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/15-prd-planning-runtime-contracts.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/15-prd-planning-runtime-contracts.out",
+        "stdout_sha256": "0a1edcd221e55c661d9160709f8085bd982a1bef79f2e83f14a7f067364e6473"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
+        "elapsed_seconds": 0.056,
+        "exit_code": 0,
+        "name": "plans-to-code-handoff-schema",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/16-plans-to-code-handoff-schema.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/16-plans-to-code-handoff-schema.out",
+        "stdout_sha256": "e9adb4d0342eb7a0f7f12e6b466a369ca69b62934d36a640b3f9ec378bfed8d1"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-audit-closure.py validate",
+        "elapsed_seconds": 1.18,
+        "exit_code": 0,
+        "name": "closure-global",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/17-closure-global.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/17-closure-global.out",
+        "stdout_sha256": "79466d7a146cde34014fffa5dacb8c806a2a11afc530c03777f43e5084f62c47"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity --require-closure-matrix",
+        "elapsed_seconds": 1.193,
+        "exit_code": 0,
+        "name": "closure-audit-required-matrix",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/18-closure-audit-required-matrix.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/18-closure-audit-required-matrix.out",
+        "stdout_sha256": "46cca7a4065e70aaed5c827f4f28991593c7362d1c7055f052053b56e96a6347"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity --require-closure-matrix --source-artifact semantic_risks.jsonl --source-artifact validator_results.json",
+        "elapsed_seconds": 1.206,
+        "exit_code": 0,
+        "name": "closure-audit-required-sources",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/19-closure-audit-required-sources.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/19-closure-audit-required-sources.out",
+        "stdout_sha256": "50bae4fa0994b56af40676b2ee6d41cbd093748c947298e0eb0dbe5670d53667"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-audit-closure.py refresh-hashes --registry Plans/.audits/_semantic_closure_registry.jsonl --dry-run",
+        "elapsed_seconds": 1.128,
+        "exit_code": 0,
+        "name": "closure-refresh-dry-run",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/20-closure-refresh-dry-run.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/20-closure-refresh-dry-run.out",
+        "stdout_sha256": "1e2f76f0eefd97a7e14762aa85f6c2bb507197bfcbbe5ebd4c32bd0564d6ff86"
+      },
+      {
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests",
+        "elapsed_seconds": 0.19,
+        "exit_code": 0,
+        "name": "tests",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/21-tests.err",
+        "stderr_sha256": "e59d787a94cfb8b3b07d6e1c2701d00b512db320008114f4a11e9adce7063286",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/21-tests.out",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "command": "git diff --check",
+        "elapsed_seconds": 0.023,
+        "exit_code": 0,
+        "name": "git-diff-check",
+        "status": "pass",
+        "stderr_log": "/tmp/pm_fff_repair_cert_logs/22-git-diff-check.err",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_log": "/tmp/pm_fff_repair_cert_logs/22-git-diff-check.out",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "completed_at_utc": "2026-06-23T07:14:54Z",
+    "fail_count": 0,
+    "pass_count": 22,
+    "status": "pass"
+  }
+}
