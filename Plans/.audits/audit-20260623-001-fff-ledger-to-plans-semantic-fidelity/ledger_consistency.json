@@ -1,0 +1,99 @@
+{
+  "audit_id": "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity",
+  "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+  "ledger_id": "pldg-20260622-001-fff",
+  "linked_finding_keys": [
+    "sfk-cc34ce26231d63bcfd452fdd",
+    "sfk-e2d145fdce3e754060317dcd",
+    "sfk-e1fcd45c960c7c2508038375"
+  ],
+  "observation_ref": "HEAD",
+  "schema_id": "pm.semantic_audit.ledger_consistency.v1",
+  "status": "fail",
+  "subject_ref": "49585be3171e4cd064447525cdda9a2b2f95e191",
+  "summary": {
+    "compile_disposition_rows": 95,
+    "compile_queue_status": "compiled_to_plans_governance_sealed",
+    "compiled_atoms_reported": 83,
+    "compiled_plan_units": 25,
+    "current_phase": "compiled_to_plans_governance_sealed",
+    "design_atoms": 95,
+    "dirty_non_audit_count": 573,
+    "handoff_phase": "compiled_to_plans_governance_sealed",
+    "ledger_health_status": "pass_governance_sealed",
+    "not_for_plan_atoms_reported": 11,
+    "operating_capsule_current_phase": "compiled_to_plans_pending_governance_seal",
+    "registry_bucket": "sealed_ledgers",
+    "superseded_atoms_reported": 1
+  },
+  "warnings": [
+    {
+      "audit_id": "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "auto_decisions",
+        "governance_status",
+        "ledger_id"
+      ],
+      "evidence": {
+        "matching_auto_decision_rows": 0,
+        "validate_auto_decisions_status": "pass"
+      },
+      "exact_tokens": [
+        "pldg-20260622-001-fff",
+        "DiscoveryService"
+      ],
+      "finding_family": "auto_decision_provenance_warning",
+      "finding_key": "sfk-f8ae0fb08b393f85e37bfacc",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/auto_decisions.jsonl",
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": 6,
+      "subject_ref": "49585be3171e4cd064447525cdda9a2b2f95e191",
+      "summary": "validate-auto-decisions passes structurally, but auto_decisions.jsonl has no specific pldg-20260622-001-fff or DiscoveryService governance decision row; this is a provenance warning if the dirty generated governance artifacts are intended to represent a final seal."
+    },
+    {
+      "audit_id": "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "manual_source_lineage_artifacts",
+        "bootstrap_ledger_validator"
+      ],
+      "evidence": {
+        "ledger_health_warning": [
+          "state/doc_impact_matrix.json, state/consumer_conformance_matrix.json, state/precision_contract.json, state/implementation_gap_defaults.json, and state/deep_audit_report.json are manual/source-lineage artifacts not yet covered by the bootstrap ledger validator."
+        ]
+      },
+      "exact_tokens": [
+        "manual/source-lineage artifacts not yet covered by the bootstrap ledger validator"
+      ],
+      "finding_family": "manual_source_lineage_artifact_warning",
+      "finding_key": "sfk-049d55388a477d45e9ae7227",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260622-001-fff/validation/ledger_health.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": 7,
+      "subject_ref": "49585be3171e4cd064447525cdda9a2b2f95e191",
+      "summary": "Ledger readiness/support artifacts such as precision_contract, doc_impact_matrix, consumer_conformance_matrix, implementation_gap_defaults, and deep_audit_report are explicit source-lineage/manual evidence and are not yet fully covered by the bootstrap ledger validator."
+    }
+  ]
+}

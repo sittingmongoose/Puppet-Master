@@ -3,73 +3,6 @@
   "compiled_ledgers": [
     {
       "canonical_plan_targets": [
-        "Plans/00-plans-index.md"
-      ],
-      "compiled_owner_docs": [
-        "Plans/00-plans-index.md",
-        "Plans/Tools.md",
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/FileSafe.md",
-        "Plans/Permissions_System.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/FileManager.md",
-        "Plans/Planning_Wizard.md",
-        "Plans/PRD_Builder.md",
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Automated_Testing_System.md",
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "compiled_plan_outputs": [
-        "Plans/00-plans-index.md",
-        "Plans/Tools.md",
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/FileSafe.md",
-        "Plans/Permissions_System.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/FileManager.md",
-        "Plans/Planning_Wizard.md",
-        "Plans/PRD_Builder.md",
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Automated_Testing_System.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/.plan_index/plan_units.jsonl",
-        "Plans/.plan_index/doc_cards.json",
-        "Plans/.plan_index/dependencies.json",
-        "Plans/.plan_index/acceptance_units.jsonl",
-        "Plans/.plan_index/coverage_report.json",
-        "Plans/.plan_index/node_readiness_report.json"
-      ],
-      "created_at_utc": "2026-06-22T07:40:19Z",
-      "governance_status": "pending_seal",
-      "last_event_id": "evt-0027",
-      "last_updated_at": "2026-06-22T22:37:17Z",
-      "last_updated_at_utc": "2026-06-22T22:37:17Z",
-      "ledger_id": "pldg-20260622-001-fff",
-      "migration_refresh_status": "pending_explicit_refresh_lane",
-      "notes": "Compiled and final-validated. Bootstrap/index/diff checks pass; migration generated metadata refresh and governance seal remain explicit separate lanes.",
-      "phase": "compiled_to_plans_pending_governance_seal",
-      "primary_goal": "Collaboratively clarify and shape the placeholder feature `<fff>` into clear, complete, testable project intent before any canonical Plans edits.",
-      "resume_file": "Plans/ledgers/v2/pldg-20260622-001-fff/state/handoff.json",
-      "status": "compiled",
-      "title": "Feature <fff>",
-      "updated_at_utc": "2026-06-22T22:45:29Z"
-    },
-    {
-      "canonical_plan_targets": [
         "Plans/Contracts_V0.md",
         "Plans/orchestrator-subagent-integration.md"
       ],
@@ -161,6 +94,73 @@
   "paused_ledgers": [],
   "schema_id": "pm.bootstrap_ledger_registry.v1",
   "sealed_ledgers": [
+    {
+      "canonical_plan_targets": [
+        "Plans/00-plans-index.md"
+      ],
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "compiled_plan_outputs": [
+        "Plans/00-plans-index.md",
+        "Plans/Tools.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/PRD_Builder.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "created_at_utc": "2026-06-22T07:40:19Z",
+      "governance_status": "sealed",
+      "last_event_id": "evt-0029",
+      "last_updated_at": "2026-06-23T05:59:26Z",
+      "last_updated_at_utc": "2026-06-23T05:59:26Z",
+      "ledger_id": "pldg-20260622-001-fff",
+      "migration_refresh_status": "postseal_refreshed",
+      "notes": "Compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed. Migration validation, PlanUnit index validation, bootstrap ledger validators, configured shard check, Spec Lock/evidence/auto_decision/plan graph validation, run-gates, audit-governance, and git diff --check pass. node_readiness_status remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or runtime launches were created.",
+      "phase": "compiled_to_plans_governance_sealed",
+      "primary_goal": "Collaboratively clarify and shape the placeholder feature `<fff>` into clear, complete, testable project intent before any canonical Plans edits.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260622-001-fff/state/handoff.json",
+      "status": "sealed",
+      "title": "Feature <fff>",
+      "updated_at_utc": "2026-06-23T05:59:26Z"
+    },
     {
       "canonical_plan_targets": [
         "Plans/Planning_Ledger_System.md",
@@ -576,5 +576,5 @@
       "updated_at_utc": "2026-06-19T17:19:04Z"
     }
   ],
-  "updated_at_utc": "2026-06-22T22:37:17Z"
+  "updated_at_utc": "2026-06-23T05:59:26Z"
 }

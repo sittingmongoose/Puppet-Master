@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "e3e79857ee2447bc51a0e8791e01d004091e8011f9fd58200cec43574c653ddb"
+      "sha256": "011cd6f0f3e091ef219b31fea2d56308a0d634209e30c6664fe3647dde43f9c1"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "db05495509cc9ee285c9e786a22d4dfd52583485d86bf07ffc9434e229198834"
+      "sha256": "4adff728c9570a90ab9951afc0c4fbc2b6f8e1603a1027b5cae250117fd98832"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "e15360a6d2c143502091e4cdb1dc709689a99e87407d91e71c7badb8d0104a10"
+      "sha256": "367dee18c18064da8e7a51205d0f85589141ad0abc53e6acf34ce462b75331da"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "b107d7038a70fbb5fbf06b2e6601504215a23e5fea3822740fbc927e547f718a"
+      "sha256": "946c49f3af5158eb63a9e4690fa01f43aed523bff01d82160a13727fcb683298"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,37 +50,37 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "d0349829ad43fb6797c4fd3ec0a77104d8b65c140dfae04012949cfa3228f7a8"
+      "sha256": "644d83ced42147d6b57bddfc2ff0ee556cf60d1d2db24be4755aa6464ca3297d"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "b2ce84d876b82fea4daa3190ceed43fa5702eee9004fc4ea3a26511df514ce03"
+      "sha256": "4c48ebe3c302fff5496cf87f8e799498f40bafdb45936ba1da9e8f56d1a6e6ec"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "5fb0a8d54956371194a669903b3d35448918618e0f15e8f7b36efa36d78c0cd6"
+      "sha256": "c1982854f8bffb04dbf3172d50b1e922f0eb1523abc3b655172737a1fdda453e"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "d0e51c9004752a46c1d09b1b47c6b4f52c51b353eb0918fdb231dc954a402ff7"
+      "sha256": "f21b95c5dfdfd9ad8818074e2bc49f15bdd64d697c0d0cc31314e2160a20bd67"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c0c7fbd5a1f46267f6644c767ea6495a96452fb74081b4d9db6ca96a717d60bb"
+      "sha256": "d9ca4080f86fe5b06d3c52689db8cfa91a9f243a357e9ee427cea494c59699b1"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "2c36be9eec7c2b4df2d0f3799df18a9603b98339e533dbbb8a6f312f531bd458"
+      "sha256": "9ee54337392daa337d1a98782369a09a0f33b35a23b60d9e8fc415b8076ca58b"
     }
   ],
   "checks": [
     {
-      "details": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits passed with 5036 live PlanUnits.",
+      "details": "Migration validation passed after batch/final-summary hash refresh.",
       "name": "migration-validate",
       "result": "PASS"
     },
     {
-      "details": "Plan index regenerated after PM semantic audit terminal-state process PlanUnit updates; node_readiness remains blocked_compiler_contract_incomplete and no WorkNodes or NodeSeeds were created.",
+      "details": "Plan index validate passed with plan_unit_count=5197, acceptance_unit_count=18557, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -90,12 +90,12 @@
       "result": "PASS"
     },
     {
-      "details": "docs_checked=51; shards_checked=888; failures=[]",
+      "details": "Configured shards regenerated from 56 sources and 1008 shards.",
       "name": "shard-check",
       "result": "PASS"
     },
     {
-      "details": "node_readiness_status=blocked_compiler_contract_incomplete; no_worknodes_created=True; nodeseed_candidates_created=False.",
+      "details": "node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
       "name": "node-readiness-boundary",
       "result": "PASS"
     },
@@ -237,7 +237,7 @@
       "stdout_excerpt": "status=pass; plan_unit_count=5036; acceptance_unit_count=17890; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
@@ -276,7 +276,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "exit_code": 0
     },
     {
@@ -296,7 +296,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "exit_code": 0
     },
     {

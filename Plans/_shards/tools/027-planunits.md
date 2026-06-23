@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2258-L10735
+Source lines: L2258-L10740
 
-Source SHA256: `ec2739c2d3571449e92549b0cedcfd00c386db3383dca5ecdf46b52e0b0f3c32`
+Source SHA256: `fb4a4aad24e0700967dcc60c50dbc35ae5d5d35b4b63eadc4812f07c73bc753e`
 
 ---
 
@@ -60,7 +60,8 @@ preserved_exact_tokens:
 - '`task`'
 - '`lsp`'
 - '`/tool/search`'
-negative_constraints: []
+negative_constraints:
+- Do not use `tool.invoked.index_used` for fuzzy/path discovery; it remains only grep/Search sparse-n-gram disclosure.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -3839,6 +3840,9 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0049
+- pldg-20260622-001-fff:atom-0063
+- pldg-20260622-001-fff:atom-0076
+- pldg-20260622-001-fff:subagent_compile_proposals:Helmholtz
 preserved_exact_tokens:
 - blocked_sequence
 - approval_scope_key
@@ -3853,7 +3857,8 @@ preserved_exact_tokens:
 - system_notification
 - tool.invoked.index_used = true
 - 'false'
-negative_constraints: []
+negative_constraints:
+- Do not use `tool.invoked.index_used` for fuzzy/path discovery; it remains only grep/Search sparse-n-gram disclosure.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []

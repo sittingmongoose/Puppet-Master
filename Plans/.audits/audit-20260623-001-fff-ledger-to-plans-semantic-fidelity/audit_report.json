@@ -1,0 +1,77 @@
+{
+  "actionable_findings": [
+    {
+      "finding_family": "worktree_currentness",
+      "finding_key": "sfk-cc34ce26231d63bcfd452fdd",
+      "finding_level": "blocker",
+      "summary": "Closed-world audit cannot prove observation_ref=HEAD against a clean committed/pushed tree because non-audit Plans/governance/ledger paths were dirty before and after validator execution."
+    },
+    {
+      "finding_family": "ledger_projection_drift",
+      "finding_key": "sfk-e2d145fdce3e754060317dcd",
+      "finding_level": "blocker",
+      "summary": "Target ledger operating capsule is partially refreshed after governance seal: governance_status is sealed, but current_phase, agent_task, last_validated_at_utc, and some phase wording still describe a pending governance/migration state."
+    },
+    {
+      "finding_family": "closure_registry_currentness",
+      "finding_key": "sfk-e1fcd45c960c7c2508038375",
+      "finding_level": "blocker",
+      "summary": "Closure validator failed because the global semantic closure registry has stale evidence hashes after current plan/index/registry changes; audit-only scope cannot refresh the registry."
+    },
+    {
+      "finding_family": "validator_failure",
+      "finding_key": "sfk-003b63f2385d012c589fe4bf",
+      "finding_level": "blocker",
+      "summary": "pm-audit-closure.py validate failed; see validator_results.json results.closure"
+    }
+  ],
+  "audit_id": "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity",
+  "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+  "classification_counts": {
+    "equivalent_with_evidence": 188,
+    "exact_present": 316,
+    "missing_or_drift": 1,
+    "not_for_plan": 18,
+    "source_lineage_only": 19,
+    "stale_retired": 2,
+    "warning": 8
+  },
+  "closure_reuse_count": 0,
+  "generated_at_utc": "2026-06-23T06:31:31Z",
+  "head_ref": "49585be3171e4cd064447525cdda9a2b2f95e191",
+  "ledger_id": "pldg-20260622-001-fff",
+  "ledger_summary": {
+    "compile_disposition_rows": 95,
+    "compile_queue_status": "compiled_to_plans_governance_sealed",
+    "compiled_atoms_reported": 83,
+    "compiled_plan_units": 25,
+    "current_phase": "compiled_to_plans_governance_sealed",
+    "design_atoms": 95,
+    "dirty_non_audit_count": 573,
+    "handoff_phase": "compiled_to_plans_governance_sealed",
+    "ledger_health_status": "pass_governance_sealed",
+    "not_for_plan_atoms_reported": 11,
+    "operating_capsule_current_phase": "compiled_to_plans_pending_governance_seal",
+    "registry_bucket": "sealed_ledgers",
+    "superseded_atoms_reported": 1
+  },
+  "non_actionable_warning_count": 8,
+  "observation_ref": "HEAD",
+  "repair_required_count": 4,
+  "schema_id": "pm.semantic_audit.report.v1",
+  "scope_coverage_percent": 100.0,
+  "scope_manifest_rows": 552,
+  "scope_rows_classified": 552,
+  "status": "BLOCKED",
+  "subagent_inputs": [
+    "pm_evidence_mapper: projection drift and atom counts",
+    "pm_fidelity_auditor: T-072 lineage-shape warning and PlanUnit source claims",
+    "pm_owner_adjudicator: no owner misroutes, manual-source warning",
+    "pm_governance_auditor: dirty governance/generated state and no forbidden artifacts"
+  ],
+  "subject_ref": "49585be3171e4cd064447525cdda9a2b2f95e191",
+  "validator_fail_count": 1,
+  "validator_pass_count": 14,
+  "validator_results_status": "fail",
+  "validator_side_effect_count": 0
+}

@@ -1,15 +1,12 @@
 {
   "deferred_questions": [],
   "ledger_id": "pldg-20260622-001-fff",
-  "notes": "No open product questions, blockers, unclassified candidates, unresolved contradictions, or ledger-internal implementation gaps remain after final validation. Governance seal and migration metadata refresh are explicit separate lanes.",
+  "notes": "No open product questions, blockers, unclassified candidates, unresolved contradictions, ledger-internal implementation gaps, or governance-seal tasks remain after the latest validation.",
   "open_blockers": [],
   "open_questions": [],
   "schema_id": "pm.bootstrap_open_items.v1",
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
-  "unsealed_governance": [
-    "governance_status=pending_seal because live Plans docs and Plans/.plan_index changed; refresh/seal only in an explicit governance seal lane.",
-    "migration_refresh_status=pending_explicit_refresh_lane because Plans/.plan_migration/pds-20260611-002-atomize-planunits contains stale generated hashes/counts after live Plan edits."
-  ],
-  "updated_at_utc": "2026-06-22T22:45:29Z"
+  "unsealed_governance": [],
+  "updated_at_utc": "2026-06-23T05:59:26Z"
 }

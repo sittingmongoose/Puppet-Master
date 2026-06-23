@@ -18,7 +18,7 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "e3e79857ee2447bc51a0e8791e01d004091e8011f9fd58200cec43574c653ddb"
+      "sha256": "011cd6f0f3e091ef219b31fea2d56308a0d634209e30c6664fe3647dde43f9c1"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "003ae7165c09ae2c4eb1fcba67203d3531e21f561a84c24e2f620b32cc203de8"
+      "sha256": "66fc76d0962be6761dc62b655de7c19b350d3e83d21b0456c6e4c83503be358a"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -84,7 +84,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "pm-plan-index validate after audit-20260618-009 repair: 5166 PlanUnits, 18423 acceptance units, node readiness blocked_compiler_contract_incomplete, no WorkNodes/NodeSeeds created."
+      "details": "Plan index validate passed with plan_unit_count=5197, acceptance_unit_count=18557, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -185,6 +185,21 @@
       "name": "audit-20260619-009-repair",
       "result": "PASS",
       "details": "Bounded repair closes five audit-009 actionable rows without WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks."
+    },
+    {
+      "name": "migration-validate",
+      "result": "PASS",
+      "details": "Migration validation passed after batch/final-summary hash refresh."
+    },
+    {
+      "name": "shard-check",
+      "result": "PASS",
+      "details": "Configured shards regenerated from 56 sources and 1008 shards."
+    },
+    {
+      "name": "node-readiness-boundary",
+      "result": "PASS",
+      "details": "node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     }
   ],
   "commands_run": [
@@ -288,7 +303,7 @@
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "exit_code": 0
     },
     {
@@ -300,7 +315,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+      "cmd": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
       "exit_code": 0
     },
     {
