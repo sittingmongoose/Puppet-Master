@@ -61,16 +61,16 @@
     "Plans/.plan_index/node_readiness_report.json"
   ],
   "compiled_plan_units_count": 25,
-  "current_phase": "compiled_to_plans_pending_governance_seal",
+  "current_phase": "compiled_to_plans_governance_sealed",
   "cursor": {
     "last_decision_id": "dec-0016",
-    "last_event_id": "evt-0027",
-    "last_question_id": "q-0016",
-    "next_action": "No further ledger product/design work is open. Await explicit governance seal or migration-refresh instruction; do not seal governance in this lane.",
+    "last_event_id": "evt-0029",
+    "last_question_id": "q-0017",
+    "next_action": "No further ledger product/design or governance-seal work is open.",
     "next_atom_id": "atom-0096",
     "next_decision_id": "dec-0017",
-    "next_event_id": "evt-0028",
-    "next_question_id": "q-0017"
+    "next_event_id": "evt-0030",
+    "next_question_id": "q-0018"
   },
   "deferred_questions": [],
   "do_not_redo": [
@@ -81,10 +81,10 @@
     "Do not treat WorkNode mentions as permission to create WorkNodes or executable queues.",
     "Do not re-clone fff or OpenCode unless Jared asks for refreshed external research; both temporary clones were deleted after inspection."
   ],
-  "governance_status": "pending_seal",
-  "last_completed_action": "Compiled accepted native discovery atoms into live canonical PlanUnits, regenerated allowed Plans/.plan_index outputs, recorded atom dispositions, and completed final validation checks.",
-  "last_event_id": "evt-0027",
-  "last_known_good_state": "Live Plans docs contain canonical PlanUnits for native PM-owned fff-inspired DiscoveryService behavior across compiled_owner_docs. Bootstrap ledger validator, PlanUnit index validator, git diff --check, and forbidden-artifact diff checks pass. Plan migration validation is pending refresh because generated migration metadata is stale after live Plan edits. Governance remains pending_seal; Spec Lock, shards, evidence, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, runtime launches, implementation files, and production build tasks remain untouched.",
+  "governance_status": "sealed",
+  "last_completed_action": "Completed explicit governance seal after refreshed migration metadata, configured shards, evidence bundles, Spec Lock, and governance validators all passed.",
+  "last_event_id": "evt-0029",
+  "last_known_good_state": "Live Plans docs contain canonical PlanUnits for native PM-owned fff-inspired DiscoveryService behavior across compiled_owner_docs. Bootstrap ledger validators, PlanUnit index validator, migration validator, shard check, run-gates, validate-auto-decisions, verify-spec-lock, validate-evidence, validate-plan-graph, audit-governance, git diff --check, and forbidden-artifact path checks pass. Governance is sealed; node_readiness_status remains blocked_compiler_contract_incomplete; WorkNodes, NodeSeeds, executable queues, final node manifests, runtime launches, implementation files, and production build tasks remain absent.",
   "latest_audit_ref": "Plans/ledgers/v2/pldg-20260622-001-fff/state/deep_audit_report.json",
   "latest_audit_status": "reconciled_ledger_only_with_external_governance_caveat",
   "ledger_id": "pldg-20260622-001-fff",
@@ -92,24 +92,22 @@
     "state/doc_impact_matrix.json",
     "state/consumer_conformance_matrix.json"
   ],
-  "next_action": "No further ledger product/design work is open. Await explicit governance seal or migration-refresh instruction; do not seal governance in this lane.",
-  "next_safe_action": "No further ledger product/design work is open. Await explicit governance seal or migration-refresh instruction; do not seal governance in this lane.",
+  "next_action": "No further ledger product/design or governance-seal work is open.",
+  "next_safe_action": "No further ledger product/design or governance-seal work is open.",
   "not_for_plan_atoms_count": 11,
   "open_blockers": [],
   "open_questions": [],
-  "phase": "compiled_to_plans_pending_governance_seal",
+  "phase": "compiled_to_plans_governance_sealed",
   "precision_artifacts": [
     "state/precision_contract.json",
     "state/implementation_gap_defaults.json"
   ],
   "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "updated_at_utc": "2026-06-22T22:45:29Z",
+  "updated_at_utc": "2026-06-23T05:59:26Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
-    "canonical_target_policy": "canonical_plan_targets restricted to governance-covered queue target; compiled_owner_docs lists all touched owner docs pending explicit governance seal.",
+    "canonical_target_policy": "canonical_plan_targets restricted to governance-covered queue target; compiled_owner_docs lists all touched owner docs after explicit governance seal.",
     "caveats": [
-      "Governance seal remains pending because live Plans docs and Plans/.plan_index changed.",
-      "Plan migration generated metadata is stale after live Plan edits and must be refreshed only in an explicit migration/governance refresh lane.",
       "Readiness artifacts are manual/source-lineage and not yet bootstrap-validator-backed."
     ],
     "followup_checks": [
@@ -117,13 +115,15 @@
       "PlanUnit index validator pass",
       "git diff --check pass",
       "forbidden governance/build artifact diff check clean",
-      "migration validator run and failure classified as stale generated metadata only"
+      "migration validator pass after refresh",
+      "configured shard check pass",
+      "governance validators pass"
     ],
     "forbidden_artifact_diff_check": "pass",
     "git_diff_check": "pass",
-    "governance_status": "pending_seal",
-    "ledger_health": "pass_compiled_pending_governance_and_migration_refresh",
-    "migration_refresh_status": "pending_explicit_refresh_lane",
+    "governance_status": "sealed",
+    "ledger_health": "pass_governance_sealed",
+    "migration_refresh_status": "postseal_refreshed",
     "plan_index": "generated_and_validated_pass",
     "plan_index_validate": "pass",
     "plan_migration_failure_summary": {
@@ -150,7 +150,7 @@
         "Plans/storage-plan.md"
       ]
     },
-    "plan_migration_validate": "fail_expected_stale_generated_metadata_after_live_plan_edits",
+    "plan_migration_validate": "pass",
     "safe_content_checks": "Updated live non-pipeline Plans owner docs, Plans/.plan_index generated outputs, and ledger state only; forbidden governance/build artifacts remain untouched."
   }
 }

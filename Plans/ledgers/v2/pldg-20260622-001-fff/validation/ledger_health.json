@@ -93,15 +93,20 @@
     },
     {
       "check_id": "final-validation-0020",
-      "status": "pass_with_external_refresh_pending",
-      "summary": "Bootstrap ledger validator, PlanUnit index validator, git diff --check, and forbidden-artifact diff checks pass. Plan migration validator reports stale generated metadata after live Plan edits, requiring a separate explicit migration/governance refresh lane."
+      "status": "pass",
+      "summary": "Bootstrap ledger validator, PlanUnit index validator, git diff --check, and forbidden-artifact diff checks pass. Plan migration validator initially reported stale generated metadata after live Plan edits; this was later refreshed in the explicit governance seal lane."
+    },
+    {
+      "check_id": "governance-seal-0021",
+      "status": "pass",
+      "summary": "Explicit governance seal completed: migration validate, PlanUnit index validate, bootstrap ledger validators, shard check, run-gates, validate-auto-decisions, verify-spec-lock, validate-evidence, validate-plan-graph, audit-governance, and git diff --check all pass. node_readiness_status remains blocked_compiler_contract_incomplete and no forbidden node/build artifacts were created."
     }
   ],
-  "last_validated_at_utc": "2026-06-22T22:45:29Z",
+  "last_validated_at_utc": "2026-06-23T05:59:26Z",
   "ledger_id": "pldg-20260622-001-fff",
-  "notes": "Ledger compiled to live Plans docs and allowed Plans/.plan_index outputs. Final bootstrap/index/diff validations pass. Migration validation is pending refresh because generated migration metadata is stale after live Plan edits. canonical_plan_targets is restricted to the governance-covered queue target; compiled_owner_docs records all touched owner docs pending explicit governance seal.",
+  "notes": "Ledger compiled to live Plans docs and allowed Plans/.plan_index outputs. Governance seal is complete: migration metadata, configured shards, evidence bundles, Spec Lock, plan graph validation, and auto_decision validation are current. canonical_plan_targets is restricted to the governance-covered queue target; compiled_owner_docs records all touched owner docs.",
   "schema_id": "pm.bootstrap_ledger_health.v1",
-  "status": "pass_compiled_pending_governance_and_migration_refresh",
+  "status": "pass_governance_sealed",
   "summary": {
     "blockers": 0,
     "candidate_atoms": 0,
@@ -112,17 +117,17 @@
     "decisions": 16,
     "deferred_questions": 0,
     "design_atoms": 95,
-    "events": 27,
-    "governance_status": "pending_seal",
-    "migration_refresh_status": "pending_explicit_refresh_lane",
+    "events": 29,
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "migration_refresh_status": "postseal_refreshed",
     "not_for_plan_atoms": 11,
     "open_blockers": 0,
-    "open_questions": 0
+    "open_questions": 0,
+    "questions": 17
   },
-  "updated_at_utc": "2026-06-22T22:45:29Z",
+  "updated_at_utc": "2026-06-23T05:59:26Z",
   "warnings": [
-    "Governance seal remains pending because live Plans docs and Plans/.plan_index changed.",
-    "Plans/.plan_migration/pds-20260611-002-atomize-planunits has stale generated hashes/counts after live Plan edits; refresh only in an explicit migration/governance lane.",
     "state/doc_impact_matrix.json, state/consumer_conformance_matrix.json, state/precision_contract.json, state/implementation_gap_defaults.json, and state/deep_audit_report.json are manual/source-lineage artifacts not yet covered by the bootstrap ledger validator."
   ]
 }

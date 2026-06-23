@@ -48,7 +48,7 @@
     "Plans/.plan_index/** before explicit index phase",
     "generated governance artifacts before explicit governance seal"
   ],
-  "governance_status": "pending_seal",
+  "governance_status": "sealed",
   "last_compiled_at_utc": "2026-06-22T22:37:17Z",
   "last_validated_at_utc": "2026-06-22T22:45:29Z",
   "ledger_id": "pldg-20260622-001-fff",
@@ -59,7 +59,7 @@
     "Plans/ledgers/work_items/**",
     "**/working_ledger.md"
   ],
-  "next_action": "No further ledger product/design work is open. Await explicit governance seal or migration-refresh instruction.",
+  "next_action": "No further ledger product/design or governance-seal work is open.",
   "required_end_of_turn_actions": [
     "append_turn_event",
     "upsert_design_atoms",

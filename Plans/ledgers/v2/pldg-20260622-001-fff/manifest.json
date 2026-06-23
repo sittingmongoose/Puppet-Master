@@ -71,23 +71,23 @@
     "questions": "records/questions.jsonl",
     "subagent_compile_proposals": "state/subagent_compile_proposals.json"
   },
-  "governance_status": "pending_seal",
-  "last_event_id": "evt-0027",
+  "governance_status": "sealed",
+  "last_event_id": "evt-0029",
   "ledger_id": "pldg-20260622-001-fff",
-  "migration_refresh_status": "pending_explicit_refresh_lane",
-  "notes": "Compiled to live Plans owner docs and allowed Plans/.plan_index outputs; final bootstrap/index/diff validations passed. Migration validator reports stale generated migration metadata after live Plan edits, which is pending an explicit migration/governance refresh lane. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or updated.",
+  "migration_refresh_status": "postseal_refreshed",
+  "notes": "Compiled to live Plans owner docs and allowed Plans/.plan_index outputs; governance_status=sealed after explicit governance refresh. Migration metadata, configured shards, evidence bundles, Spec Lock, plan graph validation, and auto_decision validation are current. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or runtime launches were created.",
   "profile": "bootstrap_planning",
   "record_counts": {
     "blockers": 0,
     "corrections": 0,
     "decisions": 16,
     "design_atoms": 95,
-    "events": 27,
-    "questions": 16
+    "events": 29,
+    "questions": 17
   },
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
   "source_context": "User requested a new v2 PM Bootstrap Planning Ledger for Feature: <fff> on 2026-06-22, then clarified `<fff>` as fff / OpenCode / Cursor fast regex search research for Puppet Master. This is a conversational design/spec thread, not a Goal run and not canonical Plans prose.",
-  "status": "compiled",
+  "status": "sealed",
   "title": "Feature <fff>",
-  "updated_at_utc": "2026-06-22T22:45:29Z"
+  "updated_at_utc": "2026-06-23T05:59:26Z"
 }
