@@ -1,0 +1,207 @@
+{
+  "schema_id": "pm.semantic_audit.ledger_consistency.v1",
+  "audit_id": "audit-20260623-003-fff-closed-world-semantic-fidelity",
+  "ledger_id": "pldg-20260622-001-fff",
+  "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+  "subject_ref": "fc81062b20df4ebfe50151c31edb80d3b6ba3db9",
+  "observation_ref": "HEAD",
+  "status": "pass_with_warnings",
+  "summary": {
+    "registry_bucket": "sealed_ledgers",
+    "current_phase": "compiled_to_plans_governance_sealed",
+    "handoff_phase": "compiled_to_plans_governance_sealed",
+    "compile_queue_status": "compiled_to_plans_governance_sealed",
+    "governance_status": "sealed",
+    "ledger_health_status": "pass_governance_sealed",
+    "compiled_plan_units": 25,
+    "compiled_atoms_reported": 83,
+    "not_for_plan_atoms_reported": 11,
+    "design_atoms": 95,
+    "superseded_atoms_reported": 1,
+    "closure_reuse_count": 5,
+    "head_ref": "fc81062b20df4ebfe50151c31edb80d3b6ba3db9",
+    "subject_ref": "fc81062b20df4ebfe50151c31edb80d3b6ba3db9",
+    "dirty_non_audit_count": 0,
+    "operating_capsule_current_phase": "compiled_to_plans_governance_sealed",
+    "operating_capsule_agent_task": "compiled_validated_governance_sealed_no_open_work"
+  },
+  "schema_contract_identity_status": "previously_closed_valid",
+  "schema_contract_identity_finding_key": "sfk-2201fa3cba0d9f196f0a2fc4",
+  "schema_contract_identity_summary": "Closed by audit-002 repair: CV-291 is now the canonical exact value registry and T-161 consumes it directly.",
+  "linked_finding_keys": [
+    "sfk-003b63f2385d012c589fe4bf",
+    "sfk-049d55388a477d45e9ae7227",
+    "sfk-2201fa3cba0d9f196f0a2fc4",
+    "sfk-7e4042e67e547577f6552392",
+    "sfk-85cf522fa090064f39a65a45",
+    "sfk-cc34ce26231d63bcfd452fdd",
+    "sfk-e1fcd45c960c7c2508038375",
+    "sfk-e2d145fdce3e754060317dcd",
+    "sfk-f8ae0fb08b393f85e37bfacc"
+  ],
+  "warnings": [
+    {
+      "audit_id": "audit-20260623-003-fff-closed-world-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "source_lineage",
+        "source_atom_ids"
+      ],
+      "evidence": {
+        "plan_unit_id": "T-072",
+        "source_atom_ids_field_present": false,
+        "source_lineage_present": true
+      },
+      "exact_tokens": [
+        "pldg-20260622-001-fff:atom-0063",
+        "pldg-20260622-001-fff:atom-0076",
+        "source_atom_ids"
+      ],
+      "finding_family": "planunit_lineage_shape_warning",
+      "finding_key": "sfk-7e4042e67e547577f6552392",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/Tools.md"
+      ],
+      "plan_unit_ids": [
+        "T-072"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [
+        "atom-0063",
+        "atom-0076"
+      ],
+      "source_row": 6,
+      "subject_ref": "fc81062b20df4ebfe50151c31edb80d3b6ba3db9",
+      "summary": "T-072 preserves reciprocal source_lineage to atom-0063 and atom-0076 but lacks the newer source_atom_ids helper field used by the other fff PlanUnits."
+    },
+    {
+      "audit_id": "audit-20260623-003-fff-closed-world-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "auto_decisions",
+        "governance_status",
+        "ledger_id"
+      ],
+      "evidence": {
+        "matching_auto_decision_rows": 0,
+        "validate_auto_decisions_status": "pass"
+      },
+      "exact_tokens": [
+        "pldg-20260622-001-fff",
+        "DiscoveryService"
+      ],
+      "finding_family": "auto_decision_provenance_warning",
+      "finding_key": "sfk-f8ae0fb08b393f85e37bfacc",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/auto_decisions.jsonl",
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": 7,
+      "subject_ref": "fc81062b20df4ebfe50151c31edb80d3b6ba3db9",
+      "summary": "validate-auto-decisions passes structurally, but auto_decisions.jsonl has no specific pldg-20260622-001-fff or DiscoveryService governance decision row; this remains a provenance warning, not an open repair requirement."
+    },
+    {
+      "audit_id": "audit-20260623-003-fff-closed-world-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "manual_source_lineage_artifacts",
+        "bootstrap_ledger_validator"
+      ],
+      "evidence": {
+        "ledger_health_warning": [
+          "state/doc_impact_matrix.json, state/consumer_conformance_matrix.json, state/precision_contract.json, state/implementation_gap_defaults.json, and state/deep_audit_report.json are manual/source-lineage artifacts not yet covered by the bootstrap ledger validator."
+        ]
+      },
+      "exact_tokens": [
+        "manual/source-lineage artifacts not yet covered by the bootstrap ledger validator"
+      ],
+      "finding_family": "manual_source_lineage_artifact_warning",
+      "finding_key": "sfk-049d55388a477d45e9ae7227",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260622-001-fff/validation/ledger_health.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": 8,
+      "subject_ref": "fc81062b20df4ebfe50151c31edb80d3b6ba3db9",
+      "summary": "Ledger readiness/support artifacts such as precision_contract, doc_impact_matrix, consumer_conformance_matrix, implementation_gap_defaults, and deep_audit_report are explicit source-lineage/manual evidence and are not yet fully covered by the bootstrap ledger validator."
+    },
+    {
+      "audit_id": "audit-20260623-003-fff-closed-world-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "canonical_text",
+        "depends_on",
+        "gui_related",
+        "owner_doc",
+        "source_atom_ids",
+        "source_lineage",
+        "unblocks"
+      ],
+      "evidence": {
+        "depends_on": [],
+        "missing_atoms": [],
+        "plan_unit_line": 4800,
+        "source_atom_ids_field_present": false,
+        "source_lineage_count": 4,
+        "unblocks": []
+      },
+      "exact_tokens": [
+        "Blocked and denied tool packets expose the shared runtime-facing blocked payload fields and canonical `tool.invoked` / `tool.denied` events; grep/Search acceleration reports optional `index_used`.",
+        "Do not use `tool.invoked.index_used` for fuzzy/path discovery; it remains only grep/Search sparse-n-gram disclosure.",
+        "Escalation ladder is preserved.",
+        "`tool.invoked.index_used=true` means sparse-n-gram narrowing served the query; false means fallback or another unindexed path.",
+        "pldg-20260622-001-fff:atom-0063",
+        "pldg-20260622-001-fff:atom-0076",
+        "source_atom_ids"
+      ],
+      "finding_family": "planunit_source_lineage",
+      "finding_key": "sfk-85cf522fa090064f39a65a45",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/Tools.md"
+      ],
+      "plan_unit_ids": [
+        "T-072"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "planunit_source_claims.jsonl",
+      "source_atom_ids": [
+        "atom-0063",
+        "atom-0076"
+      ],
+      "source_row": 19,
+      "subject_ref": "fc81062b20df4ebfe50151c31edb80d3b6ba3db9",
+      "summary": "PlanUnit T-072 has reciprocal ledger source_lineage for atom-0063 and atom-0076, but unlike the new fff PlanUnits it lacks the helper source_atom_ids field; this is a legacy-shape warning, not missing lineage."
+    }
+  ],
+  "findings": [],
+  "repair_required": false,
+  "finding_level": "observation"
+}
