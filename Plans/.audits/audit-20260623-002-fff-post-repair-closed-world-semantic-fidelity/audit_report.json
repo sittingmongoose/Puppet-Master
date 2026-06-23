@@ -1,0 +1,152 @@
+{
+  "actionable_findings": [
+    {
+      "classification": "missing_or_drift",
+      "finding_family": "schema_contract_identity_drift",
+      "finding_key": "sfk-2201fa3cba0d9f196f0a2fc4",
+      "finding_level": "blocker",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": 7,
+      "summary": "The canonical Plans compile does not fully promote the exact DiscoveryService value registry required by atom-0076. CV-291 enumerates surface_type, target_kind, and receipt events, while T-161 depends on enum values from CV-291 and the precision contract; the full registry for intent, path_kind, match_type, freshness_state, fallback_state, policy_decision, error_code, and receipt_event remains only in ledger source-lineage with compile_permission false."
+    }
+  ],
+  "audit_id": "audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+  "classification_counts": {
+    "equivalent_with_evidence": 187,
+    "exact_present": 324,
+    "missing_or_drift": 1,
+    "not_for_plan": 18,
+    "previously_closed": 1,
+    "source_lineage_only": 19,
+    "stale_retired": 2
+  },
+  "closure_reuse_count": 4,
+  "generated_at_utc": "2026-06-23T07:36:02Z",
+  "head_ref": "00f71b20f7c8807d4982654e521a7309f92ba5a5",
+  "ledger_id": "pldg-20260622-001-fff",
+  "ledger_summary": {
+    "closure_reuse_count": 4,
+    "compile_disposition_rows": 95,
+    "compile_queue_status": "compiled_to_plans_governance_sealed",
+    "compiled_atoms_reported": 83,
+    "compiled_plan_units": 25,
+    "current_phase": "compiled_to_plans_governance_sealed",
+    "design_atoms": 95,
+    "dirty_non_audit_count": 0,
+    "governance_status": "sealed",
+    "handoff_phase": "compiled_to_plans_governance_sealed",
+    "head_ref": "00f71b20f7c8807d4982654e521a7309f92ba5a5",
+    "ledger_health_status": "pass_governance_sealed",
+    "not_for_plan_atoms_reported": 11,
+    "operating_capsule_agent_task": "compiled_validated_governance_sealed_no_open_work",
+    "operating_capsule_current_phase": "compiled_to_plans_governance_sealed",
+    "registry_bucket": "sealed_ledgers",
+    "subject_ref": "b8acd2ec8819dcf04c51e49ed5faf4eccd46a111",
+    "superseded_atoms_reported": 1
+  },
+  "next_action": "Terminal BLOCKED: one repair-required semantic finding remains. A bounded repair lane should promote the complete exact DiscoveryService value registry into canonical owner docs, then rerun the audit/closure loop.",
+  "non_actionable_findings": [
+    {
+      "classification": "warning",
+      "finding_family": "planunit_source_lineage",
+      "finding_key": "sfk-85cf522fa090064f39a65a45",
+      "finding_level": "warning",
+      "summary": "PlanUnit T-072 has reciprocal ledger source_lineage for atom-0063 and atom-0076, but unlike the new fff PlanUnits it lacks the helper source_atom_ids field; this is a legacy-shape warning, not missing lineage."
+    },
+    {
+      "classification": "previously_closed",
+      "finding_family": "worktree_currentness",
+      "finding_key": "sfk-cc34ce26231d63bcfd452fdd",
+      "finding_level": "observation",
+      "summary": "Previously repair-required finding is closed by audit-20260623-001 repair certification and remains closed at this observation."
+    },
+    {
+      "classification": "previously_closed",
+      "finding_family": "ledger_projection_drift",
+      "finding_key": "sfk-e2d145fdce3e754060317dcd",
+      "finding_level": "observation",
+      "summary": "Previously repair-required finding is closed by audit-20260623-001 repair certification and remains closed at this observation."
+    },
+    {
+      "classification": "previously_closed",
+      "finding_family": "closure_registry_currentness",
+      "finding_key": "sfk-e1fcd45c960c7c2508038375",
+      "finding_level": "observation",
+      "summary": "Previously repair-required finding is closed by audit-20260623-001 repair certification and remains closed at this observation."
+    },
+    {
+      "classification": "warning",
+      "finding_family": "planunit_lineage_shape_warning",
+      "finding_key": "sfk-7e4042e67e547577f6552392",
+      "finding_level": "warning",
+      "summary": "T-072 preserves reciprocal source_lineage to atom-0063 and atom-0076 but lacks the newer source_atom_ids helper field used by the other fff PlanUnits."
+    },
+    {
+      "classification": "warning",
+      "finding_family": "auto_decision_provenance_warning",
+      "finding_key": "sfk-f8ae0fb08b393f85e37bfacc",
+      "finding_level": "warning",
+      "summary": "validate-auto-decisions passes structurally, but auto_decisions.jsonl has no specific pldg-20260622-001-fff or DiscoveryService governance decision row; this remains a provenance warning, not an open repair requirement."
+    },
+    {
+      "classification": "warning",
+      "finding_family": "manual_source_lineage_artifact_warning",
+      "finding_key": "sfk-049d55388a477d45e9ae7227",
+      "finding_level": "warning",
+      "summary": "Ledger readiness/support artifacts such as precision_contract, doc_impact_matrix, consumer_conformance_matrix, implementation_gap_defaults, and deep_audit_report are explicit source-lineage/manual evidence and are not yet fully covered by the bootstrap ledger validator."
+    }
+  ],
+  "non_actionable_warning_count": 4,
+  "observation_ref": "HEAD",
+  "previously_closed_count": 3,
+  "previously_closed_findings": [
+    {
+      "closure_id": "closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-001",
+      "closure_status": "repaired",
+      "finding_family": "worktree_currentness",
+      "finding_key": "sfk-cc34ce26231d63bcfd452fdd"
+    },
+    {
+      "closure_id": "closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-002",
+      "closure_status": "repaired",
+      "finding_family": "ledger_projection_drift",
+      "finding_key": "sfk-e2d145fdce3e754060317dcd"
+    },
+    {
+      "closure_id": "closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-003",
+      "closure_status": "repaired",
+      "finding_family": "closure_registry_currentness",
+      "finding_key": "sfk-e1fcd45c960c7c2508038375"
+    },
+    {
+      "closure_id": "closure-audit-20260623-001-fff-ledger-to-plans-semantic-fidelity-repair-004",
+      "closure_status": "repaired",
+      "finding_family": "validator_failure",
+      "finding_key": "sfk-003b63f2385d012c589fe4bf"
+    }
+  ],
+  "repair_impact_matrix_rows": 1,
+  "repair_required_count": 1,
+  "schema_id": "pm.semantic_audit.report.v1",
+  "scope_coverage_percent": 100.0,
+  "scope_manifest_rows": 552,
+  "scope_rows_classified": 552,
+  "semantic_risk_classification_counts": {
+    "missing_or_drift": 1,
+    "previously_closed": 3,
+    "warning": 3
+  },
+  "status": "BLOCKED",
+  "subagent_inputs": [
+    "pm_evidence_mapper: 95 design atoms, 16 decisions, 17 questions, 29 events; 83 compiled atoms, 11 not-for-plan, 1 superseded, 25 PlanUnits; four prior closure rows available for reuse",
+    "pm_fidelity_auditor: one repair-required blocker for schema contract identity; audit-artifact stale covered_artifacts references corrected in this bundle",
+    "pm_owner_adjudicator: no repair_required owner-routing issues; 25 PlanUnits across 19 owner docs",
+    "pm_governance_auditor: validators pass and generated/governance state remains clean; terminal audit status should reflect semantic finding, not validator failure"
+  ],
+  "subject_ref": "b8acd2ec8819dcf04c51e49ed5faf4eccd46a111",
+  "validator_fail_count": 0,
+  "validator_pass_count": 18,
+  "validator_results_status": "pass",
+  "validator_side_effect_count": 0
+}

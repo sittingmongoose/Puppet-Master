@@ -1,0 +1,148 @@
+{
+  "audit_id": "audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+  "ledger_id": "pldg-20260622-001-fff",
+  "linked_finding_keys": [
+    "sfk-7e4042e67e547577f6552392",
+    "sfk-f8ae0fb08b393f85e37bfacc",
+    "sfk-049d55388a477d45e9ae7227",
+    "sfk-2201fa3cba0d9f196f0a2fc4"
+  ],
+  "observation_ref": "HEAD",
+  "schema_contract_identity_finding_key": "sfk-2201fa3cba0d9f196f0a2fc4",
+  "schema_contract_identity_status": "missing_or_drift",
+  "schema_contract_identity_summary": "The full exact DiscoveryService value registry remains source-lineage-only in precision_contract.json instead of fully promoted to canonical Plans.",
+  "schema_id": "pm.semantic_audit.ledger_consistency.v1",
+  "status": "blocked",
+  "subject_ref": "b8acd2ec8819dcf04c51e49ed5faf4eccd46a111",
+  "summary": {
+    "closure_reuse_count": 4,
+    "compile_disposition_rows": 95,
+    "compile_queue_status": "compiled_to_plans_governance_sealed",
+    "compiled_atoms_reported": 83,
+    "compiled_plan_units": 25,
+    "current_phase": "compiled_to_plans_governance_sealed",
+    "design_atoms": 95,
+    "dirty_non_audit_count": 0,
+    "governance_status": "sealed",
+    "handoff_phase": "compiled_to_plans_governance_sealed",
+    "head_ref": "00f71b20f7c8807d4982654e521a7309f92ba5a5",
+    "ledger_health_status": "pass_governance_sealed",
+    "not_for_plan_atoms_reported": 11,
+    "operating_capsule_agent_task": "compiled_validated_governance_sealed_no_open_work",
+    "operating_capsule_current_phase": "compiled_to_plans_governance_sealed",
+    "registry_bucket": "sealed_ledgers",
+    "subject_ref": "b8acd2ec8819dcf04c51e49ed5faf4eccd46a111",
+    "superseded_atoms_reported": 1
+  },
+  "warnings": [
+    {
+      "audit_id": "audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "source_lineage",
+        "source_atom_ids"
+      ],
+      "evidence": {
+        "plan_unit_id": "T-072",
+        "source_atom_ids_field_present": false,
+        "source_lineage_present": true
+      },
+      "exact_tokens": [
+        "pldg-20260622-001-fff:atom-0063",
+        "pldg-20260622-001-fff:atom-0076",
+        "source_atom_ids"
+      ],
+      "finding_family": "planunit_lineage_shape_warning",
+      "finding_key": "sfk-7e4042e67e547577f6552392",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/Tools.md"
+      ],
+      "plan_unit_ids": [
+        "T-072"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [
+        "atom-0063",
+        "atom-0076"
+      ],
+      "source_row": 4,
+      "subject_ref": "b8acd2ec8819dcf04c51e49ed5faf4eccd46a111",
+      "summary": "T-072 preserves reciprocal source_lineage to atom-0063 and atom-0076 but lacks the newer source_atom_ids helper field used by the other fff PlanUnits."
+    },
+    {
+      "audit_id": "audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "auto_decisions",
+        "governance_status",
+        "ledger_id"
+      ],
+      "evidence": {
+        "matching_auto_decision_rows": 0,
+        "validate_auto_decisions_status": "pass"
+      },
+      "exact_tokens": [
+        "pldg-20260622-001-fff",
+        "DiscoveryService"
+      ],
+      "finding_family": "auto_decision_provenance_warning",
+      "finding_key": "sfk-f8ae0fb08b393f85e37bfacc",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/auto_decisions.jsonl",
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": 5,
+      "subject_ref": "b8acd2ec8819dcf04c51e49ed5faf4eccd46a111",
+      "summary": "validate-auto-decisions passes structurally, but auto_decisions.jsonl has no specific pldg-20260622-001-fff or DiscoveryService governance decision row; this remains a provenance warning, not an open repair requirement."
+    },
+    {
+      "audit_id": "audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "b685c3d9a9098cf18374bab8ac4bff56dbecb534",
+      "classification": "warning",
+      "detail_keys": [
+        "manual_source_lineage_artifacts",
+        "bootstrap_ledger_validator"
+      ],
+      "evidence": {
+        "ledger_health_warning": [
+          "state/doc_impact_matrix.json, state/consumer_conformance_matrix.json, state/precision_contract.json, state/implementation_gap_defaults.json, and state/deep_audit_report.json are manual/source-lineage artifacts not yet covered by the bootstrap ledger validator."
+        ]
+      },
+      "exact_tokens": [
+        "manual/source-lineage artifacts not yet covered by the bootstrap ledger validator"
+      ],
+      "finding_family": "manual_source_lineage_artifact_warning",
+      "finding_key": "sfk-049d55388a477d45e9ae7227",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260622-001-fff",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260622-001-fff/validation/ledger_health.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": 6,
+      "subject_ref": "b8acd2ec8819dcf04c51e49ed5faf4eccd46a111",
+      "summary": "Ledger readiness/support artifacts such as precision_contract, doc_impact_matrix, consumer_conformance_matrix, implementation_gap_defaults, and deep_audit_report are explicit source-lineage/manual evidence and are not yet fully covered by the bootstrap ledger validator."
+    }
+  ]
+}
