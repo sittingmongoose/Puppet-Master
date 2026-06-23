@@ -10990,13 +10990,13 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  The agent-facing discovery operation is discover_paths, delegating to DiscoveryService. DiscoveryRequest carries request_id, consumer_id, surface_type, project/worktree or remote identity, query_text, intent, target_kind, limit, budget_ms, current_context, policy_context, redaction_profile, and permission/approval/SSH trust fields where applicable. DiscoveryResult returns ranked candidates with result_id, rank, canonical_path_identity, display_path, path_kind, target_kind, score_total, score_breakdown, match_type, policy-filtered matched_ranges when available, provenance, freshness_state, fallback_state, policy_decision, source_index_generation, requires_exact_verification, and verification_handoff. Discovery receipts use discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, discovery.disabled, discovery.unsupported, and discovery.backpressure.
+  The agent-facing discovery operation is discover_paths, delegating to DiscoveryService. DiscoveryRequest carries request_id, consumer_id, surface_type, project/worktree or remote identity, query_text, intent, target_kind, limit, budget_ms, current_context, policy_context, redaction_profile, and permission/approval/SSH trust fields where applicable. DiscoveryResult returns ranked candidates with result_id, rank, canonical_path_identity, display_path, path_kind, target_kind, score_total, score_breakdown, match_type, policy-filtered matched_ranges when available, provenance, freshness_state, fallback_state, policy_decision, source_index_generation, requires_exact_verification, and verification_handoff. Discovery receipts use discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, discovery.disabled, discovery.unsupported, and discovery.backpressure. The allowed values for discover_paths request, result, receipt_event, and error_code fields come from the CV-291 canonical exact value registry.
 gui_related: false
 gui_classification_reason: This is the tool/API behavior contract; GUI presentation is owned by GUI docs.
 depends_on: [T-160, CV-291, T-072]
 unblocks: [OSI-429, EP-106, ATS-011, RAP-031]
 acceptance_criteria:
-  - discover_paths requests/results use discovery-local enum values from CV-291 and the precision contract.
+  - discover_paths requests/results use discovery-local enum values from the CV-291 canonical exact value registry.
   - Result payloads always carry freshness_state, fallback_state, policy_decision, provenance, and requires_exact_verification.
   - Ambient invocation is bounded to materially useful repo/source-location tasks and skipped for exact verified paths, pure chat, user denial, policy blocks, disabled/unsupported, or backpressure states.
 validation_surfaces:
@@ -11019,7 +11019,7 @@ source_lineage:
   - pldg-20260622-001-fff:state/precision_contract.json
   - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#shared_agent_tool_discover_paths
 source_atom_ids: [atom-0023, atom-0035, atom-0036, atom-0051, atom-0063, atom-0076, atom-0088, atom-0092]
-preserved_exact_tokens: ["discover_paths", "DiscoveryRequest", "DiscoveryResult", "request_id", "consumer_id", "surface_type", "target_kind", "score_breakdown", "freshness_state", "fallback_state", "policy_decision", "requires_exact_verification", "verification_handoff", "discovery.invoked", "discovery.candidates_returned", "discovery.selected", "discovery.fallback", "discovery.verified", "discovery.disabled", "discovery.unsupported", "discovery.backpressure"]
+preserved_exact_tokens: ["discover_paths", "DiscoveryRequest", "DiscoveryResult", "request_id", "consumer_id", "surface_type", "intent", "target_kind", "path_kind", "match_type", "score_breakdown", "freshness_state", "fallback_state", "policy_decision", "error_code", "receipt_event", "requires_exact_verification", "verification_handoff", "discovery.invoked", "discovery.candidates_returned", "discovery.selected", "discovery.fallback", "discovery.verified", "discovery.disabled", "discovery.unsupported", "discovery.backpressure"]
 negative_constraints:
   - Do not make discover_paths a grep replacement.
   - Do not expose raw private frecency/query/open history to agents by default.
