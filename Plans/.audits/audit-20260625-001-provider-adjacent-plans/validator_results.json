@@ -1,0 +1,31 @@
+{
+  "audit_id": "audit-20260625-001-provider-adjacent-plans",
+  "results": [
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "reported_by": "parallel_agents",
+      "details": {
+        "docs_checked": 56,
+        "shards_checked": 1008
+      }
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass",
+      "reported_by": "parallel_agent_franklin"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass",
+      "reported_by": "parallel_agent_franklin"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "fail",
+      "reported_by": "parallel_agents",
+      "failure_scope": "pre-existing generated evidence/plan-graph hash drift for Plans/ledgers/v2/ledger_registry.json",
+      "notes": "Governance repair was out of scope. This audit did not edit generated governance artifacts."
+    }
+  ]
+}
