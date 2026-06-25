@@ -1,0 +1,67 @@
+{
+  "audit_id": "audit-20260625-001-provider-adjacent-plans",
+  "created_on": "2026-06-25",
+  "status": "FAIL_IMPLEMENTATION_READY",
+  "mode": "audit-only",
+  "write_scope": "Plans/.audits/audit-20260625-001-provider-adjacent-plans/",
+  "canonical_plans_modified": false,
+  "generated_governance_modified": false,
+  "ledger_modified": false,
+  "scope_summary": "Provider-adjacent non-generated Plans audit for stale/conflicting provider canon, GUI issues, media/capability drift, stubs, validation gaps, and implementation readiness blockers.",
+  "excluded_write_surfaces": [
+    "Plans/*.md canonical docs",
+    "Plans/Spec_Lock.json",
+    "Plans/auto_decisions.jsonl",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/plan_graph*",
+    "Plans/ledgers/**",
+    "WorkNodes",
+    "NodeSeeds"
+  ],
+  "subagents": [
+    {
+      "agent_id": "019f006c-cfdf-7f61-a0ce-33ab30d21c8b",
+      "nickname": "Curie",
+      "status": "completed",
+      "focus": "provider inventory, BinaryLocator, OpenCode, coding-plan coverage"
+    },
+    {
+      "agent_id": "019f006c-d0b4-75d3-8865-bd712e1a71cd",
+      "nickname": "Mendel",
+      "status": "completed",
+      "focus": "GUI selectors, media setup copy, artifact surfaces"
+    },
+    {
+      "agent_id": "019f006c-d190-7e63-859f-2d601e9a54a9",
+      "nickname": "Plato",
+      "status": "completed",
+      "focus": "permissions, tools, command safety, prompt pipeline"
+    },
+    {
+      "agent_id": "019f006c-d24a-7700-b9f9-fcbb4a04391d",
+      "nickname": "Sagan",
+      "status": "completed",
+      "focus": "Gemini CLI/Antigravity, Cursor, media, readiness semantics"
+    },
+    {
+      "agent_id": "019f006c-d2fd-7381-b48f-5e2de6cd9b3b",
+      "nickname": "Kepler",
+      "status": "completed",
+      "focus": "owner adjudication and cross-doc conflicts"
+    },
+    {
+      "agent_id": "019f006c-d3c2-73d1-a001-363c55684b66",
+      "nickname": "Franklin",
+      "status": "completed",
+      "focus": "governance/gates and implementation blockers"
+    }
+  ],
+  "finding_count": 13,
+  "severity_counts": {
+    "P0": 3,
+    "P1": 4,
+    "P2": 5,
+    "P3": 1
+  }
+}

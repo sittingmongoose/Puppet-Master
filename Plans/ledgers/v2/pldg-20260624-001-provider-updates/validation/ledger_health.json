@@ -1,0 +1,166 @@
+{
+  "blocking_defects": [],
+  "checks": [
+    {
+      "check_id": "init-0001",
+      "status": "pass",
+      "summary": "Required v2 scaffold files were initialized and registry entry was added as active."
+    },
+    {
+      "check_id": "boundary-0002",
+      "status": "pass",
+      "summary": "Initialization stayed inside Plans/ledgers/v2/** plus ledger_registry.json; canonical Plans, PlanUnit index, WorkNodes, NodeSeeds, executable queues, Spec Lock, shards, evidence, plan_graph, and auto_decisions were not created or updated."
+    },
+    {
+      "check_id": "antigravity-research-0003",
+      "status": "pass",
+      "summary": "Live Antigravity CLI transition docs, official repo, installer manifest, changelog, README, codelab, and current PM provider docs were inspected and recorded as ledger-only planning evidence."
+    },
+    {
+      "check_id": "antigravity-cli-local-verification-0004",
+      "status": "pass",
+      "summary": "Antigravity CLI 1.0.11 was installed into /tmp, unauthenticated command behavior was verified, HOME-based state paths were recorded, and authenticated model/prompt behavior was explicitly marked unverified without sign-in."
+    },
+    {
+      "check_id": "openai-image-research-0005",
+      "status": "pass",
+      "summary": "Official OpenAI ChatGPT Images 2.0, GPT Image 2, API image-generation, Codex image-generation, provenance, rate-limit, and organization-verification sources were inspected and recorded as ledger-only planning evidence."
+    },
+    {
+      "check_id": "provider-media-research-0006",
+      "status": "pass",
+      "summary": "Official/current first-pass media support research across image, video, TTS/audio, and music was recorded for OpenAI API, Codex/ChatGPT, Gemini Direct API, Antigravity, Cursor, Claude, GitHub Copilot, OpenCode, MiniMax, Z.AI, and Alibaba without editing canonical Plans."
+    },
+    {
+      "check_id": "provider-taxonomy-generalization-0007",
+      "status": "pass",
+      "summary": "Jared's answers generalized provider-family grouping beyond OpenAI and settled that PM supports both coding-plan provider products and separate general media API routes where vendors support media."
+    },
+    {
+      "check_id": "local-provider-verification-0008",
+      "status": "warning",
+      "summary": "Verification threshold is settled as no-uncertainty/local-test-required. OpenCode repo inspection and local probes were recorded. Jared clarified Codex and OpenCode are direct providers rather than required CLI bridges, so active CLI support blocker blk-0001 applies only to active CLI-bridged/live-prompt routes."
+    },
+    {
+      "check_id": "direct-cli-boundary-0009",
+      "status": "pass",
+      "summary": "Codex and OpenCode were moved out of required CLI-bridge scope. Follow-up isolated installs/probes were recorded as direct-provider/tooling evidence without treating their CLIs as compile blockers for core provider support."
+    },
+    {
+      "check_id": "active-cli-blocker-refinement-0010",
+      "status": "warning",
+      "summary": "Remaining active CLI-bridged blockers were refined with additional local probes: Antigravity requires sign-in/ADC, Cursor has inconsistent account/model readiness, Claude non-interactive prompt auth is not working and doctor did not complete, and hosted GitHub Copilot CLI is policy/subscription/license/admin enablement blocked."
+    },
+    {
+      "check_id": "cli-blocker-classification-0011",
+      "status": "pass",
+      "summary": "Clarified that remaining active CLI-bridged blockers are mostly account/auth/entitlement/session readiness, not install or command-surface blockers, but should not all be simplified to plain not-logged-in because Cursor/Claude have inconsistent auth states and current hosted GitHub Copilot CLI returns a policy/subscription/license/admin enablement denial."
+    },
+    {
+      "check_id": "github-copilot-cli-currentness-0012",
+      "status": "warning",
+      "summary": "Current `@github/copilot@1.0.65` was installed and probed. It exposes reasoning-effort, output-format, mode, attachment, and BYOK/custom-provider controls, but hosted prompt execution returns `Access denied by policy settings` / `403 unauthorized`, so hosted Copilot CLI remains blocked."
+    },
+    {
+      "check_id": "cursor-sdk-local-api-route-0013",
+      "status": "warning",
+      "summary": "`Nomadcxx/opencode-cursor` and `standardagents/composer-api` were cloned and inspected. This earlier API-route preference is now superseded by the OAuth/session focus; the repos remain source-lineage evidence, and API-route live proof is required only if that secondary route is retained."
+    },
+    {
+      "check_id": "cursor-approach-local-testing-0014",
+      "status": "warning",
+      "summary": "Cursor approaches were tested locally. Raw Cursor Agent headless prompts fail auth; opencode-cursor can configure/list fallback models but runtime prompts surface auth errors while OpenCode exits 0; composer-api passes TypeScript tests/typecheck and its standalone SDK bridge starts with expected key-gated errors, but live completion remains unverified."
+    },
+    {
+      "check_id": "cursor-auth-model-clarification-0015",
+      "status": "pass",
+      "summary": "Cursor auth was clarified as route-specific using current Cursor docs, local cursor-agent help, and pulled Cursor bridge repos: interactive app/CLI browser-login/OAuth-style auth, headless CLI API-key-capable auth, and SDK/API/Cloud Agents/local bridge API-key auth. Cursor must not be recorded as API-key-only or OAuth-only."
+    },
+    {
+      "check_id": "cursor-oauth-focus-0016",
+      "status": "pass",
+      "summary": "Jared corrected Cursor priority to focus on the OAuth method, not the API. The prior SDK/local API primary-route preference is superseded; API bridge work is secondary/fallback/source-lineage unless explicitly promoted, and API-key proof must not block OAuth-focused Cursor support."
+    },
+    {
+      "check_id": "cursor-oauth-live-verification-0017",
+      "status": "warning",
+      "summary": "Direct Cursor Agent OAuth/session support is locally live-verified with browser login, status/about, 139-model catalog, text prompt, and stream-json prompt through `apiKeySource: login`. opencode-cursor remains blocked/hanging as a plugin route and should not be classified as live-supported from direct Cursor Agent success."
+    },
+    {
+      "check_id": "claude-code-live-verification-0018",
+      "status": "pass",
+      "summary": "Claude Code first-party `claude.ai` session route is locally live-verified with auth status, JSON prompt, stream-json prompt requiring `--verbose`, and `--effort low|medium|high`; `claude doctor` fails with Ink raw-mode error and should not be used as the non-interactive readiness gate."
+    },
+    {
+      "check_id": "provider-live-retest-opencode-server-0019",
+      "status": "warning",
+      "summary": "Fresh logged-in retests verified Antigravity CLI 1.0.12, direct Cursor Agent OAuth/session, Claude Code first-party session, and OpenCode server `opencode/big-pickle`. OpenCode-server-routed GitHub Copilot is catalog-visible but prompt execution is Forbidden, so it remains blocked if retained."
+    },
+    {
+      "check_id": "github-copilot-subscription-clarification-0020",
+      "status": "warning",
+      "summary": "Jared clarified GitHub Copilot likely is not working because there is no active subscription. Treat hosted CLI and OpenCode-server-routed Copilot failures as likely inactive-subscription/entitlement blockers unless later subscription-state verification or successful prompt changes the evidence."
+    },
+    {
+      "check_id": "cursor-current-approach-status-0021",
+      "status": "pass",
+      "summary": "Cursor approach restated for compile readiness: direct Cursor Agent OAuth/session is primary; opencode-cursor is blocked/secondary; SDK/API/local bridge is secondary/fallback/source-lineage unless explicitly promoted."
+    },
+    {
+      "check_id": "cursor-primary-route-lock-0022",
+      "status": "pass",
+      "summary": "Cursor primary route is locked for compile planning: direct cursor-agent OAuth/session; opencode-cursor and SDK/API bridge remain secondary unless promoted."
+    },
+    {
+      "check_id": "cursor-route-reassessment-0023",
+      "status": "warning",
+      "summary": "Cursor route hierarchy revised: composer-api preferred direct-provider candidate pending live API-key/local-app proof; ACP locally verified; print-mode cursor-agent fallback; opencode-cursor blocked."
+    },
+    {
+      "check_id": "cursor-api-key-live-verification-0024",
+      "status": "pass",
+      "summary": "Cursor native API-key / SDK / composer-api-style route is live-verified with a redacted Cursor key: direct SDK model/prompt, composer-api Responses proxy models/non-streaming/streaming/retrieval/image, local-agent bridge text/streaming/client-tool forwarding, temp Worker /v1 chat/responses/tool calls, repo tests, and typecheck all passed. opencode-cursor remains non-primary/source-lineage."
+    },
+    {
+      "check_id": "coding-plan-claude-rate-limit-research-0025",
+      "status": "warning",
+      "summary": "Claude Code status-line `rate_limits` is accepted for usage/status planning from official docs and Reddit source-lineage; local print-mode statusLine probing did not trigger the hook. Coding-plan provider expansion is recorded from OpenCode/Models.dev, Qwen Code, and Kimi For Coding research, but live E2E proof is blocked by absent coding-plan credentials/subscriptions."
+    },
+    {
+      "check_id": "opencode-first-class-provider-refresh-0026",
+      "status": "warning",
+      "summary": "Current OpenCode `origin/dev` commit `b60c0a5e8ccc71ef7cce327602401418d419472e` was refreshed and inspected. Coding-plan providers are first-class Models.dev catalog entries, but OpenCode mostly uses generic AI SDK packages plus transform rules, not bespoke provider adapters; Alibaba/Qwen Coding Plan `enable_thinking` must be PM-owned/tested because stock OpenCode applies that default to `alibaba-cn`, not `alibaba-coding-plan`."
+    },
+    {
+      "check_id": "audit-delta-reconciliation-0027",
+      "status": "pass",
+      "summary": "Provider-adjacent audit findings were reconciled ledger-only. Findings already covered by accepted provider-update atoms/decisions were not duplicated; uncovered deltas were recorded as accepted atoms for BinaryLocator/setup metadata, caller-scoped capability schema, account-bound GUI selectors, requested/effective identity, provider-native permission/secret custody, runtime artifact schemas, usage source-confidence, and stale-anchor retirement."
+    }
+  ],
+  "last_validated_at_utc": "2026-06-25T20:38:57Z",
+  "ledger_id": "pldg-20260624-001-provider-updates",
+  "notes": "Claude Code status-line `rate_limits`, coding-plan provider expansion, current OpenCode first-class provider implementation review, and provider-adjacent audit reconciliation are recorded. Native Cursor API-key / SDK / composer-api-style route remains live-verified for planning; ACP is locally prompt-verified; print-mode cursor-agent is fallback; opencode-cursor remains non-primary/source-lineage. Coding-plan live E2E proof is blocked pending credentials/subscriptions. No canonical Plans or governance artifacts were updated.",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass",
+  "summary": {
+    "blockers": 3,
+    "candidate_atoms": 0,
+    "compile_queue_items": 0,
+    "corrections": 12,
+    "decisions": 34,
+    "deferred_questions": 0,
+    "design_atoms": 123,
+    "events": 25,
+    "open_blockers": 2,
+    "open_questions": 0,
+    "questions": 11
+  },
+  "updated_at_utc": "2026-06-25T20:38:57Z",
+  "warnings": [
+    "blk-0001 open: remaining live-prompt blockers include GitHub Copilot routes and opencode-cursor if retained; GitHub Copilot is likely inactive-subscription/entitlement gated.",
+    "Cursor caveats preserved: signed production macOS app packaging was not installed/tested, Worker external-bridge image bytes are not verified, and Worker Responses lacks `output_text`; these are compatibility notes, not the prior live-proof blocker.",
+    "blk-0003 open: coding-plan live E2E verification is blocked pending credentials/subscriptions for Alibaba/Qwen, Kimi, MiniMax, ZHIPU/Z.AI, Tencent, KUAE, and Umans routes.",
+    "OpenCode should be treated as architecture/source-lineage for coding plans, not a complete correctness oracle; Alibaba/Qwen `enable_thinking` needs PM-owned verification.",
+    "Provider-adjacent audit deltas are ledger-only planning source until Jared explicitly requests compile to canonical Plans."
+  ]
+}

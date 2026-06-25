@@ -1,0 +1,48 @@
+{
+  "deferred_questions": [],
+  "ledger_id": "pldg-20260624-001-provider-updates",
+  "notes": "Cursor native API-key / SDK / composer-api-style support remains live-verified and blk-0002 is resolved. Claude Code status-line `rate_limits` support is accepted for planning. Current OpenCode `origin/dev` commit `b60c0a5e8ccc71ef7cce327602401418d419472e` was refreshed and confirms coding-plan providers are first-class catalog entries through Models.dev/generic AI SDK packages, not copyable bespoke adapters. Coding-plan provider expansion is accepted as first-class Provider -> models routes, but live E2E support claims are blocked by missing coding-plan credentials/subscriptions. PM must own provider/model transform mappings and tests, especially Alibaba/Qwen `enable_thinking`. Provider-adjacent audit reconciliation is recorded: covered findings should not be duplicated; uncovered deltas are accepted as ledger atoms for BinaryLocator/setup metadata, caller-scoped capability schema, account-bound GUI selectors, requested/effective identity, provider-native permission/secret custody, runtime artifact schemas, usage source-confidence, and stale-anchor retirement.",
+  "open_blockers": [
+    {
+      "blocker_id": "blk-0001",
+      "source_refs": [
+        "chat:no-uncertainty-local-provider-testing",
+        "chat:codex-opencode-direct-not-cli-bridge",
+        "chat:are-cli-blockers-only-not-logged-in",
+        "chat:ghcopilot-cli-cursor-sdk-route-research",
+        "chat:test-cursor-approaches",
+        "chat:cursor-oauth-vs-api-auth-clarification",
+        "chat:cursor-oauth-focus-not-api",
+        "chat:retry-automated-tests-with-user-at-computer",
+        "chat:claude",
+        "source_shards/local_cli_provider_probe_matrix.md",
+        "source_shards/local_provider_blocker_followup.md",
+        "source_shards/github_copilot_cursor_sdk_research.md",
+        "source_shards/cursor_local_approach_testing.md",
+        "source_shards/cursor_auth_model_clarification.md",
+        "source_shards/cursor_oauth_focus_correction.md",
+        "source_shards/cursor_oauth_live_verification.md",
+        "source_shards/claude_code_live_verification.md",
+        "chat:logged-in-provider-retest-and-opencode-server",
+        "source_shards/provider_live_verification_followup_20260625.md",
+        "chat:github-copilot-no-active-subscription-clarification"
+      ],
+      "summary": "Remaining open live-prompt blockers are hosted GitHub Copilot CLI and OpenCode-server-routed GitHub Copilot if PM exposes that nested route, both likely inactive-subscription/entitlement gated per Jared's clarification, plus opencode-cursor if retained as optional plugin/source-lineage. Antigravity CLI, direct Cursor Agent OAuth/session, native Cursor API-key/SDK, Claude Code first-party `claude.ai`, and OpenCode server `opencode/big-pickle` are verified. Gemini CLI is removed/retired. Codex and OpenCode are direct providers and are excluded from required CLI bridging."
+    },
+    {
+      "blocker_id": "blk-0003",
+      "source_refs": [
+        "chat:coding-plan-and-claude-rate-limit-research",
+        "source_shards/coding_plan_and_claude_rate_limits_research_20260625.md",
+        "live_catalog:https://models.dev/api.json"
+      ],
+      "summary": "Coding-plan live E2E verification is blocked locally by missing provider credentials/subscriptions for `BAILIAN_CODING_PLAN_API_KEY`, `ALIBABA_CODING_PLAN_API_KEY`, `KIMI_API_KEY`, `MINIMAX_API_KEY`, `ZHIPU_API_KEY`, `TENCENT_CODING_PLAN_API_KEY`, `KUAE_API_KEY`, and `UMANS_AI_CODING_PLAN_API_KEY`. Repo/docs/Models.dev inspection defines planned support but cannot satisfy Jared's no-uncertainty support threshold. Closure requires at least one minimal prompt per claimed coding-plan route, media probes for routes/models advertised with image/video/pdf input, and provider-specific thinking-effort probes."
+    }
+  ],
+  "open_questions": [],
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
+  "unsealed_governance": [],
+  "updated_at_utc": "2026-06-25T20:38:57Z"
+}
