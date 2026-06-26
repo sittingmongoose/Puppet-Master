@@ -1,0 +1,124 @@
+{
+  "blocking_defects": [],
+  "checks": [
+    {
+      "check_id": "init-0001",
+      "status": "pass",
+      "summary": "Required v2 scaffold files were initialized and registry entry was added as active."
+    },
+    {
+      "check_id": "boundary-0002",
+      "status": "pass",
+      "summary": "Initialization and follow-up intake stayed ledger-only and did not touch canonical Plans, generated governance artifacts, PlanUnit indexes, WorkNodes, NodeSeeds, executable queues, or build/runtime surfaces."
+    },
+    {
+      "check_id": "history-scope-0003",
+      "status": "pass",
+      "summary": "Jared clarified the first miscellaneous PM item: historical wizard-created documents and historical Orchestrator runs, with GUI design required."
+    },
+    {
+      "check_id": "history-defaults-0004",
+      "status": "pass",
+      "summary": "Jared accepted final/approved documents by default with expandable all-history, all historical run actions, and Orchestrator History as the GUI home."
+    },
+    {
+      "check_id": "history-scope-retention-actions-0005",
+      "status": "pass",
+      "summary": "Jared accepted current-project History lock, final/approved output retention forever by default, retention/archive governance for draft/intermediate history, and document-specific actions."
+    },
+    {
+      "check_id": "history-columns-control-compare-0006",
+      "status": "pass",
+      "summary": "Jared accepted dense default History rows, Approved only vs All history control, and deep document comparison in MVP."
+    },
+    {
+      "check_id": "history-export-granularity-0007",
+      "status": "pass",
+      "summary": "Jared accepted all History export granularities in MVP: selected-row export, multi-select bundle export, and whole filtered-view export with manifest."
+    },
+    {
+      "check_id": "history-export-compare-archive-0008",
+      "status": "pass",
+      "summary": "Jared accepted all export formats/profiles, combined deep comparison presentation, and Include archived behavior for archived records."
+    },
+    {
+      "check_id": "history-source-truth-0009",
+      "status": "pass",
+      "summary": "Jared accepted a project-scoped unified History index/projection as the source-of-truth shape instead of direct ad hoc subsystem queries."
+    },
+    {
+      "check_id": "history-projection-lifecycle-0010",
+      "status": "pass",
+      "summary": "Jared accepted rebuildable, event-updated History projection lifecycle semantics with stale/out-of-sync state detected and surfaced."
+    },
+    {
+      "check_id": "history-degraded-mode-0011",
+      "status": "pass",
+      "summary": "Jared accepted stale/out-of-sync degraded mode: read-only viewing with warning, Rebuild action, and blocking compare/export/reopen/send-forward until rebuild succeeds."
+    },
+    {
+      "check_id": "history-pressure-test-0012",
+      "status": "pass",
+      "summary": "Jared requested a pre-compile pressure-test; the pass found proposed MVP defaults for row schema, permissions/redaction, search/filter syntax, empty/degraded states, and acceptance tests."
+    },
+    {
+      "check_id": "history-pressure-test-defaults-0013",
+      "status": "pass",
+      "summary": "Jared accepted the pressure-test MVP defaults bundle for row schema, permissions/redaction, search/filter syntax, empty/degraded states, and acceptance tests."
+    },
+    {
+      "check_id": "next-misc-item-selected-0014",
+      "status": "pass",
+      "summary": "Jared chose to continue to the next miscellaneous item rather than pause or compile the accepted History item."
+    },
+    {
+      "check_id": "vision-reference-inspected-0015",
+      "status": "pass",
+      "summary": "Jared described the next item as adapting `opencode-see-image` for `models models without vision`; the external repo was inspected at commit `cde1615f6dfc9039c58da6813112ee53391b5b49` and captured as source-lineage only."
+    },
+    {
+      "check_id": "vision-pm-boundary-0016",
+      "status": "pass",
+      "summary": "The ledger records that PM should adapt the see-image pattern natively rather than depend on OpenCode plugin APIs, OpenCode auth/database/CLI defaults, Bun, or `--dangerously-skip-permissions` behavior."
+    },
+    {
+      "check_id": "open-design-0017",
+      "status": "open",
+      "summary": "Vision bridge MVP defaults remain open for Jared confirmation: automatic fallback/manual rerun, PM provider routing, image source scope, artifacts/cache, privacy/permission, and GUI surfacing."
+    },
+    {
+      "check_id": "validator-runtime-0018",
+      "status": "warning",
+      "summary": "Official pm-bootstrap-ledger-validate.py could not run in the current Python environments because `yaml` / PyYAML is missing. JSON/JSONL parse, record counts, and changed-file boundary checks passed."
+    }
+  ],
+  "last_validated_at_utc": "2026-06-26T20:47:51Z",
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "notes": "Ledger is active for conversational design/spec. First History item is pressure-tested and has no known open product underspecification. Current open item is PM-native vision bridge adaptation for non-vision models, based on the opencode-see-image pattern.",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "json_shape_pass_conversational_active_with_open_questions_validator_blocked",
+  "summary": {
+    "blockers": 0,
+    "candidate_atoms": 6,
+    "compile_queue_items": 0,
+    "compiled_atoms": 0,
+    "compiled_plan_units": 0,
+    "corrections": 0,
+    "decisions": 14,
+    "deferred_questions": 0,
+    "design_atoms": 78,
+    "events": 14,
+    "governance_status": "not_started",
+    "not_for_plan_atoms": 24,
+    "open_blockers": 0,
+    "open_questions": 4,
+    "questions": 23
+  },
+  "updated_at_utc": "2026-06-26T20:47:51Z",
+  "warnings": [
+    {
+      "warning_id": "missing-pyyaml-0001",
+      "summary": "`python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name` and the bundled Python equivalent both failed with `ModuleNotFoundError: No module named 'yaml'`; local JSON/JSONL structural checks passed."
+    }
+  ]
+}

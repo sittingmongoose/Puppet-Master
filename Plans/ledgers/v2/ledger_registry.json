@@ -1,5 +1,19 @@
 {
-  "active_ledgers": [],
+  "active_ledgers": [
+    {
+      "created_at_utc": "2026-06-26T19:18:34Z",
+      "last_event_id": "evt-0014",
+      "last_updated_at": "2026-06-26T20:47:51Z",
+      "last_updated_at_utc": "2026-06-26T20:47:51Z",
+      "ledger_id": "pldg-20260626-001-feature-name",
+      "notes": "Active conversational ledger for miscellaneous PM feature planning. First History item is accepted and pressure-tested: current-project History, dense rows, final/approved default, all-history controls, full run actions, document actions, deep comparison, export formats/profiles, Include archived, unified rebuildable projection, stale/degraded handling, row schema, redaction/export defaults, filters, empty states, and acceptance tests. Current open item is adapting something like `opencode-see-image` for `models models without vision` as a PM-native vision bridge, not an OpenCode plugin dependency. Ledger-only; canonical Plans and generated governance/build artifacts remain untouched.",
+      "phase": "conversational_design_active",
+      "primary_goal": "Collaboratively clarify and shape miscellaneous PM feature items, including historical wizard-created PRD/Plan documents, historical Orchestrator runs, and a PM-native vision bridge for non-vision models, before any canonical Plans edits.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260626-001-feature-name/state/handoff.json",
+      "status": "active",
+      "title": "Miscellaneous PM History and Vision Bridge Planning"
+    }
+  ],
   "compiled_ledgers": [
     {
       "canonical_plan_targets": [
@@ -643,5 +657,5 @@
       "title": "Ledger, plan document standardization, and plan-to-node readiness system"
     }
   ],
-  "updated_at_utc": "2026-06-26T16:48:05Z"
+  "updated_at_utc": "2026-06-26T19:49:26Z"
 }

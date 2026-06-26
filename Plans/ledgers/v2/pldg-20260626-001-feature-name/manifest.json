@@ -1,0 +1,34 @@
+{
+  "created_at_utc": "2026-06-26T19:18:34Z",
+  "files": {
+    "blockers": "records/blockers.jsonl",
+    "compile_queue": "state/compile_queue.json",
+    "corrections": "records/corrections.jsonl",
+    "current_state": "state/current.json",
+    "decisions": "records/decisions.jsonl",
+    "design_atoms": "records/design_atoms.jsonl",
+    "events": "events.jsonl",
+    "handoff": "state/handoff.json",
+    "open_items": "state/open_items.json",
+    "operating_capsule": "state/operating_capsule.json",
+    "questions": "records/questions.jsonl"
+  },
+  "governance_status": "not_started",
+  "last_event_id": "evt-0014",
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "notes": "Active conversational feature planning for miscellaneous PM history surfaces and PM-native vision bridge adaptation. This ledger is source/planning memory, not canonical Plans prose and not a Goal run.",
+  "profile": "bootstrap_planning",
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 0,
+    "decisions": 14,
+    "design_atoms": 78,
+    "events": 14,
+    "questions": 23
+  },
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "source_context": "User requested the PM Bootstrap Planning Ledger for `Feature: <feature name>` on 2026-06-26, then clarified that the ledger covers a bunch of miscellaneous things. The first item is historical wizard-created PRD/Plan documents and historical Orchestrator runs visible in PM. The second item is adapting something like `https://github.com/alfaoz/opencode-see-image` for `models models without vision` as a PM-native capability rather than an OpenCode plugin dependency.",
+  "status": "active",
+  "title": "Miscellaneous PM History and Vision Bridge Planning",
+  "updated_at_utc": "2026-06-26T20:47:51Z"
+}

@@ -1,0 +1,51 @@
+{
+  "current_phase": "conversational_design_active",
+  "cursor": {
+    "last_decision_id": "dec-0014",
+    "last_event_id": "evt-0014",
+    "last_question_id": "q-0023",
+    "next_action": "Ask Jared to confirm or revise the PM-native vision bridge defaults for automatic fallback, provider routing, image sources, privacy/artifacts, and GUI surfacing.",
+    "next_atom_id": "atom-0079",
+    "next_decision_id": "dec-0015",
+    "next_event_id": "evt-0015",
+    "next_question_id": "q-0024"
+  },
+  "deferred_questions": [],
+  "do_not_redo": [
+    "Do not create a second ledger unless Jared explicitly asks for a fresh ledger.",
+    "Do not write canonical Plans during conversational planning.",
+    "Do not infer later miscellaneous items beyond what Jared states.",
+    "Do not create Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions.",
+    "Do not treat resume/retry/clone/reopen/send-forward actions as permission to mutate immutable historical records in place.",
+    "Do not provide a global cross-project History view for the first History item unless a later decision supersedes the current-project lock.",
+    "Do not defer deep document comparison out of the first History item MVP.",
+    "Do not implement the History surface as direct ad hoc subsystem queries at view time.",
+    "Do not install, vendor, or depend on the OpenCode opencode-see-image plugin as PM canonical implementation during ledger planning.",
+    "Do not copy OpenCode-specific `opencode-go`, `minimax-m3`, `mimo-v2.5-free`, OpenCode `auth.json`, OpenCode SQLite DB, Bun, or `opencode run --dangerously-skip-permissions` assumptions into PM without an explicit future decision."
+  ],
+  "governance_status": "not_started",
+  "last_completed_action": "Inspected the external opencode-see-image reference and recorded PM-native vision bridge adaptation candidates.",
+  "last_event_id": "evt-0014",
+  "last_known_good_state": "Ledger-only conversational planning is active. Canonical Plans and generated governance/build artifacts remain untouched.",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "next_action": "Ask Jared to confirm or revise the PM-native vision bridge defaults for automatic fallback, provider routing, image sources, privacy/artifacts, and GUI surfacing.",
+  "next_safe_action": "Ask focused open questions q-0020 through q-0023 in chat, then record Jared's answers in the ledger after the next substantive turn.",
+  "open_blockers": [],
+  "open_questions": [
+    "q-0020",
+    "q-0021",
+    "q-0022",
+    "q-0023"
+  ],
+  "phase": "conversational_design_active",
+  "schema_id": "pm.bootstrap_ledger_handoff.v1",
+  "updated_at_utc": "2026-06-26T20:47:51Z",
+  "validation_state": {
+    "bootstrap_ledger_validator": "blocked_missing_python_yaml",
+    "forbidden_artifact_diff_check": "pass",
+    "json_jsonl_shape_check": "pass",
+    "safe_content_checks": "Updated ledger-only source files and registry entry. No canonical Plans or generated governance/build artifacts were written."
+  }
+}
