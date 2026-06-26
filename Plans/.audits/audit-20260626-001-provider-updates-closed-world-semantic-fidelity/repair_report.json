@@ -1,0 +1,173 @@
+{
+  "schema_id": "pm.audit_repair_report.v1",
+  "audit_id": "audit-20260626-001-provider-updates-closed-world-semantic-fidelity",
+  "ledger_id": "pldg-20260624-001-provider-updates",
+  "baseline_ref": "7b18d32554c37da6f694ec5851f202186219c2b7",
+  "subject_ref": "d640e0278b15cf906df3cfc8ccf484d71aeecbab",
+  "observation_ref": "HEAD",
+  "status": "repair_validated",
+  "repair_required_count": 8,
+  "post_repair_repair_required_count": 0,
+  "closed_rows": [
+    {
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": 1,
+      "finding_key": "sfk-2e1b920cfabc04dc0be69949",
+      "closure_status": "repaired",
+      "registry_closure_id": "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-001"
+    },
+    {
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": 2,
+      "finding_key": "sfk-d1a2ecb4b7d39660d5d9f5a8",
+      "closure_status": "repaired",
+      "registry_closure_id": "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-002"
+    },
+    {
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": 3,
+      "finding_key": "sfk-2558838ab5b35d7ceef3db16",
+      "closure_status": "repaired",
+      "registry_closure_id": "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-003"
+    },
+    {
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": 4,
+      "finding_key": "sfk-61185c1dea495f4aaa303ecf",
+      "closure_status": "repaired",
+      "registry_closure_id": "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-004"
+    },
+    {
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": 5,
+      "finding_key": "sfk-929f4dfbd5cc1201eff2a369",
+      "closure_status": "repaired",
+      "registry_closure_id": "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-005"
+    },
+    {
+      "source_artifact": "validator_results.json",
+      "source_row": "results.closure-global",
+      "finding_key": "sfk-93891900f1e635b8b3c4b580",
+      "closure_status": "repaired",
+      "registry_closure_id": "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-006"
+    },
+    {
+      "source_artifact": "validator_results.json",
+      "source_row": "results.closure-audit",
+      "finding_key": "sfk-6c1ae9f97fecf47728347c9e",
+      "closure_status": "repaired",
+      "registry_closure_id": "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-007"
+    },
+    {
+      "source_artifact": "validator_results.json",
+      "source_row": "results.git-diff-check-subject-range",
+      "finding_key": "sfk-19d1dc52e0a9a087ce8f5460",
+      "closure_status": "repaired",
+      "registry_closure_id": "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-008"
+    }
+  ],
+  "repair_impact_matrix": "repair_impact_matrix.jsonl",
+  "repair_closure_matrix": "repair_closure_matrix.jsonl",
+  "post_repair_audit_report": "post_repair_audit_report.json",
+  "terminal_state": "terminal_state.json",
+  "registry_closure_ids": [
+    "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-001",
+    "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-002",
+    "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-003",
+    "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-004",
+    "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-005",
+    "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-006",
+    "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-007",
+    "closure-audit-20260626-001-provider-updates-closed-world-semantic-fidelity-repair-008"
+  ],
+  "updated_at_utc": "2026-06-26T16:52:45Z",
+  "validators": [
+    {
+      "name": "closure-global",
+      "command": "python3 scripts/pm-audit-closure.py validate",
+      "status": "pass"
+    },
+    {
+      "name": "closure-audit-required-matrix",
+      "command": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity --require-closure-matrix",
+      "status": "pass"
+    },
+    {
+      "name": "target-ledger",
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+      "status": "pass"
+    },
+    {
+      "name": "plan-index",
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "summary": "5228 plan units, 18707 acceptance units, node_readiness_status=blocked_compiler_contract_incomplete"
+    },
+    {
+      "name": "plan-migration",
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass"
+    },
+    {
+      "name": "run-gates",
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass"
+    },
+    {
+      "name": "shard-check",
+      "command": "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "summary": "1021 shards, 56 docs"
+    },
+    {
+      "name": "validate-auto-decisions",
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass"
+    },
+    {
+      "name": "verify-spec-lock",
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass"
+    },
+    {
+      "name": "validate-evidence",
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass"
+    },
+    {
+      "name": "validate-plan-graph",
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "status": "pass"
+    },
+    {
+      "name": "git-diff-check-worktree",
+      "command": "git diff --check",
+      "status": "pass"
+    },
+    {
+      "name": "git-diff-check-baseline-to-worktree",
+      "command": "git diff --check 7b18d32554c37da6f694ec5851f202186219c2b7 -- Plans ':!Plans/.audits/**'",
+      "status": "pass"
+    },
+    {
+      "name": "git-diff-check-current-head-range",
+      "command": "git diff --check 7b18d32554c37da6f694ec5851f202186219c2b7..HEAD -- Plans ':!Plans/.audits/**'",
+      "status": "pass",
+      "summary": "current HEAD e90df04850a8bd985b2b55b4b05efe0a64974bd2"
+    }
+  ],
+  "validator_status": "pass",
+  "forbidden_artifacts": {
+    "status": "pass",
+    "created": [],
+    "checked_terms": [
+      "WorkNodes",
+      "NodeSeeds",
+      "executable queues",
+      "final node manifests",
+      "implementation files",
+      "runtime dispatch",
+      "production build tasks"
+    ]
+  }
+}

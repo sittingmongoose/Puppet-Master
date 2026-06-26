@@ -898,12 +898,12 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003
 ### 5.2 Disabled-reason messages
 
 **Not configured reason (`NOT_CONFIGURED`):**
-> "This feature requires Gemini access. Sign in with Gemini OAuth or add a Google/Gemini API key in Settings -> Authentication, then try again."
+> "This feature requires an eligible media generation provider route. Configure a supported provider account, profile, credential, or API key in Settings -> Providers, then try again."
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/rewrite-tie-in-memo.md
 
 **Model unavailable reason (`MODEL_UNAVAILABLE`):**
-> "That model isn't available with the current Gemini account, auth mode, or API key (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'"
+> "That model isn't available with the current provider account, profile, auth mode, API key, or media route (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'"
 
 ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-ID
 
@@ -4638,10 +4638,10 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
 preserved_exact_tokens:
-- This feature requires Gemini access. Sign in with Gemini OAuth or add a Google/Gemini API key in Settings -> Authentication, then try again.
-- That model isn't available with the current Gemini account, auth mode, or API key (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'
+- This feature requires an eligible media generation provider route. Configure a supported provider account, profile, credential, or API key in Settings -> Providers, then try again.
+- That model isn't available with the current provider account, profile, auth mode, API key, or media route (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'
 - This feature is disabled in Settings. Enable it under Media settings, then try again.
-- The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account, auth mode, or API key for media generation.
+- The current backend supports Image Generation only. To use Video/TTS/Music, use a provider route with verified generated-media support for that kind.
 - This feature is temporarily rate-limited. Wait a moment and try again.
 - API quota for this feature has been exhausted. Check your provider usage dashboard or wait for quota to reset.
 - NOT_CONFIGURED
