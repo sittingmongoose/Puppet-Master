@@ -843,7 +843,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Provider accounts are route-specific credential/profile records. PM must represent Gemini Direct, Antigravity CLI, Claude Code, Cursor session/API-key/SDK routes, Codex/OpenAI API and subscription-backed Codex image generation, GitHub Copilot direct hosted API, OpenCode server, Kimi For Coding, MiniMax global/CN, Z.AI/Zhipu standard/coding/Anthropic routes, Alibaba/Qwen global/CN coding-plan routes, and other coding-plan families as separate account/profile rows where their auth, billing, region, entitlement, quota, or transport differs. Unpurchased or inaccessible plans compile as disabled, capability-gated, unverified, or separate-profile rows, not open purchase blockers.
+  Provider accounts are route-specific credential/profile records. PM must represent Gemini Direct, Antigravity CLI public `agy` text/coding rows, the separate Antigravity OAuth/internal `gemini-3.1-flash-image` generated-image route, Claude Code, Cursor session/API-key/SDK routes, Codex/OpenAI API and subscription-backed Codex image generation, GitHub Copilot direct hosted API, OpenCode server, Kimi For Coding, MiniMax global/CN, Z.AI/Zhipu standard/coding/Anthropic routes, Alibaba/Qwen global/CN coding-plan routes, and other coding-plan families as separate account/profile rows where their auth, billing, region, entitlement, quota, transport, support-state, or proof surface differs. Unpurchased or inaccessible plans compile as disabled, capability-gated, unverified, or separate-profile rows, not open purchase blockers.
 gui_related: true
 gui_classification_reason: Account/profile rows, setup states, entitlement badges, and provider picker availability are user-visible settings behavior.
 depends_on: [MS-113, CV-292]
@@ -851,6 +851,7 @@ unblocks: [F3-400, F3-401, UF-075]
 acceptance_criteria:
   - Account/profile rows preserve route-specific auth, billing, region, entitlement, quota, and transport differences.
   - OpenAI API-key image routes and OpenAI/Codex subscription-backed image-generation routes are separate account/profile surfaces.
+  - Antigravity public `agy` CLI rows and Antigravity OAuth/internal generated-image rows are separate account/profile surfaces when auth, endpoint, support-state, or proof custody differs.
   - Cursor API key setup copy points users to the Cursor dashboard API keys section without storing the key in Plans or ledgers.
   - Lack of additional purchased plans does not leave compile blocked when a disabled/gated/unverified row is accepted.
 validation_surfaces:
@@ -866,12 +867,16 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0082
   - pldg-20260624-001-provider-updates:atom-0103
   - pldg-20260624-001-provider-updates:atom-0138
-source_atom_ids: [atom-0011, atom-0022, atom-0034, atom-0048, atom-0049, atom-0064, atom-0068, atom-0070, atom-0071, atom-0082, atom-0084, atom-0097, atom-0100, atom-0103, atom-0104, atom-0116, atom-0118, atom-0119, atom-0124, atom-0125, atom-0127, atom-0128, atom-0129, atom-0131, atom-0132, atom-0137, atom-0138]
-preserved_exact_tokens: ["Google OAuth", "Application Default Credentials (ADC)", "system keyring", "CURSOR_API_KEY", "--api-key", "cursor-agent login", "Cursor SDK", "Cloud Agents API", "https://cursor.com/dashboard/", "API keys section", "GitHub OAuth/PAT-style", "Team Plan keys are not interchangeable", "OpenAI/Codex subscription-backed", "disabled", "capability-gated", "unverified", "separate-profile"]
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+  - pldg-20260624-001-provider-updates:atom-0144
+source_atom_ids: [atom-0011, atom-0022, atom-0034, atom-0048, atom-0049, atom-0064, atom-0068, atom-0070, atom-0071, atom-0082, atom-0084, atom-0097, atom-0100, atom-0103, atom-0104, atom-0116, atom-0118, atom-0119, atom-0124, atom-0125, atom-0127, atom-0128, atom-0129, atom-0131, atom-0132, atom-0137, atom-0138, atom-0142, atom-0143, atom-0144]
+preserved_exact_tokens: ["Google OAuth", "Application Default Credentials (ADC)", "system keyring", "CURSOR_API_KEY", "--api-key", "cursor-agent login", "Cursor SDK", "Cloud Agents API", "https://cursor.com/dashboard/", "API keys section", "GitHub OAuth/PAT-style", "Team Plan keys are not interchangeable", "OpenAI/Codex subscription-backed", "Antigravity CLI", "agy", "gemini-3.1-flash-image", "v1internal:generateContent", "disabled", "capability-gated", "unverified", "separate-profile"]
 negative_constraints:
   - Do not store user-supplied API keys, OAuth URLs, tokens, or account identifiers in Plans, ledgers, logs, or artifacts.
   - Do not collapse global and CN/regioned provider routes into one account/profile row.
   - Do not ask Jared to buy additional subscriptions to complete this planning lane.
+  - Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
 owner_hints: [Plans/Multi-Account.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/usage-feature.md]
 ```
 
@@ -2236,10 +2241,8 @@ plan_unit_id: MA-023
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Provider-specific behavior preserves the provider-entry matrix for Gemini Direct, Antigravity CLI, retired
-  Gemini CLI lineage, Cursor CLI, Claude Code CLI, Codex/OpenAI, GitHub Copilot, OpenCode, and accepted coding-plan rows,
-  including identity shape, usage/health signals, recovery and switching notes, and the rule that Codex plan-backed and
-  API-billed usage/cooldowns must not be merged.
+canonical_text: >-
+  Provider-specific behavior preserves the provider-entry matrix for Gemini Direct, Antigravity CLI public `agy` rows, separate Antigravity OAuth/internal generated-image route rows, retired Gemini CLI lineage, Cursor CLI, Claude Code CLI, Codex/OpenAI, GitHub Copilot, OpenCode, and accepted coding-plan rows, including identity shape, usage/health signals, recovery and switching notes, and the rule that Codex plan-backed and API-billed usage/cooldowns must not be merged.
 gui_related: false
 gui_classification_reason: The unit preserves provider behavior data and runtime identity, not direct GUI layout.
 split_recommended: true
@@ -2249,6 +2252,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - All provider matrix rows remain traceable.
+- Antigravity public `agy` and internal generated-image behavior rows remain separate when proof/auth/endpoint differs.
 - Codex ChatGPT and API key account families remain separate.
 - OpenCode managed and attached server profiles remain distinct.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
@@ -2265,8 +2269,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+- pldg-20260624-001-provider-updates:atom-0142
+- pldg-20260624-001-provider-updates:atom-0143
+source_atom_ids: [atom-0142, atom-0143]
 preserved_exact_tokens:
 - Gemini Direct
+- Antigravity CLI
+- agy
+- gemini-3.1-flash-image
 - Gemini CLI
 - Cursor CLI
 - Claude Code CLI
@@ -2279,6 +2289,7 @@ preserved_exact_tokens:
 - Attach to Existing Server
 negative_constraints:
 - PM must not merge plan-backed and API-billed usage/cooldowns.
+- PM must not merge public Antigravity `agy` CLI rows and Antigravity OAuth/internal generated-image route rows.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -3200,10 +3211,8 @@ plan_unit_id: MA-038
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Agent-Config surfaces provider/family pooling where a provider entry participates in family-level pooling,
-  preserves active Gemini Direct and Antigravity CLI as real provider-entry/account rows, treats Gemini CLI as retired
-  source-lineage only, requires requested/effective disclosure when family pooling selects a different backend,
-  capability-checks media/effort/tooling needs, and forbids fake OAuth/API-key pseudo-providers.
+canonical_text: >-
+  Agent-Config surfaces provider/family pooling where a provider entry participates in family-level pooling, preserves active Gemini Direct, Antigravity CLI public `agy` rows, and the separate Antigravity OAuth/internal `gemini-3.1-flash-image` generated-image route as real provider-entry/account rows where configured, treats Gemini CLI as retired source-lineage only, requires requested/effective disclosure when family pooling selects a different backend, capability-checks media/effort/tooling needs, and forbids fake OAuth/API-key pseudo-providers.
 gui_related: true
 gui_classification_reason: The unit defines GUI pooling controls, account row badges, and requested/effective disclosure.
 split_recommended: true
@@ -3214,6 +3223,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Provider Pooling and Family Pooling sections remain visible where applicable.
 - Gemini Direct and Antigravity CLI remain real active provider entries; Gemini CLI is retired/source-lineage only.
+- Antigravity internal generated-image route rows remain separate from public `agy` CLI rows in pooling, badges, and requested/effective disclosure.
 - Family pooling preserves requested and effective provider entries in run records.
 - GUI grouping does not mint fake pseudo-providers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
@@ -3230,10 +3240,14 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0025
+source_atom_ids: [atom-0142, atom-0143, atom-0144]
 preserved_exact_tokens:
 - Provider Pooling
 - Family Pooling
 - Gemini Direct
+- Antigravity CLI
+- agy
+- gemini-3.1-flash-image
 - Gemini CLI
 - /media/effort/tooling
 - requested provider entry
@@ -3246,6 +3260,7 @@ preserved_exact_tokens:
 negative_constraints:
 - The GUI must not mint fake OAuth/API-key pseudo-providers that compete with real active provider entries such as gemini and antigravity_cli.
 - PM must never silently route into retired Gemini CLI-only capability boundaries.
+- PM must not silently pool or fallback between public `agy`, Antigravity OAuth/internal image generation, Gemini Direct, or retired Gemini CLI lineage.
 compatibility_only_notes:
 - gemini_cli and Gemini CLI are preserved tokens only; they are not active setup/provider rows.
 stale_retired_dispositions:

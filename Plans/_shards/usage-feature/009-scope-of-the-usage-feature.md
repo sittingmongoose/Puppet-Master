@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L128-L374
+Source lines: L128-L372
 
-Source SHA256: `4ef6ada2d4f56f156b5b034b425597baeb26ec8890f6cb4ca936477745be07ba`
+Source SHA256: `72e50b74c8a4f580c8769909461a659b2a3c5725dbb2e24220bc1d4a60eb62ee`
 
 ---
 
@@ -159,10 +159,10 @@ ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans
 - Claude Code CLI subscription `/stats` visibility generally informs pressure; PM records `/exhaustion` only when the runtime or provider explicitly signals a hard block or exhausted state.
 - API / Console / organization-backed Claude Code limits are org-level and may include monthly spend limits plus shorter-window rate limits such as `RPM` and `/TPM`; subscriber-backed rows must not reuse those hard limit semantics without provider evidence.
 
-### Gemini -- Direct and CLI usage (mode-dependent)
-Gemini usage must distinguish the direct provider from Gemini CLI while still allowing family-level pooling when policy permits. Stale-canon wording that reduces Gemini to local counters, a single `mixed-account` provider, or a generic API-key `key-exception` is not sufficient for Usage.
+### Gemini Direct, Antigravity, and retired Gemini CLI usage
+Gemini Direct usage must stay route-specific, and Antigravity CLI usage must be modeled as its own active CLI-runtime route where verified. Gemini CLI usage is retired/source-lineage only. Stale-canon wording that reduces Gemini to local counters, a single `mixed-account` provider, or a generic API-key `key-exception` is not sufficient for Usage.
 
-The provider-doc reconciliation keeps `Plans/CLI_Bridged_Providers.md` as the owner for Gemini CLI runtime transport. Usage must not collapse Gemini into one direct provider with mixed OAuth/API-key pools and no CLI runtime.
+The provider-doc reconciliation keeps `Plans/CLI_Bridged_Providers.md` as the owner for active CLI-runtime transport. Usage must not revive Gemini CLI as a live provider row; active Google-owned CLI-runtime evidence belongs to Antigravity.
 
 #### Gemini direct
 
@@ -178,31 +178,28 @@ Rules:
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Media_Generation_and_Capabilities.md
 
-#### Gemini CLI
+#### Retired Gemini CLI usage lineage
 
-`Gemini CLI` is a separate provider entry.
+`Gemini CLI` is not an active provider entry. The following tokens remain only as retired/source-lineage evidence.
 
 Rules:
-- Gemini CLI may use OAuth, direct API key, or Vertex/Google credential families depending the configured account row.
-- `Gemini CLI` OAuth/API/Vertex usage paths remain auth-family dependent, with runtime stats and provider quota signals treated as multi-source `/usage` evidence rather than one fixed reset shape.
-- `/stats model` can expose current-session usage plus quota-associated limit information, but PM still treats those `/stats` values as auth-family-sensitive rather than one universal Gemini CLI counter.
-- trust can affect runtime MCP visibility, so `Configured`, `Working`, and `Operational` must remain separate states.
-- provider-side model routing may still override the explicitly requested model in some flows; PM must show requested/effective differences rather than assuming full determinism.
-- usage/cooldown behavior depends on the active auth family and may range from authoritative remaining counters to softer or inferred pressure.
+- Do not create active Gemini CLI usage rows.
+- Do not aggregate Gemini CLI OAuth/API/Vertex usage paths into live Gemini family usage.
+- Preserve exact lineage tokens such as OAuth, direct API key, Vertex/Google credentials, `/stats model`, `Configured`, `Working`, `Operational`, and requested/effective model differences for audit only.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
 #### Family-pooling rule
 
-When policy pools Gemini direct and Gemini CLI together, the Usage surface must still show which concrete runtime surface actually handled the run and why.
+When policy pools active provider entries, the Usage surface must show which concrete runtime surface actually handled the run and why. Gemini Direct and Antigravity can participate only when their effective capabilities satisfy the request. Retired Gemini CLI cannot be selected as an active pool member.
 
-Gemini account/plan UI and quota/usage tools are mode-dependent rather than API-key-only or OAuth-only. Direct key-backed rows, CLI OAuth rows, CLI API-key rows, and CLI Google/Vertex rows must each carry their own effective auth mode, account/profile, quota plane, source confidence, and label; family-level summaries may aggregate only after preserving those requested/effective disclosures.
+Gemini Direct account/plan UI and quota/usage tools are API-key/direct-route specific. Antigravity CLI usage rows carry their own effective model, account/profile/setup state, source confidence, and label. Family-level summaries may aggregate only after preserving requested/effective disclosures.
 
 Usage UI and `/settings` surfaces inherit the GUI requested-vs-effective pattern: per-platform labels remain visible because quota semantics differ by provider, and Gemini rows must expose the requested auth/account intent beside the effective mode, quota bucket, and source label.
 
 Before saving family-pooling changes, Usage shows the preferred provider inside the family plus a capability-guardrail explanation.
 
-Gemini shared-provider capability posture is locked for Usage and account-pressure interpretation:
+Active shared-provider capability posture is locked for Usage and account-pressure interpretation:
 - `supports_multi_account = true`
 - `supports_threshold_switch = true`
 - `supports_hard_exhaustion_detection = true`
@@ -215,7 +212,7 @@ Gemini shared-provider capability posture is locked for Usage and account-pressu
 - `auth_recovery_methods` include browser relogin `/re-auth` for OAuth and key replacement/update for API-key accounts.
 - `quota_signal_sources` include direct provider quota signals when available, structured runtime output, provider heuristics, error hints, and local rollups.
 
-Gemini `/quota` visibility is mode-aware. OAuth-backed rows may surface Gemini-plan / Code Assist-style quota semantics when authoritative evidence exists; API-key-backed rows remain a separate quota bucket and MUST NOT be mislabeled as the same quota bucket or plan path. Stale `/AI-Studio-oriented` copy is allowed only as historical context: live Usage UI and specs must label the resolved auth mode, usage source, source confidence, and quota bucket instead of implying that AI Studio API-key setup is the whole Gemini usage model.
+Gemini Direct `/quota` visibility is API-key/direct-route aware. Antigravity usage visibility depends on the verified CLI/runtime signals available for the selected account/profile/model. Stale `/AI-Studio-oriented` and Gemini CLI Code Assist-style copy is allowed only as historical context: live Usage UI and specs must label the resolved provider route, auth mode, usage source, source confidence, and quota bucket.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 ### Summary table (augmentation sources)
@@ -228,7 +225,8 @@ Provider/backend usage normalization distinguishes authoritative native usage `/
 | **GitHub Copilot** | provider quotas, premium-request semantics, runtime refusals, policy blocks | GitHub login plus selected billing/entity context when required | show billing/entity and blocked reason explicitly |
 | **Claude Code CLI** | API/admin usage where available, runtime signals, softer subscriber stats | subscriber, console/API, or SSO account rows | show whether data is authoritative or inferred |
 | **Gemini** | provider usage, quota APIs, project attribution, error hints | direct API-key account rows | show project attribution and estimated-vs-authoritative status honestly |
-| **Gemini CLI** | CLI/runtime signals, config/trust state, provider counters when available | OAuth, API-key, `ADC`, `gcloud`, service-account, or Vertex account rows | show concrete runtime surface and auth family |
+| **Antigravity CLI** | CLI/runtime signals, model-list/prompt-output evidence, provider counters when available | Google OAuth/system-keyring, ADC, and local profile-root setup where verified | show concrete runtime surface, model, account/profile, and source confidence |
+| **Gemini CLI (retired)** | source-lineage only | OAuth, API-key, `ADC`, `gcloud`, service-account, or Vertex account rows are not active setup paths | do not show as an active usage row |
 | **OpenCode** | server health/discovery plus upstream provider usage where exposed through the server | managed or attached server profiles; provider-scoped OAuth record pools may expose an active record and ordered account lists | separate connected/discovery status from actual provider availability |
 
 `Server Profiles` render inside the same runtime ontology as account-backed selectable units: they use a `row-type` badge and `/secondary` label instead of becoming a separate configuration system.

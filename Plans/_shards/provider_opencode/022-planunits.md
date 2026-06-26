@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L710-L3367
+Source lines: L753-L3415
 
-Source SHA256: `d87c86177284c5689c95d0cf397d7b45fdb59b47f7390403643bff096b6f697f`
+Source SHA256: `468a9a5a83e7b05250029bd505d9453dd5e895754711ed215159af386324e75d`
 
 ---
 
@@ -1152,7 +1152,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  OpenCode capability flags stay SSOT in platform_specs; transport remains HTTP server-bridged, plan mode uses the read-only OpenCode plan agent, execute mode uses the build agent, and OpenCode-native capability aliases normalize into shared provider capability fields before routing or model-effort UI consumption.
+  OpenCode capability flags are consumed from shared provider/model contracts rather than legacy platform_specs; transport remains HTTP server-bridged, plan mode uses the read-only OpenCode plan agent, execute mode uses the build agent, and OpenCode-native capability aliases normalize into shared provider capability fields before routing or model-effort UI consumption.
 gui_related: false
 gui_classification_reason: This unit defines capability metadata and mode-agent mapping rather than visual presentation.
 split_recommended: false
@@ -1186,7 +1186,10 @@ preserved_exact_tokens:
   - "supportsParallelTools"
   - "supportsAssistantMessagePrefill"
   - "maxPayloadSize"
-negative_constraints: []
+negative_constraints:
+  - "Do not treat legacy platform_specs.rs as the active provider capability SSOT."
+compatibility_only_notes:
+  - "platform_specs.rs is preserved only as source-lineage from the removed Rust/Iced implementation."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs, PolicyRule:Decision_Policy.md§4, ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM"
 owner_hints:
@@ -1252,7 +1255,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  Media generation tools remain Puppet Master internal capabilities backed by Gemini API key or Cursor-native image support; OpenCode must not expose or proxy media-generation tools, and the media capability picker dropdown excludes OpenCode tools.
+  Media generation tools remain Puppet Master internal capabilities backed by route-specific provider/model generated-media routes, not by OpenCode. OpenCode must not expose or proxy media-generation tools, and the media capability picker dropdown excludes OpenCode tools.
 gui_related: true
 gui_classification_reason: This unit includes media capability picker behavior and visible tool exclusion.
 split_recommended: false
@@ -1652,17 +1655,17 @@ owner_hints:
   - "Plans/CLI_Bridged_Providers.md"
 ```
 
-### PO-033 - platform_specs SSOT Constraints
+### PO-033 - Retired platform_specs SSOT Constraints
 
 ```yaml
 plan_unit_id: PO-033
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  OpenCode must be represented in platform_specs.rs as the Platform variant OpenCode with server-bridged http
-  transport, default port 4096, optional CLI path only for launcher/discovery fallback, and dynamic model
-  discovery without hardcoded fallback models.
+  Legacy platform_specs.rs OpenCode SSOT wording is retired/source-lineage only. Active OpenCode constraints are
+  server-bridged http transport, default port 4096, optional CLI path only for launcher/discovery fallback, dynamic model
+  discovery without hardcoded fallback models, and provider/model capability ownership through current contracts.
 gui_related: false
 gui_classification_reason: "This unit defines provider metadata SSOT constraints rather than visual presentation."
 split_recommended: false
@@ -1685,7 +1688,7 @@ context_scope: provider_opencode_platform_specs
 implementation_surfaces:
   - "Plans/Provider_OpenCode.md"
 node_compile_hint:
-  mode: opencode_platform_specs_ssot
+  mode: retired_opencode_platform_specs_ssot
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0039"
@@ -1700,12 +1703,14 @@ preserved_exact_tokens:
   - "No hardcoded fallback models"
   - "dynamic discovery only"
 negative_constraints:
-  - "platform_specs.rs must not encode hardcoded fallback OpenCode models."
+  - "Do not use platform_specs.rs as active implementation authority."
+  - "Do not encode hardcoded fallback OpenCode models."
+compatibility_only_notes:
+  - "platform_specs.rs is retained only as source-lineage."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, CodePath:puppet-master-rs/src/platforms/platform_specs.rs"
 owner_hints:
   - "Plans/Provider_OpenCode.md"
-  - "puppet-master-rs/src/platforms/platform_specs.rs"
   - "Plans/DRY_Rules.md"
 ```
 

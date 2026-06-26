@@ -1,17 +1,18 @@
 # Shard Index: Plans/CLI_Bridged_Providers.md
 
-Generated: 2026-06-23T07:59:48Z
+Generated: 2026-06-26T15:49:00Z
 
-Source SHA256: `5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d`
+Source SHA256: `c8edb81d62c1337890538c77676ee3a44ddefe80d9d200bfddc651e8f89e15b5`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `3c01073e75301748c1569b511ad1607522cc1505efc31e00dd714a57bd040ca2`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `089e78be921180e0800e53ecbcc56c40df90d9b84803d5c838a6238216d49bf8`
-- [003 - Purpose](003-purpose.md) L15-L34 `ea5c9333be9eeb9584b58a52a4a77f0b2da88695baf13b0e2713dea74f21b098`
-- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L36-L129 `69d14b9f48378f11a8de357d1a4f96864fa07f1966cae61f2852568a5471b808`
-- [005 - Owner / Consumer Map](005-owner-consumer-map.md) L131-L135 `b3bed06b1417d14344b9991a7c1b2b69a991666cdba35104da8bc3081f91f298`
-- [006 - PlanUnits](006-planunits.md) L137-L1049 `5bc362a6ef0aaab205821a9dea50f2aa91581bcf0a720046ed7ae9f5b6beb5c4`
-- [007 - Migration Coverage](007-migration-coverage.md) L1051-L1061 `b3f4c365d5dd0ecdc232a3160b2310d37d0c800db2004be4ef7f4705fbee1395`
+- [001 - Preamble](001-preamble.md) L1-L1 `b6bf4759911d0a723d7edddf853a1ea8691c22134e4829f39274a832423ea4a0`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `575c28ec5ca3705a931eb122e7bea28af3163d0d4c60ffa64f8716caa1f5ca6f`
+- [003 - Purpose](003-purpose.md) L15-L34 `44a9aa9b9bd742b9753bb16fe0283d80a0886ee6ad8e10dbd89572e52518824c`
+- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L36-L129 `3025be6e886dc8d84ac17c90ade6ab9f726e6783a83c4e8b9d8b13aeebc30df6`
+- [005 - Owner / Consumer Map](005-owner-consumer-map.md) L131-L135 `23aec7b4a76d7dbfe69699f3820493a15ec0f1b3a9c47717786c262735d8cdc3`
+- [006 - PlanUnits](006-planunits.md) L137-L1055 `de379e185671f3a69954dd4b5159aca8d0809e92be535f1f245b78b8e129d8a8`
+- [007 - Migration Coverage](007-migration-coverage.md) L1057-L1067 `0684bf88afc2a8de8b445a8ce0e8b36d0a4be97ef35562572603e6758943865c`
+- [008 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1069-L1241 `02461874727aec2d856f7b9d41b3ec7a19a5e59dfc39a318fcdbc710fa7360e9`

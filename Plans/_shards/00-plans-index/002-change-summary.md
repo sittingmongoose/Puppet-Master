@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L23
+Source lines: L7-L24
 
-Source SHA256: `488324e79d320c82476f48addad73100a3bc72a642e0dd4909acd2c4ad510af0`
+Source SHA256: `0b1d0ddcce228cf4e86e7b372568a47476ff67cc2fdad60d41e2a6adf91252aa`
 
 ---
 
@@ -22,6 +22,7 @@ Source SHA256: `488324e79d320c82476f48addad73100a3bc72a642e0dd4909acd2c4ad510af0
 - 2026-06-18: Registered PRD Builder and Planning Wizard owner routing compiled from ledger `pldg-20260618-001-prd-planning-wizard`; bootstrap compile remains Plans/index-only and does not run finished-product Plan Compile or create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
 - 2026-06-21: Registered PRD/Planning runtime-contract repair: `Plans/prd_planning_runtime_contracts.json` and schema carry strict Native Ledger Service, ProjectContextSnapshot, stage-card, WorkNode, activation, testing, UICommand, clean-room, and retired-search-exclusion contracts; `scripts/pm-prd-planning-runtime-validate.py` is part of standard gates.
 - 2026-06-21: Retired `Plans/chain-wizard.md` and `Plans/chain-wizard-flexibility.md` from active product canon. Their `CW-*` and `CWF-*` PlanUnits are compatibility/source-lineage only and must not be accepted/indexed as active current-product truth.
+- 2026-06-26: Registered provider-update compile routing from ledger `pldg-20260624-001-provider-updates`: Gemini CLI is retired from active provider support, Gemini Direct remains API-key-backed, Antigravity CLI replaces Gemini CLI for the CLI-backed Google/agent route, Provider -> models catalogs are mandatory, media support splits input/output/generated-media routes, OpenAI/Codex subscription-backed image generation is mandatory alongside official OpenAI API-key image routes, and provider readiness stays route/model/account specific.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

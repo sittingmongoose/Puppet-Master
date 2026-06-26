@@ -1,15 +1,15 @@
 {
   "schema_id": "pm.bootstrap_compile_queue.v1",
   "ledger_id": "pldg-20260624-001-provider-updates",
-  "status": "compiled_to_plans_pending_governance_seal",
-  "current_phase": "compiled_to_plans_pending_governance_seal",
-  "compiled_at_utc": "2026-06-26T10:43:50Z",
-  "updated_at_utc": "2026-06-26T14:12:59Z",
-  "last_event_id": "evt-0038",
-  "terminal_ledger_event_id": "evt-0038",
+  "status": "compiled_to_plans_governance_sealed",
+  "current_phase": "compiled_to_plans_governance_sealed",
+  "compiled_at_utc": "2026-06-26T15:17:31Z",
+  "updated_at_utc": "2026-06-26T15:51:34Z",
+  "last_event_id": "evt-0045",
+  "terminal_ledger_event_id": "evt-0045",
   "latest_audit_ref": "Plans/.audits/audit-20260625-001-provider-adjacent-plans/FINAL_REPORT.md",
   "latest_audit_status": "reconciled_delta_backlog_recorded",
-  "governance_status": "pending_seal",
+  "governance_status": "sealed",
   "candidate_compile_owner_docs": [],
   "canonical_plan_targets": [
     "Plans/00-plans-index.md"
@@ -20,8 +20,8 @@
     "Plans/CLI_Bridged_Providers.md",
     "Plans/Contracts_V0.md",
     "Plans/FinalGUISpec.md",
-    "Plans/Media_Generation_and_Capabilities.md",
     "Plans/MCP_Integration.md",
+    "Plans/Media_Generation_and_Capabilities.md",
     "Plans/Models_System.md",
     "Plans/Multi-Account.md",
     "Plans/Permissions_System.md",
@@ -64,7 +64,7 @@
     "Plans/.plan_index/coverage_report.json",
     "Plans/.plan_index/node_readiness_report.json"
   ],
-  "compiled_plan_units_count": 30,
+  "compiled_plan_units_count": 37,
   "items": [
     {
       "queue_id": "cq-0001",
@@ -76,8 +76,8 @@
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
-        "Plans/Media_Generation_and_Capabilities.md",
         "Plans/MCP_Integration.md",
+        "Plans/Media_Generation_and_Capabilities.md",
         "Plans/Models_System.md",
         "Plans/Multi-Account.md",
         "Plans/Permissions_System.md",
@@ -93,8 +93,8 @@
         "Plans/usage-feature.md"
       ],
       "status": "compiled",
-      "compile_disposition": "compiled_to_plan",
-      "compiled_at_utc": "2026-06-26T10:43:50Z",
+      "compile_disposition": "compiled_to_plan_governance_sealed",
+      "compiled_at_utc": "2026-06-26T15:17:31Z",
       "compiled_plan_unit_ids": [
         "0PI-061",
         "ACD-424",
@@ -108,6 +108,8 @@
         "CV-294",
         "F3-400",
         "F3-401",
+        "MA-023",
+        "MA-038",
         "MA-062",
         "MA-063",
         "MGAC-020",
@@ -116,10 +118,12 @@
         "MGAC-095",
         "MGAC-096",
         "MGAC-097",
+        "MGAC-098",
+        "MS-053",
+        "MS-057",
         "MS-113",
         "MS-114",
         "MS-115",
-        "MS-053",
         "PO-048",
         "POA-050",
         "PP-054",
@@ -253,7 +257,10 @@
         "atom-0138",
         "atom-0139",
         "atom-0140",
-        "atom-0141"
+        "atom-0141",
+        "atom-0142",
+        "atom-0143",
+        "atom-0144"
       ],
       "post_compile_repair_plan_unit_ids": [
         "CBP-017",
@@ -294,21 +301,25 @@
         "N2-004",
         "0PI-061"
       ],
-      "notes": "Strict queue target is the governance-covered owner map; target_docs lists all owner docs touched by the provider-update compile and post-compile currentness repair."
+      "notes": "Strict queue target is the governance-covered owner map; target_docs lists all owner docs touched by the provider-update compile, currentness repair, and post-compile media/GUI recompile.",
+      "compile_notes": "Provider updates compiled to Plans and governance sealed; node readiness remains blocked_compiler_contract_incomplete and runtime_disabled."
     }
   ],
-  "notes": "Compiled accepted provider-update atoms into live canonical Plans PlanUnits and applied post-compile currentness/traceability repairs. Strict canonical_plan_targets remains governance-covered Plans/00-plans-index.md; compiled_owner_docs records every touched owner/consumer doc. governance_status=pending_seal because Spec_Lock, shards, evidence, plan_graph, and auto_decisions were intentionally not updated. Ledger/index/diff/search and compiled atom-to-PlanUnit traceability checks pass after evt-0036/evt-0038 repairs; migration/shard/run-gates remain stale generated-governance failures pending explicit governance/migration refresh.",
+  "notes": "Compiled accepted provider-update atoms into live canonical Plans PlanUnits, applied post-compile repairs, regenerated allowed Plans/.plan_index outputs, and completed governance seal. No WorkNodes, NodeSeeds, executable queues, implementation files, Spec_Lock-breaking stale hashes, stale shards, stale evidence, stale plan_graph hashes, or auto_decision validation failures remain.",
   "validation_state": {
-    "bootstrap_ledger_validator": "pass",
-    "plan_index_generate": "pass",
-    "plan_index_validate": "pass",
-    "git_diff_check": "pass",
-    "jsonl_parse_check": "pass",
-    "stale_exact_wording_search": "pass_no_matches",
-    "compiled_atom_planunit_traceability": "pass_449_pairs_0_missing",
-    "plan_migration_validate": "fail_stale_migration_metadata_after_live_plan_changes",
-    "pm_shard_plans_check": "fail_stale_generated_shards_pending_governance_seal",
-    "run_gates": "fail_stale_spec_lock_evidence_plan_graph_shards_pending_governance_seal",
-    "governance_status": "pending_seal"
-  }
+    "bootstrap_ledger_validator": "pending_final_rerun_after_seal_projection_update",
+    "plan_index_validate": "pass_5228_planunits_18707_acceptance_units_blocked_compiler_contract_incomplete",
+    "plan_migration_validate": "pass_postseal_5228_live_planunits",
+    "pm_shard_plans_check": "pass_1021_shards_56_docs",
+    "run_gates": "pass",
+    "validate_auto_decisions": "pass",
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass",
+    "validate_plan_graph": "pass",
+    "git_diff_check": "pending_final_rerun_after_seal_projection_update",
+    "governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "runtime_enablement_status": "runtime_disabled"
+  },
+  "post_compile_uncompiled_atom_ids": []
 }

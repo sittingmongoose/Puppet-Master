@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L689-L4234
+Source lines: L690-L4241
 
-Source SHA256: `488324e79d320c82476f48addad73100a3bc72a642e0dd4909acd2c4ad510af0`
+Source SHA256: `0b1d0ddcce228cf4e86e7b372568a47476ff67cc2fdad60d41e2a6adf91252aa`
 
 ---
 
@@ -542,7 +542,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  The rewrite tie-in preserves Rust + Slint UI rewrite, subscription-first auth, Gemini Direct and Gemini CLI split, key-exception, and requested/effective auth, account identity, account/plan UI, quota, and usage labels carrying across storage, runtime, setup/health, media capabilities, and usage.
+  The rewrite tie-in preserves Rust + Slint UI rewrite, subscription-first auth, Gemini Direct as active direct API,
+  Antigravity CLI as the active Google-owned CLI-runtime route, retired Gemini CLI split vocabulary as source-lineage
+  only, key-exception lineage, and requested/effective auth, account identity, account/plan UI, quota, and usage labels
+  carrying across storage, runtime, setup/health, media capabilities, and usage.
 gui_related: true
 gui_classification_reason: The unit covers Rust + Slint UI rewrite, account/plan UI, and visible auth/quota/usage labels.
 split_recommended: false
@@ -576,10 +579,13 @@ preserved_exact_tokens:
 - 'key-exception'
 - 'requested/effective auth'
 - 'account/plan UI'
-negative_constraints: []
-compatibility_only_notes: []
+negative_constraints:
+- 'Do not treat Gemini CLI as an active provider entry.'
+compatibility_only_notes:
+- 'Gemini Direct and Gemini CLI split is retained only as source-lineage; current active split is Gemini Direct plus Antigravity CLI.'
 stale_retired_dispositions:
 - 'Gemini is modeled as two provider entries, not one stale-canon mixed-account provider.'
+- 'Active Gemini CLI provider-entry support is retired by provider-update ledger pldg-20260624-001-provider-updates.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/00-plans-index.md

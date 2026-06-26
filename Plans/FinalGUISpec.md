@@ -269,7 +269,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Media controls must consume route-specific media capability schemas and show media input, media output, and generated-media support separately. The GUI must expose OpenAI/Codex Images 2 official API and mandatory subscription-backed routes as distinct setup/control choices, MiniMax Image-01 generation controls including aspect ratio or width/height, response format, seed, `n`, prompt optimizer, and 24-hour URL-expiry warnings, and clear unsupported/gated rows for Kimi, GitHub Copilot, Cursor, Z.AI/Zhipu, Antigravity, Gemini Direct, and other providers where evidence is partial.
+  Media controls must consume route-specific media capability schemas and show media input, media output, and generated-media support separately. The GUI and Settings image-generation engine list must be route-specific rather than Gemini-primary: expose OpenAI API-key `gpt-image-2` generation/edit, OpenAI Responses hosted `image_generation`, mandatory ChatGPT/OpenAI/Codex subscription-backed image generation, MiniMax global `image-01` generation controls including aspect ratio or width/height, response format, seed, `n`, prompt optimizer, and 24-hour URL-expiry warnings, Antigravity OAuth/internal `gemini-3.1-flash-image` as a support-state-labeled capability-gated generated-image route, and Gemini Direct generated-image routes where direct API media proof exists. Kimi, GitHub Copilot, Cursor, Z.AI/Zhipu, public text-only `agy` rows, and other providers with partial or missing generated-artifact proof must remain visible as unsupported, disabled, capability-gated, or unverified rows with reasons rather than selectable image-generation engines.
 gui_related: true
 gui_classification_reason: Defines user-visible media controls, settings, disclosures, and disabled/gated states.
 depends_on: [MGAC-094, MGAC-095, MGAC-096, MGAC-097, RAP-032, POA-050]
@@ -279,6 +279,8 @@ acceptance_criteria:
   - OpenAI API-key image routes and OpenAI/Codex subscription-backed routes are separate visible choices.
   - MiniMax Image-01 controls include route-specific parameters and expiry/partial-success disclosures.
   - Unsupported or gated media routes are shown as such, not hidden or implied green.
+  - GUI and Settings image-generation selectors include Antigravity OAuth/internal `gemini-3.1-flash-image` only as a support-state-labeled capability-gated route, not as public `agy` CLI media.
+  - Public `agy` text/coding rows remain capability metadata and do not become selectable image-generation engines unless the exact route later proves generated-media output.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -291,12 +293,20 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0029
   - pldg-20260624-001-provider-updates:atom-0133
   - pldg-20260624-001-provider-updates:atom-0137
-source_atom_ids: [atom-0028, atom-0029, atom-0031, atom-0033, atom-0034, atom-0035, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0048, atom-0049, atom-0074, atom-0101, atom-0105, atom-0126, atom-0127, atom-0128, atom-0129, atom-0130, atom-0131, atom-0133, atom-0134, atom-0136, atom-0137, atom-0138]
-preserved_exact_tokens: ["ChatGPT Images 2.0", "GPT Image 2", "gpt-image-2", "image_generation", "OpenAI/Codex subscription", "MiniMax Image-01", "aspect_ratio", "width", "height", "response_format", "url", "base64", "seed", "n", "prompt_optimizer", "24-hour URL expiry", "unsupported", "capability-gated"]
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+  - pldg-20260624-001-provider-updates:atom-0144
+source_atom_ids: [atom-0028, atom-0029, atom-0031, atom-0033, atom-0034, atom-0035, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0048, atom-0049, atom-0074, atom-0101, atom-0105, atom-0126, atom-0127, atom-0128, atom-0129, atom-0130, atom-0131, atom-0133, atom-0134, atom-0136, atom-0137, atom-0138, atom-0142, atom-0143, atom-0144]
+preserved_exact_tokens: ["ChatGPT Images 2.0", "GPT Image 2", "ChatGPT", "gpt-image-2", "image_generation", "OpenAI/Codex subscription", "OpenAI/Codex subscription-backed image generation", "MiniMax Image-01", "image-01", "gemini-3.1-flash-image", "Gemini Direct", "agy models(The ones that actually support media generation)", "aspect_ratio", "width", "height", "response_format", "url", "base64", "seed", "n", "prompt_optimizer", "24-hour URL expiry", "unsupported", "disabled", "capability-gated", "unverified", "Settings > Models", "F3-401", "ACD-424"]
 negative_constraints:
   - Do not represent image input as image generation.
   - Do not make the GUI the owner of media schema truth.
   - Do not hide expiry, partial success, provider account, or provenance caveats from generated-media results.
+  - Do not leave GUI or Settings supported image-generation model sections Gemini-primary after compiling provider updates.
+  - Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
+  - Do not collapse OpenAI API-key `gpt-image-2`, Responses `image_generation`, and OpenAI/Codex subscription-backed image generation into one generic OpenAI row.
+  - Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
+  - Do not show unsupported/gated providers as available image-generation choices; show disabled/capability-gated/unverified state and reason.
 owner_hints: [Plans/FinalGUISpec.md, Plans/Media_Generation_and_Capabilities.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
 ```
 

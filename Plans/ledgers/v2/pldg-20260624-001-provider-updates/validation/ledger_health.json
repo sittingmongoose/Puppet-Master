@@ -180,30 +180,67 @@
       "check_id": "post-compile-validation-0036",
       "status": "warning",
       "summary": "Post-compile ledger/index/diff validators passed. Migration validation reports stale historical migration hashes after live Plans changed; this is deferred to explicit governance/migration refresh."
+    },
+    {
+      "check_id": "antigravity-image-generation-probe-0037",
+      "status": "warning",
+      "summary": "Inspected `jkalasas/opencode-antigravity-image` and `opencode-antigravity-auth`; local process-only OAuth/internal probes showed `gemini-3.1-flash-image` is catalog-visible and generated a 1024x1024 JPEG through Antigravity daily `v1internal:generateContent`. This verifies a separate unofficial/private OAuth/internal generated-media route, not public `agy` CLI media support. `gemini-3-pro-image`, Nano Banana, and `gemini-2.5-flash-image` remain unverified for Antigravity in this environment."
+    },
+    {
+      "check_id": "antigravity-agy-media-capability-rows-0038",
+      "status": "warning",
+      "summary": "Fresh `agy models` still lists Gemini 3.5 Flash Medium/High/Low, Gemini 3.1 Pro Low/High, Claude Sonnet 4.6 Thinking, Claude Opus 4.6 Thinking, and GPT-OSS 120B Medium. Jared correction recorded: every public `agy` catalog row must appear in media/capability metadata with explicit modality flags, while generated-media flags remain false without row-specific artifact proof."
+    },
+    {
+      "check_id": "gui-settings-image-generation-model-rows-0039",
+      "status": "warning",
+      "summary": "Jared correction recorded: GUI and Settings supported image-generation model sections must be updated at compile time from Gemini-primary lists to route-specific supported rows including ChatGPT/OpenAI/Codex, Antigravity generated-media-capable routes such as `gemini-3.1-flash-image`, MiniMax Image-01, Gemini Direct where available, and disabled/gated unverified providers. Text-only public `agy` rows remain broader media/capability rows but not selectable image-generation engines."
+    },
+    {
+      "check_id": "post-compile-provider-media-gui-recompile-0040",
+      "status": "pass",
+      "summary": "Compiled atom-0142, atom-0143, and atom-0144 into canonical Plans. New/updated PlanUnits cover Antigravity OAuth/internal `gemini-3.1-flash-image`, every public `agy models` row with explicit modality truth, and route-specific GUI/Settings image-generation model rows. Allowed Plans/.plan_index outputs were regenerated; final validators still pending in evt-0043."
+    },
+    {
+      "check_id": "post-compile-provider-media-gui-validation-0041",
+      "status": "warning",
+      "summary": "Bootstrap ledger validator, Plans/.plan_index generation and validation, git diff --check, JSONL parse, stale active wording search, and atom-to-PlanUnit traceability pass after atom-0142 through atom-0144 compile. Migration validation still fails 103 stale historical migration hashes plus one final live PlanUnit count mismatch, 5197 recorded vs 5228 current, because migration proof artifacts were not refreshed in this non-seal phase."
+    },
+    {
+      "check_id": "gui-settings-image-generation-confirmation-0042",
+      "status": "pass",
+      "summary": "Confirmed from live compiled Plans that atom-0144 is already represented in F3-401, MS-113, MGAC-094/MGAC-098, MA-062/MA-038, and ACD-424. GUI and Settings image-generation selectors are route-specific, include ChatGPT/OpenAI/Codex and proven Antigravity generated-media routes, and keep public text-only `agy` rows out of selectable image-generation engines."
+    },
+    {
+      "check_id": "provider-updates-governance-seal-0043",
+      "status": "pass",
+      "summary": "Provider-update governance seal refreshed migration proof, configured shards, evidence bundles, Spec_Lock, and governance validators. node_readiness_report.status remains blocked_compiler_contract_incomplete; no node/runtime/build artifacts were created."
     }
   ],
-    "last_validated_at_utc": "2026-06-26T14:12:59Z",
+  "last_validated_at_utc": "2026-06-26T15:51:34Z",
   "ledger_id": "pldg-20260624-001-provider-updates",
-    "notes": "Bootstrap ledger validator pass after post-compile currentness repair. Plan index generation/validation, git diff check, JSONL parse, stale exact-wording search, and compiled atom-to-PlanUnit traceability checks pass. Migration validator and generated governance checks remain stale historical proof/hash failures pending explicit governance/migration refresh.",
+  "notes": "Governance seal completed after provider Plan and PlanUnit index changes stabilized. Migration proof, configured shards, evidence bundles, Spec_Lock, plan graph validation, auto decisions validation, PlanUnit index validation, run-gates, shard check, and git diff checks are included in the seal validator bundle; final command rerun follows this projection update.",
   "schema_id": "pm.bootstrap_ledger_health.v1",
-  "status": "pass",
+  "status": "pass_governance_sealed",
   "summary": {
     "blockers": 3,
     "candidate_atoms": 0,
     "compile_queue_items": 1,
-        "corrections": 18,
-    "decisions": 40,
+    "corrections": 21,
+    "decisions": 43,
     "deferred_questions": 0,
-        "design_atoms": 141,
-        "events": 38,
+    "design_atoms": 144,
+    "events": 45,
     "open_blockers": 0,
     "open_questions": 0,
     "questions": 11,
-        "compiled_to_plan_atoms": 123,
+    "compiled_to_plan_atoms": 126,
     "not_for_plan_atoms": 4,
-    "superseded_atoms": 14
+    "superseded_atoms": 14,
+    "accepted_atoms": 0,
+    "governance_seal": "passed"
   },
-    "updated_at_utc": "2026-06-26T14:12:59Z",
+  "updated_at_utc": "2026-06-26T15:51:34Z",
   "warnings": [
     "blk-0001 resolved for current direct-provider scope: GitHub Copilot direct hosted API is implementation-ready, and stored CLI credential execution is optional/future-route evidence only because PM is not bridging `copilot` or `gh copilot`.",
     "Cursor caveats preserved: signed production macOS app packaging was not installed/tested, Worker external-bridge image bytes are not verified, and Worker Responses lacks `output_text`; these are compatibility notes, not the prior live-proof blocker.",
@@ -217,8 +254,10 @@
     "`opencode-gpt-imagegen` uses an unofficial ChatGPT subscription/Codex backend path and OpenCode OAuth auth; keep it source-lineage for UX/artifact/subscription-route lessons, but PM must now design a mandatory OpenAI/Codex subscription-backed image-generation route with explicit auth/security/support-state handling.",
     "Official OpenAI API-key image generation remains required separately from the mandatory OpenAI/Codex subscription-backed route.",
     "Current OpenCode coding-plan config is source-lineage, not direct-provider closure proof; PM must own provider/model mappings and tests, especially Alibaba coding-plan thinking behavior.",
-        "Do not interpret `working in the ledger` as implemented runtime support; compile and implementation are still future explicit phases."
-        ,
-        "Antigravity CLI agy 1.0.12 does not currently verify Nano Banana/Nanobanana/generated-media support; prompt-output success with an unlisted model can fall back to Gemini 3.5 Flash and must not be treated as support proof."
-    ]
+    "Do not interpret `working in the ledger` as implemented runtime support; compile and implementation are still future explicit phases.",
+    "Antigravity CLI agy 1.0.12 does not currently verify Nano Banana/Nanobanana/generated-media support; prompt-output success with an unlisted model can fall back to Gemini 3.5 Flash and must not be treated as support proof.",
+    "Antigravity generated-image support is now locally proven only for a separate unofficial/private OAuth/internal route using `gemini-3.1-flash-image`; do not mark public `agy` CLI media, `gemini-3-pro-image`, Nano Banana, or `gemini-2.5-flash-image` green from this proof.",
+    "Every public `agy models` row must be represented in media/capability metadata with explicit modality flags; do not omit text/coding-only rows, and do not mark generated-media support true without row-specific artifact proof.",
+    "Node readiness remains blocked_compiler_contract_incomplete by design; this seal does not enable PlanCompile runtime launch or node artifact generation."
+  ]
 }

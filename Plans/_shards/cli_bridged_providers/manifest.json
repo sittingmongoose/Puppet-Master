@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-23T07:59:48Z",
+  "generated_at_utc": "2026-06-26T15:49:00Z",
   "index_path": "Plans/_shards/cli_bridged_providers/00-index.md",
-  "index_sha256": "cedfd6b78b4de5e9a40cd7908e89a6b500f06d8cc493c81a3df0201fd3784ce2",
+  "index_sha256": "c28965ef66e165d2696d83eae2bb327845949727f73a0a5154cb382004390a09",
   "manifest_path": "Plans/_shards/cli_bridged_providers/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/cli_bridged_providers/001-preamble.md",
-      "sha256": "3c01073e75301748c1569b511ad1607522cc1505efc31e00dd714a57bd040ca2",
+      "sha256": "b6bf4759911d0a723d7edddf853a1ea8691c22134e4829f39274a832423ea4a0",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/cli_bridged_providers/002-canonical-owner-section-requirements.md",
-      "sha256": "089e78be921180e0800e53ecbcc56c40df90d9b84803d5c838a6238216d49bf8",
+      "sha256": "575c28ec5ca3705a931eb122e7bea28af3163d0d4c60ffa64f8716caa1f5ca6f",
       "shard_id": "002",
       "source_line_end": 12,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/cli_bridged_providers/003-purpose.md",
-      "sha256": "ea5c9333be9eeb9584b58a52a4a77f0b2da88695baf13b0e2713dea74f21b098",
+      "sha256": "44a9aa9b9bd742b9753bb16fe0283d80a0886ee6ad8e10dbd89572e52518824c",
       "shard_id": "003",
       "source_line_end": 34,
       "source_line_start": 15,
@@ -35,7 +35,7 @@
     {
       "heading": "Canonical data-shape reconciliation",
       "path": "Plans/_shards/cli_bridged_providers/004-canonical-data-shape-reconciliation.md",
-      "sha256": "69d14b9f48378f11a8de357d1a4f96864fa07f1966cae61f2852568a5471b808",
+      "sha256": "3025be6e886dc8d84ac17c90ade6ab9f726e6783a83c4e8b9d8b13aeebc30df6",
       "shard_id": "004",
       "source_line_end": 129,
       "source_line_start": 36,
@@ -44,7 +44,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/cli_bridged_providers/005-owner-consumer-map.md",
-      "sha256": "b3bed06b1417d14344b9991a7c1b2b69a991666cdba35104da8bc3081f91f298",
+      "sha256": "23aec7b4a76d7dbfe69699f3820493a15ec0f1b3a9c47717786c262735d8cdc3",
       "shard_id": "005",
       "source_line_end": 135,
       "source_line_start": 131,
@@ -53,25 +53,34 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/cli_bridged_providers/006-planunits.md",
-      "sha256": "5bc362a6ef0aaab205821a9dea50f2aa91581bcf0a720046ed7ae9f5b6beb5c4",
+      "sha256": "de379e185671f3a69954dd4b5159aca8d0809e92be535f1f245b78b8e129d8a8",
       "shard_id": "006",
-      "source_line_end": 1049,
+      "source_line_end": 1055,
       "source_line_start": 137,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/cli_bridged_providers/007-migration-coverage.md",
-      "sha256": "b3f4c365d5dd0ecdc232a3160b2310d37d0c800db2004be4ef7f4705fbee1395",
+      "sha256": "0684bf88afc2a8de8b445a8ce0e8b36d0a4be97ef35562572603e6758943865c",
       "shard_id": "007",
-      "source_line_end": 1061,
-      "source_line_start": 1051,
+      "source_line_end": 1067,
+      "source_line_start": 1057,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
+      "path": "Plans/_shards/cli_bridged_providers/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "sha256": "02461874727aec2d856f7b9d41b3ec7a19a5e59dfc39a318fcdbc710fa7360e9",
+      "shard_id": "008",
+      "source_line_end": 1241,
+      "source_line_start": 1069,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1061,
+    "line_count": 1241,
     "path": "Plans/CLI_Bridged_Providers.md",
-    "sha256": "5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d"
+    "sha256": "c8edb81d62c1337890538c77676ee3a44ddefe80d9d200bfddc651e8f89e15b5"
   }
 }

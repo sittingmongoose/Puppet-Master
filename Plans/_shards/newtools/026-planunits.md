@@ -2,9 +2,9 @@
 
 Source: `Plans/newtools.md`
 
-Source lines: L1312-L8589
+Source lines: L1312-L8592
 
-Source SHA256: `f56d0da30532a888bc65621c664f432fcdfb50bdca7f91c1bfaab2195d7179c2`
+Source SHA256: `cad0e89af13bf8410029021e2aa1ab83861ce1896fea1e860fa11c1b5277c1b8`
 
 ---
 
@@ -105,7 +105,7 @@ plan_unit_id: N2-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: UI wiring is Slint-era only, no legacy Iced runtime wiring is required. Subscription-first auth preserves Gemini Direct gemini, Gemini CLI gemini_cli, and key-exception semantics while retiring stale one-provider mixed-account Gemini wording.
+canonical_text: UI wiring is Slint-era only, no legacy Iced runtime wiring is required. Subscription-first auth preserves Gemini Direct gemini, Antigravity CLI as the active Google-owned CLI-runtime route, key-exception semantics where supported, and gemini_cli only as retired/source-lineage vocabulary while retiring stale one-provider mixed-account Gemini wording.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -133,16 +133,19 @@ preserved_exact_tokens:
 - no legacy Iced runtime wiring
 - Gemini Direct
 - gemini
+- Antigravity CLI
 - Gemini CLI
 - gemini_cli
 - key-exception
 - mixed-account
 negative_constraints:
 - Legacy Iced runtime wiring is not required for this task.
+- Do not preserve Gemini CLI or gemini_cli as an active provider route.
 compatibility_only_notes:
 - Deliverables remain Plans-folder documentation updates for the Slint rebuild.
+- Gemini CLI and gemini_cli are retained only as retired/source-lineage vocabulary.
 stale_retired_dispositions:
-- Stale one-provider mixed-account Gemini wording is retired in favor of Gemini Direct and Gemini CLI.
+- Stale one-provider mixed-account Gemini wording is retired in favor of Gemini Direct plus Antigravity CLI, with Gemini CLI active-provider wording retired.
 owner_boundary_notes: []
 owner_hints:
 - Plans/newtools.md

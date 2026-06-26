@@ -92,7 +92,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
 canonical_text: >-
-  Provider media support is route-specific and must be modeled as separate `media_input`, `media_output`, and `generated_media_routes[]` capabilities under concrete provider/model rows. PM must preserve explicit per-media support-state labels for green, disabled, capability-gated, unverified, unsupported, separate-profile, and source-lineage-only states. Gemini CLI removal also removes Gemini-default setup copy; Gemini Direct API remains a media-capable direct provider route where verified.
+  Provider media support is route-specific and must be modeled as separate `media_input`, `media_output`, and `generated_media_routes[]` capabilities under concrete provider/model rows. PM must preserve explicit per-media support-state labels for green, disabled, capability-gated, unverified, unsupported, separate-profile, and source-lineage-only states. The media/capability matrix includes every public `agy models` row under Antigravity with explicit modality truth, even when generated image, generated video, generated audio/TTS, music, or artifact output are false. Selectable generated-media engines are a narrower subset: OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax global `image-01`, Gemini Direct generated-image routes where verified, and the separate capability-gated Antigravity OAuth/internal `gemini-3.1-flash-image` route where locally proven. Gemini CLI removal also removes Gemini-default setup copy; Gemini Direct API remains a media-capable direct provider route where verified.
 gui_related: false
 gui_classification_reason: Canonical media capability schema and support-state semantics rather than visual presentation.
 depends_on: [MS-113, CV-094]
@@ -102,6 +102,8 @@ acceptance_criteria:
   - Support-state labels distinguish unsupported, unverified, disabled, capability-gated, separate-profile, and source-lineage-only rows.
   - Gemini CLI is not used as the default media setup path; Gemini Direct API may remain active.
   - Provider-family grouping does not erase account, billing, region, or route differences.
+  - Public `agy` text/coding rows remain present in media/capability metadata with generated-media flags false unless row-specific artifact proof exists.
+  - GUI/Settings image-generation selectors consume only actual generated-media routes rather than every broader media/capability row.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -115,12 +117,17 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0027
   - pldg-20260624-001-provider-updates:atom-0046
   - pldg-20260624-001-provider-updates:atom-0130
-source_atom_ids: [atom-0026, atom-0027, atom-0028, atom-0035, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0048, atom-0049, atom-0074, atom-0092, atom-0098, atom-0101, atom-0105, atom-0130, atom-0138]
-preserved_exact_tokens: ["media_input", "media_output", "generated_media_routes[]", "Gemini Direct", "Gemini CLI", "disabled", "capability-gated", "unverified", "unsupported", "separate-profile", "source-lineage"]
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+  - pldg-20260624-001-provider-updates:atom-0144
+source_atom_ids: [atom-0026, atom-0027, atom-0028, atom-0035, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0048, atom-0049, atom-0074, atom-0092, atom-0098, atom-0101, atom-0105, atom-0130, atom-0138, atom-0142, atom-0143, atom-0144]
+preserved_exact_tokens: ["media_input", "media_output", "generated_media_routes[]", "Gemini Direct", "Gemini CLI", "disabled", "capability-gated", "unverified", "unsupported", "separate-profile", "source-lineage", "agy models", "text output", "image input", "PDF input", "generated image", "generated video", "generated audio/TTS", "music", "artifact output", "gpt-image-2", "image_generation", "OpenAI/Codex subscription-backed image generation", "gemini-3.1-flash-image", "image-01"]
 negative_constraints:
   - Do not use Gemini CLI or Gemini-default copy as the active media setup path.
   - Do not mark image input as image generation.
   - Do not flatten route-specific media state into a single provider-level boolean.
+  - Do not omit public `agy` models from media/capability metadata just because they are not generated-image models.
+  - Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
 owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/usage-feature.md]
 ```
 
@@ -241,6 +248,53 @@ negative_constraints:
   - Do not hide Z.AI plan, balance, overload, or resource-package gates behind generic provider failure.
   - Do not use OpenCode server or OpenCode-routed providers as direct-provider closure evidence.
 owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/usage-feature.md]
+```
+
+### MGAC-098 - Antigravity Public Catalog And OAuth/Internal Image Route Split
+
+```yaml
+plan_unit_id: MGAC-098
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: >-
+  Antigravity media capability planning splits public `agy` CLI catalog rows from the separate Antigravity OAuth/internal generated-image route. Current public `agy models` rows are `Gemini 3.5 Flash (Medium)`, `Gemini 3.5 Flash (High)`, `Gemini 3.5 Flash (Low)`, `Gemini 3.1 Pro (Low)`, `Gemini 3.1 Pro (High)`, `Claude Sonnet 4.6 (Thinking)`, `Claude Opus 4.6 (Thinking)`, and `GPT-OSS 120B (Medium)`; these rows must appear in media/capability metadata with text output, image input, PDF input, generated image, generated video, generated audio/TTS, music, artifact output, thinking/effort label, route, support state, verification state, and source provenance fields, with generated-media flags false until the exact row has artifact proof. Antigravity generated-image support is a distinct capability-gated OAuth/internal route proven locally only for `gemini-3.1-flash-image` through `v1internal:generateContent` using `responseModalities: ["IMAGE"]`, `imageConfig`, and `candidateCount`, producing a `1024x1024` `image/jpeg` artifact with SHA-256 `a60c8987f42ebb678426affb79d55f49f3efe8feebc8c09ba86772bfa91d9f5d`. `jkalasas/opencode-antigravity-image`, `opencode-antigravity-image`, and `opencode-antigravity-auth` are source-lineage for this unofficial/private endpoint shape, not proof that public `agy` CLI media is green.
+gui_related: false
+gui_classification_reason: Defines provider/media route capability truth and proof states; GUI consumes these rows but does not own them.
+depends_on: [MGAC-094, MS-113, MA-062, CV-292]
+unblocks: [F3-401, RAP-032, POA-050, UF-074]
+acceptance_criteria:
+  - Every current public `agy models` row is represented under Antigravity media/capability metadata with explicit modality fields.
+  - Public `agy` rows do not appear as selectable image-generation engines unless that exact public route later has generated-artifact proof.
+  - The Antigravity OAuth/internal `gemini-3.1-flash-image` route is distinct from Gemini Direct and from public `agy` CLI catalog rows.
+  - "`gemini-3-pro-image`, `gemini-2.5-flash-image`, Nano Banana, Nanobanana, Imagen, and Veo remain unverified for the tested Antigravity account/project unless fresh catalog and artifact proof supersede this state."
+  - Private/internal endpoint support carries capability-gated support-state, terms/risk labeling, fallback/error handling, and secret-redaction requirements.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: antigravity_media_route_overclaim
+reasoning_tier: high
+context_scope: antigravity_public_catalog_and_internal_image_route
+implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Multi-Account.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+node_compile_hint: {mode: antigravity_public_catalog_internal_image_split, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+  - pldg-20260624-001-provider-updates:atom-0144
+  - Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_image_generation_probe_20260626.md
+  - Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/antigravity_agy_media_capability_rows_20260626.md
+  - Plans/ledgers/v2/pldg-20260624-001-provider-updates/source_shards/gui_settings_image_generation_model_rows_20260626.md
+source_atom_ids: [atom-0142, atom-0143, atom-0144]
+preserved_exact_tokens: ["jkalasas/opencode-antigravity-image", "opencode-antigravity-image", "opencode-antigravity-auth", "UNOFFICIAL TOOL", "v1internal:generateContent", "v1internal:fetchAvailableModels", "responseModalities: [\"IMAGE\"]", "imageConfig", "candidateCount", "gemini-3.1-flash-image", "gemini-3-pro-image", "gemini-2.5-flash-image", "Nano Banana", "Nanobanana", "Imagen", "Veo", "PLATFORM_UNSPECIFIED", "MACOS", "INVALID_ARGUMENT", "1024x1024", "image/jpeg", "a60c8987f42ebb678426affb79d55f49f3efe8feebc8c09ba86772bfa91d9f5d", "Gemini 3.5 Flash (Medium)", "Gemini 3.5 Flash (High)", "Gemini 3.5 Flash (Low)", "Gemini 3.1 Pro (Low)", "Gemini 3.1 Pro (High)", "Claude Sonnet 4.6 (Thinking)", "Claude Opus 4.6 (Thinking)", "GPT-OSS 120B (Medium)", "text output", "image input", "PDF input", "generated image", "generated video", "generated audio/TTS", "music", "artifact output", "verification state", "source provenance"]
+negative_constraints:
+  - Do not mark Antigravity CLI generated-media support green from `agy --model` prompt output or from a plugin repo alone.
+  - Do not present `gemini-3-pro-image` as currently verified unless a fresh catalog/proof shows it works for the account/project.
+  - Do not alias Nano Banana, Nanobanana, or `gemini-2.5-flash-image` to Antigravity support without catalog presence plus generated-artifact proof.
+  - Do not store OAuth tokens, refresh tokens, account identifiers, local credential paths, full HTTP payload logs, or secrets in Plans, ledgers, logs, or artifacts.
+  - Do not treat unofficial/private internal endpoint behavior as stable without explicit support-state, terms/risk labeling, and fallback/error handling.
+  - Do not merge Antigravity OAuth/internal generated-media support into Gemini Direct API support; keep execution/auth/billing routes distinct.
+  - Do not treat the current point-in-time `agy` catalog as static; refresh catalog-backed capability rows at setup/runtime and preserve snapshot provenance.
+owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Multi-Account.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/usage-feature.md]
 ```
 
 Each entry:
@@ -399,7 +453,7 @@ Cursor rules:
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/usage-feature.md
 
-All backends, including Gemini Direct, OpenAI/Codex, MiniMax, Z.AI/Zhipu, Cursor, Kimi, GitHub Copilot, Antigravity, and future provider rows, follow the provider/media route taxonomy. Gemini Direct is one verified media-capable route where applicable; it is not the default non-Cursor media model. Gemini CLI (`gemini_cli`), Gemini CLI media routing, and Nanobanana helper paths are retired/source-lineage only. Antigravity currently verifies Gemini 3.5 Flash and Gemini 3.1 Pro text/coding model routes, but does not verify Nano Banana/Nanobanana or other generated-media routes because `agy models` does not list them and unrecognized `--model` labels fall back.
+All backends, including Gemini Direct, OpenAI/Codex, MiniMax, Z.AI/Zhipu, Cursor, Kimi, GitHub Copilot, Antigravity, and future provider rows, follow the provider/media route taxonomy. Gemini Direct is one verified media-capable route where applicable; it is not the default non-Cursor media model. Gemini CLI (`gemini_cli`), Gemini CLI media routing, and Nanobanana helper paths are retired/source-lineage only. Public Antigravity `agy` currently verifies Gemini 3.5 Flash, Gemini 3.1 Pro, Claude Sonnet 4.6, Claude Opus 4.6, and GPT-OSS 120B text/coding model routes with generated-media flags false, while a separate capability-gated Antigravity OAuth/internal route verifies `gemini-3.1-flash-image` generated image output. Public `agy` still does not verify Nano Banana/Nanobanana, `gemini-2.5-flash-image`, `gemini-3-pro-image`, Imagen, Veo, TTS, music, video, or other generated-media routes because `agy models` does not list them and unrecognized `--model` labels fall back.
 
 Quota/usage tools and account/plan UI are route-specific rather than Gemini-default. The capability picker imports account/plan and usage labels from `Plans/Multi-Account.md` and `Plans/usage-feature.md` instead of inventing a parallel bucket.
 
@@ -416,7 +470,8 @@ Media routing rules:
 - OpenAI API-key image generation uses the official OpenAI `gpt-image-2` / Responses `image_generation` routes.
 - OpenAI/Codex subscription-backed image generation is mandatory as a separate first-class route with explicit auth, support-state, terms-risk, artifact, and E2E verification requirements.
 - MiniMax global image generation uses the separate `https://api.minimax.io/v1/image_generation` route with `model: image-01`; MiniMax chat/coding text models do not become image-output models.
-- Antigravity generated-media support requires `agy models` or equivalent CLI metadata to list the media model plus an E2E generated artifact proof. Current proof does not mark Nano Banana, Nanobanana, Imagen, Veo, TTS, or other media-generation models green through Antigravity.
+- Public Antigravity `agy` generated-media support requires `agy models` or equivalent public CLI metadata to list the media model plus an E2E generated artifact proof. Current public `agy` proof does not mark Nano Banana, Nanobanana, Imagen, Veo, TTS, music, video, or other generated-media models green through Antigravity.
+- Antigravity OAuth/internal generated-image support is a separate capability-gated route currently proven only for `gemini-3.1-flash-image`; it must not be collapsed into public `agy` CLI media support or Gemini Direct API support.
 - Kimi and GitHub Copilot rows may support text, media input, or reasoning effort without native generated-image support; absence of `/images/generations` proof means no image-output route is advertised.
 - Z.AI/Zhipu media output is gated by route/model/account/resource state and must surface overload, plan-not-included, balance/resource, or unverified states rather than becoming a Gemini fallback.
 - Gemini CLI media, Nanobanana installation, `NANOBANANA_API_KEY`, extension version disclosure, and Gemini CLI family-pooling switches are retired/source-lineage only and must not be implemented as active media routes.
@@ -775,7 +830,7 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003
 ### 4.3 Banner/footnote
 When visible media capabilities are disabled because no eligible media generation provider route is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
 
-> **"Configure a media generation provider in Settings -> Providers."** Add a supported route such as OpenAI/Codex, OpenAI API key, MiniMax Image-01, or Gemini Direct where available.
+> **"Configure a media generation provider in Settings -> Providers."** Add a supported route such as OpenAI/Codex, OpenAI API key, MiniMax Image-01, Antigravity internal image generation where available, or Gemini Direct where available.
 
 Provider-specific helper links may point to the relevant dashboard or API-key page, but the surrounding copy MUST NOT imply Gemini is the default or only valid media source.
 
@@ -809,7 +864,7 @@ ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
 ### 4.7 Runtime refresh behavior
 
-The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, adding an OpenAI/Codex subscription-backed route, saving an OpenAI API key, enabling MiniMax Image-01, saving a Gemini Direct API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
+The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, adding an OpenAI/Codex subscription-backed route, saving an OpenAI API key, enabling MiniMax Image-01, enabling Antigravity OAuth/internal `gemini-3.1-flash-image`, saving a Gemini Direct API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
 

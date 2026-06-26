@@ -1,5 +1,5 @@
 {
-  "agent_task": "provider_updates_compiled_pending_governance_seal",
+  "agent_task": "provider_updates_governance_sealed",
   "allowed_reads_default": [
     "state/current.json",
     "state/handoff.json",
@@ -23,7 +23,7 @@
     "missing_gui_related_classification",
     "worknode_creation_requested_before_contract"
   ],
-  "current_phase": "compiled_to_plans_pending_governance_seal",
+  "current_phase": "compiled_to_plans_governance_sealed",
   "forbidden_until_explicit_compile_or_governance_seal": [
     "Plans/.plan_index/**",
     "WorkNodes",
@@ -45,12 +45,9 @@
     "Plans/ledgers/work_items/**",
     "**/working_ledger.md"
   ],
-  "next_action": "Run/inspect validators; do not seal governance unless explicitly asked.",
+  "next_action": "Provider-update governance seal is complete. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created; node readiness remains blocked_compiler_contract_incomplete until explicit runtime compiler enablement.",
   "required_end_of_turn_actions": [
-    "append_compile_event",
-    "update_design_atom_compile_status",
-    "update_handoff_projection",
-    "run_validators",
+    "report_sealed_governance_status",
     "preserve_node_readiness_boundary"
   ],
   "schema_id": "pm.operating_capsule.v1",

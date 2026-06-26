@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L137-L1049
+Source lines: L137-L1055
 
-Source SHA256: `5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d`
+Source SHA256: `c8edb81d62c1337890538c77676ee3a44ddefe80d9d200bfddc651e8f89e15b5`
 
 ---
 
@@ -823,52 +823,58 @@ owner_hints:
   - Plans/CLI_Bridged_Providers.md
 ```
 
-### CBP-017 - Gemini CLI Account Root and Provider Protocol Capabilities
+### CBP-017 - Retired Gemini CLI Account Root and Provider Protocol Lineage
 
 ```yaml
 plan_unit_id: CBP-017
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/CLI_Bridged_Providers.md
 canonical_text: >-
-  Gemini CLI account, session config, subagents, extensions, model routing,
-  telemetry, OTLP, and protocol probes are rooted under selected GEMINI_CLI_HOME
-  and surfaced as provider-protocol capability metadata through the account
-  resolver.
+  Retired Gemini CLI account-root and protocol-probe vocabulary remains
+  available only as source-lineage. Active PM provider support must not create
+  or launch Gemini CLI account roots, must not use GEMINI_CLI_HOME as an
+  active root, and must treat CBP-019/CBP-020 as the replacement canon: Gemini
+  Direct stays direct API, while Antigravity CLI owns the active CLI-runtime
+  lane.
 gui_related: false
-gui_classification_reason: CLI account roots and provider-protocol capabilities are adapter/runtime metadata.
+gui_classification_reason: Retired CLI account-root lineage and compatibility disposition rather than visual presentation.
 split_recommended: false
 depends_on: [CBP-014]
-unblocks: [CBP-018]
+unblocks: []
 acceptance_criteria:
-  - Gemini CLI account, /session/config, subagents, extensions, model routing, telemetry, and OTLP output are rooted under selected GEMINI_CLI_HOME.
-  - PM provisions and launches the account root through the account resolver.
-  - PM surfaces requested/effective model-routing evidence.
-  - Gemini CLI state is not collapsed into the direct Gemini provider entry.
-  - Probe evidence may include ACP, headless prompt mode, JSON /stream-json output, policy loading, MCP, extensions, hooks, and native skill management.
-  - PM records probe evidence as provider-protocol capabilities rather than assuming availability for every account or auth family.
+  - Covered Gemini CLI source tokens remain losslessly available for exact-text audit.
+  - Gemini CLI is not an active CLI-bridged provider route.
+  - GEMINI_CLI_HOME is not reused as an Antigravity account root.
+  - Gemini Direct remains a separate active direct API route.
+  - Antigravity CLI owns active Google-owned CLI-runtime setup and probing.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: gemini_cli_protocol_capability_drift
+risk_class: retired_gemini_cli_protocol_resurrection
 reasoning_tier: high
-context_scope: cli_provider_protocol
+context_scope: retired_gemini_cli_lineage
 implementation_surfaces:
   - Plans/CLI_Bridged_Providers.md
 node_compile_hint:
-  mode: cli_bridged_provider_gemini_cli_account_protocol_capabilities
+  mode: retired_gemini_cli_account_protocol_lineage
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0010
 preserved_exact_tokens:
+  - "Gemini CLI account"
   - "GEMINI_CLI_HOME"
   - "/session/config"
   - "OTLP"
   - "ACP"
   - "JSON `/stream-json`"
   - "MCP"
+compatibility_only_notes:
+  - Gemini CLI account-root/protocol evidence is retained for migration/currentness lineage only and is superseded by CBP-019/CBP-020 for active implementation.
 negative_constraints:
-  - "Gemini CLI state must not collapse into the direct Gemini provider entry."
+  - "Do not provision or launch Gemini CLI account roots."
+  - "Do not alias `gemini_cli` to `antigravity_cli`."
+  - "Do not reuse `GEMINI_CLI_HOME` for Antigravity."
 owner_hints:
   - Plans/CLI_Bridged_Providers.md
 ```

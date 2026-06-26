@@ -1,28 +1,29 @@
 # Shard Index: Plans/Multi-Account.md
 
-Generated: 2026-06-23T07:59:48Z
+Generated: 2026-06-26T15:49:00Z
 
-Source SHA256: `ec1b54e6589241754f126b81b9bee88c033195fdd7eb16e75e71a26523b18293`
+Source SHA256: `fa3e621767576c722494b915821d8d1e5dc51aa6ec3c102ee454c925d2f0a363`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `f595690817727693d43a8f0eefe738bedc72b1ae993a404e105db94d632dee26`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L19 `6aade39f4935f136896727e0961254e09f29aaf3b93433615fb926c9829d303f`
-- [003 - 1. Purpose and scope](003-1.-purpose-and-scope.md) L21-L65 `62f1a49df3899d61fb19b2d8d834b16ae1caf739e6b9197bd4f3da7f1aa53494`
-- [004 - 2. References](004-2.-references.md) L66-L78 `8036cd5d04779cf1811b23194ff88c99fd0d32674c345e0d32c92a86d52e8495`
-- [005 - Canonical data-shape reconciliation](005-canonical-data-shape-reconciliation.md) L80-L107 `234ebe1e93f1300ee79f3463fbac1dfae433a6762942c158073b26f16ee244f5`
-- [006 - 3. Assessment: what we have and gaps (filled)](006-3.-assessment-what-we-have-and-gaps-filled.md) L109-L353 `04eafb6249723d568e26801aa1940b91a131e37d5549f6567e023c1342695e8b`
-- [007 - 5. Auto-rotation](007-5.-auto-rotation.md) L354-L419 `6f8092a279fb19e87ae35cf446e865b7056b05644d1971df8eaef185f429d72f`
-- [008 - 6. Provider-specific behavior](008-6.-provider-specific-behavior.md) L420-L483 `b92b3270fbf9b0f3280968b8746b8bd12fb752afdf3f37779df4c2567c8601a9`
-- [009 - 7. Runner / orchestration contract](009-7.-runner-orchestration-contract.md) L484-L520 `54c840e71edcb8c98e4225c710bfcaa69f8c370a6a94f943f2b1cb280edad7e2`
-- [010 - 8. Usage and pick-best](010-8.-usage-and-pick-best.md) L521-L543 `a1e5783540eea2732696401d3167d97c2aa46c1e933c6f56d8ea86f56a6c42b2`
-- [011 - 9. GUI requirements (UX only)](011-9.-gui-requirements-ux-only.md) L544-L739 `0579f82da22ec6c5628a3897824f7a1ed34e00dd2e678ce1094fbea4f737f58a`
-- [012 - 10. Phase 2 (native auth) -- when available](012-10.-phase-2-native-auth-when-available.md) L740-L749 `c9b62b00d2d409ea39f92de98b77819145c0ea20c62d65ba33d8c0ce346b530b`
-- [013 - 11. Open points for implementer](013-11.-open-points-for-implementer.md) L751-L756 `da292e4aac97bbc1ccd3b5bcb134f9321b14a8d96e6d7b119467d6cea404eccc`
-- [014 - Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)](014-operational-identity-addendum-for-github-actions-and-docker-mana.md) L757-L771 `22768948c17d8cd3d1fd12b4b289ffbcf7ae189207233d23aedc408a51c069ba`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L773-L777 `736cabf28a265fa865a6599bedfc95b32885061556083bdca0b0253e4bff25a1`
-- [016 - PlanUnits](016-planunits.md) L779-L4564 `8d96430ecfbb108bb888c2e10b6b29c7feec6d176c55050c3d61839085c83c54`
-- [017 - Migration Coverage](017-migration-coverage.md) L4566-L4576 `9dbaf64a4edb80fabe1e106eab58b50161096eb5547e88d3e5fc2ecb2bead522`
-- [018 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](018-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4579-L4631 `9852339e254d9a5a97a079fce0f302979f0259d3d66255c138998acd5a6ec57b`
+- [001 - Preamble](001-preamble.md) L1-L1 `0870f1994f17c8cf99394a0b36d6561afb716991f42a4783d01e3da9346812d9`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L19 `347e79190574aa673ec5ef817bb3590d35ca88ba60721709152e5d37f6cde2b7`
+- [003 - 1. Purpose and scope](003-1.-purpose-and-scope.md) L21-L65 `b13464e3084f0d2ac8be88bf60d61a5115768a27c1be8a08fb02ebadc30867e7`
+- [004 - 2. References](004-2.-references.md) L66-L78 `6629de8061fc75c8fb48ee1d0e9e64555ff6ef4deaa9a081220a7ada2d420702`
+- [005 - Canonical data-shape reconciliation](005-canonical-data-shape-reconciliation.md) L80-L107 `8a2d211a69620451fc106f4959e7dd2335cd455c3a46ba3619c2571a48ed4e75`
+- [006 - 3. Assessment: what we have and gaps (filled)](006-3.-assessment-what-we-have-and-gaps-filled.md) L109-L354 `e004c322dac0bf0ea340c5c739a549fa903fb4de297cead88ea4c21b5df14414`
+- [007 - 5. Auto-rotation](007-5.-auto-rotation.md) L355-L420 `2920f63b81cf8f526a46ce5a57ce088566ec0db077f88300ff9c7aff0df3993d`
+- [008 - 6. Provider-specific behavior](008-6.-provider-specific-behavior.md) L421-L482 `1cdae0a338f2a748826386c97a322dc6f00f45bfd26beb9cd70c4c854403804e`
+- [009 - 7. Runner / orchestration contract](009-7.-runner-orchestration-contract.md) L483-L519 `70805c2b812e6e56edf4b49a7dbbe78a92b8e2818e269393eb24b4f18618f3bd`
+- [010 - 8. Usage and pick-best](010-8.-usage-and-pick-best.md) L520-L542 `6ae138ee8d026cd9dab3e559e035cf1622001ab5dc2a8f66952f98bba310e3be`
+- [011 - 9. GUI requirements (UX only)](011-9.-gui-requirements-ux-only.md) L543-L733 `f5e31bf94d8605faa603d8be873523a0bf340052c13a081db28f3a16e1bb332f`
+- [012 - 10. Phase 2 (native auth) -- when available](012-10.-phase-2-native-auth-when-available.md) L734-L743 `47075f8cca07298b5a3bba6a32ea1b7bd8f3d336e95653beb11f4f8f577f9a6b`
+- [013 - 11. Open points for implementer](013-11.-open-points-for-implementer.md) L745-L750 `449cc80da9e7a823e6f31825bdaa25c7bc0884c8fa6aa411e27b003c8dfa3342`
+- [014 - Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)](014-operational-identity-addendum-for-github-actions-and-docker-mana.md) L751-L765 `ca57ca7bd8095b97cf24391a7e68e4284059c82ace4baf2570f65797ce288b35`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L767-L771 `9317958f203400d1ec4203ae23e1d0b4aaa9c6e90bdde3954954f68d6a13ecb1`
+- [016 - PlanUnits](016-planunits.md) L773-L832 `40628df10ee87049a15423c6bcb6a93d6c2f614d26d97c8ac4c5d2be3f2acfe5`
+- [017 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L834-L4677 `da463df4a416c0732e3dd889e0b87e5fc2b3192d3e846f98673facea6ab82ad9`
+- [018 - Migration Coverage](018-migration-coverage.md) L4679-L4689 `19ae032309caf2cb4c5fe33482c010b575bebdeaa32bf836f5603dea475dcb1a`
+- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4692-L4744 `ff5a144ee79e6314ba49b2ec21545fe5c410cd1c09df2efaebe598cce40907b4`

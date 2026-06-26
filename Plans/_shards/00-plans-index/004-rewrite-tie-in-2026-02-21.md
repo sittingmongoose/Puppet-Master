@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L184-L204
+Source lines: L185-L205
 
-Source SHA256: `488324e79d320c82476f48addad73100a3bc72a642e0dd4909acd2c4ad510af0`
+Source SHA256: `0b1d0ddcce228cf4e86e7b372568a47476ff67cc2fdad60d41e2a6adf91252aa`
 
 ---
 
@@ -14,7 +14,7 @@ The project is intentionally adapting an OpenCode-style architecture and is mid-
 - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
 - **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
 - **UI rewrite**: Rust + Slint (winit; Skia default)
-- **Auth**: subscription-first; Gemini is modeled as two provider entries, not one stale-canon `mixed-account` provider: Gemini Direct (`gemini`, direct key-only/API-key-backed) and Gemini CLI (`gemini_cli`, CLI-wrapped OAuth/API-key/Google-credential paths). The Gemini API key remains the explicit `key-exception` where that path is selected. Requested/effective auth, account identity, account/plan UI, and quota/usage labels are mode-dependent and carry across storage, runtime, setup/health, media capabilities, and usage
+- **Auth**: subscription-first; Gemini Direct (`gemini`, direct key-only/API-key-backed) remains active, while Gemini CLI (`gemini_cli`) is retired from active provider support and preserved only as source-lineage/compatibility terminology. Antigravity CLI is the active CLI-backed Google/agent route replacing the stale Gemini CLI route. Provider identity, requested/effective auth, account identity, account/plan UI, quota/usage labels, media capabilities, and setup/health are route-, account-, and model-dependent across direct providers, CLI-backed providers, coding-plan providers, and generated-media routes.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/MCP_Integration.md`
 
-Source lines: L194-L1911
+Source lines: L191-L1914
 
-Source SHA256: `20a0ff81e309c185f9c741064d9daaa379b9534633dcf46a00248fe5144b843f`
+Source SHA256: `4ebde5e3163b9b0c59c735ddfd1a16be3bdd631be4afc5e98c2742725f87d863`
 
 ---
 
@@ -1082,7 +1082,7 @@ plan_unit_id: MI-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
-canonical_text: CLI provider MCP state remains provider/profile-local for Claude Code, Gemini CLI, and Cursor CLI surfaces, with profile isolation, structured usage evidence, setup-state models, and PM-managed roots preserving account/root isolation.
+canonical_text: CLI provider MCP state remains provider/profile-local for active Claude Code and Cursor CLI surfaces, with profile isolation, structured usage evidence, setup-state models, and PM-managed roots preserving account/root isolation. Gemini CLI MCP/home facts are retired/source-lineage only.
 gui_related: false
 gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1121,8 +1121,10 @@ preserved_exact_tokens:
 - PM-owned home `/XDG` roots
 - account/root isolation contract
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Gemini CLI MCP/home facts are retained only as source-lineage.
+stale_retired_dispositions:
+- Active Gemini CLI MCP provider-home management is retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_boundary_notes:
 - Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
 owner_hints:
@@ -1132,14 +1134,14 @@ preserved_contractrefs:
 split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
 ```
 
-### MI-022 - Gemini CLI MCP Config Commands
+### MI-022 - Retired Gemini CLI MCP Config Commands
 
 ```yaml
 plan_unit_id: MI-022
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/MCP_Integration.md
-canonical_text: Gemini CLI MCP config lives under mcpServers in user and workspace settings, supports gemini mcp add scopes, transports, env/header/timeout/trust/include/exclude options, built-in list/remove/enable/disable commands, separate enablement files, and redacted env/header diagnostics.
+canonical_text: Gemini CLI MCP config and command vocabulary is retired/source-lineage only. PM must not implement Gemini CLI MCP config generation or `gemini mcp add` management as an active provider path; current MCP projection must be proven per active provider/runtime.
 gui_related: false
 gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1159,7 +1161,7 @@ context_scope: mcp_integration_standardization
 implementation_surfaces:
 - Plans/MCP_Integration.md
 node_compile_hint:
-  mode: gemini_cli_mcp_config_commands
+  mode: retired_gemini_cli_mcp_config_commands
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0006
@@ -1186,8 +1188,12 @@ preserved_exact_tokens:
 - /redaction
 negative_constraints:
 - Env and header diagnostics must preserve redaction semantics.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Do not generate active Gemini CLI MCP config.
+- Do not run `gemini mcp add` as active PM setup.
+compatibility_only_notes:
+- Gemini CLI MCP paths and commands are preserved only for source-lineage.
+stale_retired_dispositions:
+- Gemini CLI MCP config commands are retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_boundary_notes:
 - Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
 owner_hints:

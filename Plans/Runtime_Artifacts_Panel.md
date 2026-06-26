@@ -420,7 +420,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  Runtime Artifacts must be able to project provider-native artifact envelopes for generated media, provider receipts, streamed logs/events, model catalogs, route/probe evidence, support-state transitions, adoption/drift/blocked states, and repair/retry records. Artifacts reference provider_entry_id, account_profile_ref, model_id, media_route_id, requested/effective identity, source_confidence, verification_state, redaction_profile, and permission_snapshot_id while excluding secret material.
+  Runtime Artifacts must be able to project provider-native artifact envelopes for generated media, provider receipts, streamed logs/events, model catalogs, route/probe evidence, support-state transitions, adoption/drift/blocked states, and repair/retry records. Artifacts reference provider_entry_id, account_profile_ref, model_id, media_route_id, requested/effective identity, source_confidence, verification_state, redaction_profile, and permission_snapshot_id while excluding secret material. Antigravity projections must distinguish public `agy` model catalog artifacts from the separate OAuth/internal `gemini-3.1-flash-image` generated-media route proof.
 gui_related: true
 gui_classification_reason: Runtime Artifacts Panel browsing/projection is user-visible GUI behavior.
 depends_on: [CV-294, MGAC-094, UF-074]
@@ -430,6 +430,7 @@ acceptance_criteria:
   - Generated media and route/probe evidence preserve provider metadata by reference.
   - Runtime artifacts never store API keys, OAuth URLs, tokens, or local account secrets.
   - Blocked, gated, partial-success, and retry/adoption/drift states remain visible.
+  - Antigravity public `agy` catalog rows and internal generated-image proof are browsable as separate route/proof artifacts.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -442,12 +443,15 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0121
   - pldg-20260624-001-provider-updates:atom-0130
   - pldg-20260624-001-provider-updates:atom-0137
-source_atom_ids: [atom-0117, atom-0120, atom-0121, atom-0122, atom-0130, atom-0131, atom-0133, atom-0136, atom-0137, atom-0138]
-preserved_exact_tokens: ["provider-native artifact", "generated media", "provider receipts", "streamed logs/events", "model catalogs", "route/probe evidence", "adoption/drift/blocked/repair states", "redaction_profile", "permission_snapshot_id", "source_confidence"]
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+source_atom_ids: [atom-0117, atom-0120, atom-0121, atom-0122, atom-0130, atom-0131, atom-0133, atom-0136, atom-0137, atom-0138, atom-0142, atom-0143]
+preserved_exact_tokens: ["provider-native artifact", "generated media", "provider receipts", "streamed logs/events", "model catalogs", "route/probe evidence", "adoption/drift/blocked/repair states", "redaction_profile", "permission_snapshot_id", "source_confidence", "agy models", "gemini-3.1-flash-image"]
 negative_constraints:
   - Do not store secret material in runtime artifact payloads.
   - Do not make Runtime Artifacts Panel the owner of provider behavior or media schema truth.
   - Do not flatten partial-success or gated provider states into generic failure.
+  - Do not collapse public `agy` CLI catalog rows and unofficial/private Antigravity OAuth/internal image-generation rows into one proof state.
 owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/Media_Generation_and_Capabilities.md, Plans/Project_Output_Artifacts.md]
 ```
 
@@ -459,7 +463,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  Generated media artifacts must project provider receipt metadata, generation parameters, provider/base response status, trace/request id where available, hashes, durable local artifact refs, original provider URL refs, expiry warnings, partial success/failure counts, and provenance caveats. MiniMax Image-01 URL outputs require 24-hour expiry disclosure; OpenAI/Codex Images 2 routes require account/route distinction and C2PA/SynthID caveats; subscription-backed routes require support-state and terms-risk refs.
+  Generated media artifacts must project provider receipt metadata, generation parameters, provider/base response status, trace/request id where available, hashes, durable local artifact refs, original provider URL refs, expiry warnings, partial success/failure counts, and provenance caveats. MiniMax Image-01 URL outputs require 24-hour expiry disclosure; OpenAI/Codex Images 2 routes require account/route distinction and C2PA/SynthID caveats; subscription-backed routes require support-state and terms-risk refs. Antigravity OAuth/internal `gemini-3.1-flash-image` receipts require private/unofficial endpoint caveats, non-secret request/proof refs, image dimensions/hash, and support-state labels.
 gui_related: true
 gui_classification_reason: Generated media artifact browsing, expiry warnings, and provenance presentation are user-visible GUI behavior.
 depends_on: [RAP-032, MGAC-095, MGAC-096, POA-050]
@@ -469,6 +473,7 @@ acceptance_criteria:
   - URL expiry and durable artifact capture status are visible.
   - Partial successes are represented with counts and failed-item metadata where available.
   - Provenance markers are represented as caveated metadata, not complete trust guarantees.
+  - Antigravity internal generated-image receipts preserve route/account/model identity without storing OAuth/session material.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -481,12 +486,14 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0133
   - pldg-20260624-001-provider-updates:atom-0136
   - pldg-20260624-001-provider-updates:atom-0137
-source_atom_ids: [atom-0031, atom-0033, atom-0034, atom-0130, atom-0133, atom-0134, atom-0136, atom-0137]
-preserved_exact_tokens: ["24-hour URL expiry", "partial success", "failed counts", "trace id", "base response status", "C2PA", "SynthID", "terms-risk", "OpenAI/Codex subscription", "MiniMax Image-01"]
+  - pldg-20260624-001-provider-updates:atom-0142
+source_atom_ids: [atom-0031, atom-0033, atom-0034, atom-0130, atom-0133, atom-0134, atom-0136, atom-0137, atom-0142]
+preserved_exact_tokens: ["24-hour URL expiry", "partial success", "failed counts", "trace id", "base response status", "C2PA", "SynthID", "terms-risk", "OpenAI/Codex subscription", "MiniMax Image-01", "gemini-3.1-flash-image", "v1internal:generateContent", "1024x1024", "image/jpeg", "a60c8987f42ebb678426affb79d55f49f3efe8feebc8c09ba86772bfa91d9f5d"]
 negative_constraints:
   - Do not treat expiring provider URLs as durable storage.
   - Do not overpromise C2PA or SynthID as complete durable provenance under all transformations.
   - Do not store subscription-route secrets in artifacts.
+  - Do not store Antigravity OAuth tokens, refresh tokens, account identifiers, local credential paths, full HTTP payload logs, or secrets in artifacts.
 owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/Media_Generation_and_Capabilities.md]
 ```
 

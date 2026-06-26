@@ -1,14 +1,13 @@
 {
   "deferred_questions": [],
   "ledger_id": "pldg-20260624-001-provider-updates",
-  "notes": "No open product questions, blockers, unclassified candidates, or unresolved contradictions remain after compile/currentness/traceability repair. Governance seal is pending. Antigravity Nano Banana/Nanobanana/media-generation support is not green in current agy 1.0.12 proof; future promotion requires catalog presence plus generated-artifact E2E proof. Ledger/index/diff/search and compiled atom-to-PlanUnit traceability checks pass after post-compile edits; migration/shard/run-gates failures are stale generated-governance artifacts intentionally unupdated until explicit governance seal or migration refresh scope.",
+  "notes": "No open product questions, blockers, unclassified candidates, unresolved contradictions, post-compile uncompiled deltas, or unsealed governance remain. Provider-update governance seal is complete; node readiness remains blocked_compiler_contract_incomplete by design.",
   "open_blockers": [],
   "open_questions": [],
   "schema_id": "pm.bootstrap_open_items.v1",
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
-  "unsealed_governance": [
-    "governance_status=pending_seal"
-  ],
-  "updated_at_utc": "2026-06-26T14:12:59Z"
+  "unsealed_governance": [],
+  "updated_at_utc": "2026-06-26T15:51:34Z",
+  "post_compile_uncompiled_deltas": []
 }

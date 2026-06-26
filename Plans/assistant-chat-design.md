@@ -2680,7 +2680,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Assistant Chat header, composer, and run-status surfaces consume the provider/account/model/effort and media-route schemas owned by Models, Multi-Account, Contracts, and Media. Chat may present selected provider, account/profile, model, requested thinking effort, effective effort status, media input/generation availability, and source-confidence/blocked states, but it must not own provider catalog truth or infer capability from legacy `platform_specs`. Unsupported, clamped, gated, unverified, and fallback outcomes remain visible in the turn/run status.
+  Assistant Chat header, composer, and run-status surfaces consume the provider/account/model/effort and media-route schemas owned by Models, Multi-Account, Contracts, and Media. Chat may present selected provider, account/profile, model, requested thinking effort, effective effort status, media input/generation availability, and source-confidence/blocked states, but it must not own provider catalog truth or infer capability from legacy `platform_specs`. Chat media controls consume route-specific image-generation eligibility from the GUI/Settings and Media owners, including OpenAI/Codex route families, MiniMax `image-01`, Gemini Direct where verified, and Antigravity OAuth/internal `gemini-3.1-flash-image`, while public text-only `agy` rows remain capability metadata and not generated-image engines unless exact artifact proof exists. Unsupported, clamped, gated, unverified, and fallback outcomes remain visible in the turn/run status.
 gui_related: true
 gui_classification_reason: Assistant Chat header, composer, and status controls are user-visible UI behavior.
 depends_on: [F3-400, F3-401, MS-113, MS-115, CV-293]
@@ -2690,6 +2690,7 @@ acceptance_criteria:
   - Requested and effective thinking effort are visible when they differ or are unsupported.
   - Media input/generation controls reflect route-specific capability state.
   - Chat does not use legacy `platform_specs` as the provider/model support source of truth.
+  - Chat does not turn public text-only `agy` model rows into generated-image engines.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -2702,12 +2703,17 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0018
   - pldg-20260624-001-provider-updates:atom-0118
   - pldg-20260624-001-provider-updates:atom-0119
-source_atom_ids: [atom-0018, atom-0033, atom-0035, atom-0046, atom-0048, atom-0103, atom-0105, atom-0106, atom-0117, atom-0118, atom-0119, atom-0122, atom-0130, atom-0135, atom-0138, atom-0139]
-preserved_exact_tokens: ["provider/model selectors", "thinking effort", "requested", "effective", "platform_specs", "unsupported", "clamped", "gated", "unverified", "fallback"]
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+  - pldg-20260624-001-provider-updates:atom-0144
+source_atom_ids: [atom-0018, atom-0033, atom-0035, atom-0046, atom-0048, atom-0103, atom-0105, atom-0106, atom-0117, atom-0118, atom-0119, atom-0122, atom-0130, atom-0135, atom-0138, atom-0139, atom-0142, atom-0143, atom-0144]
+preserved_exact_tokens: ["provider/model selectors", "thinking effort", "requested", "effective", "platform_specs", "unsupported", "clamped", "gated", "unverified", "fallback", "ACD-424", "gpt-image-2", "image_generation", "OpenAI/Codex subscription-backed image generation", "image-01", "gemini-3.1-flash-image", "agy models(The ones that actually support media generation)"]
 negative_constraints:
   - Do not make Assistant Chat the owner of provider catalog or media capability truth.
   - Do not infer current provider support from legacy `platform_specs` rows.
   - Do not hide unsupported or clamped effort outcomes.
+  - Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
+  - Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
 owner_hints: [Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/Models_System.md, Plans/Contracts_V0.md]
 ```
 

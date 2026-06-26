@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L16-L33
 
-Source SHA256: `f56d0da30532a888bc65621c664f432fcdfb50bdca7f91c1bfaab2195d7179c2`
+Source SHA256: `cad0e89af13bf8410029021e2aa1ab83861ce1896fea1e860fa11c1b5277c1b8`
 
 ---
 
@@ -15,7 +15,7 @@ This plan remains authoritative for *what* tool discovery/testing support must e
 - tool execution results normalize into the **unified event model** and store through seglog -> projections (redb/Tantivy)
 - tool latency and errors from the unified event model feed analytics scan jobs and dashboard rollups
 - UI wiring details should be re-expressed in Slint (not Iced) without changing feature semantics
-- auth policy remains subscription-first, with Gemini API key as the explicit `key-exception` where the selected provider entry supports it; stale-canon one-provider `mixed-account` Gemini wording is retired in favor of Gemini Direct (`gemini`, key-only/API-key-backed) and Gemini CLI (`gemini_cli`, mode-dependent OAuth/API-key/Google-credential rows), with requested/effective auth/account identity kept consistent with the shared provider runtime
+- auth policy remains subscription-first, with Gemini API key as the explicit `key-exception` where the selected provider entry supports it; stale-canon one-provider `mixed-account` Gemini wording and Gemini CLI (`gemini_cli`) active-provider wording are retired in favor of Gemini Direct (`gemini`, key-only/API-key-backed) plus Antigravity CLI as the active Google-owned CLI-runtime route, with requested/effective auth/account identity kept consistent with the shared provider runtime
 - for this task, deliverables remain **Plans-folder documentation updates for the Slint rebuild**; no legacy Iced runtime wiring is required
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD

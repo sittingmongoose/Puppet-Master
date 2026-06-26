@@ -4,7 +4,7 @@ Source: `Plans/CLI_Bridged_Providers.md`
 
 Source lines: L36-L129
 
-Source SHA256: `5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d`
+Source SHA256: `c8edb81d62c1337890538c77676ee3a44ddefe80d9d200bfddc651e8f89e15b5`
 
 ---
 
@@ -99,6 +99,6 @@ Malformed tool-call JSON is validated when the bridge stores or admits the tool-
 
 ### CLI provider protocol and state surfaces
 
-Gemini CLI account, `/session/config`, subagents, extensions, model routing, telemetry, and `OTLP` output are CLI-bridged provider surfaces rooted under the selected `GEMINI_CLI_HOME`. PM must provision and launch the account root through the account resolver, then surface requested/effective model-routing evidence instead of collapsing Gemini CLI state into the direct Gemini provider entry. Gemini CLI probe evidence may include `ACP`, headless prompt mode, JSON `/stream-json` output, policy loading, MCP, extensions, hooks, and native skill management; PM records those as provider-protocol capabilities instead of assuming they are available for every account or auth family.
+Retired Gemini CLI account, `/session/config`, subagents, extensions, model routing, telemetry, `OTLP`, `GEMINI_CLI_HOME`, and probe vocabulary are retained only as source-lineage for the deprecated/unsupported Gemini CLI route. PM must not provision, launch, or expose Gemini CLI as an active CLI-bridged provider. Active Google-owned CLI-runtime support is Antigravity CLI, with its own account/root/setup contract; Gemini Direct remains the separate direct API provider.
 
 `ACP` is tracked as provider-protocol capability metadata for CLI-bridged adapters. Cursor `ACP` support supersedes stale assumptions in `Plans/rewrite-tie-in-memo.md` that Cursor cannot expose ACP; PM still keeps provider ontology, account identity, and transport/runtime boundaries separate, so ACP support does not turn Cursor into a PM orchestration node and does not replace account-root isolation.

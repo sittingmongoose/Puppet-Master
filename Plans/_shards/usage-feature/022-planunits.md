@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L926-L4991
+Source lines: L924-L5001
 
-Source SHA256: `4ef6ada2d4f56f156b5b034b425597baeb26ec8890f6cb4ca936477745be07ba`
+Source SHA256: `72e50b74c8a4f580c8769909461a659b2a3c5725dbb2e24220bc1d4a60eb62ee`
 
 ---
 
@@ -1041,14 +1041,16 @@ owner_hints:
 - Plans/usage-feature.md
 ```
 
-### UF-021 - Gemini Cli Usage Evidence
+### UF-021 - Retired Gemini CLI Usage Evidence
 
 ```yaml
 plan_unit_id: UF-021
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Gemini CLI Usage evidence is auth-family dependent across OAuth, direct API key, Vertex/Google credentials, ADC, gcloud, service-account, and runtime stats such as /stats model, while Configured, Working, Operational, and requested/effective model differences remain separate.
+canonical_text: Gemini CLI usage evidence vocabulary is retired/source-lineage only. OAuth, direct API key, Vertex/Google
+  credentials, ADC, gcloud, service-account, /stats model, Configured, Working, Operational, and requested/effective model
+  difference tokens remain auditable, but PM must not create active Gemini CLI usage rows or scheduler pressure signals.
 gui_related: false
 gui_classification_reason: The unit preserves runtime/provider evidence rather than GUI presentation.
 split_recommended: false
@@ -1065,13 +1067,13 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: usage_feature_drift
+risk_class: retired_gemini_cli_usage_resurrection
 reasoning_tier: standard
 context_scope: usage_feature_batch_194
 implementation_surfaces:
 - Plans/usage-feature.md
 node_compile_hint:
-  mode: gemini_cli_usage_evidence
+  mode: retired_gemini_cli_usage_evidence
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0031
@@ -1088,23 +1090,30 @@ preserved_exact_tokens:
 - Working
 - Operational
 - requested/effective
-negative_constraints: []
+negative_constraints:
+- Do not create active Gemini CLI usage rows.
+- Do not use retired Gemini CLI stats as scheduler pressure signals.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Gemini CLI usage tokens are retained only for migration/currentness lineage.
+stale_retired_dispositions:
+- Active Gemini CLI usage evidence is retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_hints:
 - Plans/usage-feature.md
 ```
 
-### UF-022 - Gemini Family Pooling Capability Posture
+### UF-022 - Active Provider Family Pooling Capability Posture
 
 ```yaml
 plan_unit_id: UF-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: When policy pools Gemini direct and Gemini CLI, Usage still shows the concrete runtime surface, requested/effective auth/account intent, quota bucket, source confidence, capability posture supports_* flags, auth recovery methods, and quota signal sources; API-key buckets must not be mislabeled as OAuth/Code Assist quota paths.
+canonical_text: When policy pools active provider entries, Usage still shows the concrete runtime surface, requested/effective
+  auth/account intent, quota bucket, source confidence, capability posture supports_* flags, auth recovery methods, and quota
+  signal sources. Gemini Direct and Antigravity may pool only when their effective capabilities satisfy the request; retired
+  Gemini CLI cannot be selected as an active pool member. API-key buckets must not be mislabeled as OAuth/Code Assist quota paths.
 gui_related: true
 gui_classification_reason: The unit governs visible pooled Gemini usage and capability disclosure.
 split_recommended: true
@@ -1127,7 +1136,7 @@ context_scope: usage_feature_batch_194
 implementation_surfaces:
 - Plans/usage-feature.md
 node_compile_hint:
-  mode: gemini_family_pooling_capability_posture
+  mode: active_provider_family_pooling_capability_posture
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0032
@@ -1145,11 +1154,14 @@ preserved_exact_tokens:
 - quota_signal_sources
 negative_constraints:
 - Gemini API-key-backed rows remain a separate quota bucket and MUST NOT be mislabeled as the same quota bucket or plan path.
+- Retired Gemini CLI must not participate as an active pool member.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md'
-compatibility_only_notes: []
+compatibility_only_notes:
+- The exact phrase "Gemini direct and Gemini CLI" pooling wording is retained only as source-lineage.
 stale_retired_dispositions:
 - Stale `/AI-Studio-oriented` copy is historical context only.
+- Active Gemini CLI usage pooling is retired.
 owner_hints:
 - Plans/usage-feature.md
 ```

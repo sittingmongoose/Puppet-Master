@@ -4,7 +4,7 @@ Source: `Plans/newfeatures.md`
 
 Source lines: L94-L1200
 
-Source SHA256: `650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988`
+Source SHA256: `36661bc99f5a2a3b7d4383a83fc4105e1adb190f956a6498df7ceb785689fcc9`
 
 ---
 
@@ -135,10 +135,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/newfeatures.md
 canonical_text: >-
-  Gemini auth plan-map status is RECONCILE complete for this high-level feature summary. Gemini Direct and Gemini CLI
-  are separate provider entries, API-key access is a scoped exception rather than the default UI posture, and consumers
-  inherit requested/effective auth and account identity from the owner docs instead of restating stale Gemini
-  API-key-default language.
+  Gemini auth plan-map status is RECONCILE complete for this high-level feature summary. Gemini Direct remains the active
+  direct API provider, Antigravity CLI is the active Google-owned CLI-runtime route, Gemini CLI wording is retired
+  source-lineage only, API-key access is a scoped exception rather than the default UI posture, and consumers inherit
+  requested/effective auth and account identity from the owner docs instead of restating stale Gemini API-key-default language.
 gui_related: true
 gui_classification_reason: The unit preserves provider-auth UI posture and requested/effective identity disclosure summary.
 split_recommended: false
@@ -147,7 +147,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Gemini Direct and Gemini CLI remain separate provider entries in this summary.
+- Gemini Direct remains active, Antigravity CLI is the active CLI-runtime route, and Gemini CLI remains retired/source-lineage only in this summary.
 - API-key access remains a scoped exception rather than the default UI posture.
 - Stale Gemini API-key-default language is not revived.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.

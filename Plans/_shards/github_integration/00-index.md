@@ -1,6 +1,6 @@
 # Shard Index: Plans/GitHub_Integration.md
 
-Generated: 2026-06-23T07:59:48Z
+Generated: 2026-06-26T15:49:00Z
 
 Source SHA256: `7f64028be832f86d78a04d59920b22469f0d81b0c9f2316968f960c170eb2f5b`
 
