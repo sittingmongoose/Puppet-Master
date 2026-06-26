@@ -1,0 +1,41 @@
+{
+  "candidate_compile_owner_docs": [
+    "Plans/Orchestrator_Page.md",
+    "Plans/PRD_Builder.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/storage-plan.md",
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Permissions_System.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Models_System.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Tools.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/MCP_Integration.md",
+    "Plans/FileSafe.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/usage-feature.md"
+  ],
+  "compiled_owner_docs": [],
+  "compiled_plan_outputs": [],
+  "governance_status": "not_started",
+  "items": [],
+  "last_event_id": "evt-0014",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "notes": "No compile queue exists. Candidate owner docs are source-placement hints only; canonical Plans edits require an explicit future compile request. Current open candidate item is PM-native vision bridge adaptation for non-vision models based on the opencode-see-image pattern.",
+  "schema_id": "pm.bootstrap_ledger_compile_queue.v1",
+  "status": "conversational_design_active",
+  "terminal_ledger_event_id": null,
+  "updated_at_utc": "2026-06-26T20:47:51Z",
+  "validation_state": {
+    "bootstrap_ledger_validator": "blocked_missing_python_yaml",
+    "json_jsonl_shape_check": "pass",
+    "safe_content_checks": "No compile or generated index/governance artifacts were created."
+  }
+}
