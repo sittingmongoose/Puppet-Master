@@ -135,32 +135,49 @@
       "check_id": "audit-delta-reconciliation-0027",
       "status": "pass",
       "summary": "Provider-adjacent audit findings were reconciled ledger-only. Findings already covered by accepted provider-update atoms/decisions were not duplicated; uncovered deltas were recorded as accepted atoms for BinaryLocator/setup metadata, caller-scoped capability schema, account-bound GUI selectors, requested/effective identity, provider-native permission/secret custody, runtime artifact schemas, usage source-confidence, and stale-anchor retirement."
+    },
+    {
+      "check_id": "direct-provider-retest-preflight-0028",
+      "status": "warning",
+      "summary": "Jared confirmed active Kimi/Z.AI/MiniMax/GitHub Copilot subscriptions and then narrowed retest scope to direct providers baked into PM only. Current shell still lacks Kimi/Z.AI/MiniMax API env keys, and `gh copilot` marker prompt is not yet green; process-local credentials or Copilot CLI auth are required before E2E proof can close. OpenCode server must not be used as closure evidence for this retest."
+    },
+    {
+      "check_id": "direct-provider-e2e-retest-0029",
+      "status": "warning",
+      "summary": "Process-local credentials verified direct Kimi, MiniMax global, Z.AI/Zhipu partial, and GitHub Copilot direct hosted API routes without writing secrets to ledger or repo files. Kimi text/thinking/image-input is green but image creation is not supported by common endpoints. MiniMax global text/thinking/image-input and `image-01` generation are green, while MiniMax CN remains separate. Z.AI/Zhipu selected chat/reasoning routes are green, but `glm-5.1`/`glm-5.2`, `glm-5v-turbo`, and image generation remain blocked by overload, plan, or balance. GitHub Copilot direct hosted API is green for tested models/media/effort, with model-specific blocks."
+    },
+    {
+      "check_id": "github-copilot-stored-cli-auth-0030",
+      "status": "warning",
+      "summary": "After Jared reported `gh copilot` signed in, no-env `copilot -p` and `gh copilot -- -p` still exited nonzero with no output in this shell. The documented environment-token path using the existing GitHub OAuth token and the direct hosted API are verified, but stored CLI credential execution remains a separate non-green route."
     }
   ],
-  "last_validated_at_utc": "2026-06-25T20:38:57Z",
+  "last_validated_at_utc": "2026-06-26T08:34:00Z",
   "ledger_id": "pldg-20260624-001-provider-updates",
-  "notes": "Claude Code status-line `rate_limits`, coding-plan provider expansion, current OpenCode first-class provider implementation review, and provider-adjacent audit reconciliation are recorded. Native Cursor API-key / SDK / composer-api-style route remains live-verified for planning; ACP is locally prompt-verified; print-mode cursor-agent is fallback; opencode-cursor remains non-primary/source-lineage. Coding-plan live E2E proof is blocked pending credentials/subscriptions. No canonical Plans or governance artifacts were updated.",
+  "notes": "Claude Code status-line `rate_limits`, coding-plan provider expansion, current OpenCode first-class provider implementation review, provider-adjacent audit reconciliation, and direct-provider retesting are recorded. Native Cursor API-key / SDK / composer-api-style route remains live-verified for planning; ACP is locally prompt-verified; print-mode cursor-agent is fallback; opencode-cursor remains non-primary/source-lineage. Process-local credentials were used without storing secret values. Kimi For Coding and MiniMax global are green for the tested direct routes, Z.AI/Zhipu is partially green with explicit model/entitlement/balance blockers, and GitHub Copilot direct hosted API is green while stored CLI credential prompt execution remains non-green. No canonical Plans or governance artifacts were updated.",
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "status": "pass",
   "summary": {
     "blockers": 3,
     "candidate_atoms": 0,
     "compile_queue_items": 0,
-    "corrections": 12,
+    "corrections": 15,
     "decisions": 34,
     "deferred_questions": 0,
-    "design_atoms": 123,
-    "events": 25,
+    "design_atoms": 130,
+    "events": 29,
     "open_blockers": 2,
     "open_questions": 0,
     "questions": 11
   },
-  "updated_at_utc": "2026-06-25T20:38:57Z",
+  "updated_at_utc": "2026-06-26T08:34:00Z",
   "warnings": [
-    "blk-0001 open: remaining live-prompt blockers include GitHub Copilot routes and opencode-cursor if retained; GitHub Copilot is likely inactive-subscription/entitlement gated.",
+    "blk-0001 open: GitHub Copilot direct hosted API is green through the existing GitHub OAuth token, but stored CLI credential execution remains non-green; no-env `copilot -p` and `gh copilot -- -p` exit nonzero with no output.",
     "Cursor caveats preserved: signed production macOS app packaging was not installed/tested, Worker external-bridge image bytes are not verified, and Worker Responses lacks `output_text`; these are compatibility notes, not the prior live-proof blocker.",
-    "blk-0003 open: coding-plan live E2E verification is blocked pending credentials/subscriptions for Alibaba/Qwen, Kimi, MiniMax, ZHIPU/Z.AI, Tencent, KUAE, and Umans routes.",
+    "blk-0003 open: Kimi tested routes and MiniMax global tested routes are green, and Z.AI/Zhipu selected chat/reasoning routes are green; remaining coding-plan gaps are model-specific Z.AI overload/plan/balance blockers, MiniMax CN separate credentials, and direct E2E proof for other planned coding-plan families if retained.",
     "OpenCode should be treated as architecture/source-lineage for coding plans, not a complete correctness oracle; Alibaba/Qwen `enable_thinking` needs PM-owned verification.",
-    "Provider-adjacent audit deltas are ledger-only planning source until Jared explicitly requests compile to canonical Plans."
+    "Provider-adjacent audit deltas are ledger-only planning source until Jared explicitly requests compile to canonical Plans.",
+    "Direct-provider retest must exclude OpenCode server/OpenCode-routed providers and use PM-baked direct routes only.",
+    "Provider media support must split media input, media output, and generated-media routes; image input does not imply image creation."
   ]
 }

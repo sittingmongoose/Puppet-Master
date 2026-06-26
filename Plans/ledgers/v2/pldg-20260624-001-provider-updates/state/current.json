@@ -34,13 +34,13 @@
   "compiled_owner_docs": [],
   "compiled_plan_outputs": [],
   "cursor": {
-    "last_event_id": "evt-0025",
-    "next_action": "Continue ledger-only planning or wait for explicit compile. Provider-audit reconciliation is now recorded: covered audit findings should not be duplicated, and uncovered deltas now focus on BinaryLocator/setup metadata, caller-scoped capability schema, account-bound GUI selectors, requested/effective identity, provider-native permission/secret custody, runtime artifact schemas, usage source-confidence, and stale-anchor retirement."
+    "last_event_id": "evt-0029",
+    "next_action": "Continue provider planning from the updated direct-provider proof matrix. Kimi For Coding and MiniMax global are E2E green for the tested routes; Z.AI/Zhipu is partially green with model/entitlement/balance blockers; GitHub Copilot is green through the direct hosted API and GitHub OAuth token but stored CLI credential prompts remain non-green in this shell. Decide whether remaining model-specific blocks should be compile blockers or capability-gated disabled rows."
   },
   "deferred_questions_count": 0,
-  "design_atoms_total": 123,
+  "design_atoms_total": 130,
   "governance_status": "not_started",
-  "last_event_id": "evt-0025",
+  "last_event_id": "evt-0029",
   "ledger_id": "pldg-20260624-001-provider-updates",
   "latest_audit_ref": "Plans/.audits/audit-20260625-001-provider-adjacent-plans/FINAL_REPORT.md",
   "latest_audit_status": "reconciled_delta_backlog_recorded",
@@ -52,5 +52,5 @@
   "schema_id": "pm.bootstrap_current_state.v1",
   "status": "active",
   "title": "Provider Updates",
-  "updated_at_utc": "2026-06-25T20:38:57Z"
+  "updated_at_utc": "2026-06-26T08:34:00Z"
 }

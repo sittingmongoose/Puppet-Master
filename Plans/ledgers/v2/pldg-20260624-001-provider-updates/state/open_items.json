@@ -1,7 +1,7 @@
 {
   "deferred_questions": [],
   "ledger_id": "pldg-20260624-001-provider-updates",
-  "notes": "Cursor native API-key / SDK / composer-api-style support remains live-verified and blk-0002 is resolved. Claude Code status-line `rate_limits` support is accepted for planning. Current OpenCode `origin/dev` commit `b60c0a5e8ccc71ef7cce327602401418d419472e` was refreshed and confirms coding-plan providers are first-class catalog entries through Models.dev/generic AI SDK packages, not copyable bespoke adapters. Coding-plan provider expansion is accepted as first-class Provider -> models routes, but live E2E support claims are blocked by missing coding-plan credentials/subscriptions. PM must own provider/model transform mappings and tests, especially Alibaba/Qwen `enable_thinking`. Provider-adjacent audit reconciliation is recorded: covered findings should not be duplicated; uncovered deltas are accepted as ledger atoms for BinaryLocator/setup metadata, caller-scoped capability schema, account-bound GUI selectors, requested/effective identity, provider-native permission/secret custody, runtime artifact schemas, usage source-confidence, and stale-anchor retirement.",
+  "notes": "Cursor native API-key / SDK / composer-api-style support remains live-verified and blk-0002 is resolved. Claude Code status-line `rate_limits` support is accepted for planning. Coding-plan provider expansion is accepted as first-class Provider -> models routes. Current direct-provider retest results: Kimi For Coding is green for tested text, thinking, and image-input routes but not image creation; MiniMax global is green for tested text, thinking, image input, and `image-01` image creation, while MiniMax CN remains separate/unverified with the global key; Z.AI/Zhipu is green for tested `glm-4.5-air`, `glm-4.7`, `glm-5-turbo`, alternate Zhipu base, and `glm-5-turbo` reasoning_effort, but has open model-specific overload/plan/balance blockers; GitHub Copilot direct hosted API is green through the existing GitHub OAuth token, but stored CLI credential prompt execution remains non-green in this shell. Jared clarified not to use OpenCode server or OpenCode-routed providers for this retest because only PM-baked direct providers should close these proofs.",
   "open_blockers": [
     {
       "blocker_id": "blk-0001",
@@ -27,7 +27,7 @@
         "source_shards/provider_live_verification_followup_20260625.md",
         "chat:github-copilot-no-active-subscription-clarification"
       ],
-      "summary": "Remaining open live-prompt blockers are hosted GitHub Copilot CLI and OpenCode-server-routed GitHub Copilot if PM exposes that nested route, both likely inactive-subscription/entitlement gated per Jared's clarification, plus opencode-cursor if retained as optional plugin/source-lineage. Antigravity CLI, direct Cursor Agent OAuth/session, native Cursor API-key/SDK, Claude Code first-party `claude.ai`, and OpenCode server `opencode/big-pickle` are verified. Gemini CLI is removed/retired. Codex and OpenCode are direct providers and are excluded from required CLI bridging."
+      "summary": "Remaining open live-prompt blocker in this family is stored GitHub Copilot CLI credential execution in the current non-interactive shell: after Jared said `gh copilot` is signed in, no-env `copilot -p` and `gh copilot -- -p` still exited nonzero with no output. GitHub Copilot direct hosted API is green through the existing GitHub OAuth token and must be treated separately from stored CLI auth. OpenCode-server-routed GitHub Copilot and opencode-cursor are no longer closure evidence for this direct-provider retest. Antigravity CLI, direct Cursor Agent OAuth/session, native Cursor API-key/SDK, Claude Code first-party `claude.ai`, and OpenCode server `opencode/big-pickle` are verified in their own lanes. Gemini CLI is removed/retired. Codex and OpenCode are direct providers and are excluded from required CLI bridging."
     },
     {
       "blocker_id": "blk-0003",
@@ -36,7 +36,7 @@
         "source_shards/coding_plan_and_claude_rate_limits_research_20260625.md",
         "live_catalog:https://models.dev/api.json"
       ],
-      "summary": "Coding-plan live E2E verification is blocked locally by missing provider credentials/subscriptions for `BAILIAN_CODING_PLAN_API_KEY`, `ALIBABA_CODING_PLAN_API_KEY`, `KIMI_API_KEY`, `MINIMAX_API_KEY`, `ZHIPU_API_KEY`, `TENCENT_CODING_PLAN_API_KEY`, `KUAE_API_KEY`, and `UMANS_AI_CODING_PLAN_API_KEY`. Repo/docs/Models.dev inspection defines planned support but cannot satisfy Jared's no-uncertainty support threshold. Closure requires at least one minimal prompt per claimed coding-plan route, media probes for routes/models advertised with image/video/pdf input, and provider-specific thinking-effort probes."
+      "summary": "The user-supplied process-local credentials cleared several direct coding-plan routes but did not close every planned provider/model row. Kimi For Coding is green for tested text/thinking/image-input and blocked/unsupported for native image creation. MiniMax global is green for tested text/thinking/image-input plus `image-01` image creation, while MiniMax CN remains separate/unverified with the global credential. Z.AI/Zhipu is green for tested `glm-4.5-air`, `glm-4.7`, `glm-5-turbo`, alternate Zhipu base, and `glm-5-turbo` reasoning_effort; remaining Z.AI blockers are `glm-5.1`/`glm-5.2` temporary overload, `glm-5v-turbo` plan-not-included, and image-generation balance/resource gating. Other coding-plan families previously recorded from Models.dev, such as Alibaba/Qwen, Tencent, KUAE, and Umans, still require direct E2E proof if PM keeps them in compile scope."
     }
   ],
   "open_questions": [],
@@ -44,5 +44,5 @@
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "updated_at_utc": "2026-06-25T20:38:57Z"
+  "updated_at_utc": "2026-06-26T08:34:00Z"
 }
