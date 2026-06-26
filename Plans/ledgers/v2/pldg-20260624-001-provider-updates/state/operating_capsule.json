@@ -45,7 +45,7 @@
     "Plans/ledgers/work_items/**",
     "**/working_ledger.md"
   ],
-  "next_action": "Continue ledger-only planning or wait for explicit compile. Provider-adjacent audit reconciliation is recorded; uncovered compile deltas now cover BinaryLocator/setup metadata, caller-scoped capability schema, account-bound GUI selectors, requested/effective identity, provider-native permission/secret custody, runtime artifact schemas, usage source-confidence, and stale-anchor retirement. Live coding-plan E2E claims remain blocked pending credentials/subscriptions.",
+  "next_action": "Continue provider planning from the updated direct-provider proof matrix. Kimi For Coding and MiniMax global are E2E green for the tested routes; Z.AI/Zhipu is partially green with model/entitlement/balance blockers; GitHub Copilot is green through the direct hosted API and GitHub OAuth token but stored CLI credential prompts remain non-green in this shell. Decide whether remaining model-specific blocks should be compile blockers or capability-gated disabled rows.",
   "required_end_of_turn_actions": [
     "append_turn_event",
     "upsert_design_atoms",

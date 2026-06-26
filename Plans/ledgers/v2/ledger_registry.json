@@ -2,10 +2,10 @@
   "active_ledgers": [
     {
       "created_at_utc": "2026-06-24T09:38:50Z",
-      "last_updated_at": "2026-06-25T20:38:57Z",
-      "last_updated_at_utc": "2026-06-25T20:38:57Z",
+      "last_updated_at": "2026-06-26T08:34:00Z",
+      "last_updated_at_utc": "2026-06-26T08:34:00Z",
       "ledger_id": "pldg-20260624-001-provider-updates",
-      "notes": "Conversational design/spec ledger active. Native Cursor API-key / SDK / composer-api-style route is live-verified for planning; Cursor ACP is locally verified first-party session/agent protocol; cursor-agent print mode is fallback; opencode-cursor remains non-primary/source-lineage because PM has native support. Claude Code status-line `rate_limits` and first-class coding-plan provider expansion are recorded. Current OpenCode repo was refreshed as architecture reference; PM must own coding-plan provider/model transform mappings and E2E tests. Provider-adjacent audit reconciliation recorded only uncovered deltas: BinaryLocator/setup metadata, caller-scoped capability schema, account-bound GUI selectors, requested/effective identity, provider-native permission/secret custody, runtime artifact schemas, usage source-confidence, and stale-anchor retirement. Coding-plan E2E support claims are blocked pending provider credentials/subscriptions. No canonical Plans, PlanUnit index, WorkNodes, NodeSeeds, executable queues, Spec Lock, shards, evidence, plan_graph, or auto_decisions were created or updated.",
+      "notes": "Conversational design/spec ledger active. Native Cursor API-key / SDK / composer-api-style route is live-verified for planning; Cursor ACP is locally verified first-party session/agent protocol; cursor-agent print mode is fallback; opencode-cursor remains non-primary/source-lineage because PM has native support. Claude Code status-line `rate_limits` and first-class coding-plan provider expansion are recorded. Current OpenCode repo was refreshed as architecture reference; PM must own coding-plan provider/model transform mappings and E2E tests. Provider-adjacent audit reconciliation recorded only uncovered deltas. Direct-provider retest scope is PM-baked direct providers only; OpenCode server/routed providers must not be used as closure evidence. Process-local credentials were used without storing secret values. Kimi For Coding is green for tested text/thinking/image-input and not image creation; MiniMax global is green for tested text/thinking/image-input and `image-01` generation while CN remains separate; Z.AI/Zhipu is partially green with explicit model/entitlement/balance blockers; GitHub Copilot direct hosted API is green through existing GitHub OAuth token while stored CLI credential prompts remain non-green. Provider media support now splits media input, media output, and generated-media routes. No canonical Plans, PlanUnit index, WorkNodes, NodeSeeds, executable queues, Spec Lock, shards, evidence, plan_graph, or auto_decisions were created or updated.",
       "phase": "conversation_active",
       "primary_goal": "Collaboratively clarify and shape the placeholder feature `<provider updates>` into clear, complete, testable project intent before any canonical Plans edits.",
       "resume_file": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/handoff.json",
@@ -589,5 +589,5 @@
       "updated_at_utc": "2026-06-19T17:19:04Z"
     }
   ],
-  "updated_at_utc": "2026-06-25T20:38:57Z"
+  "updated_at_utc": "2026-06-26T00:05:00Z"
 }
