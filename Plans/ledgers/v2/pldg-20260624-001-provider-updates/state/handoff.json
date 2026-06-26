@@ -1,43 +1,46 @@
 {
-  "current_phase": "compiled_to_plans_pending_governance_seal",
+  "current_phase": "compiled_to_plans_governance_sealed",
   "cursor": {
-    "last_event_id": "evt-0038",
-    "next_action": "Governance seal remains pending and requires explicit seal scope before updating Spec_Lock, shards, evidence, plan_graph, auto_decisions, or migration proof hashes."
+    "last_event_id": "evt-0045",
+    "next_action": "Provider-update governance seal is complete. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created; node readiness remains blocked_compiler_contract_incomplete until explicit runtime compiler enablement."
   },
   "ledger_id": "pldg-20260624-001-provider-updates",
   "latest_audit_ref": "Plans/.audits/audit-20260625-001-provider-adjacent-plans/FINAL_REPORT.md",
   "latest_audit_status": "reconciled_delta_backlog_recorded",
   "open_questions": [],
-  "resume_instructions": "Resume from compact state only: state/handoff.json, state/current.json, state/open_items.json, state/operating_capsule.json, and state/compile_queue.json. Canonical Plans are compiled with post-compile provider currentness repairs; governance seal is pending and must be explicit.",
+  "resume_instructions": "Resume from compact state only. Provider-update ledger is sealed; canonical Plans and Plans/.plan_index are current. Do not update Spec_Lock, shards, evidence, plan_graph, or auto_decisions again unless a new explicit governance seal/repair scope changes governed inputs.",
   "schema_id": "pm.bootstrap_handoff.v1",
-  "status": "compiled_to_plans_pending_governance_seal",
-  "summary": "Compiled accepted provider-update atoms into live canonical Plans PlanUnits and applied post-compile currentness/traceability repairs. Gemini CLI is retired/source-lineage only; Antigravity CLI replaces it for active CLI-runtime support; Gemini Direct remains active. Provider catalogs are Provider -> models with route/account/model-specific support states. OpenAI/Codex subscription-backed Images 2 support is mandatory in canonical Plans, separate from official OpenAI API-key gpt-image-2/Responses image_generation routes. MiniMax Image-01, Z.AI/Zhipu, Kimi, GitHub Copilot direct hosted API, Cursor, Claude Code, and OpenCode/Models.dev source-lineage settings are compiled with capability-gated/unverified distinctions where appropriate. Antigravity CLI agy 1.0.12 verifies Gemini 3.5/3.1 text/coding rows but not Nano Banana/Nanobanana/media-generation routes. The compiled atom-to-PlanUnit traceability audit reports 449 pairs and 0 missing atom refs. governance_status=pending_seal because Spec_Lock, shards, evidence, plan_graph, and auto_decisions were intentionally not updated.",
+  "status": "compiled_to_plans_governance_sealed",
+  "summary": "Provider updates are compiled to canonical Plans and governance sealed. Governance seal refreshed migration proof, configured shards, evidence bundles, Spec_Lock, and existing governance validations after provider Plan and PlanUnit index changes stabilized. node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled.",
   "title": "Provider Updates",
-  "updated_at_utc": "2026-06-26T14:12:59Z",
+  "updated_at_utc": "2026-06-26T15:51:34Z",
   "validation_state": {
-    "bootstrap_ledger_validator": "pass",
-    "plan_index_generate": "pass",
-    "plan_index_validate": "pass",
-    "git_diff_check": "pass",
-    "jsonl_parse_check": "pass",
-    "stale_exact_wording_search": "pass_no_matches",
-    "compiled_atom_planunit_traceability": "pass_449_pairs_0_missing",
-    "plan_migration_validate": "fail_stale_migration_metadata_after_live_plan_changes",
-    "pm_shard_plans_check": "fail_stale_generated_shards_pending_governance_seal",
-    "run_gates": "fail_stale_spec_lock_evidence_plan_graph_shards_pending_governance_seal",
-    "governance_status": "pending_seal"
+    "bootstrap_ledger_validator": "pending_final_rerun_after_seal_projection_update",
+    "plan_index_validate": "pass_5228_planunits_18707_acceptance_units_blocked_compiler_contract_incomplete",
+    "plan_migration_validate": "pass_postseal_5228_live_planunits",
+    "pm_shard_plans_check": "pass_1021_shards_56_docs",
+    "run_gates": "pass",
+    "validate_auto_decisions": "pass",
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass",
+    "validate_plan_graph": "pass",
+    "git_diff_check": "pending_final_rerun_after_seal_projection_update",
+    "governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "runtime_enablement_status": "runtime_disabled",
+    "ledger_health": "pass_governance_sealed"
   },
-  "compiled_at_utc": "2026-06-26T10:42:01Z",
-  "last_event_id": "evt-0038",
-  "governance_status": "pending_seal",
+  "compiled_at_utc": "2026-06-26T15:17:31Z",
+  "last_event_id": "evt-0045",
+  "governance_status": "sealed",
   "compiled_owner_docs": [
     "Plans/00-plans-index.md",
     "Plans/BinaryLocator_Spec.md",
     "Plans/CLI_Bridged_Providers.md",
     "Plans/Contracts_V0.md",
     "Plans/FinalGUISpec.md",
-    "Plans/Media_Generation_and_Capabilities.md",
     "Plans/MCP_Integration.md",
+    "Plans/Media_Generation_and_Capabilities.md",
     "Plans/Models_System.md",
     "Plans/Multi-Account.md",
     "Plans/Permissions_System.md",
@@ -80,10 +83,10 @@
     "Plans/.plan_index/coverage_report.json",
     "Plans/.plan_index/node_readiness_report.json"
   ],
-  "compiled_plan_units_count": 30,
+  "compiled_plan_units_count": 37,
   "compiled_atoms_count": 123,
   "canonical_plan_targets": [
     "Plans/00-plans-index.md"
   ],
-  "next_action": "Governance seal remains pending; start an explicit seal phase before updating Spec_Lock, shards, evidence, plan_graph, auto_decisions, or migration proof hashes."
+  "next_action": "Provider-update governance seal is complete. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created; node readiness remains blocked_compiler_contract_incomplete until explicit runtime compiler enablement."
 }

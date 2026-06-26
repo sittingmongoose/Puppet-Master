@@ -916,7 +916,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Every provider/model/media route support claim must carry a provider route support evidence envelope with provider_entry_id, provider_family_id, transport_kind, account_profile_ref, credential_profile_kind, model_id, requested_model_id, effective_model_id, requested_effort, effective_effort, support_state, verification_state, proof_kind, proof_timestamp, source_lineage, blocked_reason, and capability gates. Green/implementation-ready support requires local end-to-end prompt output or an explicitly scoped generated-media proof, not catalog visibility, HTTP 200 model listing, or OpenCode-routed proxy behavior alone.
+  Every provider/model/media route support claim must carry a provider route support evidence envelope with provider_entry_id, provider_family_id, transport_kind, account_profile_ref, credential_profile_kind, model_id, requested_model_id, effective_model_id, requested_effort, effective_effort, support_state, verification_state, proof_kind, proof_timestamp, source_lineage, blocked_reason, and capability gates. Green/implementation-ready support requires local end-to-end prompt output or an explicitly scoped generated-media proof, not catalog visibility, HTTP 200 model listing, or OpenCode-routed proxy behavior alone. Antigravity evidence envelopes must distinguish public `agy` catalog rows from the capability-gated OAuth/internal `gemini-3.1-flash-image` generated-image proof; public `agy` catalog presence alone keeps generated-media output false for that row until row-specific artifact proof exists.
 gui_related: false
 gui_classification_reason: Shared backend/provider evidence contract rather than visual presentation.
 depends_on: [CV-094, MS-113]
@@ -926,6 +926,7 @@ acceptance_criteria:
   - Proof records do not contain secrets, OAuth URLs, API keys, account identifiers, or local machine state.
   - Direct-provider closure excludes OpenCode-server-routed provider results unless the support target is the OpenCode server route itself.
   - Provider support evidence records preserve requested/effective provider, model, effort, account, and route identity.
+  - Antigravity support evidence separates public `agy` CLI rows, private/internal generated-media proof, Gemini Direct API, and retired Gemini CLI lineage.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -939,12 +940,15 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0055
   - pldg-20260624-001-provider-updates:atom-0111
   - pldg-20260624-001-provider-updates:atom-0125
-source_atom_ids: [atom-0050, atom-0051, atom-0053, atom-0054, atom-0055, atom-0059, atom-0060, atom-0077, atom-0091, atom-0092, atom-0093, atom-0094, atom-0100, atom-0101, atom-0102, atom-0104, atom-0109, atom-0111, atom-0124, atom-0125, atom-0129, atom-0132, atom-0135, atom-0138, atom-0140]
-preserved_exact_tokens: ["no-uncertainty", "local E2E", "output-level success", "catalog presence", "OpenCode server", "OpenCode-routed providers", "verified", "unverified", "capability-gated", "disabled", "source-lineage", "not implementation-ready"]
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+source_atom_ids: [atom-0050, atom-0051, atom-0053, atom-0054, atom-0055, atom-0059, atom-0060, atom-0077, atom-0091, atom-0092, atom-0093, atom-0094, atom-0100, atom-0101, atom-0102, atom-0104, atom-0109, atom-0111, atom-0124, atom-0125, atom-0129, atom-0132, atom-0135, atom-0138, atom-0140, atom-0142, atom-0143]
+preserved_exact_tokens: ["no-uncertainty", "local E2E", "output-level success", "catalog presence", "OpenCode server", "OpenCode-routed providers", "verified", "unverified", "capability-gated", "disabled", "source-lineage", "not implementation-ready", "agy models", "gemini-3.1-flash-image", "v1internal:generateContent", "responseModalities: [\"IMAGE\"]", "1024x1024", "image/jpeg"]
 negative_constraints:
   - Do not clear a provider on catalog visibility or HTTP 200 model listing alone.
   - Do not store API keys, OAuth URLs, account identifiers, or local secrets in Plans, ledgers, logs, artifacts, or evidence envelopes.
   - Do not use OpenCode server or OpenCode-routed providers as direct-provider closure evidence.
+  - Do not collapse public `agy` CLI catalog rows and unofficial/private Antigravity OAuth/internal image-generation rows into one proof state.
 owner_hints: [Plans/Contracts_V0.md, Plans/Models_System.md, Plans/usage-feature.md, Plans/Media_Generation_and_Capabilities.md]
 ```
 
@@ -995,7 +999,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Provider capabilities and provider-native artifacts are caller-scoped. Capability payloads must include enabled_on_instance, usable_now, blocked_reason, caller_scope, execution_role, provider_entry_id, account_profile_ref, model_id, media_route_id, permission_snapshot_id, redaction_profile, verification_state, artifact_refs, and source_confidence where applicable. Provider-native tools and secrets are mediated through PM permission custody; artifacts may reference provider receipts, streamed logs/events, generated media, model catalogs, route/probe evidence, and adoption/drift/blocked/repair states without storing secrets.
+  Provider capabilities and provider-native artifacts are caller-scoped. Capability payloads must include enabled_on_instance, usable_now, blocked_reason, caller_scope, execution_role, provider_entry_id, account_profile_ref, model_id, media_route_id, permission_snapshot_id, redaction_profile, verification_state, artifact_refs, and source_confidence where applicable. Provider-native tools and secrets are mediated through PM permission custody; artifacts may reference provider receipts, streamed logs/events, generated media, model catalogs, route/probe evidence, and adoption/drift/blocked/repair states without storing secrets. Antigravity internal generated-image artifacts may reference non-secret route/probe evidence, model id `gemini-3.1-flash-image`, generated artifact refs, dimensions/hash, and support-state caveats, while public `agy` catalog artifacts remain model-capability evidence rather than generated-media receipts.
 gui_related: false
 gui_classification_reason: Shared capability/artifact schema and permission custody contract rather than visual presentation.
 depends_on: [CV-292, CV-293]
@@ -1005,6 +1009,7 @@ acceptance_criteria:
   - Provider-native tool execution and secret custody pass through PM permission contracts.
   - Runtime artifacts preserve provider receipts, generated media refs, logs/events, model catalogs, route/probe evidence, and drift/blocked states by reference.
   - Secret values, OAuth URLs, and local account material are never stored in artifacts.
+  - Antigravity generated-image artifact refs preserve internal-route caveats and never store OAuth/session material.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -1017,12 +1022,15 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0117
   - pldg-20260624-001-provider-updates:atom-0120
   - pldg-20260624-001-provider-updates:atom-0121
-source_atom_ids: [atom-0049, atom-0116, atom-0117, atom-0118, atom-0120, atom-0121, atom-0122, atom-0130, atom-0131, atom-0133, atom-0136, atom-0137, atom-0138]
-preserved_exact_tokens: ["enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "providerIdentifier: client", "toolName: pm_echo", "permission_snapshot_id", "redaction_profile", "provider-native", "generated media", "route/probe evidence"]
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+source_atom_ids: [atom-0049, atom-0116, atom-0117, atom-0118, atom-0120, atom-0121, atom-0122, atom-0130, atom-0131, atom-0133, atom-0136, atom-0137, atom-0138, atom-0142, atom-0143]
+preserved_exact_tokens: ["enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "providerIdentifier: client", "toolName: pm_echo", "permission_snapshot_id", "redaction_profile", "provider-native", "generated media", "route/probe evidence", "gemini-3.1-flash-image", "1024x1024", "image/jpeg", "a60c8987f42ebb678426affb79d55f49f3efe8feebc8c09ba86772bfa91d9f5d"]
 negative_constraints:
   - Do not infer `usable_now` from `enabled_on_instance`.
   - Do not bypass PM permission custody for provider-native tools or secrets.
   - Do not store provider secret material in artifact payloads.
+  - Do not store OAuth tokens, refresh tokens, account identifiers, local credential paths, full HTTP payload logs, or secrets in provider-native artifact payloads.
 owner_hints: [Plans/Contracts_V0.md, Plans/Tools.md, Plans/Permissions_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
 ```
 

@@ -292,7 +292,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  The model registry is provider-owned: PM stores concrete Provider -> models rows by runtime/account/billing/transport route, then optionally groups rows by provider family for display. The same upstream model may appear under multiple providers, and each row must carry support_state, verification_state, media_input, media_output, generated_media_routes, account_profile requirements, requested/effective provider/model/effort fields, and source_lineage. Catalog presence, OpenCode server routing, Models.dev visibility, or OpenCode Go availability is not end-to-end proof for PM-baked direct providers.
+  The model registry is provider-owned: PM stores concrete Provider -> models rows by runtime/account/billing/transport route, then optionally groups rows by provider family for display. The same upstream model may appear under multiple providers, and each row must carry support_state, verification_state, media_input, media_output, generated_media_routes, account_profile requirements, requested/effective provider/model/effort fields, and source_lineage. Public Antigravity `agy` rows must be stored as explicit model rows for `Gemini 3.5 Flash (Medium)`, `Gemini 3.5 Flash (High)`, `Gemini 3.5 Flash (Low)`, `Gemini 3.1 Pro (Low)`, `Gemini 3.1 Pro (High)`, `Claude Sonnet 4.6 (Thinking)`, `Claude Opus 4.6 (Thinking)`, and `GPT-OSS 120B (Medium)` with text output, image input, PDF input, generated image, generated video, generated audio/TTS, music, artifact output, effort label, verification state, and source provenance fields; generated-media flags stay false unless row-specific artifact proof exists. Antigravity OAuth/internal `gemini-3.1-flash-image` is a separate capability-gated generated-image route, not a public `agy` CLI model row and not Gemini Direct. Catalog presence, OpenCode server routing, Models.dev visibility, or OpenCode Go availability is not end-to-end proof for PM-baked direct providers.
 gui_related: false
 gui_classification_reason: Backend provider/model registry and evidence semantics rather than visual presentation.
 depends_on: [CV-094]
@@ -302,6 +302,8 @@ acceptance_criteria:
   - Provider family grouping remains display/policy metadata and does not collapse distinct providers that offer overlapping models.
   - Every row can expose support_state, verification_state, media capability fields, account-profile requirements, requested/effective identity, and source refs.
   - Catalog presence alone cannot mark a row green or implementation-ready.
+  - Public `agy` text/coding rows appear in Settings/model capability data with generated-media flags false unless exact generated-artifact proof exists.
+  - Settings image-generation support rows expose OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Gemini Direct where verified, Antigravity OAuth/internal `gemini-3.1-flash-image`, and gated/disabled/unverified providers as route-specific entries rather than a Gemini-primary list.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -319,12 +321,17 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0107
   - pldg-20260624-001-provider-updates:atom-0112
   - pldg-20260624-001-provider-updates:atom-0140
-source_atom_ids: [atom-0009, atom-0016, atom-0027, atom-0035, atom-0046, atom-0048, atom-0049, atom-0050, atom-0051, atom-0059, atom-0060, atom-0071, atom-0074, atom-0091, atom-0092, atom-0098, atom-0100, atom-0101, atom-0102, atom-0103, atom-0104, atom-0105, atom-0107, atom-0109, atom-0112, atom-0117, atom-0118, atom-0119, atom-0125, atom-0126, atom-0127, atom-0128, atom-0129, atom-0130, atom-0131, atom-0132, atom-0135, atom-0138, atom-0140]
-preserved_exact_tokens: ["Provider -> models", "Provider -> models, Provider -> models", "OpenCode", "Models.dev", "support_state", "verification_state", "media_input", "media_output", "generated_media_routes", "requested_model_profile", "effective_model_profile", "fallback_used", "capability_checks"]
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+  - pldg-20260624-001-provider-updates:atom-0144
+source_atom_ids: [atom-0009, atom-0016, atom-0027, atom-0035, atom-0046, atom-0048, atom-0049, atom-0050, atom-0051, atom-0059, atom-0060, atom-0071, atom-0074, atom-0091, atom-0092, atom-0098, atom-0100, atom-0101, atom-0102, atom-0103, atom-0104, atom-0105, atom-0107, atom-0109, atom-0112, atom-0117, atom-0118, atom-0119, atom-0125, atom-0126, atom-0127, atom-0128, atom-0129, atom-0130, atom-0131, atom-0132, atom-0135, atom-0138, atom-0140, atom-0142, atom-0143, atom-0144]
+preserved_exact_tokens: ["Provider -> models", "Provider -> models, Provider -> models", "OpenCode", "Models.dev", "support_state", "verification_state", "media_input", "media_output", "generated_media_routes", "requested_model_profile", "effective_model_profile", "fallback_used", "capability_checks", "agy models", "Gemini 3.5 Flash (Medium)", "Gemini 3.5 Flash (High)", "Gemini 3.5 Flash (Low)", "Gemini 3.1 Pro (Low)", "Gemini 3.1 Pro (High)", "Claude Sonnet 4.6 (Thinking)", "Claude Opus 4.6 (Thinking)", "GPT-OSS 120B (Medium)", "text output", "image input", "PDF input", "generated image", "generated video", "generated audio/TTS", "music", "artifact output", "verification state", "source provenance", "gemini-3.1-flash-image", "gpt-image-2", "image_generation", "OpenAI/Codex subscription-backed image generation", "image-01"]
 negative_constraints:
   - Do not collapse providers that offer the same model into one vendor-family account row.
   - Do not treat Models.dev catalog presence or OpenCode server routing as PM direct-provider E2E proof.
   - Do not keep Gemini CLI as an active provider row; preserve `gemini_cli` only as retired/source-lineage vocabulary.
+  - Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
+  - Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
 owner_hints: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Media_Generation_and_Capabilities.md]
 ```
 
@@ -809,12 +816,15 @@ Settings must show:
 - provider/runtime grouping
 - concrete runtime surface availability
 - current defaults and their source
+- supported image-generation model/route rows with support state, verification state, proof or gated reason, and engine-picker eligibility
 - availability or capability gaps without inferring unsupported when discovery is merely silent or stale
 - model discovery `/state`, including whether stale cached models remain visible while refresh runs, whether a single provider refresh failed, and whether progress is partial or complete.
 - explicit actions for `Refresh Models` and `Refresh Providers`; initial connect, reconnect, and app boot/profile activation may refresh automatically, but user-triggered refreshes stay visible and scoped.
 - `Edit Threshold` opens the most-local applicable override and discloses whether that value overrides the provider default or model default.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
+
+Settings image-generation rows are route-specific rather than Gemini-primary. The selectable engine list includes OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct generated-image routes where verified, and disabled/capability-gated/unverified rows where proof or entitlement is missing. Public text-only `agy` rows remain visible in capability metadata and model details, but not as selectable image-generation engines unless the exact row later proves generated-media output.
 
 ### 7.3 Variant and effort controls
 
@@ -4410,8 +4420,8 @@ plan_unit_id: MS-057
 unit_type: gui_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Settings > Models shows provider/runtime grouping, concrete runtime surface availability, current defaults
-  and sources, and stale/silent/partial discovery state without inferring unsupported when discovery is silent or stale.
+canonical_text: >-
+  Settings > Models shows provider/runtime grouping, concrete runtime surface availability, current defaults and sources, supported image-generation model/route rows, and stale/silent/partial discovery state without inferring unsupported when discovery is silent or stale. Image-generation support in Settings is route-specific rather than Gemini-primary: OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct where verified, and disabled/capability-gated/unverified provider rows are displayed separately from broader text-only public `agy` capability rows.
 gui_related: true
 gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
   behavior.
@@ -4423,6 +4433,8 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- Settings image-generation rows are not left Gemini-primary after provider-update ledger compilation.
+- Public text-only `agy` rows are visible as capability rows but not selectable image-generation engines.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -4437,8 +4449,21 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0042
+- pldg-20260624-001-provider-updates:atom-0144
 preserved_exact_tokens:
 - Settings > Models
+- settings for what image generation models are supported
+- They were primarily Gemini models before
+- ChatGPT
+- agy models(The ones that actually support media generation)
+- gpt-image-2
+- image_generation
+- OpenAI/Codex subscription-backed image generation
+- gemini-3.1-flash-image
+- image-01
+- disabled
+- capability-gated
+- unverified
 - provider/runtime grouping
 - concrete runtime surface availability
 - current defaults and their source
@@ -4447,7 +4472,11 @@ preserved_exact_tokens:
 - model discovery `/state`
 - stale cached models
 - partial or complete
-negative_constraints: []
+negative_constraints:
+- Do not leave GUI or Settings supported image-generation model sections Gemini-primary after compiling provider updates.
+- Do not add public text-only `agy` rows to the image-generation engine picker as if they generate images.
+- Do not collapse OpenAI API-key `gpt-image-2`, Responses `image_generation`, and OpenAI/Codex subscription-backed image generation into one generic OpenAI row.
+- Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
 compatibility_only_notes: []
 stale_retired_dispositions:
 - Stale cached model visibility and silent discovery must be displayed as state, not converted into unsupported claims.

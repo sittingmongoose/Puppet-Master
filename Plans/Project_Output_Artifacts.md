@@ -151,7 +151,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Project_Output_Artifacts.md
 canonical_text: >-
-  Generated media outputs become project artifacts by durable local artifact reference, content hash, provider route/account/model metadata, generation parameter summary, provider receipt refs, provenance caveats, expiry warnings, and source lineage. Project Output Artifacts consumes Runtime Artifacts and Media route truth; it owns packaging/export identity, not provider execution behavior. Expiring provider URLs such as MiniMax Image-01 URL outputs require explicit capture status and 24-hour expiry warning before being treated as durable project outputs.
+  Generated media outputs become project artifacts by durable local artifact reference, content hash, provider route/account/model metadata, generation parameter summary, provider receipt refs, provenance caveats, expiry warnings, and source lineage. Project Output Artifacts consumes Runtime Artifacts and Media route truth; it owns packaging/export identity, not provider execution behavior. Expiring provider URLs such as MiniMax Image-01 URL outputs require explicit capture status and 24-hour expiry warning before being treated as durable project outputs. Antigravity OAuth/internal `gemini-3.1-flash-image` outputs may package generated-image artifacts only through durable local refs, content hash, non-secret route/proof refs, and private/unofficial endpoint caveats.
 gui_related: true
 gui_classification_reason: Generated media artifact packaging, export identity, and expiry/provenance presentation are user-visible output behavior.
 depends_on: [RAP-032, RAP-033, MGAC-095, MGAC-096]
@@ -161,6 +161,7 @@ acceptance_criteria:
   - Provider receipt refs and route/account/model metadata are preserved without secrets.
   - Expiring provider URLs are disclosed and not treated as durable storage.
   - Output packaging consumes, rather than redefines, Media and Runtime Artifact route truth.
+  - Antigravity internal generated-image outputs preserve support-state/provenance caveats and exclude OAuth/session material.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
@@ -173,12 +174,14 @@ source_lineage:
   - pldg-20260624-001-provider-updates:atom-0121
   - pldg-20260624-001-provider-updates:atom-0133
   - pldg-20260624-001-provider-updates:atom-0137
-source_atom_ids: [atom-0031, atom-0033, atom-0034, atom-0121, atom-0130, atom-0133, atom-0134, atom-0136, atom-0137]
-preserved_exact_tokens: ["generated media", "project outputs", "provider receipt", "content hash", "24-hour expiry", "MiniMax Image-01", "OpenAI/Codex subscription", "C2PA", "SynthID"]
+  - pldg-20260624-001-provider-updates:atom-0142
+source_atom_ids: [atom-0031, atom-0033, atom-0034, atom-0121, atom-0130, atom-0133, atom-0134, atom-0136, atom-0137, atom-0142]
+preserved_exact_tokens: ["generated media", "project outputs", "provider receipt", "content hash", "24-hour expiry", "MiniMax Image-01", "OpenAI/Codex subscription", "C2PA", "SynthID", "gemini-3.1-flash-image", "image/jpeg", "a60c8987f42ebb678426affb79d55f49f3efe8feebc8c09ba86772bfa91d9f5d"]
 negative_constraints:
   - Do not treat provider URL outputs as durable project artifacts without capture status and expiry disclosure.
   - Do not store provider secrets in project output artifacts.
   - Do not make Project Output Artifacts the owner of provider execution behavior.
+  - Do not store OAuth tokens, refresh tokens, account identifiers, local credential paths, full HTTP payload logs, or secrets in project output artifacts.
 owner_hints: [Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/Media_Generation_and_Capabilities.md]
 ```
 
