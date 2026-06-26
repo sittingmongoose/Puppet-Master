@@ -310,8 +310,8 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Contracts_V0.md
 
 | Value | Meaning |
 |-------|---------|
-| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved Gemini mode (for example, no eligible Gemini OAuth session, Google/Vertex credential, or Google/Gemini API key). |
-| `MODEL_UNAVAILABLE` | The requested or configured model is not available with the current Gemini account, auth mode, API key, or provider setup. |
+| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved provider media route (for example, no eligible provider account, profile, credential, or API key). |
+| `MODEL_UNAVAILABLE` | The requested or configured model is not available with the current provider account, profile, auth mode, API key, or provider setup. |
 | `ADMIN_DISABLED` | The feature is explicitly disabled in Settings (Media settings). |
 | `BACKEND_UNSUPPORTED` | The current backend does not support this media kind (e.g., Cursor backend for video/tts/music). |
 | `RATE_LIMITED` | The capability is temporarily unavailable due to rate limiting. |
@@ -499,7 +499,9 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
   "request_id": "req_20260301_a1b2c3d4",
   "kind": "image",
   "engine": {
-    "backend": "gemini_api"
+    "provider_entry_id": "resolved_provider_entry_id",
+    "media_route_id": "resolved_media_route_id",
+    "generated_media_route_id": "resolved_generated_media_route_id"
   },
   "artifacts": [
     {
@@ -531,7 +533,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
 
 Response fields:
 - `request_id` (string, required): unique opaque ID for this generation request.
-- `engine.backend` (string, required): one of `gemini_api` | `cursor_native`.
+- `engine` (object, required): media route identity for the effective provider/model route. It includes `provider_entry_id`, `media_route_id`, and, on generated output, the matched `generated_media_route_id`; values are validated against the provider/model row's `generated_media_routes[]` and the shared requested/effective runtime snapshot rather than a fixed `gemini_api`/`cursor_native` enum.
 - `artifacts[]` (array, required on success): each item contains:
   - `artifact_id` (string): unique artifact identifier.
   - `kind` (string): media kind that was generated.
@@ -562,7 +564,7 @@ ContractRef: ToolID:media.generate, SchemaID:pm.media.generate.result.v1, Primit
 
 ContractRef: ToolID:media.generate, Primitive:ArtifactStore
 
-**Route-specific backend behavior:** When `engine.backend` resolves to a concrete provider/model route, PM checks that route's `generated_media_routes[]` for the requested `kind`. Cursor image generation is not assumed from image-input/API-key proof; it requires a verified generated-media route. For unsupported kinds, the backend returns `error.code = "BACKEND_UNSUPPORTED"` or the more specific provider status/error state.
+**Route-specific backend behavior:** When the response `engine` identity resolves through the shared requested/effective runtime snapshot to a concrete `provider_entry_id` and `media_route_id`, PM checks that route's `generated_media_routes[]` for the requested `kind`. Cursor image generation is not assumed from image-input/API-key proof; it requires a verified generated-media route. For unsupported kinds, the backend returns `error.code = "BACKEND_UNSUPPORTED"` or the more specific provider status/error state.
 
 On failure:
 ```json
@@ -571,7 +573,9 @@ On failure:
   "request_id": "req_20260301_a1b2c3d4",
   "kind": "image",
   "engine": {
-    "backend": "resolved_media_provider"
+    "provider_entry_id": "resolved_provider_entry_id",
+    "media_route_id": "resolved_media_route_id",
+    "generated_media_route_id": null
   },
   "artifacts": [],
   "usage": null,
@@ -590,7 +594,7 @@ ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2, ContractNa
 
 | Code | When |
 |------|------|
-| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved Gemini mode (for example, no eligible OAuth session, Google/Vertex credential, or Google/Gemini API key). |
+| `NOT_CONFIGURED` | Required provider configuration is missing for the resolved provider media route (for example, no eligible provider account, profile, credential, or API key). |
 | `MODEL_UNAVAILABLE` | Requested `model_override` could not be resolved or model is offline. |
 | `RATE_LIMITED` | Provider returned a rate-limit / 429. |
 | `QUOTA_EXCEEDED` | Provider quota exhausted. |
@@ -2469,7 +2473,7 @@ plan_unit_id: MGAC-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Successful media.generate responses include success, request_id, kind, engine.backend, artifacts, usage, and error fields with artifact metadata and canonical usage cost fields such as cost_microdollars and cost_is_estimate.
+canonical_text: Successful media.generate responses include success, request_id, kind, an engine route identity object with provider_entry_id, media_route_id, and generated_media_route_id when output is matched, artifacts, usage, and error fields with artifact metadata and canonical usage cost fields such as cost_microdollars and cost_is_estimate.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: true
@@ -2499,8 +2503,9 @@ preserved_exact_tokens:
 - req_20260301_a1b2c3d4
 - kind
 - engine
-- backend
-- gemini_api
+- provider_entry_id
+- media_route_id
+- generated_media_route_id
 - artifacts
 - artifact_id
 - mime
@@ -2517,9 +2522,12 @@ preserved_exact_tokens:
 - input_tokens
 - output_tokens
 - media_units
-negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+negative_constraints:
+- Active response schemas MUST NOT constrain media route identity to a fixed `gemini_api`/`cursor_native` enum.
+compatibility_only_notes:
+- The older `engine.backend` field name is source-lineage vocabulary only; active generated-media responses use the engine route identity object.
+stale_retired_dispositions:
+- '`engine.backend`, `gemini_api`, and `cursor_native` are preserved only as stale/source-lineage terms from the older response schema and are not active route taxonomy.'
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:
@@ -2732,19 +2740,23 @@ preserved_exact_tokens:
 - error
 - code
 - message
-- This feature requires Gemini access
-- Settings -> Authentication
-- Cursor special-case
-- engine.backend = "cursor_native"
+- eligible media generation provider route
+- Settings -> Providers
+- route-specific Cursor availability
+- provider_entry_id
+- media_route_id
 - kind=image
-- without requiring Gemini credentials
+- without requiring unrelated provider credentials
 - video
 - tts
 - music
 - error.code = "BACKEND_UNSUPPORTED"
-negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+negative_constraints:
+- Cursor image generation MUST NOT be inferred from image-input proof, API-key proof, or unrelated provider credentials.
+compatibility_only_notes:
+- Older `engine.backend = "cursor_native"` wording is source-lineage vocabulary only; active failures identify the resolved provider/media route.
+stale_retired_dispositions:
+- '"This feature requires Gemini access" and `engine.backend = "cursor_native"` are stale examples from the prior Gemini/Cursor split and are not active user-facing copy.'
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:

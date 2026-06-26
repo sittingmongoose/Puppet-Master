@@ -217,7 +217,7 @@
       "summary": "Provider-update governance seal refreshed migration proof, configured shards, evidence bundles, Spec_Lock, and governance validators. node_readiness_report.status remains blocked_compiler_contract_incomplete; no node/runtime/build artifacts were created."
     }
   ],
-  "last_validated_at_utc": "2026-06-26T15:51:34Z",
+  "last_validated_at_utc": "2026-06-26T16:48:05Z",
   "ledger_id": "pldg-20260624-001-provider-updates",
   "notes": "Governance seal completed after provider Plan and PlanUnit index changes stabilized. Migration proof, configured shards, evidence bundles, Spec_Lock, plan graph validation, auto decisions validation, PlanUnit index validation, run-gates, shard check, and git diff checks are included in the seal validator bundle; final command rerun follows this projection update.",
   "schema_id": "pm.bootstrap_ledger_health.v1",
@@ -240,7 +240,7 @@
     "accepted_atoms": 0,
     "governance_seal": "passed"
   },
-  "updated_at_utc": "2026-06-26T15:51:34Z",
+  "updated_at_utc": "2026-06-26T16:48:05Z",
   "warnings": [
     "blk-0001 resolved for current direct-provider scope: GitHub Copilot direct hosted API is implementation-ready, and stored CLI credential execution is optional/future-route evidence only because PM is not bridging `copilot` or `gh copilot`.",
     "Cursor caveats preserved: signed production macOS app packaging was not installed/tested, Worker external-bridge image bytes are not verified, and Worker Responses lacks `output_text`; these are compatibility notes, not the prior live-proof blocker.",

@@ -165,4 +165,3 @@ Accepted for ledger planning:
 - PM must own provider/model transform mappings and tests instead of importing OpenCode assumptions wholesale.
 - Provider setup must remain Provider -> models, with region/profile-separated coding-plan provider IDs.
 - Do not require Jared to buy additional coding-plan subscriptions to close this planning lane. Rows without proof should be capability-gated, disabled, or explicitly unverified rather than blocking the provider compile forever.
-

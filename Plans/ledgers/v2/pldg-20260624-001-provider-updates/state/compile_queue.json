@@ -4,11 +4,11 @@
   "status": "compiled_to_plans_governance_sealed",
   "current_phase": "compiled_to_plans_governance_sealed",
   "compiled_at_utc": "2026-06-26T15:17:31Z",
-  "updated_at_utc": "2026-06-26T15:51:34Z",
+  "updated_at_utc": "2026-06-26T16:48:05Z",
   "last_event_id": "evt-0045",
   "terminal_ledger_event_id": "evt-0045",
-  "latest_audit_ref": "Plans/.audits/audit-20260625-001-provider-adjacent-plans/FINAL_REPORT.md",
-  "latest_audit_status": "reconciled_delta_backlog_recorded",
+  "latest_audit_ref": "Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_status": "repair_validated",
   "governance_status": "sealed",
   "candidate_compile_owner_docs": [],
   "canonical_plan_targets": [
@@ -307,7 +307,7 @@
   ],
   "notes": "Compiled accepted provider-update atoms into live canonical Plans PlanUnits, applied post-compile repairs, regenerated allowed Plans/.plan_index outputs, and completed governance seal. No WorkNodes, NodeSeeds, executable queues, implementation files, Spec_Lock-breaking stale hashes, stale shards, stale evidence, stale plan_graph hashes, or auto_decision validation failures remain.",
   "validation_state": {
-    "bootstrap_ledger_validator": "pending_final_rerun_after_seal_projection_update",
+    "bootstrap_ledger_validator": "pass",
     "plan_index_validate": "pass_5228_planunits_18707_acceptance_units_blocked_compiler_contract_incomplete",
     "plan_migration_validate": "pass_postseal_5228_live_planunits",
     "pm_shard_plans_check": "pass_1021_shards_56_docs",
@@ -316,7 +316,7 @@
     "verify_spec_lock": "pass",
     "validate_evidence": "pass",
     "validate_plan_graph": "pass",
-    "git_diff_check": "pending_final_rerun_after_seal_projection_update",
+    "git_diff_check": "pass",
     "governance_status": "sealed",
     "node_readiness_status": "blocked_compiler_contract_incomplete",
     "runtime_enablement_status": "runtime_disabled"
