@@ -2316,6 +2316,48 @@ owner_hints:
 - Plans/Tools.md
 ```
 
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into tool capability and provider-native tool requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### T-164 - Provider Native Tool Mediation And Capability Scope
+
+```yaml
+plan_unit_id: T-164
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: >-
+  Provider-native tool calls and hosted/client tool capabilities must be mediated through PM tool policy and permission custody. Tool availability is caller-scoped and must include provider_entry_id, account_profile_ref, model_id, capability_id, caller_scope, execution_role, enabled_on_instance, usable_now, blocked_reason, permission_snapshot_id, redaction_profile, and verification_state. Cursor client tools such as `providerIdentifier: client` / `toolName: pm_echo` are evidence for route-specific capability handling, not permission bypasses.
+gui_related: false
+gui_classification_reason: Tool policy/capability mediation contract rather than visual presentation.
+depends_on: [CV-294, PS-119]
+unblocks: []
+acceptance_criteria:
+  - Provider-native tools pass through PM permission/capability policy before use.
+  - Tool availability is caller-scoped and does not infer usable_now from provider enablement alone.
+  - Provider tool evidence does not store secrets or provider-native hidden state.
+  - Tool result records can link to runtime artifacts without re-owning artifact schema.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_tool_permission_bypass
+reasoning_tier: high
+context_scope: provider_native_tools
+implementation_surfaces: [Plans/Tools.md, Plans/Permissions_System.md, Plans/Contracts_V0.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: provider_native_tool_mediation, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0117
+  - pldg-20260624-001-provider-updates:atom-0120
+source_atom_ids: [atom-0117, atom-0120, atom-0121, atom-0131]
+preserved_exact_tokens: ["provider-native tools", "providerIdentifier: client", "toolName: pm_echo", "enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "permission_snapshot_id"]
+negative_constraints:
+  - Do not bypass PM permission custody for provider-native tools.
+  - Do not infer `usable_now` from provider enablement alone.
+  - Do not store provider secret material in tool records.
+owner_hints: [Plans/Tools.md, Plans/Permissions_System.md, Plans/Contracts_V0.md, Plans/Runtime_Artifacts_Panel.md]
+```
+
 ### T-003 - Tool GUI Settings And Usage Visibility
 
 ```yaml

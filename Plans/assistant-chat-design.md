@@ -35,7 +35,7 @@ This plan's **UX requirements** remain authoritative. Implementation should targ
 - **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack; JSONL mirror is derived only.
 - **UI:** Rust + Slint remain the intended shell implementation.
 - **Tooling:** tool registry, approvals, and results normalize through the unified event stream and shared permission/runtime contracts.
-- **Auth/runtime taxonomy:** subscription-first remains the default posture, but Gemini is not one mixed provider. The concrete runtime platforms are `gemini` (**Gemini Direct**; direct API-key transport) and `gemini_cli` (**Gemini CLI**; CLI-wrapped OAuth/API-key/Google-credential flows). Consumers MAY group them under `provider_family_id = gemini`, but chat/runtime surfaces MUST display the concrete requested/effective platform instead of collapsing them into a single generic Gemini badge.
+- **Auth/runtime taxonomy:** subscription-first remains the default posture. Gemini Direct (`gemini`) is the active direct API route; Antigravity CLI is the active Google-owned CLI-runtime route; Gemini CLI (`gemini_cli`) is retired/source-lineage only. Consumers MAY group related entries under a provider family, but chat/runtime surfaces MUST display the concrete requested/effective provider entry instead of collapsing them into a single generic provider badge.
 - **Identity disclosure:** requested/effective runtime identity, account binding, and auth state are imported from the shared runtime contracts. Assistant Chat must not invent a parallel provider/auth field set.
 - **Additive field placement:** Assistant Chat treats the additive field design from `Plans/Contracts_V0.md` as frozen for this surface; reconciliation may align wording and placement but must not reopen the shared field set.
 
@@ -191,8 +191,8 @@ Required controls (placement: chat header strip, same area as the context indica
 
 | Control | Requirement |
 |---|---|
-| **Platform** | Dropdown listing available platforms. Selection applies to the current thread and the next turn. Data comes from `platform_specs`; no hardcoding. |
-| **Model** | Dropdown listing models for the currently selected platform. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from `platform_specs::fallback_model_ids(platform)`. |
+| **Provider** | Dropdown listing available provider entries from the account-bound Provider -> models registry. Selection applies to the current thread and the next turn. Data comes from Models/Multi-Account/Contracts capability snapshots; no hardcoding and no legacy `platform_specs` authority. |
+| **Model** | Dropdown listing models for the currently selected provider entry. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from the shared provider/model registry and capability resolver, never `platform_specs::fallback_model_ids(platform)`. |
 | **Reasoning / effort** | Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
 | **Worktree** | Icon button (rightmost in header strip, after Reasoning/effort). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
 
@@ -2269,8 +2269,8 @@ The **Auditor Validation** settings group exposes one row for the Auditor valida
 
 **Controls:**
 
-- **Provider dropdown** — lists all enabled platforms (sourced from `platform_specs`; same data source as the chat platform dropdown). Label: "Provider".
-- **Model dropdown** — lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown). Label: "Model". Fallback: `platform_specs::fallback_model_ids(platform)`.
+- **Provider dropdown** — lists enabled provider entries from the same account-bound Provider -> models registry as the chat provider dropdown. Label: "Provider".
+- **Model dropdown** — lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown). Label: "Model". Fallback: shared provider/model registry and capability resolver.
 
 > **Note:** No reasoning/effort control is shown in this settings group. Effort settings apply to the interactive chat session and do not govern these background validation passes.
 
@@ -2283,7 +2283,7 @@ Default provider and model values are resolved using the following deterministic
 1. **Explicit stored Auditor loop value** — if `model_roles.auditor.provider` / `model_roles.auditor.model` is present in app settings, use it.
 2. **Auditor Model role default** — if no explicit Auditor loop value is stored, use the configured Auditor Model role default from `Plans/Models_System.md`.
 3. **Primary chat platform + model** — if the Auditor Model role is also unset, use the provider and model selected in the main chat settings.
-4. **First available platform + first fallback model** — if the primary chat platform/model is also unset, select the first platform returned by `platform_specs` and the first entry from `platform_specs::fallback_model_ids(platform)`.
+4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering.
 
 **Invariants:**
 - Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching).
@@ -2316,10 +2316,10 @@ These keys are written to the same app settings store as all other GUI configura
 
 ### 26.7 DRY Rules
 
-- Provider and model lists **MUST** be sourced exclusively from `platform_specs` (same SSOT as §1.1 chat controls). No hardcoded provider names or model lists anywhere in this feature.
+- Provider and model lists **MUST** be sourced from the account-bound Provider -> models registry and shared capability resolver (same SSOT as §1.1 chat controls). No hardcoded provider names or model lists anywhere in this feature. Legacy `platform_specs` is source-lineage only.
 - Reuse the same provider + model dropdown widgets as the §1.1 chat controls. Tag new reusable settings wrappers with: `// DRY:WIDGET:auditor-validation-provider-model-selector`.
 
-ContractRef: PolicyRule:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md#platform_specs
+ContractRef: PolicyRule:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
 
 ### 26.8 Acceptance Criteria
 
@@ -2666,6 +2666,49 @@ Assistant chat deep-links into Source Control without owning its accordion layou
 
 ```json
 { "Changes": true, "Worktrees": false, "Branches/Stash": false, "History": false, "Graph": false }
+```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into Assistant Chat consumer requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### ACD-424 - Chat Provider Model Effort And Media Route Consumers
+
+```yaml
+plan_unit_id: ACD-424
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat header, composer, and run-status surfaces consume the provider/account/model/effort and media-route schemas owned by Models, Multi-Account, Contracts, and Media. Chat may present selected provider, account/profile, model, requested thinking effort, effective effort status, media input/generation availability, and source-confidence/blocked states, but it must not own provider catalog truth or infer capability from legacy `platform_specs`. Unsupported, clamped, gated, unverified, and fallback outcomes remain visible in the turn/run status.
+gui_related: true
+gui_classification_reason: Assistant Chat header, composer, and status controls are user-visible UI behavior.
+depends_on: [F3-400, F3-401, MS-113, MS-115, CV-293]
+unblocks: []
+acceptance_criteria:
+  - Chat surfaces consume provider/model/account/effort capability data from owner schemas.
+  - Requested and effective thinking effort are visible when they differ or are unsupported.
+  - Media input/generation controls reflect route-specific capability state.
+  - Chat does not use legacy `platform_specs` as the provider/model support source of truth.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: assistant_chat_provider_capability_drift
+reasoning_tier: standard
+context_scope: assistant_chat_provider_consumers
+implementation_surfaces: [Plans/assistant-chat-design.md, future assistant chat header, future composer, future run status UI]
+node_compile_hint: {mode: assistant_chat_provider_selector_consumer, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0018
+  - pldg-20260624-001-provider-updates:atom-0118
+  - pldg-20260624-001-provider-updates:atom-0119
+source_atom_ids: [atom-0018, atom-0033, atom-0035, atom-0046, atom-0048, atom-0103, atom-0105, atom-0106, atom-0117, atom-0118, atom-0119, atom-0122, atom-0130, atom-0135, atom-0138, atom-0139]
+preserved_exact_tokens: ["provider/model selectors", "thinking effort", "requested", "effective", "platform_specs", "unsupported", "clamped", "gated", "unverified", "fallback"]
+negative_constraints:
+  - Do not make Assistant Chat the owner of provider catalog or media capability truth.
+  - Do not infer current provider support from legacy `platform_specs` rows.
+  - Do not hide unsupported or clamped effort outcomes.
+owner_hints: [Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/Models_System.md, Plans/Contracts_V0.md]
 ```
 
 Inline diagnostics may render the same persisted object as `json { "Changes": true, "Worktrees": false, "Branches/Stash": false, "History": false, "Graph": false }`.
@@ -3437,7 +3480,7 @@ gui_classification_reason: Runtime identity, platform, account, and auth state a
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Assistant Chat displays concrete requested/effective platform identity instead of collapsing Gemini Direct and Gemini CLI into one generic badge.
+  - Assistant Chat displays concrete requested/effective provider identity instead of collapsing Gemini Direct, Antigravity, or retired Gemini CLI lineage into one generic badge.
   - Assistant Chat consumes shared provider/auth fields and does not invent a parallel field set.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -3464,6 +3507,9 @@ preserved_exact_tokens:
 negative_constraints:
   - "Assistant Chat must not invent a parallel provider/auth field set."
   - "Reconciliation may align wording and placement but must not reopen the shared field set."
+  - "Do not display Gemini CLI as an active provider row."
+compatibility_only_notes:
+  - "gemini_cli and Gemini CLI are preserved only as retired/source-lineage tokens."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
@@ -15132,21 +15178,21 @@ owner_hints:
   - Plans/FinalGUISpec.md
 ```
 
-### ACD-262 - Platform Specs Only
+### ACD-262 - Provider Models Registry Only
 
 ```yaml
 plan_unit_id: ACD-262
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Provider and model lists must come exclusively from `platform_specs`; hardcoded provider names or model lists are not allowed.
+canonical_text: Provider and model lists must come from the account-bound Provider -> models registry and shared capability resolver; hardcoded provider names or model lists are not allowed, and legacy platform_specs is source-lineage only.
 gui_related: false
 gui_classification_reason: Provider/model source-of-truth is DRY/config behavior.
 depends_on: [ACD-255]
 unblocks: [ACD-263]
 acceptance_criteria:
-  - Provider lists source exclusively from platform_specs.
-  - Model lists source exclusively from platform_specs.
+  - Provider lists source from the account-bound Provider -> models registry.
+  - Model lists source from the shared provider/model registry and capability resolver.
   - Hardcoded provider names and model lists are prohibited.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -15159,7 +15205,7 @@ implementation_surfaces:
   - Plans/DRY_Rules.md
   - Plans/Contracts_V0.md
 node_compile_hint:
-  mode: platform_specs_only
+  mode: provider_models_registry_only
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0121
@@ -15167,8 +15213,10 @@ preserved_exact_tokens:
   - "platform_specs"
   - "No hardcoded provider names or model lists"
 negative_constraints:
-  - "Provider and model lists MUST be sourced exclusively from platform_specs."
+  - "Provider and model lists MUST NOT be sourced exclusively from legacy platform_specs."
   - "No hardcoded provider names or model lists anywhere in this feature."
+compatibility_only_notes:
+  - "platform_specs is preserved only as a retired source-lineage token."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/DRY_Rules.md
@@ -15381,7 +15429,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  Auditor validation provider/model dropdowns draw from `platform_specs`, and
+  Auditor validation provider/model dropdowns draw from the account-bound Provider -> models registry and shared capability resolver, and
   each Auditor cycle report emits provider and model values matching the
   resolved Auditor validation loop provider/model; legacy
   `validation_pass_report.provider` and `.model` values mirror them for
@@ -15391,7 +15439,7 @@ gui_classification_reason: Dropdown data-source and emitted report parity are co
 depends_on: [ACD-260, ACD-262, ACD-263]
 unblocks: []
 acceptance_criteria:
-  - Auditor validation dropdowns use the same `platform_specs` source as chat controls.
+  - Auditor validation dropdowns use the same Provider -> models and capability resolver source as chat controls.
   - Each emitted Auditor cycle report provider/model matches the resolved Auditor validation loop settings.
   - Legacy validation pass report provider/model values mirror the Auditor cycle report values only with compatibility_only true and cycle_report_ref.
 validation_surfaces:
@@ -15415,7 +15463,10 @@ preserved_exact_tokens:
   - ".model"
   - "model_roles.auditor.provider"
   - "model_roles.auditor.model"
-negative_constraints: []
+negative_constraints:
+  - "Do not use legacy platform_specs as the active Auditor validation dropdown source."
+compatibility_only_notes:
+  - "platform_specs remains preserved only as a retired source-lineage token."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md

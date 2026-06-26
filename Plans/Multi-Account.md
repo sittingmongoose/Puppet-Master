@@ -22,8 +22,8 @@ These requirements are canonical live specification text for this owner document
 - **Purpose:** Support multiple accounts per provider so users can sign into several identities for Claude Code, Codex, Gemini, GitHub Copilot, Cursor, and OpenCode, with conservative account stickiness, threshold-based switching when supported, and provider-specific recovery behavior.
 - **Scope:** Multi-account routing is shared provider-runtime behavior for every provider-using role, including assistant, interviewer, requirements builder, PRD builder, package/seam overseers, node workers, and overseer-spawned workers. It is not an Orchestrator-only feature.
 - **Provider/runtime scope:** Provider-touched `/web` work must map through the provider capability registry / adapter contract rather than a brittle provider-doc layout; shared runtime identity applies across Assistant, Interviewer, Requirements / PRD / document builders, package/seam workers, and `/governance/execution` actors while preserving their separate actor ontologies.
-- **Gemini scope:** Gemini Direct (`gemini`) and Gemini CLI (`gemini_cli`) are separate provider entries. Gemini Direct is the direct API surface and is API-key-only. Gemini CLI is the CLI-wrapped surface and may use OAuth-backed, API-key, or Vertex/Google-credential account rows under its own policy.
-- **Provider-entry count:** The current planning model contains 7 provider entries: Gemini Direct, Gemini CLI, Cursor CLI, Claude Code CLI, Codex, GitHub Copilot, and OpenCode.
+- **Gemini scope:** Gemini Direct (`gemini`) remains the active direct API surface and is API-key-only. Gemini CLI (`gemini_cli`) is retired from active provider support and preserved only as stale/source-lineage vocabulary where compatibility or migration evidence requires the exact token. Antigravity CLI replaces Gemini CLI for the active CLI-wrapped Google-provider lane.
+- **Provider-entry count:** The current planning model is an open-ended Provider -> models catalog rather than a fixed count. Active entries include direct, CLI-runtime, and server-bridge routes such as Gemini Direct, Antigravity CLI, Cursor, Claude Code CLI, Codex/OpenAI, GitHub Copilot, OpenCode server, Kimi For Coding, MiniMax Coding Plan, Z.AI/Zhipu coding-plan routes, Alibaba/Qwen Coding Plan, and other disabled/unverified coding-plan families as evidence permits.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 
@@ -50,7 +50,7 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, 
 - **Serialization and persona account scope:** `/serialization`, `/account/persona`, `/runtime`, resume_url, and generated:// artifacts carry account/persona runtime identity rather than inventing feature-local account state.
 - **Requested/effective account gap closure:** requested_account and effective_account must not remain under-specified; `/effective` records preserve both requested and effective account truth.
 - **Role-scoped confidence:** `/confidence`, role-scoped policy, multi-account, direct-provider, and bridged-provider records preserve confidence and role scope for account routing.
-- **Current effective account state:** current effective account displays include recent switch reason, `/account`, current-state, and signal_confidence so current health does not erase switch lineage.
+- **Current effective account state:** current effective account displays include recent switch reason, `/account`, current-state, and `source_confidence` so current health does not erase switch lineage. Legacy `signal_confidence` spelling is compatibility/source-lineage only.
 - **Switch policy thresholds:** `/thresholds`, requirements-doc, `/policy`, real-world, auto-switch, multi-account, same-provider, provider-using, and user-configurable policy values govern when account switching is allowed.
 - **Actor and target identity:** actor-role and external-target are separate from effective_provider_identity, provider-native identity, and provider_identity; runtime records must keep those fields joinable without treating provider-native labels as the actor.
 - **Storage-facing audit identity:** `/storage-facing`, `/audit`, effective_provider_identity, provider_account_id, and effective_account_id expose storage/audit views while keeping provider_account_id subordinate to stable account identity.
@@ -151,7 +151,7 @@ Current-canon correction for this inventory: sections `3. Assessment` and `3.2/3
 
 ### 3.5 Current Puppet Master context
 
-- **Stack:** Rust/Iced; planning model uses 7 provider entries (CLI-bridged: Cursor, Claude Code, Gemini CLI; Server-bridged: OpenCode; Direct: Codex, GitHub Copilot, Gemini Direct). CLI-only today for bridged surfaces (no in-process OAuth store). **PlatformConfig** per platform -- one identity per platform; no accounts[] or activeAccountId yet. **platform_specs.rs** is single source of truth for CLI/auth -- no multi-account data today.
+- **Stack:** Rust + Slint target; the planning model uses an open-ended Provider -> models catalog with direct, CLI-runtime, and server-bridge routes. Gemini CLI is retired/source-lineage only; Antigravity CLI replaces it in active CLI-runtime coverage. Codex/OpenAI, GitHub Copilot, Cursor API/SDK routes, Kimi For Coding, MiniMax Coding Plan, and Z.AI/Zhipu coding-plan routes are direct-provider/account-profile entries where verified. CLI-only text in this section is stale compatibility lineage unless reasserted by a later PlanUnit. **PlatformConfig** and `platform_specs.rs` are legacy vocabulary and must not be treated as the final account/provider registry.
 - **Future:** When native auth for Codex, Copilot, Gemini lands, use OpenCode PR #11832 store + rotating-fetch + per-request context as the blueprint for in-process tokens and HTTP.
 
 ---
@@ -164,11 +164,12 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 
 Each provider entry represents one concrete runtime surface, not a loose vendor family label.
 
-The current planning model contains exactly 7 provider entries.
+The current planning model contains an open-ended Provider -> models catalog, not exactly 7 provider entries. Provider entries are concrete runtime/account/billing/transport routes; provider families only group those entries for policy and display.
 
 Examples:
 - `gemini` direct provider (`Gemini Direct`)
-- `gemini_cli` (`Gemini CLI`)
+- `gemini_cli` (`Gemini CLI`) as retired/source-lineage vocabulary only
+- `antigravity_cli` (`Antigravity CLI`)
 - `cursor_cli`
 - `claude_code_cli`
 - `codex`
@@ -186,7 +187,7 @@ Provider-entry identity fields are part of Agent-Config/provider registry canon:
 
 `provider_entry_id` identifies the concrete runtime surface, `provider_family_id` groups compatible entries for policy and pooling, and `transport_kind` records whether PM calls the provider through a `direct_api`, `cli_runtime`, or `server_bridge` path. These fields are additive; they do not rename requested/effective runtime handles owned by Orchestrator or Prompt Pipeline snapshots.
 
-The same raw vendor model may be reachable through different runtime surfaces such as `gemini`, `gemini_cli`, or an `opencode` bridge. PM preserves that overlap with provider-entry and requested/effective runtime fields instead of collapsing the rows into one vendor-family account.
+The same raw vendor model may be reachable through different runtime surfaces such as `gemini`, `antigravity_cli`, or an `opencode` bridge. PM preserves that overlap with provider-entry and requested/effective runtime fields instead of collapsing the rows into one vendor-family account. Retired `gemini_cli` overlap examples are source-lineage only.
 
 Account records may carry `provider_identity` for upstream identity display, but that value is descriptive `/provider-native` metadata only; the stable PM key remains the account/profile id.
 
@@ -254,8 +255,8 @@ Field definitions:
 - example `credential_ref` values:
   - `os_keychain:pm/openai/account_abc123`
   - `env:OPENAI_API_KEY`
-  - `file:~/.config/pm/credentials/gemini_cli.json`
-  - `cli:gemini/default`
+  - `file:~/.config/pm/credentials/antigravity_cli.json`
+  - `cli:antigravity/default`
 - `auth_surface` is the enum describing where/how the credential is consumed at runtime.
 - `auth_surface` values are:
   - `header_bearer` for `Authorization: Bearer <token>`
@@ -268,7 +269,7 @@ Field definitions:
 Examples:
 - Codex `ChatGPT` and Codex `API key` rows are separate account rows.
 - many ChatGPT-backed Codex accounts and many API-key-backed Codex accounts may coexist under the same Codex provider entry; switching, usage display, cooldown behavior, and preferred-account logic must preserve the auth-family identity.
-- Gemini direct API-key accounts are separate rows from Gemini CLI auth-backed rows because they live on different provider entries.
+- Gemini Direct API-key accounts remain separate from Antigravity CLI account/profile rows because direct API and CLI-runtime routes live on different provider entries. Gemini CLI auth-backed rows are retired/source-lineage only.
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/usage-feature.md
 
@@ -421,7 +422,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipel
 | Provider entry | Identity shape | Usage / health signals | Recovery and switching notes |
 |---|---|---|---|
 | **Gemini Direct** | Direct API-key account rows only | provider/runtime usage, quota APIs, project attribution, error hints | project context may affect effective quota identity; media capability follows the same requested/effective account model |
-| **Gemini CLI** | CLI-backed account rows across OAuth, API-key, and Vertex/Google credential families | provider settings, CLI/runtime signals, trust-gated MCP visibility, softer or authoritative counters depending auth family | PM pre-creates account roots, validates auth/config separately, and may observe provider-side model rerouting |
+| **Antigravity CLI** | CLI-runtime account/profile rows with Google OAuth/system-keyring, ADC, and local profile-root setup where verified | CLI/runtime signals, model-list/prompt-output probes, capability-gated output-format evidence | PM validates `agy` availability and account/profile readiness without reusing retired `GEMINI_CLI_HOME`; multi-model routing remains requested/effective |
+| **Gemini CLI (retired)** | source-lineage vocabulary only | migration/currentness evidence only | not an active provider setup, routing, import, or switching target |
 | **Cursor CLI** | `cursor-agent` profile/account rows; browser login default, API key advanced/non-default | provider-reported, team-admin-reported, or inferred runtime/editor refusal signals | PM-owned `HOME`/`XDG_*` roots define account isolation; API-key path is advanced only |
 | **Claude Code CLI** | CLI-backed account rows across subscriber, console/API, and SSO families | API-backed accounts can use stronger authoritative usage/cost `/token`; subscriber accounts may rely on softer `/stats/cooldown` inference plus PTY/runtime health signals | scope-aware config overlays and softer threshold behavior for subscriber paths |
 | **Codex** | Direct-provider account rows separated by `ChatGPT` and `API key` auth families | plan-backed included usage vs API-billed usage are separate buckets | PM must not merge plan-backed and API-billed usage/cooldowns |
@@ -437,16 +439,13 @@ Provider rules:
 - Claude Code import/probe may seed only `credentials.json` / `.credentials.json` into an isolated `CLAUDE_CONFIG_DIR`; `Import Existing Claude Auth` copies only the auth-bearing subset into the PM-managed `CLAUDE_CONFIG_DIR`, and a successful `claude auth status` plus authenticated headless execution prove the account root without importing unrelated Claude history or caches.
 - Claude Code setup must expose the native login variants `--email`, `--sso`, `--claudeai`, and `--console` where supported, with user-facing setup actions including `Sign In to Claude`, `Sign In to Console/API`, `Use SSO`, and `Import Existing Claude Auth`. `claude auth login --help` is the canonical setup probe for those distinct login surfaces; `--claudeai` represents subscription login and `--console` represents Anthropic Console / API billing login. `Use SSO` maps to `claude auth login --sso`, and `claude auth login --console` keeps its product-label distinction in PM setup copy. A fresh isolated `CLAUDE_CONFIG_DIR` returning clean JSON auth status with `loggedIn: false` and `authMethod: "none"` is valid logged-out account evidence rather than a provider failure.
 - Claude Code config-dir-per-account remains valid through `CLAUDE_CONFIG_DIR`, but earlier canon that treated it as sufficient for every provider is `/incomplete` for the newer Gemini/Cursor direction.
-- Account-level rule variance is modeled explicitly in provider/account matrices. Current high-confidence integration shapes include Gemini CLI, OpenCode, Claude Code memory/hooks/subagents, and Cursor CLI rules/MCP/headless usage shape; medium- or lower-confidence direct-provider shapes remain partial until primary-source evidence promotes them.
+- Account-level rule variance is modeled explicitly in provider/account matrices. Current high-confidence integration shapes include Antigravity CLI, OpenCode, Claude Code memory/hooks/subagents, and Cursor CLI rules/MCP/headless usage shape; medium- or lower-confidence direct-provider shapes remain partial until primary-source evidence promotes them.
 - PM-owned provider account roots are keyed by `provider_entry_id`. Linux account data uses `$XDG_DATA_HOME/puppet-master/providers/<provider_entry_id>/`; macOS account data uses `~/Library/Application Support/Puppet Master/providers/<provider_entry_id>/`. Windows account data uses `%APPDATA%\\Puppet Master\\providers\\<provider_entry_id>\\`; the family root may also be displayed as `%APPDATA%\\Puppet Master\\providers\\`. The portable path family is `/puppet-master/providers/`, with `/Puppet` and `/providers/` path segments treated as exact platform spelling, not semantic provider-family labels. PM MUST keep account-isolation path ownership concrete for Linux/macOS/Windows and must not hand-wave filesystem ownership for CLI-backed providers.
 - Each selectable account-like unit gets a stable PM-owned child root under that provider base: direct-account-like roots use `.../accounts/<account_id>/` and the `/accounts/<account_id>/` path family, while CLI account roots use `.../accounts/<account_id>/root/`, with `/root/` as the runnable CLI home segment under `/accounts/`.
-- Gemini CLI account roots are created before first launch. A `fresh-home` probe showed the CLI can crash when `GEMINI_CLI_HOME` points to a missing directory, so PM MUST precreate the `GEMINI_CLI_HOME` home path and then seed managed auth/settings state rather than relying on pristine-home first run. Headless setup errors that name `/.gemini/settings.json`, `GEMINI_API_KEY`, `GOOGLE_GENAI_USE_VERTEXAI`, or `GOOGLE_GENAI_USE_GCA` are setup evidence for the active Gemini CLI account root. Gemini can work with a narrower auth/settings core than its full generated home, but its home remains state-heavy and coupled enough that PM treats it as a managed account root instead of a trivial credential file.
-- A Gemini CLI `fresh-profile` with pristine `GEMINI_CLI_HOME` can hit a project-registry save error before returning the expected auth error; PM treats this first-run provider `/quirk` as managed provisioning and precreates the bootstrap directories/files before auth probing.
-- Gemini CLI provider-native profile locations remain anchored under `GEMINI_CLI_HOME`: the profile-global durable base lives in `GEMINI_CLI_HOME` user settings, the user/profile settings path is `~/.gemini/settings.json` within that home, and workspace/project setup evidence may name `/.gemini/settings.json`. Gemini state under that home includes OAuth credentials, account records, history, temp/bin, policies, skills, commands, and other persistent state.
-- Gemini CLI auth-bearing import/provisioning tracks `oauth_creds.json`, `oauth_creds`, `settings.json`, `state.json`, `installation_id`, and `projects.json` as provider-native state; PM imports only the minimum necessary subset into the managed account root, and uses per-account state roots to avoid CLI-home history, credential, settings, or project-state bleed-through.
+- Retired Gemini CLI root/provisioning evidence (`GEMINI_CLI_HOME`, `fresh-home`, `fresh-profile`, `/.gemini/settings.json`, `oauth_creds.json`, `state.json`, `installation_id`, and `projects.json`) is compatibility/source-lineage only. PM must not create active Gemini CLI account roots or import Gemini CLI auth. Antigravity CLI account/profile roots are owned by the `agy` setup contract and must not reuse `GEMINI_CLI_HOME`.
 - Gemini auth states are richer than a binary logged-in flag. `oauth_logged_out`, `oauth_logged_in`, `oauth_needs_project_context`, `oauth_needs_configuration`, and `api_key_configured` are distinct setup/readiness states. `oauth_needs_configuration` may be account-scoped when the selected account lacks project, billing, trust, or credential context; provider-scoped setup state is allowed only when every account under that provider entry shares the same missing configuration.
 - Gemini OAuth project-context handling is tier-aware. Free-tier onboarding can proceed without a configured Google Cloud project id when the provider-managed project path is valid; non-free tiers can require an explicit configured Google Cloud project id before the account reaches `Ready`. `validation_required` is surfaced before onboarding continues when PM cannot prove the selected project/account context; provider-facing `validation-required` wording maps to that canonical state. A configured project id takes precedence over any previously persisted `managed-project` id from provider-native state.
-- Gemini OAuth and API-key paths are different auth, billing, and `/quota` planes, not interchangeable labels over one key-centric `/bucket`. Gemini Direct remains API-key-only, while Gemini CLI can expose OAuth, API-key, or Vertex/Google credential families. OAuth uses browser auth, localhost callback, `PKCE`, refresh-token handling, and Code Assist-style endpoint plus `/project-context` logic; project context and effective project can differ from merely having an OAuth token.
+- Gemini Direct remains API-key-only. Active Google-owned CLI-runtime setup is Antigravity CLI and may expose Google OAuth/system-keyring, ADC, or local profile-root paths only where verified. Gemini CLI OAuth, API-key, and Vertex/Google credential families are retired/source-lineage only and must not appear as active setup rows.
 - Claude Code account roots isolate generated `settings.json`, `projects/`, `plans/`, `plugins/blocklist.json`, and `mcp-needs-auth-cache.json`. These are account-local provider artifacts unless a later owner contract explicitly promotes one of them into a PM-managed overlay. PM treats generated `projects/`, `plans/`, `settings.json`, plugin state, and stats caches as account-local runtime state by default.
 - Cursor Agent state isolation is tied to PM-owned `HOME` and `XDG_*` / `XDG_` roots, not the narrow `CURSOR_USER_DATA_DIR` knob by itself; home `/XDG` isolation must be treated as the runnable account boundary until an owner contract proves a narrower Cursor-specific root is sufficient.
 - Cursor account design may include `browser-auth profile roots`, `API-key accounts`, or both, but PM must define the actual `/launch` contract against `cursor-agent` rather than only the editor-facing `cursor --user-data-dir` workaround.
@@ -460,9 +459,9 @@ Provider rules:
 - Codex account-model implication: many ChatGPT-backed Codex accounts and many API-key-backed Codex accounts may coexist under the same Codex provider entry; auth family remains material for switching, usage display, cooldown behavior, and preferred-account logic.
 - same-provider rows are not interchangeable when auth family, billing/entity context, or profile mode changes quota or recovery behavior.
 - Codex OAuth/subscription rows preserve the `/ChatGPT` auth-family marker separately from API-key rows so setup, quota, cooldown, and preferred-account policy do not collapse both families into one generic Codex account.
-- In PM's provider-model, `Gemini` is not `direct-only`: `Gemini Direct` and `Gemini CLI` are separate provider entries and may still participate in one family pool when policy allows.
-- Gemini CLI capability gating is provider + account + auth-family aware: OAuth-only, API-key, and Vertex-backed accounts may differ in media/tool capability, and internal model-routing /fallback behavior must be constrained or surfaced as requested/effective model-routing evidence.
-- Gemini-specific capability declarations must fit the shared provider capability model in Plans/Models_System.md. Both `gemini` and `gemini_cli` provider entries MUST declare `supports_multi_account`, `account_identity_kind`, `quota_signal_sources`, `quota_signal_confidence`, `supports_threshold_switch`, `supports_hard_exhaustion_detection`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, and `supports_role_scoped_account_pools` rather than using Gemini-only capability flags.
+- In PM's provider model, `gemini` is Gemini Direct and remains an active direct API provider entry. `gemini_cli` is retired/source-lineage only and must not be implemented as an active entry. Antigravity CLI is its own active CLI-runtime provider entry with multi-model support and requested/effective model-routing evidence.
+- Active CLI-runtime capability gating for Antigravity is provider + account/profile + setup-state aware; Gemini CLI-only capability branches are retired and cannot be requested as active PM capabilities.
+- Gemini Direct and Antigravity CLI capability declarations must fit the shared provider capability model in Plans/Models_System.md. Retired `gemini_cli` tokens remain auditable only as compatibility/source-lineage vocabulary.
 - Gemini account and runtime records use requested/effective storage vocabulary, including `requested_auth_mode` and `effective_*` snapshots for auth, `/capability`, billing/quota plane, project context, and usage source. Non-secret preferences can live in project/account settings; OAuth/API credentials stay out of redb and `/seglog`.
 - Codex and GitHub Copilot are direct providers, not CLI-backed execution surfaces in PM.
 - GitHub API auth used for repository operations remains independent from GitHub Copilot provider auth.
@@ -530,7 +529,7 @@ Canonical Gemini usage/source expectations:
 - show one shared Gemini-family usage surface rather than separate top-level Gemini Direct vs Gemini CLI pages
 - label OAuth-backed views as `Gemini quota` when authoritative quota semantics are available
 - label API-key/local-only views with source-qualified wording such as `Gemini (estimated)` when authoritative quota data is not available
-- expose `signal_confidence` so users can tell whether quota pressure is authoritative, structured, heuristic, or local-only
+- expose `source_confidence` so users can tell whether quota pressure is authoritative, structured, heuristic, or local-only; legacy `signal_confidence` is an import/display alias only
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
 
@@ -563,11 +562,11 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipel
 
 The Agent-Config GUI includes a `Provider Pooling` / `Family Pooling` section wherever a provider entry can participate in family-level account or runtime pooling. `Provider Pooling` also surfaces add/import/login/bootstrap actions per provider-specific account type instead of forcing one generic account-setup flow across incompatible providers.
 
-Gemini setup no longer uses a one-card mixed OAuth/API grouping. The `9. GUI requirements` owner direction is that Agent-Config presents Gemini Direct and Gemini CLI through the current provider-entry/account model, with direct API-key setup separated from CLI auth families and with requested/effective disclosure when family pooling selects a different backend.
+Gemini setup no longer uses a one-card mixed OAuth/API grouping. The `9. GUI requirements` owner direction is that Agent-Config presents Gemini Direct as a direct API-key provider and Antigravity CLI as the active Google-owned CLI-runtime provider. Retired Gemini CLI rows must not appear as active setup paths; if shown for migration diagnostics, they must be explicitly labeled source-lineage/retired.
 
-Family-pool guardrails: PM may only auto-select a unit when its effective capabilities satisfy the requested model/media/effort/tooling needs, including `/media/effort/tooling` capability checks. The run record must preserve the requested provider entry and effective provider entry explicitly, and PM must never silently route a request that depends on Gemini CLI-only features to Gemini Direct or route a direct-only request into Gemini CLI without requested/effective disclosure.
+Family-pool guardrails: PM may only auto-select a unit when its effective capabilities satisfy the requested model/media/effort/tooling needs, including `/media/effort/tooling` capability checks. The run record must preserve the requested provider entry and effective provider entry explicitly, and PM must never silently route a request into retired Gemini CLI-only features. Antigravity and Gemini Direct requested/effective transitions require explicit disclosure.
 
-The anti-duplication rule from the older one-card direction is preserved as a no-`pseudo-providers` rule: the GUI may group related Gemini rows under a family surface, but it MUST NOT mint fake OAuth/API-key pseudo-providers that compete with the real `gemini` and `gemini_cli` provider entries. Within each real entry or family grouping, account rows expose auth-surface badges and derived auth `/configuration/availability` state rather than hiding readiness inside a provider-level card.
+The anti-duplication rule from the older one-card direction is preserved as a no-`pseudo-providers` rule: the GUI may group related provider rows under a family surface, but it MUST NOT mint fake OAuth/API-key pseudo-providers that compete with real entries such as `gemini` and `antigravity_cli`. Retired `gemini_cli` may appear only as compatibility/source-lineage vocabulary. Within each real entry or family grouping, account rows expose auth-surface badges and derived auth `/configuration/availability` state rather than hiding readiness inside a provider-level card.
 
 Agent-Config field-placement and `/runtime` rules are frozen: provider detail exposes `Overview`, `Defaults`, `Accounts / Profiles`, `Models`, `Instructions`, `Skills`, and `Advanced Runtime`, while the `Effective Runtime` inspector remains persistently visible as a side or bottom inspector instead of being hidden in diagnostics.
 
@@ -616,9 +615,9 @@ Rules:
 - setup-state labels MUST treat `Logged In` as distinct from `Ready`; a `Use API Key` path can save credentials but still requires auth/config/entitlement validation before the row reaches `Ready`, selected `/account/profile` readiness requires `/config/entitlement` validation for the active provider/account/profile type, and unresolved entitlement/billing context keeps direct-provider setup in a `partial-setup` / configuration state rather than treating auth alone as sufficient.
 - Provider-specific entitlement or `/billing` resolution can keep an account in `Needs setup` after auth succeeds; PM must not collapse that state into `Ready`, `partial-setup`, or `Logging Out`.
 - Copilot may require `Choose Billing Entity` before reaching `Ready`.
-- Vertex/Google Cloud Gemini CLI setups may require credentials, project/location selection, and trust validation before reaching `Ready`.
-- `Use Vertex AI` setup for Gemini CLI uses helper text `Best for Google Cloud project-based usage with ADC, service accounts, or Google Cloud API keys`; it branches into `Application Default Credentials (ADC)`, `Service Account JSON`, and Google Cloud API key credential paths before the row can be validated as `Ready`. Gemini CLI setup also exposes `Sign In with Google` and `Use Gemini API Key` as distinct account-auth choices; the Vertex branch is the `Vertex ADC/service-account/API-key` family and preserves the `/service-account/API-key` spelling in evidence.
-- Gemini CLI validation runs after every setup path using the PM-owned `GEMINI_CLI_HOME`, then separately surfaces project context, workspace trust, and `/trust/MCP` readiness before declaring the account/profile fully ready.
+- Antigravity CLI setups may require Google OAuth/system-keyring, ADC, local profile-root validation, model-list probing, prompt-output proof, and trust/plugin validation before reaching `Ready`.
+- Antigravity setup may expose `Sign In with Google`, `Use a Google Cloud project`, and `Application Default Credentials (ADC)` style paths only where locally verified. These setup paths must use the Antigravity `agy` contract and must not reuse retired Gemini CLI labels or `GEMINI_CLI_HOME`.
+- Retired Gemini CLI setup copy such as `Use Vertex AI`, `Best for Google Cloud project-based usage with ADC, service accounts, or Google Cloud API keys`, `Sign In with Google`, `Use Gemini API Key`, `Vertex ADC/service-account/API-key`, and `GEMINI_CLI_HOME` remains source-lineage only unless reintroduced by a later active owner contract.
 - Cursor CLI browser login is the default path; API key is exposed as an advanced optional path only.
 - Official/current Cursor docs direction treats Project Rules (`.cursor/rules/*.mdc`) as the primary/native rules path, so Cursor docs/rules projection generates `.cursor/rules/*.mdc` first; `Cursor Rules` is the user-facing label, while `.cursorrules` remains supported but legacy/deprecated and root compatibility files remain compatibility targets rather than the primary managed artifact.
 - provider-reported cooldowns remain read-only facts with source `/confidence`; PM pause and recheck controls are separate overlays.
@@ -679,13 +678,8 @@ Every account setup/auth flow must surface its active auth path explicitly: OAut
 6. On success, PM stores the refresh token in the OS credential store and keeps the short-lived access token cached in memory only.
 7. On failure or timeout, PM shows a clear error and an explicit retry option.
 
-#### CLI token flow (Gemini CLI)
-1. PM detects an installed Gemini CLI before presenting the CLI-token option as ready.
-2. PM invokes the Gemini CLI auth command in the background.
-3. The Gemini CLI performs its native OAuth/browser flow.
-4. PM reads the resulting token or credential handle from the CLI credential cache and records it through the account row's `credential_ref`.
-5. Ongoing token refresh remains delegated to the Gemini CLI runtime rather than reimplemented inside PM.
-6. `Import Existing Gemini CLI Auth` copies only the minimum auth-bearing state into the PM-owned `GEMINI_CLI_HOME` root, after PM has precreated and validated that root.
+#### Retired CLI token flow (Gemini CLI lineage)
+The old Gemini CLI token/import flow is not an active PM setup path. Exact tokens remain only for compatibility/source-lineage: `Gemini CLI`, `Import Existing Gemini CLI Auth`, native OAuth/browser flow, credential cache, `credential_ref`, and `GEMINI_CLI_HOME`. Active CLI-runtime setup for this lane belongs to Antigravity CLI and must be proven through the `agy` setup/probe contract.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md
 
@@ -837,6 +831,90 @@ preserved_contractrefs: []
 split_recommendation_reason: The covered spans are narrow owner/vocabulary scaffolding and do not require further splitting.
 ```
 
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into canonical provider account/profile requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### MA-062 - Provider Route Credential Profiles And Entitlement States
+
+```yaml
+plan_unit_id: MA-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Provider accounts are route-specific credential/profile records. PM must represent Gemini Direct, Antigravity CLI, Claude Code, Cursor session/API-key/SDK routes, Codex/OpenAI API and subscription-backed Codex image generation, GitHub Copilot direct hosted API, OpenCode server, Kimi For Coding, MiniMax global/CN, Z.AI/Zhipu standard/coding/Anthropic routes, Alibaba/Qwen global/CN coding-plan routes, and other coding-plan families as separate account/profile rows where their auth, billing, region, entitlement, quota, or transport differs. Unpurchased or inaccessible plans compile as disabled, capability-gated, unverified, or separate-profile rows, not open purchase blockers.
+gui_related: true
+gui_classification_reason: Account/profile rows, setup states, entitlement badges, and provider picker availability are user-visible settings behavior.
+depends_on: [MS-113, CV-292]
+unblocks: [F3-400, F3-401, UF-075]
+acceptance_criteria:
+  - Account/profile rows preserve route-specific auth, billing, region, entitlement, quota, and transport differences.
+  - OpenAI API-key image routes and OpenAI/Codex subscription-backed image-generation routes are separate account/profile surfaces.
+  - Cursor API key setup copy points users to the Cursor dashboard API keys section without storing the key in Plans or ledgers.
+  - Lack of additional purchased plans does not leave compile blocked when a disabled/gated/unverified row is accepted.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: account_profile_route_collapse
+reasoning_tier: high
+context_scope: provider_route_credential_profiles
+implementation_surfaces: [Plans/Multi-Account.md, Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/usage-feature.md]
+node_compile_hint: {mode: provider_route_credential_profiles, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0011
+  - pldg-20260624-001-provider-updates:atom-0082
+  - pldg-20260624-001-provider-updates:atom-0103
+  - pldg-20260624-001-provider-updates:atom-0138
+source_atom_ids: [atom-0011, atom-0022, atom-0034, atom-0048, atom-0049, atom-0064, atom-0068, atom-0070, atom-0071, atom-0082, atom-0084, atom-0097, atom-0100, atom-0103, atom-0104, atom-0116, atom-0118, atom-0119, atom-0124, atom-0125, atom-0127, atom-0128, atom-0129, atom-0131, atom-0132, atom-0137, atom-0138]
+preserved_exact_tokens: ["Google OAuth", "Application Default Credentials (ADC)", "system keyring", "CURSOR_API_KEY", "--api-key", "cursor-agent login", "Cursor SDK", "Cloud Agents API", "https://cursor.com/dashboard/", "API keys section", "GitHub OAuth/PAT-style", "Team Plan keys are not interchangeable", "OpenAI/Codex subscription-backed", "disabled", "capability-gated", "unverified", "separate-profile"]
+negative_constraints:
+  - Do not store user-supplied API keys, OAuth URLs, tokens, or account identifiers in Plans, ledgers, logs, or artifacts.
+  - Do not collapse global and CN/regioned provider routes into one account/profile row.
+  - Do not ask Jared to buy additional subscriptions to complete this planning lane.
+owner_hints: [Plans/Multi-Account.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/usage-feature.md]
+```
+
+### MA-063 - Direct Provider Subscription And Usage Authority Boundaries
+
+```yaml
+plan_unit_id: MA-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Direct-provider subscription and usage authority is provider-specific. GitHub Copilot readiness comes from the direct hosted API and Copilot entitlement token, not `copilot` CLI bridging. Claude Code status-line `rate_limits` is the accepted usage source for Claude Code rather than OAuth usage polling. OpenAI/Codex subscription image generation uses the user's OpenAI/Codex subscription/account route and is separate from API-key billing. Z.AI/Zhipu plan, overload, balance, and resource-package states remain upstream/account states that PM surfaces accurately rather than treating as user-action blockers.
+gui_related: true
+gui_classification_reason: Subscription, usage, account setup, and blocked-state disclosures are visible provider settings behavior.
+depends_on: [MA-062, CV-292]
+unblocks: [UF-074, F3-400]
+acceptance_criteria:
+  - Direct-provider usage and entitlement checks are tied to the correct provider/account route.
+  - GitHub Copilot direct hosted API is not blocked on optional CLI prompt flow.
+  - Claude Code usage can consume status-line `rate_limits` fields.
+  - Z.AI/Zhipu account/upstream failures surface as capability-gated or blocked states with concrete reasons.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_entitlement_source_drift
+reasoning_tier: high
+context_scope: provider_usage_entitlement_authority
+implementation_surfaces: [Plans/Multi-Account.md, Plans/usage-feature.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: direct_provider_subscription_usage_boundaries, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0106
+  - pldg-20260624-001-provider-updates:atom-0129
+  - pldg-20260624-001-provider-updates:atom-0137
+  - pldg-20260624-001-provider-updates:atom-0138
+source_atom_ids: [atom-0068, atom-0094, atom-0106, atom-0122, atom-0129, atom-0131, atom-0132, atom-0137, atom-0138]
+preserved_exact_tokens: ["rate_limits", "five_hour.used_percentage", "five_hour.resets_at", "seven_day.used_percentage", "seven_day.resets_at", "statusLine", "refreshInterval", "GitHub Copilot", "https://api.githubcopilot.com", "OpenAI/Codex subscription", "glm-5.1", "glm-5.2", "glm-5v-turbo", "plan-not-included", "balance/resource gating"]
+negative_constraints:
+  - Do not poll or store secrets where provider-owned status-line or direct API usage metadata is sufficient.
+  - Do not treat optional CLI auth failures as blockers for direct hosted provider routes.
+  - Do not hide upstream/account gating behind generic provider failure copy.
+owner_hints: [Plans/Multi-Account.md, Plans/usage-feature.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
+```
+
 ### MA-003 - Provider Runtime Scope And Entry Count
 
 ```yaml
@@ -845,10 +923,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  Multi-account support covers multiple accounts per provider for Claude Code, Codex, Gemini, GitHub Copilot,
-  Cursor, and OpenCode. Routing is shared provider-runtime behavior for all provider-using roles, provider-touched
-  /web work maps through the provider capability registry or adapter contract, Gemini Direct and Gemini CLI remain
-  separate provider entries, and the current planning model contains exactly seven provider entries.
+  Multi-account support covers an open-ended Provider -> models catalog across direct, CLI-runtime, and server-bridge
+  routes including Claude Code, Codex/OpenAI, Gemini Direct, Antigravity CLI, GitHub Copilot, Cursor, OpenCode, and
+  coding-plan providers where accepted. Routing is shared provider-runtime behavior for all provider-using roles, and
+  provider-touched /web work maps through the provider capability registry or adapter contract. The old exactly-seven
+  provider inventory and active Gemini CLI split are retired/source-lineage only.
 gui_related: false
 gui_classification_reason: The unit defines runtime/provider scope and account identity rather than GUI presentation.
 split_recommended: true
@@ -858,19 +937,20 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Multi-account routing remains shared provider-runtime behavior rather than Orchestrator-only behavior.
-- Gemini Direct and Gemini CLI remain separate provider entries.
-- The seven provider-entry inventory remains traceable.
+- Gemini Direct remains active and Gemini CLI is retired/source-lineage only.
+- Antigravity CLI is a separate active CLI-runtime provider entry.
+- The old exactly-seven provider-entry inventory remains traceable only as retired source-lineage.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: provider_runtime_scope
+risk_class: provider_runtime_scope_currentness
 reasoning_tier: standard
 context_scope: multi_account_standardization
 implementation_surfaces:
 - Plans/Multi-Account.md
 node_compile_hint:
-  mode: provider_runtime_scope
+  mode: provider_runtime_scope_currentness
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0005
@@ -890,8 +970,12 @@ preserved_exact_tokens:
 negative_constraints:
 - Multi-account routing is not an Orchestrator-only feature.
 - Provider-touched /web work must not depend on a brittle provider-doc layout.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- The exact phrase "Gemini Direct and Gemini CLI remain separate provider entries" is retained only as retired source-lineage; active entries are Gemini Direct and Antigravity CLI.
+- The exact phrase "exactly seven provider entries" is retained only as retired source-lineage; the current catalog is open-ended Provider -> models.
+stale_retired_dispositions:
+- Active Gemini CLI provider-entry support is retired by pldg-20260624-001-provider-updates.
+- The seven-provider inventory is retired by the open-ended provider catalog.
 owner_boundary_notes:
 - Provider-runtime identity applies across assistant, interviewer, builder, package/seam, and governance/execution actors while preserving separate actor ontologies.
 owner_hints:
@@ -2152,9 +2236,10 @@ plan_unit_id: MA-023
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Provider-specific behavior preserves the provider-entry matrix for Gemini Direct, Gemini CLI, Cursor CLI,
-  Claude Code CLI, Codex, GitHub Copilot, and OpenCode, including identity shape, usage/health signals, recovery and
-  switching notes, and the rule that Codex plan-backed and API-billed usage/cooldowns must not be merged.
+canonical_text: Provider-specific behavior preserves the provider-entry matrix for Gemini Direct, Antigravity CLI, retired
+  Gemini CLI lineage, Cursor CLI, Claude Code CLI, Codex/OpenAI, GitHub Copilot, OpenCode, and accepted coding-plan rows,
+  including identity shape, usage/health signals, recovery and switching notes, and the rule that Codex plan-backed and
+  API-billed usage/cooldowns must not be merged.
 gui_related: false
 gui_classification_reason: The unit preserves provider behavior data and runtime identity, not direct GUI layout.
 split_recommended: true
@@ -2276,17 +2361,17 @@ preserved_contractrefs:
 split_recommendation_reason: Claude Code auth/root behavior is separable from Gemini/Cursor/Codex root behavior.
 ```
 
-### MA-025 - Provider Account Root Layout And Gemini CLI Managed Root
+### MA-025 - Provider Account Root Layout And Retired Gemini CLI Root Lineage
 
 ```yaml
 plan_unit_id: MA-025
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: PM-owned provider account roots are keyed by provider_entry_id with explicit Linux, macOS, Windows, and
-  portable path families. Selectable account-like units get stable child roots, CLI account roots use a runnable root
-  segment, and Gemini CLI roots are precreated, provisioned, validated, and imported using only minimum provider-native
-  auth/settings state.
+  portable path families. Selectable account-like units get stable child roots, and CLI account roots use a runnable root
+  segment. The old Gemini CLI root-provisioning details are retained only as source-lineage; active CLI-runtime account
+  roots for this lane belong to Antigravity CLI and must not reuse GEMINI_CLI_HOME.
 gui_related: false
 gui_classification_reason: The unit defines filesystem/root provisioning and provider-native state boundaries.
 split_recommended: false
@@ -2296,20 +2381,21 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Account-isolation path ownership remains concrete for Linux, macOS, and Windows.
-- GEMINI_CLI_HOME is precreated before launch/probe where required.
-- Gemini CLI auth-bearing import remains minimal.
+- GEMINI_CLI_HOME remains traceable only as retired Gemini CLI source-lineage.
+- Active implementation does not precreate or import Gemini CLI roots.
+- Antigravity CLI root/probe behavior is owned by the active Antigravity setup contract.
 - Provider-native history, credential, settings, and project-state bleed-through is avoided.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: provider_root_layout
+risk_class: retired_gemini_cli_root_resurrection
 reasoning_tier: standard
 context_scope: multi_account_standardization
 implementation_surfaces:
 - Plans/Multi-Account.md
 node_compile_hint:
-  mode: provider_root_layout
+  mode: provider_root_layout_retired_gemini_cli_lineage
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
@@ -2335,16 +2421,20 @@ preserved_exact_tokens:
 - projects.json
 negative_constraints:
 - PM must not hand-wave filesystem ownership for CLI-backed providers.
-- Gemini CLI must not rely on pristine-home first run when the home path is missing.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Do not create active Gemini CLI account roots.
+- Do not import Gemini CLI auth as an active setup mode.
+- Do not reuse GEMINI_CLI_HOME for Antigravity.
+compatibility_only_notes:
+- Gemini CLI root/provisioning tokens are preserved only for migration/currentness lineage.
+stale_retired_dispositions:
+- Gemini CLI managed-root provisioning is retired by CBP-019/MA-062.
 owner_boundary_notes:
-- Gemini state under GEMINI_CLI_HOME is provider-native state managed within the account root.
+- Gemini state under GEMINI_CLI_HOME is retired source-lineage only; Antigravity CLI root ownership is separate.
 owner_hints:
 - Plans/Multi-Account.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md'
-split_recommendation_reason: Provider root layout and Gemini CLI root provisioning are cohesive filesystem concerns.
+split_recommendation_reason: Provider root layout remains cohesive; Gemini CLI root provisioning is retained only as retired filesystem lineage.
 ```
 
 ### MA-026 - Gemini Auth Project Context And Quota Plane Readiness
@@ -2555,9 +2645,10 @@ plan_unit_id: MA-029
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Gemini is not direct-only, Gemini provider entries use shared capability declarations, Codex and GitHub
-  Copilot are direct providers in PM, GitHub API auth remains independent from GitHub Copilot provider auth, and Copilot
-  account records preserve auth realm, billing/entity context, entitlement class, policy block, and cooldown reason codes.
+canonical_text: Gemini Direct is an active direct API provider entry, retired Gemini CLI vocabulary is source-lineage only,
+  Antigravity CLI is the active Google-owned CLI-runtime entry, Codex and GitHub Copilot are direct providers in PM,
+  GitHub API auth remains independent from GitHub Copilot provider auth, and Copilot account records preserve auth realm,
+  billing/entity context, entitlement class, policy block, and cooldown reason codes.
 gui_related: false
 gui_classification_reason: The unit defines provider identity and capability boundaries rather than GUI presentation.
 split_recommended: false
@@ -2566,7 +2657,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Gemini Direct and Gemini CLI remain separate provider entries that may family-pool only when policy allows.
+- Gemini Direct remains active, Gemini CLI is retired/source-lineage only, and Antigravity CLI is a separate active CLI-runtime entry.
 - Gemini capability declarations use the shared provider capability model.
 - GitHub Copilot account switching does not alter Git or GitHub API identity.
 - Copilot entitlement and cooldown reason codes remain explicit.
@@ -2601,8 +2692,10 @@ preserved_exact_tokens:
 - copilot_entitlement_missing
 negative_constraints:
 - Switching GitHub Copilot accounts must not change Git transport, local Git/worktree state, remotes, worktree ownership, repository transport state, or GitHub API account binding.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Retired "Gemini Direct and Gemini CLI remain separate provider entries" wording is kept only for source-lineage.
+stale_retired_dispositions:
+- Active Gemini CLI family pooling is retired; requested/effective pooling now applies to active provider entries only.
 owner_boundary_notes:
 - GitHub API auth for repository operations is independent from GitHub Copilot provider auth.
 owner_hints:
@@ -2932,10 +3025,9 @@ plan_unit_id: MA-035
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Gemini usage/source expectations present one shared Gemini-family usage surface while preserving source-qualified
-  labels. OAuth-backed views use Gemini quota when authoritative semantics are available, API-key/local-only views use
-  source-qualified estimated wording, and signal_confidence exposes whether quota pressure is authoritative, structured,
-  heuristic, or local-only.
+canonical_text: Gemini Direct usage/source expectations preserve source-qualified labels. API-key/local-only views use
+  source-qualified estimated wording, and source_confidence exposes whether quota pressure is authoritative, structured,
+  heuristic, or local-only. Legacy Gemini CLI family-usage and signal_confidence wording is compatibility/source-lineage only.
 gui_related: true
 gui_classification_reason: The unit defines user-visible Gemini usage labels and confidence disclosure.
 split_recommended: true
@@ -2944,9 +3036,9 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Gemini usage appears as a shared family surface rather than separate top-level pages.
+- Gemini Direct usage remains source-qualified; retired Gemini CLI family aggregation is not an active UI requirement.
 - Gemini quota and Gemini (estimated) labels remain source-qualified.
-- signal_confidence remains visible.
+- source_confidence remains visible; legacy signal_confidence is an alias/source-lineage token only.
 - Authoritative, structured, heuristic, and local-only confidence levels remain distinguishable.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
@@ -2967,6 +3059,7 @@ preserved_exact_tokens:
 - Gemini quota
 - Gemini (estimated)
 - signal_confidence
+- source_confidence
 - authoritative
 - structured
 - heuristic
@@ -3108,9 +3201,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: Agent-Config surfaces provider/family pooling where a provider entry participates in family-level pooling,
-  preserves Gemini Direct and Gemini CLI through the real provider-entry/account model, requires requested/effective
-  disclosure when family pooling selects a different backend, capability-checks media/effort/tooling needs, and forbids
-  fake OAuth/API-key pseudo-providers.
+  preserves active Gemini Direct and Antigravity CLI as real provider-entry/account rows, treats Gemini CLI as retired
+  source-lineage only, requires requested/effective disclosure when family pooling selects a different backend,
+  capability-checks media/effort/tooling needs, and forbids fake OAuth/API-key pseudo-providers.
 gui_related: true
 gui_classification_reason: The unit defines GUI pooling controls, account row badges, and requested/effective disclosure.
 split_recommended: true
@@ -3120,7 +3213,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Provider Pooling and Family Pooling sections remain visible where applicable.
-- Gemini Direct and Gemini CLI remain real provider entries.
+- Gemini Direct and Antigravity CLI remain real active provider entries; Gemini CLI is retired/source-lineage only.
 - Family pooling preserves requested and effective provider entries in run records.
 - GUI grouping does not mint fake pseudo-providers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
@@ -3151,11 +3244,13 @@ preserved_exact_tokens:
 - auth-surface badges
 - /configuration/availability
 negative_constraints:
-- The GUI must not mint fake OAuth/API-key pseudo-providers that compete with real gemini and gemini_cli provider entries.
-- PM must never silently route across Gemini Direct/Gemini CLI capability boundaries without requested/effective disclosure.
-compatibility_only_notes: []
+- The GUI must not mint fake OAuth/API-key pseudo-providers that compete with real active provider entries such as gemini and antigravity_cli.
+- PM must never silently route into retired Gemini CLI-only capability boundaries.
+compatibility_only_notes:
+- gemini_cli and Gemini CLI are preserved tokens only; they are not active setup/provider rows.
 stale_retired_dispositions:
 - The older one-card mixed OAuth/API grouping is preserved only as a retired direction.
+- Active Gemini CLI provider grouping is retired.
 owner_boundary_notes:
 - Provider family grouping is a GUI/runtime policy surface, not a replacement for concrete provider entries.
 owner_hints:
@@ -3713,17 +3808,16 @@ preserved_contractrefs: []
 split_recommendation_reason: OAuth device-code setup is narrow enough for one PlanUnit.
 ```
 
-### MA-048 - Gemini CLI Token Flow And Import Boundary
+### MA-048 - Retired Gemini CLI Token Flow And Import Boundary
 
 ```yaml
 plan_unit_id: MA-048
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Multi-Account.md
-canonical_text: Gemini CLI token setup detects an installed CLI before presenting the option as ready, invokes CLI auth in
-  the background, delegates native OAuth/browser and refresh behavior to the Gemini CLI runtime, records the token or
-  credential handle through credential_ref, and imports only minimum auth-bearing state into the precreated PM-owned
-  GEMINI_CLI_HOME root.
+canonical_text: Gemini CLI token setup/import vocabulary is retired and retained only as source-lineage. Active PM setup
+  must not present Gemini CLI token options, invoke Gemini CLI auth, import Gemini CLI credentials, or create a PM-owned
+  GEMINI_CLI_HOME root. Active CLI-runtime setup for this lane belongs to Antigravity CLI.
 gui_related: false
 gui_classification_reason: The unit covers CLI auth orchestration and import boundaries rather than GUI layout.
 split_recommended: false
@@ -3732,21 +3826,21 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Gemini CLI is detected before the CLI-token option is ready.
-- CLI native OAuth/browser flow remains delegated.
-- credential_ref records the resulting token or credential handle.
-- Import Existing Gemini CLI Auth copies only minimum auth-bearing state.
+- Gemini CLI token/import tokens remain losslessly available for exact-text audit.
+- Active setup does not present Gemini CLI token options.
+- Active setup does not import Gemini CLI auth-bearing state.
+- Antigravity CLI setup is separate and does not reuse GEMINI_CLI_HOME.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: gemini_cli_token_flow
+risk_class: retired_gemini_cli_token_flow_resurrection
 reasoning_tier: standard
 context_scope: multi_account_standardization
 implementation_surfaces:
 - Plans/Multi-Account.md
 node_compile_hint:
-  mode: gemini_cli_token_flow
+  mode: retired_gemini_cli_token_flow
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0032
@@ -3757,16 +3851,20 @@ preserved_exact_tokens:
 - GEMINI_CLI_HOME
 - native OAuth/browser flow
 negative_constraints:
-- Ongoing token refresh remains delegated to the Gemini CLI runtime rather than reimplemented inside PM.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Do not invoke Gemini CLI auth commands.
+- Do not import Existing Gemini CLI Auth as an active setup mode.
+- Do not create a PM-owned GEMINI_CLI_HOME root.
+compatibility_only_notes:
+- Ongoing token refresh delegated to the Gemini CLI runtime is retained only as source-lineage vocabulary.
+stale_retired_dispositions:
+- Gemini CLI token flow and import boundary are retired by CBP-019/MA-062.
 owner_boundary_notes:
-- CLI-token setup is provider-runtime delegated while PM owns account row evidence and root import boundary.
+- Gemini CLI token setup is retired; active CLI-runtime account evidence is owned by Antigravity setup/probe contracts.
 owner_hints:
 - Plans/Multi-Account.md
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md'
-split_recommendation_reason: Gemini CLI token flow is narrow enough for one PlanUnit.
+split_recommendation_reason: Retired Gemini CLI token flow is narrow enough for one compatibility PlanUnit.
 ```
 
 ### MA-049 - Usage Runtime Visibility And Usage Consumer Boundary

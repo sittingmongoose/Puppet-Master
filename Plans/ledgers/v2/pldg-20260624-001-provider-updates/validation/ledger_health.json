@@ -150,34 +150,75 @@
       "check_id": "github-copilot-stored-cli-auth-0030",
       "status": "warning",
       "summary": "After Jared reported `gh copilot` signed in, no-env `copilot -p` and `gh copilot -- -p` still exited nonzero with no output in this shell. The documented environment-token path using the existing GitHub OAuth token and the direct hosted API are verified, but stored CLI credential execution remains a separate non-green route."
+    },
+    {
+      "check_id": "zai-copilot-minimax-deepening-0031",
+      "status": "pass",
+      "summary": "Official Z.AI docs/OpenAPI, GitHub Copilot direct hosted API, Models.dev catalog, and MiniMax Image-01 OpenAPI were rechecked. GitHub Copilot is implementation-ready as a direct hosted provider without CLI bridging. Z.AI requires split standard/coding/Anthropic-compatible routes, Team Plan key separation, thinking/preserved-thinking handling, and separate media/tool capability rows. MiniMax Image-01 is implementation-shaped as a generated-media route with URL/base64 output, batch metadata, URL expiry, and status-code handling."
+    },
+    {
+      "check_id": "minimax-media-openai-imagegen-source-lineage-0032",
+      "status": "pass",
+      "summary": "MiniMax global was accepted for the media generation provider list through Image-01 while preserving MiniMax CN as separate. `yuji-hatakeyama/opencode-gpt-imagegen` was inspected as source-lineage for ChatGPT Images 2 UX/artifact handling, but official OpenAI Image API `gpt-image-2` and Responses API `image_generation` remain the canonical OpenAI generated-media backend contracts."
+    },
+    {
+      "check_id": "openai-codex-mandatory-and-opencode-coding-plan-config-0033",
+      "status": "pass",
+      "summary": "Jared corrected OpenAI/Codex subscription-backed image generation to mandatory, not optional, and closed additional subscription purchases as non-blocking capability states. Current OpenCode `origin/dev` commit `753d312c28519b0c060a56e69e8cde971b3719bb` plus Models.dev were inspected for all coding-plan provider IDs; PM-owned mapping source-lineage now covers Qwen, MiniMax, Z.AI/Zhipu, GLM-5.2, Tencent/Hunyuan, Umans, KUAE, Alibaba regioned routes, and OpenCode Go as separate source-lineage."
+    },
+    {
+      "check_id": "provider-readiness-status-confirmation-0034",
+      "status": "pass",
+      "summary": "Status clarified: OpenAI/Codex Images 2 subscription support is accepted and mandatory in the ledger as planning/spec intent, but no runtime implementation or canonical Plans compile has happened yet. Direct-provider obscure settings from local tests and OpenCode/Models.dev source-lineage are captured for future compile."
+    },
+    {
+      "check_id": "provider-updates-plan-compile-0035",
+      "status": "pass",
+      "summary": "Accepted provider-update atoms were compiled into 30 live PlanUnits across 16 owner docs; allowed Plans/.plan_index outputs were regenerated; governance remains pending seal."
+    },
+    {
+      "check_id": "post-compile-validation-0036",
+      "status": "warning",
+      "summary": "Post-compile ledger/index/diff validators passed. Migration validation reports stale historical migration hashes after live Plans changed; this is deferred to explicit governance/migration refresh."
     }
   ],
-  "last_validated_at_utc": "2026-06-26T08:34:00Z",
+    "last_validated_at_utc": "2026-06-26T14:12:59Z",
   "ledger_id": "pldg-20260624-001-provider-updates",
-  "notes": "Claude Code status-line `rate_limits`, coding-plan provider expansion, current OpenCode first-class provider implementation review, provider-adjacent audit reconciliation, and direct-provider retesting are recorded. Native Cursor API-key / SDK / composer-api-style route remains live-verified for planning; ACP is locally prompt-verified; print-mode cursor-agent is fallback; opencode-cursor remains non-primary/source-lineage. Process-local credentials were used without storing secret values. Kimi For Coding and MiniMax global are green for the tested direct routes, Z.AI/Zhipu is partially green with explicit model/entitlement/balance blockers, and GitHub Copilot direct hosted API is green while stored CLI credential prompt execution remains non-green. No canonical Plans or governance artifacts were updated.",
+    "notes": "Bootstrap ledger validator pass after post-compile currentness repair. Plan index generation/validation, git diff check, JSONL parse, stale exact-wording search, and compiled atom-to-PlanUnit traceability checks pass. Migration validator and generated governance checks remain stale historical proof/hash failures pending explicit governance/migration refresh.",
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "status": "pass",
   "summary": {
     "blockers": 3,
     "candidate_atoms": 0,
-    "compile_queue_items": 0,
-    "corrections": 15,
-    "decisions": 34,
+    "compile_queue_items": 1,
+        "corrections": 18,
+    "decisions": 40,
     "deferred_questions": 0,
-    "design_atoms": 130,
-    "events": 29,
-    "open_blockers": 2,
+        "design_atoms": 141,
+        "events": 38,
+    "open_blockers": 0,
     "open_questions": 0,
-    "questions": 11
+    "questions": 11,
+        "compiled_to_plan_atoms": 123,
+    "not_for_plan_atoms": 4,
+    "superseded_atoms": 14
   },
-  "updated_at_utc": "2026-06-26T08:34:00Z",
+    "updated_at_utc": "2026-06-26T14:12:59Z",
   "warnings": [
-    "blk-0001 open: GitHub Copilot direct hosted API is green through the existing GitHub OAuth token, but stored CLI credential execution remains non-green; no-env `copilot -p` and `gh copilot -- -p` exit nonzero with no output.",
+    "blk-0001 resolved for current direct-provider scope: GitHub Copilot direct hosted API is implementation-ready, and stored CLI credential execution is optional/future-route evidence only because PM is not bridging `copilot` or `gh copilot`.",
     "Cursor caveats preserved: signed production macOS app packaging was not installed/tested, Worker external-bridge image bytes are not verified, and Worker Responses lacks `output_text`; these are compatibility notes, not the prior live-proof blocker.",
-    "blk-0003 open: Kimi tested routes and MiniMax global tested routes are green, and Z.AI/Zhipu selected chat/reasoning routes are green; remaining coding-plan gaps are model-specific Z.AI overload/plan/balance blockers, MiniMax CN separate credentials, and direct E2E proof for other planned coding-plan families if retained.",
+    "blk-0003 resolved by disposition, not blanket green support: Kimi tested routes, MiniMax global tested routes, MiniMax Image-01 media generation, and GitHub Copilot direct hosted API are green/implementation-shaped; Z.AI overload/plan/balance states, MiniMax CN, Alibaba/Qwen, Tencent, KUAE, Umans, and other unpurchased/unverified rows must compile as disabled/capability-gated/unverified until direct E2E proof exists.",
     "OpenCode should be treated as architecture/source-lineage for coding plans, not a complete correctness oracle; Alibaba/Qwen `enable_thinking` needs PM-owned verification.",
     "Provider-adjacent audit deltas are ledger-only planning source until Jared explicitly requests compile to canonical Plans.",
     "Direct-provider retest must exclude OpenCode server/OpenCode-routed providers and use PM-baked direct routes only.",
-    "Provider media support must split media input, media output, and generated-media routes; image input does not imply image creation."
-  ]
+    "Provider media support must split media input, media output, and generated-media routes; image input does not imply image creation.",
+    "Z.AI media/tool features must be capability-gated separately from coding chat: image generation, async image generation, video, audio transcription, OCR/layout parsing, web reader/search, and MCP servers are not implied by a working GLM chat model.",
+    "MiniMax Image-01 URL results expire after 24 hours and batch requests expose success/failure metadata; PM needs GUI/runtime artifact handling for those states during compile.",
+    "`opencode-gpt-imagegen` uses an unofficial ChatGPT subscription/Codex backend path and OpenCode OAuth auth; keep it source-lineage for UX/artifact/subscription-route lessons, but PM must now design a mandatory OpenAI/Codex subscription-backed image-generation route with explicit auth/security/support-state handling.",
+    "Official OpenAI API-key image generation remains required separately from the mandatory OpenAI/Codex subscription-backed route.",
+    "Current OpenCode coding-plan config is source-lineage, not direct-provider closure proof; PM must own provider/model mappings and tests, especially Alibaba coding-plan thinking behavior.",
+        "Do not interpret `working in the ledger` as implemented runtime support; compile and implementation are still future explicit phases."
+        ,
+        "Antigravity CLI agy 1.0.12 does not currently verify Nano Banana/Nanobanana/generated-media support; prompt-output success with an unlisted model can fall back to Gemini 3.5 Flash and must not be treated as support proof."
+    ]
 }

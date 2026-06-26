@@ -125,13 +125,10 @@ CLI-provider MCP reference facts:
 - Each MCP server has a three-level lifecycle: `Registered in PM`, `Configured for provider/runtime`, and `Operational`. `Registered in PM` means the central `mcp_server_record` exists; `Configured for provider/runtime` means the relevant per-provider/per-runtime adapter state is usable for the selected `/runtime`; `Operational` means auth, trust, health, and tool-list evidence pass for the active account/profile/workspace.
 - PM owns one central MCP registry of configured servers. Provider-side derived config generation is optional and exists only where a provider transport requires it; `/per-runtime` adapter state proves usability for a concrete execution surface without treating provider config as the MCP source of truth.
 - Claude Code CLI remains a CLI-provider surface with profile isolation, MCP support, structured usage evidence, and an explicit setup-state model.
-- Gemini CLI remains the heaviest managed home: auth, extensions, MCP OAuth tokens, history, temp chats, and project registry can all sit under one `.gemini` tree, so PM treats those as profile-local runtime state unless a later owner contract promotes a safe overlay.
+- Gemini CLI MCP/home facts are retired/source-lineage only: auth, extensions, MCP OAuth tokens, history, temp chats, and project registry under `.gemini` must not be implemented as an active PM provider home.
 - Cursor CLI MCP support is evaluated through `cursor-agent` under PM-owned home `/XDG` roots; PM records provider-native MCP output as availability evidence without replacing the account/root isolation contract.
 - Consumer references include `Plans/Tools.md`, `Plans/newtools.md`, and `Plans/Section15_MVP_Promoted_Features_Spec.md`; slash-form trace labels may render these as `/Tools.md`, `/newtools.md`, or `/Section15_MVP_Promoted_Features_Spec.md`, but ownership stays here.
-- Gemini CLI MCP docs live at `geminicli.com/docs/tools/mcp-server/` and `/docs/tools/mcp-server/`.
-- Gemini CLI MCP config lives under `mcpServers` in `settings.json` at user `~/.gemini/settings.json` and workspace `/.gemini/settings.json`; the path family may also be rendered as `gemini/settings.json`.
-- `gemini mcp add` supports `--scope user|project` with effective precedence `project -> global -> nested`, `--transport stdio|sse|http`, `--env`, `--header`, `--timeout`, `--trust`, `--include-tools`, and `--exclude-tools`; built-in commands include `list-tools`, list, remove, enable, and disable.
-- Gemini enablement state may persist separately in `~/.gemini/mcp-server-enablement.json` or `/.gemini/mcp-server-enablement.json`; env and header handling must preserve `/redaction` semantics in diagnostics.
+- Gemini CLI MCP docs/config/command facts (`geminicli.com/docs/tools/mcp-server/`, `mcpServers`, `settings.json`, `gemini mcp add`, enablement files, and redacted env/header diagnostics) remain exact source-lineage tokens only. Active MCP projection for current providers must be proven per provider/runtime.
 - Cursor CLI provider-native MCP inspection includes `cursor-agent mcp list`; PM still treats the central MCP records as authoritative and maps provider-native output into those records.
 - Cursor CLI MCP durable base lives in the PM-managed Cursor profile root. PM generates or `/refreshed` syncs `.cursor/mcp.json` / `cursor/mcp.json` only when workspace-local MCP visibility is required; this workspace adapter is derived from central records and is not the MCP source of truth.
 - DirectApi providers (`Gemini`, `Codex`, `GitHub Copilot`, `Alibaba Coding Plan`, `MiniMax Coding Plan`, `Z.AI Coding Plan`) use PM-native MCP only; no provider-side MCP config files are canonical for `DirectApi` rows, including `MiniMax` and `Z.AI` coding-plan surfaces.
@@ -1265,7 +1262,7 @@ plan_unit_id: MI-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
-canonical_text: CLI provider MCP state remains provider/profile-local for Claude Code, Gemini CLI, and Cursor CLI surfaces, with profile isolation, structured usage evidence, setup-state models, and PM-managed roots preserving account/root isolation.
+canonical_text: CLI provider MCP state remains provider/profile-local for active Claude Code and Cursor CLI surfaces, with profile isolation, structured usage evidence, setup-state models, and PM-managed roots preserving account/root isolation. Gemini CLI MCP/home facts are retired/source-lineage only.
 gui_related: false
 gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1304,8 +1301,10 @@ preserved_exact_tokens:
 - PM-owned home `/XDG` roots
 - account/root isolation contract
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Gemini CLI MCP/home facts are retained only as source-lineage.
+stale_retired_dispositions:
+- Active Gemini CLI MCP provider-home management is retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_boundary_notes:
 - Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
 owner_hints:
@@ -1315,14 +1314,14 @@ preserved_contractrefs:
 split_recommendation_reason: The source span contains multiple separable MCP concerns; repeated source lineage preserves exact provenance without inventing subspans.
 ```
 
-### MI-022 - Gemini CLI MCP Config Commands
+### MI-022 - Retired Gemini CLI MCP Config Commands
 
 ```yaml
 plan_unit_id: MI-022
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/MCP_Integration.md
-canonical_text: Gemini CLI MCP config lives under mcpServers in user and workspace settings, supports gemini mcp add scopes, transports, env/header/timeout/trust/include/exclude options, built-in list/remove/enable/disable commands, separate enablement files, and redacted env/header diagnostics.
+canonical_text: Gemini CLI MCP config and command vocabulary is retired/source-lineage only. PM must not implement Gemini CLI MCP config generation or `gemini mcp add` management as an active provider path; current MCP projection must be proven per active provider/runtime.
 gui_related: false
 gui_classification_reason: The unit defines MCP runtime, identity, config, auth, provider, storage, or ownership behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1342,7 +1341,7 @@ context_scope: mcp_integration_standardization
 implementation_surfaces:
 - Plans/MCP_Integration.md
 node_compile_hint:
-  mode: gemini_cli_mcp_config_commands
+  mode: retired_gemini_cli_mcp_config_commands
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MCP_Integration-S0006
@@ -1369,8 +1368,12 @@ preserved_exact_tokens:
 - /redaction
 negative_constraints:
 - Env and header diagnostics must preserve redaction semantics.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Do not generate active Gemini CLI MCP config.
+- Do not run `gemini mcp add` as active PM setup.
+compatibility_only_notes:
+- Gemini CLI MCP paths and commands are preserved only for source-lineage.
+stale_retired_dispositions:
+- Gemini CLI MCP config commands are retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_boundary_notes:
 - Plans/MCP_Integration.md owns MCP configuration, naming, availability, credential binding, invalidation, and GUI surfacing boundaries while referenced owner docs retain their SSOTs.
 owner_hints:

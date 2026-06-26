@@ -426,6 +426,49 @@ owner_hints:
   - Plans/BinaryLocator_Spec.md
 ```
 
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into binary/provider launcher discovery requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### BS-026 - Provider Launcher Metadata For Antigravity And CLI Runtime Routes
+
+```yaml
+plan_unit_id: BS-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/BinaryLocator_Spec.md
+canonical_text: >-
+  Binary/provider launcher discovery must include provider-owned setup-health metadata for active CLI-runtime routes such as Antigravity `agy`, Claude Code `claude`, and Cursor `cursor-agent` while keeping Codex, GitHub Copilot, OpenCode server, and direct coding-plan providers out of required CLI bridge discovery. `agy` discovery is version-gated and records command templates, account-root/env requirements, model-list support, prompt-output proof state, and unsupported format caveats without storing secrets.
+gui_related: false
+gui_classification_reason: Binary discovery and launcher metadata are backend setup contracts, though GUI consumes status.
+depends_on: [CBP-020, CBP-021, CBP-022]
+unblocks: [F3-400]
+acceptance_criteria:
+  - "`agy` is a first-class active CLI-runtime launcher entry."
+  - Launcher metadata tracks setup health, version, command templates, output-proof state, and account-root/env requirements.
+  - Direct providers are not incorrectly marked as requiring CLI bridge binaries.
+  - Secret material is never captured in launcher metadata.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_launcher_discovery_drift
+reasoning_tier: standard
+context_scope: provider_launcher_metadata
+implementation_surfaces: [Plans/BinaryLocator_Spec.md, future binary locator, future provider setup health registry]
+node_compile_hint: {mode: provider_launcher_metadata, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0019
+  - pldg-20260624-001-provider-updates:atom-0020
+  - pldg-20260624-001-provider-updates:atom-0116
+source_atom_ids: [atom-0019, atom-0020, atom-0022, atom-0023, atom-0054, atom-0061, atom-0087, atom-0088, atom-0116, atom-0132]
+preserved_exact_tokens: ["agy", "Antigravity CLI", "claude", "cursor-agent", "version-gate", "setup-health", "--print-timeout", "agy models", "command templates", "output-level proof"]
+negative_constraints:
+  - Do not require Copilot CLI discovery for GitHub Copilot direct hosted API support.
+  - Do not require Codex CLI discovery for Codex/OpenAI direct provider support.
+  - Do not store provider secret material in launcher metadata.
+owner_hints: [Plans/BinaryLocator_Spec.md, Plans/CLI_Bridged_Providers.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
+```
+
 ### BS-002 - BinaryLocator Authority, Purpose, And Non-Goals
 
 ```yaml

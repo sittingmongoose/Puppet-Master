@@ -48,7 +48,7 @@ Rules:
 - **Provider facade contract:** `Plans/CLI_Bridged_Providers.md` (extended for server transport)
 - **Canonical contracts (events/tools/auth/UICommand):** `Plans/Contracts_V0.md`
 - **Locked decisions:** `Plans/Spec_Lock.json`
-- **Platform CLI data SSOT:** `puppet-master-rs/src/platforms/platform_specs.rs`
+- **Provider/model capability SSOT:** `Plans/Models_System.md`, `Plans/Contracts_V0.md`, `Plans/CLI_Bridged_Providers.md`, and `Plans/Media_Generation_and_Capabilities.md`. Legacy `puppet-master-rs/src/platforms/platform_specs.rs` references are source-lineage only.
 - **Deterministic defaults:** `Plans/Decision_Policy.md`
 - **DRY + ContractRef rules:** `Plans/DRY_Rules.md`
 - **Architecture invariants:** `Plans/Architecture_Invariants.md`
@@ -346,6 +346,50 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md,
 Puppet Master discovers available models via the OpenCode provider API:
 
 ```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into OpenCode provider/source-lineage boundaries. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### PO-048 - OpenCode Coding-Plan Source-Lineage Boundary
+
+```yaml
+plan_unit_id: PO-048
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode server routes, OpenCode/Models.dev provider catalogs, `opencode-cursor`, `opencode-gpt-imagegen`, and current OpenCode coding-plan config are source-lineage or OpenCode-provider evidence unless the target provider route is explicitly OpenCode server. PM may use current OpenCode commit `753d312c28519b0c060a56e69e8cde971b3719bb` and Models.dev as mapping source-lineage for provider ids, model defaults, and transform caveats, but direct-provider implementation readiness still requires PM-owned route contracts and local end-to-end proof.
+gui_related: false
+gui_classification_reason: Provider/source-lineage evidence boundary rather than visual presentation.
+depends_on: [MS-113, CV-292]
+unblocks: [MS-114, MS-115]
+acceptance_criteria:
+  - OpenCode server support remains its own provider route.
+  - OpenCode-routed GitHub Copilot, Cursor, and other upstream providers are not direct-provider closure evidence.
+  - Current OpenCode/Models.dev coding-plan config can seed PM-owned mappings with preserved source refs.
+  - Unofficial OpenCode image or Cursor plugins are not imported as PM backend canon.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: opencode_source_lineage_overclaim
+reasoning_tier: high
+context_scope: opencode_provider_boundary
+implementation_surfaces: [Plans/Provider_OpenCode.md, Plans/Models_System.md, Plans/Contracts_V0.md, Plans/Media_Generation_and_Capabilities.md]
+node_compile_hint: {mode: opencode_source_lineage_boundary, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0051
+  - pldg-20260624-001-provider-updates:atom-0091
+  - pldg-20260624-001-provider-updates:atom-0136
+  - pldg-20260624-001-provider-updates:atom-0140
+source_atom_ids: [atom-0051, atom-0072, atom-0076, atom-0077, atom-0091, atom-0092, atom-0093, atom-0104, atom-0136, atom-0139, atom-0140]
+preserved_exact_tokens: ["OpenCode", "Models.dev", "opencode-cursor", "opencode-gpt-imagegen", "753d312c28519b0c060a56e69e8cde971b3719bb", "OpenCode Go", "source-lineage", "not closure evidence", "alibaba-coding-plan", "minimax-coding-plan", "zai-coding-plan", "zhipuai-coding-plan"]
+negative_constraints:
+  - Do not use OpenCode server or OpenCode-routed providers as direct-provider closure evidence.
+  - Do not require `opencode-cursor` when PM has native Cursor support.
+  - Do not import unofficial plugin backend/auth behavior as canonical PM backend support.
+owner_hints: [Plans/Provider_OpenCode.md, Plans/Models_System.md, Plans/Contracts_V0.md, Plans/Media_Generation_and_Capabilities.md]
+```
 GET /provider
 → {
     "all": [ { "id": "anthropic", "name": "Anthropic", "models": [...] }, ... ],
@@ -369,7 +413,7 @@ ACP model listing can supply model IDs, names, and descriptions (`IDs/names/desc
 
 ACP agent streams may emit `usage_update`. When available, PM maps that usage into the shared provider usage event shape with input/output/reasoning/cache token breakdown (`/output/reasoning/cache`) plus cost, preserving ACP as the source protocol rather than treating the update as an OpenCode-only GUI counter.
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
 
 ### 7.3 Fallback Models
 
@@ -383,16 +427,16 @@ ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contract
 
 ## 8. Capability flags
 
-Capability flags are **SSOT in** `puppet-master-rs/src/platforms/platform_specs.rs`. This plan does not redefine them.
+Capability flags are owned by the shared provider/model contracts, not by legacy `platform_specs.rs`. This plan does not redefine the provider catalog; it only constrains OpenCode server transport and OpenCode-specific normalization.
 
 OpenCode-specific capability requirements (normative):
 - Transport remains `http` (server-bridged).
 - **Plan mode:** When `mode=plan`, Puppet Master MUST use the OpenCode `plan` agent (read-only). When `mode=execute`, use the `build` agent.
 - **Provider-tool capability reporting:** OpenCode-discovered tools (from `GET /provider` and session tool lists) MUST be reported through `capabilities.get` with `category: "provider_tool"`. Each tool entry includes the same `enabled` / `disabled_reason` / `setup_hint` shape defined in `Plans/Media_Generation_and_Capabilities.md` [§1.2](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM). This enables agents and users to discover all available OpenCode tools via capability introspection.
 - **Provider capability aliases:** OpenCode-native declarations such as `supportsParallelTools`, `supportsAssistantMessagePrefill`, and `maxPayloadSize` normalize into the shared provider capability fields before PM routing, request shaping, or model-effort UI decisions consume them.
-- **Media tools are NOT OpenCode-provided:** Media generation (`media.image`, `media.video`, `media.tts`, `media.music`) remains a Puppet Master internal capability backed by the Gemini API key (or Cursor-native for images). OpenCode MUST NOT expose or proxy media-generation tools. The media capability picker dropdown does not include OpenCode tools; see `Plans/Media_Generation_and_Capabilities.md` [§4](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER).
+- **Media tools are NOT OpenCode-provided:** Media generation (`media.image`, `media.video`, `media.tts`, `media.music`) remains a Puppet Master internal capability backed by route-specific provider/model generated-media routes such as OpenAI/Codex, OpenAI API-key image routes, MiniMax Image-01, Gemini Direct where verified, or future verified routes. OpenCode MUST NOT expose or proxy media-generation tools. The media capability picker dropdown does not include OpenCode tools; see `Plans/Media_Generation_and_Capabilities.md` [§4](Plans/Media_Generation_and_Capabilities.md#CAPABILITY-PICKER).
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs, PolicyRule:Decision_Policy.md§4, ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, PolicyRule:Decision_Policy.md§4, ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM
 
 ---
 
@@ -468,18 +512,17 @@ Unlike CLI-bridged providers, OpenCode does NOT require CLI path input for norma
 
 ---
 
-## 11. platform_specs integration (SSOT)
+## 11. Legacy platform_specs lineage and current metadata ownership
 
-OpenCode MUST be represented in `puppet-master-rs/src/platforms/platform_specs.rs` (SSOT). This plan does not duplicate the full spec table.
+Legacy OpenCode references to `puppet-master-rs/src/platforms/platform_specs.rs` are preserved only as source-lineage from the removed Rust/Iced implementation. Active OpenCode metadata ownership lives in the provider/model contracts and OpenCode server profile setup metadata.
 
-Minimum OpenCode constraints the spec MUST encode (normative):
-- Platform variant: `OpenCode`
+Minimum active OpenCode constraints:
 - Transport: `http` (server-bridged)
 - Default server port: `4096`
 - CLI path is **optional** and used only for launcher/discovery fallback (not as runtime transport)
 - No hardcoded fallback models (dynamic discovery only)
 
-ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, CodePath:puppet-master-rs/src/platforms/platform_specs.rs
+ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
 
 ---
 
@@ -633,7 +676,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - `Plans/Decision_Policy.md` (deterministic defaults)
 - `Plans/DRY_Rules.md` (DRY + ContractRef)
 - `Plans/Glossary.md` (canonical terms)
-- `puppet-master-rs/src/platforms/platform_specs.rs` (platform specs SSOT)
+- `puppet-master-rs/src/platforms/platform_specs.rs` (retired/source-lineage only; not active provider capability SSOT)
 - OpenCode server docs: https://opencode.ai/docs/server/
 - OpenCode repository: https://github.com/anomalyco/opencode
 
@@ -1851,7 +1894,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  OpenCode capability flags stay SSOT in platform_specs; transport remains HTTP server-bridged, plan mode uses the read-only OpenCode plan agent, execute mode uses the build agent, and OpenCode-native capability aliases normalize into shared provider capability fields before routing or model-effort UI consumption.
+  OpenCode capability flags are consumed from shared provider/model contracts rather than legacy platform_specs; transport remains HTTP server-bridged, plan mode uses the read-only OpenCode plan agent, execute mode uses the build agent, and OpenCode-native capability aliases normalize into shared provider capability fields before routing or model-effort UI consumption.
 gui_related: false
 gui_classification_reason: This unit defines capability metadata and mode-agent mapping rather than visual presentation.
 split_recommended: false
@@ -1885,7 +1928,10 @@ preserved_exact_tokens:
   - "supportsParallelTools"
   - "supportsAssistantMessagePrefill"
   - "maxPayloadSize"
-negative_constraints: []
+negative_constraints:
+  - "Do not treat legacy platform_specs.rs as the active provider capability SSOT."
+compatibility_only_notes:
+  - "platform_specs.rs is preserved only as source-lineage from the removed Rust/Iced implementation."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs, PolicyRule:Decision_Policy.md§4, ToolID:capabilities.get, ContractName:Plans/Media_Generation_and_Capabilities.md#CAPABILITY-SYSTEM"
 owner_hints:
@@ -1951,7 +1997,7 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  Media generation tools remain Puppet Master internal capabilities backed by Gemini API key or Cursor-native image support; OpenCode must not expose or proxy media-generation tools, and the media capability picker dropdown excludes OpenCode tools.
+  Media generation tools remain Puppet Master internal capabilities backed by route-specific provider/model generated-media routes, not by OpenCode. OpenCode must not expose or proxy media-generation tools, and the media capability picker dropdown excludes OpenCode tools.
 gui_related: true
 gui_classification_reason: This unit includes media capability picker behavior and visible tool exclusion.
 split_recommended: false
@@ -2351,17 +2397,17 @@ owner_hints:
   - "Plans/CLI_Bridged_Providers.md"
 ```
 
-### PO-033 - platform_specs SSOT Constraints
+### PO-033 - Retired platform_specs SSOT Constraints
 
 ```yaml
 plan_unit_id: PO-033
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Provider_OpenCode.md
 canonical_text: >-
-  OpenCode must be represented in platform_specs.rs as the Platform variant OpenCode with server-bridged http
-  transport, default port 4096, optional CLI path only for launcher/discovery fallback, and dynamic model
-  discovery without hardcoded fallback models.
+  Legacy platform_specs.rs OpenCode SSOT wording is retired/source-lineage only. Active OpenCode constraints are
+  server-bridged http transport, default port 4096, optional CLI path only for launcher/discovery fallback, dynamic model
+  discovery without hardcoded fallback models, and provider/model capability ownership through current contracts.
 gui_related: false
 gui_classification_reason: "This unit defines provider metadata SSOT constraints rather than visual presentation."
 split_recommended: false
@@ -2384,7 +2430,7 @@ context_scope: provider_opencode_platform_specs
 implementation_surfaces:
   - "Plans/Provider_OpenCode.md"
 node_compile_hint:
-  mode: opencode_platform_specs_ssot
+  mode: retired_opencode_platform_specs_ssot
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0039"
@@ -2399,12 +2445,14 @@ preserved_exact_tokens:
   - "No hardcoded fallback models"
   - "dynamic discovery only"
 negative_constraints:
-  - "platform_specs.rs must not encode hardcoded fallback OpenCode models."
+  - "Do not use platform_specs.rs as active implementation authority."
+  - "Do not encode hardcoded fallback OpenCode models."
+compatibility_only_notes:
+  - "platform_specs.rs is retained only as source-lineage."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, CodePath:puppet-master-rs/src/platforms/platform_specs.rs"
 owner_hints:
   - "Plans/Provider_OpenCode.md"
-  - "puppet-master-rs/src/platforms/platform_specs.rs"
   - "Plans/DRY_Rules.md"
 ```
 

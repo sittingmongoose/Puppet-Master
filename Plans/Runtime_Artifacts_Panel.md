@@ -392,7 +392,7 @@ Required actions:
 Rules:
 - Bridge fields remain joins rather than replacement primary keys.
 - Open and focus actions route through canonical receipt and usage identity.
-- Usage-linked artifacts consume frozen `effective_*` runtime snapshot fields and `usage-source-confidence` fields; Agent-Config and Health may display live current values beside the artifact, but they must not rename or rewrite the frozen schema carried by the usage/runtime record.
+- Usage-linked artifacts consume frozen `effective_*` runtime snapshot fields and `source_confidence` fields. The legacy `usage-source-confidence` spelling remains preserved only as compatibility/source-lineage vocabulary; Agent-Config and Health may display live current values beside the artifact, but they must not rename or rewrite the frozen schema carried by the usage/runtime record.
 
 ## Owner / Consumer Map
 
@@ -406,6 +406,88 @@ ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Boot
 
 ```yaml
 {plan_unit_id: "RAP-002", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "Runtime_Artifacts_Panel.md is the Runtime Artifacts Panel SSOT and owner-section document; it preserves Puppet Master naming, deterministic defaults, required artifact envelope routing preference, and ContractRefs to Contracts, storage, usage, and Project Output Artifacts owners.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "CV-002", "SP-001", "UF-001"], unblocks: [], acceptance_criteria: ["RAP-002 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "owner_identity_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_authority", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "runtime_artifacts_authority_preface", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0001", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0002", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0006"], preserved_exact_tokens: ["Runtime Artifacts Panel — SSOT", "Canonical owner-section requirements", "Artifact envelope routing preference", "Puppet Master", "No open questions", "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Project_Output_Artifacts.md"], negative_constraints: [], preserved_contractrefs: ["ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Project_Output_Artifacts.md"], compatibility_only_notes: [], stale_retired_dispositions: [], owner_hints: ["Plans/Runtime_Artifacts_Panel.md"]}
+```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into Runtime Artifacts Panel requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### RAP-032 - Provider Native Artifact Envelope Projection
+
+```yaml
+plan_unit_id: RAP-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts must be able to project provider-native artifact envelopes for generated media, provider receipts, streamed logs/events, model catalogs, route/probe evidence, support-state transitions, adoption/drift/blocked states, and repair/retry records. Artifacts reference provider_entry_id, account_profile_ref, model_id, media_route_id, requested/effective identity, source_confidence, verification_state, redaction_profile, and permission_snapshot_id while excluding secret material.
+gui_related: true
+gui_classification_reason: Runtime Artifacts Panel browsing/projection is user-visible GUI behavior.
+depends_on: [CV-294, MGAC-094, UF-074]
+unblocks: [POA-050]
+acceptance_criteria:
+  - Provider-native artifacts are browsable by route, provider, account/profile, model, and artifact family.
+  - Generated media and route/probe evidence preserve provider metadata by reference.
+  - Runtime artifacts never store API keys, OAuth URLs, tokens, or local account secrets.
+  - Blocked, gated, partial-success, and retry/adoption/drift states remain visible.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_artifact_projection_drift
+reasoning_tier: high
+context_scope: provider_native_runtime_artifacts
+implementation_surfaces: [Plans/Runtime_Artifacts_Panel.md, future runtime artifacts panel, future provider artifact store]
+node_compile_hint: {mode: provider_native_artifact_projection, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0121
+  - pldg-20260624-001-provider-updates:atom-0130
+  - pldg-20260624-001-provider-updates:atom-0137
+source_atom_ids: [atom-0117, atom-0120, atom-0121, atom-0122, atom-0130, atom-0131, atom-0133, atom-0136, atom-0137, atom-0138]
+preserved_exact_tokens: ["provider-native artifact", "generated media", "provider receipts", "streamed logs/events", "model catalogs", "route/probe evidence", "adoption/drift/blocked/repair states", "redaction_profile", "permission_snapshot_id", "source_confidence"]
+negative_constraints:
+  - Do not store secret material in runtime artifact payloads.
+  - Do not make Runtime Artifacts Panel the owner of provider behavior or media schema truth.
+  - Do not flatten partial-success or gated provider states into generic failure.
+owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/Media_Generation_and_Capabilities.md, Plans/Project_Output_Artifacts.md]
+```
+
+### RAP-033 - Generated Media Receipt And Expiry Projection
+
+```yaml
+plan_unit_id: RAP-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Generated media artifacts must project provider receipt metadata, generation parameters, provider/base response status, trace/request id where available, hashes, durable local artifact refs, original provider URL refs, expiry warnings, partial success/failure counts, and provenance caveats. MiniMax Image-01 URL outputs require 24-hour expiry disclosure; OpenAI/Codex Images 2 routes require account/route distinction and C2PA/SynthID caveats; subscription-backed routes require support-state and terms-risk refs.
+gui_related: true
+gui_classification_reason: Generated media artifact browsing, expiry warnings, and provenance presentation are user-visible GUI behavior.
+depends_on: [RAP-032, MGAC-095, MGAC-096, POA-050]
+unblocks: []
+acceptance_criteria:
+  - Generated media receipts include route/account/model identity and non-secret provider metadata.
+  - URL expiry and durable artifact capture status are visible.
+  - Partial successes are represented with counts and failed-item metadata where available.
+  - Provenance markers are represented as caveated metadata, not complete trust guarantees.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: generated_media_artifact_drift
+reasoning_tier: high
+context_scope: generated_media_runtime_artifacts
+implementation_surfaces: [Plans/Runtime_Artifacts_Panel.md, future generated media artifact browser, future project output packaging]
+node_compile_hint: {mode: generated_media_receipt_projection, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0133
+  - pldg-20260624-001-provider-updates:atom-0136
+  - pldg-20260624-001-provider-updates:atom-0137
+source_atom_ids: [atom-0031, atom-0033, atom-0034, atom-0130, atom-0133, atom-0134, atom-0136, atom-0137]
+preserved_exact_tokens: ["24-hour URL expiry", "partial success", "failed counts", "trace id", "base response status", "C2PA", "SynthID", "terms-risk", "OpenAI/Codex subscription", "MiniMax Image-01"]
+negative_constraints:
+  - Do not treat expiring provider URLs as durable storage.
+  - Do not overpromise C2PA or SynthID as complete durable provenance under all transformations.
+  - Do not store subscription-route secrets in artifacts.
+owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md, Plans/Media_Generation_and_Capabilities.md]
 ```
 
 ### RAP-003 - Purpose Scope And Family Boundary
@@ -537,7 +619,7 @@ ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Boot
 ### RAP-024 - Receipt Linkage And Bridge Viewer
 
 ```yaml
-{plan_unit_id: "RAP-024", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "Receipt-like artifacts preserve canonical runtime identity and bridge fields: operation_receipt_record is a derived projector/receipt-surface record, receipt/run/attempt/action fields are identity anchors, legacy tier_id is display/grouping compatibility only, bridge fields remain joins, open/focus routes through canonical receipt and usage identity, and frozen effective_* runtime snapshot and usage-source-confidence fields must not be renamed by live Agent-Config or Health values.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "UF-001", "UCC-001", "CV-215"], unblocks: [], acceptance_criteria: ["RAP-024 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "receipt_bridge_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_receipts", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "receipt_linkage_bridge_viewer", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0029", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0030", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0031"], preserved_exact_tokens: ["operation_receipt_record", "receipt_id", "run_id", "attempt_id", "action_family", "action_name", "provider_attempt_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "workflow_run_id", "usage-source-confidence", "effective_*"], negative_constraints: ["Bridge fields remain joins rather than replacement primary keys.", "Legacy tier_id is not a receipt key, approval correlation key, or usage join.", "Agent-Config and Health must not rename or rewrite frozen schema carried by the usage/runtime record."], preserved_contractrefs: [], compatibility_only_notes: ["tier_id may appear only as derived display/grouping compatibility metadata."], stale_retired_dispositions: [], owner_hints: ["Plans/Runtime_Artifacts_Panel.md", "Plans/storage-plan.md", "Plans/usage-feature.md", "Plans/UI_Command_Catalog.md"]}
+{plan_unit_id: "RAP-024", unit_type: "requirement", status: "accepted", owner_doc: "Plans/Runtime_Artifacts_Panel.md", canonical_text: "Receipt-like artifacts preserve canonical runtime identity and bridge fields: operation_receipt_record is a derived projector/receipt-surface record, receipt/run/attempt/action fields are identity anchors, legacy tier_id is display/grouping compatibility only, bridge fields remain joins, open/focus routes through canonical receipt and usage identity, and frozen effective_* runtime snapshot and source_confidence fields must not be renamed by live Agent-Config or Health values. The legacy usage-source-confidence spelling is compatibility/source-lineage vocabulary only.", gui_related: false, gui_classification_reason: "This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.", split_recommended: false, depends_on: ["PDS-003", "PDS-004", "PDS-005", "PNC-001", "SP-001", "UF-001", "UCC-001", "CV-215"], unblocks: [], acceptance_criteria: ["RAP-024 remains addressable as a fine-grained Runtime Artifacts Panel PlanUnit with source-span coverage.", "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.", "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "python3 scripts/pm-plan-index.py validate"], risk_class: "receipt_bridge_drift", reasoning_tier: "standard", context_scope: "runtime_artifact_receipts", implementation_surfaces: ["Plans/Runtime_Artifacts_Panel.md"], node_compile_hint: {mode: "receipt_linkage_bridge_viewer", create_worknodes: false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0029", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0030", "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Runtime_Artifacts_Panel-S0031"], preserved_exact_tokens: ["operation_receipt_record", "receipt_id", "run_id", "attempt_id", "action_family", "action_name", "provider_attempt_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "workflow_run_id", "usage-source-confidence", "source_confidence", "effective_*"], negative_constraints: ["Bridge fields remain joins rather than replacement primary keys.", "Legacy tier_id is not a receipt key, approval correlation key, or usage join.", "Agent-Config and Health must not rename or rewrite frozen schema carried by the usage/runtime record.", "Do not treat usage-source-confidence as the active runtime artifact schema field name."], preserved_contractrefs: [], compatibility_only_notes: ["tier_id may appear only as derived display/grouping compatibility metadata.", "usage-source-confidence is preserved only as compatibility/source-lineage vocabulary; active provider artifact and usage records use source_confidence."], stale_retired_dispositions: ["usage-source-confidence spelling retired in favor of source_confidence"], owner_hints: ["Plans/Runtime_Artifacts_Panel.md", "Plans/storage-plan.md", "Plans/usage-feature.md", "Plans/UI_Command_Catalog.md"]}
 ```
 
 ### RAP-001 - Runtime Artifacts Panel Retired Source-Preserving Bridge

@@ -1,5 +1,5 @@
 {
-  "agent_task": "continue_feature_design_conversation_or_compile_when_explicitly_requested",
+  "agent_task": "provider_updates_compiled_pending_governance_seal",
   "allowed_reads_default": [
     "state/current.json",
     "state/handoff.json",
@@ -23,7 +23,7 @@
     "missing_gui_related_classification",
     "worknode_creation_requested_before_contract"
   ],
-  "current_phase": "conversation_active",
+  "current_phase": "compiled_to_plans_pending_governance_seal",
   "forbidden_until_explicit_compile_or_governance_seal": [
     "Plans/.plan_index/**",
     "WorkNodes",
@@ -45,14 +45,20 @@
     "Plans/ledgers/work_items/**",
     "**/working_ledger.md"
   ],
-  "next_action": "Continue provider planning from the updated direct-provider proof matrix. Kimi For Coding and MiniMax global are E2E green for the tested routes; Z.AI/Zhipu is partially green with model/entitlement/balance blockers; GitHub Copilot is green through the direct hosted API and GitHub OAuth token but stored CLI credential prompts remain non-green in this shell. Decide whether remaining model-specific blocks should be compile blockers or capability-gated disabled rows.",
+  "next_action": "Run/inspect validators; do not seal governance unless explicitly asked.",
   "required_end_of_turn_actions": [
-    "append_turn_event",
-    "upsert_design_atoms",
-    "update_questions_blockers",
+    "append_compile_event",
+    "update_design_atom_compile_status",
     "update_handoff_projection",
-    "classify_gui_related",
+    "run_validators",
     "preserve_node_readiness_boundary"
   ],
-  "schema_id": "pm.operating_capsule.v1"
+  "schema_id": "pm.operating_capsule.v1",
+  "forbidden_until_explicit_governance_seal": [
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl"
+  ]
 }

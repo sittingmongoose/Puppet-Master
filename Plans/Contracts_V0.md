@@ -904,6 +904,128 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 }
 ```
 
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into canonical shared contracts. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### CV-292 - Provider Route Support Evidence Envelope
+
+```yaml
+plan_unit_id: CV-292
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Every provider/model/media route support claim must carry a provider route support evidence envelope with provider_entry_id, provider_family_id, transport_kind, account_profile_ref, credential_profile_kind, model_id, requested_model_id, effective_model_id, requested_effort, effective_effort, support_state, verification_state, proof_kind, proof_timestamp, source_lineage, blocked_reason, and capability gates. Green/implementation-ready support requires local end-to-end prompt output or an explicitly scoped generated-media proof, not catalog visibility, HTTP 200 model listing, or OpenCode-routed proxy behavior alone.
+gui_related: false
+gui_classification_reason: Shared backend/provider evidence contract rather than visual presentation.
+depends_on: [CV-094, MS-113]
+unblocks: [MS-114, MGAC-095, F3-400, UF-074]
+acceptance_criteria:
+  - Support claims distinguish catalog-visible, local-prompt-verified, generated-media-verified, source-lineage-only, unsupported, disabled, capability-gated, and retired/source-lineage states.
+  - Proof records do not contain secrets, OAuth URLs, API keys, account identifiers, or local machine state.
+  - Direct-provider closure excludes OpenCode-server-routed provider results unless the support target is the OpenCode server route itself.
+  - Provider support evidence records preserve requested/effective provider, model, effort, account, and route identity.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_support_overclaim
+reasoning_tier: high
+context_scope: provider_support_evidence
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/Models_System.md, Plans/Media_Generation_and_Capabilities.md, Plans/usage-feature.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: provider_route_support_evidence_envelope, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0050
+  - pldg-20260624-001-provider-updates:atom-0055
+  - pldg-20260624-001-provider-updates:atom-0111
+  - pldg-20260624-001-provider-updates:atom-0125
+source_atom_ids: [atom-0050, atom-0051, atom-0053, atom-0054, atom-0055, atom-0059, atom-0060, atom-0077, atom-0091, atom-0092, atom-0093, atom-0094, atom-0100, atom-0101, atom-0102, atom-0104, atom-0109, atom-0111, atom-0124, atom-0125, atom-0129, atom-0132, atom-0135, atom-0138, atom-0140]
+preserved_exact_tokens: ["no-uncertainty", "local E2E", "output-level success", "catalog presence", "OpenCode server", "OpenCode-routed providers", "verified", "unverified", "capability-gated", "disabled", "source-lineage", "not implementation-ready"]
+negative_constraints:
+  - Do not clear a provider on catalog visibility or HTTP 200 model listing alone.
+  - Do not store API keys, OAuth URLs, account identifiers, or local secrets in Plans, ledgers, logs, artifacts, or evidence envelopes.
+  - Do not use OpenCode server or OpenCode-routed providers as direct-provider closure evidence.
+owner_hints: [Plans/Contracts_V0.md, Plans/Models_System.md, Plans/usage-feature.md, Plans/Media_Generation_and_Capabilities.md]
+```
+
+### CV-293 - Requested Effective Provider Identity And Effort Contract
+
+```yaml
+plan_unit_id: CV-293
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Provider execution envelopes must preserve requested and effective identity for provider, account/profile, model, auth surface, transport, effort level, media route, and tool/capability scope. Requested thinking effort is a user intent that may be honored, skipped, clamped, unsupported, partially supported, or mapped to a provider-specific wire value; the effective result and any fallback or clamp reason must remain queryable by GUI, usage, runtime artifacts, and audit consumers.
+gui_related: false
+gui_classification_reason: Runtime/request contract; GUI displays it but does not own the schema.
+depends_on: [MS-115, CV-292]
+unblocks: [ACD-424, F3-400, UF-074, RAP-032]
+acceptance_criteria:
+  - Requested provider/model/account/effort/media route and effective provider/model/account/effort/media route are recorded separately.
+  - Effort mapping includes honored, skipped, clamped, unsupported, and partially supported outcomes.
+  - Fallbacks disclose fallback_used and fallback_reason without hiding provider route identity.
+  - Consumers can query the same envelope without creating feature-local identity schemas.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: requested_effective_identity_drift
+reasoning_tier: high
+context_scope: requested_effective_provider_identity
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/Prompt_Pipeline.md, Plans/Multi-Account.md, Plans/Models_System.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: requested_effective_provider_identity_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0052
+  - pldg-20260624-001-provider-updates:atom-0119
+  - pldg-20260624-001-provider-updates:atom-0139
+source_atom_ids: [atom-0017, atom-0018, atom-0052, atom-0117, atom-0118, atom-0119, atom-0122, atom-0129, atom-0131, atom-0132, atom-0139, atom-0140]
+preserved_exact_tokens: ["requested_account", "effective_account", "requested provider/model/effort", "effective provider/model/effort", "fallback_used", "reasoning_effort", "thinking", "honored", "skipped", "clamped", "unsupported", "partially supported"]
+negative_constraints:
+  - Do not infer effective provider identity from model name alone.
+  - Do not silently drop unsupported thinking effort requests.
+  - Do not let GUI, usage, or artifact surfaces invent divergent requested/effective schemas.
+owner_hints: [Plans/Contracts_V0.md, Plans/Prompt_Pipeline.md, Plans/Multi-Account.md, Plans/Models_System.md]
+```
+
+### CV-294 - Caller-Scoped Capability And Provider-Native Artifact Envelope
+
+```yaml
+plan_unit_id: CV-294
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Provider capabilities and provider-native artifacts are caller-scoped. Capability payloads must include enabled_on_instance, usable_now, blocked_reason, caller_scope, execution_role, provider_entry_id, account_profile_ref, model_id, media_route_id, permission_snapshot_id, redaction_profile, verification_state, artifact_refs, and source_confidence where applicable. Provider-native tools and secrets are mediated through PM permission custody; artifacts may reference provider receipts, streamed logs/events, generated media, model catalogs, route/probe evidence, and adoption/drift/blocked/repair states without storing secrets.
+gui_related: false
+gui_classification_reason: Shared capability/artifact schema and permission custody contract rather than visual presentation.
+depends_on: [CV-292, CV-293]
+unblocks: [RAP-032, RAP-033, T-164, PS-119, POA-050]
+acceptance_criteria:
+  - Capability availability is caller-scoped and cannot be inferred from global provider enablement alone.
+  - Provider-native tool execution and secret custody pass through PM permission contracts.
+  - Runtime artifacts preserve provider receipts, generated media refs, logs/events, model catalogs, route/probe evidence, and drift/blocked states by reference.
+  - Secret values, OAuth URLs, and local account material are never stored in artifacts.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_capability_artifact_drift
+reasoning_tier: high
+context_scope: caller_scoped_provider_capabilities
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/Tools.md, Plans/Permissions_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+node_compile_hint: {mode: caller_scoped_provider_capability_artifact_envelope, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0117
+  - pldg-20260624-001-provider-updates:atom-0120
+  - pldg-20260624-001-provider-updates:atom-0121
+source_atom_ids: [atom-0049, atom-0116, atom-0117, atom-0118, atom-0120, atom-0121, atom-0122, atom-0130, atom-0131, atom-0133, atom-0136, atom-0137, atom-0138]
+preserved_exact_tokens: ["enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "providerIdentifier: client", "toolName: pm_echo", "permission_snapshot_id", "redaction_profile", "provider-native", "generated media", "route/probe evidence"]
+negative_constraints:
+  - Do not infer `usable_now` from `enabled_on_instance`.
+  - Do not bypass PM permission custody for provider-native tools or secrets.
+  - Do not store provider secret material in artifact payloads.
+owner_hints: [Plans/Contracts_V0.md, Plans/Tools.md, Plans/Permissions_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+```
+
 Rules:
 - Writers SHOULD include `run_id` and `thread_id` whenever available, but `EventEnvelopeV1` does not require them.
 - Readers MUST tolerate both envelopes; projectors SHOULD upgrade in-memory to `EventRecord` form.
@@ -943,7 +1065,7 @@ Providers may use one of these transport classes. The normalized stream contract
 - **Server-bridged:** HTTP REST + SSE to a local server process. OpenCode is server-bridged.
 - **Direct-provider:** direct provider endpoint calls with provider-native auth. Codex, Copilot, and Gemini Direct follow this class.
 - Provider support-state projections use the closed values `native`, `native_projected`, and `projected` so UI/help surfaces can distinguish provider-native support from PM-projected compatibility.
-- Direct-provider catalog candidates such as Alibaba, MiniMax, and Z.AI stay lower-confidence until a primary-source pass confirms the direct-provider shape; unverified entries must not be promoted as first-class PM direct providers.
+- Direct-provider catalog candidates remain route-specific. Alibaba/Qwen, MiniMax, Z.AI/Zhipu, Kimi, and similar coding-plan rows use the latest owner PlanUnits for current support state: verified rows may be first-class, while unverified, regional, entitlement-gated, balance-gated, or disabled rows must not be promoted as green from catalog presence alone.
 - Legacy `CLI/runtime outputs + CLI auth/import` design notes are migration provenance; Codex and Copilot-facing contracts reconcile toward direct-provider auth/runtime semantics while preserving `/import`, `/runtime`, PM skill access, and the separate `copilot_github` auth realm.
 
 Canonical enum contract for implementation:
@@ -1272,19 +1394,19 @@ Rules:
 - Codex supports `OAuthBrowser`, `OAuthDeviceCode`, and `ApiKey` for direct-provider auth/calls, but product auth copy must distinguish the ChatGPT-plan-plus-API-key model: plan-backed ChatGPT access and API-key usage are separate paths with separate billing/limit semantics.
 - GitHub Copilot uses `OAuthDeviceCode` for direct-provider auth/calls.
 - Gemini Direct (`gemini`) uses direct-provider auth/calls with `ApiKey` only.
-- Gemini CLI (`gemini_cli`) is a CLI-bridged provider entry that may resolve `oauth` requests through `CliInteractive`, `api_key` requests through CLI-managed API-key flows, and `google_credentials` requests through `GoogleCredentials` where the provider/runtime capability matrix supports them.
+- Antigravity CLI is the active Google-owned CLI-runtime provider entry for this lane; it uses its own `agy` setup/probe contract and must not reuse retired Gemini CLI account roots. Gemini CLI (`gemini_cli`) auth branches are retired/source-lineage only.
 - OpenCode uses server credentials for server access plus provider-native auth managed by OpenCode.
 - Anthropic Console/API setup surfaces use the helper action label `Sign in to Console/API` with helper text `Uses Anthropic API or workspace billing; cost and rate-limit reporting may be more precise` where the selected auth path can produce provider-authoritative billing or rate-limit data.
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
 
-- Gemini Direct and Gemini CLI are separate provider entries and MUST NOT be collapsed into one mixed auth pool.
+- Gemini Direct is an active direct API provider entry and MUST NOT be collapsed into Antigravity CLI or any retired Gemini CLI source-lineage.
 - `gemini` defaults `requested_auth_mode` to `api_key`.
-- `gemini_cli` defaults `requested_auth_mode` to `auto`, and the provider-default auth-surface preference is OAuth/CLI-interactive first, then API key, then Google credentials, unless project/run policy overrides it.
-- Explicit `oauth` or `cli_interactive` requests MUST filter to Gemini CLI accounts only.
+- `gemini_cli` default/auth-surface preference is retired/source-lineage only and must not be used for active routing.
+- Explicit `oauth` or `cli_interactive` requests MUST filter to active provider entries that support those auth surfaces, such as Antigravity or other verified CLI-runtime entries, not retired Gemini CLI.
 - Explicit `api_key` requests MUST remain inside the selected provider entry's API-key-capable accounts.
-- Explicit `google_credentials` requests MUST filter to Gemini CLI Google-credential accounts only.
-- There is no silent cross-provider fallback between `gemini` and `gemini_cli`.
+- Explicit `google_credentials` requests MUST filter to active provider entries that support Google credentials/ADC where verified.
+- There is no silent cross-provider fallback between `gemini`, Antigravity, and retired `gemini_cli` lineage.
 - The locked `auto` auth-mode rule is that `auto` follows provider, role, and account policy preference order for auth surfaces before account selection; it does not pick any credential opportunistically or bypass policy. Explicit auth-mode requests do not silently cross-fallback across account families or provider entries.
 - Each mixed-pool account profile carries an explicit auth-surface `/method` such as `oauth`, `api_key`, or the provider's equivalent so account resolution can distinguish OAuth quota, API-key billing, and provider-specific capability paths.
 
@@ -1317,7 +1439,7 @@ ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans
 Canonical enum families for setup, health, and readiness:
 
 ```text
-InstallableComponent = CursorAgent | ClaudeCodeCli | GeminiCli | Playwright | Nanobanana | OpenCodeServer
+InstallableComponent = CursorAgent | ClaudeCodeCli | AntigravityCli | Playwright | OpenCodeServer
 InstallJobState = NotInstalled | Installing | Installed | Uninstalling | Failed
 AuthJobState = LoggedOut | LoggingIn | LoggedIn | LoggingOut | AuthExpired | AuthFailed
 ProviderReadinessState = NeedsSetup | Validating | Ready | Degraded | ExternalNotManaged
@@ -1334,9 +1456,9 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Accoun
 Lifecycle rules:
 - Setup and Health MUST expose both `AuthJobState` and `ProviderReadinessState` when a provider can be authenticated but still blocked on configuration, billing/entity selection, trust, discovery, or validation.
 - `CursorAgent` is the canonical installable/runtime target for Cursor CLI integration.
-- `Nanobanana` is an installable helper for Gemini CLI media paths only when media is enabled.
+- `GeminiCli` and `Nanobanana` are retired/source-lineage installable tokens only and are not active PM installable components.
 - `AuthSurface = chatgpt` is the canonical user-facing direct-login family for Codex plan-backed usage.
-- `google_adc`, `service_account_json`, and `vertex_api_key` are separate validation branches for Gemini CLI Vertex/Google Cloud setups and MUST NOT be collapsed into a single unlabeled "Google credentials" setup path in user-facing flows.
+- `google_adc`, `service_account_json`, and `vertex_api_key` are separate validation branches where an active provider entry supports them; user-facing flows must not collapse them into a single unlabeled "Google credentials" setup path.
 - `UsagePressureState` is provider-agnostic and maps authoritative counters, authoritative blocks, monthly-plan exhaustion, or weaker inferred pressure into one normalized scheduler vocabulary.
 - Provider projections expose `pressure_state` with `nominal`, `approaching_threshold`, `threshold_reached`, `exhausted`, and `unknown` values; an `unhealthy` provider remains a readiness/health presentation and must not be collapsed into usage pressure.
 - provider-reported cooldown windows remain facts; user actions such as `Temporary Pause`, `Resume Now`, and `Mark Needs Recheck` are PM-imposed overlays and MUST NOT overwrite the provider-reported cooldown metadata.
@@ -7019,11 +7141,16 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Provider support-state projections use closed values native,
-  native_projected, and projected; direct-provider catalog candidates such as
-  Alibaba, MiniMax, and Z.AI remain lower-confidence until a primary-source pass
-  confirms direct-provider shape; legacy CLI/runtime outputs plus CLI
-  auth/import notes are migration provenance while /import, /runtime, PM skill
-  access, and copilot_github auth realm are preserved.
+  native_projected, and projected plus explicit evidence dispositions for
+  verified, unverified, unsupported, disabled, capability-gated,
+  separate-profile, source-lineage-only, and retired/source-lineage states.
+  Direct-provider catalog candidates such as Alibaba/Qwen, MiniMax, Kimi,
+  Z.AI/Zhipu, Cursor, GitHub Copilot, and OpenAI/Codex must not be promoted
+  from catalog visibility alone; local end-to-end prompt output or explicit
+  route proof is required for green implementation-ready status. Legacy
+  CLI/runtime outputs plus CLI auth/import notes are migration provenance while
+  /import, /runtime, PM skill access, and copilot_github auth realm are
+  preserved.
 gui_related: true
 gui_classification_reason: This unit affects provider support-state projections visible to UI/help surfaces.
 split_recommended: true
@@ -7031,7 +7158,8 @@ depends_on: [CV-092, CV-093]
 unblocks: []
 acceptance_criteria:
   - Provider support-state projections use native, native_projected, and projected.
-  - Alibaba, MiniMax, and Z.AI remain lower-confidence until primary-source confirmation.
+  - Direct-provider catalog candidates remain lower-confidence until route-specific local end-to-end proof or explicit primary-source route proof exists.
+  - Capability-gated, unsupported, disabled, unverified, source-lineage-only, separate-profile, and retired/source-lineage states remain distinct.
   - Legacy CLI/runtime outputs plus CLI auth/import notes remain migration provenance.
   - /import, /runtime, PM skill access, and copilot_github auth realm are preserved.
 validation_surfaces:
@@ -7057,14 +7185,28 @@ preserved_exact_tokens:
   - "`projected`"
   - "Alibaba"
   - "MiniMax"
+  - "Kimi"
   - "Z.AI"
+  - "Zhipu"
+  - "Cursor"
+  - "GitHub Copilot"
+  - "OpenAI/Codex"
+  - "verified"
+  - "unverified"
+  - "unsupported"
+  - "disabled"
+  - "capability-gated"
+  - "separate-profile"
+  - "source-lineage-only"
+  - "retired/source-lineage"
   - "`/import`"
   - "`/runtime`"
   - "`copilot_github`"
 compatibility_only_notes:
   - "Legacy CLI/runtime outputs plus CLI auth/import notes are migration provenance."
 negative_constraints:
-  - "Unverified direct-provider catalog candidates must not be promoted as first-class PM direct providers."
+  - "Unverified direct-provider catalog candidates must not be promoted as implementation-ready PM direct providers."
+  - "Catalog visibility, HTTP 200 model listing, or OpenCode-routed proof alone must not be treated as direct-provider closure evidence."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -9038,41 +9180,42 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-### CV-133 - Gemini Provider Split And Auth-Mode Filtering
+### CV-133 - Retired Gemini CLI Auth-Mode Filtering Lineage
 
 ```yaml
 plan_unit_id: CV-133
-unit_type: constraint
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Gemini Direct and Gemini CLI are separate provider entries with explicit
-  requested_auth_mode defaults, auth-surface filtering, and no silent
-  cross-provider fallback between gemini and gemini_cli.
+  Retired Gemini CLI auth-mode filtering vocabulary remains source-lineage
+  only. Active contracts keep Gemini Direct (`gemini`) as an API-key direct
+  provider and Antigravity CLI as the active Google-owned CLI-runtime route;
+  `gemini_cli` must not be implemented as an active provider entry, auth pool,
+  or fallback target.
 gui_related: false
-gui_classification_reason: This unit defines Gemini auth routing and provider-entry constraints.
+gui_classification_reason: Retired auth-routing lineage and compatibility disposition rather than visual presentation.
 split_recommended: true
 depends_on: [CV-017, CV-131]
-unblocks: [CV-134]
+unblocks: []
 acceptance_criteria:
-  - Gemini Direct and Gemini CLI remain separate provider entries.
-  - gemini defaults requested_auth_mode to api_key.
-  - gemini_cli defaults requested_auth_mode to auto and prefers OAuth/CLI-interactive first, then API key, then Google credentials unless policy overrides.
-  - Explicit oauth, cli_interactive, api_key, and google_credentials requests filter to the correct Gemini account families.
-  - There is no silent cross-provider fallback between gemini and gemini_cli.
+  - Gemini Direct remains active and defaults requested_auth_mode to api_key.
+  - gemini_cli remains preserved only as retired source-lineage.
+  - Active oauth, cli_interactive, api_key, and google_credentials filtering targets active provider entries only.
+  - There is no silent fallback into retired gemini_cli.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
-risk_class: gemini_provider_auth_pool_collapse
+risk_class: retired_gemini_cli_auth_pool_resurrection
 reasoning_tier: high
-context_scope: gemini_provider_auth_filtering
+context_scope: retired_gemini_cli_auth_filtering
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Multi-Account.md
   - Plans/Prompt_Pipeline.md
   - Plans/rewrite-tie-in-memo.md
 node_compile_hint:
-  mode: gemini_auth_filtering_constraint
+  mode: retired_gemini_cli_auth_filtering_lineage
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0047
@@ -9087,8 +9230,10 @@ preserved_exact_tokens:
   - "`google_credentials`"
   - "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD"
 negative_constraints:
-  - "Gemini Direct and Gemini CLI must not be collapsed into one mixed auth pool."
-  - "There is no silent cross-provider fallback between gemini and gemini_cli."
+  - "Do not implement gemini_cli as an active provider entry."
+  - "Do not route active oauth, cli_interactive, or google_credentials requests into retired Gemini CLI."
+compatibility_only_notes:
+  - The exact phrase "Gemini Direct and Gemini CLI must not be collapsed into one mixed auth pool" is retained as lineage; current active split is Gemini Direct plus Antigravity CLI.
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -9300,9 +9445,10 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Setup and Health expose both AuthJobState and ProviderReadinessState, preserve
-  CursorAgent, Nanobanana, Codex chatgpt auth surface, and keep google_adc,
-  service_account_json, and vertex_api_key as separate Gemini CLI
-  Vertex/Google Cloud validation branches.
+  CursorAgent, AntigravityCli, Codex chatgpt auth surface, and keep google_adc,
+  service_account_json, and vertex_api_key as separate validation branches only
+  for active provider entries that support them. Nanobanana and Gemini CLI
+  Vertex/Google Cloud setup wording is retired/source-lineage only.
 gui_related: true
 gui_classification_reason: This unit affects user-facing setup and health flows.
 split_recommended: true
@@ -9311,7 +9457,8 @@ unblocks: [CV-141]
 acceptance_criteria:
   - Setup and Health expose both AuthJobState and ProviderReadinessState when providers can be authenticated but still blocked.
   - CursorAgent remains the canonical installable/runtime target for Cursor CLI integration.
-  - Nanobanana remains an installable helper for Gemini CLI media paths only when media is enabled.
+  - AntigravityCli is the active Google-owned CLI-runtime installable/setup target for this lane.
+  - Nanobanana remains only a retired/source-lineage helper token and is not an active installable component.
   - AuthSurface = chatgpt remains the canonical user-facing direct-login family for Codex plan-backed usage.
   - google_adc, service_account_json, and vertex_api_key remain separate validation branches.
 validation_surfaces:
@@ -9334,6 +9481,7 @@ preserved_exact_tokens:
   - "`AuthJobState`"
   - "`ProviderReadinessState`"
   - "`CursorAgent`"
+  - "`AntigravityCli`"
   - "`Nanobanana`"
   - "`AuthSurface = chatgpt`"
   - "`google_adc`"
@@ -9341,6 +9489,10 @@ preserved_exact_tokens:
   - "`vertex_api_key`"
 negative_constraints:
   - "Google credential branches must not be collapsed into a single unlabeled Google credentials setup path in user-facing flows."
+  - "Do not expose Nanobanana as an active installable helper."
+  - "Do not expose Gemini CLI Vertex/Google Cloud setup as an active setup path."
+compatibility_only_notes:
+  - Nanobanana and Gemini CLI media/setup branches are retained only as retired source-lineage.
 owner_hints:
   - Plans/Contracts_V0.md
 ```

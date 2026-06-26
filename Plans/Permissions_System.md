@@ -309,6 +309,49 @@ Tool-family prefix wildcards are valid for MCP/server-provided tools as well as 
 "rm *" = "deny"
 ```
 
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into provider permission and secret-custody requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### PS-119 - Provider Secret Custody And Route Permission Boundaries
+
+```yaml
+plan_unit_id: PS-119
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Provider route credentials, OAuth/session state, API keys, subscription-backed auth, authorization URLs, local account roots, and provider-native tool access are governed by PM permission custody and secret redaction. Plans, ledgers, logs, runtime artifacts, usage rows, and GUI diagnostics may store credential locators, account/profile refs, redacted setup state, and proof metadata, but never raw secrets. Route permissions must distinguish direct API, CLI runtime, server bridge, subscription-backed, and provider-native tool access.
+gui_related: true
+gui_classification_reason: Permission prompts, setup diagnostics, and redacted provider state are visible GUI behavior.
+depends_on: [CV-294, MA-062]
+unblocks: [T-164, RAP-032, F3-400]
+acceptance_criteria:
+  - Provider credentials are referenced by non-secret locators or profile refs.
+  - API keys, OAuth URLs, session tokens, and local account secrets are never persisted in Plans, ledgers, logs, usage rows, or runtime artifacts.
+  - Provider-native tool access goes through permission snapshots and redaction profiles.
+  - Subscription-backed routes have distinct permission/account states from API-key routes.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_secret_leak
+reasoning_tier: high
+context_scope: provider_secret_custody
+implementation_surfaces: [Plans/Permissions_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/Tools.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: provider_secret_custody_boundaries, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0055
+  - pldg-20260624-001-provider-updates:atom-0120
+  - pldg-20260624-001-provider-updates:atom-0137
+source_atom_ids: [atom-0055, atom-0116, atom-0120, atom-0121, atom-0131, atom-0137, atom-0138]
+preserved_exact_tokens: ["Dont put it in the ledger.", "API key", "OAuth", "authorization URL", "credential_locator", "credential_ref", "subscription-backed", "provider-native tools", "redaction_profile", "permission_snapshot_id"]
+negative_constraints:
+  - Do not store raw provider API keys, OAuth URLs, tokens, account identifiers, or local secrets in Plans, ledgers, logs, artifacts, or diagnostics.
+  - Do not treat a subscription-backed route as equivalent to an API-key route for permission custody.
+  - Do not bypass permission snapshots for provider-native tools.
+owner_hints: [Plans/Permissions_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/Tools.md]
+```
+
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, PolicyRule:Decision_Policy.md§2
 
 **Case sensitivity:**

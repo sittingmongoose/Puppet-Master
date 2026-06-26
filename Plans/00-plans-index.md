@@ -18,6 +18,7 @@
 - 2026-06-18: Registered PRD Builder and Planning Wizard owner routing compiled from ledger `pldg-20260618-001-prd-planning-wizard`; bootstrap compile remains Plans/index-only and does not run finished-product Plan Compile or create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
 - 2026-06-21: Registered PRD/Planning runtime-contract repair: `Plans/prd_planning_runtime_contracts.json` and schema carry strict Native Ledger Service, ProjectContextSnapshot, stage-card, WorkNode, activation, testing, UICommand, clean-room, and retired-search-exclusion contracts; `scripts/pm-prd-planning-runtime-validate.py` is part of standard gates.
 - 2026-06-21: Retired `Plans/chain-wizard.md` and `Plans/chain-wizard-flexibility.md` from active product canon. Their `CW-*` and `CWF-*` PlanUnits are compatibility/source-lineage only and must not be accepted/indexed as active current-product truth.
+- 2026-06-26: Registered provider-update compile routing from ledger `pldg-20260624-001-provider-updates`: Gemini CLI is retired from active provider support, Gemini Direct remains API-key-backed, Antigravity CLI replaces Gemini CLI for the CLI-backed Google/agent route, Provider -> models catalogs are mandatory, media support splits input/output/generated-media routes, OpenAI/Codex subscription-backed image generation is mandatory alongside official OpenAI API-key image routes, and provider readiness stays route/model/account specific.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
@@ -187,7 +188,7 @@ The project is intentionally adapting an OpenCode-style architecture and is mid-
 - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
 - **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
 - **UI rewrite**: Rust + Slint (winit; Skia default)
-- **Auth**: subscription-first; Gemini is modeled as two provider entries, not one stale-canon `mixed-account` provider: Gemini Direct (`gemini`, direct key-only/API-key-backed) and Gemini CLI (`gemini_cli`, CLI-wrapped OAuth/API-key/Google-credential paths). The Gemini API key remains the explicit `key-exception` where that path is selected. Requested/effective auth, account identity, account/plan UI, and quota/usage labels are mode-dependent and carry across storage, runtime, setup/health, media capabilities, and usage
+- **Auth**: subscription-first; Gemini Direct (`gemini`, direct key-only/API-key-backed) remains active, while Gemini CLI (`gemini_cli`) is retired from active provider support and preserved only as source-lineage/compatibility terminology. Antigravity CLI is the active CLI-backed Google/agent route replacing the stale Gemini CLI route. Provider identity, requested/effective auth, account identity, account/plan UI, quota/usage labels, media capabilities, and setup/health are route-, account-, and model-dependent across direct providers, CLI-backed providers, coding-plan providers, and generated-media routes.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
@@ -444,7 +445,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run
 | `Plugins_System.md` | Canonical plugin system | SSOT for plugin discovery (internal/project/global/config paths), load order (deterministic), plugin context, 10 hook events with typed I/O and return enums, compaction hook (InjectContext/ReplacePrompt), custom tool registration with collision policy, structured plugin logging, GUI requirements (Settings > Plugins), and OpenCode baseline/deltas. |
 | `Formatters_System.md` | Canonical formatter system | SSOT for formatter lifecycle (HTE-only, triggered on File.Edited), built-in formatter table (21 formatters), per-formatter config (disabled/command/environment/extensions, `$FILE` placeholder), evidence tracking via `format.applied` events, GUI requirements (Settings > Formatters), and OpenCode baseline/deltas. |
 | `Models_System.md` | Canonical model system | SSOT for canonical model ID (`provider_id/model_id`), 6-level selection priority, model options (per-provider+model), per-Persona model overrides (`default_model`/`default_variant` in PERSONA.md frontmatter), variants (built-in default/fast/powerful + custom + disabling + cycling), canonical media model alias table (§6.8: Nano Banana, Nano Banana Pro, Veo fast, TTS flash, TTS pro), GUI requirements (Settings > Models, Chat model picker, variant picker), and OpenCode baseline/deltas. |
-| `Media_Generation_and_Capabilities.md` | Media generation and capability system SSOT | Canonical for `capabilities.get` (internal tool returning all media + provider-tool capabilities with enabled/disabled + disabled_reason + setup hints), `media.generate` (uniform media generation interface with per-request `model_override`, artifact-path output, and stable error codes), natural-language slot extraction grammar (deterministic regex-based prompt parsing), capability picker dropdown UI/UX, Cursor-native image routing (Image only; Video/TTS/Music unsupported on Cursor), Gemini media APIs, and verbatim UI copy strings. Model aliases for media (Nano Banana, Nano Banana Pro, Veo fast, TTS flash, TTS pro) are DRY-referenced from `Plans/Models_System.md` §6.8. |
+| `Media_Generation_and_Capabilities.md` | Media generation and capability system SSOT | Canonical for `capabilities.get` (internal tool returning all media + provider-tool capabilities with enabled/disabled + disabled_reason + setup hints), `media.generate` (uniform media generation interface with per-request `model_override`, artifact-path output, route-specific provider/model generated-media capabilities, artifact-path output, and stable error codes), natural-language slot extraction grammar, capability picker dropdown UI/UX, OpenAI/Codex subscription and API-key image routes, MiniMax Image-01, Gemini Direct where verified, provider-specific gated/unsupported rows, and media alias resolution. Cursor image-input proof and media aliases such as Nano Banana are not provider availability proof without route/catalog/artifact evidence. |
 | `OpenCode_Coverage_Matrix.md` | OpenCode-to-SSOT coverage audit | Audit of all OpenCode-derived capabilities (extraction §7A–§7H) vs Puppet Master SSOT docs. Coverage matrix, DRY authority audit, GUI/config wiring audit, and mandatory fix list (anchors/subsections). |
 | `Wiring_Matrix.md` | Wiring matrix template + examples | Canonical routing for UI command producer/consumer mappings and required runtime/browser/dev/catalog wiring coverage; example/template posture is subordinate to the canonical runtime wiring sections. |
 
@@ -1220,7 +1221,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  The rewrite tie-in preserves Rust + Slint UI rewrite, subscription-first auth, Gemini Direct and Gemini CLI split, key-exception, and requested/effective auth, account identity, account/plan UI, quota, and usage labels carrying across storage, runtime, setup/health, media capabilities, and usage.
+  The rewrite tie-in preserves Rust + Slint UI rewrite, subscription-first auth, Gemini Direct as active direct API,
+  Antigravity CLI as the active Google-owned CLI-runtime route, retired Gemini CLI split vocabulary as source-lineage
+  only, key-exception lineage, and requested/effective auth, account identity, account/plan UI, quota, and usage labels
+  carrying across storage, runtime, setup/health, media capabilities, and usage.
 gui_related: true
 gui_classification_reason: The unit covers Rust + Slint UI rewrite, account/plan UI, and visible auth/quota/usage labels.
 split_recommended: false
@@ -1254,10 +1258,13 @@ preserved_exact_tokens:
 - 'key-exception'
 - 'requested/effective auth'
 - 'account/plan UI'
-negative_constraints: []
-compatibility_only_notes: []
+negative_constraints:
+- 'Do not treat Gemini CLI as an active provider entry.'
+compatibility_only_notes:
+- 'Gemini Direct and Gemini CLI split is retained only as source-lineage; current active split is Gemini Direct plus Antigravity CLI.'
 stale_retired_dispositions:
 - 'Gemini is modeled as two provider entries, not one stale-canon mixed-account provider.'
+- 'Active Gemini CLI provider-entry support is retired by provider-update ledger pldg-20260624-001-provider-updates.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/00-plans-index.md
@@ -4438,4 +4445,83 @@ negative_constraints:
   - Do not revive Chain Wizard, Plan Wizard, Requirements Doc Builder, or Start Chain as current product terms.
   - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, Spec_Lock, shards, evidence, plan_graph, or auto_decisions from this compile.
 owner_hints: [Plans/00-plans-index.md, Plans/Tools.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/FinalGUISpec.md]
+```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260624-001-provider-updates` into this index. It registers owner routing only; detailed behavior remains owned by the referenced Plans docs. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### 0PI-061 - Provider Updates Owner Map And Retired Gemini CLI Anchor
+
+```yaml
+plan_unit_id: 0PI-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Provider updates from ledger pldg-20260624-001-provider-updates route to the existing provider owner docs instead of a new owner doc. Gemini CLI and gemini_cli are retired from active provider support and preserved only as compatibility/source-lineage tokens; Gemini Direct remains the API-key-backed direct provider; Antigravity CLI replaces Gemini CLI for the active CLI-backed Google/agent route. Provider support is now Provider -> models, with same-named models allowed under multiple provider entries, direct providers and CLI-backed providers kept separate, and coding-plan/provider-media rows marked green only from route-level E2E proof or explicit capability-gated/unverified status.
+gui_related: false
+gui_classification_reason: This is index owner routing and stale-anchor disposition, not visual presentation.
+depends_on: [PLS-001, PDS-005]
+unblocks: [MS-113, MA-062, CBP-019, MGAC-094, F3-400]
+acceptance_criteria:
+  - Gemini CLI appears only as retired/source-lineage/compatibility terminology after this compile.
+  - Provider updates route to Models_System, Multi-Account, CLI_Bridged_Providers, Media_Generation_and_Capabilities, Contracts_V0, usage-feature, FinalGUISpec, Provider_OpenCode, BinaryLocator_Spec, Tools, Permissions_System, Runtime_Artifacts_Panel, and Project_Output_Artifacts as owners or consumers.
+  - The index does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_owner_routing_drift
+reasoning_tier: high
+context_scope: provider_updates_owner_map
+implementation_surfaces:
+  - Plans/00-plans-index.md
+  - Plans/Models_System.md
+  - Plans/Multi-Account.md
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Media_Generation_and_Capabilities.md
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: owner_map_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0005
+  - pldg-20260624-001-provider-updates:atom-0015
+  - pldg-20260624-001-provider-updates:atom-0016
+  - pldg-20260624-001-provider-updates:atom-0024
+  - pldg-20260624-001-provider-updates:atom-0025
+  - pldg-20260624-001-provider-updates:atom-0115
+  - pldg-20260624-001-provider-updates:atom-0123
+source_atom_ids: [atom-0005, atom-0015, atom-0016, atom-0024, atom-0025, atom-0115, atom-0123]
+decision_refs: [dec-0002, dec-0004, dec-0005, dec-0008, dec-0034]
+correction_refs: [corr-0001, corr-0003, corr-0012]
+preserved_exact_tokens:
+  - "Kill Gemini cli support"
+  - "it’s being turned off, so no one can use it"
+  - "It has to be replaced by antigravity"
+  - "No, kill Gemini completely"
+  - "Gemini direct provider via api is ok to keep"
+  - "Provider -> models"
+  - "gemini_cli"
+  - "Gemini CLI"
+  - "GEMINI_CLI_HOME"
+  - "exactly 7 provider entries"
+  - "platform_specs.rs"
+  - "compatibility-only"
+  - "retired-token"
+negative_constraints:
+  - Do not preserve Gemini CLI as active provider support.
+  - Do not silently alias gemini_cli to antigravity_cli.
+  - Do not collapse provider/model identity across providers that expose the same model name.
+  - Do not rely on removed Rust/Iced or platform_specs.rs anchors as implementation authority.
+owner_hints:
+  - Plans/00-plans-index.md
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/Media_Generation_and_Capabilities.md
 ```
