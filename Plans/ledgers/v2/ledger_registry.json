@@ -96,10 +96,10 @@
   "sealed_ledgers": [
     {
       "created_at_utc": "2026-06-24T09:38:50Z",
-      "last_updated_at": "2026-06-26T15:51:34Z",
-      "last_updated_at_utc": "2026-06-26T15:51:34Z",
+      "last_updated_at": "2026-06-26T16:48:05Z",
+      "last_updated_at_utc": "2026-06-26T16:48:05Z",
       "ledger_id": "pldg-20260624-001-provider-updates",
-      "notes": "Compiled provider-update atoms into canonical Plans, regenerated PlanUnit index, refreshed migration proof, configured shards, evidence bundles, Spec_Lock, plan graph/auto-decision validations, and sealed governance. node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+      "notes": "Compiled provider-update atoms into canonical Plans, regenerated PlanUnit index, refreshed migration proof, configured shards, evidence bundles, Spec_Lock, plan graph/auto-decision validations, sealed governance, and closed the latest semantic repair certification. node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
       "phase": "compiled_to_plans_governance_sealed",
       "primary_goal": "Provider updates compiled to canonical Plans and governance sealed.",
       "resume_file": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/handoff.json",
@@ -643,5 +643,5 @@
       "title": "Ledger, plan document standardization, and plan-to-node readiness system"
     }
   ],
-  "updated_at_utc": "2026-06-26T10:01:39Z"
+  "updated_at_utc": "2026-06-26T16:48:05Z"
 }

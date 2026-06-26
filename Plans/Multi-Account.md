@@ -526,7 +526,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Pol
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#42-authpolicy
 
 Canonical Gemini usage/source expectations:
-- show one shared Gemini-family usage surface rather than separate top-level Gemini Direct vs Gemini CLI pages
+- show one shared Gemini-family usage surface for active entries such as Gemini Direct and Antigravity CLI where they expose usage/account state; retired Gemini CLI terms may appear only as source-lineage or migration diagnostics, not as a top-level usage page
 - label OAuth-backed views as `Gemini quota` when authoritative quota semantics are available
 - label API-key/local-only views with source-qualified wording such as `Gemini (estimated)` when authoritative quota data is not available
 - expose `source_confidence` so users can tell whether quota pressure is authoritative, structured, heuristic, or local-only; legacy `signal_confidence` is an import/display alias only
