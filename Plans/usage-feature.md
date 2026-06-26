@@ -276,10 +276,10 @@ ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans
 - Claude Code CLI subscription `/stats` visibility generally informs pressure; PM records `/exhaustion` only when the runtime or provider explicitly signals a hard block or exhausted state.
 - API / Console / organization-backed Claude Code limits are org-level and may include monthly spend limits plus shorter-window rate limits such as `RPM` and `/TPM`; subscriber-backed rows must not reuse those hard limit semantics without provider evidence.
 
-### Gemini -- Direct and CLI usage (mode-dependent)
-Gemini usage must distinguish the direct provider from Gemini CLI while still allowing family-level pooling when policy permits. Stale-canon wording that reduces Gemini to local counters, a single `mixed-account` provider, or a generic API-key `key-exception` is not sufficient for Usage.
+### Gemini Direct, Antigravity, and retired Gemini CLI usage
+Gemini Direct usage must stay route-specific, and Antigravity CLI usage must be modeled as its own active CLI-runtime route where verified. Gemini CLI usage is retired/source-lineage only. Stale-canon wording that reduces Gemini to local counters, a single `mixed-account` provider, or a generic API-key `key-exception` is not sufficient for Usage.
 
-The provider-doc reconciliation keeps `Plans/CLI_Bridged_Providers.md` as the owner for Gemini CLI runtime transport. Usage must not collapse Gemini into one direct provider with mixed OAuth/API-key pools and no CLI runtime.
+The provider-doc reconciliation keeps `Plans/CLI_Bridged_Providers.md` as the owner for active CLI-runtime transport. Usage must not revive Gemini CLI as a live provider row; active Google-owned CLI-runtime evidence belongs to Antigravity.
 
 #### Gemini direct
 
@@ -295,31 +295,28 @@ Rules:
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Media_Generation_and_Capabilities.md
 
-#### Gemini CLI
+#### Retired Gemini CLI usage lineage
 
-`Gemini CLI` is a separate provider entry.
+`Gemini CLI` is not an active provider entry. The following tokens remain only as retired/source-lineage evidence.
 
 Rules:
-- Gemini CLI may use OAuth, direct API key, or Vertex/Google credential families depending the configured account row.
-- `Gemini CLI` OAuth/API/Vertex usage paths remain auth-family dependent, with runtime stats and provider quota signals treated as multi-source `/usage` evidence rather than one fixed reset shape.
-- `/stats model` can expose current-session usage plus quota-associated limit information, but PM still treats those `/stats` values as auth-family-sensitive rather than one universal Gemini CLI counter.
-- trust can affect runtime MCP visibility, so `Configured`, `Working`, and `Operational` must remain separate states.
-- provider-side model routing may still override the explicitly requested model in some flows; PM must show requested/effective differences rather than assuming full determinism.
-- usage/cooldown behavior depends on the active auth family and may range from authoritative remaining counters to softer or inferred pressure.
+- Do not create active Gemini CLI usage rows.
+- Do not aggregate Gemini CLI OAuth/API/Vertex usage paths into live Gemini family usage.
+- Preserve exact lineage tokens such as OAuth, direct API key, Vertex/Google credentials, `/stats model`, `Configured`, `Working`, `Operational`, and requested/effective model differences for audit only.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
 #### Family-pooling rule
 
-When policy pools Gemini direct and Gemini CLI together, the Usage surface must still show which concrete runtime surface actually handled the run and why.
+When policy pools active provider entries, the Usage surface must show which concrete runtime surface actually handled the run and why. Gemini Direct and Antigravity can participate only when their effective capabilities satisfy the request. Retired Gemini CLI cannot be selected as an active pool member.
 
-Gemini account/plan UI and quota/usage tools are mode-dependent rather than API-key-only or OAuth-only. Direct key-backed rows, CLI OAuth rows, CLI API-key rows, and CLI Google/Vertex rows must each carry their own effective auth mode, account/profile, quota plane, source confidence, and label; family-level summaries may aggregate only after preserving those requested/effective disclosures.
+Gemini Direct account/plan UI and quota/usage tools are API-key/direct-route specific. Antigravity CLI usage rows carry their own effective model, account/profile/setup state, source confidence, and label. Family-level summaries may aggregate only after preserving requested/effective disclosures.
 
 Usage UI and `/settings` surfaces inherit the GUI requested-vs-effective pattern: per-platform labels remain visible because quota semantics differ by provider, and Gemini rows must expose the requested auth/account intent beside the effective mode, quota bucket, and source label.
 
 Before saving family-pooling changes, Usage shows the preferred provider inside the family plus a capability-guardrail explanation.
 
-Gemini shared-provider capability posture is locked for Usage and account-pressure interpretation:
+Active shared-provider capability posture is locked for Usage and account-pressure interpretation:
 - `supports_multi_account = true`
 - `supports_threshold_switch = true`
 - `supports_hard_exhaustion_detection = true`
@@ -332,7 +329,7 @@ Gemini shared-provider capability posture is locked for Usage and account-pressu
 - `auth_recovery_methods` include browser relogin `/re-auth` for OAuth and key replacement/update for API-key accounts.
 - `quota_signal_sources` include direct provider quota signals when available, structured runtime output, provider heuristics, error hints, and local rollups.
 
-Gemini `/quota` visibility is mode-aware. OAuth-backed rows may surface Gemini-plan / Code Assist-style quota semantics when authoritative evidence exists; API-key-backed rows remain a separate quota bucket and MUST NOT be mislabeled as the same quota bucket or plan path. Stale `/AI-Studio-oriented` copy is allowed only as historical context: live Usage UI and specs must label the resolved auth mode, usage source, source confidence, and quota bucket instead of implying that AI Studio API-key setup is the whole Gemini usage model.
+Gemini Direct `/quota` visibility is API-key/direct-route aware. Antigravity usage visibility depends on the verified CLI/runtime signals available for the selected account/profile/model. Stale `/AI-Studio-oriented` and Gemini CLI Code Assist-style copy is allowed only as historical context: live Usage UI and specs must label the resolved provider route, auth mode, usage source, source confidence, and quota bucket.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 ### Summary table (augmentation sources)
@@ -345,7 +342,8 @@ Provider/backend usage normalization distinguishes authoritative native usage `/
 | **GitHub Copilot** | provider quotas, premium-request semantics, runtime refusals, policy blocks | GitHub login plus selected billing/entity context when required | show billing/entity and blocked reason explicitly |
 | **Claude Code CLI** | API/admin usage where available, runtime signals, softer subscriber stats | subscriber, console/API, or SSO account rows | show whether data is authoritative or inferred |
 | **Gemini** | provider usage, quota APIs, project attribution, error hints | direct API-key account rows | show project attribution and estimated-vs-authoritative status honestly |
-| **Gemini CLI** | CLI/runtime signals, config/trust state, provider counters when available | OAuth, API-key, `ADC`, `gcloud`, service-account, or Vertex account rows | show concrete runtime surface and auth family |
+| **Antigravity CLI** | CLI/runtime signals, model-list/prompt-output evidence, provider counters when available | Google OAuth/system-keyring, ADC, and local profile-root setup where verified | show concrete runtime surface, model, account/profile, and source confidence |
+| **Gemini CLI (retired)** | source-lineage only | OAuth, API-key, `ADC`, `gcloud`, service-account, or Vertex account rows are not active setup paths | do not show as an active usage row |
 | **OpenCode** | server health/discovery plus upstream provider usage where exposed through the server | managed or attached server profiles; provider-scoped OAuth record pools may expose an active record and ordered account lists | separate connected/discovery status from actual provider availability |
 
 `Server Profiles` render inside the same runtime ontology as account-backed selectable units: they use a `row-type` badge and `/secondary` label instead of becoming a separate configuration system.
@@ -1956,14 +1954,16 @@ owner_hints:
 - Plans/usage-feature.md
 ```
 
-### UF-021 - Gemini Cli Usage Evidence
+### UF-021 - Retired Gemini CLI Usage Evidence
 
 ```yaml
 plan_unit_id: UF-021
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Gemini CLI Usage evidence is auth-family dependent across OAuth, direct API key, Vertex/Google credentials, ADC, gcloud, service-account, and runtime stats such as /stats model, while Configured, Working, Operational, and requested/effective model differences remain separate.
+canonical_text: Gemini CLI usage evidence vocabulary is retired/source-lineage only. OAuth, direct API key, Vertex/Google
+  credentials, ADC, gcloud, service-account, /stats model, Configured, Working, Operational, and requested/effective model
+  difference tokens remain auditable, but PM must not create active Gemini CLI usage rows or scheduler pressure signals.
 gui_related: false
 gui_classification_reason: The unit preserves runtime/provider evidence rather than GUI presentation.
 split_recommended: false
@@ -1980,13 +1980,13 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: usage_feature_drift
+risk_class: retired_gemini_cli_usage_resurrection
 reasoning_tier: standard
 context_scope: usage_feature_batch_194
 implementation_surfaces:
 - Plans/usage-feature.md
 node_compile_hint:
-  mode: gemini_cli_usage_evidence
+  mode: retired_gemini_cli_usage_evidence
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0031
@@ -2003,23 +2003,30 @@ preserved_exact_tokens:
 - Working
 - Operational
 - requested/effective
-negative_constraints: []
+negative_constraints:
+- Do not create active Gemini CLI usage rows.
+- Do not use retired Gemini CLI stats as scheduler pressure signals.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Gemini CLI usage tokens are retained only for migration/currentness lineage.
+stale_retired_dispositions:
+- Active Gemini CLI usage evidence is retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_hints:
 - Plans/usage-feature.md
 ```
 
-### UF-022 - Gemini Family Pooling Capability Posture
+### UF-022 - Active Provider Family Pooling Capability Posture
 
 ```yaml
 plan_unit_id: UF-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: When policy pools Gemini direct and Gemini CLI, Usage still shows the concrete runtime surface, requested/effective auth/account intent, quota bucket, source confidence, capability posture supports_* flags, auth recovery methods, and quota signal sources; API-key buckets must not be mislabeled as OAuth/Code Assist quota paths.
+canonical_text: When policy pools active provider entries, Usage still shows the concrete runtime surface, requested/effective
+  auth/account intent, quota bucket, source confidence, capability posture supports_* flags, auth recovery methods, and quota
+  signal sources. Gemini Direct and Antigravity may pool only when their effective capabilities satisfy the request; retired
+  Gemini CLI cannot be selected as an active pool member. API-key buckets must not be mislabeled as OAuth/Code Assist quota paths.
 gui_related: true
 gui_classification_reason: The unit governs visible pooled Gemini usage and capability disclosure.
 split_recommended: true
@@ -2042,7 +2049,7 @@ context_scope: usage_feature_batch_194
 implementation_surfaces:
 - Plans/usage-feature.md
 node_compile_hint:
-  mode: gemini_family_pooling_capability_posture
+  mode: active_provider_family_pooling_capability_posture
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0032
@@ -2060,11 +2067,14 @@ preserved_exact_tokens:
 - quota_signal_sources
 negative_constraints:
 - Gemini API-key-backed rows remain a separate quota bucket and MUST NOT be mislabeled as the same quota bucket or plan path.
+- Retired Gemini CLI must not participate as an active pool member.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md'
-compatibility_only_notes: []
+compatibility_only_notes:
+- The exact phrase "Gemini direct and Gemini CLI" pooling wording is retained only as source-lineage.
 stale_retired_dispositions:
 - Stale `/AI-Studio-oriented` copy is historical context only.
+- Active Gemini CLI usage pooling is retired.
 owner_hints:
 - Plans/usage-feature.md
 ```
@@ -5001,3 +5011,85 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Phase 2B batch 194 atomized `usage-feature-S0011` through `usage-feature-S0037` plus semantic anchor headings `usage-feature-S0003` through `usage-feature-S0010` into fine-grained PlanUnits `UF-002` through `UF-026`, while structurally dispositioning the title/preface, source-lineage/reference tables, parent headings, and migration-only material in `usage-feature-S0001`, `usage-feature-S0002`, `usage-feature-S0016`, `usage-feature-S0017`, `usage-feature-S0018`, and `usage-feature-S0035`. `UF-001` is narrowed to residual source-preserving coverage for `usage-feature-S0038` through `usage-feature-S0103` only and must not override the fine-grained units. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code. Phase 2B batch 195 atomized `usage-feature-S0038` through `usage-feature-S0092` into fine-grained PlanUnits `UF-027` through `UF-056` or mapped spans to existing fine-grained `UF-005` and `UF-007`, while structurally dispositioning parent headings, Version History, and widget-addendum heading material. `UF-001` is narrowed to residual source-preserving coverage for `usage-feature-S0093` through `usage-feature-S0103` only and must not override the fine-grained units. Batch 195 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code. Phase 2B batch 196 atomized `usage-feature-S0093` through `usage-feature-S0103` into fine-grained PlanUnits `UF-057` through `UF-073` or mapped cross-cutting clauses to existing fine-grained `UF-005`, `UF-006`, and `UF-007`, while structurally dispositioning the cross-reference list and runtime observability parent heading. `UF-001` is narrowed to generated-tail source-preserving coverage for `usage-feature-S0104` through `usage-feature-S0107` only and must not override the fine-grained units. Batch 196 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code. Phase 2B batch 197 structurally dispositioned generated Owner / Consumer Map, PlanUnits heading, and Migration Coverage tail spans `usage-feature-S0104`, `usage-feature-S0105`, and `usage-feature-S0107`, and retired generated bridge span `usage-feature-S0106` through `UF-001` as migration-lineage-only compatibility residue. `UF-001` no longer uses `source_preserving_planunit` mode and must not own product coverage. Batch 197 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into canonical usage and quota presentation requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### UF-074 - Provider Usage Source Confidence And Missing-Vs-Zero Contract
+
+```yaml
+plan_unit_id: UF-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  Provider usage displays must carry source_confidence and distinguish missing, unavailable, unsupported, blocked, stale, estimated, provider-reported, and zero. Usage rows consume requested/effective provider, model, account, route, media, and artifact identity from Contracts/Models rather than inventing a feature-local provider schema. Media generation and coding-plan usage must disclose whether usage comes from provider status-line fields, direct provider API metadata, artifact receipts, local estimates, or unavailable source state.
+gui_related: true
+gui_classification_reason: Usage/quota/status rows are user-visible presentation and recovery behavior.
+depends_on: [CV-292, CV-293, MA-063]
+unblocks: [F3-400, F3-401, RAP-032]
+acceptance_criteria:
+  - Missing or unavailable provider usage is not displayed as zero.
+  - Usage rows carry source confidence and route/account/model identity.
+  - Media-generation artifacts can contribute usage/receipt metadata by reference.
+  - Provider-specific source types are disclosed without exposing secrets.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: usage_source_confidence_drift
+reasoning_tier: high
+context_scope: provider_usage_source_confidence
+implementation_surfaces: [Plans/usage-feature.md, Plans/Contracts_V0.md, Plans/Multi-Account.md, Plans/Runtime_Artifacts_Panel.md]
+node_compile_hint: {mode: provider_usage_source_confidence, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0122
+  - pldg-20260624-001-provider-updates:atom-0129
+  - pldg-20260624-001-provider-updates:atom-0130
+source_atom_ids: [atom-0031, atom-0034, atom-0074, atom-0106, atom-0122, atom-0129, atom-0130, atom-0131, atom-0132, atom-0137, atom-0138]
+preserved_exact_tokens: ["source_confidence", "missing-vs-zero", "rate_limits", "five_hour.used_percentage", "seven_day.used_percentage", "provider-reported", "estimated", "blocked", "unsupported", "unavailable", "zero"]
+negative_constraints:
+  - Do not display missing usage as zero.
+  - Do not infer usage source confidence from provider family alone.
+  - Do not expose secret material in usage diagnostics or receipts.
+owner_hints: [Plans/usage-feature.md, Plans/Contracts_V0.md, Plans/Runtime_Artifacts_Panel.md, Plans/FinalGUISpec.md]
+```
+
+### UF-075 - Provider Plan Gating And Quota Pressure Presentation
+
+```yaml
+plan_unit_id: UF-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: >-
+  Provider usage and quota pressure must surface provider-specific plan, subscription, region, balance, resource-package, and entitlement gates without converting them into purchase blockers. Kimi For Coding, MiniMax, Z.AI/Zhipu, GitHub Copilot, OpenAI/Codex subscription image generation, Alibaba/Qwen, Tencent, KUAE, and Umans rows may show disabled/capability-gated/unverified states until directly proven. Z.AI `glm-5.1`/`glm-5.2` overload, `glm-5v-turbo` plan-not-included, and image-generation balance/resource gating are accepted upstream/account states.
+gui_related: true
+gui_classification_reason: Quota, plan, entitlement, and recovery states are user-visible usage/settings behavior.
+depends_on: [UF-074, MS-114, MA-063]
+unblocks: [F3-400, F3-401]
+acceptance_criteria:
+  - Usage view distinguishes entitlement gaps, plan-not-included, balance/resource gating, regional profile mismatch, overload, and unsupported routes.
+  - Rows that cannot be tested because no additional subscription is purchased are not compile blockers.
+  - Provider media and coding-plan rows inherit the same support-state vocabulary as Models/Contracts.
+  - Recovery copy points to concrete setup or account facts when available.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_plan_gate_ui_drift
+reasoning_tier: high
+context_scope: provider_plan_usage_presentation
+implementation_surfaces: [Plans/usage-feature.md, Plans/FinalGUISpec.md, Plans/Multi-Account.md, Plans/Models_System.md]
+node_compile_hint: {mode: provider_plan_gate_usage_presentation, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0124
+  - pldg-20260624-001-provider-updates:atom-0128
+  - pldg-20260624-001-provider-updates:atom-0138
+source_atom_ids: [atom-0107, atom-0108, atom-0110, atom-0111, atom-0124, atom-0125, atom-0126, atom-0127, atom-0128, atom-0129, atom-0131, atom-0132, atom-0135, atom-0138, atom-0139, atom-0140]
+preserved_exact_tokens: ["Kimi For Coding", "MiniMax", "Z.AI", "Zhipu", "GitHub Copilot", "OpenAI/Codex", "Alibaba/Qwen", "Tencent", "KUAE", "Umans", "glm-5.1", "glm-5.2", "glm-5v-turbo", "plan-not-included", "balance/resource gating", "overload", "capability-gated", "unverified"]
+negative_constraints:
+  - Do not ask Jared to buy additional subscription plans to complete this planning lane.
+  - Do not hide entitlement, region, balance, resource-package, or overload states behind generic provider failure.
+  - Do not mark untested rows green from Models.dev or OpenCode config alone.
+owner_hints: [Plans/usage-feature.md, Plans/FinalGUISpec.md, Plans/Models_System.md, Plans/Multi-Account.md]
+```

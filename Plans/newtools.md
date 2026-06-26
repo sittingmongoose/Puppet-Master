@@ -20,7 +20,7 @@ This plan remains authoritative for *what* tool discovery/testing support must e
 - tool execution results normalize into the **unified event model** and store through seglog -> projections (redb/Tantivy)
 - tool latency and errors from the unified event model feed analytics scan jobs and dashboard rollups
 - UI wiring details should be re-expressed in Slint (not Iced) without changing feature semantics
-- auth policy remains subscription-first, with Gemini API key as the explicit `key-exception` where the selected provider entry supports it; stale-canon one-provider `mixed-account` Gemini wording is retired in favor of Gemini Direct (`gemini`, key-only/API-key-backed) and Gemini CLI (`gemini_cli`, mode-dependent OAuth/API-key/Google-credential rows), with requested/effective auth/account identity kept consistent with the shared provider runtime
+- auth policy remains subscription-first, with Gemini API key as the explicit `key-exception` where the selected provider entry supports it; stale-canon one-provider `mixed-account` Gemini wording and Gemini CLI (`gemini_cli`) active-provider wording are retired in favor of Gemini Direct (`gemini`, key-only/API-key-backed) plus Antigravity CLI as the active Google-owned CLI-runtime route, with requested/effective auth/account identity kept consistent with the shared provider runtime
 - for this task, deliverables remain **Plans-folder documentation updates for the Slint rebuild**; no legacy Iced runtime wiring is required
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
@@ -1406,7 +1406,7 @@ plan_unit_id: N2-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: UI wiring is Slint-era only, no legacy Iced runtime wiring is required. Subscription-first auth preserves Gemini Direct gemini, Gemini CLI gemini_cli, and key-exception semantics while retiring stale one-provider mixed-account Gemini wording.
+canonical_text: UI wiring is Slint-era only, no legacy Iced runtime wiring is required. Subscription-first auth preserves Gemini Direct gemini, Antigravity CLI as the active Google-owned CLI-runtime route, key-exception semantics where supported, and gemini_cli only as retired/source-lineage vocabulary while retiring stale one-provider mixed-account Gemini wording.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -1434,16 +1434,19 @@ preserved_exact_tokens:
 - no legacy Iced runtime wiring
 - Gemini Direct
 - gemini
+- Antigravity CLI
 - Gemini CLI
 - gemini_cli
 - key-exception
 - mixed-account
 negative_constraints:
 - Legacy Iced runtime wiring is not required for this task.
+- Do not preserve Gemini CLI or gemini_cli as an active provider route.
 compatibility_only_notes:
 - Deliverables remain Plans-folder documentation updates for the Slint rebuild.
+- Gemini CLI and gemini_cli are retained only as retired/source-lineage vocabulary.
 stale_retired_dispositions:
-- Stale one-provider mixed-account Gemini wording is retired in favor of Gemini Direct and Gemini CLI.
+- Stale one-provider mixed-account Gemini wording is retired in favor of Gemini Direct plus Antigravity CLI, with Gemini CLI active-provider wording retired.
 owner_boundary_notes: []
 owner_hints:
 - Plans/newtools.md

@@ -74,10 +74,173 @@ ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
       "category": "media",
       "enabled": false,
       "disabled_reason": "NOT_CONFIGURED",
-      "setup_hint": "Configure Gemini access in Settings -> Authentication."
+      "setup_hint": "Configure an eligible media provider route in Settings -> Providers."
     }
   ]
 }
+```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into canonical media capability requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### MGAC-094 - Provider Media Route Taxonomy
+
+```yaml
+plan_unit_id: MGAC-094
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: >-
+  Provider media support is route-specific and must be modeled as separate `media_input`, `media_output`, and `generated_media_routes[]` capabilities under concrete provider/model rows. PM must preserve explicit per-media support-state labels for green, disabled, capability-gated, unverified, unsupported, separate-profile, and source-lineage-only states. Gemini CLI removal also removes Gemini-default setup copy; Gemini Direct API remains a media-capable direct provider route where verified.
+gui_related: false
+gui_classification_reason: Canonical media capability schema and support-state semantics rather than visual presentation.
+depends_on: [MS-113, CV-094]
+unblocks: [F3-401, RAP-032, POA-050]
+acceptance_criteria:
+  - Media input, media output, and generated-media routes are not collapsed into one generic supports-media flag.
+  - Support-state labels distinguish unsupported, unverified, disabled, capability-gated, separate-profile, and source-lineage-only rows.
+  - Gemini CLI is not used as the default media setup path; Gemini Direct API may remain active.
+  - Provider-family grouping does not erase account, billing, region, or route differences.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: media_capability_drift
+reasoning_tier: high
+context_scope: provider_media_capability_taxonomy
+implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: provider_media_route_taxonomy, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0026
+  - pldg-20260624-001-provider-updates:atom-0027
+  - pldg-20260624-001-provider-updates:atom-0046
+  - pldg-20260624-001-provider-updates:atom-0130
+source_atom_ids: [atom-0026, atom-0027, atom-0028, atom-0035, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0048, atom-0049, atom-0074, atom-0092, atom-0098, atom-0101, atom-0105, atom-0130, atom-0138]
+preserved_exact_tokens: ["media_input", "media_output", "generated_media_routes[]", "Gemini Direct", "Gemini CLI", "disabled", "capability-gated", "unverified", "unsupported", "separate-profile", "source-lineage"]
+negative_constraints:
+  - Do not use Gemini CLI or Gemini-default copy as the active media setup path.
+  - Do not mark image input as image generation.
+  - Do not flatten route-specific media state into a single provider-level boolean.
+owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/usage-feature.md]
+```
+
+### MGAC-095 - OpenAI/Codex Images 2 Route Families
+
+```yaml
+plan_unit_id: MGAC-095
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: >-
+  OpenAI/Codex Images 2 support is mandatory and split into separate route families: official OpenAI API-key `gpt-image-2` generation/edit, Responses API hosted `image_generation`, and OpenAI/Codex subscription-backed image generation. The subscription-backed route must be modeled as required product support with explicit auth model, credential custody, support-state, terms-risk, artifact handling, rate-limit/plan disclosure, and local end-to-end verification before runtime green status. `opencode-gpt-imagegen` is source-lineage for UX, artifact, and subscription-route lessons only, not backend canon or auth storage canon.
+gui_related: false
+gui_classification_reason: Media route capability and backend/auth contract; GUI consumes controls and disclosures.
+depends_on: [MGAC-094, MS-113, CV-292]
+unblocks: [F3-401, RAP-032, POA-050, UF-074]
+acceptance_criteria:
+  - OpenAI API-key image routes and OpenAI/Codex subscription-backed image routes remain separate.
+  - "`gpt-image-2` endpoint-specific parameters are preserved where supported: image refs, size/custom size, quality, output format, compression, input fidelity, partial/streaming images, background, moderation, and `n`."
+  - Subscription-backed support is mandatory, not optional, but cannot be marked runtime-green without E2E verification.
+  - C2PA/SynthID provenance is represented as a caveat, not a complete durable guarantee.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: openai_codex_image_route_drift
+reasoning_tier: high
+context_scope: openai_codex_image_generation
+implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Multi-Account.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+node_compile_hint: {mode: openai_codex_images2_route_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0029
+  - pldg-20260624-001-provider-updates:atom-0030
+  - pldg-20260624-001-provider-updates:atom-0031
+  - pldg-20260624-001-provider-updates:atom-0137
+source_atom_ids: [atom-0029, atom-0030, atom-0031, atom-0032, atom-0033, atom-0034, atom-0038, atom-0136, atom-0137]
+preserved_exact_tokens: ["OpenAI", "ChatGPT", "Codex", "ChatGPT Images 2.0", "GPT Image 2", "gpt-image-2", "image_generation", "$imagegen", "C2PA", "SynthID", "opencode-gpt-imagegen", "mandatory", "not optional"]
+negative_constraints:
+  - Do not treat Codex built-in image generation, ChatGPT UI image generation, OpenAI API image generation, and MCP image generation as one interchangeable backend.
+  - Do not import `opencode-gpt-imagegen` backend/auth behavior as canonical PM backend support.
+  - Do not overpromise transparent background, partial images, streaming, batch, or provenance behavior across endpoints that do not support it.
+owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md]
+```
+
+### MGAC-096 - MiniMax Image-01 Generated-Media Route
+
+```yaml
+plan_unit_id: MGAC-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: >-
+  MiniMax global `Image-01` is an implementation-ready generated-media provider route under the MiniMax global account/profile, separate from MiniMax CN. PM must target `https://api.minimax.io` `POST /v1/image_generation` with `model: image-01`, prompt max 1500, `aspect_ratio` or width/height, `response_format: url|base64`, seed, `n` 1-9, `prompt_optimizer`, partial success/failure counts, trace id/base response status, and 24-hour URL expiry handling. `aspect_ratio` takes precedence over width/height; width and height are 512-2048 and divisible by 8 when both are used.
+gui_related: false
+gui_classification_reason: Provider generated-media route contract and artifact semantics rather than visual presentation.
+depends_on: [MGAC-094, MS-114]
+unblocks: [F3-401, RAP-032, POA-050]
+acceptance_criteria:
+  - MiniMax global Image-01 appears in the generated-media provider list.
+  - MiniMax CN is kept as a separate unverified credential/profile route when only a global key is tested.
+  - URL outputs carry 24-hour expiry warnings and artifact capture requirements.
+  - Partial success and provider status metadata are not flattened into binary success/failure.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: minimax_image_route_drift
+reasoning_tier: high
+context_scope: minimax_generated_media
+implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+node_compile_hint: {mode: minimax_image01_route_contract, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0127
+  - pldg-20260624-001-provider-updates:atom-0133
+  - pldg-20260624-001-provider-updates:atom-0134
+source_atom_ids: [atom-0127, atom-0130, atom-0133, atom-0134, atom-0138]
+preserved_exact_tokens: ["MiniMax", "Image-01", "image-01", "https://api.minimax.io", "/v1/image_generation", "aspect_ratio", "1:1", "16:9", "4:3", "3:2", "2:3", "3:4", "9:16", "21:9", "response_format", "url", "base64", "seed", "n", "prompt_optimizer", "24h", "24-hour URL expiry"]
+negative_constraints:
+  - Do not merge MiniMax global and MiniMax CN credential/profile routes.
+  - Do not drop partial-success metadata, trace id, or base response status.
+  - Do not treat URL output as durable storage without PM artifact capture or expiry disclosure.
+owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/FinalGUISpec.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+```
+
+### MGAC-097 - Tested Direct-Provider Media Support Matrix
+
+```yaml
+plan_unit_id: MGAC-097
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: >-
+  Tested direct-provider media support must stay scoped to observed route behavior. Kimi For Coding supports tested text/thinking/image-input and not image creation. GitHub Copilot direct hosted API supports tested chat routes and image input on supported models such as `gpt-5-mini`, but `/images/generations` is 404 and no native image generation is green. Z.AI/Zhipu supports route-specific multimodal and image APIs in documentation, but tested image-generation states include balance/resource, plan, and overload gates and must be exposed as gated where not green. Cursor API-key/SDK and composer-api-style routes have image-input proof and compatibility caveats; product-native Cursor image generation is separate. OpenCode server catalogs are source-lineage metadata, not direct-provider closure evidence.
+gui_related: false
+gui_classification_reason: Capability and verification matrix; GUI consumes the statuses but does not own them.
+depends_on: [MGAC-094, MS-114]
+unblocks: [F3-401, UF-074]
+acceptance_criteria:
+  - Kimi and GitHub Copilot are not advertised as native image-generation providers.
+  - Z.AI/Zhipu image/media rows expose plan, balance, overload, and resource-package gates.
+  - Cursor image-input proof and Worker/proxy caveats remain route-specific.
+  - Direct-provider closure evidence excludes OpenCode-server-routed provider results.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: media_support_overclaim
+reasoning_tier: high
+context_scope: tested_provider_media_matrix
+implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/usage-feature.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: tested_direct_provider_media_matrix, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0126
+  - pldg-20260624-001-provider-updates:atom-0128
+  - pldg-20260624-001-provider-updates:atom-0129
+  - pldg-20260624-001-provider-updates:atom-0131
+source_atom_ids: [atom-0037, atom-0041, atom-0042, atom-0044, atom-0074, atom-0092, atom-0098, atom-0101, atom-0105, atom-0126, atom-0128, atom-0129, atom-0130, atom-0131, atom-0132, atom-0135, atom-0138]
+preserved_exact_tokens: ["Kimi", "image creation", "GitHub Copilot", "/images/generations", "404", "gpt-5-mini", "Z.AI", "Zhipu", "balance/resource", "glm-5v-turbo", "Cursor", "composer-api", "OpenCode server"]
+negative_constraints:
+  - Do not claim native image generation for Kimi or GitHub Copilot from image-input support.
+  - Do not hide Z.AI plan, balance, overload, or resource-package gates behind generic provider failure.
+  - Do not use OpenCode server or OpenCode-routed providers as direct-provider closure evidence.
+owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/usage-feature.md]
 ```
 
 Each entry:
@@ -225,21 +388,20 @@ Resolution order for `model_override`:
 ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
 ### 2.4 Backend routing
-Cursor remains the special-case backend for Cursor-native image generation.
+Media routing resolves through concrete provider/model rows and their `generated_media_routes[]`, `media_input`, and `media_output` capability fields.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
 
 Cursor rules:
-- when the active backend is Cursor and `kind=image`, route via Cursor-native image generation.
-- when the active backend is Cursor and `kind` is `video`, `tts`, or `music`, disable the capability with `disabled_reason: BACKEND_UNSUPPORTED`.
+- Cursor API-key/SDK proof is media-input/tooling evidence only unless a later owner contract proves product-native Cursor image generation.
+- When a Cursor route lacks a verified generated-media route for `kind=image`, image generation is disabled or capability-gated rather than routed to a fictional Cursor-native generator.
+- when the active backend is Cursor and `kind` is `video`, `tts`, or `music`, disable the capability with `disabled_reason: BACKEND_UNSUPPORTED` unless a verified Cursor route later declares that generated-media kind.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/usage-feature.md
 
-All non-Cursor backends follow the canonical Gemini media routing model.
+All backends, including Gemini Direct, OpenAI/Codex, MiniMax, Z.AI/Zhipu, Cursor, Kimi, GitHub Copilot, Antigravity, and future provider rows, follow the provider/media route taxonomy. Gemini Direct is one verified media-capable route where applicable; it is not the default non-Cursor media model. Gemini CLI (`gemini_cli`), Gemini CLI media routing, and Nanobanana helper paths are retired/source-lineage only. Antigravity currently verifies Gemini 3.5 Flash and Gemini 3.1 Pro text/coding model routes, but does not verify Nano Banana/Nanobanana or other generated-media routes because `agy models` does not list them and unrecognized `--model` labels fall back.
 
-Stale-canon cleanup: legacy shorthand that described non-Cursor Gemini media as simply `key-backed`, described Gemini as one `mixed-account` provider, or treated the Gemini API-key `key-exception` as the whole model is obsolete. Gemini media routing is mode-dependent. Gemini Direct (`gemini`) is the direct, key-only, API-key-backed provider entry. Gemini CLI (`gemini_cli`) is the CLI-wrapped provider entry and may use OAuth, API-key, or Google/Vertex credential account rows, but each media request MUST evaluate the concrete requested/effective provider entry, auth family, billing/quota plane, account/profile, and capability path before enabling a capability.
-
-Quota/usage tools and account/plan UI for Gemini are also mode-dependent rather than API-key-only or OAuth-only. Direct key-backed rows can show API-key-derived or estimated usage with project attribution when available; Gemini CLI OAuth rows can show `Gemini quota` only when authoritative quota semantics are available; CLI API-key and Google/Vertex rows must use their own source-qualified labels. The capability picker imports those account/plan and usage labels from `Plans/Multi-Account.md` and `Plans/usage-feature.md` instead of inventing a parallel bucket.
+Quota/usage tools and account/plan UI are route-specific rather than Gemini-default. The capability picker imports account/plan and usage labels from `Plans/Multi-Account.md` and `Plans/usage-feature.md` instead of inventing a parallel bucket.
 
 Required routing order:
 1. resolve the requested provider/runtime surface for media
@@ -250,16 +412,17 @@ Required routing order:
 Media generation consumes the product-wide shared runtime identity model instead of defining feature-local runtime-state fields. The requested/effective runtime snapshot remains that shared model's one canonical truth for requested/effective runtime state across the product, and media routing reads it to produce less schema drift, better audit/history/debugging (`/history/debugging`), more consistent UI across chat, tools, logs, subagents, and providers, safer routing/retry/account-switch (`/retry/account-switch`) behavior, and fewer feature-local special-case fields. Media-specific records may attach media request/output details, but they must not own or create shadow fields for account, provider, retry, switch, or audit identity.
 
 Media routing rules:
-- Gemini Direct media follows the direct Gemini provider path only and is key-only/API-key-backed.
-- Gemini CLI media uses the Gemini CLI runtime only when the required helper path is configured and a compatible API-key-backed media route exists.
-- when Gemini CLI media depends on nanobanana, PM installs and updates nanobanana per PM-managed Gemini CLI account root only when media is enabled.
-- Nanobanana media tracks installed version per account root and supports multiple `image-preview` models; PM injects `NANOBANANA_API_KEY` at launch, including when the Gemini CLI account is OAuth- or Vertex-backed, instead of duplicating secrets into provider-managed config.
-- OAuth-only or Vertex-backed Gemini CLI accounts without a compatible API-key media path are `media_partial` or `media_unavailable` rather than silently cross-falling back.
-- provider health/capability refresh for Gemini CLI media MUST expose extension presence/version (`/version`) and restart-required state in the user-visible `/disclosure` and `/capability` surfaces.
-- when family pooling chooses `Gemini` direct instead of `Gemini CLI` because of media capability, the requested/effective runtime disclosure must make that switch visible.
+- Gemini Direct media follows the direct Gemini provider path only and is key-only/API-key-backed where verified.
+- OpenAI API-key image generation uses the official OpenAI `gpt-image-2` / Responses `image_generation` routes.
+- OpenAI/Codex subscription-backed image generation is mandatory as a separate first-class route with explicit auth, support-state, terms-risk, artifact, and E2E verification requirements.
+- MiniMax global image generation uses the separate `https://api.minimax.io/v1/image_generation` route with `model: image-01`; MiniMax chat/coding text models do not become image-output models.
+- Antigravity generated-media support requires `agy models` or equivalent CLI metadata to list the media model plus an E2E generated artifact proof. Current proof does not mark Nano Banana, Nanobanana, Imagen, Veo, TTS, or other media-generation models green through Antigravity.
+- Kimi and GitHub Copilot rows may support text, media input, or reasoning effort without native generated-image support; absence of `/images/generations` proof means no image-output route is advertised.
+- Z.AI/Zhipu media output is gated by route/model/account/resource state and must surface overload, plan-not-included, balance/resource, or unverified states rather than becoming a Gemini fallback.
+- Gemini CLI media, Nanobanana installation, `NANOBANANA_API_KEY`, extension version disclosure, and Gemini CLI family-pooling switches are retired/source-lineage only and must not be implemented as active media routes.
 - Media profile overlay policy keeps auth `/session/account` state isolated per account. Settings `/plugins/MCP/extensions` may be isolated or PM-managed shared assets only when provider capability and risk review support sharing; the default is conservative isolation.
 - Media-impact reconciliation follows the final three-bucket `CHANGE` register: this document owns media-capability changes while consuming account, runtime, usage, model, and GUI owner changes from the provider/account specs.
-- PM should consider disabling `general.plan.modelRouting` in PM-managed Gemini CLI profiles unless PM explicitly wants Gemini CLI's internal plan `/execution` model split; any effective-model changes from internal routing or fallback must be captured and surfaced.
+- Provider-side model routing for active media providers must be constrained or surfaced through requested/effective model disclosure; Gemini CLI `general.plan.modelRouting` wording is retired/source-lineage only.
 - Media usage accounting consumes `Plans/usage-feature.md` / `/usage-feature.md`, `usage_event_ref`, and a single scope-precedence envelope rather than inventing media-local usage scope rules.
 - Media audit links must not treat `.puppet-master/state/active-git-operations.json`, `/state/active-git-operations.json`, or `puppet-master/state/active-git-operations.json` as canonical audit; `storage-plan`, `puppet-master`, seglog, and `/receipts` remain the source-of-truth path for durable audit evidence.
 - Media consumers of execution state follow event-sourced storage: `active-agents.json` and active-agents flat files are compatibility inputs only, while `/redb`, redb projections, and event-sourced stores own durable execution state.
@@ -344,7 +507,7 @@ ContractRef: ToolID:media.generate, SchemaID:pm.media.generate.result.v1, Primit
 
 ContractRef: ToolID:media.generate, Primitive:ArtifactStore
 
-**Cursor special-case:** When `engine.backend = "cursor_native"`, Cursor routes `kind=image` to Cursor-native image generation without requiring Gemini credentials. For `kind` ∈ {`video`, `tts`, `music`}, the Cursor backend returns `error.code = "BACKEND_UNSUPPORTED"`.
+**Route-specific backend behavior:** When `engine.backend` resolves to a concrete provider/model route, PM checks that route's `generated_media_routes[]` for the requested `kind`. Cursor image generation is not assumed from image-input/API-key proof; it requires a verified generated-media route. For unsupported kinds, the backend returns `error.code = "BACKEND_UNSUPPORTED"` or the more specific provider status/error state.
 
 On failure:
 ```json
@@ -353,13 +516,13 @@ On failure:
   "request_id": "req_20260301_a1b2c3d4",
   "kind": "image",
   "engine": {
-    "backend": "gemini_api"
+    "backend": "resolved_media_provider"
   },
   "artifacts": [],
   "usage": null,
   "error": {
     "code": "NOT_CONFIGURED",
-    "message": "This feature requires Gemini access. Sign in with Gemini OAuth or add a Google/Gemini API key in Settings -> Authentication, then try again."
+    "message": "This feature requires an eligible media generation provider route. Configure a supported provider in Settings -> Providers, then try again."
   }
 }
 ```
@@ -610,11 +773,11 @@ Disabled rows remain keyboard-focusable so the same reason text is available on 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003
 
 ### 4.3 Banner/footnote
-When visible media capabilities are disabled because no eligible Gemini account is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
+When visible media capabilities are disabled because no eligible media generation provider route is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
 
-> **"Configure Gemini access in Settings → Authentication."** Sign in with Gemini OAuth or add a Google/Gemini API key. [Get API key]
+> **"Configure a media generation provider in Settings -> Providers."** Add a supported route such as OpenAI/Codex, OpenAI API key, MiniMax Image-01, or Gemini Direct where available.
 
-The `Get API key` text is a clickable convenience link to the Google AI Studio API-key page, but the surrounding copy MUST NOT imply AI Studio is the only valid source of Gemini API keys.
+Provider-specific helper links may point to the relevant dashboard or API-key page, but the surrounding copy MUST NOT imply Gemini is the default or only valid media source.
 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/rewrite-tie-in-memo.md
 
@@ -623,10 +786,11 @@ When multiple visible capabilities are disabled for the same missing-configurati
 ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
 ### 4.4 Cursor backend behavior
 When the active backend is Cursor:
-- image remains enabled through Cursor-native image generation
-- video, TTS, and music remain disabled with `disabled_reason: BACKEND_UNSUPPORTED`
-- Cursor's image special case does not create a separate Gemini account model
-- non-Cursor media still follows the canonical requested/effective Gemini routing model described in `### 2.4 Backend routing`
+- image generation is enabled only if the Cursor route declares a verified generated-media route for image output
+- image input/tooling evidence alone does not prove generated-image support
+- video, TTS, and music remain disabled with `disabled_reason: BACKEND_UNSUPPORTED` unless Cursor later declares verified generated-media routes
+- Cursor does not create a separate Gemini account model
+- non-Cursor media follows the provider/model `generated_media_routes[]` taxonomy described in `### 2.4 Backend routing`
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
 ### 4.5 Click behavior
@@ -645,7 +809,7 @@ ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
 
 ### 4.7 Runtime refresh behavior
 
-The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, signing in with Gemini OAuth, saving a Gemini API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
+The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, adding an OpenAI/Codex subscription-backed route, saving an OpenAI API key, enabling MiniMax Image-01, saving a Gemini Direct API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
 
 ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
 
@@ -719,22 +883,22 @@ ContractRef: ToolID:capabilities.get
 ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 
 <a id="AC-MED03"></a>
-**AC-MED03:** When the active backend is Cursor and no eligible Gemini account is configured, `media.image` MUST be enabled (routed via Cursor-native generation) and `media.video`, `media.tts`, `media.music` MUST be disabled with `BACKEND_UNSUPPORTED`.
+**AC-MED03:** When the active backend is Cursor and no verified Cursor generated-media route is configured, `media.image`, `media.video`, `media.tts`, and `media.music` MUST be disabled with `BACKEND_UNSUPPORTED` or a route-specific unavailable state. Cursor image-input/API-key proof alone MUST NOT enable generated-image output.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
 
 <a id="AC-MED03A"></a>
-**AC-MED03A:** When the active backend is Cursor and a valid Gemini API key and/or Gemini OAuth account is configured, `media.image` MUST remain enabled via Cursor-native generation and `media.video`, `media.tts`, `media.music` MUST remain disabled with `BACKEND_UNSUPPORTED`.
+**AC-MED03A:** When the active backend is Cursor and another provider such as Gemini Direct is configured, Cursor media capabilities still depend on Cursor's own verified generated-media route. Other providers do not turn Cursor into a generated-media backend; requested/effective routing must show any switch to the provider that actually generated media.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
 
 <a id="AC-MED04"></a>
-**AC-MED04:** When the active backend is non-Cursor and at least one eligible Gemini account exists for the resolved request/policy, each media capability (`media.image`, `media.video`, `media.tts`, `media.music`) is eligible for enablement and routes through the Gemini media provider path, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF -> `ADMIN_DISABLED`), and (b) the underlying model being available for that kind (if unavailable -> `MODEL_UNAVAILABLE`). An eligible account alone does NOT guarantee all four are enabled.
+**AC-MED04:** When the active backend is non-Cursor and at least one eligible provider/model `generated_media_routes[]` entry exists for the resolved request/policy, only the media kinds declared by that route are eligible for enablement, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF -> `ADMIN_DISABLED`), and (b) the underlying model/route being available for that kind (if unavailable -> `MODEL_UNAVAILABLE` or the provider-specific disabled state). An eligible account alone does NOT guarantee all media kinds are enabled.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
 
 <a id="AC-MED05"></a>
-**AC-MED05:** When the active backend is non-Cursor and no eligible Gemini account exists for the resolved request/policy, all four media capabilities MUST be disabled with `NOT_CONFIGURED`.
+**AC-MED05:** When the active backend is non-Cursor and no eligible provider/model generated-media route exists for the resolved request/policy, generated-media capabilities MUST be disabled with `NOT_CONFIGURED`, `UNSUPPORTED`, `CAPABILITY_GATED`, or the more specific route/account state.
 
 ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
@@ -774,9 +938,9 @@ ContractRef: ToolID:capabilities.get, Invariant:INV-003
 ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
 
 <a id="AC-MED13"></a>
-**AC-MED13:** When the active backend is non-Cursor, `media.generate` MUST use the same requested/effective Gemini auth/account resolution model as standard Gemini provider interactions. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback to the other auth surface.
+**AC-MED13:** When the active backend is non-Cursor, `media.generate` MUST use standard requested/effective provider/account/route auth resolution. Explicit `oauth`, explicit `api_key`, and explicit provider-route requests MUST NOT silently cross-fallback to another auth surface or provider route.
 
-**AC-MED13A:** Gemini media availability, usage/quota disclosure, and account/plan UI are mode-dependent. Gemini Direct is key-only/API-key-backed; Gemini CLI OAuth, API-key, and Google/Vertex rows are separate effective modes. UI MUST NOT collapse those modes into one stale-canon mixed-account bucket.
+**AC-MED13A:** Media availability, usage/quota disclosure, and account/plan UI are route-dependent. Gemini Direct is key-only/API-key-backed where verified; Gemini CLI OAuth, API-key, Google/Vertex rows, and Nanobanana are retired/source-lineage only. UI MUST NOT collapse provider/media routes into one stale-canon mixed-account bucket.
 
 ContractRef: ToolID:media.generate, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
@@ -1053,7 +1217,7 @@ plan_unit_id: MGAC-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: The capabilities.get response is a capabilities array whose entries carry id, category, enabled, disabled_reason, and setup_hint fields, including media.image/media.video examples and NOT_CONFIGURED setup guidance.
+canonical_text: The capabilities.get response is a capabilities array whose entries carry id, category, enabled, disabled_reason, and setup_hint fields, including media.image/media.video examples and route-specific NOT_CONFIGURED setup guidance.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: false
@@ -1093,8 +1257,10 @@ preserved_exact_tokens:
 - enabled (bool, required)
 - disabled_reason (string | null, required)
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- The exact phrase "Configure Gemini access in Settings -> Authentication." is retained only as an old example token; active setup hints are route/provider specific.
+stale_retired_dispositions:
+- Gemini-default setup copy is retired by MGAC-094 through MGAC-097.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:
@@ -1821,7 +1987,7 @@ plan_unit_id: MGAC-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Cursor remains a special-case backend for Cursor-native image generation; Cursor image routes to Cursor-native generation, while Cursor video, tts, and music are disabled with BACKEND_UNSUPPORTED.
+canonical_text: Cursor image generation is route-specific. Cursor image-input/API-key proof does not by itself prove product-native image generation; Cursor image output requires a verified generated-media route, while unsupported Cursor media kinds are disabled with BACKEND_UNSUPPORTED or route-specific unavailable state.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: true
@@ -1835,13 +2001,13 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: media_generation_contract_drift
+risk_class: cursor_media_route_contract_drift
 reasoning_tier: standard
 context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: cursor_backend_routing
+  mode: cursor_backend_route_specific_media
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
@@ -1857,8 +2023,10 @@ preserved_exact_tokens:
 - ToolID:capabilities.get
 - ToolID:media.generate
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- The exact phrase "Cursor-native image generation" is retained only as retired/source-lineage until a later owner contract proves product-native Cursor generation.
+stale_retired_dispositions:
+- Cursor image-input support must not be treated as generated-image output support.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:
@@ -1876,7 +2044,7 @@ plan_unit_id: MGAC-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Non-Cursor media follows the canonical Gemini media routing model; legacy shorthand for key-backed Gemini, mixed-account Gemini, or key-exception-only media is obsolete, and each request evaluates concrete provider entry, auth family, billing/quota plane, account/profile, and capability path.
+canonical_text: Media routing follows concrete provider/model route capability fields, not a Gemini-default non-Cursor model. Legacy shorthand for key-backed Gemini, mixed-account Gemini, key-exception-only media, and non-Cursor Gemini-default routing is obsolete; each request evaluates concrete provider entry, auth family, billing/quota plane, account/profile, generated_media_routes[], and capability path.
 gui_related: false
 gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
 split_recommended: true
@@ -1890,16 +2058,17 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: media_generation_contract_drift
+risk_class: media_route_taxonomy_drift
 reasoning_tier: standard
 context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: gemini_media_mode_cleanup
+  mode: media_route_taxonomy_cleanup
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+- pldg-20260624-001-provider-updates:atom-0141
 preserved_exact_tokens:
 - Stale-canon cleanup
 - key-backed
@@ -1920,9 +2089,9 @@ preserved_exact_tokens:
 negative_constraints:
 - Gemini media routing must not collapse into stale key-backed, mixed-account, or key-exception-only shorthand.
 compatibility_only_notes:
-- Legacy shorthand for non-Cursor Gemini media is obsolete.
+- Legacy shorthand for non-Cursor Gemini media is obsolete; current routing is provider/model generated_media_routes[].
 stale_retired_dispositions:
-- Stale-canon cleanup retires key-backed, mixed-account, and key-exception-only Gemini media wording.
+- Stale-canon cleanup retires key-backed, mixed-account, key-exception-only, and Gemini-default media wording.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:
@@ -2045,14 +2214,16 @@ preserved_contractrefs:
 split_recommendation_reason: The source span contains multiple separable media/capability concerns; repeated source lineage preserves exact provenance without inventing subspans.
 ```
 
-### MGAC-023 - Gemini CLI Nanobanana Media Route
+### MGAC-023 - Retired Gemini CLI Nanobanana Media Route Lineage
 
 ```yaml
 plan_unit_id: MGAC-023
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Gemini Direct and Gemini CLI media routing keep separate route rules, including nanobanana installation per PM-managed Gemini CLI account root, NANOBANANA_API_KEY injection, media_partial/media_unavailable handling, version and restart disclosure, and visible runtime switches when pooling selects Gemini Direct.
+canonical_text: Gemini CLI Nanobanana media route vocabulary is retired and retained only as source-lineage. Active media
+  routing must use concrete provider/model generated_media_routes[] such as Gemini Direct where verified, OpenAI/Codex,
+  OpenAI API-key routes, and MiniMax Image-01. PM must not install Nanobanana or create PM-managed Gemini CLI media roots.
 gui_related: false
 gui_classification_reason: The unit defines media/capability runtime, tool, routing, storage, parsing, or contract behavior rather than direct GUI presentation.
 split_recommended: true
@@ -2066,16 +2237,17 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: media_generation_contract_drift
+risk_class: retired_gemini_cli_nanobanana_resurrection
 reasoning_tier: standard
 context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: gemini_cli_nanobanana_media_route
+  mode: retired_gemini_cli_nanobanana_media_route
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0017
+- pldg-20260624-001-provider-updates:atom-0141
 preserved_exact_tokens:
 - Gemini Direct media
 - key-only/API-key-backed
@@ -2095,9 +2267,14 @@ preserved_exact_tokens:
 - family pooling
 - requested/effective runtime disclosure
 negative_constraints:
-- OAuth-only or Vertex-backed Gemini CLI accounts without a compatible API-key media path must be media_partial or media_unavailable rather than silently cross-falling back.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Do not implement Gemini CLI media as an active generated-media route.
+- Do not install or update Nanobanana as an active PM installable.
+- Do not inject NANOBANANA_API_KEY for active media routing.
+- Do not silently fall back from retired Gemini CLI media to Gemini Direct without requested/effective route disclosure.
+compatibility_only_notes:
+- OAuth-only or Vertex-backed Gemini CLI media states are retained only as retired source-lineage.
+stale_retired_dispositions:
+- Gemini CLI Nanobanana media route is retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, slot extraction, and media UI behavior while referenced owner docs retain their SSOT boundaries.
 owner_hints:
@@ -2468,7 +2645,7 @@ plan_unit_id: MGAC-030
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Failure responses return success false with empty artifacts, null usage, and error code/message; Cursor-native image generation does not require Gemini credentials, while Cursor video, tts, and music return BACKEND_UNSUPPORTED.
+canonical_text: Failure responses return success false with empty artifacts, null usage, and error code/message. Cursor generated-media output requires a verified generated-media route; Cursor image-input proof or other provider credentials do not make Cursor image generation available. Unsupported Cursor video, tts, and music return BACKEND_UNSUPPORTED or route-specific unavailable states.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: true
@@ -2488,7 +2665,7 @@ context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: failure_response_and_cursor_error
+  mode: failure_response_and_route_specific_cursor_error
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0018
@@ -3987,14 +4164,14 @@ preserved_contractrefs:
 split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
 ```
 
-### MGAC-059 - Missing Gemini Access Footer Copy
+### MGAC-059 - Missing Media Provider Footer Copy
 
 ```yaml
 plan_unit_id: MGAC-059
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: When visible media capabilities are disabled because no eligible Gemini account is configured, the dropdown footer shows the exact Gemini-access configuration copy and Get API key link, without implying AI Studio is the only valid API-key source.
+canonical_text: When visible media capabilities are disabled because no eligible media generation provider route is configured, the dropdown footer shows route-specific setup copy and helper links without implying Gemini or AI Studio is the default media source. The old Gemini-access copy remains preserved only as source-lineage.
 gui_related: true
 gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
 split_recommended: true
@@ -4016,7 +4193,7 @@ context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: missing_gemini_access_footer_copy
+  mode: missing_media_provider_footer_copy
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
@@ -4028,8 +4205,11 @@ preserved_exact_tokens:
 - MUST NOT imply AI Studio is the only valid source of Gemini API keys
 negative_constraints:
 - The surrounding copy MUST NOT imply AI Studio is the only valid source of Gemini API keys.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- The active footer MUST NOT use Gemini as the generic missing-media setup path.
+compatibility_only_notes:
+- Old Gemini access copy and Get API key link are retained only as source-lineage examples.
+stale_retired_dispositions:
+- Gemini-default media setup footer is retired by MGAC-094 through MGAC-097.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:
@@ -4098,7 +4278,7 @@ plan_unit_id: MGAC-061
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: For the Cursor backend, image remains enabled through Cursor-native image generation, video/TTS/music remain disabled with BACKEND_UNSUPPORTED, the image special case does not create a separate Gemini account model, and non-Cursor media still follows canonical requested/effective Gemini routing.
+canonical_text: For the Cursor backend, generated media is enabled only when Cursor declares a verified generated-media route; image-input proof alone is not generated-image support. Unsupported Cursor media kinds remain disabled with BACKEND_UNSUPPORTED, Cursor does not create a separate Gemini account model, and non-Cursor media follows provider/model generated_media_routes[] routing.
 gui_related: false
 gui_classification_reason: The unit defines backend capability routing behavior rather than direct GUI presentation.
 split_recommended: true
@@ -4133,8 +4313,12 @@ preserved_exact_tokens:
 - '### 2.4 Backend routing'
 negative_constraints:
 - Cursor image special casing must not create a separate Gemini account model.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Cursor image-input/API-key proof must not enable generated-image output without a generated-media route.
+compatibility_only_notes:
+- The exact phrases "image remains enabled through Cursor-native image generation" and "canonical requested/effective Gemini routing" are retired source-lineage phrases.
+stale_retired_dispositions:
+- Cursor-native image generation as an always-on route is retired pending future proof.
+- Gemini-default non-Cursor routing is retired.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:
@@ -4532,7 +4716,7 @@ plan_unit_id: MGAC-069
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED03 requires Cursor without eligible Gemini configuration to keep media.image enabled via Cursor-native generation and disable media.video, media.tts, and media.music with BACKEND_UNSUPPORTED.
+canonical_text: AC-MED03 requires Cursor without a verified Cursor generated-media route to keep generated-media output disabled or capability-gated; image-input proof alone must not enable media.image, and unsupported Cursor media kinds use BACKEND_UNSUPPORTED or a route-specific unavailable state.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true
@@ -4554,7 +4738,7 @@ context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: ac_med03_cursor_without_gemini
+  mode: ac_med03_cursor_without_generated_media_route
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
@@ -4568,8 +4752,10 @@ preserved_exact_tokens:
 - media.music
 - BACKEND_UNSUPPORTED
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- The old "Cursor without eligible Gemini configuration" criterion is retired source-lineage.
+stale_retired_dispositions:
+- Gemini configuration no longer governs Cursor generated-media availability.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:
@@ -4586,7 +4772,7 @@ plan_unit_id: MGAC-070
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED03A requires Cursor with valid Gemini API key and/or OAuth account to still keep image enabled via Cursor-native generation and video/TTS/music disabled with BACKEND_UNSUPPORTED.
+canonical_text: AC-MED03A requires Cursor generated-media availability to depend on Cursor's own verified generated-media route. Valid Gemini Direct or other provider credentials do not make Cursor a generated-media backend; requested/effective routing must disclose any switch to the actual media provider.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true
@@ -4608,7 +4794,7 @@ context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: ac_med03a_cursor_with_gemini_configured
+  mode: ac_med03a_cursor_with_other_provider_configured
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
@@ -4622,8 +4808,10 @@ preserved_exact_tokens:
 - music
 - BACKEND_UNSUPPORTED
 negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- The old "Cursor with valid Gemini API key and/or OAuth account" criterion is retired source-lineage.
+stale_retired_dispositions:
+- Gemini credentials no longer enable Cursor-native image generation.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:
@@ -4640,7 +4828,7 @@ plan_unit_id: MGAC-071
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED04 requires non-Cursor media capabilities to be eligible for Gemini media routing when an eligible Gemini account exists, subject to Settings > Media toggles and model availability.
+canonical_text: AC-MED04 requires non-Cursor media capabilities to be eligible only for media kinds declared by the resolved provider/model generated_media_routes[] entry, subject to Settings > Media toggles, route/model availability, and provider-specific support states. An eligible account alone does not guarantee all media kinds are enabled.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true
@@ -4663,7 +4851,7 @@ context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: ac_med04_non_cursor_eligible_gemini
+  mode: ac_med04_non_cursor_eligible_generated_media_route
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
@@ -4677,8 +4865,10 @@ preserved_exact_tokens:
 - An eligible account alone does NOT guarantee all four are enabled.
 negative_constraints:
 - An eligible account alone does NOT guarantee all four are enabled.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- The old "eligible Gemini account" criterion is retained only as source-lineage.
+stale_retired_dispositions:
+- Gemini-default non-Cursor media routing is retired.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:
@@ -4688,14 +4878,14 @@ preserved_contractrefs:
 split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
 ```
 
-### MGAC-072 - AC-MED05 Non Cursor Missing Gemini
+### MGAC-072 - AC-MED05 Non Cursor Missing Generated Media Route
 
 ```yaml
 plan_unit_id: MGAC-072
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED05 requires all four media capabilities to be disabled with NOT_CONFIGURED when the active backend is non-Cursor and no eligible Gemini account exists for the resolved request/policy.
+canonical_text: AC-MED05 requires generated-media capabilities to be disabled with NOT_CONFIGURED, UNSUPPORTED, CAPABILITY_GATED, or the more specific provider/account state when the active backend is non-Cursor and no eligible provider/model generated-media route exists for the resolved request/policy.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true
@@ -4717,7 +4907,7 @@ context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: ac_med05_non_cursor_missing_gemini
+  mode: ac_med05_non_cursor_missing_generated_media_route
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
@@ -4727,9 +4917,12 @@ preserved_exact_tokens:
 - no eligible Gemini account
 - resolved request/policy
 - NOT_CONFIGURED
-negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+negative_constraints:
+- No eligible provider/model generated-media route must not be reported as zero-cost success or generic Gemini setup.
+compatibility_only_notes:
+- The old "no eligible Gemini account" criterion is retained only as source-lineage.
+stale_retired_dispositions:
+- Gemini-default non-Cursor NOT_CONFIGURED behavior is retired.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:
@@ -5098,14 +5291,14 @@ preserved_contractrefs:
 split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
 ```
 
-### MGAC-080 - AC-MED13 Non Cursor Gemini Auth Resolution
+### MGAC-080 - AC-MED13 Non Cursor Route Auth Resolution
 
 ```yaml
 plan_unit_id: MGAC-080
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED13 requires non-Cursor media.generate to use standard requested/effective Gemini auth/account resolution and forbids silent oauth/api_key cross-fallback.
+canonical_text: AC-MED13 requires non-Cursor media.generate to use standard requested/effective provider/account/route auth resolution and forbids silent oauth/api_key or provider-route cross-fallback.
 gui_related: false
 gui_classification_reason: The unit defines a testable acceptance criterion or contract assertion rather than direct GUI presentation.
 split_recommended: true
@@ -5127,7 +5320,7 @@ context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: ac_med13_non_cursor_gemini_auth_resolution
+  mode: ac_med13_non_cursor_route_auth_resolution
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
@@ -5141,8 +5334,11 @@ preserved_exact_tokens:
 - MUST NOT silently cross-fallback
 negative_constraints:
 - Explicit oauth and explicit api_key requests MUST NOT silently cross-fallback to the other auth surface.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Explicit provider/media-route requests MUST NOT silently cross-fallback to another provider.
+compatibility_only_notes:
+- The exact phrase "requested/effective Gemini auth/account resolution" is retained only as source-lineage.
+stale_retired_dispositions:
+- Gemini-default auth resolution for non-Cursor media is retired.
 owner_boundary_notes:
 - Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
 owner_hints:
@@ -5152,14 +5348,14 @@ preserved_contractrefs:
 split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
 ```
 
-### MGAC-081 - AC-MED13A Mode Dependent Gemini Disclosure
+### MGAC-081 - AC-MED13A Route Dependent Media Disclosure
 
 ```yaml
 plan_unit_id: MGAC-081
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: AC-MED13A requires Gemini media availability, usage/quota disclosure, and account/plan UI to stay mode-dependent and not collapse Gemini Direct, Gemini CLI, API-key, Google, and Vertex rows into a stale mixed-account bucket.
+canonical_text: AC-MED13A requires media availability, usage/quota disclosure, and account/plan UI to stay route-dependent and not collapse provider/media routes into a stale mixed-account bucket. Gemini Direct remains a route-specific provider where verified; Gemini CLI, Gemini CLI OAuth, Google/Vertex Gemini CLI rows, and Nanobanana remain retired/source-lineage only.
 gui_related: true
 gui_classification_reason: The unit defines a testable GUI-facing capability picker, UI copy, accessibility, or account-plan presentation criterion.
 split_recommended: true
@@ -5181,7 +5377,7 @@ context_scope: media_generation_capabilities_standardization
 implementation_surfaces:
 - Plans/Media_Generation_and_Capabilities.md
 node_compile_hint:
-  mode: ac_med13a_mode_dependent_gemini_disclosure
+  mode: ac_med13a_route_dependent_media_disclosure
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
@@ -5195,8 +5391,10 @@ preserved_exact_tokens:
 - UI MUST NOT collapse
 - stale-canon mixed-account bucket
 negative_constraints:
-- UI MUST NOT collapse mode-dependent Gemini rows into one stale-canon mixed-account bucket.
-compatibility_only_notes: []
+- UI MUST NOT collapse route-dependent media rows into one stale-canon mixed-account bucket.
+- UI MUST NOT surface retired Gemini CLI rows as active media setup.
+compatibility_only_notes:
+- Gemini CLI OAuth, Google/Vertex rows, and stale-canon mixed-account wording are retained only as source-lineage.
 stale_retired_dispositions:
 - Legacy shorthand that treats Gemini as one mixed-account provider is stale canon.
 owner_boundary_notes:

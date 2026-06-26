@@ -936,11 +936,11 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contra
 - **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info** through Agent Config > Personas. (1) **Seed/import:** Discover provider-native definitions (for example the project's `.claude/agents` directory) and import them into Puppet Master Persona storage as starter content; imported files may supply the initial name and description/purpose, but they are not canonical runtime storage. (2) **User control:** Users can **add their own** Personas and **delete any** imported or user-created Persona from Puppet Master storage; protected core built-ins from `Plans/Personas.md` are read-only and not deletable. (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent; the normalized result is saved back into Puppet Master Persona storage with provenance to the imported source. (4) **Canonical Persona content -- single source:** User edits happen in the Personas UI and persist to Puppet Master Persona storage defined in `Plans/Personas.md`, not to provider-native directories and not as a second runtime source in `SubagentGuiConfig`. At runtime, resolve the subagent name to the canonical Persona stored by Puppet Master; provider-native files remain import/refresh sources only. UI: Agent Config > Personas list showing name, ID, description, scope, chat/subagent eligibility, and prompt preview; "Edit" changes canonical Persona content where the Persona is mutable, while protected built-ins may only be duplicated to a non-reserved ID.
 - **Discovery:** Subagent names in the override UI come from `subagent_registry` and Persona names from `persona_registry`; document so UI and backend share the same names. Removed catalog names such as `project-manager`, `product-manager`, and `context-manager` are source-lineage/import-seed vocabulary only unless a future owner decision promotes a replacement.
 
-### 6. Doctor -- Gemini Access and Plan Mode Check
+### 6. Doctor -- Provider Access and Plan Mode Check
 
-- **Check:** In `doctor/` (new check or inside existing config check): if any tier selects the Gemini family, validate the resolved Gemini provider entry and auth mode rather than assuming a Gemini API key is the primary `/only` settings surface. Gemini Direct requires an API-key-backed account; Gemini CLI may resolve OAuth, API-key, or Google/Vertex credential account rows according to `Plans/Multi-Account.md` and `Plans/Contracts_V0.md`.
+- **Check:** In `doctor/` (new check or inside existing config check): if any tier selects Gemini Direct, Antigravity, or another provider family, validate the resolved provider entry, account/profile, auth mode, and model capability rather than assuming a Gemini API key is the primary `/only` settings surface. Gemini Direct requires an API-key-backed account; Antigravity uses its own active CLI-runtime setup/probe contract. Gemini CLI auth modes are retired/source-lineage only.
 - **Project-context UX:** Gemini OAuth checks expose explicit `project-context` fields/UX: optional configured Google Cloud project id, effective resolved project id, and `validation-required` / `onboarding-needed` states before onboarding or plan-mode execution continues. These values are account readiness evidence, not Orchestrator-owned project artifacts.
-- **GUI/spec copy:** Config, Wizard, and Doctor GUI text must say "Configure Gemini access" or name the resolved auth mode; it MUST NOT frame "Gemini API key" as the primary or `/only` settings path when OAuth or Google/Vertex credential modes are valid for the selected provider entry.
+- **GUI/spec copy:** Config, Wizard, and Doctor GUI text must name the resolved provider setup path. It MUST NOT use "Configure Gemini access" as generic media/provider setup copy, and MUST NOT frame "Gemini API key" as the primary or `/only` settings path for non-Gemini provider entries.
 
 ### 7. Implementation Checklist (GUI & Backend -- Add/Expand)
 
@@ -1160,10 +1160,10 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 
 **Canonical subagent name registry:** Maintained in `platform_specs` or a dedicated `subagent_registry` module. Names are stable strings (kebab-case, e.g., `architect-reviewer`, `security-auditor`).
 
-### 3. Gemini access validation
+### 3. Provider access validation for Gemini Direct and Antigravity
 
-- **Issue:** Gemini validation used to be framed as API-key-only, but the current provider model separates Gemini Direct and Gemini CLI. A tier that selects Gemini must validate the resolved provider entry, auth mode, project context, and account readiness instead of assuming a single key setting.
-- **Mitigation:** (1) **Auth mode:** resolve `auto`, explicit OAuth, explicit API key, or Google/Vertex credential mode through the shared account resolver. (2) **Validation:** probe the selected account using the provider-appropriate lightweight validation path. (3) **Project context:** surface `project-context`, `validation-required`, and `onboarding-needed` states for Gemini OAuth when the configured project id, effective resolved project id, billing/trust context, or provider-managed project path is incomplete. (4) **Errors:** if the selected Gemini mode is not configured, Doctor names that missing mode rather than warning that a Gemini API key is the `/only` fix.
+- **Issue:** Gemini validation used to be framed as API-key-only, then as Gemini Direct versus Gemini CLI. The current provider model keeps Gemini Direct as the direct API route, uses Antigravity as the active Google-owned CLI-runtime route, and retires Gemini CLI. A tier that selects a Google-family provider must validate the resolved provider entry, auth mode, project context, and account readiness instead of assuming a single key setting.
+- **Mitigation:** (1) **Auth mode:** resolve `auto`, explicit OAuth, explicit API key, Antigravity CLI login/ADC, or Google/Vertex credential mode through the shared account resolver. (2) **Validation:** probe the selected account using the provider-appropriate lightweight validation path. (3) **Project context:** surface `project-context`, `validation-required`, and `onboarding-needed` states when the configured project id, effective resolved project id, billing/trust context, or provider-managed project path is incomplete for the selected provider route. (4) **Errors:** if the selected Google-family mode is not configured, Doctor names that missing mode rather than warning that a Gemini API key is the `/only` fix. Gemini CLI is preserved only as retired/source-lineage vocabulary.
 
 ### 4. Doctor check when config is not GuiConfig
 
@@ -5577,9 +5577,13 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 - direct API-key provider.
 - runtime invocation is not a CLI subprocess.
 
-**Gemini CLI**
-- separate CLI-backed provider entry.
-- may expose routing behavior that differs from the originally requested model.
+**Antigravity CLI**
+- active Google-owned CLI-runtime provider entry replacing Gemini CLI.
+- may expose routing behavior that differs from the originally requested model; PM must record requested/effective model evidence from `agy` probes.
+
+**Gemini CLI (retired/source-lineage only)**
+- not an active provider entry.
+- retained only to preserve stale source tokens and prevent accidental resurrection.
 
 **Codex**
 - direct provider with `ChatGPT` and `API key` account rows.
@@ -11142,7 +11146,7 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plans/Personas.md#STORAGE-LAYOUT'
 ```
 
-### OSI-085 - Gemini Provider Validation And Config Loading
+### OSI-085 - Google-Family Provider Validation And Config Loading
 
 ```yaml
 plan_unit_id: OSI-085
@@ -11150,7 +11154,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Doctor and plan-mode validation for Gemini resolve the selected provider entry, auth mode, project context, and account readiness for Gemini Direct and Gemini CLI, discover/load the same project GuiConfig inside run(), and skip or warn neutrally when config cannot be loaded rather than assuming a single API-key-only settings surface.
+  Doctor and plan-mode validation for Google-family provider routes resolve the selected provider entry, auth mode, project context, and account readiness for active Gemini Direct and Antigravity routes, discover/load the same project GuiConfig inside run(), and skip or warn neutrally when config cannot be loaded rather than assuming a single API-key-only settings surface. Gemini CLI validation vocabulary is retired/source-lineage only.
 gui_related: false
 gui_classification_reason: This unit covers provider/account validation and config loading, not GUI copy.
 split_recommended: false
@@ -11172,9 +11176,9 @@ reasoning_tier: standard
 context_scope: orchestrator_subagent_standardization
 implementation_surfaces:
 - Plans/orchestrator-subagent-integration.md
-risk_class: gemini_provider_validation_config_loading
+risk_class: google_family_provider_validation_config_loading
 node_compile_hint:
-  mode: gemini_provider_validation_config_loading
+  mode: google_family_provider_validation_config_loading
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0042
@@ -11184,17 +11188,23 @@ source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0075
 preserved_exact_tokens:
 - 'Gemini Direct'
+- 'Antigravity'
 - 'Gemini CLI'
 - 'OAuth'
 - 'API-key'
 - 'Google/Vertex credential'
+- 'Antigravity CLI login/ADC'
 - 'config_discovery::discover_config_path(None)'
 - 'gui_config::load_config(path)'
 - 'skip check'
 - 'neutral warning'
-negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+negative_constraints:
+- Do not validate active Google-family provider setup by assuming Gemini API key is the only fix.
+- Do not select or validate Gemini CLI as an active provider route.
+compatibility_only_notes:
+- Gemini CLI validation wording is preserved only as retired/source-lineage vocabulary.
+stale_retired_dispositions:
+- Active Gemini CLI validation is retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_boundary_notes:
 - 'Plans/Multi-Account.md and Plans/Contracts_V0.md own account/auth resolution semantics.'
 owner_hints:
@@ -11210,7 +11220,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Gemini OAuth and Doctor UX expose project-context fields, validation-required and onboarding-needed states, and copy that says Configure Gemini access or names the resolved auth mode instead of treating Gemini API key as the primary or only settings path.
+  Doctor UX exposes project-context fields, validation-required and onboarding-needed states where the resolved active provider route requires them, and setup copy names the resolved provider/auth mode rather than using "Configure Gemini access" as generic setup text or treating Gemini API key as the primary or only settings path.
 gui_related: true
 gui_classification_reason: This unit covers Doctor/Config/Wizard user-visible Gemini access copy and UX.
 split_recommended: false
@@ -11233,9 +11243,9 @@ reasoning_tier: standard
 context_scope: orchestrator_subagent_standardization
 implementation_surfaces:
 - Plans/orchestrator-subagent-integration.md
-risk_class: gemini_project_context_ux_copy_boundary
+risk_class: provider_project_context_ux_copy_boundary
 node_compile_hint:
-  mode: gemini_project_context_ux_copy_boundary
+  mode: provider_project_context_ux_copy_boundary
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0047
@@ -11248,9 +11258,12 @@ preserved_exact_tokens:
 - 'Gemini API key'
 - '/only'
 negative_constraints:
-- 'Config, Wizard, and Doctor GUI text MUST NOT frame Gemini API key as the primary or /only settings path when OAuth or Google/Vertex credential modes are valid.'
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- 'Config, Wizard, and Doctor GUI text MUST NOT frame Gemini API key as the primary or /only settings path when another provider/auth route is selected.'
+- 'Config, Wizard, and Doctor GUI text MUST NOT use Configure Gemini access as generic provider setup copy.'
+compatibility_only_notes:
+- 'Configure Gemini access is preserved only as older source-lineage copy.'
+stale_retired_dispositions:
+- 'Generic Gemini setup copy is retired for route-specific provider setup.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -27599,16 +27612,17 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md'
 ```
 
-### OSI-367 - Gemini CLI Separate Provider Entry
+### OSI-367 - Retired Gemini CLI Separate Provider Entry Lineage
 
 ```yaml
 plan_unit_id: OSI-367
-unit_type: requirement
+unit_type: compatibility_disposition
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Gemini CLI remains a separate CLI-backed provider entry whose routing behavior may differ from the originally requested
-  model and must be disclosed through requested/effective runtime facts.
+  Gemini CLI separate-provider-entry wording is retired/source-lineage only. Active orchestration must not select Gemini
+  CLI as a provider/runtime entry; requested/effective runtime facts still disclose active provider routing differences
+  such as Gemini Direct versus Antigravity or other verified provider routes.
 gui_related: false
 gui_classification_reason: This unit covers provider/runtime capability boundaries, not GUI presentation.
 split_recommended: false
@@ -27618,7 +27632,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered Gemini CLI bullets remain losslessly available for exact-text audit.
-- Gemini direct and Gemini CLI remain separate provider/runtime entries.
+- Gemini Direct remains active and Gemini CLI remains retired/source-lineage only.
+- Active provider routing differences still require requested/effective disclosure.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -27628,9 +27643,9 @@ reasoning_tier: standard
 context_scope: orchestrator_subagent_standardization
 implementation_surfaces:
 - Plans/orchestrator-subagent-integration.md
-risk_class: gemini_cli_separate_provider_entry
+risk_class: retired_gemini_cli_provider_entry_resurrection
 node_compile_hint:
-  mode: gemini_cli_separate_provider_entry
+  mode: retired_gemini_cli_separate_provider_entry
   create_worknodes: false
 source_lineage:
 - >-
@@ -27641,10 +27656,12 @@ preserved_exact_tokens:
 - may expose routing behavior
 - originally requested model
 negative_constraints:
-- Gemini CLI must not collapse into Gemini direct provider semantics.
+- Do not select Gemini CLI as an active provider/runtime entry.
+- Do not collapse active provider routes into one generic Gemini badge.
 compatibility_only_notes:
 - Requested/effective runtime disclosure remains required for provider routing differences.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Gemini CLI separate-provider-entry support is retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_boundary_notes:
 - Models and multi-account owners retain provider routing/account semantics.
 owner_hints:

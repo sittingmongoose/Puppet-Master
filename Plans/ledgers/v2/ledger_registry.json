@@ -1,19 +1,72 @@
 {
-  "active_ledgers": [
+  "active_ledgers": [],
+  "compiled_ledgers": [
     {
       "created_at_utc": "2026-06-24T09:38:50Z",
-      "last_updated_at": "2026-06-26T08:34:00Z",
-      "last_updated_at_utc": "2026-06-26T08:34:00Z",
+      "last_updated_at": "2026-06-26T14:12:59Z",
+      "last_updated_at_utc": "2026-06-26T14:12:59Z",
       "ledger_id": "pldg-20260624-001-provider-updates",
-      "notes": "Conversational design/spec ledger active. Native Cursor API-key / SDK / composer-api-style route is live-verified for planning; Cursor ACP is locally verified first-party session/agent protocol; cursor-agent print mode is fallback; opencode-cursor remains non-primary/source-lineage because PM has native support. Claude Code status-line `rate_limits` and first-class coding-plan provider expansion are recorded. Current OpenCode repo was refreshed as architecture reference; PM must own coding-plan provider/model transform mappings and E2E tests. Provider-adjacent audit reconciliation recorded only uncovered deltas. Direct-provider retest scope is PM-baked direct providers only; OpenCode server/routed providers must not be used as closure evidence. Process-local credentials were used without storing secret values. Kimi For Coding is green for tested text/thinking/image-input and not image creation; MiniMax global is green for tested text/thinking/image-input and `image-01` generation while CN remains separate; Z.AI/Zhipu is partially green with explicit model/entitlement/balance blockers; GitHub Copilot direct hosted API is green through existing GitHub OAuth token while stored CLI credential prompts remain non-green. Provider media support now splits media input, media output, and generated-media routes. No canonical Plans, PlanUnit index, WorkNodes, NodeSeeds, executable queues, Spec Lock, shards, evidence, plan_graph, or auto_decisions were created or updated.",
-      "phase": "conversation_active",
-      "primary_goal": "Collaboratively clarify and shape the placeholder feature `<provider updates>` into clear, complete, testable project intent before any canonical Plans edits.",
+      "notes": "Compiled accepted provider-update atoms into live canonical Plans PlanUnits, applied post-compile currentness/traceability repairs, and regenerated allowed Plans/.plan_index outputs. Strict canonical_plan_targets remains governance-covered Plans/00-plans-index.md; compiled_owner_docs records every touched owner/consumer doc. governance_status=pending_seal because Spec_Lock, shards, evidence, plan_graph, and auto_decisions were intentionally not updated. Post-currentness validator results recorded: ledger/index/diff/search and atom-to-PlanUnit traceability checks pass; migration/shard/run-gates remain stale generated-governance failures pending explicit refresh.",
+      "phase": "compiled_to_plans_pending_governance_seal",
+      "primary_goal": "Provider updates compiled to canonical Plans; governance seal pending.",
       "resume_file": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/handoff.json",
-      "status": "active",
-      "title": "Provider Updates"
-    }
-  ],
-  "compiled_ledgers": [
+      "status": "compiled",
+      "title": "Provider Updates",
+      "canonical_plan_targets": [
+        "Plans/00-plans-index.md"
+      ],
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/BinaryLocator_Spec.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MCP_Integration.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Permissions_System.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newfeatures.md",
+        "Plans/newtools.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "compiled_plan_outputs": [
+        "Plans/00-plans-index.md",
+        "Plans/BinaryLocator_Spec.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/MCP_Integration.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Permissions_System.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/newfeatures.md",
+        "Plans/newtools.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/usage-feature.md",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "governance_status": "pending_seal"
+    },
     {
       "canonical_plan_targets": [
         "Plans/Contracts_V0.md",
@@ -589,5 +642,5 @@
       "updated_at_utc": "2026-06-19T17:19:04Z"
     }
   ],
-  "updated_at_utc": "2026-06-26T00:05:00Z"
+  "updated_at_utc": "2026-06-26T10:01:39Z"
 }

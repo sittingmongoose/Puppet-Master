@@ -226,7 +226,7 @@ Required fields:
 - when model/runtime selection is shown beside usage data, `provider_usage_source_kind?` maps to the Usage/Contracts `usage_source_kind` field and preserves whether the evidence is project-local, provider/API-backed (`/API-backed`), API-key-derived, OAuth-quota-derived, or estimated instead of flattening all model rows into one source label
 - `provider_signal_confidence?` records confidence for provider-derived signals that affect model/runtime availability or usage disclosure
 - `model_id_raw`, `effort`, `compact_threshold`, `auth_family`, `pool_scope`, `effective_runtime`, and `effective_runtime_snapshot` remain inspectable runtime/model fields when they affect selection, compatibility, or requested/effective disclosure.
-- In `/OpenCode-era` multi-platform availability, platform-mapping is additive: raw IDs and `provider_id/model_id` stay exact, while runtime-platform fields distinguish surfaces such as `gemini_direct`, `gemini_cli`, OpenCode bridges, and Cursor CLI without renaming the canonical model ID.
+- In `/OpenCode-era` multi-platform availability, platform-mapping is additive: raw IDs and `provider_id/model_id` stay exact, while runtime-platform fields distinguish active surfaces such as `gemini_direct`, `antigravity_cli`, OpenCode bridges, and Cursor CLI without renaming the canonical model ID. The legacy `gemini_cli` surface remains retired/source-lineage vocabulary only.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
 
@@ -260,7 +260,7 @@ Selection rules:
 - `provider_family_id` may influence pooling or fallback, but it does not replace the concrete provider entry selection.
 - if the runtime internally reroutes to another effective model or model variant, that deviation is captured as runtime evidence; it does not rewrite the frozen requested selection.
 - model availability and capability checks must consider the concrete runtime surface, not just the vendor model namespace.
-- Gemini CLI deterministic selection precedence is explicit: `--model`, then `GEMINI_MODEL`, then `settings.json` `model.name`, then a local model router when enabled, then the provider default. PM-owned run setup uses that chain to force the requested model where possible, and any Gemini CLI `general.plan.modelRouting` value that remains `true` must be reflected as requested/effective routing evidence instead of silently changing the model. Even when PM passes `--model`, Gemini CLI plan/sub-agent routing can choose internal models, so PM must record requested/effective model evidence instead of equating `/model` or `--model` with every internal choice.
+- Retired Gemini CLI deterministic selection precedence (`--model`, `GEMINI_MODEL`, `settings.json` `model.name`, local model router, provider default, and `general.plan.modelRouting`) is retained only as source-lineage. Active CLI-runtime selection in this lane belongs to Antigravity CLI (`agy`, `agy models`, `--model`) and must record requested/effective model evidence without treating Gemini CLI as an active provider.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 ## 3. Model options configuration
@@ -278,6 +278,139 @@ max_output_tokens = 64000
 
 [provider.openai.options]
 max_output_tokens = 32000
+```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into canonical model/provider registry requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### MS-113 - Provider-Owned Model Catalog And Evidence States
+
+```yaml
+plan_unit_id: MS-113
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  The model registry is provider-owned: PM stores concrete Provider -> models rows by runtime/account/billing/transport route, then optionally groups rows by provider family for display. The same upstream model may appear under multiple providers, and each row must carry support_state, verification_state, media_input, media_output, generated_media_routes, account_profile requirements, requested/effective provider/model/effort fields, and source_lineage. Catalog presence, OpenCode server routing, Models.dev visibility, or OpenCode Go availability is not end-to-end proof for PM-baked direct providers.
+gui_related: false
+gui_classification_reason: Backend provider/model registry and evidence semantics rather than visual presentation.
+depends_on: [CV-094]
+unblocks: [MA-062, F3-400, MGAC-094, UF-074]
+acceptance_criteria:
+  - Provider rows are keyed by concrete runtime/account/billing/transport route, not only vendor family.
+  - Provider family grouping remains display/policy metadata and does not collapse distinct providers that offer overlapping models.
+  - Every row can expose support_state, verification_state, media capability fields, account-profile requirements, requested/effective identity, and source refs.
+  - Catalog presence alone cannot mark a row green or implementation-ready.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_catalog_drift
+reasoning_tier: high
+context_scope: provider_model_registry
+implementation_surfaces: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/Media_Generation_and_Capabilities.md]
+node_compile_hint: {mode: provider_owned_model_catalog, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0009
+  - pldg-20260624-001-provider-updates:atom-0016
+  - pldg-20260624-001-provider-updates:atom-0027
+  - pldg-20260624-001-provider-updates:atom-0048
+  - pldg-20260624-001-provider-updates:atom-0049
+  - pldg-20260624-001-provider-updates:atom-0107
+  - pldg-20260624-001-provider-updates:atom-0112
+  - pldg-20260624-001-provider-updates:atom-0140
+source_atom_ids: [atom-0009, atom-0016, atom-0027, atom-0035, atom-0046, atom-0048, atom-0049, atom-0050, atom-0051, atom-0059, atom-0060, atom-0071, atom-0074, atom-0091, atom-0092, atom-0098, atom-0100, atom-0101, atom-0102, atom-0103, atom-0104, atom-0105, atom-0107, atom-0109, atom-0112, atom-0117, atom-0118, atom-0119, atom-0125, atom-0126, atom-0127, atom-0128, atom-0129, atom-0130, atom-0131, atom-0132, atom-0135, atom-0138, atom-0140]
+preserved_exact_tokens: ["Provider -> models", "Provider -> models, Provider -> models", "OpenCode", "Models.dev", "support_state", "verification_state", "media_input", "media_output", "generated_media_routes", "requested_model_profile", "effective_model_profile", "fallback_used", "capability_checks"]
+negative_constraints:
+  - Do not collapse providers that offer the same model into one vendor-family account row.
+  - Do not treat Models.dev catalog presence or OpenCode server routing as PM direct-provider E2E proof.
+  - Do not keep Gemini CLI as an active provider row; preserve `gemini_cli` only as retired/source-lineage vocabulary.
+owner_hints: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Media_Generation_and_Capabilities.md]
+```
+
+### MS-114 - Direct Coding-Plan Provider Route Matrix
+
+```yaml
+plan_unit_id: MS-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Direct coding-plan providers are first-class Provider -> models routes in PM. Kimi For Coding, MiniMax Coding Plan global, Z.AI/Zhipu coding-plan routes, GitHub Copilot direct hosted API, Alibaba/Qwen Coding Plan global and CN rows, and other OpenCode/Models.dev coding-plan families must be represented as separate provider entries with route-specific base URLs, credential/profile requirements, model ids, media support, support-state, and verification-state. Rows without local end-to-end prompt proof remain disabled, capability-gated, unverified, or separate-profile rather than purchase blockers.
+gui_related: false
+gui_classification_reason: Backend model/provider catalog and provider-route metadata rather than visual presentation.
+depends_on: [MS-113]
+unblocks: [MA-062, MGAC-097, UF-075]
+acceptance_criteria:
+  - Kimi For Coding is green only for tested text, thinking, and image-input routes and is not marked as image generation.
+  - MiniMax global coding plan is green for tested text, thinking, image input, and separate `image-01` generation; MiniMax CN remains separate/unverified with a global key.
+  - Z.AI/Zhipu rows preserve standard, coding-plan, Anthropic, and Zhipu base-route distinctions and mark overload, plan-not-included, balance, and resource-package states accurately.
+  - GitHub Copilot direct hosted API uses `https://api.githubcopilot.com` with `/models` and `/chat/completions`, no `/v1`, and no native image-generation route.
+  - Unpurchased or unverified coding-plan families do not block compile and are not marked green.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: coding_plan_route_drift
+reasoning_tier: high
+context_scope: direct_coding_plan_providers
+implementation_surfaces: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/usage-feature.md]
+node_compile_hint: {mode: direct_coding_plan_provider_matrix, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0107
+  - pldg-20260624-001-provider-updates:atom-0126
+  - pldg-20260624-001-provider-updates:atom-0127
+  - pldg-20260624-001-provider-updates:atom-0128
+  - pldg-20260624-001-provider-updates:atom-0129
+  - pldg-20260624-001-provider-updates:atom-0140
+source_atom_ids: [atom-0107, atom-0108, atom-0109, atom-0110, atom-0111, atom-0112, atom-0124, atom-0125, atom-0126, atom-0127, atom-0128, atom-0129, atom-0131, atom-0132, atom-0135, atom-0138, atom-0140]
+preserved_exact_tokens: ["Kimi For Coding", "MiniMax Coding Plan", "MiniMax CN", "Z.AI", "Zhipu", "GitHub Copilot", "Alibaba Coding Plan", "Qwen", "alibaba-coding-plan", "alibaba-coding-plan-cn", "kuae-cloud-coding-plan", "minimax-coding-plan", "minimax-cn-coding-plan", "tencent-coding-plan", "umans-ai-coding-plan", "zai-coding-plan", "zhipuai-coding-plan", "https://api.githubcopilot.com", "/models", "/chat/completions", "/v1"]
+negative_constraints:
+  - Do not require Jared to buy additional subscription plans to finish provider planning.
+  - Do not mark untested or inaccessible coding-plan rows green from catalog presence alone.
+  - Do not prepend `/v1` to GitHub Copilot direct hosted routes.
+  - Do not collapse global and CN/regioned provider IDs into one credential/profile row.
+owner_hints: [Plans/Models_System.md, Plans/Multi-Account.md, Plans/Contracts_V0.md, Plans/usage-feature.md, Plans/FinalGUISpec.md]
+```
+
+### MS-115 - Provider-Specific Thinking Effort And Transform Defaults
+
+```yaml
+plan_unit_id: MS-115
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Thinking effort is a global user-selectable intent that resolves through provider/model-specific support. PM must store requested effort separately from supported variants and effective wire mapping, then disclose honored, skipped, clamped, unsupported, and partially supported outcomes. Current transforms include Claude Code print-mode thinking models, Antigravity model-specific choices, Codex/OpenAI `model_reasoning_effort`, Cursor model/route caveats, GitHub Copilot `reasoning_effort` only where the hosted model supports it, Kimi `thinking` and `reasoning_effort` with `xhigh|max -> high`, Z.AI/Zhipu preserved thinking plus GLM-5.2 `high|max`, MiniMax M3 `none|thinking`, MiniMax M2 defaults, and Alibaba/Qwen `enable_thinking` as an explicit PM-owned verification gap.
+gui_related: false
+gui_classification_reason: Provider/model transform and effective-wire behavior; GUI consumes the state but does not own it.
+depends_on: [MS-113]
+unblocks: [F3-400, ACD-424, CV-293]
+acceptance_criteria:
+  - Requested effort and effective provider wire value are both recorded for every provider attempt.
+  - Unsupported or clamped effort requests do not silently become successful support claims.
+  - OpenCode/Models.dev defaults are treated as source-lineage for PM-owned transforms, not copied adapter code.
+  - Qwen/Alibaba `enable_thinking` is not assumed for coding-plan rows until PM verifies or maps it explicitly.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: effort_transform_drift
+reasoning_tier: high
+context_scope: provider_effort_mapping
+implementation_surfaces: [Plans/Models_System.md, Plans/Prompt_Pipeline.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: provider_specific_effort_mapping, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0017
+  - pldg-20260624-001-provider-updates:atom-0052
+  - pldg-20260624-001-provider-updates:atom-0113
+  - pldg-20260624-001-provider-updates:atom-0114
+  - pldg-20260624-001-provider-updates:atom-0139
+source_atom_ids: [atom-0017, atom-0018, atom-0052, atom-0069, atom-0086, atom-0088, atom-0089, atom-0090, atom-0106, atom-0113, atom-0114, atom-0126, atom-0127, atom-0128, atom-0129, atom-0131, atom-0139, atom-0140]
+preserved_exact_tokens: ["thinking effort", "reasoning_effort", "model_reasoning_effort", "thinking", "reasoningEffort", "xhigh|max -> high", "high", "max", "none", "thinking", "enable_thinking", "clear_thinking", "reasoning_content", "temperature", "topP", "topK", "toolStreaming=false"]
+negative_constraints:
+  - Do not expose generic low/medium/high effort variants for provider/model rows where current evidence excludes them.
+  - Do not clear Z.AI/Zhipu thinking content when preserved-thinking semantics are required.
+  - Do not assume Alibaba coding-plan rows receive `enable_thinking` just because OpenCode applies it to `alibaba-cn`.
+owner_hints: [Plans/Models_System.md, Plans/Contracts_V0.md, Plans/Provider_Stream_Mapping_External_Reference_A2A.md, Plans/FinalGUISpec.md]
 ```
 
 ### 3.2 Per-model options
@@ -317,7 +450,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Con
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
 
-Capability checks are data-driven and must not devolve into scattered `if-else` branches. Gemini Direct and Gemini CLI keep distinct capability entries, and Gemini `disableCache` compatibility evidence maps through `cache_control` / `cache_with_oauth` rather than a hidden provider flag.
+Capability checks are data-driven and must not devolve into scattered `if-else` branches. Gemini Direct and Antigravity CLI keep distinct active capability entries; retired Gemini CLI capability tokens remain compatibility/source-lineage only. Gemini `disableCache` compatibility evidence maps through `cache_control` / `cache_with_oauth` rather than a hidden provider flag.
 
 Provider/catalog discovery remains dynamic and model-scoped. OpenCode `models.dev` and provider `/catalog` evidence may supply model-level capability metadata such as reasoning, `/tool/temperature` support, limits, modalities, and pricing; PM records this as capability data rather than hardcoding provider defaults. Selectable-unit snapshots preserve `requested_default` and `effective_capabilities` so UI defaults and runtime routing can explain which provider/model entry was requested and what capability block was actually discovered. `cursor-agent models` is live catalog evidence whose returned IDs may encode reasoning variants directly, so PM must discover those IDs instead of inferring variants from vendor name alone.
 
@@ -331,7 +464,8 @@ Role-mapping is data-driven through `system_role_name`. OpenAI reasoning surface
 | OpenAI standard | `system` |
 | OpenAI reasoning family | `developer` |
 | Gemini Direct | `system` |
-| Gemini CLI | `system` |
+| Antigravity CLI | `system` |
+| Gemini CLI (retired/source-lineage only) | `system` |
 | Other providers | `system` by default |
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
@@ -630,7 +764,7 @@ Aliases and variants are distinct concepts: aliases are lookup keys for model re
 
 <a id="MEDIA-ALIASES"></a>
 
-The following aliases are registered by default for media-generation models. They are resolved by `media.generate` `model_override` (§2.3 of `Plans/Media_Generation_and_Capabilities.md`) and by any other model-override surface that uses alias resolution.
+The following aliases are registered by default for media-generation models. They are resolved by `media.generate` `model_override` (§2.3 of `Plans/Media_Generation_and_Capabilities.md`) and by any other model-override surface that uses alias resolution. Alias registration is not provider availability proof: the resolved provider/model route must still appear in the selected provider catalog and satisfy media artifact E2E proof before the route is green. Current Antigravity CLI proof does not list Nano Banana/Nanobanana media models; arbitrary `--model "Nano Banana"` prompt success falls back and is not support evidence.
 
 | Alias (normalized key) | Canonical model ID | Kind(s) |
 |------------------------|--------------------|---------|
@@ -640,7 +774,7 @@ The following aliases are registered by default for media-generation models. The
 | `tts flash` | `gemini-2.5-flash-preview-tts` | tts |
 | `tts pro` | `gemini-2.5-pro-preview-tts` | tts |
 
-Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in config.
+Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in config. Overrides can affect lookup, not capability truth; provider/model support still comes from catalog metadata plus route-specific verification.
 
 ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
 
@@ -690,7 +824,7 @@ Rules:
 - effort support is never inferred solely from model-name similarity.
 - unavailable, silent, or stale discovery should display `Unknown` instead of asserting `Unsupported`.
 - the GUI must keep requested and effective reasoning/effort selections distinct when a runtime clamps or ignores them.
-- Provider/model `/features` metadata may expose thinking-related controls as provider-specific option names, including Gemini CLI `thinkingLevel` for Gemini 3-style model features and `thinkingBudget` for 2.5-style flows; PM records these as runtime-qualified capability data rather than hardcoding a universal effort enum.
+- Provider/model `/features` metadata may expose thinking-related controls as provider-specific option names. Active providers must declare those names per provider/model; retired Gemini CLI `thinkingLevel` and `thinkingBudget` terms remain source-lineage examples only. PM records thinking effort as runtime-qualified capability data rather than hardcoding a universal effort enum.
 - Any legacy consumer wording in `Plans/assistant-chat-design.md` or `/assistant-chat-design.md` that treats Gemini effort or Cursor effort as universally unsupported is superseded by this runtime-qualified capability rule.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
@@ -884,15 +1018,16 @@ Day-one supported runtime/API-family surfaces for this change set:
 | `alibaba-coding-plan` direct | direct-provider | Effort and API-family behavior must be treated as provider-specific, not assumed OpenAI-equivalent. |
 | `zai-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply; `zai-coding-plan` is the product label while `zai_coding_plan` is the family mapping token. |
 | `minimax-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply; source docs include `https://platform.minimaxi.com/docs/coding-plan/intro`. |
-| `gemini` direct | direct-provider | Distinct runtime surface from Gemini CLI. |
-| `gemini-cli` | CLI-bridged | Distinct auth/control/cache/runtime surface from Gemini direct. |
+| `gemini` direct | direct-provider | Active Gemini Direct API runtime surface. |
+| `antigravity-cli` | CLI-bridged | Active multi-model Google-owned CLI-runtime surface replacing Gemini CLI. |
+| `gemini-cli` | retired/source-lineage | Not an active runtime surface; retained only for migration/currentness audit. |
 | `claude-code-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
 | `cursor-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Commands_System.md, ContractName:Plans/FinalGUISpec.md
 
 Matrix rules:
-- `gemini` direct and `gemini-cli` are separate surfaces even when grouped by a higher-level provider family.
+- `gemini` direct and `antigravity-cli` are separate active surfaces even when grouped by a higher-level provider family; retired `gemini-cli` must not be selected.
 - effort support is evaluated per surface.
 - tool-schema normalization and loop-control behavior may vary by surface.
 - provider-native agent or session files are not PM runtime canon.
@@ -913,7 +1048,7 @@ Provider-family transforms, provider-specific API-shape mismatch handling, and A
 - PM must keep adapter policy explicit and must not assume one generic direct-provider loop is sufficient for all model families; OpenAI-like providers therefore use per-surface API-family routing, including explicit `responses` vs `chat` vs `model-language` / plain language model primitive selection, rather than one universal OpenAI-compatible surface.
 - `Gemini/Vertex` surfaces need stricter `tool-schema` normalization and schema sanitization requirements than generic JSON Schema before PM treats tool calls as equivalent across transports; sanitizer evidence must preserve `anyOf`/combiners and numeric enums with issue refs `#14788`, `#12908`, `#12827`, and `#12911`.
 - upstream provider identity remains explicit where relevant; examples include `google`, `anthropic`, and `openai-compatible`, and bridge/runtime adapters freeze that identity in effective disclosure instead of collapsing it into the PM runtime platform label.
-- for Gemini CLI and other provider-side routers, PM should prefer explicit model selection, disable or constrain provider-side routing where feasible, tolerate/observe any remaining internal routing, and surface any `/observe` state rather than allowing silent provider-side model changes without requested/effective model disclosure.
+- for Antigravity CLI and other active provider-side routers, PM should prefer explicit model selection, disable or constrain provider-side routing where feasible, tolerate/observe any remaining internal routing, and surface any `/observe` state rather than allowing silent provider-side model changes without requested/effective model disclosure. Gemini CLI router wording is retired/source-lineage only.
 
 Direct coding-plan provider identities:
 - `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` are user-visible provider names in the same direct-provider `/runtime` bucket as `GitHub Copilot`, `Codex`, and `Gemini`; they are not CLI-bridged surfaces merely because they use provider SDK adapters.
@@ -1282,8 +1417,11 @@ preserved_exact_tokens:
 - Puppet Master
 - Plans/Models_System.md#MODEL-ID
 - single canonical source of truth
-negative_constraints: []
-compatibility_only_notes: []
+negative_constraints:
+- Default aliases must not be treated as provider availability proof.
+- Antigravity `--model` prompt success with an unlisted alias must not mark that alias green because the CLI can fall back to a default model.
+compatibility_only_notes:
+- Nano Banana aliases remain valid media lookup aliases, but current Antigravity CLI verification does not prove Antigravity media-generation support for them.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Plans/Models_System.md is the single canonical source for model selection, configuration, and variant rules.
@@ -1335,9 +1473,13 @@ preserved_exact_tokens:
 - Plans/Spec_Lock.json
 - Plans/auto_decisions.jsonl
 - Plans/FinalGUISpec.md
-negative_constraints: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+negative_constraints:
+- Default media aliases are lookup aliases, not provider availability proof.
+- Do not mark Nano Banana, Nanobanana, Imagen, Veo, TTS, or other generated-media aliases green through Antigravity unless the selected provider catalog lists the media model and an E2E generated artifact proof succeeds.
+compatibility_only_notes:
+- Nano Banana aliases remain valid lookup aliases, but current Antigravity CLI proof does not verify Antigravity generated-media support for them.
+stale_retired_dispositions:
+- Arbitrary successful `agy --model "Nano Banana"` prompt output is not support evidence because the current Antigravity CLI logs the model as unrecognized and falls back.
 owner_boundary_notes:
 - This unit preserves reference inventory only; referenced owner docs keep their own contracts.
 owner_hints:
@@ -1957,7 +2099,7 @@ split_recommendation_reason: The covered span set is narrow enough for this Plan
   where safe.
 ```
 
-### MS-015 - Selection Priority And Gemini CLI Evidence
+### MS-015 - Selection Priority And Retired Gemini CLI Evidence
 
 ```yaml
 plan_unit_id: MS-015
@@ -1965,7 +2107,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: Selection follows the deterministic requested/effective pipeline and priority table. Concrete provider entries
-  resolve before provider families, while Gemini CLI precedence and general.plan.modelRouting are recorded as evidence.
+  resolve before provider families. Gemini CLI precedence and general.plan.modelRouting are retained only as retired
+  source-lineage evidence; active CLI-runtime model selection for this lane belongs to Antigravity CLI and other verified
+  active provider entries.
 gui_related: false
 gui_classification_reason: The unit covers resolver selection priority rather than direct GUI presentation.
 split_recommended: false
@@ -1981,13 +2125,13 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: selection_priority_gemini_cli_evidence
+risk_class: selection_priority_retired_gemini_cli_evidence
 reasoning_tier: standard
 context_scope: models_system_standardization
 implementation_surfaces:
 - Plans/Models_System.md
 node_compile_hint:
-  mode: selection_priority_gemini_cli_evidence
+  mode: selection_priority_retired_gemini_cli_evidence
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0015
@@ -1999,8 +2143,10 @@ preserved_exact_tokens:
 - general.plan.modelRouting
 negative_constraints:
 - Provider family cannot replace a concrete provider entry when the concrete provider is specified.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Gemini CLI precedence tokens are retained only for migration/currentness lineage.
+stale_retired_dispositions:
+- Gemini CLI selection precedence is not active implementation guidance after CBP-019/CBP-020.
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
 owner_hints:
@@ -2074,7 +2220,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: Capability metadata covers transport, tool, cache, payload, pricing, billing, and source fields. Checks are
-  data-driven, Gemini Direct and Gemini CLI remain distinct, and disableCache maps through cache capability fields.
+  data-driven, Gemini Direct and Antigravity CLI remain distinct active entries, retired Gemini CLI capability tokens remain
+  source-lineage only, and disableCache maps through cache capability fields.
 gui_related: false
 gui_classification_reason: The unit covers capability metadata and runtime checks rather than direct GUI presentation.
 split_recommended: false
@@ -2107,6 +2254,7 @@ preserved_exact_tokens:
 - billing_entity
 - billing_source
 - disableCache
+- Gemini Direct and Gemini CLI remain distinct
 negative_constraints:
 - Capability checks must not devolve into scattered if-else branches.
 compatibility_only_notes:
@@ -2165,8 +2313,10 @@ preserved_exact_tokens:
 - cursor-agent models
 negative_constraints:
 - Provider defaults and variants must not be hardcoded when returned IDs and catalog metadata are available.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- Retired Gemini CLI capability-entry wording is source-lineage only; current active split is Gemini Direct and Antigravity CLI.
+stale_retired_dispositions:
+- Active Gemini CLI capability rows are retired by provider-update ledger pldg-20260624-001-provider-updates.
 owner_boundary_notes:
 - Models_System.md owns catalog-derived capability interpretation.
 owner_hints:
@@ -4065,6 +4215,7 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0039
+- pldg-20260624-001-provider-updates:atom-0141
 preserved_exact_tokens:
 - MEDIA-ALIASES
 - nano banana

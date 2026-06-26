@@ -139,6 +139,49 @@ ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requ
   quickstart.md                          # optional derived human convenience file (see §12; non-canonical)
 ```
 
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into project output packaging requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### POA-050 - Generated Media Output Packaging And Provenance
+
+```yaml
+plan_unit_id: POA-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Generated media outputs become project artifacts by durable local artifact reference, content hash, provider route/account/model metadata, generation parameter summary, provider receipt refs, provenance caveats, expiry warnings, and source lineage. Project Output Artifacts consumes Runtime Artifacts and Media route truth; it owns packaging/export identity, not provider execution behavior. Expiring provider URLs such as MiniMax Image-01 URL outputs require explicit capture status and 24-hour expiry warning before being treated as durable project outputs.
+gui_related: true
+gui_classification_reason: Generated media artifact packaging, export identity, and expiry/provenance presentation are user-visible output behavior.
+depends_on: [RAP-032, RAP-033, MGAC-095, MGAC-096]
+unblocks: []
+acceptance_criteria:
+  - Generated media project outputs reference durable local artifacts and hashes.
+  - Provider receipt refs and route/account/model metadata are preserved without secrets.
+  - Expiring provider URLs are disclosed and not treated as durable storage.
+  - Output packaging consumes, rather than redefines, Media and Runtime Artifact route truth.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: generated_media_output_packaging_drift
+reasoning_tier: high
+context_scope: generated_media_output_artifacts
+implementation_surfaces: [Plans/Project_Output_Artifacts.md, future artifact export/package system]
+node_compile_hint: {mode: generated_media_output_packaging, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0121
+  - pldg-20260624-001-provider-updates:atom-0133
+  - pldg-20260624-001-provider-updates:atom-0137
+source_atom_ids: [atom-0031, atom-0033, atom-0034, atom-0121, atom-0130, atom-0133, atom-0134, atom-0136, atom-0137]
+preserved_exact_tokens: ["generated media", "project outputs", "provider receipt", "content hash", "24-hour expiry", "MiniMax Image-01", "OpenAI/Codex subscription", "C2PA", "SynthID"]
+negative_constraints:
+  - Do not treat provider URL outputs as durable project artifacts without capture status and expiry disclosure.
+  - Do not store provider secrets in project output artifacts.
+  - Do not make Project Output Artifacts the owner of provider execution behavior.
+owner_hints: [Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/Media_Generation_and_Capabilities.md]
+```
+
 ### 2.2 Non-canonical execution workspace (sidecar) — `.puppet-master/workspace/**`
 
 The **Project Plan Package** (this document) is staged under `.puppet-master/project/**`.

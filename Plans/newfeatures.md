@@ -13,7 +13,7 @@ The rewrite is aligned to these canonical decisions:
 - shared requested/effective runtime identity spans assistant, interview, builders, overseers, and node workers
 - `route_target` and `OpenSubject` are canonical navigation and identity-open primitives
 - Source Control remains worktree-first while Orchestrator carries lane/package/seam operational context
-- Gemini auth plan-map status is `RECONCILE complete` for this high-level feature summary: Gemini Direct and Gemini CLI are separate provider entries, API-key access is a scoped exception rather than the default UI posture, and consumer docs inherit requested/effective auth/account identity from `Plans/Multi-Account.md`, `Plans/Contracts_V0.md`, `Plans/Prompt_Pipeline.md`, `Plans/CLI_Bridged_Providers.md`, `Plans/feature-list.md`, `Plans/assistant-chat-design.md`, `Plans/newtools.md`, `Plans/00-plans-index.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/Orchestrator_Page.md` instead of restating stale Gemini API-key-default language.
+- Gemini auth plan-map status is `RECONCILE complete` for this high-level feature summary: Gemini Direct remains the active direct API provider, Antigravity CLI is the active Google-owned CLI-runtime provider, Gemini CLI is retired/source-lineage only, API-key access is a scoped exception rather than the default UI posture, and consumer docs inherit requested/effective auth/account identity from `Plans/Multi-Account.md`, `Plans/Contracts_V0.md`, `Plans/Prompt_Pipeline.md`, `Plans/CLI_Bridged_Providers.md`, `Plans/feature-list.md`, `Plans/assistant-chat-design.md`, `Plans/newtools.md`, `Plans/00-plans-index.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/Orchestrator_Page.md` instead of restating stale Gemini API-key-default language.
 - Rewrite-root summaries are now owned here at feature-summary level: `Plans/Decision_Log.md` and `/Decision_Log.md` are not sufficient as a rewrite-era decision ledger when they only carry 2026-02-27 OpenCode extraction entries. This high-level GUI/spec summary must name the graph-owned `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`, worktree-first Source Control with `/worktree` lane split, requested/effective runtime identity, blocked-episode identity over HITL request identity, `route_target`, `OpenSubject`, `projection_freshness`, and `projection_health`.
 - `Plans/**` and `/spec` summaries must reflect feature seam and work package governance objects in GUI copy; absence from broad plan search is treated as stale summary drift, not as permission to omit them. `rewrite-tie-in-memo.md` and rewrite-tie-in-memo remain route/open references for `/open`, `/health`, `/runtime`, rewrite-root routing, `/seam/package`, and blocked/runtime approval identity.
 - Run Graph summary language must preserve the under-modeled command and struct gaps: `/corroboration/promotion/graph-patch`, concern, corroboration, promotion, graph-patch, trust state, and command-catalog fields are required feature families rather than high-level placeholders.
@@ -218,10 +218,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/newfeatures.md
 canonical_text: >-
-  Gemini auth plan-map status is RECONCILE complete for this high-level feature summary. Gemini Direct and Gemini CLI
-  are separate provider entries, API-key access is a scoped exception rather than the default UI posture, and consumers
-  inherit requested/effective auth and account identity from the owner docs instead of restating stale Gemini
-  API-key-default language.
+  Gemini auth plan-map status is RECONCILE complete for this high-level feature summary. Gemini Direct remains the active
+  direct API provider, Antigravity CLI is the active Google-owned CLI-runtime route, Gemini CLI wording is retired
+  source-lineage only, API-key access is a scoped exception rather than the default UI posture, and consumers inherit
+  requested/effective auth and account identity from the owner docs instead of restating stale Gemini API-key-default language.
 gui_related: true
 gui_classification_reason: The unit preserves provider-auth UI posture and requested/effective identity disclosure summary.
 split_recommended: false
@@ -230,7 +230,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
-- Gemini Direct and Gemini CLI remain separate provider entries in this summary.
+- Gemini Direct remains active, Antigravity CLI is the active CLI-runtime route, and Gemini CLI remains retired/source-lineage only in this summary.
 - API-key access remains a scoped exception rather than the default UI posture.
 - Stale Gemini API-key-default language is not revived.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
