@@ -1,0 +1,292 @@
+{
+  "actionable_findings": [
+    {
+      "exact_tokens": [
+        "Do not leave retired provider terms in active setup or selector copy",
+        "Gemini direct provider via api is ok to keep",
+        "Kill Gemini cli support",
+        "Retired Gemini CLI tokens remain auditable as stale/source-lineage terms only",
+        "show one shared Gemini-family usage surface rather than separate top-level Gemini Direct vs Gemini CLI pages"
+      ],
+      "finding_family": "stale_lineage_active_usage_copy",
+      "finding_key": "sfk-2e1b920cfabc04dc0be69949",
+      "finding_level": "blocker",
+      "owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Multi-Account.md"
+      ],
+      "plan_unit_ids": [
+        "0PI-061",
+        "CBP-019",
+        "MA-035",
+        "MA-062"
+      ],
+      "source_atom_ids": [
+        "atom-0015",
+        "atom-0024",
+        "atom-0025",
+        "atom-0057",
+        "atom-0123"
+      ],
+      "summary": "Active Multi-Account usage copy still contrasts Gemini Direct with Gemini CLI pages even though the same cycle retires Gemini CLI to source-lineage/compatibility vocabulary only."
+    },
+    {
+      "exact_tokens": [
+        "engine.backend",
+        "gemini_api | cursor_native",
+        "generated_media_routes[]",
+        "media_route_id",
+        "provider_entry_id",
+        "requested/effective runtime snapshot"
+      ],
+      "finding_family": "stale_provider_schema_residue",
+      "finding_key": "sfk-d1a2ecb4b7d39660d5d9f5a8",
+      "finding_level": "blocker",
+      "owner_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "plan_unit_ids": [
+        "CV-293",
+        "F3-401",
+        "MGAC-026",
+        "MGAC-094",
+        "MS-113",
+        "PP-054"
+      ],
+      "source_atom_ids": [
+        "atom-0026",
+        "atom-0027",
+        "atom-0028",
+        "atom-0035",
+        "atom-0037",
+        "atom-0038",
+        "atom-0039",
+        "atom-0040",
+        "atom-0041",
+        "atom-0042",
+        "atom-0043",
+        "atom-0044",
+        "atom-0045",
+        "atom-0046",
+        "atom-0048",
+        "atom-0049",
+        "atom-0074",
+        "atom-0092",
+        "atom-0098",
+        "atom-0101",
+        "atom-0105",
+        "atom-0130",
+        "atom-0138",
+        "atom-0142",
+        "atom-0143",
+        "atom-0144"
+      ],
+      "summary": "Media response schema still constrains engine.backend to gemini_api | cursor_native while newer provider media route canon requires route-specific generated_media_routes and requested/effective provider identity."
+    },
+    {
+      "exact_tokens": [
+        "123",
+        "126",
+        "compiled_to_plan_atoms",
+        "compiled_to_plans_governance_sealed",
+        "governance seal remains pending",
+        "sealed"
+      ],
+      "finding_family": "ledger_projection_count_drift",
+      "finding_key": "sfk-2558838ab5b35d7ceef3db16",
+      "finding_level": "blocker",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/current.json",
+        "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/handoff.json",
+        "Plans/ledgers/v2/pldg-20260624-001-provider-updates/validation/ledger_health.json"
+      ],
+      "plan_unit_ids": [
+        "ACD-424",
+        "F3-401",
+        "MA-062",
+        "MGAC-094",
+        "MGAC-098",
+        "MS-113"
+      ],
+      "source_atom_ids": [
+        "atom-0142",
+        "atom-0143",
+        "atom-0144"
+      ],
+      "summary": "Sealed ledger projections disagree on compiled atom count: current.json and ledger_health report 126 compiled atoms, while handoff.json still reports 123; current primary_goal also says governance seal remains pending despite sealed status."
+    },
+    {
+      "exact_tokens": [
+        "bootstrap_ledger_validator",
+        "compiled_to_plans_governance_sealed",
+        "git_diff_check",
+        "pass_governance_sealed",
+        "pending_final_rerun_after_seal_projection_update"
+      ],
+      "finding_family": "ledger_validator_projection_stale",
+      "finding_key": "sfk-61185c1dea495f4aaa303ecf",
+      "finding_level": "blocker",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/current.json",
+        "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/handoff.json",
+        "Plans/ledgers/v2/pldg-20260624-001-provider-updates/validation/ledger_health.json"
+      ],
+      "plan_unit_ids": [
+        "ACD-424",
+        "F3-401",
+        "MA-062",
+        "MGAC-094",
+        "MGAC-098",
+        "MS-113"
+      ],
+      "source_atom_ids": [
+        "atom-0142",
+        "atom-0143",
+        "atom-0144"
+      ],
+      "summary": "Compact-state validation projections still say bootstrap ledger and git diff checks are pending final rerun after seal, while ledger_health and compile_queue claim the sealed pass state."
+    },
+    {
+      "exact_tokens": [
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/00-plans-index.md",
+        "Plans/ledgers/v2/ledger_registry.json",
+        "closure_evidence_hash_updates=297",
+        "closure_evidence_hashes",
+        "owner_evidence_hash_updates=201",
+        "owner_evidence_hashes",
+        "stale",
+        "touched_rows=214"
+      ],
+      "finding_family": "closure_registry_currentness",
+      "finding_key": "sfk-929f4dfbd5cc1201eff2a369",
+      "finding_level": "blocker",
+      "owner_docs": [
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "scripts/pm-audit-closure.py"
+      ],
+      "plan_unit_ids": [
+        "PDS-014",
+        "PLS-012"
+      ],
+      "source_atom_ids": [],
+      "summary": "Global semantic closure registry hashes are stale; pm-audit-closure.py validate fails and refresh-hashes --dry-run would touch 214 rows."
+    }
+  ],
+  "audit_id": "audit-20260626-001-provider-updates-closed-world-semantic-fidelity",
+  "baseline_ref": "7b18d32554c37da6f694ec5851f202186219c2b7",
+  "classification_counts": {
+    "equivalent_with_evidence": 81,
+    "exact_present": 489,
+    "missing_or_drift": 27,
+    "not_for_plan": 4,
+    "stale_retired": 14,
+    "warning": 901
+  },
+  "closure_reuse_count": 0,
+  "closure_reuse_summary": "No valid provider-updates closure-registry rows matched this ledger or finding keys; prior provider-adjacent audit had no semantic closure registry rows to reuse.",
+  "generated_at_utc": "2026-06-26T16:26:48Z",
+  "head_ref": "d640e0278b15cf906df3cfc8ccf484d71aeecbab",
+  "latest_related_audit": "Plans/.audits/audit-20260625-001-provider-adjacent-plans",
+  "latest_related_audit_status": "reconciled_with_residual_repair_required_findings",
+  "ledger_id": "pldg-20260624-001-provider-updates",
+  "ledger_summary": {
+    "compile_queue_phase": "compiled_to_plans_governance_sealed",
+    "compile_queue_status": "compiled_to_plans_governance_sealed",
+    "compiled_atoms_current": 126,
+    "compiled_atoms_handoff": 123,
+    "compiled_atoms_ledger_health": 126,
+    "compiled_plan_units_compile_queue": 37,
+    "compiled_plan_units_current": 37,
+    "compiled_plan_units_handoff": 37,
+    "current_phase": "compiled_to_plans_governance_sealed",
+    "current_status": "compiled_to_plans_governance_sealed",
+    "design_atoms": 144,
+    "governance_status": "sealed",
+    "handoff_phase": "compiled_to_plans_governance_sealed",
+    "handoff_status": "compiled_to_plans_governance_sealed",
+    "ledger_health_status": "pass_governance_sealed",
+    "ledger_registry_entry_last_updated_at_utc": "2026-06-26T15:51:34Z",
+    "ledger_registry_top_updated_at_utc": "2026-06-26T10:01:39Z",
+    "not_for_plan_atoms_current": 4,
+    "open_blockers": 0,
+    "open_questions": 0,
+    "operating_capsule_agent_task": "provider_updates_governance_sealed",
+    "operating_capsule_current_phase": "compiled_to_plans_governance_sealed",
+    "registry_bucket": "sealed_ledgers",
+    "superseded_atoms_current": 14
+  },
+  "next_action": "BLOCKED: do not repair in this audit. Run bounded repair for semantic copy/schema/projection issues and regenerate closure registry hashes through pm-audit-closure.py refresh-hashes, then rerun closed-world semantic audit and validators.",
+  "non_actionable_findings": [
+    {
+      "classification": "warning",
+      "finding_family": "planunit_lineage_shape_warning",
+      "finding_key": "sfk-550fbc578ef71b16bc0c37d6",
+      "finding_level": "warning",
+      "summary": "Four legacy-shaped PlanUnits preserve reciprocal ledger source_lineage but lack the newer source_atom_ids helper field; lineage is present, so this is not repair-required."
+    },
+    {
+      "classification": "warning",
+      "finding_family": "source_lineage_helper_narrower_than_atom_mapping",
+      "finding_key": "sfk-b08e726dc65c92ce62acd1d2",
+      "finding_level": "warning",
+      "summary": "Some provider-update PlanUnits preserve broader source_atom_ids than their compact source_lineage list. Current prose remains auditable, but tools that read only source_lineage may see narrower coverage."
+    },
+    {
+      "classification": "warning",
+      "finding_family": "auto_decision_provenance_warning",
+      "finding_key": "sfk-4e6d67b0e599862eba5567e8",
+      "finding_level": "warning",
+      "summary": "validate-auto-decisions is expected to pass structurally, but auto_decisions.jsonl has no provider-updates-specific governance decision row; this is provenance-only and non-actionable unless governance policy changes."
+    }
+  ],
+  "non_actionable_warning_count": 3,
+  "non_audit_side_effects": [],
+  "observation_ref": "HEAD",
+  "repair_required_count": 8,
+  "schema_id": "pm.semantic_audit.report.v1",
+  "scope_coverage_percent": 100.0,
+  "scope_manifest_rows": 1516,
+  "scope_rows_classified": 1516,
+  "semantic_risk_classification_counts": {
+    "missing_or_drift": 5,
+    "warning": 3
+  },
+  "status": "BLOCKED",
+  "subagent_inputs": [
+    "pm_owner_adjudicator: found stale_provider_schema_residue for MGAC-026/MGAC-094/CV-293/PP-054/F3-401/MS-113; other provider-adjacent stale routes are closed/routed.",
+    "pm_fidelity_auditor: found stale_lineage_active_usage_copy for Gemini Direct vs Gemini CLI active usage copy; other high-risk provider PlanUnits preserve lineage.",
+    "pm_governance_auditor: pending result at artifact-generation time."
+  ],
+  "subject_ref": "d640e0278b15cf906df3cfc8ccf484d71aeecbab",
+  "validator_actionable_rows": [
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate",
+      "finding_key": "sfk-93891900f1e635b8b3c4b580",
+      "name": "closure-global",
+      "summary": "Validator closure-global failed with exit_code 1"
+    },
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity",
+      "finding_key": "sfk-6c1ae9f97fecf47728347c9e",
+      "name": "closure-audit",
+      "summary": "Validator closure-audit failed with exit_code 1"
+    },
+    {
+      "command": "git diff --check 7b18d32554c37da6f694ec5851f202186219c2b7..d640e0278b15cf906df3cfc8ccf484d71aeecbab -- Plans :!Plans/.audits/**",
+      "finding_key": "sfk-19d1dc52e0a9a087ce8f5460",
+      "name": "git-diff-check-subject-range",
+      "summary": "Validator git-diff-check-subject-range failed with exit_code 2"
+    }
+  ],
+  "validator_fail_count": 3,
+  "validator_pass_count": 17,
+  "validator_results_status": "fail",
+  "validator_side_effect_count": 0
+}
