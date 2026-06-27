@@ -35,6 +35,23 @@
       ]
     },
     {
+      "plan_unit_id": "ACD-425",
+      "remaining_depends_on": [
+        "RAP-035",
+        "T-165",
+        "UCC-101"
+      ]
+    },
+    {
+      "plan_unit_id": "ACD-426",
+      "remaining_depends_on": [
+        "F3-403",
+        "MS-117",
+        "P-055",
+        "PP-056"
+      ]
+    },
+    {
       "plan_unit_id": "ATS-011",
       "remaining_depends_on": [
         "ACD-422",
@@ -55,9 +72,64 @@
       ]
     },
     {
+      "plan_unit_id": "ATS-012",
+      "remaining_depends_on": [
+        "OP-027",
+        "SP-219"
+      ]
+    },
+    {
+      "plan_unit_id": "ATS-013",
+      "remaining_depends_on": [
+        "ACD-425",
+        "PP-055",
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "ATS-014",
+      "remaining_depends_on": [
+        "ACD-426",
+        "F3-403",
+        "G-026",
+        "MS-117",
+        "P-055",
+        "PP-056",
+        "UCC-102"
+      ]
+    },
+    {
+      "plan_unit_id": "CS-053",
+      "remaining_depends_on": [
+        "ACD-426",
+        "UCC-102"
+      ]
+    },
+    {
       "plan_unit_id": "CV-291",
       "remaining_depends_on": [
         "T-161"
+      ]
+    },
+    {
+      "plan_unit_id": "CV-295",
+      "remaining_depends_on": [
+        "SP-219"
+      ]
+    },
+    {
+      "plan_unit_id": "CV-296",
+      "remaining_depends_on": [
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "CV-297",
+      "remaining_depends_on": [
+        "ACD-426",
+        "PP-056"
       ]
     },
     {
@@ -85,6 +157,13 @@
       ]
     },
     {
+      "plan_unit_id": "F2-192",
+      "remaining_depends_on": [
+        "PP-055",
+        "PS-121"
+      ]
+    },
+    {
       "plan_unit_id": "F3-399",
       "remaining_depends_on": [
         "CV-291",
@@ -102,12 +181,61 @@
       ]
     },
     {
+      "plan_unit_id": "F3-402",
+      "remaining_depends_on": [
+        "ACD-425"
+      ]
+    },
+    {
+      "plan_unit_id": "F3-403",
+      "remaining_depends_on": [
+        "ACD-426",
+        "G-026",
+        "UCC-102"
+      ]
+    },
+    {
+      "plan_unit_id": "G-026",
+      "remaining_depends_on": [
+        "ACD-426",
+        "PP-056"
+      ]
+    },
+    {
       "plan_unit_id": "GI-033",
       "remaining_depends_on": [
         "F2-191",
         "PS-118",
         "SP-218",
         "W-074"
+      ]
+    },
+    {
+      "plan_unit_id": "MGAC-099",
+      "remaining_depends_on": [
+        "MS-116",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "MS-116",
+      "remaining_depends_on": [
+        "MGAC-099",
+        "PS-121"
+      ]
+    },
+    {
+      "plan_unit_id": "MS-117",
+      "remaining_depends_on": [
+        "ACD-426",
+        "P-055"
+      ]
+    },
+    {
+      "plan_unit_id": "OP-027",
+      "remaining_depends_on": [
+        "CV-295",
+        "SP-219"
       ]
     },
     {
@@ -120,6 +248,12 @@
       ]
     },
     {
+      "plan_unit_id": "P-055",
+      "remaining_depends_on": [
+        "ACD-426"
+      ]
+    },
+    {
       "plan_unit_id": "PNC-020",
       "remaining_depends_on": [
         "OSI-429",
@@ -127,9 +261,38 @@
       ]
     },
     {
+      "plan_unit_id": "PO-049",
+      "remaining_depends_on": [
+        "T-165"
+      ]
+    },
+    {
       "plan_unit_id": "POA-050",
       "remaining_depends_on": [
         "RAP-033"
+      ]
+    },
+    {
+      "plan_unit_id": "POA-051",
+      "remaining_depends_on": [
+        "CV-295",
+        "OP-027"
+      ]
+    },
+    {
+      "plan_unit_id": "PP-055",
+      "remaining_depends_on": [
+        "CV-296",
+        "F2-192",
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "PP-056",
+      "remaining_depends_on": [
+        "G-026",
+        "P-055"
       ]
     },
     {
@@ -142,9 +305,36 @@
       ]
     },
     {
+      "plan_unit_id": "PRDB-010",
+      "remaining_depends_on": [
+        "SP-219"
+      ]
+    },
+    {
       "plan_unit_id": "PS-118",
       "remaining_depends_on": [
         "F2-191"
+      ]
+    },
+    {
+      "plan_unit_id": "PS-120",
+      "remaining_depends_on": [
+        "OP-027",
+        "POA-051"
+      ]
+    },
+    {
+      "plan_unit_id": "PS-121",
+      "remaining_depends_on": [
+        "CV-296",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "PS-122",
+      "remaining_depends_on": [
+        "CV-297",
+        "UCC-102"
       ]
     },
     {
@@ -154,6 +344,12 @@
         "F3-399",
         "SP-217",
         "T-161"
+      ]
+    },
+    {
+      "plan_unit_id": "PWIZ-016",
+      "remaining_depends_on": [
+        "SP-219"
       ]
     },
     {
@@ -173,6 +369,28 @@
       ]
     },
     {
+      "plan_unit_id": "RAP-034",
+      "remaining_depends_on": [
+        "POA-051",
+        "SP-219"
+      ]
+    },
+    {
+      "plan_unit_id": "RAP-035",
+      "remaining_depends_on": [
+        "CV-296",
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "RAP-036",
+      "remaining_depends_on": [
+        "ACD-426",
+        "CV-297"
+      ]
+    },
+    {
       "plan_unit_id": "SP-217",
       "remaining_depends_on": [
         "T-160"
@@ -185,6 +403,18 @@
         "PS-118",
         "SP-217",
         "W-074"
+      ]
+    },
+    {
+      "plan_unit_id": "SP-219",
+      "remaining_depends_on": [
+        "CV-295"
+      ]
+    },
+    {
+      "plan_unit_id": "SP-220",
+      "remaining_depends_on": [
+        "ACD-426"
       ]
     },
     {
@@ -216,11 +446,52 @@
       ]
     },
     {
+      "plan_unit_id": "T-165",
+      "remaining_depends_on": [
+        "MGAC-099",
+        "MS-116",
+        "PP-055",
+        "PS-121"
+      ]
+    },
+    {
       "plan_unit_id": "UCC-099",
       "remaining_depends_on": [
         "F3-399",
         "SP-217",
         "T-160"
+      ]
+    },
+    {
+      "plan_unit_id": "UCC-100",
+      "remaining_depends_on": [
+        "CV-295",
+        "OP-027",
+        "PS-120"
+      ]
+    },
+    {
+      "plan_unit_id": "UCC-101",
+      "remaining_depends_on": [
+        "PS-121",
+        "RAP-035",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "UCC-102",
+      "remaining_depends_on": [
+        "ACD-426",
+        "CS-053",
+        "F3-403",
+        "PS-122"
+      ]
+    },
+    {
+      "plan_unit_id": "UF-076",
+      "remaining_depends_on": [
+        "MS-116",
+        "RAP-035"
       ]
     },
     {
@@ -243,9 +514,45 @@
       ]
     },
     {
+      "plan_unit_id": "ACD-426",
+      "remaining_depends_on": [
+        "F3-403",
+        "MS-117",
+        "P-055",
+        "PP-056"
+      ]
+    },
+    {
+      "plan_unit_id": "CS-053",
+      "remaining_depends_on": [
+        "ACD-426",
+        "UCC-102"
+      ]
+    },
+    {
       "plan_unit_id": "CV-291",
       "remaining_depends_on": [
         "T-161"
+      ]
+    },
+    {
+      "plan_unit_id": "CV-295",
+      "remaining_depends_on": [
+        "SP-219"
+      ]
+    },
+    {
+      "plan_unit_id": "CV-296",
+      "remaining_depends_on": [
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "CV-297",
+      "remaining_depends_on": [
+        "ACD-426",
+        "PP-056"
       ]
     },
     {
@@ -256,15 +563,94 @@
       ]
     },
     {
+      "plan_unit_id": "F2-192",
+      "remaining_depends_on": [
+        "PP-055",
+        "PS-121"
+      ]
+    },
+    {
+      "plan_unit_id": "F3-403",
+      "remaining_depends_on": [
+        "ACD-426",
+        "G-026",
+        "UCC-102"
+      ]
+    },
+    {
+      "plan_unit_id": "G-026",
+      "remaining_depends_on": [
+        "ACD-426",
+        "PP-056"
+      ]
+    },
+    {
+      "plan_unit_id": "MGAC-099",
+      "remaining_depends_on": [
+        "MS-116",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "MS-116",
+      "remaining_depends_on": [
+        "MGAC-099",
+        "PS-121"
+      ]
+    },
+    {
+      "plan_unit_id": "MS-117",
+      "remaining_depends_on": [
+        "ACD-426",
+        "P-055"
+      ]
+    },
+    {
+      "plan_unit_id": "P-055",
+      "remaining_depends_on": [
+        "ACD-426"
+      ]
+    },
+    {
       "plan_unit_id": "POA-050",
       "remaining_depends_on": [
         "RAP-033"
       ]
     },
     {
+      "plan_unit_id": "PP-055",
+      "remaining_depends_on": [
+        "CV-296",
+        "F2-192",
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "PP-056",
+      "remaining_depends_on": [
+        "G-026",
+        "P-055"
+      ]
+    },
+    {
       "plan_unit_id": "PS-118",
       "remaining_depends_on": [
         "F2-191"
+      ]
+    },
+    {
+      "plan_unit_id": "PS-121",
+      "remaining_depends_on": [
+        "CV-296",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "PS-122",
+      "remaining_depends_on": [
+        "CV-297",
+        "UCC-102"
       ]
     },
     {
@@ -280,6 +666,12 @@
         "PS-118",
         "SP-217",
         "W-074"
+      ]
+    },
+    {
+      "plan_unit_id": "SP-219",
+      "remaining_depends_on": [
+        "CV-295"
       ]
     },
     {
@@ -303,6 +695,24 @@
       ]
     },
     {
+      "plan_unit_id": "T-165",
+      "remaining_depends_on": [
+        "MGAC-099",
+        "MS-116",
+        "PP-055",
+        "PS-121"
+      ]
+    },
+    {
+      "plan_unit_id": "UCC-102",
+      "remaining_depends_on": [
+        "ACD-426",
+        "CS-053",
+        "F3-403",
+        "PS-122"
+      ]
+    },
+    {
       "plan_unit_id": "W-074",
       "remaining_depends_on": [
         "F2-191",
@@ -315,12 +725,19 @@
     {
       "component_id": "cycle-001",
       "plan_unit_ids": [
+        "CV-295",
+        "SP-219"
+      ]
+    },
+    {
+      "component_id": "cycle-002",
+      "plan_unit_ids": [
         "POA-050",
         "RAP-033"
       ]
     },
     {
-      "component_id": "cycle-002",
+      "component_id": "cycle-003",
       "plan_unit_ids": [
         "F2-191",
         "PS-118",
@@ -329,13 +746,40 @@
       ]
     },
     {
-      "component_id": "cycle-003",
+      "component_id": "cycle-004",
       "plan_unit_ids": [
         "0PI-060",
         "CV-291",
         "T-160",
         "T-161",
         "T-162"
+      ]
+    },
+    {
+      "component_id": "cycle-005",
+      "plan_unit_ids": [
+        "CV-296",
+        "F2-192",
+        "MGAC-099",
+        "MS-116",
+        "PP-055",
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "component_id": "cycle-006",
+      "plan_unit_ids": [
+        "ACD-426",
+        "CS-053",
+        "CV-297",
+        "F3-403",
+        "G-026",
+        "MS-117",
+        "P-055",
+        "PP-056",
+        "PS-122",
+        "UCC-102"
       ]
     }
   ],
@@ -365,6 +809,14 @@
       ]
     },
     {
+      "plan_unit_id": "ACD-425",
+      "remaining_depends_on": [
+        "RAP-035",
+        "T-165",
+        "UCC-101"
+      ]
+    },
+    {
       "plan_unit_id": "ATS-011",
       "remaining_depends_on": [
         "ACD-422",
@@ -382,6 +834,34 @@
         "T-161",
         "T-162",
         "T-163"
+      ]
+    },
+    {
+      "plan_unit_id": "ATS-012",
+      "remaining_depends_on": [
+        "OP-027",
+        "SP-219"
+      ]
+    },
+    {
+      "plan_unit_id": "ATS-013",
+      "remaining_depends_on": [
+        "ACD-425",
+        "PP-055",
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "ATS-014",
+      "remaining_depends_on": [
+        "ACD-426",
+        "F3-403",
+        "G-026",
+        "MS-117",
+        "P-055",
+        "PP-056",
+        "UCC-102"
       ]
     },
     {
@@ -419,12 +899,25 @@
       ]
     },
     {
+      "plan_unit_id": "F3-402",
+      "remaining_depends_on": [
+        "ACD-425"
+      ]
+    },
+    {
       "plan_unit_id": "GI-033",
       "remaining_depends_on": [
         "F2-191",
         "PS-118",
         "SP-218",
         "W-074"
+      ]
+    },
+    {
+      "plan_unit_id": "OP-027",
+      "remaining_depends_on": [
+        "CV-295",
+        "SP-219"
       ]
     },
     {
@@ -444,6 +937,19 @@
       ]
     },
     {
+      "plan_unit_id": "PO-049",
+      "remaining_depends_on": [
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "POA-051",
+      "remaining_depends_on": [
+        "CV-295",
+        "OP-027"
+      ]
+    },
+    {
       "plan_unit_id": "PRDB-009",
       "remaining_depends_on": [
         "F2-191",
@@ -453,12 +959,31 @@
       ]
     },
     {
+      "plan_unit_id": "PRDB-010",
+      "remaining_depends_on": [
+        "SP-219"
+      ]
+    },
+    {
+      "plan_unit_id": "PS-120",
+      "remaining_depends_on": [
+        "OP-027",
+        "POA-051"
+      ]
+    },
+    {
       "plan_unit_id": "PWIZ-015",
       "remaining_depends_on": [
         "F2-191",
         "F3-399",
         "SP-217",
         "T-161"
+      ]
+    },
+    {
+      "plan_unit_id": "PWIZ-016",
+      "remaining_depends_on": [
+        "SP-219"
       ]
     },
     {
@@ -472,9 +997,37 @@
       ]
     },
     {
+      "plan_unit_id": "RAP-034",
+      "remaining_depends_on": [
+        "POA-051",
+        "SP-219"
+      ]
+    },
+    {
+      "plan_unit_id": "RAP-035",
+      "remaining_depends_on": [
+        "CV-296",
+        "PS-121",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "RAP-036",
+      "remaining_depends_on": [
+        "ACD-426",
+        "CV-297"
+      ]
+    },
+    {
       "plan_unit_id": "SP-217",
       "remaining_depends_on": [
         "T-160"
+      ]
+    },
+    {
+      "plan_unit_id": "SP-220",
+      "remaining_depends_on": [
+        "ACD-426"
       ]
     },
     {
@@ -491,6 +1044,29 @@
         "F3-399",
         "SP-217",
         "T-160"
+      ]
+    },
+    {
+      "plan_unit_id": "UCC-100",
+      "remaining_depends_on": [
+        "CV-295",
+        "OP-027",
+        "PS-120"
+      ]
+    },
+    {
+      "plan_unit_id": "UCC-101",
+      "remaining_depends_on": [
+        "PS-121",
+        "RAP-035",
+        "T-165"
+      ]
+    },
+    {
+      "plan_unit_id": "UF-076",
+      "remaining_depends_on": [
+        "MS-116",
+        "RAP-035"
       ]
     }
   ],
@@ -934,6 +1510,16 @@
       "edge_type": "depends_on",
       "from": "0PI-061",
       "to": "PLS-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "0PI-062",
+      "to": "PDS-005"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "0PI-062",
+      "to": "PLS-011"
     },
     {
       "edge_type": "depends_on",
@@ -3492,6 +4078,41 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ACD-425",
+      "to": "RAP-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-425",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-425",
+      "to": "UCC-101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-426",
+      "to": "F3-403"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-426",
+      "to": "MS-117"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-426",
+      "to": "P-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-426",
+      "to": "PP-056"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "AI-001",
       "to": "AI-002"
     },
@@ -4434,6 +5055,76 @@
       "edge_type": "depends_on",
       "from": "ATS-011",
       "to": "T-163"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-012",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-012",
+      "to": "OP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-012",
+      "to": "SP-219"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-013",
+      "to": "ACD-425"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-013",
+      "to": "PP-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-013",
+      "to": "PS-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-013",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-014",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-014",
+      "to": "F3-403"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-014",
+      "to": "G-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-014",
+      "to": "MS-117"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-014",
+      "to": "P-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-014",
+      "to": "PP-056"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-014",
+      "to": "UCC-102"
     },
     {
       "edge_type": "depends_on",
@@ -6984,6 +7675,16 @@
       "edge_type": "depends_on",
       "from": "CS-051",
       "to": "UCC-096"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-053",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-053",
+      "to": "UCC-102"
     },
     {
       "edge_type": "depends_on",
@@ -10717,6 +11418,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-295",
+      "to": "SP-219"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-296",
+      "to": "PS-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-296",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-297",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-297",
+      "to": "PP-056"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -12937,6 +13663,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "F2-192",
+      "to": "PP-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-192",
+      "to": "PS-121"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F3-387",
       "to": "PDS-003"
     },
@@ -13189,6 +13925,41 @@
       "edge_type": "depends_on",
       "from": "F3-401",
       "to": "RAP-032"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-402",
+      "to": "ACD-425"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-402",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-403",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-403",
+      "to": "G-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-403",
+      "to": "UCC-102"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "G-026",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "G-026",
+      "to": "PP-056"
     },
     {
       "edge_type": "depends_on",
@@ -16072,6 +16843,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "MGAC-099",
+      "to": "MS-116"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MGAC-099",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "MS-001",
       "to": "MS-099"
     },
@@ -16684,6 +17465,26 @@
       "edge_type": "depends_on",
       "from": "MS-115",
       "to": "MS-113"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-116",
+      "to": "MGAC-099"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-116",
+      "to": "PS-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-117",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-117",
+      "to": "P-055"
     },
     {
       "edge_type": "depends_on",
@@ -18264,6 +19065,26 @@
       "edge_type": "depends_on",
       "from": "OP-024",
       "to": "W-072"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-026",
+      "to": "0PI-062"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-027",
+      "to": "CV-295"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-027",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-027",
+      "to": "SP-219"
     },
     {
       "edge_type": "depends_on",
@@ -23097,6 +23918,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "P-055",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PDS-001",
       "to": "PLS-001"
     },
@@ -25977,6 +26803,11 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PO-049",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "POA-001",
       "to": "POA-002"
     },
@@ -26539,6 +27370,16 @@
       "edge_type": "depends_on",
       "from": "POA-050",
       "to": "RAP-033"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "POA-051",
+      "to": "CV-295"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "POA-051",
+      "to": "OP-027"
     },
     {
       "edge_type": "depends_on",
@@ -27172,6 +28013,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PP-055",
+      "to": "CV-296"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-055",
+      "to": "F2-192"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-055",
+      "to": "PS-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-055",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-056",
+      "to": "G-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-056",
+      "to": "P-055"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PRDB-008",
       "to": "PRDB-006"
     },
@@ -27194,6 +28065,16 @@
       "edge_type": "depends_on",
       "from": "PRDB-009",
       "to": "T-161"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PRDB-010",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PRDB-010",
+      "to": "SP-219"
     },
     {
       "edge_type": "depends_on",
@@ -29002,6 +29883,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PS-120",
+      "to": "OP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-120",
+      "to": "POA-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-121",
+      "to": "CV-296"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-121",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-122",
+      "to": "CV-297"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-122",
+      "to": "UCC-102"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PSMERA-001",
       "to": "PSMERA-002"
     },
@@ -29944,6 +30855,16 @@
       "edge_type": "depends_on",
       "from": "PWIZ-015",
       "to": "T-161"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-016",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-016",
+      "to": "SP-219"
     },
     {
       "edge_type": "depends_on",
@@ -30934,6 +31855,46 @@
       "edge_type": "depends_on",
       "from": "RAP-033",
       "to": "RAP-032"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-034",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-034",
+      "to": "POA-051"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-034",
+      "to": "SP-219"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-035",
+      "to": "CV-296"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-035",
+      "to": "PS-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-035",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-036",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-036",
+      "to": "CV-297"
     },
     {
       "edge_type": "depends_on",
@@ -43922,6 +44883,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-219",
+      "to": "CV-295"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-220",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SS-001",
       "to": "SS-002"
     },
@@ -46617,6 +47588,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "T-165",
+      "to": "MGAC-099"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-165",
+      "to": "MS-116"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-165",
+      "to": "PP-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-165",
+      "to": "PS-121"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UCC-001",
       "to": "UCC-002"
     },
@@ -49032,6 +50023,56 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UCC-100",
+      "to": "CV-295"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-100",
+      "to": "OP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-100",
+      "to": "PS-120"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-101",
+      "to": "PS-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-101",
+      "to": "RAP-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-101",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-102",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-102",
+      "to": "CS-053"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-102",
+      "to": "F3-403"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-102",
+      "to": "PS-122"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UF-001",
       "to": "UF-002"
     },
@@ -50914,6 +51955,16 @@
       "edge_type": "depends_on",
       "from": "UF-075",
       "to": "UF-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-076",
+      "to": "MS-116"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-076",
+      "to": "RAP-035"
     },
     {
       "edge_type": "depends_on",
@@ -55347,6 +56398,21 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "0PI-062",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "0PI-062",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "0PI-062",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "ACD-020",
       "to": "ACD-021"
     },
@@ -57449,6 +58515,21 @@
       "edge_type": "unblocks",
       "from": "ACD-423",
       "to": "ATS-011"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ACD-425",
+      "to": "ATS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ACD-426",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ACD-426",
+      "to": "G-026"
     },
     {
       "edge_type": "unblocks",
@@ -59772,6 +60853,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "CS-053",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "CV-002",
       "to": "CV-003"
     },
@@ -61242,6 +62328,46 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "CV-295",
+      "to": "OP-027"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-295",
+      "to": "POA-051"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-295",
+      "to": "UCC-100"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-296",
+      "to": "ACD-425"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-296",
+      "to": "RAP-035"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-297",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-297",
+      "to": "RAP-036"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-297",
+      "to": "UCC-102"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "CW-002",
       "to": "CW-003"
     },
@@ -62667,6 +63793,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "F2-192",
+      "to": "ACD-425"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "F3-387",
       "to": "F-067"
     },
@@ -62714,6 +63845,26 @@
       "edge_type": "unblocks",
       "from": "F3-400",
       "to": "ACD-424"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-402",
+      "to": "ATS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-402",
+      "to": "ATS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-403",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "G-026",
+      "to": "ATS-014"
     },
     {
       "edge_type": "unblocks",
@@ -62927,6 +64078,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "MGAC-099",
+      "to": "ATS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MGAC-099",
+      "to": "PP-055"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "MS-110",
       "to": "EP-100"
     },
@@ -63017,6 +64178,21 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "MS-116",
+      "to": "RAP-035"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MS-116",
+      "to": "T-165"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MS-117",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "OP-022",
       "to": "F3-394"
     },
@@ -63057,6 +64233,31 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "OP-026",
+      "to": "ATS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "OP-026",
+      "to": "UCC-100"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "OP-027",
+      "to": "ATS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "OP-027",
+      "to": "POA-051"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "OP-027",
+      "to": "UCC-100"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "OSI-428",
       "to": "F3-394"
     },
@@ -63089,6 +64290,16 @@
       "edge_type": "unblocks",
       "from": "P-053",
       "to": "OSI-426"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "P-055",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "P-055",
+      "to": "PP-056"
     },
     {
       "edge_type": "unblocks",
@@ -63577,6 +64788,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PO-049",
+      "to": "MGAC-099"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "POA-047",
       "to": "CV-289"
     },
@@ -63602,6 +64818,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "POA-051",
+      "to": "ATS-012"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "PP-054",
       "to": "ACD-424"
     },
@@ -63617,6 +64838,26 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PP-055",
+      "to": "ACD-425"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PP-055",
+      "to": "RAP-035"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PP-056",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PP-056",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "PRDB-009",
       "to": "ATS-011"
     },
@@ -63624,6 +64865,16 @@
       "edge_type": "unblocks",
       "from": "PRDB-009",
       "to": "PWIZ-015"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PRDB-010",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PRDB-010",
+      "to": "POA-051"
     },
     {
       "edge_type": "unblocks",
@@ -63672,8 +64923,38 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PS-120",
+      "to": "ATS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PS-121",
+      "to": "ACD-425"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PS-121",
+      "to": "RAP-035"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PS-122",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "PWIZ-015",
       "to": "ATS-011"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PWIZ-016",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PWIZ-016",
+      "to": "POA-051"
     },
     {
       "edge_type": "unblocks",
@@ -63694,6 +64975,21 @@
       "edge_type": "unblocks",
       "from": "RAP-032",
       "to": "POA-050"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "RAP-034",
+      "to": "OP-027"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "RAP-035",
+      "to": "ACD-425"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "RAP-036",
+      "to": "ATS-014"
     },
     {
       "edge_type": "unblocks",
@@ -63809,6 +65105,31 @@
       "edge_type": "unblocks",
       "from": "SP-218",
       "to": "GI-033"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-219",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-219",
+      "to": "OP-027"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-219",
+      "to": "RAP-034"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-220",
+      "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-220",
+      "to": "G-026"
     },
     {
       "edge_type": "unblocks",
@@ -64062,6 +65383,21 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "T-165",
+      "to": "ACD-425"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "T-165",
+      "to": "ATS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "T-165",
+      "to": "RAP-035"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "UCC-098",
       "to": "CS-052"
     },
@@ -64079,6 +65415,21 @@
       "edge_type": "unblocks",
       "from": "UCC-099",
       "to": "ATS-011"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-100",
+      "to": "ATS-012"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-101",
+      "to": "ATS-013"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-102",
+      "to": "ATS-014"
     },
     {
       "edge_type": "unblocks",
@@ -64104,6 +65455,11 @@
       "edge_type": "unblocks",
       "from": "UF-075",
       "to": "F3-401"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UF-076",
+      "to": "CV-296"
     },
     {
       "edge_type": "unblocks",
@@ -64201,7 +65557,7 @@
       "to": "GI-033"
     }
   ],
-  "generated_at_utc": "2026-06-26T16:50:30Z",
+  "generated_at_utc": "2026-06-27T13:50:04Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -64213,8 +65569,8 @@
       "source_location": {
         "heading": "0PI-001 - Plans Index Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 692,
-        "line": 694,
+        "heading_line": 693,
+        "line": 695,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64230,8 +65586,8 @@
       "source_location": {
         "heading": "0PI-002 - Index Authority And Compliance",
         "heading_level": 3,
-        "heading_line": 807,
-        "line": 809,
+        "heading_line": 808,
+        "line": 810,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64247,8 +65603,8 @@
       "source_location": {
         "heading": "0PI-003 - Change Summary And Index Role",
         "heading_level": 3,
-        "heading_line": 855,
-        "line": 857,
+        "heading_line": 856,
+        "line": 858,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64264,8 +65620,8 @@
       "source_location": {
         "heading": "0PI-004 - Anti Drift Reading Order",
         "heading_level": 3,
-        "heading_line": 906,
-        "line": 908,
+        "heading_line": 907,
+        "line": 909,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64281,8 +65637,8 @@
       "source_location": {
         "heading": "0PI-005 - Owner Map Guard And Initial Seams",
         "heading_level": 3,
-        "heading_line": 961,
-        "line": 963,
+        "heading_line": 962,
+        "line": 964,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64298,8 +65654,8 @@
       "source_location": {
         "heading": "0PI-006 - Owner Map Routing And Stale Consumer Seams",
         "heading_level": 3,
-        "heading_line": 1010,
-        "line": 1012,
+        "heading_line": 1011,
+        "line": 1013,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64315,8 +65671,8 @@
       "source_location": {
         "heading": "0PI-007 - Owner Map Runtime File Storage Seams",
         "heading_level": 3,
-        "heading_line": 1061,
-        "line": 1063,
+        "heading_line": 1062,
+        "line": 1064,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64332,8 +65688,8 @@
       "source_location": {
         "heading": "0PI-008 - Owner Map GUI Widget Usage Final Pass Seams",
         "heading_level": 3,
-        "heading_line": 1112,
-        "line": 1114,
+        "heading_line": 1113,
+        "line": 1115,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64349,8 +65705,8 @@
       "source_location": {
         "heading": "0PI-009 - Rewrite Agent Loop Architecture Baseline",
         "heading_level": 3,
-        "heading_line": 1165,
-        "line": 1167,
+        "heading_line": 1166,
+        "line": 1168,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64366,8 +65722,8 @@
       "source_location": {
         "heading": "0PI-010 - Rewrite UI Auth Account Carry Through",
         "heading_level": 3,
-        "heading_line": 1216,
-        "line": 1218,
+        "heading_line": 1217,
+        "line": 1219,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64383,8 +65739,8 @@
       "source_location": {
         "heading": "0PI-011 - Provider Account Owner Split",
         "heading_level": 3,
-        "heading_line": 1276,
-        "line": 1278,
+        "heading_line": 1277,
+        "line": 1279,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64400,8 +65756,8 @@
       "source_location": {
         "heading": "0PI-012 - PM Planning And Node Readiness Owner Split",
         "heading_level": 3,
-        "heading_line": 1327,
-        "line": 1329,
+        "heading_line": 1328,
+        "line": 1330,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64417,8 +65773,8 @@
       "source_location": {
         "heading": "0PI-013 - Instant Grep Live Canon Map",
         "heading_level": 3,
-        "heading_line": 1379,
-        "line": 1381,
+        "heading_line": 1380,
+        "line": 1382,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64434,8 +65790,8 @@
       "source_location": {
         "heading": "0PI-014 - Instant Grep Owner Split",
         "heading_level": 3,
-        "heading_line": 1428,
-        "line": 1430,
+        "heading_line": 1429,
+        "line": 1431,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64451,8 +65807,8 @@
       "source_location": {
         "heading": "0PI-015 - Browser Owner Split",
         "heading_level": 3,
-        "heading_line": 1477,
-        "line": 1479,
+        "heading_line": 1478,
+        "line": 1480,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64468,8 +65824,8 @@
       "source_location": {
         "heading": "0PI-016 - Browser Stale Cleanup And Consumer Map",
         "heading_level": 3,
-        "heading_line": 1530,
-        "line": 1532,
+        "heading_line": 1531,
+        "line": 1533,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64485,8 +65841,8 @@
       "source_location": {
         "heading": "0PI-017 - Slash Chat SSOT Boundary",
         "heading_level": 3,
-        "heading_line": 1582,
-        "line": 1584,
+        "heading_line": 1583,
+        "line": 1585,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64502,8 +65858,8 @@
       "source_location": {
         "heading": "0PI-018 - Slash Chat Scope And Drift Risks",
         "heading_level": 3,
-        "heading_line": 1633,
-        "line": 1635,
+        "heading_line": 1634,
+        "line": 1636,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64519,8 +65875,8 @@
       "source_location": {
         "heading": "0PI-019 - Artifact HITL Tool Owner Split",
         "heading_level": 3,
-        "heading_line": 1685,
-        "line": 1687,
+        "heading_line": 1686,
+        "line": 1688,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64536,8 +65892,8 @@
       "source_location": {
         "heading": "0PI-020 - Approval Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 1736,
-        "line": 1738,
+        "heading_line": 1737,
+        "line": 1739,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64553,8 +65909,8 @@
       "source_location": {
         "heading": "0PI-021 - Terminal Ownership Map",
         "heading_level": 3,
-        "heading_line": 1785,
-        "line": 1787,
+        "heading_line": 1786,
+        "line": 1788,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64570,8 +65926,8 @@
       "source_location": {
         "heading": "0PI-022 - File Manager Editor Owner Posture",
         "heading_level": 3,
-        "heading_line": 1838,
-        "line": 1840,
+        "heading_line": 1839,
+        "line": 1841,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64587,8 +65943,8 @@
       "source_location": {
         "heading": "0PI-023 - File Manager Editor Packetization Gates",
         "heading_level": 3,
-        "heading_line": 1888,
-        "line": 1890,
+        "heading_line": 1889,
+        "line": 1891,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64604,8 +65960,8 @@
       "source_location": {
         "heading": "0PI-024 - GUI Worktree And Source Control Handoff",
         "heading_level": 3,
-        "heading_line": 1941,
-        "line": 1943,
+        "heading_line": 1942,
+        "line": 1944,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64621,8 +65977,8 @@
       "source_location": {
         "heading": "0PI-025 - Debug Ownership And Packet Coupling",
         "heading_level": 3,
-        "heading_line": 1994,
-        "line": 1996,
+        "heading_line": 1995,
+        "line": 1997,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64638,8 +65994,8 @@
       "source_location": {
         "heading": "0PI-026 - Plan Map Table Core UX Owners",
         "heading_level": 3,
-        "heading_line": 2048,
-        "line": 2050,
+        "heading_line": 2049,
+        "line": 2051,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64655,8 +66011,8 @@
       "source_location": {
         "heading": "0PI-027 - Plan Map Table Planning Runtime Artifacts",
         "heading_level": 3,
-        "heading_line": 2100,
-        "line": 2102,
+        "heading_line": 2101,
+        "line": 2103,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64672,8 +66028,8 @@
       "source_location": {
         "heading": "0PI-028 - Plan Map Table Widgets Config Media Wiring",
         "heading_level": 3,
-        "heading_line": 2159,
-        "line": 2161,
+        "heading_line": 2160,
+        "line": 2162,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64689,8 +66045,8 @@
       "source_location": {
         "heading": "0PI-029 - Instant Grep Sparse N Gram Owner Split",
         "heading_level": 3,
-        "heading_line": 2220,
-        "line": 2222,
+        "heading_line": 2221,
+        "line": 2223,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64706,8 +66062,8 @@
       "source_location": {
         "heading": "0PI-030 - Cross-Cutting Backend Duplication Hotspots",
         "heading_level": 3,
-        "heading_line": 2272,
-        "line": 2274,
+        "heading_line": 2273,
+        "line": 2275,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64723,8 +66079,8 @@
       "source_location": {
         "heading": "0PI-031 - Context Lens UI Hotspot",
         "heading_level": 3,
-        "heading_line": 2329,
-        "line": 2331,
+        "heading_line": 2330,
+        "line": 2332,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64740,8 +66096,8 @@
       "source_location": {
         "heading": "0PI-032 - Rewrite-Era Owner Guidance",
         "heading_level": 3,
-        "heading_line": 2378,
-        "line": 2380,
+        "heading_line": 2379,
+        "line": 2381,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64757,8 +66113,8 @@
       "source_location": {
         "heading": "0PI-033 - Shard Governance Boundaries",
         "heading_level": 3,
-        "heading_line": 2429,
-        "line": 2431,
+        "heading_line": 2430,
+        "line": 2432,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64774,8 +66130,8 @@
       "source_location": {
         "heading": "0PI-034 - Shard Index Routing Table",
         "heading_level": 3,
-        "heading_line": 2486,
-        "line": 2488,
+        "heading_line": 2487,
+        "line": 2489,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64791,8 +66147,8 @@
       "source_location": {
         "heading": "0PI-035 - Containers Registry Unraid Owner Scope",
         "heading_level": 3,
-        "heading_line": 2542,
-        "line": 2544,
+        "heading_line": 2543,
+        "line": 2545,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64808,8 +66164,8 @@
       "source_location": {
         "heading": "0PI-036 - Docker Manager Auth UX Routing",
         "heading_level": 3,
-        "heading_line": 2596,
-        "line": 2598,
+        "heading_line": 2597,
+        "line": 2599,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64825,8 +66181,8 @@
       "source_location": {
         "heading": "0PI-037 - Runtime Packet Owner Routing",
         "heading_level": 3,
-        "heading_line": 2646,
-        "line": 2648,
+        "heading_line": 2647,
+        "line": 2649,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64842,8 +66198,8 @@
       "source_location": {
         "heading": "0PI-038 - Runtime Rendering And Blocked UX",
         "heading_level": 3,
-        "heading_line": 2702,
-        "line": 2704,
+        "heading_line": 2703,
+        "line": 2705,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64859,8 +66215,8 @@
       "source_location": {
         "heading": "0PI-039 - Source Control Actions Docker Owner Split",
         "heading_level": 3,
-        "heading_line": 2756,
-        "line": 2758,
+        "heading_line": 2757,
+        "line": 2759,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64876,8 +66232,8 @@
       "source_location": {
         "heading": "0PI-040 - Visible Source-Control Surface Routing",
         "heading_level": 3,
-        "heading_line": 2812,
-        "line": 2814,
+        "heading_line": 2813,
+        "line": 2815,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64893,8 +66249,8 @@
       "source_location": {
         "heading": "0PI-041 - Retired Git Alias And Stale-Canon Risk",
         "heading_level": 3,
-        "heading_line": 2876,
-        "line": 2878,
+        "heading_line": 2877,
+        "line": 2879,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64910,8 +66266,8 @@
       "source_location": {
         "heading": "0PI-042 - Web Firecrawl Owner Set",
         "heading_level": 3,
-        "heading_line": 2931,
-        "line": 2933,
+        "heading_line": 2932,
+        "line": 2934,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64927,8 +66283,8 @@
       "source_location": {
         "heading": "0PI-043 - Firecrawl Consumer Deference And Anchors",
         "heading_level": 3,
-        "heading_line": 3002,
-        "line": 3004,
+        "heading_line": 3003,
+        "line": 3005,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64944,8 +66300,8 @@
       "source_location": {
         "heading": "0PI-044 - Firecrawl Obligation Routing",
         "heading_level": 3,
-        "heading_line": 3074,
-        "line": 3076,
+        "heading_line": 3075,
+        "line": 3077,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64961,8 +66317,8 @@
       "source_location": {
         "heading": "0PI-045 - Slash And Provider Drift Guards",
         "heading_level": 3,
-        "heading_line": 3146,
-        "line": 3148,
+        "heading_line": 3147,
+        "line": 3149,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64978,8 +66334,8 @@
       "source_location": {
         "heading": "0PI-046 - Firecrawl Packet-Conflict Reset Scope",
         "heading_level": 3,
-        "heading_line": 3212,
-        "line": 3214,
+        "heading_line": 3213,
+        "line": 3215,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -64995,8 +66351,8 @@
       "source_location": {
         "heading": "0PI-047 - Reset Operation Constraints",
         "heading_level": 3,
-        "heading_line": 3276,
-        "line": 3278,
+        "heading_line": 3277,
+        "line": 3279,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65012,8 +66368,8 @@
       "source_location": {
         "heading": "0PI-048 - Legacy Fidelity Traceability",
         "heading_level": 3,
-        "heading_line": 3348,
-        "line": 3350,
+        "heading_line": 3349,
+        "line": 3351,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65029,8 +66385,8 @@
       "source_location": {
         "heading": "0PI-049 - Additional Fidelity And Webmap Guard",
         "heading_level": 3,
-        "heading_line": 3421,
-        "line": 3423,
+        "heading_line": 3422,
+        "line": 3424,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65046,8 +66402,8 @@
       "source_location": {
         "heading": "0PI-050 - A2A OpenCode Packet Boundary",
         "heading_level": 3,
-        "heading_line": 3493,
-        "line": 3495,
+        "heading_line": 3494,
+        "line": 3496,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65063,8 +66419,8 @@
       "source_location": {
         "heading": "0PI-051 - A2A Impacted-Doc Taxonomy",
         "heading_level": 3,
-        "heading_line": 3554,
-        "line": 3556,
+        "heading_line": 3555,
+        "line": 3557,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65080,8 +66436,8 @@
       "source_location": {
         "heading": "0PI-052 - A2A Cleanup And Final Narrowing",
         "heading_level": 3,
-        "heading_line": 3629,
-        "line": 3631,
+        "heading_line": 3630,
+        "line": 3632,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65097,8 +66453,8 @@
       "source_location": {
         "heading": "0PI-053 - A2A Evidence And Anchor Exactness",
         "heading_level": 3,
-        "heading_line": 3697,
-        "line": 3699,
+        "heading_line": 3698,
+        "line": 3700,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65114,8 +66470,8 @@
       "source_location": {
         "heading": "0PI-054 - Standardization Owner Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 3775,
-        "line": 3777,
+        "heading_line": 3776,
+        "line": 3778,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65131,8 +66487,8 @@
       "source_location": {
         "heading": "0PI-055 - Goal Runtime System Owner Map",
         "heading_level": 3,
-        "heading_line": 3827,
-        "line": 3829,
+        "heading_line": 3828,
+        "line": 3830,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65148,8 +66504,8 @@
       "source_location": {
         "heading": "0PI-056 - Orchestrator Goal Runtime Flow Owner Map",
         "heading_level": 3,
-        "heading_line": 3916,
-        "line": 3918,
+        "heading_line": 3917,
+        "line": 3919,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65165,8 +66521,8 @@
       "source_location": {
         "heading": "0PI-057 - Semantic Audit Closure Owner Map",
         "heading_level": 3,
-        "heading_line": 4051,
-        "line": 4053,
+        "heading_line": 4052,
+        "line": 4054,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65182,8 +66538,8 @@
       "source_location": {
         "heading": "0PI-058 - Plans-To-Code Handoff Owner Map",
         "heading_level": 3,
-        "heading_line": 4140,
-        "line": 4142,
+        "heading_line": 4141,
+        "line": 4143,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65199,8 +66555,8 @@
       "source_location": {
         "heading": "0PI-059 - PRD Builder And Planning Wizard Owner Map",
         "heading_level": 3,
-        "heading_line": 4261,
-        "line": 4263,
+        "heading_line": 4262,
+        "line": 4264,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65216,8 +66572,8 @@
       "source_location": {
         "heading": "Native Discovery Owner Map (2026-06-22)",
         "heading_level": 3,
-        "heading_line": 4362,
-        "line": 4373,
+        "heading_line": 4363,
+        "line": 4374,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -65233,8 +66589,25 @@
       "source_location": {
         "heading": "0PI-061 - Provider Updates Owner Map And Retired Gemini CLI Anchor",
         "heading_level": 3,
-        "heading_line": 4454,
-        "line": 4456,
+        "heading_line": 4455,
+        "line": 4457,
+        "path": "Plans/00-plans-index.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "misc_history_vision_teach_owner_map",
+      "gui_related": false,
+      "owner_doc": "Plans/00-plans-index.md",
+      "plan_unit_id": "0PI-062",
+      "reasoning_tier": "high",
+      "risk_class": "owner_routing_drift",
+      "source_location": {
+        "heading": "0PI-062 - Miscellaneous History Vision Bridge Teach Owner Map",
+        "heading_level": 3,
+        "heading_line": 4535,
+        "line": 4537,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72449,6 +73822,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "assistant_chat_vision_bridge",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-425",
+      "reasoning_tier": "standard",
+      "risk_class": "vision_bridge_chat_opacity",
+      "source_location": {
+        "heading": "ACD-425 - Assistant Chat Vision Bridge Controls",
+        "heading_level": 3,
+        "heading_line": 22510,
+        "line": 22512,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "assistant_chat_teach_teacher",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-426",
+      "reasoning_tier": "high",
+      "risk_class": "teach_threaded_guidance_gap",
+      "source_location": {
+        "heading": "ACD-426 - Teach Teacher Threaded Guidance Workflow",
+        "heading_level": 3,
+        "heading_line": 22644,
+        "line": 22646,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Architecture_Invariants.md",
@@ -75061,6 +76468,57 @@
         "heading_level": 3,
         "heading_line": 719,
         "line": 721,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
+    },
+    {
+      "context_scope": "history_acceptance_tests",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-012",
+      "reasoning_tier": "standard",
+      "risk_class": "history_validation_gap",
+      "source_location": {
+        "heading": "ATS-012 - History MVP Acceptance Tests",
+        "heading_level": 3,
+        "heading_line": 795,
+        "line": 797,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
+    },
+    {
+      "context_scope": "vision_bridge_acceptance_tests",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-013",
+      "reasoning_tier": "high",
+      "risk_class": "vision_bridge_validation_gap",
+      "source_location": {
+        "heading": "ATS-013 - Vision Bridge MVP Acceptance Tests",
+        "heading_level": 3,
+        "heading_line": 876,
+        "line": 878,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
+    },
+    {
+      "context_scope": "teach_teacher_acceptance_tests",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-014",
+      "reasoning_tier": "high",
+      "risk_class": "teach_validation_gap",
+      "source_location": {
+        "heading": "ATS-014 - Teach Teacher End To End Acceptance Tests",
+        "heading_level": 3,
+        "heading_line": 953,
+        "line": 955,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -79260,6 +80718,23 @@
         "heading_level": 3,
         "heading_line": 3518,
         "line": 3520,
+        "path": "Plans/Commands_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teach_invocation_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/Commands_System.md",
+      "plan_unit_id": "CS-053",
+      "reasoning_tier": "standard",
+      "risk_class": "teach_invocation_gap",
+      "source_location": {
+        "heading": "CS-053 - Teach Invocation Command Routes",
+        "heading_level": 3,
+        "heading_line": 3578,
+        "line": 3580,
         "path": "Plans/Commands_System.md"
       },
       "status": "accepted",
@@ -84258,6 +85733,57 @@
         "heading_level": 3,
         "heading_line": 994,
         "line": 996,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "history_identity_contracts",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-295",
+      "reasoning_tier": "high",
+      "risk_class": "history_contract_identity_drift",
+      "source_location": {
+        "heading": "CV-295 - History Identity Projection And Action Envelope",
+        "heading_level": 3,
+        "heading_line": 17949,
+        "line": 17951,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "vision_bridge_result_contract",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-296",
+      "reasoning_tier": "high",
+      "risk_class": "vision_result_contract_drift",
+      "source_location": {
+        "heading": "CV-296 - Vision Bridge Result Envelope",
+        "heading_level": 3,
+        "heading_line": 18103,
+        "line": 18105,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teacher_guided_help_contracts",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-297",
+      "reasoning_tier": "high",
+      "risk_class": "teacher_activity_contract_gap",
+      "source_location": {
+        "heading": "CV-297 - Teacher Guided Help Activity Envelope",
+        "heading_level": 3,
+        "heading_line": 18262,
+        "line": 18264,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -95858,6 +97384,23 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "vision_image_sources_filesafe",
+      "gui_related": true,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-192",
+      "reasoning_tier": "high",
+      "risk_class": "image_source_policy_bypass",
+      "source_location": {
+        "heading": "F2-192 - Vision Bridge Image Source Safety",
+        "heading_level": 3,
+        "heading_line": 13251,
+        "line": 13253,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/FinalGUISpec.md",
@@ -102675,6 +104218,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "history_vision_gui_alignment",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-402",
+      "reasoning_tier": "standard",
+      "risk_class": "gui_concept_overfit",
+      "source_location": {
+        "heading": "F3-402 - History And Vision GUI Concept Alignment",
+        "heading_level": 3,
+        "heading_line": 25524,
+        "line": 25526,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teach_teacher_gui",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-403",
+      "reasoning_tier": "high",
+      "risk_class": "teach_gui_underspecification",
+      "source_location": {
+        "heading": "F3-403 - Teach Help Icon Teacher Thread And Guided Overlay GUI",
+        "heading_level": 3,
+        "heading_line": 25708,
+        "line": 25710,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/feature-list.md",
@@ -103774,6 +105351,23 @@
         "heading_level": 3,
         "heading_line": 1506,
         "line": 1508,
+        "path": "Plans/Glossary.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teach_help_glossary",
+      "gui_related": true,
+      "owner_doc": "Plans/Glossary.md",
+      "plan_unit_id": "G-026",
+      "reasoning_tier": "high",
+      "risk_class": "teach_help_content_gap",
+      "source_location": {
+        "heading": "G-026 - Teach Help Glossary Content Pack",
+        "heading_level": 3,
+        "heading_line": 1631,
+        "line": 1633,
         "path": "Plans/Glossary.md"
       },
       "status": "accepted",
@@ -112535,6 +114129,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "vision_bridge_media_capability",
+      "gui_related": true,
+      "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
+      "plan_unit_id": "MGAC-099",
+      "reasoning_tier": "high",
+      "risk_class": "media_capability_route_drift",
+      "source_location": {
+        "heading": "MGAC-099 - Vision Bridge Media Capability Eligibility",
+        "heading_level": 3,
+        "heading_line": 6276,
+        "line": 6278,
+        "path": "Plans/Media_Generation_and_Capabilities.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/MCP_Integration.md",
@@ -114994,6 +116605,40 @@
         "heading_level": 3,
         "heading_line": 382,
         "line": 384,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "vision_bridge_model_resolution",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-116",
+      "reasoning_tier": "high",
+      "risk_class": "vision_model_route_drift",
+      "source_location": {
+        "heading": "MS-116 - Vision Bridge Requested Effective Route Resolution",
+        "heading_level": 3,
+        "heading_line": 7793,
+        "line": 7795,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teach_teacher_model_setting",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-117",
+      "reasoning_tier": "standard",
+      "risk_class": "teach_model_setting_drift",
+      "source_location": {
+        "heading": "MS-117 - Teach Teacher Low End Model Setting",
+        "heading_level": 3,
+        "heading_line": 7885,
+        "line": 7887,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -119839,6 +121484,40 @@
         "heading_level": 3,
         "heading_line": 1710,
         "line": 1712,
+        "path": "Plans/Orchestrator_Page.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "orchestrator_history_surface",
+      "gui_related": true,
+      "owner_doc": "Plans/Orchestrator_Page.md",
+      "plan_unit_id": "OP-026",
+      "reasoning_tier": "standard",
+      "risk_class": "history_surface_drift",
+      "source_location": {
+        "heading": "OP-026 - Current Project History Documents Runs Surface",
+        "heading_level": 3,
+        "heading_line": 1853,
+        "line": 1855,
+        "path": "Plans/Orchestrator_Page.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "orchestrator_history_actions",
+      "gui_related": true,
+      "owner_doc": "Plans/Orchestrator_Page.md",
+      "plan_unit_id": "OP-027",
+      "reasoning_tier": "high",
+      "risk_class": "history_action_authority_drift",
+      "source_location": {
+        "heading": "OP-027 - History Actions Deep Compare Export Rebuild",
+        "heading_level": 3,
+        "heading_line": 2077,
+        "line": 2079,
         "path": "Plans/Orchestrator_Page.md"
       },
       "status": "accepted",
@@ -128056,6 +129735,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "teacher_persona",
+      "gui_related": false,
+      "owner_doc": "Plans/Personas.md",
+      "plan_unit_id": "P-055",
+      "reasoning_tier": "standard",
+      "risk_class": "teacher_persona_scope_drift",
+      "source_location": {
+        "heading": "P-055 - Teacher Persona Teach Boundary",
+        "heading_level": 3,
+        "heading_line": 3314,
+        "line": 3316,
+        "path": "Plans/Personas.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "all_plans",
       "gui_related": false,
       "owner_doc": "Plans/Plan_Document_System.md",
@@ -131813,6 +133509,23 @@
       "unit_type": "compatibility_disposition"
     },
     {
+      "context_scope": "opencode_see_image_lineage",
+      "gui_related": false,
+      "owner_doc": "Plans/Provider_OpenCode.md",
+      "plan_unit_id": "PO-049",
+      "reasoning_tier": "standard",
+      "risk_class": "opencode_dependency_leak",
+      "source_location": {
+        "heading": "PO-049 - opencode-see-image Source Lineage Boundary",
+        "heading_level": 3,
+        "heading_line": 3475,
+        "line": 3477,
+        "path": "Plans/Provider_OpenCode.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
       "context_scope": "project_output_artifacts_residual_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Project_Output_Artifacts.md",
@@ -132657,6 +134370,23 @@
         "heading_level": 3,
         "heading_line": 146,
         "line": 148,
+        "path": "Plans/Project_Output_Artifacts.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "history_exports",
+      "gui_related": false,
+      "owner_doc": "Plans/Project_Output_Artifacts.md",
+      "plan_unit_id": "POA-051",
+      "reasoning_tier": "standard",
+      "risk_class": "history_export_identity_loss",
+      "source_location": {
+        "heading": "POA-051 - History Export Manifest Profiles",
+        "heading_level": 3,
+        "heading_line": 3438,
+        "line": 3440,
         "path": "Plans/Project_Output_Artifacts.md"
       },
       "status": "accepted",
@@ -133581,6 +135311,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "vision_bridge_prompt_output",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-055",
+      "reasoning_tier": "high",
+      "risk_class": "vision_prompt_injection_or_guessing",
+      "source_location": {
+        "heading": "PP-055 - Vision Bridge Prompt Output Contract",
+        "heading_level": 3,
+        "heading_line": 3529,
+        "line": 3531,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teacher_pm_knowledge_pipeline",
+      "gui_related": false,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-056",
+      "reasoning_tier": "high",
+      "risk_class": "teacher_pm_knowledge_guessing",
+      "source_location": {
+        "heading": "PP-056 - Teacher PM Knowledge Source Resolution",
+        "heading_level": 3,
+        "heading_line": 3690,
+        "line": 3692,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "ledger_to_plans_compile",
       "gui_related": true,
       "owner_doc": "Plans/PRD_Builder.md",
@@ -133728,6 +135492,23 @@
         "heading_level": 3,
         "heading_line": 602,
         "line": 604,
+        "path": "Plans/PRD_Builder.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "prd_builder_history_records",
+      "gui_related": false,
+      "owner_doc": "Plans/PRD_Builder.md",
+      "plan_unit_id": "PRDB-010",
+      "reasoning_tier": "standard",
+      "risk_class": "prd_history_lineage_loss",
+      "source_location": {
+        "heading": "PRDB-010 - PRD Builder Historical Document Records",
+        "heading_level": 3,
+        "heading_line": 651,
+        "line": 653,
         "path": "Plans/PRD_Builder.md"
       },
       "status": "accepted",
@@ -135757,6 +137538,57 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "history_permission_authority",
+      "gui_related": true,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-120",
+      "reasoning_tier": "high",
+      "risk_class": "history_permission_leak",
+      "source_location": {
+        "heading": "PS-120 - History Permission Redaction And Authority Gates",
+        "heading_level": 3,
+        "heading_line": 7913,
+        "line": 7915,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "vision_bridge_disclosure_permission",
+      "gui_related": true,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-121",
+      "reasoning_tier": "high",
+      "risk_class": "vision_disclosure_leak",
+      "source_location": {
+        "heading": "PS-121 - Vision Bridge Image Disclosure Permission",
+        "heading_level": 3,
+        "heading_line": 8022,
+        "line": 8024,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teach_guided_permission_gates",
+      "gui_related": true,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-122",
+      "reasoning_tier": "high",
+      "risk_class": "teacher_mutation_authority_drift",
+      "source_location": {
+        "heading": "PS-122 - Teach Guided Mutation Confirmation Gates",
+        "heading_level": 3,
+        "heading_line": 8161,
+        "line": 8163,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "provider_stream_mapping_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
@@ -136437,6 +138269,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "planning_wizard_history_records",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "plan_unit_id": "PWIZ-016",
+      "reasoning_tier": "standard",
+      "risk_class": "planning_history_lineage_loss",
+      "source_location": {
+        "heading": "PWIZ-016 - Planning Wizard Historical Plan Pack Records",
+        "heading_level": 3,
+        "heading_line": 1188,
+        "line": 1190,
+        "path": "Plans/Planning_Wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "runtime_artifacts_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
@@ -136975,6 +138824,57 @@
         "heading_level": 3,
         "heading_line": 458,
         "line": 460,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "history_runtime_artifacts",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-034",
+      "reasoning_tier": "standard",
+      "risk_class": "history_artifact_link_loss",
+      "source_location": {
+        "heading": "RAP-034 - History Runtime Artifact And Evidence Projection",
+        "heading_level": 3,
+        "heading_line": 999,
+        "line": 1001,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "vision_bridge_artifacts",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-035",
+      "reasoning_tier": "standard",
+      "risk_class": "vision_artifact_lineage_loss",
+      "source_location": {
+        "heading": "RAP-035 - Vision Bridge Derived Description Artifacts",
+        "heading_level": 3,
+        "heading_line": 1152,
+        "line": 1154,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teacher_activity_projection",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-036",
+      "reasoning_tier": "standard",
+      "risk_class": "teacher_activity_trace_gap",
+      "source_location": {
+        "heading": "RAP-036 - Teacher Activity Transparency Projection",
+        "heading_level": 3,
+        "heading_line": 1288,
+        "line": 1290,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -144478,6 +146378,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "project_history_projection",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-219",
+      "reasoning_tier": "high",
+      "risk_class": "history_projection_drift",
+      "source_location": {
+        "heading": "SP-219 - Project Scoped Unified History Projection",
+        "heading_level": 3,
+        "heading_line": 15266,
+        "line": 15268,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teach_memory_capture_records",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-220",
+      "reasoning_tier": "standard",
+      "risk_class": "teach_memory_persistence_drift",
+      "source_location": {
+        "heading": "SP-220 - Teach Memory Capture Storage Boundary",
+        "heading_level": 3,
+        "heading_line": 15460,
+        "line": 15462,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "skills_generated_tail_disposition",
       "gui_related": false,
       "owner_doc": "Plans/Skills_System.md",
@@ -147844,6 +149778,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "vision_bridge_tool_contract",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-165",
+      "reasoning_tier": "high",
+      "risk_class": "vision_bridge_tool_drift",
+      "source_location": {
+        "heading": "T-165 - PM Native Vision Bridge Tool Contract",
+        "heading_level": 3,
+        "heading_line": 11160,
+        "line": 11162,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "ui_command_catalog_generated_tail_after_batch_191",
       "gui_related": true,
       "owner_doc": "Plans/UI_Command_Catalog.md",
@@ -149527,6 +151478,57 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "history_ui_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-100",
+      "reasoning_tier": "standard",
+      "risk_class": "history_command_drift",
+      "source_location": {
+        "heading": "UCC-100 - History Command Payloads And Action Wrappers",
+        "heading_level": 3,
+        "heading_line": 7037,
+        "line": 7039,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "vision_bridge_ui_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-101",
+      "reasoning_tier": "standard",
+      "risk_class": "vision_command_drift",
+      "source_location": {
+        "heading": "UCC-101 - Vision Bridge GUI Commands",
+        "heading_level": 3,
+        "heading_line": 7194,
+        "line": 7196,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "teach_guided_gui_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-102",
+      "reasoning_tier": "high",
+      "risk_class": "teach_guided_command_drift",
+      "source_location": {
+        "heading": "UCC-102 - Teach Guided GUI Command Taxonomy",
+        "heading_level": 3,
+        "heading_line": 7306,
+        "line": 7308,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "usage_feature_generated_tail_batch_197",
       "gui_related": false,
       "owner_doc": "Plans/usage-feature.md",
@@ -150796,6 +152798,23 @@
         "heading_level": 3,
         "heading_line": 5062,
         "line": 5064,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "vision_bridge_usage",
+      "gui_related": false,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-076",
+      "reasoning_tier": "standard",
+      "risk_class": "vision_usage_attribution_gap",
+      "source_location": {
+        "heading": "UF-076 - Vision Bridge Usage Attribution",
+        "heading_level": 3,
+        "heading_line": 5110,
+        "line": 5112,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -153084,14 +155103,14 @@
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
   "summary": {
     "build_order_available": false,
-    "build_order_blocked_node_count": 28,
-    "cycle_blocker_count": 11,
-    "depends_on_edge_count": 10961,
-    "downstream_blocked_node_count": 17,
-    "edge_count": 12741,
-    "node_count": 5228,
-    "true_cycle_component_count": 3,
-    "unblocks_edge_count": 1780,
+    "build_order_blocked_node_count": 65,
+    "cycle_blocker_count": 30,
+    "depends_on_edge_count": 11056,
+    "downstream_blocked_node_count": 35,
+    "edge_count": 12897,
+    "node_count": 5267,
+    "true_cycle_component_count": 6,
+    "unblocks_edge_count": 1841,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

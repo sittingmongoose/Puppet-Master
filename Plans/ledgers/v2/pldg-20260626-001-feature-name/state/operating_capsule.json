@@ -1,5 +1,5 @@
 {
-  "agent_task": "conversational_misc_pm_feature_design",
+  "agent_task": "compiled_misc_pm_feature_plans_governance_sealed",
   "allowed_reads_default": [
     "state/current.json",
     "state/handoff.json",
@@ -23,7 +23,7 @@
   "allowed_writes_during_index_phase": [
     "Only after Jared explicitly requests a PlanUnit index phase: Plans/.plan_index/** outputs."
   ],
-  "capsule_id": "cap-misc-pm-history-vision-bridge-current",
+  "capsule_id": "cap-misc-pm-history-vision-bridge-teach-current",
   "completion_blockers_visible_to_agent": [
     "open_questions",
     "unclassified_candidates",
@@ -33,7 +33,7 @@
     "missing_gui_related_classification",
     "worknode_creation_requested_before_contract"
   ],
-  "current_phase": "conversational_design_active",
+  "current_phase": "compiled_to_plans_governance_sealed",
   "forbidden_until_explicit_compile_or_governance_seal": [
     "Plans/.plan_index/**",
     "WorkNodes",
@@ -47,7 +47,7 @@
     "Plans/** live canonical plan prose before explicit compile",
     "generated governance artifacts before explicit governance seal"
   ],
-  "governance_status": "not_started",
+  "governance_status": "sealed",
   "ledger_id": "pldg-20260626-001-feature-name",
   "ledger_profile": "bootstrap_planning",
   "must_not_read_by_default": [
@@ -56,7 +56,7 @@
     "Plans/ledgers/work_items/**",
     "**/working_ledger.md"
   ],
-  "next_action": "Ask Jared to confirm or revise the PM-native vision bridge defaults for automatic fallback, provider routing, image sources, privacy/artifacts, and GUI surfacing.",
+  "next_action": "Governance seal complete; no WorkNodes, NodeSeeds, executable queues, or implementation files are authorized by this phase.",
   "required_end_of_turn_actions": [
     "append_turn_event",
     "upsert_design_atoms",
@@ -65,5 +65,15 @@
     "classify_gui_related",
     "preserve_node_readiness_boundary"
   ],
-  "schema_id": "pm.operating_capsule.v1"
+  "schema_id": "pm.operating_capsule.v1",
+  "updated_at_utc": "2026-06-27T15:22:59Z",
+  "last_event_id": "evt-0033",
+  "phase": "compiled_to_plans_governance_sealed",
+  "next_safe_action": "Future implementation/runtime compiler work requires a new explicit phase.",
+  "validation_state": {
+    "governance_seal": "passed",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_shard_plans_check": "pass",
+    "node_readiness_status": "blocked_compiler_contract_incomplete"
+  }
 }

@@ -1,5 +1,2449 @@
 {
-  "candidate_compile_owner_docs": [
+  "schema_id": "pm.bootstrap_ledger_compile_queue.v1",
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "status": "compiled_to_plans_governance_sealed",
+  "items": [
+    {
+      "compile_item_id": "cq-0001",
+      "status": "compiled",
+      "target_doc": "Plans/00-plans-index.md",
+      "target_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Permissions_System.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Tools.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/FileSafe.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "Plans/Personas.md",
+        "Plans/Commands_System.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Glossary.md"
+      ],
+      "source_atom_ids": [
+        "atom-0007",
+        "atom-0008",
+        "atom-0009",
+        "atom-0010",
+        "atom-0011",
+        "atom-0012",
+        "atom-0015",
+        "atom-0016",
+        "atom-0017",
+        "atom-0018",
+        "atom-0019",
+        "atom-0023",
+        "atom-0024",
+        "atom-0025",
+        "atom-0026",
+        "atom-0027",
+        "atom-0032",
+        "atom-0033",
+        "atom-0034",
+        "atom-0035",
+        "atom-0038",
+        "atom-0039",
+        "atom-0041",
+        "atom-0042",
+        "atom-0043",
+        "atom-0044",
+        "atom-0045",
+        "atom-0047",
+        "atom-0048",
+        "atom-0049",
+        "atom-0051",
+        "atom-0052",
+        "atom-0053",
+        "atom-0054",
+        "atom-0056",
+        "atom-0057",
+        "atom-0058",
+        "atom-0059",
+        "atom-0061",
+        "atom-0062",
+        "atom-0063",
+        "atom-0064",
+        "atom-0065",
+        "atom-0066",
+        "atom-0069",
+        "atom-0070",
+        "atom-0071",
+        "atom-0072",
+        "atom-0073",
+        "atom-0074",
+        "atom-0075",
+        "atom-0076",
+        "atom-0077",
+        "atom-0078",
+        "atom-0079",
+        "atom-0081",
+        "atom-0082",
+        "atom-0083",
+        "atom-0084",
+        "atom-0085",
+        "atom-0086",
+        "atom-0087",
+        "atom-0088",
+        "atom-0090",
+        "atom-0091",
+        "atom-0092",
+        "atom-0093",
+        "atom-0094",
+        "atom-0095",
+        "atom-0096",
+        "atom-0097",
+        "atom-0098",
+        "atom-0099",
+        "atom-0100",
+        "atom-0101",
+        "atom-0103",
+        "atom-0104",
+        "atom-0105",
+        "atom-0106",
+        "atom-0107",
+        "atom-0108",
+        "atom-0109",
+        "atom-0110",
+        "atom-0111",
+        "atom-0112",
+        "atom-0113",
+        "atom-0114",
+        "atom-0115",
+        "atom-0116",
+        "atom-0117",
+        "atom-0118",
+        "atom-0119",
+        "atom-0120",
+        "atom-0121",
+        "atom-0122",
+        "atom-0123",
+        "atom-0124",
+        "atom-0125",
+        "atom-0126",
+        "atom-0127",
+        "atom-0128",
+        "atom-0129",
+        "atom-0130",
+        "atom-0131",
+        "atom-0132",
+        "atom-0133",
+        "atom-0135",
+        "atom-0136",
+        "atom-0137",
+        "atom-0138",
+        "atom-0139",
+        "atom-0140",
+        "atom-0141",
+        "atom-0142",
+        "atom-0143",
+        "atom-0144",
+        "atom-0145",
+        "atom-0146",
+        "atom-0147",
+        "atom-0148",
+        "atom-0149",
+        "atom-0150",
+        "atom-0151",
+        "atom-0152",
+        "atom-0153",
+        "atom-0154"
+      ],
+      "compiled_plan_unit_ids": [
+        "0PI-062",
+        "OP-026",
+        "OP-027",
+        "PRDB-010",
+        "PWIZ-016",
+        "RAP-034",
+        "RAP-035",
+        "RAP-036",
+        "POA-051",
+        "SP-219",
+        "SP-220",
+        "CV-295",
+        "CV-296",
+        "CV-297",
+        "F3-402",
+        "F3-403",
+        "UCC-100",
+        "UCC-101",
+        "UCC-102",
+        "PS-120",
+        "PS-121",
+        "PS-122",
+        "MGAC-099",
+        "MS-116",
+        "MS-117",
+        "PP-055",
+        "PP-056",
+        "T-165",
+        "PO-049",
+        "F2-192",
+        "ACD-425",
+        "ACD-426",
+        "UF-076",
+        "P-055",
+        "CS-053",
+        "ATS-012",
+        "ATS-013",
+        "ATS-014",
+        "G-026"
+      ],
+      "compiled_outputs": [
+        "Plans/00-plans-index.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Permissions_System.md",
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Tools.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/FileSafe.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "Plans/Personas.md",
+        "Plans/Commands_System.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Glossary.md",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "atom_disposition_matrix": [
+        {
+          "atom_id": "atom-0007",
+          "lane": "feature_scope_intake",
+          "title": "Scope ledger as miscellaneous PM improvements",
+          "compile_disposition": "consumer_reference_only",
+          "compiled_plan_unit_ids": [
+            "0PI-062"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0008",
+          "lane": "historical_documents",
+          "title": "Show historical wizard-created documents",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "PRDB-010",
+            "PWIZ-016",
+            "SP-219"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/PRD_Builder.md",
+            "Plans/Planning_Wizard.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0009",
+          "lane": "historical_orchestrator_runs",
+          "title": "Show historical Orchestrator runs",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "RAP-034",
+            "SP-219"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0010",
+          "lane": "history_gui",
+          "title": "Design a GUI history surface",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "F3-402"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0011",
+          "lane": "history_gui",
+          "title": "Use Orchestrator History as GUI home",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "F3-402"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0012",
+          "lane": "identity_routing",
+          "title": "Preserve identity-native history routing",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-034",
+            "SP-219",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0015",
+          "lane": "history_gui_documents",
+          "title": "Default document history to final/approved outputs",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "PRDB-010",
+            "PWIZ-016"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/PRD_Builder.md",
+            "Plans/Planning_Wizard.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0016",
+          "lane": "history_gui_documents",
+          "title": "Expandable all-document history",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "PRDB-010",
+            "PWIZ-016"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/PRD_Builder.md",
+            "Plans/Planning_Wizard.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0017",
+          "lane": "history_gui_runs",
+          "title": "Support full historical run action set",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "RAP-034",
+            "UCC-100"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0018",
+          "lane": "history_action_authority",
+          "title": "Gate historical mutation/continuation actions",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "UCC-100",
+            "PS-120"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Permissions_System.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0019",
+          "lane": "history_gui",
+          "title": "Use Orchestrator History with Documents and Runs views",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0023",
+          "lane": "history_gui_navigation",
+          "title": "Lock History to current project",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0024",
+          "lane": "history_retention",
+          "title": "Retain final/approved outputs forever by default",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "PRDB-010",
+            "PWIZ-016",
+            "SP-219"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/PRD_Builder.md",
+            "Plans/Planning_Wizard.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0025",
+          "lane": "history_retention",
+          "title": "Retention-govern draft and intermediate history",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "PRDB-010",
+            "PWIZ-016",
+            "SP-219"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/PRD_Builder.md",
+            "Plans/Planning_Wizard.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0026",
+          "lane": "history_gui_actions",
+          "title": "Use document-specific History actions",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "UCC-100"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0027",
+          "lane": "history_action_authority",
+          "title": "Gate document send-forward and reopen actions",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "UCC-100",
+            "PS-120"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Permissions_System.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0032",
+          "lane": "history_gui_columns",
+          "title": "Use dense History tables by default",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0033",
+          "lane": "history_gui_documents",
+          "title": "Use Approved only vs All history control",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "PRDB-010"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/PRD_Builder.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0034",
+          "lane": "history_gui_actions",
+          "title": "Make deep document comparison MVP",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "PWIZ-016",
+            "UCC-100"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Planning_Wizard.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0035",
+          "lane": "history_action_authority",
+          "title": "Preserve identity in deep comparison",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "PWIZ-016",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Orchestrator_Page.md",
+            "Plans/Planning_Wizard.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0038",
+          "lane": "history_gui_actions",
+          "title": "Support all History export granularities in MVP",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "RAP-034",
+            "POA-051",
+            "UCC-100"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Project_Output_Artifacts.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0039",
+          "lane": "history_export_contract",
+          "title": "Preserve identities in export manifests",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "POA-051",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Project_Output_Artifacts.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0041",
+          "lane": "history_gui_actions",
+          "title": "Support all History export formats in MVP",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "RAP-034",
+            "POA-051",
+            "UCC-100"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Project_Output_Artifacts.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0042",
+          "lane": "history_export_contract",
+          "title": "Gate raw/evidence export behind explicit profile",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-034",
+            "POA-051",
+            "PS-120"
+          ],
+          "target_docs": [
+            "Plans/Permissions_System.md",
+            "Plans/Project_Output_Artifacts.md",
+            "Plans/Runtime_Artifacts_Panel.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0043",
+          "lane": "history_gui_actions",
+          "title": "Use combined deep comparison view",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "UCC-100"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0044",
+          "lane": "history_gui_documents",
+          "title": "Require Include archived for archived records",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "PRDB-010"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/PRD_Builder.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0045",
+          "lane": "history_gui_documents",
+          "title": "Visibly mark included archived records",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "PRDB-010"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/PRD_Builder.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0047",
+          "lane": "history_storage_indexing",
+          "title": "Use project-scoped unified History projection",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PRDB-010",
+            "PWIZ-016",
+            "RAP-034",
+            "SP-219",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/PRD_Builder.md",
+            "Plans/Planning_Wizard.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0048",
+          "lane": "history_storage_indexing",
+          "title": "Keep History projection identity-preserving and non-authoritative",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-034",
+            "SP-219",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0049",
+          "lane": "history_storage_indexing",
+          "title": "Drive History behaviors from the unified projection",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-034",
+            "SP-219",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0051",
+          "lane": "history_storage_indexing",
+          "title": "Make History projection rebuildable",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "SP-219",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0052",
+          "lane": "history_storage_indexing",
+          "title": "Update History projection from lifecycle events",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PRDB-010",
+            "PWIZ-016",
+            "SP-219",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/PRD_Builder.md",
+            "Plans/Planning_Wizard.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0053",
+          "lane": "history_gui_state",
+          "title": "Surface stale or out-of-sync History state",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "SP-219",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Orchestrator_Page.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0054",
+          "lane": "history_storage_indexing",
+          "title": "Keep rebuild non-mutating for immutable history",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "SP-219",
+            "CV-295"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0056",
+          "lane": "history_gui_state",
+          "title": "Allow read-only History viewing in degraded state",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026",
+            "SP-219"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0057",
+          "lane": "history_gui_state",
+          "title": "Expose History projection Rebuild action",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "SP-219",
+            "UCC-100"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0058",
+          "lane": "history_gui_state",
+          "title": "Block authority-sensitive History actions until rebuild succeeds",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "SP-219",
+            "UCC-100",
+            "PS-120"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Permissions_System.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0059",
+          "lane": "history_action_authority",
+          "title": "Resume normal History actions only after rebuild and checks",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "SP-219",
+            "UCC-100",
+            "PS-120"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Permissions_System.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0061",
+          "lane": "history_gui_columns",
+          "title": "Use exact MVP History row schema defaults",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0062",
+          "lane": "history_export_contract",
+          "title": "Use MVP evidence/redaction export defaults",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-027",
+            "RAP-034",
+            "POA-051",
+            "PS-120"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/Permissions_System.md",
+            "Plans/Project_Output_Artifacts.md",
+            "Plans/Runtime_Artifacts_Panel.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0063",
+          "lane": "history_gui_filters",
+          "title": "Use MVP structured search/filter defaults",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0064",
+          "lane": "history_gui_state",
+          "title": "Use MVP History empty/degraded states",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "OP-026"
+          ],
+          "target_docs": [
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0065",
+          "lane": "history_acceptance_tests",
+          "title": "Use MVP History acceptance-test defaults",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "ATS-012"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0066",
+          "lane": "history_compile_readiness",
+          "title": "Pressure-test defaults accepted but not compiled",
+          "compile_disposition": "consumer_reference_only",
+          "compiled_plan_unit_ids": [
+            "PWIZ-016",
+            "ATS-012"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md",
+            "Plans/Planning_Wizard.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0069",
+          "lane": "vision_bridge",
+          "title": "Plan non-vision image understanding bridge",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "MGAC-099",
+            "T-165"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/Media_Generation_and_Capabilities.md",
+            "Plans/Tools.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0070",
+          "lane": "vision_bridge_external_reference",
+          "title": "Capture inspected opencode-see-image source reference",
+          "compile_disposition": "consumer_reference_only",
+          "compiled_plan_unit_ids": [
+            "T-165",
+            "PO-049"
+          ],
+          "target_docs": [
+            "Plans/Provider_OpenCode.md",
+            "Plans/Tools.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0071",
+          "lane": "vision_bridge_external_reference",
+          "title": "Record external see_image mechanism",
+          "compile_disposition": "consumer_reference_only",
+          "compiled_plan_unit_ids": [
+            "PP-055",
+            "T-165",
+            "PO-049"
+          ],
+          "target_docs": [
+            "Plans/Prompt_Pipeline.md",
+            "Plans/Provider_OpenCode.md",
+            "Plans/Tools.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0072",
+          "lane": "vision_bridge_pm_boundary",
+          "title": "Adapt the pattern, not the OpenCode plugin",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "MGAC-099",
+            "T-165",
+            "PO-049"
+          ],
+          "target_docs": [
+            "Plans/Media_Generation_and_Capabilities.md",
+            "Plans/Provider_OpenCode.md",
+            "Plans/Tools.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0073",
+          "lane": "vision_bridge_mvp_behavior",
+          "title": "Use PM-native automatic vision bridge fallback",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "T-165"
+          ],
+          "target_docs": [
+            "Plans/Tools.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0074",
+          "lane": "vision_bridge_provider_routing",
+          "title": "Route bridge through PM provider capability matrix",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "MGAC-099",
+            "MS-116"
+          ],
+          "target_docs": [
+            "Plans/Media_Generation_and_Capabilities.md",
+            "Plans/Models_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0075",
+          "lane": "vision_bridge_image_sources",
+          "title": "Define PM-owned image source resolution",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PP-055",
+            "F2-192",
+            "ACD-425"
+          ],
+          "target_docs": [
+            "Plans/FileSafe.md",
+            "Plans/Prompt_Pipeline.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0076",
+          "lane": "vision_bridge_artifacts_cache",
+          "title": "Persist auditable vision-description artifacts",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-035",
+            "CV-296",
+            "UF-076"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/usage-feature.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0077",
+          "lane": "vision_bridge_permissions_privacy",
+          "title": "Gate bridge image disclosure through PM permissions",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-296",
+            "PS-121"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Permissions_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0078",
+          "lane": "vision_bridge_gui",
+          "title": "Surface bridge outputs and controls in GUI",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-035",
+            "F3-402",
+            "UCC-101",
+            "ACD-425"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0079",
+          "lane": "vision_bridge_permissions_privacy",
+          "title": "Remember scoped always-accept bridge permission",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PS-121"
+          ],
+          "target_docs": [
+            "Plans/Permissions_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0081",
+          "lane": "vision_bridge_failure_modes",
+          "title": "Fail closed with explicit vision bridge degraded states",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PP-055",
+            "T-165"
+          ],
+          "target_docs": [
+            "Plans/Prompt_Pipeline.md",
+            "Plans/Tools.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0082",
+          "lane": "vision_bridge_image_sources",
+          "title": "Use deterministic image source precedence",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-402",
+            "UCC-101",
+            "PP-055",
+            "F2-192",
+            "ACD-425"
+          ],
+          "target_docs": [
+            "Plans/FileSafe.md",
+            "Plans/FinalGUISpec.md",
+            "Plans/Prompt_Pipeline.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0083",
+          "lane": "vision_bridge_permissions_privacy",
+          "title": "Scope and revoke always-accept permission safely",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "UCC-101",
+            "PS-121"
+          ],
+          "target_docs": [
+            "Plans/Permissions_System.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0084",
+          "lane": "vision_bridge_artifacts_cache",
+          "title": "Define vision-description cache invalidation",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-035",
+            "CV-296"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Runtime_Artifacts_Panel.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0085",
+          "lane": "vision_bridge_permissions_privacy",
+          "title": "Apply redaction and disclosure policy before bridge dispatch",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-296",
+            "PS-121",
+            "PP-055",
+            "F2-192"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/FileSafe.md",
+            "Plans/Permissions_System.md",
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0086",
+          "lane": "vision_bridge_prompt_output_contract",
+          "title": "Use structured bridge prompt and output contract",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-296",
+            "PP-055",
+            "T-165"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Prompt_Pipeline.md",
+            "Plans/Tools.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0087",
+          "lane": "vision_bridge_provider_routing",
+          "title": "Make bridge routing retry and cost explicit",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-296",
+            "PS-121",
+            "MGAC-099",
+            "MS-116",
+            "UF-076"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Media_Generation_and_Capabilities.md",
+            "Plans/Models_System.md",
+            "Plans/Permissions_System.md",
+            "Plans/usage-feature.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0088",
+          "lane": "vision_bridge_acceptance_tests",
+          "title": "Add vision bridge MVP acceptance tests",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "ATS-013"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0090",
+          "lane": "teach_persona_boundary",
+          "title": "Treat Teach as feature and Teacher as resolved Persona",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "ACD-426",
+            "P-055"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/Personas.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0091",
+          "lane": "teach_model_defaults",
+          "title": "Default Teach Teacher conversations to a low-end model",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "MS-117"
+          ],
+          "target_docs": [
+            "Plans/Models_System.md"
+          ],
+          "gui_related": false
+        },
+        {
+          "atom_id": "atom-0092",
+          "lane": "teach_model_settings_gui",
+          "title": "Expose Teach Teacher model setting in the GUI",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "MS-117"
+          ],
+          "target_docs": [
+            "Plans/Models_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0093",
+          "lane": "teach_implementation_readiness_gaps",
+          "title": "Teach is not yet fully implementation-ready as guided help",
+          "compile_disposition": "duplicate",
+          "compiled_plan_unit_ids": [
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0094",
+          "lane": "teach_subflows",
+          "title": "Split Teach capture and Teacher-guided instruction semantics",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "SP-220",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/assistant-chat-design.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0095",
+          "lane": "teach_pm_knowledge_substrate",
+          "title": "Give Teach a live PM knowledge substrate",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PP-056"
+          ],
+          "target_docs": [
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0096",
+          "lane": "teach_invocation_routing",
+          "title": "Define Teach Teacher summon phrases",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CS-053"
+          ],
+          "target_docs": [
+            "Plans/Commands_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0097",
+          "lane": "teach_help_icon_launch",
+          "title": "Help icon opens new Teach Teacher chat thread",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-297",
+            "UCC-102",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0098",
+          "lane": "teach_guided_gui_control",
+          "title": "Let Teacher guide the GUI through safe commands and highlights",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-297",
+            "UCC-102",
+            "PS-122"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Permissions_System.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0099",
+          "lane": "teach_activity_transparency",
+          "title": "Show Teacher GUI activity in Assistant Chat",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-036",
+            "CV-297",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0100",
+          "lane": "teach_model_resolution_disclosure",
+          "title": "Make Teach Teacher model override scope inspectable",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "MS-117"
+          ],
+          "target_docs": [
+            "Plans/Models_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0101",
+          "lane": "teach_acceptance_tests",
+          "title": "Add Teach implementation-readiness acceptance tests",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "ATS-014"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0103",
+          "lane": "teach_gui_help_entrypoints",
+          "title": "Define Teach help icon placement and activation",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-403",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0104",
+          "lane": "teach_teacher_thread_presentation",
+          "title": "Define Teacher thread presentation",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-403",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0105",
+          "lane": "teach_information_source_display",
+          "title": "Show Teacher information sources and context",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-297",
+            "PP-056"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0106",
+          "lane": "teach_guided_gui_overlay",
+          "title": "Define Teacher guided GUI overlay",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-403"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0107",
+          "lane": "teach_activity_cards",
+          "title": "Show Teacher activity cards in chat",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-036",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0108",
+          "lane": "teach_model_setting_presentation",
+          "title": "Define Teach model setting presentation",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "MS-117"
+          ],
+          "target_docs": [
+            "Plans/Models_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0109",
+          "lane": "teach_information_pipeline_order",
+          "title": "Define Teacher information pipeline order",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PP-056"
+          ],
+          "target_docs": [
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0110",
+          "lane": "teach_gui_detail_acceptance_tests",
+          "title": "Add Teach GUI-detail acceptance tests",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "ATS-014"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0111",
+          "lane": "teach_help_glossary_status",
+          "title": "Classify Help Glossary as generic architecture not Teach content pack",
+          "compile_disposition": "duplicate",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0112",
+          "lane": "teach_help_entry_inventory",
+          "title": "Add Teach-specific help entry inventory",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0113",
+          "lane": "teach_help_entry_schema",
+          "title": "Extend help-entry template for Teach",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0114",
+          "lane": "teach_help_depths",
+          "title": "Route Teach through three-depth help",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0115",
+          "lane": "teach_teacher_help_resolution",
+          "title": "Define Teacher Help Glossary resolution order",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PP-056",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md",
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0116",
+          "lane": "teach_help_coverage_audit",
+          "title": "Make Teach help coverage auditable",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0117",
+          "lane": "teach_help_authoring_lifecycle",
+          "title": "Source Teach help content from canonical owners",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0118",
+          "lane": "teach_help_glossary_acceptance_tests",
+          "title": "Add Teach Help Glossary acceptance tests",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "ATS-014",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md",
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0119",
+          "lane": "teach_help_glossary_content_boundary",
+          "title": "Separate Teach coverage contract from filled Help Glossary content",
+          "compile_disposition": "duplicate",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0120",
+          "lane": "teach_help_entry_teach",
+          "title": "Fill canonical help entry for Teach",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0121",
+          "lane": "teach_help_entry_teacher",
+          "title": "Fill canonical help entry for Teacher",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "P-055",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md",
+            "Plans/Personas.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0122",
+          "lane": "teach_help_entries_memory_scope",
+          "title": "Fill taught memory and memory scope help entries",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "SP-220",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0123",
+          "lane": "teach_help_entry_user_locked_record",
+          "title": "Fill user-locked record help entry",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "SP-220",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0124",
+          "lane": "teach_help_entry_sources_context",
+          "title": "Fill Sources used and PM context help entries",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PP-056",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md",
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0125",
+          "lane": "teach_help_entry_guided_step",
+          "title": "Fill guided GUI step help entry",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0126",
+          "lane": "teach_help_entries_safe_action_confirmation",
+          "title": "Fill safe guided action and mutation confirmation help entries",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PS-122",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md",
+            "Plans/Permissions_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0127",
+          "lane": "teach_help_entry_model_default_setting",
+          "title": "Fill Teach model default and setting help entry",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "MS-117",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md",
+            "Plans/Models_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0128",
+          "lane": "teach_help_entries_handoff_missing_coverage",
+          "title": "Fill Teacher handoff and missing PM coverage help entries",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PP-056",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md",
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0129",
+          "lane": "teach_help_entry_launch_summon",
+          "title": "Fill Help icon and summon phrase help entry",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CS-053",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Commands_System.md",
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0130",
+          "lane": "teach_context_help_surface_pack",
+          "title": "Define Teach context-help surface pack",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-403",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0131",
+          "lane": "teach_help_microcopy_examples",
+          "title": "Add Teach Help Glossary microcopy examples",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0132",
+          "lane": "teach_help_owner_source_mapping",
+          "title": "Define Teach Help Glossary owner-source mapping",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0133",
+          "lane": "teach_help_coverage_matrix",
+          "title": "Add Teach Help Glossary coverage matrix",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "ATS-014",
+            "G-026"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md",
+            "Plans/Glossary.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0135",
+          "lane": "teach_full_gap_matrix",
+          "title": "Require full Teach gap matrix before readiness claim",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "ATS-014"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0136",
+          "lane": "teach_model_setting_states",
+          "title": "Fill Teach model setting state matrix",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "MS-117"
+          ],
+          "target_docs": [
+            "Plans/Models_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0137",
+          "lane": "teach_pm_knowledge_substrate",
+          "title": "Define Teacher PM knowledge substrate",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-297",
+            "PP-056"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0138",
+          "lane": "teach_source_confidence_states",
+          "title": "Fill Teacher source confidence and currentness states",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-297",
+            "PP-056"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0139",
+          "lane": "teach_help_icon_launch_flow",
+          "title": "Fill help icon Teacher launch flow",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-403",
+            "UCC-102",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/UI_Command_Catalog.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0140",
+          "lane": "teach_summon_phrase_resolution",
+          "title": "Fill Teach summon phrase resolution",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "UCC-102",
+            "CS-053"
+          ],
+          "target_docs": [
+            "Plans/Commands_System.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0141",
+          "lane": "teach_thread_presentation",
+          "title": "Fill Teacher thread presentation",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-403",
+            "MS-117",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/Models_System.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0142",
+          "lane": "teach_guided_gui_action_taxonomy",
+          "title": "Fill guided GUI allowed action taxonomy",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "CV-297",
+            "UCC-102",
+            "PS-122"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Permissions_System.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0143",
+          "lane": "teach_guided_overlay_presentation",
+          "title": "Fill guided overlay presentation rules",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-403",
+            "UCC-102"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0144",
+          "lane": "teach_guided_gui_degraded_states",
+          "title": "Fill Teacher guided GUI degraded states",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "F3-403",
+            "UCC-102",
+            "PS-122"
+          ],
+          "target_docs": [
+            "Plans/FinalGUISpec.md",
+            "Plans/Permissions_System.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0145",
+          "lane": "teach_activity_transparency",
+          "title": "Fill Teacher activity transparency cards",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-036",
+            "CV-297",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0146",
+          "lane": "teach_memory_capture_ui",
+          "title": "Fill Teach memory capture UI",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "SP-220",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/assistant-chat-design.md",
+            "Plans/storage-plan.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0147",
+          "lane": "teach_handoff_boundaries",
+          "title": "Fill Teacher handoff boundaries",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "RAP-036",
+            "CV-297",
+            "P-055"
+          ],
+          "target_docs": [
+            "Plans/Contracts_V0.md",
+            "Plans/Personas.md",
+            "Plans/Runtime_Artifacts_Panel.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0148",
+          "lane": "teach_end_to_end_acceptance_tests",
+          "title": "Fill end-to-end Teach acceptance tests",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "ATS-014"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0149",
+          "lane": "teach_pm_knowledge_pressure_test",
+          "title": "Add Teacher PM knowledge pressure test",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "PP-056",
+            "P-055",
+            "ATS-014"
+          ],
+          "target_docs": [
+            "Plans/Automated_Testing_System.md",
+            "Plans/Personas.md",
+            "Plans/Prompt_Pipeline.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0150",
+          "lane": "gui_concept_reference",
+          "title": "Use PMConcept as non-final GUI concept reference",
+          "compile_disposition": "consumer_reference_only",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "F3-402",
+            "F3-403"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/FinalGUISpec.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0151",
+          "lane": "assistant_chat_thread_model",
+          "title": "Align Teach with PMConcept Assistant Chat threads",
+          "compile_disposition": "create_new_planunit",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "F3-403",
+            "ACD-426"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/FinalGUISpec.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0152",
+          "lane": "history_gui_concept_alignment",
+          "title": "Align History GUI with PMConcept Orchestrator History tab style",
+          "compile_disposition": "consumer_reference_only",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "OP-026",
+            "F3-402"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/FinalGUISpec.md",
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0153",
+          "lane": "vision_bridge_gui_concept_alignment",
+          "title": "Align vision bridge GUI with PMConcept composer and artifact patterns",
+          "compile_disposition": "consumer_reference_only",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "RAP-035",
+            "F3-402",
+            "ACD-425"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/FinalGUISpec.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/assistant-chat-design.md"
+          ],
+          "gui_related": true
+        },
+        {
+          "atom_id": "atom-0154",
+          "lane": "pmconcept_visual_workbench_direction",
+          "title": "Use PMConcept dense workbench visual conventions directionally",
+          "compile_disposition": "consumer_reference_only",
+          "compiled_plan_unit_ids": [
+            "0PI-062",
+            "OP-026",
+            "F3-402",
+            "F3-403"
+          ],
+          "target_docs": [
+            "Plans/00-plans-index.md",
+            "Plans/FinalGUISpec.md",
+            "Plans/Orchestrator_Page.md"
+          ],
+          "gui_related": true
+        }
+      ],
+      "compile_disposition_summary": {
+        "consumer_reference_only": 8,
+        "create_new_planunit": 115,
+        "duplicate": 3
+      },
+      "owner_adjudication": {
+        "strategy": "existing_owner_docs_additive_planunits",
+        "subagent_results": "Read-only owner reviews were used for History, vision bridge, Teach/Teacher, and compile mechanics; the main agent was the only writer.",
+        "primary_owner_docs": [
+          "Plans/00-plans-index.md",
+          "Plans/Orchestrator_Page.md",
+          "Plans/PRD_Builder.md",
+          "Plans/Planning_Wizard.md",
+          "Plans/Runtime_Artifacts_Panel.md",
+          "Plans/Project_Output_Artifacts.md",
+          "Plans/storage-plan.md",
+          "Plans/Contracts_V0.md",
+          "Plans/FinalGUISpec.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/Permissions_System.md",
+          "Plans/Media_Generation_and_Capabilities.md",
+          "Plans/Models_System.md",
+          "Plans/Prompt_Pipeline.md",
+          "Plans/Tools.md",
+          "Plans/Provider_OpenCode.md",
+          "Plans/FileSafe.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/usage-feature.md",
+          "Plans/Personas.md",
+          "Plans/Commands_System.md",
+          "Plans/Automated_Testing_System.md",
+          "Plans/Glossary.md"
+        ],
+        "no_update_evidence": {
+          "Plans/MCP_Integration.md": "Considered from original candidate list, but no accepted atom required MCP-specific product canon after PM-native vision bridge routing landed in Tools, Provider_OpenCode lineage, Media Capabilities, and Prompt Pipeline.",
+          "Plans/Provider_OpenCode.md": "Updated only with source-lineage boundary PO-049; the PM-native tool is owned by Plans/Tools.md."
+        }
+      },
+      "governance_status": "sealed",
+      "compiled_at_utc": "2026-06-27T13:33:20Z",
+      "validation_commands": [
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "git diff --check",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+        "python3 scripts/pm-shard-plans.py --check",
+        "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "python3 scripts/pm-plans-verify.py validate-evidence",
+        "python3 scripts/pm-plans-verify.py validate-plan-graph"
+      ],
+      "negative_constraints_preserved": [
+        "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.",
+        "Do not update Spec_Lock, shards, evidence, plan_graph, or auto_decisions during this compile phase.",
+        "Do not treat PMConcept.html as final/canonical UI or copy its HTML/CSS into product spec.",
+        "Do not install, vendor, or depend on the OpenCode opencode-see-image plugin as PM canonical implementation.",
+        "Do not treat plan-compile readiness as direct code implementation readiness."
+      ],
+      "validator_results": {
+        "plan_migration_validate": {
+          "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "status": "pass"
+        },
+        "plan_index_validate": {
+          "command": "python3 scripts/pm-plan-index.py validate",
+          "status": "pass",
+          "plan_unit_count": 5267,
+          "acceptance_unit_count": 18824,
+          "coverage_status": "pass",
+          "node_readiness_status": "blocked_compiler_contract_incomplete"
+        },
+        "bootstrap_ledger_validate_20260610": {
+          "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+          "status": "pass"
+        },
+        "bootstrap_ledger_validate": {
+          "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+          "status": "pass",
+          "atoms": 157,
+          "compile_queue_items": 1,
+          "plan_units_checked": 2673
+        },
+        "pm_plans_verify_run_gates": {
+          "command": "python3 scripts/pm-plans-verify.py run-gates",
+          "status": "pass"
+        },
+        "pm_shard_plans_check": {
+          "command": "python3 scripts/pm-shard-plans.py --check",
+          "status": "pass",
+          "source_count": 56,
+          "shards_checked": 1042
+        },
+        "validate_auto_decisions": {
+          "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+          "status": "pass"
+        },
+        "verify_spec_lock": {
+          "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+          "status": "pass"
+        },
+        "validate_evidence": {
+          "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+          "status": "pass"
+        },
+        "validate_plan_graph": {
+          "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+          "status": "pass"
+        },
+        "git_diff_check": {
+          "command": "git diff --check",
+          "status": "pass"
+        },
+        "node_readiness_boundary": {
+          "artifact": "Plans/.plan_index/node_readiness_report.json",
+          "status": "blocked_compiler_contract_incomplete",
+          "runtime_enablement_status": "runtime_disabled",
+          "no_worknodes_created": true,
+          "nodeseed_candidates_created": false
+        }
+      },
+      "terminal_ledger_event_id": "evt-0033"
+    }
+  ],
+  "compiled_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/PRD_Builder.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/storage-plan.md",
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Permissions_System.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Models_System.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Tools.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/FileSafe.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/usage-feature.md",
+    "Plans/Personas.md",
+    "Plans/Commands_System.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Glossary.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/00-plans-index.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/PRD_Builder.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/storage-plan.md",
+    "Plans/Contracts_V0.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Permissions_System.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/Models_System.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Tools.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/FileSafe.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/usage-feature.md",
+    "Plans/Personas.md",
+    "Plans/Commands_System.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Glossary.md",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "governance_status": "sealed",
+  "last_event_id": "evt-0033",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "notes": "Accepted atoms compiled into 39 canonical PlanUnits across existing owner docs; allowed .plan_index outputs regenerated; governance seal completed with migration proof, shards, evidence, Spec_Lock, run-gates, shard check, and diff hygiene passing. Node readiness remains blocked_compiler_contract_incomplete.",
+  "terminal_ledger_event_id": "evt-0033",
+  "updated_at_utc": "2026-06-27T15:23:35Z",
+  "validation_state": {
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "validator_results": {
+      "plan_migration_validate": {
+        "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "status": "pass"
+      },
+      "plan_index_validate": {
+        "command": "python3 scripts/pm-plan-index.py validate",
+        "status": "pass",
+        "plan_unit_count": 5267,
+        "acceptance_unit_count": 18824,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete"
+      },
+      "bootstrap_ledger_validate_20260610": {
+        "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+        "status": "pass"
+      },
+      "bootstrap_ledger_validate": {
+        "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+        "status": "pass",
+        "atoms": 157,
+        "compile_queue_items": 1,
+        "plan_units_checked": 2673
+      },
+      "pm_plans_verify_run_gates": {
+        "command": "python3 scripts/pm-plans-verify.py run-gates",
+        "status": "pass"
+      },
+      "pm_shard_plans_check": {
+        "command": "python3 scripts/pm-shard-plans.py --check",
+        "status": "pass",
+        "source_count": 56,
+        "shards_checked": 1042
+      },
+      "validate_auto_decisions": {
+        "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "status": "pass"
+      },
+      "verify_spec_lock": {
+        "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "status": "pass"
+      },
+      "validate_evidence": {
+        "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+        "status": "pass"
+      },
+      "validate_plan_graph": {
+        "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+        "status": "pass"
+      },
+      "git_diff_check": {
+        "command": "git diff --check",
+        "status": "pass"
+      },
+      "node_readiness_boundary": {
+        "artifact": "Plans/.plan_index/node_readiness_report.json",
+        "status": "blocked_compiler_contract_incomplete",
+        "runtime_enablement_status": "runtime_disabled",
+        "no_worknodes_created": true,
+        "nodeseed_candidates_created": false
+      }
+    },
+    "last_validated_at_utc": "2026-06-27T15:23:35Z"
+  },
+  "source_lineage_pre_seal_candidate_compile_owner_docs": [
     "Plans/Orchestrator_Page.md",
     "Plans/PRD_Builder.md",
     "Plans/Planning_Wizard.md",
@@ -18,24 +2462,10 @@
     "Plans/MCP_Integration.md",
     "Plans/FileSafe.md",
     "Plans/assistant-chat-design.md",
-    "Plans/usage-feature.md"
-  ],
-  "compiled_owner_docs": [],
-  "compiled_plan_outputs": [],
-  "governance_status": "not_started",
-  "items": [],
-  "last_event_id": "evt-0014",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
-  "ledger_id": "pldg-20260626-001-feature-name",
-  "notes": "No compile queue exists. Candidate owner docs are source-placement hints only; canonical Plans edits require an explicit future compile request. Current open candidate item is PM-native vision bridge adaptation for non-vision models based on the opencode-see-image pattern.",
-  "schema_id": "pm.bootstrap_ledger_compile_queue.v1",
-  "status": "conversational_design_active",
-  "terminal_ledger_event_id": null,
-  "updated_at_utc": "2026-06-26T20:47:51Z",
-  "validation_state": {
-    "bootstrap_ledger_validator": "blocked_missing_python_yaml",
-    "json_jsonl_shape_check": "pass",
-    "safe_content_checks": "No compile or generated index/governance artifacts were created."
-  }
+    "Plans/usage-feature.md",
+    "Plans/Personas.md",
+    "Plans/Commands_System.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Glossary.md"
+  ]
 }

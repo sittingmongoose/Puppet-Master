@@ -1,58 +1,27 @@
 {
-  "deferred_questions": [],
-  "ledger_id": "pldg-20260626-001-feature-name",
-  "notes": "First History item has no known open product underspecification and remains ledger-only. The current item is PM-native adaptation of the opencode-see-image pattern for non-vision models; key MVP defaults are open for Jared confirmation or revision.",
-  "open_blockers": [],
-  "open_questions": [
-    {
-      "question": "Should MVP expose this as a PM-native `vision_bridge` / `see_image` tool that automatically runs when the selected model lacks `image input`, while still allowing manual rerun from the UI/artifact surface?",
-      "question_id": "q-0020",
-      "status": "open"
-    },
-    {
-      "question": "Should bridge routing use PM's provider/model capability matrix and project/account defaults, with no OpenCode-specific defaults such as `opencode-go`, `minimax-m3`, `mimo-v2.5-free`, OpenCode `auth.json`, OpenCode DB, Bun, or OpenCode CLI dependency?",
-      "question_id": "q-0021",
-      "status": "open"
-    },
-    {
-      "question": "Which image sources are MVP for PM's resolver: chat/thread attachments, runtime artifacts/screenshots, project files allowed by FileSafe, clipboard/recent OS screenshots, or all of those with explicit ingestion rules?",
-      "question_id": "q-0022",
-      "status": "open"
-    },
-    {
-      "question": "For privacy/cache/GUI, should PM require an explicit permission decision before sending local images to a separate vision provider, then store the generated description as a runtime artifact with source image ref/hash, prompt, provider/model, freshness/cache state, and inspect/rerun controls?",
-      "question_id": "q-0023",
-      "status": "open"
-    }
-  ],
   "schema_id": "pm.bootstrap_open_items.v1",
-  "unclassified_candidates": [
-    {
-      "atom_id": "atom-0073",
-      "reason": "Automatic fallback/manual rerun behavior needs Jared confirmation."
-    },
-    {
-      "atom_id": "atom-0074",
-      "reason": "Provider/model routing default needs Jared confirmation."
-    },
-    {
-      "atom_id": "atom-0075",
-      "reason": "PM-owned image source resolver scope needs Jared confirmation."
-    },
-    {
-      "atom_id": "atom-0076",
-      "reason": "Artifact/cache metadata contract needs Jared confirmation."
-    },
-    {
-      "atom_id": "atom-0077",
-      "reason": "Privacy/permission default for sending local images to a vision provider needs Jared confirmation."
-    },
-    {
-      "atom_id": "atom-0078",
-      "reason": "GUI surfacing and controls for bridge outputs need Jared confirmation."
-    }
-  ],
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "notes": "No open product questions, blockers, unclassified candidates, unresolved contradictions, deferred product decisions, or governance-seal items remain. Node readiness remains blocked_compiler_contract_incomplete by design.",
+  "open_questions": [],
+  "open_blockers": [],
+  "deferred_questions": [],
+  "unclassified_candidates": [],
   "unresolved_contradictions": [],
-  "unsealed_governance": [],
-  "updated_at_utc": "2026-06-26T20:41:49Z"
+  "unsealed_governance": [
+    "governance_status=pending_seal after Plans/.plan_index changes; explicit governance seal phase required later.",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits validation failed with stale proof hashes and stale live PlanUnit count; explicit migration/governance refresh required later."
+  ],
+  "updated_at_utc": "2026-06-27T15:22:59Z",
+  "last_event_id": "evt-0033",
+  "governance_status": "sealed",
+  "compile_open_items": [],
+  "post_compile_pending_items": [],
+  "remaining_phase_boundaries": [
+    {
+      "item_id": "rpb-0001",
+      "kind": "runtime_compiler_boundary",
+      "status": "intentionally_blocked_until_explicit_future_phase",
+      "summary": "PlanUnit-to-NodeSeed-to-WorkNode runtime/compiler enablement remains blocked_compiler_contract_incomplete; this governance seal did not create node artifacts."
+    }
+  ]
 }

@@ -3,10 +3,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 26,
+        "False": 27,
         "True": 35
       },
-      "heading_count": 93,
+      "heading_count": 95,
       "implementation_surfaces": [
         "Plans/.audits/_semantic_closure_registry.jsonl",
         "Plans/.audits/audit-*/audit_scope_manifest.jsonl",
@@ -52,9 +52,9 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 4527,
+      "line_count": 4738,
       "path": "Plans/00-plans-index.md",
-      "plan_unit_count": 61,
+      "plan_unit_count": 62,
       "plan_unit_ids": [
         "0PI-001",
         "0PI-002",
@@ -116,7 +116,8 @@
         "0PI-058",
         "0PI-059",
         "0PI-060",
-        "0PI-061"
+        "0PI-061",
+        "0PI-062"
       ],
       "reasoning_tiers": [
         "high",
@@ -159,6 +160,7 @@
         "owner_map_routing_and_stale_consumer_seams",
         "owner_map_runtime_file_storage_seams",
         "owner_routing",
+        "owner_routing_drift",
         "plan_map_table_core_ux_owners",
         "plan_map_table_planning_runtime_artifacts",
         "plan_map_table_widgets_config_media_wiring",
@@ -183,25 +185,27 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "0b1d0ddcce228cf4e86e7b372568a47476ff67cc2fdad60d41e2a6adf91252aa",
+      "sha256": "1423b091a9caf8f4708d951cfd8daf793e4e069f600b9628654cfe7ec0047ee4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 61
+        "accepted": 62
       },
       "title": "Plans Index (authoritative map)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "owner_map": 1,
-        "requirement": 59
+        "requirement": 60
       },
       "validation_surfaces": [
         "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
         "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
+        "git diff --check",
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -486,9 +490,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 184,
-        "True": 240
+        "True": 242
       },
-      "heading_count": 614,
+      "heading_count": 617,
       "implementation_surfaces": [
         "AGENTS.md",
         "Plans/Architecture_Invariants.md",
@@ -545,15 +549,17 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md",
         "future Assistant Chat @file autocomplete",
+        "future Assistant Chat Teacher threads",
+        "future Assistant Chat composer and artifact controls",
         "future Assistant Chat thread UI",
         "future Settings UI",
         "future assistant chat header",
         "future composer",
         "future run status UI"
       ],
-      "line_count": 22503,
+      "line_count": 22881,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 424,
+      "plan_unit_count": 426,
       "plan_unit_ids": [
         "ACD-424",
         "ACD-001",
@@ -978,7 +984,9 @@
         "ACD-420",
         "ACD-421",
         "ACD-422",
-        "ACD-423"
+        "ACD-423",
+        "ACD-425",
+        "ACD-426"
       ],
       "reasoning_tiers": [
         "high",
@@ -1225,6 +1233,7 @@
         "subtype_drift",
         "surface_routing",
         "task_status_visibility_drift",
+        "teach_threaded_guidance_gap",
         "terminal_accessibility",
         "terminal_action_alias",
         "terminal_action_fabrication",
@@ -1255,6 +1264,7 @@
         "validation_lifecycle",
         "validation_settings",
         "validation_storage",
+        "vision_bridge_chat_opacity",
         "visual_flow_drift",
         "visualizer_boundary",
         "visualizer_bridge",
@@ -1280,17 +1290,17 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "5e64367eb48c2cf54a7b091dddf3fecfe85f5b7f7d8cdd5ad2ffa18a28c3aadb",
+      "sha256": "e81a1b2254c51808535a1a8c94fda81112f74a0bf6245577b79295469a8f96fc",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 424
+        "accepted": 426
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
         "compatibility_disposition": 7,
         "constraint": 137,
         "decision": 6,
-        "requirement": 272,
+        "requirement": 274,
         "validation_rule": 2
       },
       "validation_surfaces": [
@@ -1302,10 +1312,12 @@
         "future Assistant Chat child-goal display review",
         "future Assistant Chat evidence display review",
         "future Assistant Chat task tracker review",
+        "git diff --check",
         "manual assistant-chat cross-reference review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "rg newfeatures.md Plans/assistant-chat-design.md"
@@ -1430,9 +1442,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 6,
-        "True": 5
+        "True": 8
       },
-      "heading_count": 24,
+      "heading_count": 28,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -1452,12 +1464,15 @@
         "Plans/human-in-the-loop.md",
         "Plans/plans_to_code_handoff.schema.json",
         "future GUI tests",
+        "future History GUI and projection tests",
         "future SSH tests",
-        "future discovery conformance tests"
+        "future Teach/Teacher tests",
+        "future discovery conformance tests",
+        "future vision bridge tests"
       ],
-      "line_count": 788,
+      "line_count": 1139,
       "path": "Plans/Automated_Testing_System.md",
-      "plan_unit_count": 11,
+      "plan_unit_count": 14,
       "plan_unit_ids": [
         "ATS-001",
         "ATS-002",
@@ -1469,7 +1484,10 @@
         "ATS-008",
         "ATS-009",
         "ATS-010",
-        "ATS-011"
+        "ATS-011",
+        "ATS-012",
+        "ATS-013",
+        "ATS-014"
       ],
       "reasoning_tiers": [
         "high",
@@ -1478,28 +1496,33 @@
       "risk_classes": [
         "discovery_validation_gap",
         "false_test_capability",
+        "history_validation_gap",
         "implementation_readiness",
         "manual_only_completion",
         "owner_drift",
+        "teach_validation_gap",
         "unverifiable_completion",
+        "vision_bridge_validation_gap",
         "weak_test_oracle"
       ],
-      "sha256": "d90751704683a723941159fa3a2b5ab0adffd47836b562629587d9aa9070f8e0",
+      "sha256": "f1fe3bd7651e69f79a5b6cb67a5e68cf2479f53004ef8fa7d47519a649d70812",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 11
+        "accepted": 14
       },
       "title": "Automated Testing System",
       "unit_type_counts": {
         "requirement": 10,
-        "validation_criterion": 1
+        "validation_criterion": 4
       },
       "validation_surfaces": [
         "Future Assistant Chat visibility and toggle tests.",
         "Future DiscoveryService conformance suite.",
         "Future PlanUnit index no-worknodes-created check.",
         "Future SSH/no-local-fallback tests.",
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
@@ -2260,9 +2283,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 29,
-        "True": 23
+        "True": 24
       },
-      "heading_count": 110,
+      "heading_count": 112,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -2294,11 +2317,13 @@
         "Plans/chain-wizard-flexibility.md",
         "Plans/orchestrator-subagent-integration.md",
         "Plans/prd_planning_runtime_contracts.json",
-        "Plans/storage-plan.md"
+        "Plans/storage-plan.md",
+        "future command palette",
+        "future command parser"
       ],
-      "line_count": 3571,
+      "line_count": 3681,
       "path": "Plans/Commands_System.md",
-      "plan_unit_count": 52,
+      "plan_unit_count": 53,
       "plan_unit_ids": [
         "CS-002",
         "CS-003",
@@ -2351,7 +2376,8 @@
         "CS-001",
         "CS-050",
         "CS-051",
-        "CS-052"
+        "CS-052",
+        "CS-053"
       ],
       "reasoning_tiers": [
         "high",
@@ -2408,14 +2434,15 @@
         "reserved_command_catalog_drift",
         "reserved_slash_set_drift",
         "shortcut_heading_overinterpretation",
+        "teach_invocation_gap",
         "uicommand_user_command_conflation",
         "user_command_definition_drift",
         "web_slash_family_drift"
       ],
-      "sha256": "22dd09e99960560bd60cf5022e9bbc8ce19050021d1898510cc37c138dff2864",
+      "sha256": "2c3b8a960ed046c731dca2edfa34550be68ef3ecca0d22bc3d2287d451fff39d",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 52
+        "accepted": 53
       },
       "title": "Commands System (Canonical SSOT)",
       "unit_type_counts": {
@@ -2423,12 +2450,14 @@
         "compatibility_disposition": 1,
         "constraint": 15,
         "reference": 1,
-        "requirement": 32
+        "requirement": 33
       },
       "validation_surfaces": [
         "future command registry validation",
+        "git diff --check",
         "manual heading/anchor review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -2666,10 +2695,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 232,
+        "False": 235,
         "True": 62
       },
-      "heading_count": 424,
+      "heading_count": 428,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -2721,11 +2750,14 @@
         "Plans/rewrite-tie-in-memo.md",
         "Plans/storage-plan.md",
         "Plans/usage-feature.md",
-        "future discovery receipt schemas"
+        "future Teacher activity and guided action records",
+        "future discovery receipt schemas",
+        "future history row/action envelopes",
+        "future vision_bridge result records"
       ],
-      "line_count": 17942,
+      "line_count": 18463,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 294,
+      "plan_unit_count": 297,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -3020,7 +3052,10 @@
         "CV-288",
         "CV-289",
         "CV-290",
-        "CV-291"
+        "CV-291",
+        "CV-295",
+        "CV-296",
+        "CV-297"
       ],
       "reasoning_tiers": [
         "high",
@@ -3142,6 +3177,7 @@
         "gui_action_projection_stale",
         "handoff_identity_underkeying",
         "hidden_peer_channel_drift",
+        "history_contract_identity_drift",
         "hitl_blocked_episode_identity_loss",
         "hitl_request_id_identity_revival",
         "hitl_scope_persistence_loss",
@@ -3281,6 +3317,7 @@
         "subagent_lineage_alias_drift",
         "subagent_retry_budget_event_loss",
         "task_projection_persistence_confusion",
+        "teacher_activity_contract_gap",
         "terminal_route_identity_fork",
         "thread_cost_display_drift",
         "thread_usage_detail_pattern_drift",
@@ -3308,6 +3345,7 @@
         "usage_source_metadata_loss",
         "usage_warning_setup_label_drift",
         "validation_pass_event_lineage_loss",
+        "vision_result_contract_drift",
         "wait_state_inference_drift",
         "web_change_tracking_false_error",
         "web_error_mapping_drift",
@@ -3322,10 +3360,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "d0ffe4c18e9f967796e2660e2ad5908158973627f128f14950ae9a0cea6e7e3d",
+      "sha256": "cbfa4e1449039a2e50148f317a8e79d334a965a5f0c5cc97ff95449ee51308d7",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 292,
+        "accepted": 295,
         "deferred": 2
       },
       "title": "Contracts V0 (Canonical)",
@@ -3333,7 +3371,7 @@
         "compatibility_disposition": 32,
         "constraint": 53,
         "deferred_decision": 2,
-        "requirement": 206,
+        "requirement": 209,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -3342,12 +3380,14 @@
         "future Goal Runtime contract/schema review",
         "future Goal Runtime event schema registration review",
         "future GoalRun contract registration review",
+        "git diff --check",
         "manual contract owner review before promotion",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -4339,9 +4379,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 168,
-        "True": 23
+        "True": 24
       },
-      "heading_count": 308,
+      "heading_count": 310,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Executor_Protocol.md",
@@ -4356,11 +4396,12 @@
         "Plans/Project_Output_Artifacts.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/plans_to_code_handoff.schema.json",
-        "future DiscoveryService policy filter"
+        "future DiscoveryService policy filter",
+        "future image source resolver"
       ],
-      "line_count": 13244,
+      "line_count": 13354,
       "path": "Plans/FileSafe.md",
-      "plan_unit_count": 191,
+      "plan_unit_count": 192,
       "plan_unit_ids": [
         "F2-002",
         "F2-003",
@@ -4552,7 +4593,8 @@
         "F2-188",
         "F2-189",
         "F2-190",
-        "F2-191"
+        "F2-191",
+        "F2-192"
       ],
       "reasoning_tiers": [
         "high",
@@ -4561,6 +4603,7 @@
       "risk_classes": [
         "filesafe_drift",
         "filesafe_no_leak",
+        "image_source_policy_bypass",
         "implementation_sequence_drift",
         "migration_lineage",
         "mutation_safety_boundary_drift",
@@ -4568,23 +4611,25 @@
         "stale_or_forbidden_behavior",
         "unrecoverable_mutation"
       ],
-      "sha256": "d64a6e89622ae2049310e926f5729a8336d79b9976ae988bb8ebbb22625c30be",
+      "sha256": "a2edd7b12a5cf46ab6ec337d991f2ac9649fad4fad028ee0533262381c9af612",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 191
+        "accepted": 192
       },
       "title": "FileSafe -- Implementation Plan",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 1,
-        "requirement": 189
+        "requirement": 190
       },
       "validation_surfaces": [
         "Future denied/hidden-by-policy no-leak tests.",
         "Future root/home refusal, ignore, symlink, and remote authorized-root tests.",
         "future safe_point_receipt validation",
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -4594,9 +4639,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 35,
-        "True": 366
+        "True": 368
       },
-      "heading_count": 661,
+      "heading_count": 664,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
@@ -4627,14 +4672,17 @@
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md",
         "Plans/usage-feature.md",
+        "future Assistant Chat Teacher thread",
+        "future Orchestrator History and Assistant Chat visual surfaces",
         "future Settings UI",
+        "future guided overlay",
         "future media generation controls",
         "future provider settings UI",
         "future run control UI"
       ],
-      "line_count": 25517,
+      "line_count": 25928,
       "path": "Plans/FinalGUISpec.md",
-      "plan_unit_count": 401,
+      "plan_unit_count": 403,
       "plan_unit_ids": [
         "F3-400",
         "F3-401",
@@ -5036,7 +5084,9 @@
         "F3-396",
         "F3-397",
         "F3-398",
-        "F3-399"
+        "F3-399",
+        "F3-402",
+        "F3-403"
       ],
       "reasoning_tiers": [
         "high",
@@ -5049,6 +5099,7 @@
         "finalgui_risk",
         "gui_anchor_drift",
         "gui_blocked_recovery_addenda_drift",
+        "gui_concept_overfit",
         "gui_cross_reference_ambiguity",
         "gui_discovery_route_drift",
         "gui_extract_semantic_loss",
@@ -5063,13 +5114,14 @@
         "settings_model_role_drift",
         "source_preservation",
         "static_or_misleading_plan_compile_ui",
+        "teach_gui_underspecification",
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "20aee157518aff105a10534ea95d0c61d3edc32ea124bb34ebd5dafb52555623",
+      "sha256": "376250c8c45bb2787282bbfe13cda6ceeca875096ca2c65d2c3863133e843e38",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 400,
+        "accepted": 402,
         "retired": 1
       },
       "title": "Puppet Master GUI Specification -- Slint Rewrite",
@@ -5077,7 +5129,7 @@
         "compatibility_disposition": 3,
         "constraint": 70,
         "decision": 4,
-        "requirement": 323,
+        "requirement": 325,
         "validation_rule": 1
       },
       "validation_surfaces": [
@@ -5089,12 +5141,14 @@
         "future Settings capability-lane review",
         "future Settings model selector review",
         "future Settings/Agent Config UI review",
+        "git diff --check",
         "manual FinalGUISpec heading review",
         "manual markdown anchor/cross-reference review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -5299,15 +5353,17 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 11,
-        "True": 14
+        "True": 15
       },
-      "heading_count": 55,
+      "heading_count": 57,
       "implementation_surfaces": [
-        "Plans/Glossary.md"
+        "Plans/Glossary.md",
+        "future Help surfaces",
+        "future context help"
       ],
-      "line_count": 1624,
+      "line_count": 2011,
       "path": "Plans/Glossary.md",
-      "plan_unit_count": 25,
+      "plan_unit_count": 26,
       "plan_unit_ids": [
         "G-002",
         "G-003",
@@ -5333,26 +5389,31 @@
         "G-023",
         "G-024",
         "G-025",
-        "G-001"
+        "G-001",
+        "G-026"
       ],
       "reasoning_tiers": [
+        "high",
         "standard"
       ],
       "risk_classes": [
         "glossary_drift",
-        "migration_lineage"
+        "migration_lineage",
+        "teach_help_content_gap"
       ],
-      "sha256": "cf86d78ef62a90bd3af41b039b33c4b3731756f6d0471f67b78d0b6c385a4faf",
+      "sha256": "e66d78bf8c14eec2f3e928858f87296b406b9d7149e05ae16b09adf2766acac5",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 25
+        "accepted": 26
       },
       "title": "Glossary (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 24
+        "requirement": 25
       },
       "validation_surfaces": [
+        "git diff --check",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -5959,7 +6020,7 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 72,
-        "True": 26
+        "True": 27
       },
       "heading_count": 30,
       "implementation_surfaces": [
@@ -5974,11 +6035,12 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/Skills_System.md",
         "Plans/agent-rules-context.md",
-        "Plans/usage-feature.md"
+        "Plans/usage-feature.md",
+        "future provider/model capability matrix"
       ],
-      "line_count": 6269,
+      "line_count": 6395,
       "path": "Plans/Media_Generation_and_Capabilities.md",
-      "plan_unit_count": 98,
+      "plan_unit_count": 99,
       "plan_unit_ids": [
         "MGAC-094",
         "MGAC-095",
@@ -6077,7 +6139,8 @@
         "MGAC-091",
         "MGAC-001",
         "MGAC-092",
-        "MGAC-093"
+        "MGAC-093",
+        "MGAC-099"
       ],
       "reasoning_tiers": [
         "high",
@@ -6092,6 +6155,7 @@
         "media_backend_routing_drift",
         "media_capability_drift",
         "media_capability_picker_gui_drift",
+        "media_capability_route_drift",
         "media_generation_contract_drift",
         "media_route_taxonomy_drift",
         "media_slot_extraction_drift",
@@ -6103,20 +6167,22 @@
         "owner_drift",
         "retired_gemini_cli_nanobanana_resurrection"
       ],
-      "sha256": "b2a0fae60a1db0df6aac08ee4715a9170d6b4550bec453cf1dc5c32b92ec4931",
+      "sha256": "d1ad26bfd69c008e045b898fab489c04e0c82c0ff78eb4ff25a6066f7da15cef",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 98
+        "accepted": 99
       },
       "title": "Media Generation and Capabilities (Canonical SSOT)",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "requirement": 96
+        "requirement": 97
       },
       "validation_surfaces": [
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -6333,9 +6399,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 82,
-        "True": 33
+        "True": 35
       },
-      "heading_count": 201,
+      "heading_count": 204,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -6356,11 +6422,14 @@
         "Plans/orchestrator-subagent-integration.md",
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
+        "Plans/usage-feature.md",
+        "future Teach settings row",
+        "future Teacher thread model chips",
+        "future model route resolver"
       ],
-      "line_count": 7786,
+      "line_count": 8030,
       "path": "Plans/Models_System.md",
-      "plan_unit_count": 115,
+      "plan_unit_count": 117,
       "plan_unit_ids": [
         "MS-113",
         "MS-114",
@@ -6476,7 +6545,9 @@
         "MS-109",
         "MS-110",
         "MS-111",
-        "MS-112"
+        "MS-112",
+        "MS-116",
+        "MS-117"
       ],
       "reasoning_tiers": [
         "high",
@@ -6587,6 +6658,7 @@
         "talkativeness_derived_persona_control",
         "talkativeness_snapshot_bridge_gui_gating",
         "tavily_heavy_mode_non_default_policy",
+        "teach_model_setting_drift",
         "three_axis_settings_precedence",
         "two_gemini_providers_structural_anchor",
         "ui_artifact_snapshot_id_consumption",
@@ -6595,14 +6667,15 @@
         "variant_cycling_surfaces",
         "variant_definition",
         "variants_section_anchor",
+        "vision_model_route_drift",
         "web_capability_mirror_site_reader_routing",
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "d232e30036f09878b6a12c753c794ecf389ea21e2d65f9d3685dbe5d6b804e70",
+      "sha256": "5cfd469a6ae1233eb1feb0d342999fea028a1a48a1a00f4d609348dc3af40825",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 115
+        "accepted": 117
       },
       "title": "Models System (Canonical SSOT)",
       "unit_type_counts": {
@@ -6631,7 +6704,7 @@
         "provider_surface_contract": 1,
         "provider_taxonomy": 1,
         "reference_formula": 1,
-        "requirement": 29,
+        "requirement": 31,
         "runtime_contract": 12,
         "runtime_disclosure": 2,
         "runtime_policy": 5,
@@ -6649,9 +6722,11 @@
         "future Goal Runtime model-role resolver review",
         "future Settings model-role review",
         "future capability-lane resolver review",
+        "git diff --check",
         "manual provider/model owner review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -8408,9 +8483,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 10,
-        "True": 15
+        "True": 17
       },
-      "heading_count": 106,
+      "heading_count": 109,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
@@ -8427,11 +8502,13 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/WorktreeGitImprovement.md",
-        "Plans/storage-plan.md"
+        "Plans/storage-plan.md",
+        "future History row action menus",
+        "future Orchestrator History tab"
       ],
-      "line_count": 1846,
+      "line_count": 2254,
       "path": "Plans/Orchestrator_Page.md",
-      "plan_unit_count": 25,
+      "plan_unit_count": 27,
       "plan_unit_ids": [
         "OP-002",
         "OP-003",
@@ -8457,7 +8534,9 @@
         "OP-022",
         "OP-023",
         "OP-024",
-        "OP-025"
+        "OP-025",
+        "OP-026",
+        "OP-027"
       ],
       "reasoning_tiers": [
         "high",
@@ -8474,6 +8553,8 @@
         "execution_boundary",
         "gui_runtime_authority_drift",
         "help_glossary_drift",
+        "history_action_authority_drift",
+        "history_surface_drift",
         "notification_escalation_drift",
         "orchestrator_owner_hollowing",
         "orchestrator_projection_drift",
@@ -8490,26 +8571,28 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "a915c4671effdd63854fc4a7b253f34507b12328b194aab600d2fdb72164c22e",
+      "sha256": "ed8d6eed25610d681f69a605aa39a58225f343b31053fa3a1c923153c28f2fc3",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 24,
+        "accepted": 26,
         "retired": 1
       },
       "title": "Orchestrator Page -- Single-Page Seven-Tab Specification",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 6,
-        "requirement": 17,
+        "requirement": 19,
         "validation_rule": 1
       },
       "validation_surfaces": [
         "future Orchestrator Plan Compile tab review",
         "future Orchestrator execution observability review",
         "future Orchestrator page surface review",
+        "git diff --check",
         "manual Orchestrator owner-section review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -8519,9 +8602,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 70,
-        "True": 49
+        "True": 52
       },
-      "heading_count": 207,
+      "heading_count": 211,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -8541,11 +8624,15 @@
         "Plans/human-in-the-loop.md",
         "Plans/storage-plan.md",
         "future DiscoveryService permission context",
-        "future SSH prompt flow"
+        "future History export/action permission prompts",
+        "future SSH prompt flow",
+        "future Teacher guided action confirmations",
+        "future bridge disclosure popup",
+        "future permission settings"
       ],
-      "line_count": 7906,
+      "line_count": 8289,
       "path": "Plans/Permissions_System.md",
-      "plan_unit_count": 119,
+      "plan_unit_count": 122,
       "plan_unit_ids": [
         "PS-119",
         "PS-002",
@@ -8665,7 +8752,10 @@
         "PS-115",
         "PS-116",
         "PS-117",
-        "PS-118"
+        "PS-118",
+        "PS-120",
+        "PS-121",
+        "PS-122"
       ],
       "reasoning_tiers": [
         "high",
@@ -8675,24 +8765,27 @@
         "approval_scope_overreach",
         "goal_runtime_permission_scope_drift",
         "goalrun_write_authority_drift",
+        "history_permission_leak",
         "permission_system_drift",
         "permission_trust_leak",
         "provider_secret_leak",
         "residual_bridge_overreach",
         "stale_or_forbidden_behavior",
-        "unsafe_external_effect"
+        "teacher_mutation_authority_drift",
+        "unsafe_external_effect",
+        "vision_disclosure_leak"
       ],
-      "sha256": "9a733becdf754e8321210841d757764e827a596c432b0c40052abaf0127b3f2b",
+      "sha256": "f1fa7497f2ef8e29a13dafdc3e67bff7fa0818a2b65c3ff2c1c9c4d79e8b0668",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 119
+        "accepted": 122
       },
       "title": "Permissions System (Canonical SSOT)",
       "unit_type_counts": {
         "constraint": 39,
         "generated_artifact_residual": 1,
         "reference": 3,
-        "requirement": 76
+        "requirement": 79
       },
       "validation_surfaces": [
         "Future SSH auth, known-host, passphrase, remote command denial, and redaction tests.",
@@ -8700,9 +8793,11 @@
         "future Goal Runtime permission/approval review",
         "future GoalRun permission/blocker review",
         "future external-effects policy validation",
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -8711,10 +8806,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 38,
+        "False": 39,
         "True": 16
       },
-      "heading_count": 117,
+      "heading_count": 119,
       "implementation_surfaces": [
         "Plans/FinalGUISpec.md",
         "Plans/Models_System.md",
@@ -8723,11 +8818,12 @@
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Planning_Wizard.md",
         "Plans/assistant-chat-design.md",
-        "Plans/orchestrator-subagent-integration.md"
+        "Plans/orchestrator-subagent-integration.md",
+        "future Teacher persona routing"
       ],
-      "line_count": 3307,
+      "line_count": 3445,
       "path": "Plans/Personas.md",
-      "plan_unit_count": 54,
+      "plan_unit_count": 55,
       "plan_unit_ids": [
         "P-002",
         "P-003",
@@ -8782,7 +8878,8 @@
         "P-052",
         "P-001",
         "P-053",
-        "P-054"
+        "P-054",
+        "P-055"
       ],
       "reasoning_tiers": [
         "high",
@@ -8842,12 +8939,13 @@
         "specialty_prompt_bloat_drift",
         "subagent_persona_inheritance_drift",
         "subagent_registry_persona_registry_conflation",
-        "teacher_persona_doc_guessing_drift"
+        "teacher_persona_doc_guessing_drift",
+        "teacher_persona_scope_drift"
       ],
-      "sha256": "75b45e602969e00f98f65cfb7e2a3951224818e3240cc8e9db43de4932a0559f",
+      "sha256": "ab5dca7bf9cd45038d75b2d41421d9a44a3d721958162329b59563604a3d3edf",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 53,
+        "accepted": 54,
         "retired": 1
       },
       "title": "Personas (Canonical SSOT)",
@@ -8855,11 +8953,13 @@
         "compatibility_disposition": 1,
         "constraint": 16,
         "decision": 1,
-        "requirement": 36
+        "requirement": 37
       },
       "validation_surfaces": [
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -9248,10 +9348,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 4,
+        "False": 5,
         "True": 11
       },
-      "heading_count": 26,
+      "heading_count": 28,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
@@ -9278,11 +9378,12 @@
         "Plans/prd_planning_runtime_contracts.json",
         "Plans/prd_planning_runtime_contracts.schema.json",
         "Plans/storage-plan.md",
+        "future Planning Wizard output records",
         "future Planning Wizard source picker"
       ],
-      "line_count": 1181,
+      "line_count": 1335,
       "path": "Plans/Planning_Wizard.md",
-      "plan_unit_count": 15,
+      "plan_unit_count": 16,
       "plan_unit_ids": [
         "PWIZ-001",
         "PWIZ-002",
@@ -9298,7 +9399,8 @@
         "PWIZ-011",
         "PWIZ-012",
         "PWIZ-013",
-        "PWIZ-015"
+        "PWIZ-015",
+        "PWIZ-016"
       ],
       "reasoning_tiers": [
         "high",
@@ -9307,23 +9409,26 @@
       "risk_classes": [
         "implementation_readiness",
         "owner_drift",
+        "planning_history_lineage_loss",
         "planning_source_context_drift",
         "stale_approval_build_race",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "6750d554730cc856304ac9282b423b85be8c4688887ecfb96c3bf3477eda9f58",
+      "sha256": "77bc16723459f442900e0f709acae2b1d95ac4b13a5711feb134fa5144d33b13",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 15
+        "accepted": 16
       },
       "title": "Planning Wizard",
       "unit_type_counts": {
-        "requirement": 15
+        "requirement": 16
       },
       "validation_surfaces": [
         "Future Planning Wizard source pick local/SSH tests.",
         "Future policy-hidden source no-leak tests.",
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts"
       ]
@@ -9434,10 +9539,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 2,
+        "False": 3,
         "True": 7
       },
-      "heading_count": 20,
+      "heading_count": 22,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Contracts_V0.md",
@@ -9456,11 +9561,12 @@
         "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
         "Plans/prd_planning_runtime_contracts.json",
         "Plans/prd_planning_runtime_contracts.schema.json",
+        "future PRD Builder output records",
         "future PRD Builder source picker"
       ],
-      "line_count": 644,
+      "line_count": 789,
       "path": "Plans/PRD_Builder.md",
-      "plan_unit_count": 9,
+      "plan_unit_count": 10,
       "plan_unit_ids": [
         "PRDB-001",
         "PRDB-002",
@@ -9470,7 +9576,8 @@
         "PRDB-006",
         "PRDB-008",
         "PRDB-007",
-        "PRDB-009"
+        "PRDB-009",
+        "PRDB-010"
       ],
       "reasoning_tiers": [
         "high",
@@ -9478,23 +9585,26 @@
       ],
       "risk_classes": [
         "owner_drift",
+        "prd_history_lineage_loss",
         "prd_source_provenance_drift",
         "stale_or_forbidden_behavior",
         "untrusted_source_security_bypass"
       ],
-      "sha256": "bbedc9414f422a16878ef1cbf63419e07f0f00cb1b266b1730f437d8a32f3e2d",
+      "sha256": "337e80e538514ce9800f65c469963bfd76b50c0f3a2939c27188786d4e81a118",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 9
+        "accepted": 10
       },
       "title": "PRD Builder",
       "unit_type_counts": {
-        "requirement": 9
+        "requirement": 10
       },
       "validation_surfaces": [
         "Future PRD Builder source picker local/SSH tests.",
         "Future hidden-by-policy source no-leak tests.",
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts"
       ]
@@ -9614,10 +9724,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 36,
+        "False": 37,
         "True": 14
       },
-      "heading_count": 106,
+      "heading_count": 108,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -9631,11 +9741,12 @@
         "Plans/Project_Output_Artifacts.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/plans_to_code_handoff.schema.json",
+        "future History export packages",
         "future artifact export/package system"
       ],
-      "line_count": 3431,
+      "line_count": 3537,
       "path": "Plans/Project_Output_Artifacts.md",
-      "plan_unit_count": 50,
+      "plan_unit_count": 51,
       "plan_unit_ids": [
         "POA-050",
         "POA-002",
@@ -9686,7 +9797,8 @@
         "POA-046",
         "POA-047",
         "POA-048",
-        "POA-049"
+        "POA-049",
+        "POA-051"
       ],
       "reasoning_tiers": [
         "high",
@@ -9709,6 +9821,7 @@
         "false_completion",
         "generated_media_output_packaging_drift",
         "gui_artifact_pair_drift",
+        "history_export_identity_loss",
         "missing_completion_evidence",
         "node_id_nondeterminism",
         "node_requirement_ref_mapping_drift",
@@ -9744,10 +9857,10 @@
         "validation_sweep_finality_drift",
         "validator_graph_integrity_drift"
       ],
-      "sha256": "cfb34cb80de7add6d66d68e4bbe80ecb8b243a9038d4a4f696eb1298c4324241",
+      "sha256": "5aea224c7bb380fd6d0a7469de4e21e7ec55a458f2790f3c3fe188a2ed9c3e11",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 49,
+        "accepted": 50,
         "retired": 1
       },
       "title": "Puppet Master — User-Project Project Plan Package Outputs (SSOT)",
@@ -9755,13 +9868,15 @@
         "compatibility_disposition": 1,
         "constraint": 9,
         "decision": 1,
-        "requirement": 38,
+        "requirement": 39,
         "source_lineage_disposition": 1
       },
       "validation_surfaces": [
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -9771,19 +9886,21 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 42,
-        "True": 12
+        "False": 43,
+        "True": 13
       },
-      "heading_count": 100,
+      "heading_count": 103,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/Models_System.md",
         "Plans/Multi-Account.md",
-        "Plans/Prompt_Pipeline.md"
+        "Plans/Prompt_Pipeline.md",
+        "future Teacher source resolver",
+        "future bridge prompt/result serializer"
       ],
-      "line_count": 3522,
+      "line_count": 3888,
       "path": "Plans/Prompt_Pipeline.md",
-      "plan_unit_count": 54,
+      "plan_unit_count": 56,
       "plan_unit_ids": [
         "PP-002",
         "PP-003",
@@ -9838,7 +9955,9 @@
         "PP-052",
         "PP-053",
         "PP-001",
-        "PP-054"
+        "PP-054",
+        "PP-055",
+        "PP-056"
       ],
       "reasoning_tiers": [
         "high",
@@ -9853,12 +9972,14 @@
         "provider_identity_snapshot_drift",
         "residual_bridge_overreach",
         "runtime_identity_ssot_fracture",
+        "teacher_pm_knowledge_guessing",
+        "vision_prompt_injection_or_guessing",
         "widget_owner_boundary_drift"
       ],
-      "sha256": "f190bd3bca0bc564ef23500146e1ba8d5ed665fe95093b74ec22f1bf6832290a",
+      "sha256": "c932286057f8edcdbcc1e5324382e4c78b9fb9ae4e21ac9ad85e113d81efe2e0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 50,
+        "accepted": 52,
         "deferred": 3,
         "retired": 1
       },
@@ -9869,10 +9990,12 @@
         "constraint": 7,
         "deferred_decision": 1,
         "deferred_reconciliation": 2,
-        "requirement": 41
+        "requirement": 43
       },
       "validation_surfaces": [
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -9880,21 +10003,22 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 36,
+        "False": 37,
         "True": 12
       },
-      "heading_count": 105,
+      "heading_count": 107,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/Media_Generation_and_Capabilities.md",
         "Plans/Models_System.md",
         "Plans/Provider_OpenCode.md",
         "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
-        "Plans/usage-feature.md"
+        "Plans/usage-feature.md",
+        "future provider docs"
       ],
-      "line_count": 3468,
+      "line_count": 3573,
       "path": "Plans/Provider_OpenCode.md",
-      "plan_unit_count": 48,
+      "plan_unit_count": 49,
       "plan_unit_ids": [
         "PO-048",
         "PO-002",
@@ -9943,7 +10067,8 @@
         "PO-045",
         "PO-046",
         "PO-001",
-        "PO-047"
+        "PO-047",
+        "PO-049"
       ],
       "reasoning_tiers": [
         "high",
@@ -9951,6 +10076,7 @@
       ],
       "risk_classes": [
         "opencode_blocked_signal_drift",
+        "opencode_dependency_leak",
         "opencode_identity_recovery_gap",
         "opencode_persistence_authority_drift",
         "opencode_provider_drift",
@@ -9960,22 +10086,24 @@
         "provider_identity_correlation_drift",
         "residual_bridge_overreach"
       ],
-      "sha256": "468a9a5a83e7b05250029bd505d9453dd5e895754711ed215159af386324e75d",
+      "sha256": "640061c9f53855131de4d1dbe82a9193ec07947094ed4fb4f6f71013e29b9736",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 47,
+        "accepted": 48,
         "retired": 1
       },
       "title": "Provider: OpenCode (Server-Bridged)",
       "unit_type_counts": {
         "acceptance": 1,
         "compatibility_disposition": 3,
-        "constraint": 12,
+        "constraint": 13,
         "requirement": 32
       },
       "validation_surfaces": [
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -10372,9 +10500,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 9,
-        "True": 23
+        "True": 26
       },
-      "heading_count": 73,
+      "heading_count": 77,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -10385,15 +10513,18 @@
         "Plans/Project_Output_Artifacts.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/storage-plan.md",
+        "future History artifact/evidence inspector",
+        "future Teacher activity detail rows",
+        "future derived vision-description artifact rows",
         "future generated media artifact browser",
         "future project output packaging",
         "future provider artifact store",
         "future runtime artifact receipt browser",
         "future runtime artifacts panel"
       ],
-      "line_count": 992,
+      "line_count": 1405,
       "path": "Plans/Runtime_Artifacts_Panel.md",
-      "plan_unit_count": 32,
+      "plan_unit_count": 35,
       "plan_unit_ids": [
         "RAP-002",
         "RAP-032",
@@ -10426,7 +10557,10 @@
         "RAP-027",
         "RAP-029",
         "RAP-030",
-        "RAP-031"
+        "RAP-031",
+        "RAP-034",
+        "RAP-035",
+        "RAP-036"
       ],
       "reasoning_tiers": [
         "high",
@@ -10446,6 +10580,7 @@
         "event_taxonomy_drift",
         "export_manifest_drift",
         "generated_media_artifact_drift",
+        "history_artifact_link_loss",
         "identity_open_export_drift",
         "mvp_scope_drift",
         "owner_drift",
@@ -10464,28 +10599,32 @@
         "schema_owner_boundary_drift",
         "stale_gap_promotion_risk",
         "stream_audit_drift",
-        "structural_anchor_loss"
+        "structural_anchor_loss",
+        "teacher_activity_trace_gap",
+        "vision_artifact_lineage_loss"
       ],
-      "sha256": "ee09dc34ddaa867aace5583661b73abedc42f6dd4a765809c3a9d9eeabd88de2",
+      "sha256": "d0e1a8d86d1173158be821337eba7abff838b536273e7401f5bc9f095e0875f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 31,
+        "accepted": 34,
         "retired": 1
       },
       "title": "Runtime Artifacts Panel — SSOT",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 31
+        "requirement": 34
       },
       "validation_surfaces": [
         "Future Assistant Chat inline display off but durable receipt available test.",
         "Future Runtime Artifacts receipt browsing tests.",
         "future Runtime Artifacts plans-to-code receipt projection review",
         "future Runtime Artifacts receipt projection review",
+        "git diff --check",
         "manual heading/anchor review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -10829,10 +10968,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 134,
+        "False": 136,
         "True": 84
       },
-      "heading_count": 352,
+      "heading_count": 355,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -10848,12 +10987,14 @@
         "Plans/assistant-chat-design.md",
         "Plans/storage-plan.md",
         "future DiscoveryIndex",
+        "future History projection store",
         "future Runtime Artifacts receipt store",
-        "future SSH remote manifest adapter"
+        "future SSH remote manifest adapter",
+        "future taught memory records"
       ],
-      "line_count": 15259,
+      "line_count": 15581,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 218,
+      "plan_unit_count": 220,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -11072,7 +11213,9 @@
         "SP-215",
         "SP-216",
         "SP-217",
-        "SP-218"
+        "SP-218",
+        "SP-219",
+        "SP-220"
       ],
       "reasoning_tiers": [
         "high",
@@ -11082,22 +11225,24 @@
         "execution_boundary",
         "goal_runtime_persistence_owner_gap",
         "goalrun_evidence_persistence_gap",
+        "history_projection_drift",
         "persistence_identity_drift",
         "remote_identity_drift",
         "residual_bridge_overreach",
         "storage_owner_stub_loss",
-        "storage_plan_drift"
+        "storage_plan_drift",
+        "teach_memory_persistence_drift"
       ],
-      "sha256": "2ffbaf5b6281780710a0190fefbed0c7caf5ccaa724557f497351db34de35a50",
+      "sha256": "421f6c197603891ad2daea75dfa54dc5410690606bcfa942bafbca582b8ad632",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 217,
+        "accepted": 219,
         "retired": 1
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 217
+        "requirement": 219
       },
       "validation_surfaces": [
         "Future SSH project with no local checkout test.",
@@ -11106,8 +11251,10 @@
         "Future stale remote cache and wrong-branch invalidation tests.",
         "future Goal Runtime persistence review",
         "future GoalRun storage contract review",
+        "git diff --check",
         "manual storage owner-section review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -11116,9 +11263,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 109,
-        "True": 55
+        "True": 56
       },
-      "heading_count": 285,
+      "heading_count": 287,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -11134,11 +11281,13 @@
         "future DiscoveryService scheduler",
         "future GUI query surfaces",
         "future discover_paths tool route",
-        "future grep/codesearch/Instant Grep routes"
+        "future grep/codesearch/Instant Grep routes",
+        "future see_image tool",
+        "future vision_bridge tool"
       ],
-      "line_count": 11153,
+      "line_count": 11325,
       "path": "Plans/Tools.md",
-      "plan_unit_count": 164,
+      "plan_unit_count": 165,
       "plan_unit_ids": [
         "T-002",
         "T-164",
@@ -11303,7 +11452,8 @@
         "T-160",
         "T-161",
         "T-162",
-        "T-163"
+        "T-163",
+        "T-165"
       ],
       "reasoning_tiers": [
         "high",
@@ -11359,23 +11509,24 @@
         "unsafe_media_download_or_rendering_drift",
         "unsafe_scheme_or_cache_drift",
         "untyped_page_dump_drift",
+        "vision_bridge_tool_drift",
         "web_audit_cache_extras_drift",
         "web_evidence_hidden",
         "web_permission_opacity",
         "web_provider_routing_contract_drift",
         "write_atomicity_drift"
       ],
-      "sha256": "8267963419c1d6b68ad9337379c2f27485848acfa7a831f04b24ac2e178d529b",
+      "sha256": "481b75461ab0575dd3f7655766eab0bf6831b24c313e919502f5c5d0f856df9c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 163,
+        "accepted": 164,
         "retired": 1
       },
       "title": "Adding Tool Support -- Research & Plan",
       "unit_type_counts": {
         "compatibility_disposition": 2,
         "constraint": 1,
-        "requirement": 161
+        "requirement": 162
       },
       "validation_surfaces": [
         "Future Assistant Chat and GUI degraded-state tests.",
@@ -11385,9 +11536,11 @@
         "Future tests proving content_candidate does not bypass grep/codesearch/Instant Grep verification.",
         "PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate",
         "future tool capability discovery tests",
+        "git diff --check",
         "manual Tools heading/anchor review",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates"
@@ -11397,9 +11550,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 20,
-        "True": 79
+        "True": 82
       },
-      "heading_count": 157,
+      "heading_count": 161,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/FinalGUISpec.md",
@@ -11412,12 +11565,15 @@
         "Plans/assistant-chat-design.md",
         "Plans/prd_planning_runtime_contracts.json",
         "Plans/prd_planning_runtime_contracts.schema.json",
+        "future Assistant Chat vision bridge controls",
+        "future History command catalog",
+        "future command palette and guided overlay commands",
         "future command registry",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 7030,
+      "line_count": 7475,
       "path": "Plans/UI_Command_Catalog.md",
-      "plan_unit_count": 99,
+      "plan_unit_count": 102,
       "plan_unit_ids": [
         "UCC-002",
         "UCC-003",
@@ -11517,7 +11673,10 @@
         "UCC-001",
         "UCC-097",
         "UCC-098",
-        "UCC-099"
+        "UCC-099",
+        "UCC-100",
+        "UCC-101",
+        "UCC-102"
       ],
       "reasoning_tiers": [
         "high",
@@ -11526,28 +11685,33 @@
       "risk_classes": [
         "goal_command_owner_gap",
         "gui_command_contract_drift",
+        "history_command_drift",
         "owner_drift",
         "residual_bridge_overreach",
+        "teach_guided_command_drift",
         "ui_command_catalog_drift",
-        "ui_command_compatibility_drift"
+        "ui_command_compatibility_drift",
+        "vision_command_drift"
       ],
-      "sha256": "3cfc0b921c3cb56e27121bd344aa4f018709c97aac6c161a11add1b3e74cf1e9",
+      "sha256": "01b2be7b2f64074f42e44a57c15ae31131e1cb61c81421d48d08ec14811ba2e8",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 98,
+        "accepted": 101,
         "retired": 1
       },
       "title": "UI Command Catalog (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 1,
-        "requirement": 97
+        "requirement": 100
       },
       "validation_surfaces": [
         "Future GUI route migration tests.",
         "Future UI command catalog compatibility review.",
         "future command catalog/wiring review",
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -11631,21 +11795,22 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 25,
+        "False": 26,
         "True": 50
       },
-      "heading_count": 182,
+      "heading_count": 184,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
         "Plans/Models_System.md",
         "Plans/Multi-Account.md",
         "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/usage-feature.md"
+        "Plans/usage-feature.md",
+        "future usage events"
       ],
-      "line_count": 5103,
+      "line_count": 5198,
       "path": "Plans/usage-feature.md",
-      "plan_unit_count": 75,
+      "plan_unit_count": 76,
       "plan_unit_ids": [
         "UF-002",
         "UF-003",
@@ -11721,7 +11886,8 @@
         "UF-073",
         "UF-001",
         "UF-074",
-        "UF-075"
+        "UF-075",
+        "UF-076"
       ],
       "reasoning_tiers": [
         "high",
@@ -11732,22 +11898,25 @@
         "residual_bridge_overreach",
         "retired_gemini_cli_usage_resurrection",
         "usage_feature_drift",
-        "usage_source_confidence_drift"
+        "usage_source_confidence_drift",
+        "vision_usage_attribution_gap"
       ],
-      "sha256": "72e50b74c8a4f580c8769909461a659b2a3c5725dbb2e24220bc1d4a60eb62ee",
+      "sha256": "f36a9f06b8895a1798524dc3927ddc35e21f798849f9dcd5a232fc159dafda39",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 75
+        "accepted": 76
       },
       "title": "Usage Feature -- App/GUI Plan",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "deferred_enhancement": 9,
         "generated_artifact_residual": 1,
-        "requirement": 64
+        "requirement": 65
       },
       "validation_surfaces": [
+        "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
       ]
@@ -12042,7 +12211,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-26T16:50:30Z",
+  "generated_at_utc": "2026-06-27T13:50:04Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -12050,13 +12219,13 @@
     "docs_with_plan_units": 71,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3007,
-      "True": 2221
+      "False": 3020,
+      "True": 2247
     },
-    "plan_unit_count": 5228,
+    "plan_unit_count": 5267,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5043,
+      "accepted": 5082,
       "deferred": 7,
       "retired": 178
     },
@@ -12072,7 +12241,7 @@
       "capability_matrix": 1,
       "compatibility_disposition": 130,
       "compatibility_note": 2,
-      "constraint": 579,
+      "constraint": 580,
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,
@@ -12097,7 +12266,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4328,
+      "requirement": 4363,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -12113,7 +12282,7 @@
       "structural_anchor": 5,
       "surface_default_policy": 1,
       "validation": 3,
-      "validation_criterion": 3,
+      "validation_criterion": 6,
       "validation_rule": 21,
       "variant_contract": 2
     }

@@ -1,6 +1,6 @@
 # Shard Index: Plans/Wiring_Matrix.md
 
-Generated: 2026-06-26T16:51:50Z
+Generated: 2026-06-27T15:16:26Z
 
 Source SHA256: `2616ba11aefb8faf615ec4cf1d46b4e7c42b572feab4fcaf2013b531828a0d8c`
 
