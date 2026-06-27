@@ -1,20 +1,16 @@
 {
-  "schema_id": "pm.bootstrap_open_items.v1",
+  "compile_open_items": [],
+  "deferred_questions": [],
+  "governance_status": "sealed",
+  "last_event_id": "evt-0033",
+  "latest_audit_ref": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_post_repair_audit_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/post_repair_audit_report.json",
   "ledger_id": "pldg-20260626-001-feature-name",
   "notes": "No open product questions, blockers, unclassified candidates, unresolved contradictions, deferred product decisions, or governance-seal items remain. Node readiness remains blocked_compiler_contract_incomplete by design.",
-  "open_questions": [],
   "open_blockers": [],
-  "deferred_questions": [],
-  "unclassified_candidates": [],
-  "unresolved_contradictions": [],
-  "unsealed_governance": [
-    "governance_status=pending_seal after Plans/.plan_index changes; explicit governance seal phase required later.",
-    "Plans/.plan_migration/pds-20260611-002-atomize-planunits validation failed with stale proof hashes and stale live PlanUnit count; explicit migration/governance refresh required later."
-  ],
-  "updated_at_utc": "2026-06-27T15:22:59Z",
-  "last_event_id": "evt-0033",
-  "governance_status": "sealed",
-  "compile_open_items": [],
+  "open_questions": [],
   "post_compile_pending_items": [],
   "remaining_phase_boundaries": [
     {
@@ -23,5 +19,10 @@
       "status": "intentionally_blocked_until_explicit_future_phase",
       "summary": "PlanUnit-to-NodeSeed-to-WorkNode runtime/compiler enablement remains blocked_compiler_contract_incomplete; this governance seal did not create node artifacts."
     }
-  ]
+  ],
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
+  "unsealed_governance": [],
+  "updated_at_utc": "2026-06-27T16:11:50Z"
 }

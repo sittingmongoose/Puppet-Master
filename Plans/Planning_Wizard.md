@@ -1202,7 +1202,6 @@ gui_related: false
 gui_classification_reason: Defines Planning Wizard output/history record obligations; GUI presentation is owned
   by Orchestrator History.
 depends_on:
-- OP-026
 - SP-219
 unblocks:
 - OP-026

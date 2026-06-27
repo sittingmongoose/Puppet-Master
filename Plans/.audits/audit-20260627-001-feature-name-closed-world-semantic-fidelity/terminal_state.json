@@ -1,0 +1,17 @@
+{
+  "audit_id": "audit-20260627-001-feature-name-closed-world-semantic-fidelity",
+  "baseline_ref": "5432e92e8",
+  "effective_terminal_report": "post_repair_audit_report.json",
+  "historical_audit_report": "audit_report.json",
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "matrix_status_counts": {
+    "repaired": 5
+  },
+  "observation_ref": "HEAD",
+  "open_repair_required_count": 0,
+  "original_repair_required_count": 5,
+  "schema_id": "pm.audit_terminal_state.v1",
+  "subject_ref": "c3416e738",
+  "terminal_repair_state": "repair_validated",
+  "updated_at_utc": "2026-06-27T16:07:47Z"
+}

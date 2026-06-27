@@ -6291,7 +6291,6 @@ gui_classification_reason: Image input/media capability truth affects user-visib
   model route availability.
 depends_on:
 - MS-116
-- T-165
 unblocks:
 - PP-055
 - ATS-013

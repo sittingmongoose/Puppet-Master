@@ -1,28 +1,15 @@
 {
-  "schema_id": "pm.bootstrap_ledger_handoff.v1",
-  "ledger_id": "pldg-20260626-001-feature-name",
   "current_phase": "compiled_to_plans_governance_sealed",
-  "phase": "compiled_to_plans_governance_sealed",
-  "governance_status": "sealed",
-  "last_event_id": "evt-0033",
-  "last_completed_action": "Governance seal completed with migration proof, shards, evidence, Spec_Lock, plan graph/evidence validation, auto-decision validation, PlanUnit index validation, run-gates, shard check, and git diff hygiene passing.",
-  "last_known_good_state": "Compiled ledger is governance sealed. Canonical Plans, allowed PlanUnit indexes, configured shards, evidence bundles, Spec_Lock, and migration proof artifacts are synchronized. node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, or production build tasks were created.",
-  "latest_audit_ref": null,
-  "latest_audit_status": null,
-  "next_action": "No governance action remains for this seal phase. Future build/code work still requires an explicit runtime/compiler enablement phase.",
-  "next_safe_action": "Proceed only to a separately requested audit, implementation-planning, or runtime/compiler enablement phase; do not create NodeSeeds, WorkNodes, executable queues, or implementation files from this seal.",
   "cursor": {
-    "last_event_id": "evt-0033",
     "last_decision_id": "dec-0024",
+    "last_event_id": "evt-0033",
     "last_question_id": "q-0029",
-    "next_event_id": "evt-0034",
-    "next_decision_id": "dec-0025",
-    "next_question_id": "q-0030",
+    "next_action": "No governance action remains for this seal phase. Future build/code work still requires an explicit runtime/compiler enablement phase.",
     "next_atom_id": "atom-0158",
-    "next_action": "No governance action remains for this seal phase. Future build/code work still requires an explicit runtime/compiler enablement phase."
+    "next_decision_id": "dec-0025",
+    "next_event_id": "evt-0034",
+    "next_question_id": "q-0030"
   },
-  "open_questions": [],
-  "open_blockers": [],
   "deferred_questions": [],
   "do_not_redo": [
     "Do not create a second ledger unless Jared explicitly asks for a fresh ledger.",
@@ -47,37 +34,70 @@
     "Do not reopen product questions merely because compile/readiness evidence is pending.",
     "Do not emit source-lineage, concept-reference, duplicate, or superseded risk atoms as standalone active product PlanUnits during future compile."
   ],
-  "updated_at_utc": "2026-06-27T15:23:35Z",
+  "governance_status": "sealed",
+  "last_completed_action": "Governance seal completed with migration proof, shards, evidence, Spec_Lock, plan graph/evidence validation, auto-decision validation, PlanUnit index validation, run-gates, shard check, and git diff hygiene passing.",
+  "last_event_id": "evt-0033",
+  "last_known_good_state": "Compiled ledger is governance sealed. Canonical Plans, allowed PlanUnit indexes, configured shards, evidence bundles, Spec_Lock, and migration proof artifacts are synchronized. node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, or production build tasks were created.",
+  "latest_audit_ref": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_post_repair_audit_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "next_action": "No governance action remains for this seal phase. Future build/code work still requires an explicit runtime/compiler enablement phase.",
+  "next_safe_action": "Proceed only to a separately requested audit, implementation-planning, or runtime/compiler enablement phase; do not create NodeSeeds, WorkNodes, executable queues, or implementation files from this seal.",
+  "open_blockers": [],
+  "open_questions": [],
+  "phase": "compiled_to_plans_governance_sealed",
+  "schema_id": "pm.bootstrap_ledger_handoff.v1",
+  "updated_at_utc": "2026-06-27T16:11:50Z",
   "validation_state": {
-    "plan_index_generate": "pass",
     "bootstrap_ledger_validator": "pass",
+    "git_diff_check": "pass",
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "last_validated_at_utc": "2026-06-27T15:23:35Z",
+    "ledger_health": "pass_governance_sealed",
+    "plan_index_generate": "pass",
     "pm_plan_index_validate": "pass",
     "pm_plan_migration_validate": "pass",
-    "git_diff_check": "pass",
-    "governance_status": "sealed",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_shard_plans_check": "pass",
+    "validate_auto_decisions": "pass",
+    "validate_evidence": "pass",
     "validator_results": {
-      "plan_migration_validate": {
-        "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "bootstrap_ledger_validate": {
+        "atoms": 157,
+        "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+        "compile_queue_items": 1,
+        "plan_units_checked": 2673,
         "status": "pass"
-      },
-      "plan_index_validate": {
-        "command": "python3 scripts/pm-plan-index.py validate",
-        "status": "pass",
-        "plan_unit_count": 5267,
-        "acceptance_unit_count": 18824,
-        "coverage_status": "pass",
-        "node_readiness_status": "blocked_compiler_contract_incomplete"
       },
       "bootstrap_ledger_validate_20260610": {
         "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
         "status": "pass"
       },
-      "bootstrap_ledger_validate": {
-        "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
-        "status": "pass",
-        "atoms": 157,
-        "compile_queue_items": 1,
-        "plan_units_checked": 2673
+      "git_diff_check": {
+        "command": "git diff --check",
+        "status": "pass"
+      },
+      "node_readiness_boundary": {
+        "artifact": "Plans/.plan_index/node_readiness_report.json",
+        "no_worknodes_created": true,
+        "nodeseed_candidates_created": false,
+        "runtime_enablement_status": "runtime_disabled",
+        "status": "blocked_compiler_contract_incomplete"
+      },
+      "plan_index_validate": {
+        "acceptance_unit_count": 18824,
+        "command": "python3 scripts/pm-plan-index.py validate",
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "plan_unit_count": 5267,
+        "status": "pass"
+      },
+      "plan_migration_validate": {
+        "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "status": "pass"
       },
       "pm_plans_verify_run_gates": {
         "command": "python3 scripts/pm-plans-verify.py run-gates",
@@ -85,16 +105,12 @@
       },
       "pm_shard_plans_check": {
         "command": "python3 scripts/pm-shard-plans.py --check",
-        "status": "pass",
+        "shards_checked": 1042,
         "source_count": 56,
-        "shards_checked": 1042
+        "status": "pass"
       },
       "validate_auto_decisions": {
         "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
-        "status": "pass"
-      },
-      "verify_spec_lock": {
-        "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "status": "pass"
       },
       "validate_evidence": {
@@ -105,25 +121,11 @@
         "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
         "status": "pass"
       },
-      "git_diff_check": {
-        "command": "git diff --check",
+      "verify_spec_lock": {
+        "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "status": "pass"
-      },
-      "node_readiness_boundary": {
-        "artifact": "Plans/.plan_index/node_readiness_report.json",
-        "status": "blocked_compiler_contract_incomplete",
-        "runtime_enablement_status": "runtime_disabled",
-        "no_worknodes_created": true,
-        "nodeseed_candidates_created": false
       }
     },
-    "last_validated_at_utc": "2026-06-27T15:23:35Z",
-    "pm_plans_verify_run_gates": "pass",
-    "governance_seal": "passed",
-    "ledger_health": "pass_governance_sealed",
-    "pm_shard_plans_check": "pass",
-    "validate_auto_decisions": "pass",
-    "verify_spec_lock": "pass",
-    "validate_evidence": "pass"
+    "verify_spec_lock": "pass"
   }
 }

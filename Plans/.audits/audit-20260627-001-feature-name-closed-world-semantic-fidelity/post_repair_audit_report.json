@@ -1,0 +1,86 @@
+{
+  "audit_id": "audit-20260627-001-feature-name-closed-world-semantic-fidelity",
+  "baseline_ref": "5432e92e8",
+  "changed_plan_unit_ids": [
+    "CV-295",
+    "CV-296",
+    "CV-297",
+    "MGAC-099",
+    "MS-116",
+    "MS-117",
+    "PP-055",
+    "PP-056",
+    "PS-121",
+    "PS-122",
+    "F2-192",
+    "ACD-426",
+    "CS-053",
+    "G-026",
+    "P-055",
+    "UCC-102",
+    "PRDB-010",
+    "PWIZ-016"
+  ],
+  "closure_rows": 5,
+  "closure_status_counts": {
+    "repaired": 5
+  },
+  "dependency_summary": {
+    "build_order_available": false,
+    "introduced_cycle_components_remaining": 0,
+    "remaining_cycle_components": "pre-existing baseline cycles only",
+    "true_cycle_component_count": 3
+  },
+  "forbidden_artifacts": {
+    "implementation_files_created": false,
+    "legacy_iced_app_recreated": false,
+    "nodeseeds_created": false,
+    "queues_or_manifests_created": false,
+    "worknodes_created": false
+  },
+  "generated_at_utc": "2026-06-27T16:17:43Z",
+  "governance_sealed": true,
+  "impact_rows": 5,
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "non_actionable_warnings": [
+    {
+      "finding_family": "node_readiness_boundary_warning",
+      "repair_required": false,
+      "status": "warning",
+      "summary": "Node readiness remains blocked_compiler_contract_incomplete by design; no WorkNodes or NodeSeeds were created."
+    }
+  ],
+  "notes": [
+    "Audit report remains historical BLOCKED input; post_repair_audit_report.json is the effective terminal report.",
+    "Closure validation is scoped to semantic_risks.jsonl because the audit closure matrix covers every and only original repair_required=true finding from audit_report."
+  ],
+  "observation_ref": "HEAD",
+  "original_repair_required_count": 5,
+  "repair_required_count": 0,
+  "schema_id": "pm.post_repair_audit_report.v1",
+  "scope_coverage": {
+    "coverage_percent": 100.0,
+    "covered_rows": 6176,
+    "total_rows": 6176
+  },
+  "scope_manifest_rows": 6176,
+  "status": "PASS_WITH_WARNINGS",
+  "subject_ref": "c3416e738",
+  "terminal_repair_state": "repair_validated",
+  "validator_results": {
+    "git diff --check": "pass",
+    "pm-audit-closure validate registry": "pass",
+    "pm-audit-closure validate required matrix semantic_risks": "pass",
+    "pm-bootstrap-ledger-validate": "pass",
+    "pm-plan-index validate": "pass",
+    "pm-plan-migration validate": "pass",
+    "pm-plans-verify run-gates": "pass",
+    "pm-plans-verify validate-auto-decisions": "pass",
+    "pm-plans-verify validate-evidence": "pass",
+    "pm-plans-verify validate-plan-graph": "pass",
+    "pm-plans-verify verify-spec-lock": "pass",
+    "pm-shard-plans --check": "pass",
+    "python3 -m py_compile scripts/pm-audit-closure.py": "pass",
+    "test suite discovery": "not_found"
+  }
+}

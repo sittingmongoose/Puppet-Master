@@ -3589,7 +3589,6 @@ canonical_text: Teach/Teacher can be summoned through /teach, help icon launches
 gui_related: true
 gui_classification_reason: Defines user-facing /teach and natural-language invocation routes into Assistant Chat.
 depends_on:
-- ACD-426
 - UCC-102
 unblocks:
 - ATS-014

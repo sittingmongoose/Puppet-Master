@@ -7806,7 +7806,6 @@ gui_related: true
 gui_classification_reason: Requested/effective provider/model/account states are user-visible model-route disclosure
   for image understanding.
 depends_on:
-- MGAC-099
 - PS-121
 unblocks:
 - T-165
@@ -7898,7 +7897,6 @@ gui_related: true
 gui_classification_reason: Defines visible settings, model chips, fallback states, and requested/effective model
   disclosure for Teach/Teacher.
 depends_on:
-- ACD-426
 - P-055
 unblocks:
 - ATS-014

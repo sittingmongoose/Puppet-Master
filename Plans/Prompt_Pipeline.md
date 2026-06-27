@@ -3544,7 +3544,6 @@ gui_related: true
 gui_classification_reason: The structured image-derived output is user-visible and governs screenshot/image context
   passed into chat.
 depends_on:
-- T-165
 - CV-296
 - F2-192
 - PS-121
@@ -3705,7 +3704,6 @@ gui_classification_reason: Source ordering, confidence, and no-guessing are prom
   presentation; GUI disclosure is owned elsewhere.
 depends_on:
 - P-055
-- G-026
 unblocks:
 - ACD-426
 - ATS-014

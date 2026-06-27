@@ -48,6 +48,11 @@
     "generated governance artifacts before explicit governance seal"
   ],
   "governance_status": "sealed",
+  "last_event_id": "evt-0033",
+  "latest_audit_ref": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_post_repair_audit_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/post_repair_audit_report.json",
   "ledger_id": "pldg-20260626-001-feature-name",
   "ledger_profile": "bootstrap_planning",
   "must_not_read_by_default": [
@@ -57,6 +62,8 @@
     "**/working_ledger.md"
   ],
   "next_action": "Governance seal complete; no WorkNodes, NodeSeeds, executable queues, or implementation files are authorized by this phase.",
+  "next_safe_action": "Future implementation/runtime compiler work requires a new explicit phase.",
+  "phase": "compiled_to_plans_governance_sealed",
   "required_end_of_turn_actions": [
     "append_turn_event",
     "upsert_design_atoms",
@@ -66,14 +73,11 @@
     "preserve_node_readiness_boundary"
   ],
   "schema_id": "pm.operating_capsule.v1",
-  "updated_at_utc": "2026-06-27T15:22:59Z",
-  "last_event_id": "evt-0033",
-  "phase": "compiled_to_plans_governance_sealed",
-  "next_safe_action": "Future implementation/runtime compiler work requires a new explicit phase.",
+  "updated_at_utc": "2026-06-27T16:11:50Z",
   "validation_state": {
     "governance_seal": "passed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
     "pm_plans_verify_run_gates": "pass",
-    "pm_shard_plans_check": "pass",
-    "node_readiness_status": "blocked_compiler_contract_incomplete"
+    "pm_shard_plans_check": "pass"
   }
 }

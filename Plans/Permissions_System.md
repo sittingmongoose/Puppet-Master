@@ -8035,9 +8035,7 @@ canonical_text: Before PM sends a local image or screenshot to a separate vision
 gui_related: true
 gui_classification_reason: Defines the user-visible disclosure popup, reject/accept/always-accept choices, settings
   visibility, and revocation UI.
-depends_on:
-- T-165
-- CV-296
+depends_on: []
 unblocks:
 - RAP-035
 - ACD-425
@@ -8173,7 +8171,6 @@ canonical_text: Teacher can guide GUI use through safe route, highlight, focus, 
 gui_related: true
 gui_classification_reason: Defines visible confirmation and permission gates for Teacher-guided GUI actions.
 depends_on:
-- UCC-102
 - CV-297
 unblocks:
 - ATS-014

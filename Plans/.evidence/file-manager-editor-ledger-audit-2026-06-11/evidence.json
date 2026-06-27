@@ -18,7 +18,7 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "c6a98dbe8c9684899fa5f3b6df6b91cb80965cf71830601a761ee1ea7120e36d"
+      "sha256": "cc6013f655c75c10f90afbbe0a02c784c61c46c6451cdeebb9dff294cdc037cd"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "3c07fabe8302b4a66018120e99cce703fd5af0cb39d52a706a250761cca71a98"
+      "sha256": "fe92c553d42dcb18a65b4af1eaddc8c80972d7ef65f92403c3aecd0d0b3ee43a"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -84,7 +84,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "Plan index generate/validate passed with plan_unit_count=5197, acceptance_unit_count=18558, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
+      "details": "PASS: 5267 PlanUnits, 18824 acceptance units, coverage pass, node readiness blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -194,7 +194,7 @@
     {
       "name": "shard-check",
       "result": "PASS",
-      "details": "Configured shards regenerated from 56 sources and 1008 shards."
+      "details": "PASS: 56 configured docs and 1042 shards checked with no failures after regeneration."
     },
     {
       "name": "node-readiness-boundary",
@@ -205,6 +205,11 @@
       "name": "audit-20260623-002-fff-schema-registry-repair",
       "result": "PASS",
       "details": "CV-291 now owns atom-0076's exact DiscoveryService value registry; T-161 now consumes CV-291 instead of a ledger precision-contract dependency."
+    },
+    {
+      "name": "plan-migration-validate",
+      "result": "PASS",
+      "details": "PASS: pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary for pldg-20260626-001-feature-name."
     }
   ],
   "commands_run": [
@@ -308,7 +313,7 @@
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     },
     {
-      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
       "exit_code": 0
     },
     {
@@ -320,7 +325,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
       "exit_code": 0
     },
     {

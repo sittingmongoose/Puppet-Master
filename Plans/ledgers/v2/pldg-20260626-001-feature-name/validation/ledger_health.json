@@ -1,25 +1,5 @@
 {
-  "schema_id": "pm.bootstrap_ledger_health.v1",
-  "ledger_id": "pldg-20260626-001-feature-name",
-  "status": "pass_governance_sealed",
-  "summary": {
-    "events": 33,
-    "design_atoms": 157,
-    "decisions": 24,
-    "questions": 29,
-    "corrections": 5,
-    "blockers": 0,
-    "candidate_atoms": 0,
-    "not_for_plan_atoms": 31,
-    "open_questions": 0,
-    "open_blockers": 0,
-    "deferred_questions": 0,
-    "compile_queue_items": 1,
-    "compiled_atoms": 126,
-    "compiled_plan_units": 39,
-    "governance_status": "sealed",
-    "governance_seal": "passed"
-  },
+  "blocking_defects": [],
   "checks": [
     {
       "check_id": "init-0001",
@@ -87,101 +67,41 @@
       "summary": "Governance seal completed; migration proof, shards, evidence, Spec_Lock, run-gates, shard check, auto-decisions, evidence, plan graph, and diff hygiene pass while node readiness remains blocked_compiler_contract_incomplete."
     }
   ],
-  "blocking_defects": [],
-  "warnings": [
-    "Node readiness remains blocked_compiler_contract_incomplete by design; the WorkNode compiler/runtime enablement phase has not been opened.",
-    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
-  ],
-  "notes": "Governance seal complete for the miscellaneous PM History, PM-native vision_bridge / see_image, and Teach/Teacher compile. Migration proof, configured shards, evidence bundles, Spec_Lock, plan graph/evidence validation, auto-decision validation, PlanUnit index validation, run-gates, shard check, and git diff hygiene pass.",
-  "last_validated_at_utc": "2026-06-27T15:23:35Z",
-  "updated_at_utc": "2026-06-27T15:23:35Z",
-  "validator_results": {
-    "plan_migration_validate": {
-      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-      "status": "pass"
-    },
-    "plan_index_validate": {
-      "command": "python3 scripts/pm-plan-index.py validate",
-      "status": "pass",
-      "plan_unit_count": 5267,
-      "acceptance_unit_count": 18824,
-      "coverage_status": "pass",
-      "node_readiness_status": "blocked_compiler_contract_incomplete"
-    },
-    "bootstrap_ledger_validate_20260610": {
-      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
-      "status": "pass"
-    },
-    "bootstrap_ledger_validate": {
-      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
-      "status": "pass",
-      "atoms": 157,
-      "compile_queue_items": 1,
-      "plan_units_checked": 2673
-    },
-    "pm_plans_verify_run_gates": {
-      "command": "python3 scripts/pm-plans-verify.py run-gates",
-      "status": "pass"
-    },
-    "pm_shard_plans_check": {
-      "command": "python3 scripts/pm-shard-plans.py --check",
-      "status": "pass",
-      "source_count": 56,
-      "shards_checked": 1042
-    },
-    "validate_auto_decisions": {
-      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
-      "status": "pass"
-    },
-    "verify_spec_lock": {
-      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
-      "status": "pass"
-    },
-    "validate_evidence": {
-      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
-      "status": "pass"
-    },
-    "validate_plan_graph": {
-      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
-      "status": "pass"
-    },
-    "git_diff_check": {
-      "command": "git diff --check",
-      "status": "pass"
-    },
-    "node_readiness_boundary": {
-      "artifact": "Plans/.plan_index/node_readiness_report.json",
-      "status": "blocked_compiler_contract_incomplete",
-      "runtime_enablement_status": "runtime_disabled",
-      "no_worknodes_created": true,
-      "nodeseed_candidates_created": false
-    }
-  },
-  "last_event_id": "evt-0033",
   "external_validation_results": {
     "governance_seal": {
-      "plan_migration_validate": {
-        "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "bootstrap_ledger_validate": {
+        "atoms": 157,
+        "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+        "compile_queue_items": 1,
+        "plan_units_checked": 2673,
         "status": "pass"
-      },
-      "plan_index_validate": {
-        "command": "python3 scripts/pm-plan-index.py validate",
-        "status": "pass",
-        "plan_unit_count": 5267,
-        "acceptance_unit_count": 18824,
-        "coverage_status": "pass",
-        "node_readiness_status": "blocked_compiler_contract_incomplete"
       },
       "bootstrap_ledger_validate_20260610": {
         "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
         "status": "pass"
       },
-      "bootstrap_ledger_validate": {
-        "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
-        "status": "pass",
-        "atoms": 157,
-        "compile_queue_items": 1,
-        "plan_units_checked": 2673
+      "git_diff_check": {
+        "command": "git diff --check",
+        "status": "pass"
+      },
+      "node_readiness_boundary": {
+        "artifact": "Plans/.plan_index/node_readiness_report.json",
+        "no_worknodes_created": true,
+        "nodeseed_candidates_created": false,
+        "runtime_enablement_status": "runtime_disabled",
+        "status": "blocked_compiler_contract_incomplete"
+      },
+      "plan_index_validate": {
+        "acceptance_unit_count": 18824,
+        "command": "python3 scripts/pm-plan-index.py validate",
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "plan_unit_count": 5267,
+        "status": "pass"
+      },
+      "plan_migration_validate": {
+        "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "status": "pass"
       },
       "pm_plans_verify_run_gates": {
         "command": "python3 scripts/pm-plans-verify.py run-gates",
@@ -189,16 +109,12 @@
       },
       "pm_shard_plans_check": {
         "command": "python3 scripts/pm-shard-plans.py --check",
-        "status": "pass",
+        "shards_checked": 1042,
         "source_count": 56,
-        "shards_checked": 1042
+        "status": "pass"
       },
       "validate_auto_decisions": {
         "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
-        "status": "pass"
-      },
-      "verify_spec_lock": {
-        "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "status": "pass"
       },
       "validate_evidence": {
@@ -209,17 +125,105 @@
         "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
         "status": "pass"
       },
-      "git_diff_check": {
-        "command": "git diff --check",
+      "verify_spec_lock": {
+        "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "status": "pass"
-      },
-      "node_readiness_boundary": {
-        "artifact": "Plans/.plan_index/node_readiness_report.json",
-        "status": "blocked_compiler_contract_incomplete",
-        "runtime_enablement_status": "runtime_disabled",
-        "no_worknodes_created": true,
-        "nodeseed_candidates_created": false
       }
     }
-  }
+  },
+  "last_event_id": "evt-0033",
+  "last_validated_at_utc": "2026-06-27T15:23:35Z",
+  "latest_audit_ref": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
+  "latest_post_repair_audit_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "ledger_id": "pldg-20260626-001-feature-name",
+  "notes": "Governance seal and post-repair semantic closure are complete for the miscellaneous PM History, PM-native vision_bridge / see_image, and Teach/Teacher compile. Migration proof, configured shards, evidence bundles, Spec_Lock, plan graph/evidence validation, auto-decision validation, PlanUnit index validation, run-gates, shard check, closure validation, and git diff hygiene pass.",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_governance_sealed",
+  "summary": {
+    "blockers": 0,
+    "candidate_atoms": 0,
+    "compile_queue_items": 1,
+    "compiled_atoms": 126,
+    "compiled_plan_units": 39,
+    "corrections": 5,
+    "decisions": 24,
+    "deferred_questions": 0,
+    "design_atoms": 157,
+    "events": 33,
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "not_for_plan_atoms": 31,
+    "open_blockers": 0,
+    "open_questions": 0,
+    "questions": 29
+  },
+  "updated_at_utc": "2026-06-27T16:11:50Z",
+  "validator_results": {
+    "bootstrap_ledger_validate": {
+      "atoms": 157,
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "compile_queue_items": 1,
+      "plan_units_checked": 2673,
+      "status": "pass"
+    },
+    "bootstrap_ledger_validate_20260610": {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "status": "pass"
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "status": "pass"
+    },
+    "node_readiness_boundary": {
+      "artifact": "Plans/.plan_index/node_readiness_report.json",
+      "no_worknodes_created": true,
+      "nodeseed_candidates_created": false,
+      "runtime_enablement_status": "runtime_disabled",
+      "status": "blocked_compiler_contract_incomplete"
+    },
+    "plan_index_validate": {
+      "acceptance_unit_count": 18824,
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_compiler_contract_incomplete",
+      "plan_unit_count": 5267,
+      "status": "pass"
+    },
+    "plan_migration_validate": {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass"
+    },
+    "pm_plans_verify_run_gates": {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass"
+    },
+    "pm_shard_plans_check": {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "shards_checked": 1042,
+      "source_count": 56,
+      "status": "pass"
+    },
+    "validate_auto_decisions": {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass"
+    },
+    "validate_evidence": {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass"
+    },
+    "validate_plan_graph": {
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "status": "pass"
+    },
+    "verify_spec_lock": {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass"
+    }
+  },
+  "warnings": [
+    "Node readiness remains blocked_compiler_contract_incomplete by design; the WorkNode compiler/runtime enablement phase has not been opened.",
+    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or final node queues were created."
+  ]
 }
