@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1184-L1335
+Source lines: L1184-L1334
 
-Source SHA256: `77bc16723459f442900e0f709acae2b1d95ac4b13a5711feb134fa5144d33b13`
+Source SHA256: `87dab21b491a7760cffba73c44215e5d9a5515cfffc7d67de71bbd76f6d8481a`
 
 ---
 
@@ -29,7 +29,6 @@ gui_related: false
 gui_classification_reason: Defines Planning Wizard output/history record obligations; GUI presentation is owned
   by Orchestrator History.
 depends_on:
-- OP-026
 - SP-219
 unblocks:
 - OP-026

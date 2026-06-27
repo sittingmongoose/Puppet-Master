@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L22506-L22881
+Source lines: L22506-L22880
 
-Source SHA256: `e81a1b2254c51808535a1a8c94fda81112f74a0bf6245577b79295469a8f96fc`
+Source SHA256: `4b3ec1fa89dfb260e10c32ff9d6033e8f31300ba37072e4951a0abd7dd87179b`
 
 ---
 
@@ -166,7 +166,6 @@ depends_on:
 - P-055
 - MS-117
 - PP-056
-- F3-403
 unblocks:
 - G-026
 - ATS-014

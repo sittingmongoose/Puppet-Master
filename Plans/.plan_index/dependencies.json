@@ -35,23 +35,6 @@
       ]
     },
     {
-      "plan_unit_id": "ACD-425",
-      "remaining_depends_on": [
-        "RAP-035",
-        "T-165",
-        "UCC-101"
-      ]
-    },
-    {
-      "plan_unit_id": "ACD-426",
-      "remaining_depends_on": [
-        "F3-403",
-        "MS-117",
-        "P-055",
-        "PP-056"
-      ]
-    },
-    {
       "plan_unit_id": "ATS-011",
       "remaining_depends_on": [
         "ACD-422",
@@ -72,64 +55,9 @@
       ]
     },
     {
-      "plan_unit_id": "ATS-012",
-      "remaining_depends_on": [
-        "OP-027",
-        "SP-219"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-013",
-      "remaining_depends_on": [
-        "ACD-425",
-        "PP-055",
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-014",
-      "remaining_depends_on": [
-        "ACD-426",
-        "F3-403",
-        "G-026",
-        "MS-117",
-        "P-055",
-        "PP-056",
-        "UCC-102"
-      ]
-    },
-    {
-      "plan_unit_id": "CS-053",
-      "remaining_depends_on": [
-        "ACD-426",
-        "UCC-102"
-      ]
-    },
-    {
       "plan_unit_id": "CV-291",
       "remaining_depends_on": [
         "T-161"
-      ]
-    },
-    {
-      "plan_unit_id": "CV-295",
-      "remaining_depends_on": [
-        "SP-219"
-      ]
-    },
-    {
-      "plan_unit_id": "CV-296",
-      "remaining_depends_on": [
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "CV-297",
-      "remaining_depends_on": [
-        "ACD-426",
-        "PP-056"
       ]
     },
     {
@@ -157,13 +85,6 @@
       ]
     },
     {
-      "plan_unit_id": "F2-192",
-      "remaining_depends_on": [
-        "PP-055",
-        "PS-121"
-      ]
-    },
-    {
       "plan_unit_id": "F3-399",
       "remaining_depends_on": [
         "CV-291",
@@ -181,61 +102,12 @@
       ]
     },
     {
-      "plan_unit_id": "F3-402",
-      "remaining_depends_on": [
-        "ACD-425"
-      ]
-    },
-    {
-      "plan_unit_id": "F3-403",
-      "remaining_depends_on": [
-        "ACD-426",
-        "G-026",
-        "UCC-102"
-      ]
-    },
-    {
-      "plan_unit_id": "G-026",
-      "remaining_depends_on": [
-        "ACD-426",
-        "PP-056"
-      ]
-    },
-    {
       "plan_unit_id": "GI-033",
       "remaining_depends_on": [
         "F2-191",
         "PS-118",
         "SP-218",
         "W-074"
-      ]
-    },
-    {
-      "plan_unit_id": "MGAC-099",
-      "remaining_depends_on": [
-        "MS-116",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "MS-116",
-      "remaining_depends_on": [
-        "MGAC-099",
-        "PS-121"
-      ]
-    },
-    {
-      "plan_unit_id": "MS-117",
-      "remaining_depends_on": [
-        "ACD-426",
-        "P-055"
-      ]
-    },
-    {
-      "plan_unit_id": "OP-027",
-      "remaining_depends_on": [
-        "CV-295",
-        "SP-219"
       ]
     },
     {
@@ -248,12 +120,6 @@
       ]
     },
     {
-      "plan_unit_id": "P-055",
-      "remaining_depends_on": [
-        "ACD-426"
-      ]
-    },
-    {
       "plan_unit_id": "PNC-020",
       "remaining_depends_on": [
         "OSI-429",
@@ -261,38 +127,9 @@
       ]
     },
     {
-      "plan_unit_id": "PO-049",
-      "remaining_depends_on": [
-        "T-165"
-      ]
-    },
-    {
       "plan_unit_id": "POA-050",
       "remaining_depends_on": [
         "RAP-033"
-      ]
-    },
-    {
-      "plan_unit_id": "POA-051",
-      "remaining_depends_on": [
-        "CV-295",
-        "OP-027"
-      ]
-    },
-    {
-      "plan_unit_id": "PP-055",
-      "remaining_depends_on": [
-        "CV-296",
-        "F2-192",
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "PP-056",
-      "remaining_depends_on": [
-        "G-026",
-        "P-055"
       ]
     },
     {
@@ -305,36 +142,9 @@
       ]
     },
     {
-      "plan_unit_id": "PRDB-010",
-      "remaining_depends_on": [
-        "SP-219"
-      ]
-    },
-    {
       "plan_unit_id": "PS-118",
       "remaining_depends_on": [
         "F2-191"
-      ]
-    },
-    {
-      "plan_unit_id": "PS-120",
-      "remaining_depends_on": [
-        "OP-027",
-        "POA-051"
-      ]
-    },
-    {
-      "plan_unit_id": "PS-121",
-      "remaining_depends_on": [
-        "CV-296",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "PS-122",
-      "remaining_depends_on": [
-        "CV-297",
-        "UCC-102"
       ]
     },
     {
@@ -344,12 +154,6 @@
         "F3-399",
         "SP-217",
         "T-161"
-      ]
-    },
-    {
-      "plan_unit_id": "PWIZ-016",
-      "remaining_depends_on": [
-        "SP-219"
       ]
     },
     {
@@ -369,28 +173,6 @@
       ]
     },
     {
-      "plan_unit_id": "RAP-034",
-      "remaining_depends_on": [
-        "POA-051",
-        "SP-219"
-      ]
-    },
-    {
-      "plan_unit_id": "RAP-035",
-      "remaining_depends_on": [
-        "CV-296",
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "RAP-036",
-      "remaining_depends_on": [
-        "ACD-426",
-        "CV-297"
-      ]
-    },
-    {
       "plan_unit_id": "SP-217",
       "remaining_depends_on": [
         "T-160"
@@ -403,18 +185,6 @@
         "PS-118",
         "SP-217",
         "W-074"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-219",
-      "remaining_depends_on": [
-        "CV-295"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-220",
-      "remaining_depends_on": [
-        "ACD-426"
       ]
     },
     {
@@ -446,52 +216,11 @@
       ]
     },
     {
-      "plan_unit_id": "T-165",
-      "remaining_depends_on": [
-        "MGAC-099",
-        "MS-116",
-        "PP-055",
-        "PS-121"
-      ]
-    },
-    {
       "plan_unit_id": "UCC-099",
       "remaining_depends_on": [
         "F3-399",
         "SP-217",
         "T-160"
-      ]
-    },
-    {
-      "plan_unit_id": "UCC-100",
-      "remaining_depends_on": [
-        "CV-295",
-        "OP-027",
-        "PS-120"
-      ]
-    },
-    {
-      "plan_unit_id": "UCC-101",
-      "remaining_depends_on": [
-        "PS-121",
-        "RAP-035",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "UCC-102",
-      "remaining_depends_on": [
-        "ACD-426",
-        "CS-053",
-        "F3-403",
-        "PS-122"
-      ]
-    },
-    {
-      "plan_unit_id": "UF-076",
-      "remaining_depends_on": [
-        "MS-116",
-        "RAP-035"
       ]
     },
     {
@@ -514,45 +243,9 @@
       ]
     },
     {
-      "plan_unit_id": "ACD-426",
-      "remaining_depends_on": [
-        "F3-403",
-        "MS-117",
-        "P-055",
-        "PP-056"
-      ]
-    },
-    {
-      "plan_unit_id": "CS-053",
-      "remaining_depends_on": [
-        "ACD-426",
-        "UCC-102"
-      ]
-    },
-    {
       "plan_unit_id": "CV-291",
       "remaining_depends_on": [
         "T-161"
-      ]
-    },
-    {
-      "plan_unit_id": "CV-295",
-      "remaining_depends_on": [
-        "SP-219"
-      ]
-    },
-    {
-      "plan_unit_id": "CV-296",
-      "remaining_depends_on": [
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "CV-297",
-      "remaining_depends_on": [
-        "ACD-426",
-        "PP-056"
       ]
     },
     {
@@ -563,94 +256,15 @@
       ]
     },
     {
-      "plan_unit_id": "F2-192",
-      "remaining_depends_on": [
-        "PP-055",
-        "PS-121"
-      ]
-    },
-    {
-      "plan_unit_id": "F3-403",
-      "remaining_depends_on": [
-        "ACD-426",
-        "G-026",
-        "UCC-102"
-      ]
-    },
-    {
-      "plan_unit_id": "G-026",
-      "remaining_depends_on": [
-        "ACD-426",
-        "PP-056"
-      ]
-    },
-    {
-      "plan_unit_id": "MGAC-099",
-      "remaining_depends_on": [
-        "MS-116",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "MS-116",
-      "remaining_depends_on": [
-        "MGAC-099",
-        "PS-121"
-      ]
-    },
-    {
-      "plan_unit_id": "MS-117",
-      "remaining_depends_on": [
-        "ACD-426",
-        "P-055"
-      ]
-    },
-    {
-      "plan_unit_id": "P-055",
-      "remaining_depends_on": [
-        "ACD-426"
-      ]
-    },
-    {
       "plan_unit_id": "POA-050",
       "remaining_depends_on": [
         "RAP-033"
       ]
     },
     {
-      "plan_unit_id": "PP-055",
-      "remaining_depends_on": [
-        "CV-296",
-        "F2-192",
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "PP-056",
-      "remaining_depends_on": [
-        "G-026",
-        "P-055"
-      ]
-    },
-    {
       "plan_unit_id": "PS-118",
       "remaining_depends_on": [
         "F2-191"
-      ]
-    },
-    {
-      "plan_unit_id": "PS-121",
-      "remaining_depends_on": [
-        "CV-296",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "PS-122",
-      "remaining_depends_on": [
-        "CV-297",
-        "UCC-102"
       ]
     },
     {
@@ -666,12 +280,6 @@
         "PS-118",
         "SP-217",
         "W-074"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-219",
-      "remaining_depends_on": [
-        "CV-295"
       ]
     },
     {
@@ -695,24 +303,6 @@
       ]
     },
     {
-      "plan_unit_id": "T-165",
-      "remaining_depends_on": [
-        "MGAC-099",
-        "MS-116",
-        "PP-055",
-        "PS-121"
-      ]
-    },
-    {
-      "plan_unit_id": "UCC-102",
-      "remaining_depends_on": [
-        "ACD-426",
-        "CS-053",
-        "F3-403",
-        "PS-122"
-      ]
-    },
-    {
       "plan_unit_id": "W-074",
       "remaining_depends_on": [
         "F2-191",
@@ -725,19 +315,12 @@
     {
       "component_id": "cycle-001",
       "plan_unit_ids": [
-        "CV-295",
-        "SP-219"
-      ]
-    },
-    {
-      "component_id": "cycle-002",
-      "plan_unit_ids": [
         "POA-050",
         "RAP-033"
       ]
     },
     {
-      "component_id": "cycle-003",
+      "component_id": "cycle-002",
       "plan_unit_ids": [
         "F2-191",
         "PS-118",
@@ -746,40 +329,13 @@
       ]
     },
     {
-      "component_id": "cycle-004",
+      "component_id": "cycle-003",
       "plan_unit_ids": [
         "0PI-060",
         "CV-291",
         "T-160",
         "T-161",
         "T-162"
-      ]
-    },
-    {
-      "component_id": "cycle-005",
-      "plan_unit_ids": [
-        "CV-296",
-        "F2-192",
-        "MGAC-099",
-        "MS-116",
-        "PP-055",
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "component_id": "cycle-006",
-      "plan_unit_ids": [
-        "ACD-426",
-        "CS-053",
-        "CV-297",
-        "F3-403",
-        "G-026",
-        "MS-117",
-        "P-055",
-        "PP-056",
-        "PS-122",
-        "UCC-102"
       ]
     }
   ],
@@ -809,14 +365,6 @@
       ]
     },
     {
-      "plan_unit_id": "ACD-425",
-      "remaining_depends_on": [
-        "RAP-035",
-        "T-165",
-        "UCC-101"
-      ]
-    },
-    {
       "plan_unit_id": "ATS-011",
       "remaining_depends_on": [
         "ACD-422",
@@ -834,34 +382,6 @@
         "T-161",
         "T-162",
         "T-163"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-012",
-      "remaining_depends_on": [
-        "OP-027",
-        "SP-219"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-013",
-      "remaining_depends_on": [
-        "ACD-425",
-        "PP-055",
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "ATS-014",
-      "remaining_depends_on": [
-        "ACD-426",
-        "F3-403",
-        "G-026",
-        "MS-117",
-        "P-055",
-        "PP-056",
-        "UCC-102"
       ]
     },
     {
@@ -899,25 +419,12 @@
       ]
     },
     {
-      "plan_unit_id": "F3-402",
-      "remaining_depends_on": [
-        "ACD-425"
-      ]
-    },
-    {
       "plan_unit_id": "GI-033",
       "remaining_depends_on": [
         "F2-191",
         "PS-118",
         "SP-218",
         "W-074"
-      ]
-    },
-    {
-      "plan_unit_id": "OP-027",
-      "remaining_depends_on": [
-        "CV-295",
-        "SP-219"
       ]
     },
     {
@@ -937,19 +444,6 @@
       ]
     },
     {
-      "plan_unit_id": "PO-049",
-      "remaining_depends_on": [
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "POA-051",
-      "remaining_depends_on": [
-        "CV-295",
-        "OP-027"
-      ]
-    },
-    {
       "plan_unit_id": "PRDB-009",
       "remaining_depends_on": [
         "F2-191",
@@ -959,31 +453,12 @@
       ]
     },
     {
-      "plan_unit_id": "PRDB-010",
-      "remaining_depends_on": [
-        "SP-219"
-      ]
-    },
-    {
-      "plan_unit_id": "PS-120",
-      "remaining_depends_on": [
-        "OP-027",
-        "POA-051"
-      ]
-    },
-    {
       "plan_unit_id": "PWIZ-015",
       "remaining_depends_on": [
         "F2-191",
         "F3-399",
         "SP-217",
         "T-161"
-      ]
-    },
-    {
-      "plan_unit_id": "PWIZ-016",
-      "remaining_depends_on": [
-        "SP-219"
       ]
     },
     {
@@ -997,37 +472,9 @@
       ]
     },
     {
-      "plan_unit_id": "RAP-034",
-      "remaining_depends_on": [
-        "POA-051",
-        "SP-219"
-      ]
-    },
-    {
-      "plan_unit_id": "RAP-035",
-      "remaining_depends_on": [
-        "CV-296",
-        "PS-121",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "RAP-036",
-      "remaining_depends_on": [
-        "ACD-426",
-        "CV-297"
-      ]
-    },
-    {
       "plan_unit_id": "SP-217",
       "remaining_depends_on": [
         "T-160"
-      ]
-    },
-    {
-      "plan_unit_id": "SP-220",
-      "remaining_depends_on": [
-        "ACD-426"
       ]
     },
     {
@@ -1044,29 +491,6 @@
         "F3-399",
         "SP-217",
         "T-160"
-      ]
-    },
-    {
-      "plan_unit_id": "UCC-100",
-      "remaining_depends_on": [
-        "CV-295",
-        "OP-027",
-        "PS-120"
-      ]
-    },
-    {
-      "plan_unit_id": "UCC-101",
-      "remaining_depends_on": [
-        "PS-121",
-        "RAP-035",
-        "T-165"
-      ]
-    },
-    {
-      "plan_unit_id": "UF-076",
-      "remaining_depends_on": [
-        "MS-116",
-        "RAP-035"
       ]
     }
   ],
@@ -4090,11 +3514,6 @@
       "edge_type": "depends_on",
       "from": "ACD-425",
       "to": "UCC-101"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "ACD-426",
-      "to": "F3-403"
     },
     {
       "edge_type": "depends_on",
@@ -7675,11 +7094,6 @@
       "edge_type": "depends_on",
       "from": "CS-051",
       "to": "UCC-096"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "CS-053",
-      "to": "ACD-426"
     },
     {
       "edge_type": "depends_on",
@@ -11418,23 +10832,8 @@
     },
     {
       "edge_type": "depends_on",
-      "from": "CV-295",
-      "to": "SP-219"
-    },
-    {
-      "edge_type": "depends_on",
       "from": "CV-296",
       "to": "PS-121"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "CV-296",
-      "to": "T-165"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "CV-297",
-      "to": "ACD-426"
     },
     {
       "edge_type": "depends_on",
@@ -13664,11 +13063,6 @@
     {
       "edge_type": "depends_on",
       "from": "F2-192",
-      "to": "PP-055"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "F2-192",
       "to": "PS-121"
     },
     {
@@ -13950,11 +13344,6 @@
       "edge_type": "depends_on",
       "from": "F3-403",
       "to": "UCC-102"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "G-026",
-      "to": "ACD-426"
     },
     {
       "edge_type": "depends_on",
@@ -16848,11 +16237,6 @@
     },
     {
       "edge_type": "depends_on",
-      "from": "MGAC-099",
-      "to": "T-165"
-    },
-    {
-      "edge_type": "depends_on",
       "from": "MS-001",
       "to": "MS-099"
     },
@@ -17469,17 +16853,7 @@
     {
       "edge_type": "depends_on",
       "from": "MS-116",
-      "to": "MGAC-099"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "MS-116",
       "to": "PS-121"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "MS-117",
-      "to": "ACD-426"
     },
     {
       "edge_type": "depends_on",
@@ -23918,11 +23292,6 @@
     },
     {
       "edge_type": "depends_on",
-      "from": "P-055",
-      "to": "ACD-426"
-    },
-    {
-      "edge_type": "depends_on",
       "from": "PDS-001",
       "to": "PLS-001"
     },
@@ -28028,16 +27397,6 @@
     },
     {
       "edge_type": "depends_on",
-      "from": "PP-055",
-      "to": "T-165"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "PP-056",
-      "to": "G-026"
-    },
-    {
-      "edge_type": "depends_on",
       "from": "PP-056",
       "to": "P-055"
     },
@@ -28065,11 +27424,6 @@
       "edge_type": "depends_on",
       "from": "PRDB-009",
       "to": "T-161"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "PRDB-010",
-      "to": "OP-026"
     },
     {
       "edge_type": "depends_on",
@@ -29893,23 +29247,8 @@
     },
     {
       "edge_type": "depends_on",
-      "from": "PS-121",
-      "to": "CV-296"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "PS-121",
-      "to": "T-165"
-    },
-    {
-      "edge_type": "depends_on",
       "from": "PS-122",
       "to": "CV-297"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "PS-122",
-      "to": "UCC-102"
     },
     {
       "edge_type": "depends_on",
@@ -30855,11 +30194,6 @@
       "edge_type": "depends_on",
       "from": "PWIZ-015",
       "to": "T-161"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "PWIZ-016",
-      "to": "OP-026"
     },
     {
       "edge_type": "depends_on",
@@ -50054,21 +49388,6 @@
     {
       "edge_type": "depends_on",
       "from": "UCC-102",
-      "to": "ACD-426"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "UCC-102",
-      "to": "CS-053"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "UCC-102",
-      "to": "F3-403"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "UCC-102",
       "to": "PS-122"
     },
     {
@@ -65557,7 +64876,7 @@
       "to": "GI-033"
     }
   ],
-  "generated_at_utc": "2026-06-27T13:50:04Z",
+  "generated_at_utc": "2026-06-27T15:55:20Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -85765,8 +85084,8 @@
       "source_location": {
         "heading": "CV-296 - Vision Bridge Result Envelope",
         "heading_level": 3,
-        "heading_line": 18103,
-        "line": 18105,
+        "heading_line": 18102,
+        "line": 18104,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -85782,8 +85101,8 @@
       "source_location": {
         "heading": "CV-297 - Teacher Guided Help Activity Envelope",
         "heading_level": 3,
-        "heading_line": 18262,
-        "line": 18264,
+        "heading_line": 18260,
+        "line": 18262,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -116637,8 +115956,8 @@
       "source_location": {
         "heading": "MS-117 - Teach Teacher Low End Model Setting",
         "heading_level": 3,
-        "heading_line": 7885,
-        "line": 7887,
+        "heading_line": 7884,
+        "line": 7886,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -135337,8 +134656,8 @@
       "source_location": {
         "heading": "PP-056 - Teacher PM Knowledge Source Resolution",
         "heading_level": 3,
-        "heading_line": 3690,
-        "line": 3692,
+        "heading_line": 3689,
+        "line": 3691,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -137581,8 +136900,8 @@
       "source_location": {
         "heading": "PS-122 - Teach Guided Mutation Confirmation Gates",
         "heading_level": 3,
-        "heading_line": 8161,
-        "line": 8163,
+        "heading_line": 8159,
+        "line": 8161,
         "path": "Plans/Permissions_System.md"
       },
       "status": "accepted",
@@ -155103,13 +154422,13 @@
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
   "summary": {
     "build_order_available": false,
-    "build_order_blocked_node_count": 65,
-    "cycle_blocker_count": 30,
-    "depends_on_edge_count": 11056,
-    "downstream_blocked_node_count": 35,
-    "edge_count": 12897,
+    "build_order_blocked_node_count": 28,
+    "cycle_blocker_count": 11,
+    "depends_on_edge_count": 11035,
+    "downstream_blocked_node_count": 17,
+    "edge_count": 12876,
     "node_count": 5267,
-    "true_cycle_component_count": 6,
+    "true_cycle_component_count": 3,
     "unblocks_edge_count": 1841,
     "unresolved_reference_count": 0
   },

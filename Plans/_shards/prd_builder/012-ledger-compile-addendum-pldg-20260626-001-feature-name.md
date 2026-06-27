@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L647-L789
+Source lines: L647-L788
 
-Source SHA256: `337e80e538514ce9800f65c469963bfd76b50c0f3a2939c27188786d4e81a118`
+Source SHA256: `373412e5656c18ee07cee10f3eb17a025246e09d491ab88bbe97117aa28be53c`
 
 ---
 
@@ -29,7 +29,6 @@ gui_related: false
 gui_classification_reason: Defines PRD Builder output/history record obligations; GUI presentation is owned by Orchestrator
   History.
 depends_on:
-- OP-026
 - SP-219
 unblocks:
 - OP-026

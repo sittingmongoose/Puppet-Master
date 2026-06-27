@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3310-L3445
+Source lines: L3310-L3444
 
-Source SHA256: `ab5dca7bf9cd45038d75b2d41421d9a44a3d721958162329b59563604a3d3edf`
+Source SHA256: `93a948241c79656528bf10eaeb01e6d82e44ce50b5cabc1981bf22c314950b1e`
 
 ---
 
@@ -26,8 +26,7 @@ canonical_text: Teacher is a protected Persona used by Teach, not a standalone f
   destination Persona/mode, context to carry forward, and whether a stronger model is recommended.
 gui_related: false
 gui_classification_reason: Persona identity and scope are assistant behavior, not GUI layout.
-depends_on:
-- ACD-426
+depends_on: []
 unblocks:
 - PP-056
 - ATS-014

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7033-L7475
+Source lines: L7033-L7472
 
-Source SHA256: `01b2be7b2f64074f42e44a57c15ae31131e1cb61c81421d48d08ec14811ba2e8`
+Source SHA256: `6a616dd3375b758f7e0e381316974470e13d542971b54e55891e420823082e2a`
 
 ---
 
@@ -297,10 +297,7 @@ gui_related: true
 gui_classification_reason: Defines user-visible guided action commands, route/highlight controls, mutation confirmation,
   and degraded action handling.
 depends_on:
-- ACD-426
-- CS-053
 - PS-122
-- F3-403
 unblocks:
 - ATS-014
 acceptance_criteria:

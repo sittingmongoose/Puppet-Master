@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L7909-L8289
+Source lines: L7909-L8286
 
-Source SHA256: `f1fa7497f2ef8e29a13dafdc3e67bff7fa0818a2b65c3ff2c1c9c4d79e8b0668`
+Source SHA256: `7a7c451c4367fe93257ee08d522f3a37ec275aa46f036130e30060e49b4f0940`
 
 ---
 
@@ -137,9 +137,7 @@ canonical_text: Before PM sends a local image or screenshot to a separate vision
 gui_related: true
 gui_classification_reason: Defines the user-visible disclosure popup, reject/accept/always-accept choices, settings
   visibility, and revocation UI.
-depends_on:
-- T-165
-- CV-296
+depends_on: []
 unblocks:
 - RAP-035
 - ACD-425
@@ -275,7 +273,6 @@ canonical_text: Teacher can guide GUI use through safe route, highlight, focus, 
 gui_related: true
 gui_classification_reason: Defines visible confirmation and permission gates for Teacher-guided GUI actions.
 depends_on:
-- UCC-102
 - CV-297
 unblocks:
 - ATS-014

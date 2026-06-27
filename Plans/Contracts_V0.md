@@ -17960,8 +17960,7 @@ canonical_text: History row, compare, export, open, reopen, send-forward, resume
   source records.
 gui_related: false
 gui_classification_reason: Shared identity/action envelopes are contract data shapes, not GUI.
-depends_on:
-- SP-219
+depends_on: []
 unblocks:
 - OP-027
 - UCC-100
@@ -18115,7 +18114,6 @@ canonical_text: A VisionBridgeResult records source image ref/hash, prompt/quest
 gui_related: false
 gui_classification_reason: The result envelope is a shared contract shape; GUI owners render it separately.
 depends_on:
-- T-165
 - PS-121
 unblocks:
 - RAP-035
@@ -18274,7 +18272,6 @@ gui_related: false
 gui_classification_reason: Teacher launch, source, guided-action, and activity shapes are shared contract data;
   GUI owners render them.
 depends_on:
-- ACD-426
 - PP-056
 unblocks:
 - RAP-036

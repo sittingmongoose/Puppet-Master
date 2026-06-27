@@ -13265,7 +13265,6 @@ gui_classification_reason: Image source selection, clipboard, screenshots, and p
   safety surfaces.
 depends_on:
 - PS-121
-- PP-055
 unblocks:
 - ACD-425
 acceptance_criteria:

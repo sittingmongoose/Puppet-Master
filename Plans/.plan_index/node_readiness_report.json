@@ -13,45 +13,9 @@
           ]
         },
         {
-          "plan_unit_id": "ACD-426",
-          "remaining_depends_on": [
-            "F3-403",
-            "MS-117",
-            "P-055",
-            "PP-056"
-          ]
-        },
-        {
-          "plan_unit_id": "CS-053",
-          "remaining_depends_on": [
-            "ACD-426",
-            "UCC-102"
-          ]
-        },
-        {
           "plan_unit_id": "CV-291",
           "remaining_depends_on": [
             "T-161"
-          ]
-        },
-        {
-          "plan_unit_id": "CV-295",
-          "remaining_depends_on": [
-            "SP-219"
-          ]
-        },
-        {
-          "plan_unit_id": "CV-296",
-          "remaining_depends_on": [
-            "PS-121",
-            "T-165"
-          ]
-        },
-        {
-          "plan_unit_id": "CV-297",
-          "remaining_depends_on": [
-            "ACD-426",
-            "PP-056"
           ]
         },
         {
@@ -62,94 +26,15 @@
           ]
         },
         {
-          "plan_unit_id": "F2-192",
-          "remaining_depends_on": [
-            "PP-055",
-            "PS-121"
-          ]
-        },
-        {
-          "plan_unit_id": "F3-403",
-          "remaining_depends_on": [
-            "ACD-426",
-            "G-026",
-            "UCC-102"
-          ]
-        },
-        {
-          "plan_unit_id": "G-026",
-          "remaining_depends_on": [
-            "ACD-426",
-            "PP-056"
-          ]
-        },
-        {
-          "plan_unit_id": "MGAC-099",
-          "remaining_depends_on": [
-            "MS-116",
-            "T-165"
-          ]
-        },
-        {
-          "plan_unit_id": "MS-116",
-          "remaining_depends_on": [
-            "MGAC-099",
-            "PS-121"
-          ]
-        },
-        {
-          "plan_unit_id": "MS-117",
-          "remaining_depends_on": [
-            "ACD-426",
-            "P-055"
-          ]
-        },
-        {
-          "plan_unit_id": "P-055",
-          "remaining_depends_on": [
-            "ACD-426"
-          ]
-        },
-        {
           "plan_unit_id": "POA-050",
           "remaining_depends_on": [
             "RAP-033"
           ]
         },
         {
-          "plan_unit_id": "PP-055",
-          "remaining_depends_on": [
-            "CV-296",
-            "F2-192",
-            "PS-121",
-            "T-165"
-          ]
-        },
-        {
-          "plan_unit_id": "PP-056",
-          "remaining_depends_on": [
-            "G-026",
-            "P-055"
-          ]
-        },
-        {
           "plan_unit_id": "PS-118",
           "remaining_depends_on": [
             "F2-191"
-          ]
-        },
-        {
-          "plan_unit_id": "PS-121",
-          "remaining_depends_on": [
-            "CV-296",
-            "T-165"
-          ]
-        },
-        {
-          "plan_unit_id": "PS-122",
-          "remaining_depends_on": [
-            "CV-297",
-            "UCC-102"
           ]
         },
         {
@@ -165,12 +50,6 @@
             "PS-118",
             "SP-217",
             "W-074"
-          ]
-        },
-        {
-          "plan_unit_id": "SP-219",
-          "remaining_depends_on": [
-            "CV-295"
           ]
         },
         {
@@ -191,24 +70,6 @@
           "remaining_depends_on": [
             "T-160",
             "T-161"
-          ]
-        },
-        {
-          "plan_unit_id": "T-165",
-          "remaining_depends_on": [
-            "MGAC-099",
-            "MS-116",
-            "PP-055",
-            "PS-121"
-          ]
-        },
-        {
-          "plan_unit_id": "UCC-102",
-          "remaining_depends_on": [
-            "ACD-426",
-            "CS-053",
-            "F3-403",
-            "PS-122"
           ]
         },
         {
@@ -249,14 +110,6 @@
           ]
         },
         {
-          "plan_unit_id": "ACD-425",
-          "remaining_depends_on": [
-            "RAP-035",
-            "T-165",
-            "UCC-101"
-          ]
-        },
-        {
           "plan_unit_id": "ATS-011",
           "remaining_depends_on": [
             "ACD-422",
@@ -274,34 +127,6 @@
             "T-161",
             "T-162",
             "T-163"
-          ]
-        },
-        {
-          "plan_unit_id": "ATS-012",
-          "remaining_depends_on": [
-            "OP-027",
-            "SP-219"
-          ]
-        },
-        {
-          "plan_unit_id": "ATS-013",
-          "remaining_depends_on": [
-            "ACD-425",
-            "PP-055",
-            "PS-121",
-            "T-165"
-          ]
-        },
-        {
-          "plan_unit_id": "ATS-014",
-          "remaining_depends_on": [
-            "ACD-426",
-            "F3-403",
-            "G-026",
-            "MS-117",
-            "P-055",
-            "PP-056",
-            "UCC-102"
           ]
         },
         {
@@ -339,25 +164,12 @@
           ]
         },
         {
-          "plan_unit_id": "F3-402",
-          "remaining_depends_on": [
-            "ACD-425"
-          ]
-        },
-        {
           "plan_unit_id": "GI-033",
           "remaining_depends_on": [
             "F2-191",
             "PS-118",
             "SP-218",
             "W-074"
-          ]
-        },
-        {
-          "plan_unit_id": "OP-027",
-          "remaining_depends_on": [
-            "CV-295",
-            "SP-219"
           ]
         },
         {
@@ -377,19 +189,6 @@
           ]
         },
         {
-          "plan_unit_id": "PO-049",
-          "remaining_depends_on": [
-            "T-165"
-          ]
-        },
-        {
-          "plan_unit_id": "POA-051",
-          "remaining_depends_on": [
-            "CV-295",
-            "OP-027"
-          ]
-        },
-        {
           "plan_unit_id": "PRDB-009",
           "remaining_depends_on": [
             "F2-191",
@@ -399,31 +198,12 @@
           ]
         },
         {
-          "plan_unit_id": "PRDB-010",
-          "remaining_depends_on": [
-            "SP-219"
-          ]
-        },
-        {
-          "plan_unit_id": "PS-120",
-          "remaining_depends_on": [
-            "OP-027",
-            "POA-051"
-          ]
-        },
-        {
           "plan_unit_id": "PWIZ-015",
           "remaining_depends_on": [
             "F2-191",
             "F3-399",
             "SP-217",
             "T-161"
-          ]
-        },
-        {
-          "plan_unit_id": "PWIZ-016",
-          "remaining_depends_on": [
-            "SP-219"
           ]
         },
         {
@@ -437,37 +217,9 @@
           ]
         },
         {
-          "plan_unit_id": "RAP-034",
-          "remaining_depends_on": [
-            "POA-051",
-            "SP-219"
-          ]
-        },
-        {
-          "plan_unit_id": "RAP-035",
-          "remaining_depends_on": [
-            "CV-296",
-            "PS-121",
-            "T-165"
-          ]
-        },
-        {
-          "plan_unit_id": "RAP-036",
-          "remaining_depends_on": [
-            "ACD-426",
-            "CV-297"
-          ]
-        },
-        {
           "plan_unit_id": "SP-217",
           "remaining_depends_on": [
             "T-160"
-          ]
-        },
-        {
-          "plan_unit_id": "SP-220",
-          "remaining_depends_on": [
-            "ACD-426"
           ]
         },
         {
@@ -485,46 +237,23 @@
             "SP-217",
             "T-160"
           ]
-        },
-        {
-          "plan_unit_id": "UCC-100",
-          "remaining_depends_on": [
-            "CV-295",
-            "OP-027",
-            "PS-120"
-          ]
-        },
-        {
-          "plan_unit_id": "UCC-101",
-          "remaining_depends_on": [
-            "PS-121",
-            "RAP-035",
-            "T-165"
-          ]
-        },
-        {
-          "plan_unit_id": "UF-076",
-          "remaining_depends_on": [
-            "MS-116",
-            "RAP-035"
-          ]
         }
       ]
     }
   ],
   "dependency_graph_summary": {
     "build_order_available": false,
-    "build_order_blocked_node_count": 65,
-    "cycle_blocker_count": 30,
-    "depends_on_edge_count": 11056,
-    "downstream_blocked_node_count": 35,
-    "edge_count": 12897,
+    "build_order_blocked_node_count": 28,
+    "cycle_blocker_count": 11,
+    "depends_on_edge_count": 11035,
+    "downstream_blocked_node_count": 17,
+    "edge_count": 12876,
     "node_count": 5267,
-    "true_cycle_component_count": 6,
+    "true_cycle_component_count": 3,
     "unblocks_edge_count": 1841,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-27T13:50:04Z",
+  "generated_at_utc": "2026-06-27T15:55:20Z",
   "gui_related_units": {
     "count": 2247,
     "units": [
@@ -16000,8 +15729,8 @@
         "source_location": {
           "heading": "MS-117 - Teach Teacher Low End Model Setting",
           "heading_level": 3,
-          "heading_line": 7885,
-          "line": 7887,
+          "heading_line": 7884,
+          "line": 7886,
           "path": "Plans/Models_System.md"
         }
       },
@@ -19696,8 +19425,8 @@
         "source_location": {
           "heading": "PS-122 - Teach Guided Mutation Confirmation Gates",
           "heading_level": 3,
-          "heading_line": 8161,
-          "line": 8163,
+          "heading_line": 8159,
+          "line": 8161,
           "path": "Plans/Permissions_System.md"
         }
       },

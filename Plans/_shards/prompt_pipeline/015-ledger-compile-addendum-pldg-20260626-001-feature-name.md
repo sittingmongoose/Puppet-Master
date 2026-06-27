@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L3525-L3888
+Source lines: L3525-L3886
 
-Source SHA256: `c932286057f8edcdbcc1e5324382e4c78b9fb9ae4e21ac9ad85e113d81efe2e0`
+Source SHA256: `fc63ee6efdc781020bed7d2846c9c56f0462c6966442cdef1bca52351e2d00be`
 
 ---
 
@@ -30,7 +30,6 @@ gui_related: true
 gui_classification_reason: The structured image-derived output is user-visible and governs screenshot/image context
   passed into chat.
 depends_on:
-- T-165
 - CV-296
 - F2-192
 - PS-121
@@ -191,7 +190,6 @@ gui_classification_reason: Source ordering, confidence, and no-guessing are prom
   presentation; GUI disclosure is owned elsewhere.
 depends_on:
 - P-055
-- G-026
 unblocks:
 - ACD-426
 - ATS-014

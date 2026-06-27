@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L7789-L8030
+Source lines: L7789-L8028
 
-Source SHA256: `5cfd469a6ae1233eb1feb0d342999fea028a1a48a1a00f4d609348dc3af40825`
+Source SHA256: `86cbd6cdd89e710c84e7197225f41cefbb756fda8fc81e6e2f0ba5ab8e19f1cd`
 
 ---
 
@@ -28,7 +28,6 @@ gui_related: true
 gui_classification_reason: Requested/effective provider/model/account states are user-visible model-route disclosure
   for image understanding.
 depends_on:
-- MGAC-099
 - PS-121
 unblocks:
 - T-165
@@ -120,7 +119,6 @@ gui_related: true
 gui_classification_reason: Defines visible settings, model chips, fallback states, and requested/effective model
   disclosure for Teach/Teacher.
 depends_on:
-- ACD-426
 - P-055
 unblocks:
 - ATS-014

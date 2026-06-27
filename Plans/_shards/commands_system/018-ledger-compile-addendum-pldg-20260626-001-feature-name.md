@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L3574-L3681
+Source lines: L3574-L3680
 
-Source SHA256: `2c3b8a960ed046c731dca2edfa34550be68ef3ecca0d22bc3d2287d451fff39d`
+Source SHA256: `861c08c51b24d4000bec75a81ff9cfde0238c02c11c0066497111f75bd44f865`
 
 ---
 
@@ -26,7 +26,6 @@ canonical_text: Teach/Teacher can be summoned through /teach, help icon launches
 gui_related: true
 gui_classification_reason: Defines user-facing /teach and natural-language invocation routes into Assistant Chat.
 depends_on:
-- ACD-426
 - UCC-102
 unblocks:
 - ATS-014

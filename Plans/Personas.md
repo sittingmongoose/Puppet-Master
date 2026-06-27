@@ -3325,8 +3325,7 @@ canonical_text: Teacher is a protected Persona used by Teach, not a standalone f
   destination Persona/mode, context to carry forward, and whether a stronger model is recommended.
 gui_related: false
 gui_classification_reason: Persona identity and scope are assistant behavior, not GUI layout.
-depends_on:
-- ACD-426
+depends_on: []
 unblocks:
 - PP-056
 - ATS-014

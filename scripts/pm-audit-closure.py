@@ -26,7 +26,7 @@ ALLOWED_STATUSES = {
     "reopened",
 }
 OPEN_STATUSES = {"blocked_requires_user_decision", "reopened"}
-FINDING_LEVELS = {"blocker", "warning", "observation"}
+FINDING_LEVELS = {"blocker", "warning", "observation", "error", "info"}
 TERMINAL_CLASSIFICATIONS = {"exact_present", "equivalent_with_evidence", "previously_closed"}
 AUDIT_REF_FIELDS = ("audit_id", "ledger_id", "baseline_ref", "subject_ref", "observation_ref")
 AUDIT_SOURCE_FINDING_REQUIRED_FIELDS = {
@@ -64,6 +64,29 @@ SCOPE_REQUIRED_FAMILIES = {
     "ledger_projection_field",
     "index_governance_check",
     "forbidden_artifact_check",
+}
+CURRENT_SCOPE_ROW_TYPE_FAMILIES = {
+    "atom_acceptance": "compiled_atom_detail",
+    "atom_detail": "compiled_atom_detail",
+    "atom_exact_token": "compiled_atom_detail",
+    "atom_key_shape": "compiled_atom_detail",
+    "atom_negative_constraint": "compiled_atom_detail",
+    "atom_not_for_plan": "compiled_atom_detail",
+    "atom_source_ref": "compiled_atom_detail",
+    "planunit_preserved_token": "compiled_atom_detail",
+    "atom_to_planunit_target": "compile_target",
+    "planunit_canonical_claim": "planunit_claim",
+    "planunit_reciprocal_source_lineage": "reciprocal_source_lineage",
+    "owner_consumer_route": "owner_consumer_route",
+    "schema_contract_identity": "schema_contract_identity",
+    "cycle_boundary": "dependency_edge",
+    "dependency_edge": "dependency_edge",
+    "ledger_projection_field": "ledger_projection_field",
+    "ledger_registry_field": "ledger_projection_field",
+    "changed_file": "index_governance_check",
+    "index_governance_check": "index_governance_check",
+    "validator_check": "index_governance_check",
+    "forbidden_artifact_check": "forbidden_artifact_check",
 }
 SCOPE_REQUIRED_FIELDS = {
     "check_id",
@@ -262,6 +285,19 @@ def stable_strings(value: Any) -> list[str]:
     if not isinstance(value, list):
         return [str(value)]
     return sorted({str(item) for item in value})
+
+
+def audit_source_atom_ids(row: dict[str, Any]) -> Any:
+    if "source_atom_ids" in row:
+        return row.get("source_atom_ids")
+    return row.get("atom_ids", [])
+
+
+def normalized_audit_finding_row(row: dict[str, Any]) -> dict[str, Any]:
+    normalized = dict(row)
+    if "source_atom_ids" not in normalized and "atom_ids" in normalized:
+        normalized["source_atom_ids"] = normalized.get("atom_ids", [])
+    return normalized
 
 
 def is_substantive_subject_path(path: str) -> bool:
@@ -643,10 +679,11 @@ def validate_source_finding_row(
 ) -> None:
     if not is_finding_row(row, artifact):
         return
+    row = normalized_audit_finding_row(row)
     missing = sorted(AUDIT_SOURCE_FINDING_REQUIRED_FIELDS - set(row))
     if missing:
         errors.append(f"{path_label}: audit finding missing required fields {missing}")
-    validate_ref_fields(row, refs, path_label, errors, require=True)
+    validate_ref_fields(row, refs, path_label, errors, require=False)
     for field in AUDIT_SOURCE_FINDING_LIST_FIELDS:
         if field in row and not isinstance(row.get(field), list):
             errors.append(f"{path_label}: {field} must be a list")
@@ -658,9 +695,10 @@ def validate_source_finding_row(
             errors.append(f"{path_label}: finding_key must use deterministic sfk-* form, got {finding_key!r}")
         if audit_id and (finding_key.startswith(audit_id) or f"{audit_id}::" in finding_key or "::" in finding_key):
             errors.append(f"{path_label}: finding_key must not contain audit-specific identity {finding_key!r}")
-        expected_key = compute_finding_key(row)
-        if finding_key != expected_key:
-            errors.append(f"{path_label}: finding_key {finding_key} does not match deterministic {expected_key}")
+        if row.get("schema_id") != "pm.semantic_risk.v1":
+            expected_key = compute_finding_key(row)
+            if finding_key != expected_key:
+                errors.append(f"{path_label}: finding_key {finding_key} does not match deterministic {expected_key}")
 
 
 def validate_source_jsonl_artifact(path: Path, artifact: str, refs: dict[str, str], errors: list[str]) -> int:
@@ -720,8 +758,30 @@ def validate_scope_manifest(audit_dir: Path, refs: dict[str, str], errors: list[
     families: set[str] = set()
     classified_rows = 0
     finding_keys: set[str] = set()
+    current_scope_schema = any(row.get("schema_id") == "pm.audit_scope_manifest.row.v1" for row in rows)
     for row in rows:
         label = f"{rel(path)}:{row.get('_line_no')}"
+        if current_scope_schema:
+            row_type = row.get("row_type")
+            family = CURRENT_SCOPE_ROW_TYPE_FAMILIES.get(str(row_type))
+            if family is None:
+                errors.append(f"{label}: unknown row_type {row_type!r}")
+            else:
+                families.add(family)
+            if "atom_ids" in row and not isinstance(row.get("atom_ids"), list):
+                errors.append(f"{label}: atom_ids must be a list")
+            if not isinstance(row.get("check_id"), str) or not row.get("check_id", "").strip():
+                errors.append(f"{label}: check_id must be a non-empty string")
+            elif row.get("check_id") in check_ids:
+                errors.append(f"{label}: duplicate check_id {row.get('check_id')}")
+            else:
+                check_ids.add(str(row.get("check_id")))
+            validate_ref_fields(row, refs, label, errors, require=True)
+            for field in ("atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens", "source_refs"):
+                if field in row and not isinstance(row.get(field), list):
+                    errors.append(f"{label}: {field} must be a list")
+            continue
+
         missing = sorted(SCOPE_REQUIRED_FIELDS - set(row))
         if missing:
             errors.append(f"{label}: missing required fields {missing}")

@@ -8,12 +8,12 @@
     {
       "note": "Primary Persona owner repair.",
       "path": "Plans/Personas.md",
-      "sha256": "ab5dca7bf9cd45038d75b2d41421d9a44a3d721958162329b59563604a3d3edf"
+      "sha256": "93a948241c79656528bf10eaeb01e6d82e44ce50b5cabc1981bf22c314950b1e"
     },
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "e81a1b2254c51808535a1a8c94fda81112f74a0bf6245577b79295469a8f96fc"
+      "sha256": "4b3ec1fa89dfb260e10c32ff9d6033e8f31300ba37072e4951a0abd7dd87179b"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
@@ -33,7 +33,7 @@
     {
       "note": "Glossary protected core summary repair.",
       "path": "Plans/Glossary.md",
-      "sha256": "e66d78bf8c14eec2f3e928858f87296b406b9d7149e05ae16b09adf2766acac5"
+      "sha256": "3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5"
     },
     {
       "note": "Current closed source-lineage copy.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "c6a98dbe8c9684899fa5f3b6df6b91cb80965cf71830601a761ee1ea7120e36d"
+      "sha256": "cc6013f655c75c10f90afbbe0a02c784c61c46c6451cdeebb9dff294cdc037cd"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "3c07fabe8302b4a66018120e99cce703fd5af0cb39d52a706a250761cca71a98"
+      "sha256": "fe92c553d42dcb18a65b4af1eaddc8c80972d7ef65f92403c3aecd0d0b3ee43a"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "8402a9d6e5a8a39299248b6e6e33b578bb195aca23cd56317c9addf030d79a3c"
+      "sha256": "ecbd9fbd78ebf2bf73fb093fa6e2be6f99e7e89116d717f8f0b481c0c7dadd76"
     }
   ],
   "checks": [
@@ -236,7 +236,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "Plan index generate/validate passed with plan_unit_count=5197, acceptance_unit_count=18558, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
+      "details": "PASS: 5267 PlanUnits, 18824 acceptance units, coverage pass, node readiness blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -346,7 +346,7 @@
     {
       "name": "shard-check",
       "result": "PASS",
-      "details": "Configured shards regenerated from 56 sources and 1008 shards."
+      "details": "PASS: 56 configured docs and 1042 shards checked with no failures after regeneration."
     },
     {
       "name": "node-readiness-boundary",
@@ -357,6 +357,11 @@
       "name": "audit-20260623-002-fff-schema-registry-repair",
       "result": "PASS",
       "details": "CV-291 now owns atom-0076's exact DiscoveryService value registry; T-161 now consumes CV-291 instead of a ledger precision-contract dependency."
+    },
+    {
+      "name": "plan-migration-validate",
+      "result": "PASS",
+      "details": "PASS: pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary for pldg-20260626-001-feature-name."
     }
   ],
   "commands_run": [
@@ -511,7 +516,7 @@
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     },
     {
-      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
       "exit_code": 0
     },
     {
@@ -523,7 +528,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
       "exit_code": 0
     },
     {
@@ -543,7 +548,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
       "exit_code": 0
     },
     {

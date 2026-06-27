@@ -576,16 +576,6 @@
       "updated_at_utc": "2026-06-23T05:59:26Z"
     },
     {
-      "created_at_utc": "2026-06-24T09:38:50Z",
-      "last_updated_at": "2026-06-26T16:48:05Z",
-      "last_updated_at_utc": "2026-06-26T16:48:05Z",
-      "ledger_id": "pldg-20260624-001-provider-updates",
-      "notes": "Compiled provider-update atoms into canonical Plans, regenerated PlanUnit index, refreshed migration proof, configured shards, evidence bundles, Spec_Lock, plan graph/auto-decision validations, sealed governance, and closed the latest semantic repair certification. node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
-      "phase": "compiled_to_plans_governance_sealed",
-      "primary_goal": "Provider updates compiled to canonical Plans and governance sealed.",
-      "resume_file": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/handoff.json",
-      "status": "sealed",
-      "title": "Provider Updates",
       "canonical_plan_targets": [
         "Plans/00-plans-index.md"
       ],
@@ -639,22 +629,20 @@
         "Plans/.plan_index/coverage_report.json",
         "Plans/.plan_index/node_readiness_report.json"
       ],
+      "created_at_utc": "2026-06-24T09:38:50Z",
       "governance_status": "sealed",
-      "last_event_id": "evt-0045"
+      "last_event_id": "evt-0045",
+      "last_updated_at": "2026-06-26T16:48:05Z",
+      "last_updated_at_utc": "2026-06-26T16:48:05Z",
+      "ledger_id": "pldg-20260624-001-provider-updates",
+      "notes": "Compiled provider-update atoms into canonical Plans, regenerated PlanUnit index, refreshed migration proof, configured shards, evidence bundles, Spec_Lock, plan graph/auto-decision validations, sealed governance, and closed the latest semantic repair certification. node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+      "phase": "compiled_to_plans_governance_sealed",
+      "primary_goal": "Provider updates compiled to canonical Plans and governance sealed.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260624-001-provider-updates/state/handoff.json",
+      "status": "sealed",
+      "title": "Provider Updates"
     },
     {
-      "created_at_utc": "2026-06-26T19:18:34Z",
-      "last_event_id": "evt-0033",
-      "last_updated_at": "2026-06-27T15:22:59Z",
-      "last_updated_at_utc": "2026-06-27T15:22:59Z",
-      "ledger_id": "pldg-20260626-001-feature-name",
-      "notes": "Compiled History, PM-native vision bridge, and Teach/Teacher PlanUnits into canonical Plans, regenerated PlanUnit indexes, refreshed migration proof, configured shards, evidence bundles, Spec_Lock, plan graph/evidence validation, auto-decision validation, run-gates, shard check, and sealed governance. node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
-      "phase": "compiled_to_plans_governance_sealed",
-      "primary_goal": "Collaboratively clarify and shape miscellaneous PM feature items, including historical wizard-created PRD/Plan documents, historical Orchestrator runs, a PM-native vision bridge for non-vision models, and Teach/Teacher implementation readiness, before any canonical Plans edits.",
-      "resume_file": "Plans/ledgers/v2/pldg-20260626-001-feature-name/state/handoff.json",
-      "status": "sealed",
-      "title": "Miscellaneous PM History, Vision Bridge, and Teach Planning",
-      "governance_status": "sealed",
       "canonical_plan_targets": [
         "Plans/00-plans-index.md"
       ],
@@ -714,9 +702,25 @@
         "Plans/.plan_index/coverage_report.json",
         "Plans/.plan_index/node_readiness_report.json"
       ],
-      "updated_at_utc": "2026-06-27T15:22:59Z",
-      "validation_summary": "Governance sealed; all required validators pass; node readiness remains blocked_compiler_contract_incomplete."
+      "created_at_utc": "2026-06-26T19:18:34Z",
+      "governance_status": "sealed",
+      "last_event_id": "evt-0033",
+      "last_updated_at": "2026-06-27T16:11:50Z",
+      "last_updated_at_utc": "2026-06-27T16:11:50Z",
+      "latest_audit_ref": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+      "latest_audit_repair_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/repair_report.json",
+      "latest_audit_status": "repair_validated",
+      "latest_post_repair_audit_report": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/post_repair_audit_report.json",
+      "ledger_id": "pldg-20260626-001-feature-name",
+      "notes": "Compiled History, PM-native vision bridge, and Teach/Teacher PlanUnits into canonical Plans, regenerated PlanUnit indexes, refreshed migration proof, configured shards, evidence bundles, Spec_Lock, plan graph/evidence validation, auto-decision validation, run-gates, shard check, and sealed governance. node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+      "phase": "compiled_to_plans_governance_sealed",
+      "primary_goal": "Collaboratively clarify and shape miscellaneous PM feature items, including historical wizard-created PRD/Plan documents, historical Orchestrator runs, a PM-native vision bridge for non-vision models, and Teach/Teacher implementation readiness, before any canonical Plans edits.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260626-001-feature-name/state/handoff.json",
+      "status": "sealed",
+      "title": "Miscellaneous PM History, Vision Bridge, and Teach Planning",
+      "updated_at_utc": "2026-06-27T16:11:50Z",
+      "validation_summary": "Post-repair semantic certification complete; repair_required_count=0; governance, closure, index, migration, shard, evidence, Spec Lock, plan graph, auto decisions, run-gates, and diff hygiene pass; node readiness remains blocked_compiler_contract_incomplete."
     }
   ],
-  "updated_at_utc": "2026-06-26T19:49:26Z"
+  "updated_at_utc": "2026-06-27T16:11:50Z"
 }

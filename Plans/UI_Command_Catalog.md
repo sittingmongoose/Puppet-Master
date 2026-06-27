@@ -7319,10 +7319,7 @@ gui_related: true
 gui_classification_reason: Defines user-visible guided action commands, route/highlight controls, mutation confirmation,
   and degraded action handling.
 depends_on:
-- ACD-426
-- CS-053
 - PS-122
-- F3-403
 unblocks:
 - ATS-014
 acceptance_criteria:

@@ -1645,7 +1645,6 @@ gui_related: true
 gui_classification_reason: Help and Glossary entries are user-visible help content and context-help surfaces.
 depends_on:
 - PP-056
-- ACD-426
 unblocks:
 - ATS-014
 acceptance_criteria:
