@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "shard_id": "compaction_status_check_20260627",
+  "created_at_utc": "2026-06-27T19:45:53Z",
+  "source_kind": "plans_status_check",
+  "user_prompt_exact": "is compaction fully functioning?  Including clicking the little compact now in the circle in the chat window?",
+  "summary": "PM canonical Plans specify user-triggered compaction, the chat context-circle Compact Now affordance, command catalog wiring, prompt-pipeline compaction behavior, storage/cache lineage behavior, and stale-owner retargeting. Jared corrected that this question is about PM Plans docs only: the Codex chat UI is not relevant, and no PM code should be expected because no PM code has been written yet.",
+  "status_assessment": {
+    "specified_in_plans": true,
+    "ui_affordance_specified": true,
+    "command_catalog_entry_specified": true,
+    "wiring_matrix_entry_specified": true,
+    "prompt_pipeline_behavior_specified": true,
+    "product_code_expected": false,
+    "runnable_product_implementation_found_in_repo": "not_relevant_no_pm_code_expected",
+    "fully_functioning_status": "plans_doc_coverage_present_with_stale_owner_reference_cleanup_needed",
+    "implementation_ready_status": "implementation_ready_in_ledger_source_prepared_for_future_compile"
+  },
+  "evidence_refs": [
+    "Plans/assistant-chat-design.md:11607-11617",
+    "Plans/assistant-chat-design.md:14727-14735",
+    "Plans/FinalGUISpec.md:1420",
+    "Plans/FinalGUISpec.md:10467-10502",
+    "Plans/UI_Command_Catalog.md:770-778",
+    "Plans/UI_Command_Catalog.md:4514-4549",
+    "Plans/Wiring_Matrix.md:329",
+    "Plans/usage-feature.md:169-170",
+    "Plans/usage-feature.md:1429-1462",
+    "Plans/Contracts_V0.md:1976-1980",
+    "Plans/Prompt_Pipeline.md:238-405",
+    "Plans/assistant-chat-design.md:21813-21823"
+    ,"state/compaction_readiness_matrix.json"
+  ],
+  "exact_tokens": [
+    "Compact Now",
+    "cmd.chat.compact_context",
+    "context.compaction.started",
+    "context.compaction.completed",
+    "/compact",
+    "Compact session",
+    "Summarize and continue",
+    "Compacting...",
+    "same compaction pipeline as auto-compact",
+    "chat context circle",
+    "Plans docs",
+    "This Codex chat is not in PM.",
+    "that is not relavent at all.",
+    "It shouldnt be in code",
+    "no code for PM was written yet",
+    "plans_doc_coverage_present_with_stale_owner_reference_cleanup_needed"
+  ],
+  "negative_constraints": [
+    "Do not evaluate PM compaction by Codex chat behavior.",
+    "Do not expect PM code evidence while PM has no product code.",
+    "Do not call the stale `Plans/newfeatures.md` owner reference canonical when ACD-414 says auto-compact must retarget to Prompt_Pipeline and explicit chat command surfaces.",
+    "Do not dispatch compaction merely because the user clicks the context circle if the UI pattern requires the user to choose Compact Now.",
+    "Do not weaken or replace system, persona, active tool schema, user-pinned, or compaction-immune content during compaction."
+  ]
+}

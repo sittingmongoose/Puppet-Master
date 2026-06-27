@@ -1,0 +1,122 @@
+{
+  "schema_id": "pm.bootstrap_compaction_readiness_matrix.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-27T20:10:51Z",
+  "updated_at_utc": "2026-06-27T20:10:51Z",
+  "status": "implementation_ready_in_ledger_source_prepared_for_future_compile",
+  "scope": "manual compaction / chat context circle Compact Now in PM Plans docs only",
+  "source_refs": [
+    "Plans/assistant-chat-design.md:11599-11642",
+    "Plans/assistant-chat-design.md:21805-21845",
+    "Plans/FinalGUISpec.md:1408-1424",
+    "Plans/usage-feature.md:166-171",
+    "Plans/Contracts_V0.md:1968-1980",
+    "Plans/UI_Command_Catalog.md:760-782",
+    "Plans/Wiring_Matrix.md:320-333",
+    "Plans/storage-plan.md:1268-1275",
+    "Plans/Prompt_Pipeline.md:238-405"
+  ],
+  "readiness_rows": [
+    {
+      "row_id": "cmp-ready-001",
+      "topic": "live owner cleanup",
+      "future_compile_action": "Update ACD-177 so `Plans/newfeatures.md` is not a live implementation surface or owner hint for auto-compact/manual compaction. Preserve `newfeatures.md` and `§10 auto-compact` only as source-lineage, preserved exact tokens, or compatibility cues under ACD-414.",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "negative_constraints": [
+        "Do not revive `Plans/newfeatures.md` as the live owner for auto-compact.",
+        "Do not delete historical `newfeatures.md` source lineage or exact tokens."
+      ],
+      "status": "accepted_for_future_compile"
+    },
+    {
+      "row_id": "cmp-ready-002",
+      "topic": "visible chat affordance",
+      "future_compile_action": "Preserve the chat-header context indicator as the GUI entrypoint; hover opens usage/status and `More Details`; click may reveal `Compact Now`; compaction dispatch happens only when the user chooses `Compact Now`.",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "negative_constraints": [
+        "Do not dispatch compaction merely from hover.",
+        "Do not replace `More Details` context-detail routing with direct usage-panel navigation."
+      ],
+      "status": "accepted_for_future_compile"
+    },
+    {
+      "row_id": "cmp-ready-003",
+      "topic": "command and wiring contract",
+      "future_compile_action": "Preserve `cmd.chat.compact_context` with payload `{ thread_id }`, events `context.compaction.started` and `context.compaction.completed`, command palette availability, `/compact` reservation, and Wiring Matrix route from thread context click `Compact Now` to chat runtime controller.",
+      "owner_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Commands_System.md"
+      ],
+      "negative_constraints": [
+        "Do not mint a second compaction command ID for the same thread action.",
+        "Do not leave stale superseded thread usage command IDs canonical."
+      ],
+      "status": "accepted_for_future_compile"
+    },
+    {
+      "row_id": "cmp-ready-004",
+      "topic": "prompt pipeline behavior",
+      "future_compile_action": "Preserve Prompt_Pipeline ownership for compaction/pruning, immune content, overflow algorithm, context assembly/cache preservation, reasoning replay/conversion, synthetic compaction metadata, role alternation, and post-filter repair/abort behavior.",
+      "owner_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Models_System.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "negative_constraints": [
+        "Do not let a compaction LLM or summary pass replace system/persona/tool-schema commitments with empty or weakened content.",
+        "Do not replay synthetic compaction text as a user-authored instruction.",
+        "Do not silently strip thinking/reasoning content merely because an adapter lacks a native replay field."
+      ],
+      "status": "accepted_for_future_compile"
+    },
+    {
+      "row_id": "cmp-ready-005",
+      "topic": "storage and cache lineage",
+      "future_compile_action": "Preserve the rule that manual `Compact Now` alone does not force a new cache lineage unless it also changes logical run lineage.",
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "negative_constraints": [
+        "Do not reset cache lineage solely because the user triggered manual Compact Now."
+      ],
+      "status": "accepted_for_future_compile"
+    },
+    {
+      "row_id": "cmp-ready-006",
+      "topic": "validation coverage",
+      "future_compile_action": "Future acceptance should test or verify the visible entrypoints, command/event dispatch, Prompt_Pipeline preservation rules, storage/cache lineage rule, and stale-owner cleanup. Validation may be plan/index/static until runtime exists.",
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md"
+      ],
+      "negative_constraints": [
+        "Do not require PM product code evidence while no PM product code exists.",
+        "Do not call runtime click-through testing mandatory before a runtime exists; keep the runtime test as a future acceptance path."
+      ],
+      "status": "accepted_for_future_compile"
+    }
+  ],
+  "implementation_ready_basis": [
+    "No product-code evidence is required or expected for this ledger-only PM planning item.",
+    "The only open readiness concern, q-0013, is resolved by making stale-owner cleanup a mandatory future compile action rather than an open product decision.",
+    "Compile permission remains unopened; this matrix makes the ledger source-prepared, not canonically compiled."
+  ]
+}

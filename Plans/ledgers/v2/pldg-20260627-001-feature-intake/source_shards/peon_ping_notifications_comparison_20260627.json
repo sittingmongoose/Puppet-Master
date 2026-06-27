@@ -1,0 +1,208 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-27T18:31:44Z",
+  "updated_at_utc": "2026-06-27T18:47:01Z",
+  "shard_id": "source-peon-ping-notifications-20260627",
+  "title": "PeonPing notification, sound, and PM plan comparison",
+  "source_urls": [
+    "https://www.peonping.com",
+    "https://github.com/PeonPing/peon-ping"
+  ],
+  "external_snapshot": {
+    "repo": "https://github.com/PeonPing/peon-ping",
+    "commit": "9e698cf2de7e5159d9645fcd955611fcdcdd6225",
+    "commit_date": "2026-06-27T09:29:46-05:00",
+    "local_clone_path": "/tmp/pm-peon-ping",
+    "source_lineage_only": true,
+    "inspected_files": [
+      {
+        "path": "README.md",
+        "lines": 1594,
+        "sha256": "22efcd208ac6912273b2c3e1f253ad7c5c76efdeaa309c28ef5bf7d2abaf6eb3"
+      },
+      {
+        "path": "config.json",
+        "lines": 68,
+        "sha256": "ad7a478799f6fe56a777e4bcc4e9fa2b17f0279ea4d5d62850e2a52cf2b43329"
+      },
+      {
+        "path": "peon.sh",
+        "lines": 6637,
+        "sha256": "ccf9a127c66889156a666bb1db324167f52eb959e9969fa8819e03611e22064d"
+      },
+      {
+        "path": "scripts/notify.sh",
+        "lines": 795,
+        "sha256": "eb79180a04f68516e0c96c1cfabc6d86140b54a0815fd33b68e556c9c0fc3dcf"
+      },
+      {
+        "path": "scripts/peon-play.swift",
+        "lines": 126,
+        "sha256": "51ab70ad9e3263703360dd74d28ac7865eacc71b0c3e2d9fba9fb143511b4518"
+      },
+      {
+        "path": "scripts/win-notify.ps1",
+        "lines": 235,
+        "sha256": "22877ebedbe56dc4ca9b6a6a5ed6913cf4c1933d587446904d8c0178b4bc88b3"
+      },
+      {
+        "path": "mcp/README.md",
+        "lines": 85,
+        "sha256": "68155fe9a381bcbe8e9e18391e23bd76ec1dc7ce6ab2a55b2460a2b35b8d1392"
+      },
+      {
+        "path": "trainer/manifest.json",
+        "lines": 36,
+        "sha256": "7eb9e54e501a39ccba44ed52e4ad3c152dc9e7a952342f2786b8e045e6900f34"
+      }
+    ],
+    "audio_example_count": 147,
+    "trainer_sound_categories": [
+      "trainer.session_start",
+      "trainer.remind",
+      "trainer.log",
+      "trainer.complete",
+      "trainer.slacking"
+    ]
+  },
+  "peonping_findings": [
+    {
+      "finding_id": "pp-001",
+      "summary": "PeonPing maps coding-agent events to CESP sound categories: session.start, task.complete, task.acknowledge, input.required, task.error, resource.limit, and user.spam.",
+      "source_refs": [
+        "README.md:233-247"
+      ]
+    },
+    {
+      "finding_id": "pp-002",
+      "summary": "PeonPing exposes setup/CLI controls for volume, categories, packs, per-pack sound enable/disable, desktop notifications, overlay/standard notification style, notification position/dismissal, templates, preview, and mobile push.",
+      "source_refs": [
+        "README.md:262-314",
+        "README.md:390-494",
+        "config.json:1-68"
+      ]
+    },
+    {
+      "finding_id": "pp-003",
+      "summary": "PeonPing keeps sounds, desktop popups, and mobile push as independent controls rather than one notification switch.",
+      "source_refs": [
+        "README.md:430-446"
+      ]
+    },
+    {
+      "finding_id": "pp-004",
+      "summary": "PeonPing supports mobile notifications via ntfy.sh, Pushover, and Telegram, but current inspected sources did not show Slack or Discord channels as built-in PeonPing destinations.",
+      "source_refs": [
+        "README.md:1396-1452",
+        "peon.sh:1094-1135"
+      ]
+    },
+    {
+      "finding_id": "pp-005",
+      "summary": "PeonPing supports local/custom pack ideas through sound pack install/use/bind, local pack install, disabled per-sound entries, MCP play_sound, and trainer custom voice-line folders.",
+      "source_refs": [
+        "README.md:276-309",
+        "README.md:665-681",
+        "mcp/README.md:1-85",
+        "trainer/manifest.json:1-36"
+      ]
+    },
+    {
+      "finding_id": "pp-006",
+      "summary": "PeonPing includes focus/meeting/headphones/silent-window/subagent suppression controls that are useful noise-governance patterns for PM, but should be adapted into PM attention-routing authority rather than copied as hook-script config.",
+      "source_refs": [
+        "README.md:456-492",
+        "config.json:15-40"
+      ]
+    }
+  ],
+  "pm_plan_findings": [
+    {
+      "finding_id": "pm-001",
+      "summary": "PM already has a shared notification routing policy for Dashboard Action Required, thread badges, run-graph badges, toasts/banners, tray/system notifications, rate-limit banners, blocked versus attention-required copy, and canonical owner route preservation.",
+      "source_refs": [
+        "Plans/FinalGUISpec.md:66-72",
+        "Plans/FinalGUISpec.md:1307-1358",
+        "Plans/Orchestrator_Page.md:277-312",
+        "Plans/storage-plan.md:608-618"
+      ]
+    },
+    {
+      "finding_id": "pm-002",
+      "summary": "PM already includes optional sound effects through rodio, but only as a narrow accessibility-boundary requirement and audio module layout/risk; it does not specify user-uploaded sounds, sound packs, normal vs custom vs PeonPing sound libraries, or per-destination settings.",
+      "source_refs": [
+        "Plans/FinalGUISpec.md:182",
+        "Plans/FinalGUISpec.md:1837-1839",
+        "Plans/FinalGUISpec.md:13349-13394",
+        "Plans/FinalGUISpec.md:14645-14681",
+        "Plans/FinalGUISpec.md:17428-17465"
+      ]
+    },
+    {
+      "finding_id": "pm-003",
+      "summary": "PM already has adopted HITL/run-complete notification requirements and a run-complete opt-out setting in Assistant Chat, plus GitHub Actions notification prefs for failure/success; these are not a unified notification center or cross-channel delivery matrix.",
+      "source_refs": [
+        "Plans/assistant-chat-design.md:13874-13901",
+        "Plans/storage-plan.md:966-968"
+      ]
+    },
+    {
+      "finding_id": "pm-004",
+      "summary": "Search did not find canonical Slack, Discord, PeonPing, OpenPeon, ntfy, Pushover, or Telegram notification integrations in live non-ledger Plans; `webhook or push notification` appears only as aspirational/not-MVP for remote Git fetch.",
+      "source_refs": [
+        "Plans/storage-plan.md:262"
+      ]
+    }
+  ],
+  "recommended_pm_direction": [
+    "Add a unified Notification and Sound Settings surface in GUI, not scattered per-feature toggles.",
+    "Keep existing PM attention-routing semantics authoritative; external channels are delivery destinations, not owners of alert truth.",
+    "Support destinations: in-app toast/banner, system/tray notification, sound, Slack webhook, Discord webhook, and a generic webhook/mobile-push extension point.",
+    "Support built-in normal notification sounds, PeonPing/OpenPeon-compatible sound-pack import or source-lineage adaptation, and user-uploaded custom sounds.",
+    "Do not bundle third-party/game voice packs unless licensing is explicitly verified; user-imported packs should be treated as user assets.",
+    "Store webhook credentials/secrets through PM secret storage; never log webhook URLs/tokens or expose them in exported ordinary settings.",
+    "Add preview/test affordances for every destination and sound mapping, plus accessibility/noise controls such as quiet hours, focus/DND respect, and per-event severity defaults."
+  ],
+  "open_product_questions": [
+    "Which `etc` notification destinations are MVP beyond Slack and Discord: generic webhook, ntfy, Pushover, Telegram, email, or mobile push?",
+    "Should PM ship any PeonPing-style sound packs by default, or support PeonPing/OpenPeon-compatible imports while shipping only clean built-in normal sounds until licensing is verified?",
+    "Which events should make sound by default versus require opt-in?",
+    "Should notification/sound settings be global-only initially, or global defaults plus per-project overrides?"
+  ],
+  "accepted_resolutions": [
+    {
+      "question_id": "q-0008",
+      "resolution": "MVP planning includes generic webhook plus mobile push candidates ntfy, Pushover, and Telegram in addition to Slack, Discord, in-app toast/banner, system/tray, and sound.",
+      "source_ref": "chat:notifications-sounds-defaults-yeses",
+      "exact_tokens": [
+        "we can add ntfy/pushover/telegram as well.",
+        "1. yes"
+      ]
+    },
+    {
+      "question_id": "q-0009",
+      "resolution": "PM supports PeonPing/OpenPeon-compatible pack import and user-provided PeonPing packs while shipping only clean built-in normal sounds until licensing is verified.",
+      "source_ref": "chat:notifications-sounds-defaults-yeses",
+      "exact_tokens": [
+        "2. yes"
+      ]
+    },
+    {
+      "question_id": "q-0010",
+      "resolution": "Sound defaults are on for input/approval required, blocked/escalated, failures, rate/resource limits, and long-running completion; routine run start, routine run complete, artifact published, and repeated-prompt/user-spam stay visual-only unless enabled.",
+      "source_ref": "chat:notifications-sounds-defaults-yeses",
+      "exact_tokens": [
+        "3. yes"
+      ]
+    },
+    {
+      "question_id": "q-0011",
+      "resolution": "Notification and sound settings use global defaults plus per-project overrides from the start.",
+      "source_ref": "chat:notifications-sounds-defaults-yeses",
+      "exact_tokens": [
+        "4. yes"
+      ]
+    }
+  ]
+}

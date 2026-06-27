@@ -1,0 +1,36 @@
+{
+  "created_at_utc": "2026-06-27T17:13:41Z",
+  "files": {
+    "blockers": "records/blockers.jsonl",
+    "compile_queue": "state/compile_queue.json",
+    "corrections": "records/corrections.jsonl",
+    "current_state": "state/current.json",
+    "decisions": "records/decisions.jsonl",
+    "design_atoms": "records/design_atoms.jsonl",
+    "events": "events.jsonl",
+    "handoff": "state/handoff.json",
+    "open_items": "state/open_items.json",
+    "operating_capsule": "state/operating_capsule.json",
+    "questions": "records/questions.jsonl"
+  },
+  "governance_status": "not_started",
+  "last_event_id": "evt-0012",
+  "last_validation_summary": "Bootstrap ledger validator pass; reviewed gui_related warnings for atom-0016 and atom-0027 remain known; DRY Method outside planned docs item has three open questions.",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "notes": "Ledger-only DRY Method outside planned docs intake recorded. Accepted scope/risk atoms identify that DRY_Rules.md is plan-document scoped while agent-rules-context.md already provides the single rules pipeline and Instruction Bundle route for Assistant, Interview, Orchestrator, and delegated child runs. Open q-0014 through q-0016 cover default scope, unresolved-owner fallback, and Assistant Chat visibility. No canonical Plans, generated governance artifacts, PlanUnit indexes, WorkNodes, NodeSeeds, executable queues, implementation files, or build/runtime surfaces were created or updated.",
+  "phase": "active_conversational_planning",
+  "profile": "bootstrap_planning",
+  "record_counts": {
+    "blockers": 0,
+    "corrections": 1,
+    "decisions": 16,
+    "design_atoms": 45,
+    "events": 12,
+    "questions": 16
+  },
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "source_context": "User requested PM Bootstrap Planning Ledger for `Feature: <feature name>` on 2026-06-27. Jared then clarified this ledger covers `a number of miscellaneous items`; the first item is comparing PM inline chat visualizer features with the updated `Classic298/open-webui-plugins/inline-visualizer-v2` code because the upstream visualizer basis evolved and improved.",
+  "status": "active",
+  "title": "Miscellaneous Feature Intake Planning",
+  "updated_at_utc": "2026-06-27T20:47:54Z"
+}

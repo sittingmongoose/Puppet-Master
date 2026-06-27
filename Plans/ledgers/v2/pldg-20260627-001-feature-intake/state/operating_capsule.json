@@ -1,0 +1,84 @@
+{
+  "agent_task": "continue_feature_design_conversation_or_compile_when_explicitly_requested",
+  "allowed_reads_default": [
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/operating_capsule.json",
+    "records/design_atoms.jsonl",
+    "records/decisions.jsonl",
+    "records/questions.jsonl"
+  ],
+  "allowed_writes_during_compile": [
+    "Only after Jared explicitly requests compile: live non-pipeline Plans/** owner docs needed for accepted PlanUnits and allowed Plans/.plan_index/** outputs."
+  ],
+  "allowed_writes_during_conversation": [
+    "events.jsonl",
+    "records/*.jsonl",
+    "state/*.json",
+    "source_shards/*.json"
+  ],
+  "allowed_writes_during_governance_seal": [
+    "Only after Jared explicitly requests governance seal/refresh: generated Spec Lock/shards/evidence/plan graph/auto_decisions via repo scripts, never hand edits."
+  ],
+  "allowed_writes_during_index_phase": [
+    "Only after Jared explicitly requests a PlanUnit index phase: Plans/.plan_index/** outputs."
+  ],
+  "capsule_id": "cap-feature-intake-current",
+  "completion_blockers_visible_to_agent": [
+    "open_questions",
+    "unclassified_candidates",
+    "unresolved_contradictions",
+    "open_blockers",
+    "unsealed_governance",
+    "missing_gui_related_classification",
+    "worknode_creation_requested_before_contract"
+  ],
+  "current_phase": "active_conversational_planning",
+  "forbidden_until_explicit_compile_or_governance_seal": [
+    "Plans/.plan_index/**",
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues",
+    "Plans/Spec_Lock.json",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/plan_graph.json",
+    "Plans/auto_decisions.jsonl",
+    "Plans/** live canonical plan prose before explicit compile",
+    "generated governance artifacts before explicit governance seal"
+  ],
+  "governance_status": "not_started",
+  "last_event_id": "evt-0012",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "ledger_profile": "bootstrap_planning",
+  "must_not_read_by_default": [
+    "events.jsonl",
+    "source_shards/**",
+    "Plans/ledgers/work_items/**",
+    "**/working_ledger.md"
+  ],
+  "next_action": "Ask Jared to resolve q-0014 through q-0016 for the DRY Method outside planned docs item; keep the work ledger-only until explicit compile.",
+  "next_safe_action": "Continue the DRY Method outside planned docs planning conversation by settling default scope, unresolved-owner fallback, and visible Assistant Chat evidence.",
+  "phase": "active_conversational_planning",
+  "required_end_of_turn_actions": [
+    "append_turn_event",
+    "upsert_design_atoms",
+    "update_questions_blockers",
+    "update_handoff_projection",
+    "classify_gui_related",
+    "preserve_node_readiness_boundary"
+  ],
+  "schema_id": "pm.operating_capsule.v1",
+  "updated_at_utc": "2026-06-27T20:47:54Z",
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "governance_status": "not_started",
+    "last_validated_at_utc": "2026-06-27T20:47:54Z",
+    "ledger_health": "pass_active_conversational_planning",
+    "validator_warnings": [
+      "review gui_related=false on GUI-looking atom: atom-0016",
+      "review gui_related=false on GUI-looking atom: atom-0027"
+    ]
+  }
+}

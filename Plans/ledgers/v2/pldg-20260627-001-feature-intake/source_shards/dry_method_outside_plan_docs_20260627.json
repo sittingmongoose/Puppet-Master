@@ -1,0 +1,86 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "shard_id": "dry_method_outside_plan_docs_20260627",
+  "created_at_utc": "2026-06-27T20:39:40Z",
+  "source_prompt": "Ok next item, we need to figure out how to get assistant to keep using dry method outside of planned docs.",
+  "source_refs": [
+    "chat:dry-method-outside-planned-docs",
+    "Plans/DRY_Rules.md:15-20",
+    "Plans/DRY_Rules.md:36-48",
+    "Plans/DRY_Rules.md:100-131",
+    "Plans/agent-rules-context.md:30-37",
+    "Plans/agent-rules-context.md:43-46",
+    "Plans/agent-rules-context.md:56-88",
+    "Plans/agent-rules-context.md:98-147",
+    "Plans/assistant-chat-design.md:1878-1914",
+    "Plans/assistant-chat-design.md:1996-2001"
+  ],
+  "current_docs_observations": [
+    {
+      "observation_id": "dry-src-001",
+      "summary": "Plans/DRY_Rules.md is explicitly scoped to anti-drift rules for plan documents, including SSOT references and ContractRef gating.",
+      "evidence_refs": [
+        "Plans/DRY_Rules.md:15-20"
+      ],
+      "risk": "If this remains the only explicit DRY definition, implementers may treat non-Plan assistant outputs as outside scope."
+    },
+    {
+      "observation_id": "dry-src-002",
+      "summary": "Plans/agent-rules-context.md already says project-level rules such as `Always use DRY Method` apply to every agent that works on that project, and both Application and Project rules flow through a single rules pipeline.",
+      "evidence_refs": [
+        "Plans/agent-rules-context.md:33-37",
+        "Plans/agent-rules-context.md:77-88"
+      ],
+      "risk": "This creates a good implementation route, but it does not by itself define what DRY adherence means for non-Plan output artifacts."
+    },
+    {
+      "observation_id": "dry-src-003",
+      "summary": "The single rules pipeline and Instruction Bundle route already covers Assistant, Interview, Orchestrator, and delegated child runs, and forbids copy-paste of rules into multiple prompt builders.",
+      "evidence_refs": [
+        "Plans/agent-rules-context.md:43-46",
+        "Plans/agent-rules-context.md:77-88",
+        "Plans/agent-rules-context.md:129-147"
+      ],
+      "risk": "The future compile should extend semantics through this route rather than inventing a separate Assistant-only DRY source."
+    },
+    {
+      "observation_id": "dry-src-004",
+      "summary": "Assistant Chat already has deterministic bundle ordering and an Injected Context visibility requirement that can host rules/DRY disclosure without creating a separate visible model.",
+      "evidence_refs": [
+        "Plans/assistant-chat-design.md:1878-1914"
+      ],
+      "risk": "The existing UI could show context contents but still fail to indicate DRY owner/source checks unless that state is specified."
+    },
+    {
+      "observation_id": "dry-src-005",
+      "summary": "Assistant/Interview generated content already mentions DRY Method enforcement for documentation and plans, but the user request asks for assistant behavior outside planned docs too.",
+      "evidence_refs": [
+        "Plans/assistant-chat-design.md:1996-2001"
+      ],
+      "risk": "Generated non-Plan artifacts such as scripts, code, tests, README content, and config could still duplicate owners unless covered explicitly."
+    }
+  ],
+  "initial_candidate_shape": {
+    "delivery_mechanism": "Existing single rules pipeline plus deterministic Instruction Bundle.",
+    "behavior_surface": "Assistant chat answers, code edits, generated files, scripts, tests, READMEs, config, runtime prompts, document builders, Interview, Orchestrator, and delegated child-agent work.",
+    "core_behavior": [
+      "Identify owner artifact/module/schema/config/component before canonical claims or mutations when one exists.",
+      "Reuse existing helpers, components, schemas, enums, event names, settings, storage keys, and owner definitions.",
+      "Distinguish source-of-truth, projection, summary, compatibility-only, and source-lineage material.",
+      "Carry owner refs in generated non-Plan artifacts where that prevents drift."
+    ],
+    "open_decisions": [
+      "Whether DRY Method is default application-level, project-level only, or both.",
+      "Whether unresolved owner/source routes block mutation or only warn.",
+      "Whether visible Assistant Chat DRY/rules evidence is always compactly shown or only surfaced on degraded trust states."
+    ]
+  },
+  "negative_constraints": [
+    "Do not write canonical Plans during this ledger-only turn.",
+    "Do not solve by copy-pasting `DRY Method` into multiple prompt builders.",
+    "Do not create a shadow instruction source that the runtime rules pipeline does not read.",
+    "Do not limit DRY Method to canonical Plans prose if Jared wants assistant behavior outside planned docs.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or PlanUnit indexes from this planning item."
+  ]
+}

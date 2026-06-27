@@ -1,0 +1,103 @@
+{
+  "blocking_defects": [],
+  "checks": [
+    {
+      "check_id": "inline-visualizer-decisions-0008",
+      "status": "pass_with_open_questions",
+      "summary": "Recorded Jared's `Yes, yes, yes` as accepted decisions for PM-native streaming, bridge aliases, and PM-managed per-message visual state."
+    },
+    {
+      "check_id": "boundary-0009",
+      "status": "pass",
+      "summary": "All work stayed ledger-only and did not touch canonical Plans, generated governance artifacts, PlanUnit indexes, WorkNodes, NodeSeeds, executable queues, or build/runtime surfaces."
+    },
+    {
+      "check_id": "inline-visualizer-defaults-0011",
+      "status": "pass",
+      "summary": "Recorded Jared's `That all sounds great.` as accepted defaults for design system, library scope, and feedback/audio policy."
+    },
+    {
+      "check_id": "notifications-sounds-peonping-0013",
+      "status": "pass",
+      "summary": "Recorded notification/sound/PeonPing planning item, PM plan coverage comparison, accepted core scope, and open product questions."
+    },
+    {
+      "check_id": "notifications-sounds-defaults-0015",
+      "status": "pass",
+      "summary": "Recorded Jared answers for q-0008 through q-0011 and cleared notification/sound open questions."
+    },
+    {
+      "check_id": "compaction-status-check-0017",
+      "status": "superseded_by_scope_correction",
+      "summary": "Initial compaction status record included an incorrect code-evidence framing; superseded by corr-0001."
+    },
+    {
+      "check_id": "compaction-scope-correction-0018",
+      "status": "pass",
+      "summary": "Recorded Jared's correction that PM compaction status must be judged from Plans docs, not Codex chat or missing PM code."
+    },
+    {
+      "check_id": "compaction-implementation-readiness-0020",
+      "status": "superseded_by_ready_closure",
+      "summary": "Prior not-ready status while q-0013 was open is superseded by dec-0015 and atom-0038."
+    },
+    {
+      "check_id": "compaction-implementation-ready-0021",
+      "status": "pass",
+      "summary": "Manual compaction / Compact Now is implementation-ready in the ledger and source-prepared for future explicit compile via state/compaction_readiness_matrix.json."
+    },
+    {
+      "check_id": "bootstrap-ledger-validator-0022",
+      "status": "pass_with_reviewed_warnings",
+      "summary": "pm-bootstrap-ledger-validate.py returned status=pass with reviewed warnings for atom-0016 and atom-0027 gui_related=false classifications."
+    },
+    {
+      "check_id": "dry-method-outside-plan-docs-0023",
+      "status": "pass_with_open_questions",
+      "summary": "Recorded DRY Method outside planned docs intake, accepted the single-rules-pipeline route, and opened q-0014 through q-0016 for default scope, unresolved-owner fallback, and Assistant Chat visibility."
+    }
+  ],
+  "last_event_id": "evt-0012",
+  "last_validated_at_utc": "2026-06-27T20:47:54Z",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "notes": "DRY Method outside planned docs intake recorded. Ledger validator passes with two reviewed gui_related warnings: atom-0016 remains non-GUI storage authority; atom-0027 remains non-GUI validation/test authority. q-0014 through q-0016 remain open, and atom-0042 through atom-0045 remain candidate until scope, fallback, and visibility defaults are accepted.",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_active_conversational_planning",
+  "summary": {
+    "blockers": 0,
+    "candidate_atoms": 4,
+    "compile_queue_items": 0,
+    "corrections": 1,
+    "decisions": 16,
+    "deferred_questions": 0,
+    "design_atoms": 45,
+    "events": 12,
+    "governance_seal": "not_started",
+    "governance_status": "not_started",
+    "not_for_plan_atoms": 5,
+    "open_blockers": 0,
+    "open_questions": 3,
+    "questions": 16,
+    "ready_for_plan_compile_atoms": 0
+  },
+  "updated_at_utc": "2026-06-27T20:47:54Z",
+  "validator_results": {
+    "errors": [],
+    "ran_at_utc": "2026-06-27T20:47:54Z",
+    "script": "scripts/pm-bootstrap-ledger-validate.py",
+    "status": "pass",
+    "summary": {
+      "atoms": 45,
+      "compile_queue_items": 0,
+      "corrections": 1,
+      "decisions": 16,
+      "events": 12,
+      "plan_units_checked": 0,
+      "questions": 16
+    },
+    "warnings": [
+      "review gui_related=false on GUI-looking atom: atom-0016",
+      "review gui_related=false on GUI-looking atom: atom-0027"
+    ]
+  }
+}
