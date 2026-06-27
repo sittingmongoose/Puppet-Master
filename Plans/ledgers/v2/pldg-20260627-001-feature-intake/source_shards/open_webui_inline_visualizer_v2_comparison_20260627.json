@@ -1,0 +1,99 @@
+{
+  "comparison_id": "cmp-0001",
+  "comparison_rows": [
+    {
+      "disposition": "candidate_pm_native_streaming_protocol",
+      "pm_current": "Plans define sandboxed inline visual module cards and host-mediated resize, but not a full PM-native streaming marker/feed protocol.",
+      "risk": "Do not copy parent DOM scraping or allow-same-origin dependency into PM.",
+      "topic": "rendering_protocol",
+      "upstream_v2": "visualize(title) mounts an empty iframe; model streams HTML/SVG between @@@VIZ-START and @@@VIZ-END; same-origin observer tails parent chat DOM and renders token-by-token."
+    },
+    {
+      "disposition": "hard_conflict_literal_import_invalid",
+      "pm_current": "PM denies allow-same-origin, allow-forms, allow-popups, and allow-top-navigation; postMessage is the only allowed bridge.",
+      "risk": "Same-origin escalation would violate current PM canon and weaken isolation.",
+      "topic": "sandbox_security",
+      "upstream_v2": "Requires Open WebUI iframe Sandbox Allow Same Origin; with it, visualization JS can reach the parent page."
+    },
+    {
+      "disposition": "candidate_bridge_parity_with_pm_names_or_aliases",
+      "pm_current": "sendPrompt, openLink, copyToClipboard, requestResize, question-flow narrowing, local visual-state queues.",
+      "risk": "Raw parent.localStorage must not become PM state authority.",
+      "topic": "bridge_api",
+      "upstream_v2": "sendPrompt, openLink, copyText, toast, saveState, loadState."
+    },
+    {
+      "disposition": "candidate_expand_pm_visual_module_design_tokens",
+      "pm_current": "Minimal PM visualizer theme tokens are locked; hardcoded replacement colors are prohibited.",
+      "risk": "Must align with PM design system and Rust/Slint host styling, not copy Open WebUI CSS wholesale.",
+      "topic": "design_system",
+      "upstream_v2": "9 color ramps, data-accent, pre-styled bare HTML controls, aria-invalid and focus-visible defaults, SVG utilities."
+    },
+    {
+      "disposition": "candidate_library_catalog_not_direct_allowlist",
+      "pm_current": "Default allowlist is empty; libraries require bundled, version-pinned, integrity-recorded, license/security-reviewed entries; CDN fetches and dynamic network imports are prohibited.",
+      "risk": "V2 library list is useful as candidate coverage, not as permission to load remote scripts.",
+      "topic": "third_party_libraries",
+      "upstream_v2": "Skill documents CDN usage for Chart.js, D3, Vega-Lite, ECharts, Plotly, vis-network, Tone.js/Wavesurfer; strict CSP allowlists CDN script hosts."
+    },
+    {
+      "disposition": "candidate_pm_renderer_requirements",
+      "pm_current": "PM does not yet spell out incremental visual-stream reconciliation details.",
+      "risk": "Without these, streaming visual modules can flicker, remount, lose chart canvases, or capture false markers.",
+      "topic": "incremental_rendering_resilience",
+      "upstream_v2": "Safe-cut parser, append-only reconciler, script serialization, script-populated container preservation, TreeWalker exclusions for tool/reasoning/code details, guarded observers and poll fallback."
+    },
+    {
+      "disposition": "candidate_accessible_feedback_policy",
+      "pm_current": "PM visualizer plans do not yet specify visualizer-specific localized feedback or audio behavior.",
+      "risk": "Audio should be opt-in or off by default unless Jared explicitly wants it.",
+      "topic": "feedback_i18n_audio",
+      "upstream_v2": "46-language localization for loader/unavailable/copied/ready/download strings, ready toast, optional chime valve."
+    }
+  ],
+  "created_at_utc": "2026-06-27T17:29:41Z",
+  "external_source": {
+    "clone_url": "https://github.com/Classic298/open-webui-plugins.git",
+    "commit": "7db77c5320169d10fd2b5e0b1ee8ab09726d4d4d",
+    "commit_date": "2026-06-16T09:21:52+02:00",
+    "commit_subject": "Update README.md",
+    "files": [
+      {
+        "bytes": 30553,
+        "lines": 438,
+        "path": "inline-visualizer-v2/README.md",
+        "sha256": "79f41500d57f3d5473cfbfb970b3276f8207e8476db55ecd8cc12ed314bcf8b1"
+      },
+      {
+        "bytes": 41459,
+        "lines": 727,
+        "path": "inline-visualizer-v2/SKILL.md",
+        "sha256": "61e398e4e507b55d9b3d3b27e28ed20f38a46f96e6253597e6f27bf9853cc1ea"
+      },
+      {
+        "bytes": 124094,
+        "lines": 2901,
+        "path": "inline-visualizer-v2/tool.py",
+        "sha256": "1012bcde56bb13f698862fb096103353cd5339d448e347abaecaedd8a27f0a99"
+      }
+    ],
+    "path": "inline-visualizer-v2",
+    "url": "https://github.com/Classic298/open-webui-plugins/tree/main/inline-visualizer-v2"
+  },
+  "high_level_result": "PM already has a stronger static/sandboxed inline visual module contract than a naive v1 import, but upstream v2 adds live streaming, richer bridges, pre-styled primitives, a larger visual design system, localization, robust incremental reconciliation, and a broader library catalog. Literal adoption conflicts with PM security because upstream v2 requires allow-same-origin and parent DOM access, while PM plans deny allow-same-origin and require postMessage-only cross-boundary communication.",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "pm_plan_refs": [
+    "Plans/assistant-chat-design.md:2489-2515",
+    "Plans/assistant-chat-design.md:16369-16869",
+    "Plans/FinalGUISpec.md:3502-3524",
+    "Plans/FinalGUISpec.md:24563-24590"
+  ],
+  "recommended_direction": [
+    "Keep Open WebUI v2 as source-lineage/reference-only.",
+    "Adopt the live streaming user experience as a PM-native host-fed visual stream if Jared wants it.",
+    "Do not adopt same-origin parent DOM scanning; PM should parse model stream/events in the host and feed sanitized fragments to the iframe through a controlled channel.",
+    "Expand PM bridge/design-system/library requirements only after resolving persistence, bridge naming, library allowlist, and audio/notification defaults."
+  ],
+  "schema_id": "pm.external_source_comparison.v1",
+  "title": "Open WebUI inline-visualizer-v2 comparison against PM inline visual module plans"
+}

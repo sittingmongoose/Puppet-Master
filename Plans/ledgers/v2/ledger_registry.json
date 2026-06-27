@@ -1,5 +1,48 @@
 {
-  "active_ledgers": [],
+  "active_ledgers": [
+    {
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "title": "Miscellaneous Feature Intake Planning",
+      "status": "active",
+      "phase": "active_conversational_planning",
+      "governance_status": "not_started",
+      "primary_goal": "Collaboratively clarify and shape miscellaneous PM feature items, starting with inline chat visualizer parity against upstream inline-visualizer-v2, before any canonical Plans edits.",
+      "created_at_utc": "2026-06-27T17:13:41Z",
+      "last_updated_at": "2026-06-27T20:47:54Z",
+      "last_updated_at_utc": "2026-06-27T20:47:54Z",
+      "updated_at_utc": "2026-06-27T20:47:54Z",
+      "resume_file": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/handoff.json",
+      "canonical_plan_targets": [],
+      "notes": "Active conversational ledger. Inline visualizer v2 and notification/sound planning questions are answered. Compaction / Compact Now is implementation-ready in the ledger and source-prepared for future explicit compile via state/compaction_readiness_matrix.json. DRY Method outside planned docs is newly recorded: accepted scope/risk atoms route enforcement through the existing single rules pipeline and Instruction Bundle, while q-0014 through q-0016 remain open for default scope, unresolved-owner fallback, and Assistant Chat visibility. No canonical Plans, generated governance artifacts, PlanUnit indexes, WorkNodes, NodeSeeds, executable queues, implementation files, or build/runtime surfaces were created or updated.",
+      "last_event_id": "evt-0012",
+      "validation_summary": "Bootstrap ledger validator pass; reviewed gui_related warnings for atom-0016 and atom-0027 remain known; DRY Method outside planned docs item has three open questions.",
+      "candidate_compile_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Modes.md",
+        "Plans/Models_System.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Progression_Gates.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/agent-rules-context.md",
+        "Plans/DRY_Rules.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Decision_Policy.md"
+      ]
+    }
+  ],
   "compiled_ledgers": [
     {
       "canonical_plan_targets": [
@@ -722,5 +765,5 @@
       "validation_summary": "Post-repair semantic certification complete; repair_required_count=0; governance, closure, index, migration, shard, evidence, Spec Lock, plan graph, auto decisions, run-gates, and diff hygiene pass; node readiness remains blocked_compiler_contract_incomplete."
     }
   ],
-  "updated_at_utc": "2026-06-27T16:11:50Z"
+  "updated_at_utc": "2026-06-27T18:49:21Z"
 }

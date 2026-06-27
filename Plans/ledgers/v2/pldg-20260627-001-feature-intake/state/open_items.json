@@ -1,0 +1,91 @@
+{
+  "compile_open_items": [
+    {
+      "item_id": "coi-0001",
+      "linked_question_ids": [
+        "q-0014",
+        "q-0015",
+        "q-0016"
+      ],
+      "status": "open",
+      "summary": "DRY Method outside planned docs is not implementation-ready for future compile until default rule scope, unresolved-owner fallback, and Assistant Chat visibility/audit boundary are settled."
+    }
+  ],
+  "deferred_questions": [],
+  "governance_status": "not_started",
+  "last_event_id": "evt-0012",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "notes": "DRY Method outside planned docs intake is recorded ledger-only. Accepted scope routes through the existing single rules pipeline and Instruction Bundle; q-0014 through q-0016 remain open for default application/project scope, unresolved-owner fallback, and visible Assistant Chat evidence. Compile remains unopened until explicit future request.",
+  "open_blockers": [],
+  "open_questions": [
+    {
+      "question_id": "q-0014",
+      "linked_atom_ids": [
+        "atom-0039",
+        "atom-0041",
+        "atom-0045"
+      ],
+      "status": "open",
+      "summary": "Should DRY Method become a default application-level rule for all PM agent work while project-specific DRY conventions remain project-level, or remain project-level/opt-in only?"
+    },
+    {
+      "question_id": "q-0015",
+      "linked_atom_ids": [
+        "atom-0042",
+        "atom-0043",
+        "atom-0045"
+      ],
+      "status": "open",
+      "summary": "When the assistant cannot resolve a DRY owner/source route, should canonical or implementation-changing work block while exploratory chat proceeds with a caveat, or should all work proceed with warning?"
+    },
+    {
+      "question_id": "q-0016",
+      "linked_atom_ids": [
+        "atom-0044"
+      ],
+      "status": "open",
+      "summary": "Should Assistant Chat show compact visible rules/DRY evidence per turn/run or keep it audit/receipt-only unless missing or stale?"
+    }
+  ],
+  "post_compile_pending_items": [],
+  "remaining_phase_boundaries": [
+    {
+      "item_id": "rpb-0001",
+      "kind": "compile_boundary",
+      "status": "intentionally_blocked_until_explicit_future_phase",
+      "summary": "Canonical Plans, PlanUnit indexes, governance artifacts, NodeSeeds, WorkNodes, executable queues, and implementation files are out of scope until Jared explicitly requests compile, index, governance seal, or implementation work."
+    }
+  ],
+  "resolved_contradictions": [
+    {
+      "item_id": "uc-0001",
+      "linked_atom_ids": [
+        "atom-0007",
+        "atom-0008"
+      ],
+      "linked_decision_ids": [
+        "dec-0003"
+      ],
+      "status": "resolved_by_decision",
+      "summary": "Resolved by dec-0003: PM adopts streaming only as a host-fed PM-native stream; upstream same-origin parent DOM access remains rejected."
+    },
+    {
+      "item_id": "uc-0002",
+      "linked_atom_ids": [
+        "atom-0035",
+        "atom-0036",
+        "atom-0038"
+      ],
+      "linked_decision_ids": [
+        "dec-0015"
+      ],
+      "status": "resolved_by_decision",
+      "summary": "Resolved by dec-0015: prior not-ready blocker is superseded because q-0013 is answered and stale Plans/newfeatures.md owner/source residue is mandatory future compile cleanup."
+    }
+  ],
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
+  "unsealed_governance": [],
+  "updated_at_utc": "2026-06-27T20:47:54Z"
+}

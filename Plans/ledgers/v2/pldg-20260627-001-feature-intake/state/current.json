@@ -1,0 +1,104 @@
+{
+  "accepted_decisions_count": 16,
+  "candidate_atoms_count": 4,
+  "candidate_compile_owner_docs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/storage-plan.md",
+    "Plans/Permissions_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Commands_System.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/usage-feature.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Run_Modes.md",
+    "Plans/Models_System.md",
+    "Plans/Architecture_Invariants.md",
+    "Plans/Progression_Gates.md",
+    "Plans/human-in-the-loop.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/agent-rules-context.md",
+    "Plans/DRY_Rules.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/interview-subagent-integration.md",
+    "Plans/Decision_Policy.md"
+  ],
+  "canonical_plan_targets": [],
+  "compiled_owner_docs": [],
+  "compiled_plan_outputs": [],
+  "cursor": {
+    "last_decision_id": "dec-0016",
+    "last_event_id": "evt-0012",
+    "last_question_id": "q-0016",
+    "next_action": "Ask Jared to resolve q-0014 through q-0016 for the DRY Method outside planned docs item; keep the work ledger-only until explicit compile.",
+    "next_atom_id": "atom-0046",
+    "next_decision_id": "dec-0017",
+    "next_event_id": "evt-0013",
+    "next_question_id": "q-0017"
+  },
+  "deferred_questions_count": 0,
+  "design_atoms_total": 45,
+  "governance_status": "not_started",
+  "last_completed_action": "Recorded the DRY Method outside planned docs planning item, compared DRY_Rules versus agent-rules-context coverage, accepted the single-rules-pipeline route, and opened q-0014 through q-0016 for scope, fallback, and Assistant Chat visibility.",
+  "last_event_id": "evt-0012",
+  "last_known_good_state": "Ledger-only DRY Method outside planned docs intake recorded. Current docs show DRY_Rules.md is plan-document scoped while agent-rules-context.md already defines a single application/project rules pipeline and Instruction Bundle consumed by Assistant, Interview, Orchestrator, and delegated child runs. Accepted atoms cover extending DRY expectations beyond planned docs and enforcing them through one rules pipeline. Candidate atoms remain open for non-Plan assistant behavior, unresolved-owner fallback, visible Assistant Chat evidence, and validation. No canonical Plans edits, generated governance artifacts, PlanUnit indexes, WorkNodes, NodeSeeds, executable queues, implementation files, or build/runtime surfaces were created or updated.",
+  "latest_audit_ref": null,
+  "latest_audit_status": null,
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "must_not_do": [
+    "Do not write canonical Plans until Jared explicitly asks to compile the ledger.",
+    "Do not create or update Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions.",
+    "Do not treat this conversational design/spec thread as a Goal run.",
+    "Do not recreate the removed legacy Iced app unless explicitly asked.",
+    "Do not ask Jared to label GUI work; infer gui_related true/false.",
+    "Do not read full events.jsonl or source_shards/** by default unless compact state points to a specific source_ref.",
+    "Do not treat ledger/source memory as canonical product prose before explicit compile.",
+    "Do not import `Classic298/open-webui-plugins` code or Open WebUI runtime assumptions into PM canon without explicit compile/design acceptance.",
+    "Do not enable `allow-same-origin` for PM visual modules merely to mimic upstream streaming.",
+    "Do not use raw parent `localStorage` as PM durable state authority for visual modules.",
+    "Do not use Codex chat behavior as PM compaction evidence.",
+    "Do not expect product code evidence for PM while no PM code exists.",
+    "Do not frame Plans-doc completeness as implementation-code completeness.",
+    "Do not treat implementation-ready ledger status as compile permission.",
+    "Do not limit DRY Method to canonical Plans prose only.",
+    "Do not solve DRY Method persistence by copy-pasting rule prose into multiple prompt builders.",
+    "Do not create shadow instruction sources outside the runtime rules pipeline."
+  ],
+  "next_action": "Ask Jared to resolve q-0014 through q-0016 for the DRY Method outside planned docs item; keep the work ledger-only until explicit compile.",
+  "next_safe_action": "Continue the DRY Method outside planned docs planning conversation by settling default scope, unresolved-owner fallback, and visible Assistant Chat evidence.",
+  "open_blockers": [],
+  "open_blockers_count": 0,
+  "open_questions": [
+    {
+      "question_id": "q-0014",
+      "summary": "Should DRY Method become a default application-level rule for all PM agent work while project-specific DRY conventions remain project-level, or remain project-level/opt-in only?"
+    },
+    {
+      "question_id": "q-0015",
+      "summary": "When the assistant cannot resolve a DRY owner/source route, should canonical or implementation-changing work block while exploratory chat proceeds with a caveat, or should all work proceed with warning?"
+    },
+    {
+      "question_id": "q-0016",
+      "summary": "Should Assistant Chat show compact visible rules/DRY evidence per turn/run or keep it audit/receipt-only unless missing or stale?"
+    }
+  ],
+  "open_questions_count": 3,
+  "phase": "active_conversational_planning",
+  "ready_for_plan_compile_atoms": 0,
+  "schema_id": "pm.bootstrap_ledger_current_state.v1",
+  "title": "Miscellaneous Feature Intake Planning",
+  "updated_at_utc": "2026-06-27T20:47:54Z",
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "governance_status": "not_started",
+    "last_validated_at_utc": "2026-06-27T20:47:54Z",
+    "ledger_health": "pass_active_conversational_planning",
+    "validator_warnings": [
+      "review gui_related=false on GUI-looking atom: atom-0016",
+      "review gui_related=false on GUI-looking atom: atom-0027"
+    ]
+  }
+}
