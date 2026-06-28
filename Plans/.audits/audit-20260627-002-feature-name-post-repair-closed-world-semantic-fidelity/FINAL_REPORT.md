@@ -2,9 +2,9 @@
 
 Status: PASS_WITH_WARNINGS
 
-Ledger: `pldg-20260626-001-feature-name`  
-Baseline ref: `5432e92e8`  
-Subject ref: `909d47699`  
+Ledger: `pldg-20260626-001-feature-name`
+Baseline ref: `5432e92e8`
+Subject ref: `909d47699`
 Observation ref: `HEAD`
 
 Scope rows: 9862. Classified rows: 9862. Coverage: 100.0%.

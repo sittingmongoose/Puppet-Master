@@ -1,0 +1,663 @@
+{
+  "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+  "baseline_ref": "909d47699",
+  "changed_plan_unit_ids": [
+    "ATS-016",
+    "CV-298",
+    "F3-405",
+    "PDS-014",
+    "PLS-012",
+    "PS-124",
+    "RAP-039",
+    "SP-222",
+    "UCC-103",
+    "WM-039"
+  ],
+  "closed_findings": [
+    {
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "closure_evidence": [
+        "Plans/UI_Command_Catalog.md:7503",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_impact_matrix.jsonl"
+      ],
+      "closure_reason": "Removed the reciprocal UCC-103 -> F3-405 dependency while preserving valid notification command and acceptance-test downstream dependencies; regenerated the PlanUnit index so only the three baseline cycle components remain.",
+      "closure_status": "repaired",
+      "detail_keys": [
+        "depends_on",
+        "unblocks",
+        "cycle_components",
+        "build_order_blocked_nodes",
+        "downstream_blocked_nodes"
+      ],
+      "exact_tokens": [
+        "depends_on: [ACD-428, CV-298, SP-222, PS-124, UCC-103]",
+        "depends_on: [CV-298, F3-405, PS-124]",
+        "cycle-001",
+        "F3-405",
+        "UCC-103"
+      ],
+      "finding_family": "dependency_cycle",
+      "finding_key": "sfk-86db9520ada607519d81d553",
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "plan_unit_ids": [
+        "F3-405",
+        "UCC-103",
+        "WM-039",
+        "ATS-016"
+      ],
+      "registry_closure_id": "closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-001",
+      "schema_id": "pm.semantic_repair_closure.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [
+        "atom-0064",
+        "atom-0068",
+        "atom-0069"
+      ],
+      "source_row": "1",
+      "subject_ref": "8f377b33a",
+      "title": "Feature-intake introduced a new dependency cycle: F3-405 depends_on UCC-103 while UCC-103 depends_on F3-405; WM-039 and ATS-016 are blocked downstream."
+    },
+    {
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "closure_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:1527",
+        "Plans/Contracts_V0.md:18477",
+        "Plans/storage-plan.md:15653",
+        "Plans/Permissions_System.md:8366",
+        "Plans/Automated_Testing_System.md:1215",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_impact_matrix.jsonl"
+      ],
+      "closure_reason": "Added RAP-039 as the Runtime Artifacts owner for notification delivery receipt projection and export routing, then wired CV-298, SP-222, PS-124, and ATS-016 reciprocal dependency/unblock metadata to it.",
+      "closure_status": "repaired",
+      "detail_keys": [
+        "NotificationDeliveryAttemptReceipt",
+        "delivery attempt receipts",
+        "Runtime_Artifacts_Panel projection",
+        "export routing"
+      ],
+      "exact_tokens": [
+        "Delivery receipts record",
+        "delivery attempt receipts",
+        "Receipts, screenshots, exports, logs",
+        "Runtime_Artifacts_Panel"
+      ],
+      "finding_family": "notification_receipt_artifact_owner_gap",
+      "finding_key": "sfk-e19d99c878fe5bb3003d1896",
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/.plan_index/plan_units.jsonl"
+      ],
+      "plan_unit_ids": [
+        "CV-298",
+        "SP-222",
+        "PS-124",
+        "ATS-016"
+      ],
+      "registry_closure_id": "closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-002",
+      "schema_id": "pm.semantic_repair_closure.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [
+        "atom-0061",
+        "atom-0062",
+        "atom-0063",
+        "atom-0069",
+        "atom-0091"
+      ],
+      "source_row": "2",
+      "subject_ref": "8f377b33a",
+      "title": "Notification delivery receipts are defined in contract/storage/permission owners, but no notification/sound Runtime Artifacts PlanUnit owns user-visible projection/export routing."
+    },
+    {
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "closure_evidence": [
+        "scripts/pm-audit-closure.py",
+        "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_closure_matrix.jsonl"
+      ],
+      "closure_reason": "Added current repair closure rows for the five active feature-intake findings and refreshed semantic closure registry owner/closure evidence hashes through pm-audit-closure.",
+      "closure_status": "repaired",
+      "detail_keys": [
+        "pm-audit-closure.py validate",
+        "owner_evidence_hashes",
+        "closure_evidence_hashes",
+        "stale_hash_error_count",
+        "stale_registry_rows"
+      ],
+      "exact_tokens": [
+        "owner_evidence_hashes is stale",
+        "closure_evidence_hashes is stale",
+        "567",
+        "220"
+      ],
+      "finding_family": "closure_registry_currentness_failure",
+      "finding_key": "sfk-2c2724eecefb5f4a899ed133",
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "scripts/pm-audit-closure.py"
+      ],
+      "plan_unit_ids": [
+        "PDS-014",
+        "PLS-012"
+      ],
+      "registry_closure_id": "closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-003",
+      "schema_id": "pm.semantic_repair_closure.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": "3",
+      "subject_ref": "8f377b33a",
+      "title": "Closure registry validation fails with stale owner/closure evidence hashes after the feature-intake cycle."
+    },
+    {
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "closure_evidence": [
+        "Plans/.audits/audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md:5",
+        "Plans/.audits/audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md:6",
+        "Plans/.audits/audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md:7"
+      ],
+      "closure_reason": "Removed trailing whitespace from the prior generated feature-name post-repair audit report so current diff hygiene and the subject-range whitespace finding no longer require repair.",
+      "closure_status": "repaired",
+      "detail_keys": [
+        "git diff --check subject range",
+        "trailing whitespace"
+      ],
+      "exact_tokens": [
+        "Ledger: `pldg-20260626-001-feature-name`  ",
+        "Baseline ref: `5432e92e8`  ",
+        "Subject ref: `909d47699`  "
+      ],
+      "finding_family": "diff_validator_failure",
+      "finding_key": "sfk-66961e9860756a5854b98333",
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/.audits/audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md"
+      ],
+      "plan_unit_ids": [],
+      "registry_closure_id": "closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-004",
+      "schema_id": "pm.semantic_repair_closure.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": "4",
+      "subject_ref": "8f377b33a",
+      "title": "Working-tree git diff --check passes, but the subject range diff check fails on trailing whitespace introduced in a prior generated audit report included in the cycle."
+    },
+    {
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "closure_evidence": [
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/handoff.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/open_items.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/operating_capsule.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/manifest.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/validation/ledger_health.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/events.jsonl",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/corrections.jsonl",
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "closure_reason": "Synchronized feature-intake ledger projections to the repair certification artifacts, demoted the pre-repair readiness recheck to lineage-only, appended corr-0007 and evt-0030, and aligned registry/capsule timestamps with the repaired sealed state.",
+      "closure_status": "repaired",
+      "detail_keys": [
+        "latest_audit_ref",
+        "latest_audit_status",
+        "source_readiness_recheck_ref",
+        "operating_capsule.phase",
+        "operating_capsule.next_action"
+      ],
+      "exact_tokens": [
+        "implementation_readiness_fifth_recheck_20260628.json",
+        "not_implementation_ready__repair_required_before_sealed_handoff",
+        "sealed_governance__product_readiness_repaired__node_compiler_phase_boundary_remaining",
+        "compiled_pending_governance_seal"
+      ],
+      "finding_family": "ledger_projection_stale_readiness_ref",
+      "finding_key": "sfk-43dea7138d4c7af4469d8d25",
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/operating_capsule.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_fifth_recheck_20260628.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_repair_20260628.json"
+      ],
+      "plan_unit_ids": [],
+      "registry_closure_id": "closure-audit-20260628-001-feature-intake-closed-world-semantic-fidelity-repair-005",
+      "schema_id": "pm.semantic_repair_closure.v1",
+      "source_artifact": "semantic_risks.jsonl",
+      "source_atom_ids": [],
+      "source_row": "5",
+      "subject_ref": "8f377b33a",
+      "title": "Ledger projections still point latest_audit_ref/source_readiness_recheck_ref at the pre-repair fifth readiness check while claiming sealed product readiness; operating_capsule also remains on compiled_pending_governance_seal after evt-0029 sealed governance."
+    }
+  ],
+  "generated_at_utc": "2026-06-28T14:14:21Z",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "observation_ref": "HEAD",
+  "original_repair_required_count": 5,
+  "post_repair_repair_required_count": 0,
+  "repair_impact_rows": [
+    {
+      "_line_no": 1,
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "dependency_edges": [
+        "UCC-103 depends_on F3-405 removed",
+        "F3-405 depends_on UCC-103 retained",
+        "WM-039 remains downstream of F3-405 and UCC-103",
+        "ATS-016 remains downstream of F3-405, UCC-103, WM-039"
+      ],
+      "files": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "finding_family": "dependency_cycle",
+      "finding_key": "sfk-86db9520ada607519d81d553",
+      "governance_artifacts": [
+        "Plans/Spec_Lock.json",
+        "Plans/_shards/**",
+        "Plans/.evidence/**",
+        "Plans/plan_graph.json",
+        "Plans/auto_decisions.jsonl",
+        "Plans/.audits/_semantic_closure_registry.jsonl"
+      ],
+      "impact_id": "imp-157cd4a79511de9b8847478a",
+      "index_artifacts": [
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/doc_cards.json"
+      ],
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "ledger_projection_fields": [],
+      "observation_ref": "HEAD",
+      "original_finding_key": "sfk-86db9520ada607519d81d553",
+      "owner_refs": [
+        "Plans/UI_Command_Catalog.md:UCC-103",
+        "Plans/FinalGUISpec.md:F3-405",
+        "Plans/Wiring_Matrix.md:WM-039",
+        "Plans/Automated_Testing_System.md:ATS-016"
+      ],
+      "plan_unit_ids": [
+        "F3-405",
+        "UCC-103",
+        "WM-039",
+        "ATS-016"
+      ],
+      "post_repair_semantic_audit": {
+        "covered_impact_rows": true,
+        "covered_original_scope": true,
+        "drift": {
+          "dependencies": false,
+          "ledger_projections": false,
+          "owner_routing": false,
+          "reciprocal_lineage": false,
+          "schema_identity": false
+        },
+        "repair_required_count": 0,
+        "status": "PASS_WITH_WARNINGS"
+      },
+      "pre_edit_mapped_at_utc": "2026-06-28T13:58:00Z",
+      "schema_id": "pm.semantic_repair_impact.v1",
+      "schemas": [
+        "pm.planunit.yaml",
+        "pm.plan_index.dependencies.v1",
+        "pm.plan_index.plan_units.v1"
+      ],
+      "scope_check_ids": [],
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": "1",
+      "subject_ref": "8f377b33a"
+    },
+    {
+      "_line_no": 2,
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "dependency_edges": [
+        "RAP-039 depends_on CV-298, SP-222, PS-124",
+        "CV-298 unblocks RAP-039",
+        "SP-222 unblocks RAP-039",
+        "PS-124 unblocks RAP-039",
+        "RAP-039 unblocks ATS-016",
+        "ATS-016 depends_on RAP-039"
+      ],
+      "files": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/handoff.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/open_items.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/manifest.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/validation/ledger_health.json",
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "finding_family": "notification_receipt_artifact_owner_gap",
+      "finding_key": "sfk-e19d99c878fe5bb3003d1896",
+      "governance_artifacts": [
+        "Plans/Spec_Lock.json",
+        "Plans/_shards/**",
+        "Plans/.evidence/**",
+        "Plans/plan_graph.json",
+        "Plans/auto_decisions.jsonl",
+        "Plans/.audits/_semantic_closure_registry.jsonl"
+      ],
+      "impact_id": "imp-309fed26b43953f90f87c51b",
+      "index_artifacts": [
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/doc_cards.json"
+      ],
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "ledger_projection_fields": [
+        "design_atoms.atom-0061.compiled_output_plan_unit_ids",
+        "design_atoms.atom-0061.plan_compile_targets",
+        "design_atoms.atom-0061.compiled_owner_docs",
+        "design_atoms.atom-0062.compiled_output_plan_unit_ids",
+        "design_atoms.atom-0062.plan_compile_targets",
+        "design_atoms.atom-0062.compiled_owner_docs",
+        "design_atoms.atom-0063.compiled_output_plan_unit_ids",
+        "design_atoms.atom-0063.plan_compile_targets",
+        "design_atoms.atom-0063.compiled_owner_docs",
+        "design_atoms.atom-0069.compiled_output_plan_unit_ids",
+        "design_atoms.atom-0069.plan_compile_targets",
+        "design_atoms.atom-0069.compiled_owner_docs",
+        "design_atoms.atom-0091.compiled_output_plan_unit_ids",
+        "design_atoms.atom-0091.plan_compile_targets",
+        "design_atoms.atom-0091.compiled_owner_docs",
+        "current.compiled_plan_unit_ids",
+        "handoff.compiled_plan_unit_ids",
+        "compile_queue.compiled_plan_unit_ids",
+        "open_items.future_compile_actions[notifications_sounds_peonping].compiled_plan_unit_ids",
+        "manifest.record_counts.events",
+        "manifest.record_counts.corrections",
+        "manifest.last_event_id",
+        "ledger_registry.sealed_ledgers[pldg-20260627-001-feature-intake].compiled_plan_unit_ids"
+      ],
+      "observation_ref": "HEAD",
+      "original_finding_key": "sfk-e19d99c878fe5bb3003d1896",
+      "owner_refs": [
+        "Plans/Runtime_Artifacts_Panel.md:RAP-039",
+        "Plans/Contracts_V0.md:CV-298",
+        "Plans/storage-plan.md:SP-222",
+        "Plans/Permissions_System.md:PS-124",
+        "Plans/Automated_Testing_System.md:ATS-016"
+      ],
+      "plan_unit_ids": [
+        "RAP-039",
+        "CV-298",
+        "SP-222",
+        "PS-124",
+        "ATS-016"
+      ],
+      "post_repair_semantic_audit": {
+        "covered_impact_rows": true,
+        "covered_original_scope": true,
+        "drift": {
+          "dependencies": false,
+          "ledger_projections": false,
+          "owner_routing": false,
+          "reciprocal_lineage": false,
+          "schema_identity": false
+        },
+        "repair_required_count": 0,
+        "status": "PASS_WITH_WARNINGS"
+      },
+      "pre_edit_mapped_at_utc": "2026-06-28T13:58:00Z",
+      "schema_id": "pm.semantic_repair_impact.v1",
+      "schemas": [
+        "pm.planunit.yaml",
+        "pm.bootstrap_design_atom.v1",
+        "pm.bootstrap_ledger_current_state.v1",
+        "pm.bootstrap_ledger_handoff.v1",
+        "pm.bootstrap_compile_queue.v1",
+        "pm.bootstrap_open_items.v1",
+        "pm.bootstrap_planning_ledger_manifest.v1",
+        "pm.bootstrap_ledger_registry.v1",
+        "pm.ledger_health.v1",
+        "pm.plan_index.plan_units.v1"
+      ],
+      "scope_check_ids": [],
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": "2",
+      "subject_ref": "8f377b33a"
+    },
+    {
+      "_line_no": 3,
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "dependency_edges": [],
+      "files": [
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "scripts/pm-audit-closure.py"
+      ],
+      "finding_family": "closure_registry_currentness_failure",
+      "finding_key": "sfk-2c2724eecefb5f4a899ed133",
+      "governance_artifacts": [
+        "Plans/.audits/_semantic_closure_registry.jsonl"
+      ],
+      "impact_id": "imp-dea054f47c011453279d4343",
+      "index_artifacts": [],
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "ledger_projection_fields": [],
+      "observation_ref": "HEAD",
+      "original_finding_key": "sfk-2c2724eecefb5f4a899ed133",
+      "owner_refs": [
+        "Plans/Planning_Ledger_System.md:PLS-012",
+        "Plans/Plan_Document_System.md:PDS-014",
+        "scripts/pm-audit-closure.py"
+      ],
+      "plan_unit_ids": [
+        "PDS-014",
+        "PLS-012"
+      ],
+      "post_repair_semantic_audit": {
+        "covered_impact_rows": true,
+        "covered_original_scope": true,
+        "drift": {
+          "dependencies": false,
+          "ledger_projections": false,
+          "owner_routing": false,
+          "reciprocal_lineage": false,
+          "schema_identity": false
+        },
+        "repair_required_count": 0,
+        "status": "PASS_WITH_WARNINGS"
+      },
+      "pre_edit_mapped_at_utc": "2026-06-28T13:58:00Z",
+      "schema_id": "pm.semantic_repair_impact.v1",
+      "schemas": [
+        "pm.audit_closure.registry.v1",
+        "pm.semantic_repair_closure.v1",
+        "pm.semantic_repair_impact.v1"
+      ],
+      "scope_check_ids": [],
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": "3",
+      "subject_ref": "8f377b33a"
+    },
+    {
+      "_line_no": 4,
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "dependency_edges": [],
+      "files": [
+        "Plans/.audits/audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md"
+      ],
+      "finding_family": "diff_validator_failure",
+      "finding_key": "sfk-66961e9860756a5854b98333",
+      "governance_artifacts": [],
+      "impact_id": "imp-5d1693c023505311931a7203",
+      "index_artifacts": [],
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "ledger_projection_fields": [],
+      "observation_ref": "HEAD",
+      "original_finding_key": "sfk-66961e9860756a5854b98333",
+      "owner_refs": [
+        "Plans/.audits/audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md"
+      ],
+      "plan_unit_ids": [],
+      "post_repair_semantic_audit": {
+        "covered_impact_rows": true,
+        "covered_original_scope": true,
+        "drift": {
+          "dependencies": false,
+          "ledger_projections": false,
+          "owner_routing": false,
+          "reciprocal_lineage": false,
+          "schema_identity": false
+        },
+        "repair_required_count": 0,
+        "status": "PASS_WITH_WARNINGS"
+      },
+      "pre_edit_mapped_at_utc": "2026-06-28T13:58:00Z",
+      "schema_id": "pm.semantic_repair_impact.v1",
+      "schemas": [
+        "git.diff_check"
+      ],
+      "scope_check_ids": [],
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": "4",
+      "subject_ref": "8f377b33a"
+    },
+    {
+      "_line_no": 5,
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "baseline_ref": "909d47699",
+      "dependency_edges": [],
+      "files": [
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/handoff.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/open_items.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/operating_capsule.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/manifest.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/validation/ledger_health.json",
+        "Plans/ledgers/v2/ledger_registry.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/events.jsonl",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/corrections.jsonl"
+      ],
+      "finding_family": "ledger_projection_stale_readiness_ref",
+      "finding_key": "sfk-43dea7138d4c7af4469d8d25",
+      "governance_artifacts": [
+        "Plans/.audits/_semantic_closure_registry.jsonl"
+      ],
+      "impact_id": "imp-da320d9cda40c3aa91d6255e",
+      "index_artifacts": [],
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "ledger_projection_fields": [
+        "current.latest_audit_ref",
+        "current.latest_audit_status",
+        "current.latest_audit_repair_report",
+        "current.latest_post_repair_audit_report",
+        "current.source_readiness_recheck_ref",
+        "handoff.latest_audit_ref",
+        "handoff.latest_audit_status",
+        "handoff.latest_audit_repair_report",
+        "handoff.latest_post_repair_audit_report",
+        "handoff.source_readiness_recheck_ref",
+        "compile_queue.latest_audit_ref",
+        "compile_queue.latest_audit_status",
+        "compile_queue.latest_audit_repair_report",
+        "compile_queue.latest_post_repair_audit_report",
+        "compile_queue.source_readiness_recheck_ref",
+        "open_items.latest_audit_ref",
+        "operating_capsule.current_phase",
+        "operating_capsule.current_status",
+        "operating_capsule.phase",
+        "operating_capsule.governance_status",
+        "operating_capsule.next_action",
+        "operating_capsule.next_safe_action",
+        "operating_capsule.source_readiness_recheck_ref",
+        "operating_capsule.updated_at_utc",
+        "manifest.last_event_id",
+        "manifest.updated_at_utc",
+        "validation.ledger_health.updated_at_utc",
+        "ledger_registry.updated_at_utc",
+        "ledger_registry.sealed_ledgers[pldg-20260627-001-feature-intake].updated_at_utc"
+      ],
+      "observation_ref": "HEAD",
+      "original_finding_key": "sfk-43dea7138d4c7af4469d8d25",
+      "owner_refs": [
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/handoff.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/operating_capsule.json",
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "plan_unit_ids": [],
+      "post_repair_semantic_audit": {
+        "covered_impact_rows": true,
+        "covered_original_scope": true,
+        "drift": {
+          "dependencies": false,
+          "ledger_projections": false,
+          "owner_routing": false,
+          "reciprocal_lineage": false,
+          "schema_identity": false
+        },
+        "repair_required_count": 0,
+        "status": "PASS_WITH_WARNINGS"
+      },
+      "pre_edit_mapped_at_utc": "2026-06-28T13:58:00Z",
+      "schema_id": "pm.semantic_repair_impact.v1",
+      "schemas": [
+        "pm.bootstrap_ledger_current_state.v1",
+        "pm.bootstrap_ledger_handoff.v1",
+        "pm.bootstrap_open_items.v1",
+        "pm.bootstrap_compile_queue.v1",
+        "pm.bootstrap_operating_capsule.v1",
+        "pm.bootstrap_planning_ledger_manifest.v1",
+        "pm.bootstrap_ledger_registry.v1",
+        "pm.ledger_health.v1"
+      ],
+      "scope_check_ids": [],
+      "source_artifact": "semantic_risks.jsonl",
+      "source_row": "5",
+      "subject_ref": "8f377b33a"
+    }
+  ],
+  "schema_id": "pm.semantic_repair_report.v1",
+  "status": "repair_validated",
+  "subject_ref": "8f377b33a",
+  "validator_results": {
+    "git diff --check": "pass",
+    "python3 -m py_compile governance/ledger/audit scripts": "pass",
+    "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity --require-closure-matrix --source-artifact semantic_risks.jsonl": "pass",
+    "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake": "pass",
+    "python3 scripts/pm-plan-index.py validate": "pass",
+    "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits": "pass",
+    "python3 scripts/pm-plans-verify.py run-gates": "pass",
+    "python3 scripts/pm-shard-plans.py --check": "pass"
+  }
+}

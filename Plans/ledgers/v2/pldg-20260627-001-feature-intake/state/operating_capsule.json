@@ -1,5 +1,5 @@
 {
-  "agent_task": "continue_feature_design_conversation_or_compile_when_explicitly_requested",
+  "agent_task": "compiled_feature_intake_repair_certified",
   "allowed_reads_default": [
     "state/current.json",
     "state/handoff.json",
@@ -26,12 +26,12 @@
   ],
   "capsule_id": "cap-feature-intake-current",
   "completion_blockers_visible_to_agent": [],
-  "current_phase": "compiled_pending_governance_seal",
-  "current_status": "compiled_product_readiness_repaired_pending_governance_seal",
+  "current_phase": "compiled_to_plans_governance_sealed",
+  "current_status": "repair_validated",
   "cursor": {
-    "last_event_id": "evt-0028",
-    "next_action": "Run explicit governance seal when requested; compile-to-Plans content is complete, product-readiness blockers are closed, and migration metadata is current.",
-    "next_event_id": "evt-0029"
+    "last_event_id": "evt-0030",
+    "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
+    "next_event_id": "evt-0031"
   },
   "forbidden_until_explicit_compile_or_governance_seal": [
     "Plans/.plan_index/**",
@@ -46,11 +46,11 @@
     "Plans/** live canonical plan prose before explicit compile",
     "generated governance artifacts before explicit governance seal"
   ],
-  "governance_status": "pending_seal",
-  "last_completed_action": "Completed ledger-to-Plans compile, repaired post-compile product-readiness blockers, refreshed preseal migration metadata, regenerated allowed PlanUnit index outputs, and ran required validators.",
-  "last_event_id": "evt-0028",
-  "last_known_good_state": "Canonical Plans contain repaired compiled PlanUnits; Plans/.plan_index validates with 5298 PlanUnits / 18946 acceptance units; pm-plan-migration validate passes after preseal metadata refresh. Governance seal remains pending; node readiness remains intentionally blocked_compiler_contract_incomplete.",
-  "latest_audit_status": "product_readiness_and_migration_metadata_repaired_pending_governance_seal_and_node_compiler_phase_boundary",
+  "governance_status": "sealed",
+  "last_completed_action": "Closed-world semantic audit repair certified with dependency, Runtime Artifacts receipt projection, ledger projection, closure registry, and diff hygiene repairs.",
+  "last_event_id": "evt-0030",
+  "last_known_good_state": "Canonical Plans and ledger projections are repaired and ready for final governance/index validation; node readiness remains intentionally blocked_compiler_contract_incomplete.",
+  "latest_audit_status": "repair_validated",
   "latest_objective_gate_spot_check": {
     "checked_at_utc": "2026-06-28T11:58:03Z",
     "closed_phase_boundary_blocker_count": 1,
@@ -67,7 +67,7 @@
   "ledger_profile": "bootstrap_planning",
   "must_not_do": [
     "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from this compile.",
-    "Do not update Spec_Lock, generated shards, evidence bundles, plan_graph, or auto_decisions until an explicit governance seal phase.",
+    "Do not update Spec_Lock, generated shards, evidence bundles, plan_graph, or auto_decisions except through an explicit governance seal/refresh phase.",
     "Do not treat governance_status=pending_seal as sealed implementation handoff.",
     "Do not treat Plans/newfeatures.md, PeonPing/OpenPeon, or external provider docs as live product owners unless a live PlanUnit says so."
   ],
@@ -77,8 +77,8 @@
     "Plans/ledgers/work_items/**",
     "**/working_ledger.md"
   ],
-  "next_action": "Run explicit governance seal when requested; compile-to-Plans content is complete, product-readiness blockers are closed, and migration metadata is current.",
-  "next_safe_action": "Optional next phase is explicit governance seal. Node compiler remains disabled until the compiler contract is complete. Do not create WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks from compile.",
+  "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
+  "next_safe_action": "Use the repaired, sealed canonical Plans as source for future implementation planning. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or runtime launches until that later phase explicitly allows them.",
   "open_blockers": [],
   "partial_canonical_compile_detected": {
     "detected_at_utc": "2026-06-28T09:43:00Z",
@@ -107,7 +107,7 @@
     "resolved_at_utc": "2026-06-28T10:15:30Z",
     "status": "resolved_by_completed_compile_to_owner_docs__superseded_by_evt_0025_readiness_audit"
   },
-  "phase": "compiled_pending_governance_seal",
+  "phase": "compiled_to_plans_governance_sealed",
   "previous_source_readiness_recheck_ref": "state/implementation_readiness_fourth_recheck_20260628.json",
   "prior_source_readiness_recheck_refs": [
     "state/implementation_readiness_recheck_20260628.json",
@@ -125,18 +125,22 @@
   ],
   "schema_id": "pm.operating_capsule.v1",
   "source_compile_readiness_status": "compiled_to_canonical_plans__readiness_repaired__migration_metadata_refreshed__governance_pending_seal",
-  "source_readiness_recheck_ref": "state/implementation_readiness_fifth_recheck_20260628.json",
-  "updated_at_utc": "2026-06-28T11:58:03Z",
+  "updated_at_utc": "2026-06-28T13:59:18Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
     "git_diff_check": "pass",
-    "governance_status": "pending_seal",
-    "last_validated_at_utc": "2026-06-28T11:58:03Z",
+    "governance_status": "sealed",
+    "last_validated_at_utc": "2026-06-28T13:59:18Z",
     "ledger_health": "pass_no_open_product_readiness_blockers_pending_governance_seal",
     "plan_index_generate": "pass",
     "plan_index_validate": "pass",
     "plan_migration_validate": "pass_preseal_metadata_refreshed",
     "post_compile_readiness_audit": "product_readiness_and_migration_metadata_repaired_pending_governance_seal_and_node_compiler_phase_boundary",
-    "validator_warnings": []
-  }
+    "validator_warnings": [],
+    "post_repair_semantic_audit": "repair_validated"
+  },
+  "latest_audit_ref": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_report.json",
+  "latest_post_repair_audit_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "source_readiness_recheck_ref_lineage_only": "state/implementation_readiness_fifth_recheck_20260628.json"
 }

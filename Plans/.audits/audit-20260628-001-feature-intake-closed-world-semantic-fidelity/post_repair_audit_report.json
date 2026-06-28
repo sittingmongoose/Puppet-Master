@@ -1,0 +1,80 @@
+{
+  "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+  "baseline_ref": "909d47699",
+  "changed_plan_unit_ids": [
+    "ATS-016",
+    "CV-298",
+    "F3-405",
+    "PDS-014",
+    "PLS-012",
+    "PS-124",
+    "RAP-039",
+    "SP-222",
+    "UCC-103",
+    "WM-039"
+  ],
+  "closure_rows": 5,
+  "closure_status_counts": {
+    "repaired": 5
+  },
+  "dependency_summary": {
+    "build_order_available": false,
+    "introduced_cycle_components_remaining": 0,
+    "remaining_cycle_components": "pre-existing baseline cycles only",
+    "true_cycle_component_count": 3
+  },
+  "forbidden_artifacts": {
+    "implementation_files_created": false,
+    "legacy_iced_app_recreated": false,
+    "nodeseeds_created": false,
+    "queues_or_manifests_created": false,
+    "worknodes_created": false
+  },
+  "generated_at_utc": "2026-06-28T14:14:21Z",
+  "impact_rows": 5,
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "non_actionable_warnings": [
+    {
+      "finding_family": "planunit_source_atom_ids_sparse",
+      "repair_required": false,
+      "status": "warning"
+    },
+    {
+      "finding_family": "node_readiness_phase_boundary",
+      "repair_required": false,
+      "status": "warning"
+    },
+    {
+      "finding_family": "audit_bundle_untracked_not_in_subject_ref",
+      "repair_required": false,
+      "status": "info"
+    }
+  ],
+  "notes": [
+    "audit_report.json remains the historical BLOCKED input; post_repair_audit_report.json is the effective terminal report.",
+    "Closure validation is scoped to semantic_risks.jsonl because the closure matrix covers every and only original repair_required=true semantic finding."
+  ],
+  "observation_ref": "HEAD",
+  "original_repair_required_count": 5,
+  "repair_required_count": 0,
+  "schema_id": "pm.post_repair_audit_report.v1",
+  "scope_coverage": {
+    "coverage_percent": 100.0,
+    "covered_rows": 10495,
+    "total_rows": 10495
+  },
+  "scope_manifest_rows": 10495,
+  "status": "PASS_WITH_WARNINGS",
+  "subject_ref": "8f377b33a",
+  "terminal_repair_state": "repair_validated",
+  "validator_results": {
+    "git diff --check": "pass",
+    "python3 -m py_compile governance/ledger/audit scripts": "pass",
+    "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity --require-closure-matrix --source-artifact semantic_risks.jsonl": "pass",
+    "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake": "pass",
+    "python3 scripts/pm-plan-index.py validate": "pass",
+    "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits": "pass",
+    "python3 scripts/pm-plans-verify.py run-gates": "pass",
+    "python3 scripts/pm-shard-plans.py --check": "pass"
+  }
+}

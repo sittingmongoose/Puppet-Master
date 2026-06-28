@@ -1229,7 +1229,7 @@ canonical_text: >-
   manifest review, unsupported format rejection, and accessibility where sound is not the only carrier.
 gui_related: true
 gui_classification_reason: Validates visible settings, sound controls, preview/test-send, and notification copy behavior.
-depends_on: [ACD-428, CV-298, F3-405, SP-222, PS-124, UCC-103, WM-039]
+depends_on: [ACD-428, CV-298, F3-405, SP-222, PS-124, RAP-039, UCC-103, WM-039]
 unblocks: []
 acceptance_criteria:
   - Automated delivery tests use mocks by default; live sends require explicit user action and enabled destination.
@@ -1282,6 +1282,7 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Contracts_V0.md
   - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
 ```
 
 ### ATS-017 - Compact Now And Manual Compaction Acceptance Tests

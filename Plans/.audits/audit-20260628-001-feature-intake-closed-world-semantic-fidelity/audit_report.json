@@ -92,7 +92,7 @@
         "UCC-103"
       ],
       "finding_family": "dependency_cycle",
-      "finding_key": "sfk-96cfa9b6b3c29b4b1c6a8d86",
+      "finding_key": "sfk-86db9520ada607519d81d553",
       "finding_level": "error",
       "ledger_id": "pldg-20260627-001-feature-intake",
       "owner_docs": [
@@ -148,7 +148,7 @@
         "Runtime_Artifacts_Panel"
       ],
       "finding_family": "notification_receipt_artifact_owner_gap",
-      "finding_key": "sfk-4dc2cce8478d9641df95fe91",
+      "finding_key": "sfk-e19d99c878fe5bb3003d1896",
       "finding_level": "error",
       "ledger_id": "pldg-20260627-001-feature-intake",
       "owner_docs": [
@@ -199,7 +199,7 @@
         "220"
       ],
       "finding_family": "closure_registry_currentness_failure",
-      "finding_key": "sfk-371b3e6a7061c8c73a3b3584",
+      "finding_key": "sfk-2c2724eecefb5f4a899ed133",
       "finding_level": "error",
       "ledger_id": "pldg-20260627-001-feature-intake",
       "owner_docs": [
@@ -235,7 +235,7 @@
         "Subject ref: `909d47699`  "
       ],
       "finding_family": "diff_validator_failure",
-      "finding_key": "sfk-b3c5eadddc777d8c08689c55",
+      "finding_key": "sfk-66961e9860756a5854b98333",
       "finding_level": "error",
       "ledger_id": "pldg-20260627-001-feature-intake",
       "owner_docs": [
@@ -272,7 +272,7 @@
         "compiled_pending_governance_seal"
       ],
       "finding_family": "ledger_projection_stale_readiness_ref",
-      "finding_key": "sfk-a431d10b9b34978abeec62c3",
+      "finding_key": "sfk-43dea7138d4c7af4469d8d25",
       "finding_level": "warning",
       "ledger_id": "pldg-20260627-001-feature-intake",
       "owner_docs": [
@@ -306,7 +306,7 @@
   "repair_required_scope_row_count": 49,
   "schema_id": "pm.semantic_audit.report.v1",
   "scope_row_count": 10495,
-  "status": "BLOCKED_REPAIR_REQUIRED",
+  "status": "BLOCKED",
   "subagents": [
     {
       "agent_id": "019f0e5f-4a81-7511-913f-1b22d174cf63",
@@ -389,7 +389,7 @@
         "source_lineage has direct design_atoms.jsonl:atom-*; reciprocal source_atom_ids absent in some older/updated PlanUnits"
       ],
       "finding_family": "planunit_source_atom_ids_sparse",
-      "finding_key": "sfk-aa588e63f2a3acce585f43d9",
+      "finding_key": "sfk-b32f924659acc0d72be32e41",
       "finding_level": "warning",
       "ledger_id": "pldg-20260627-001-feature-intake",
       "owner_docs": [
@@ -450,7 +450,7 @@
         "No WorkNodes, NodeSeeds, executable queues"
       ],
       "finding_family": "node_readiness_phase_boundary",
-      "finding_key": "sfk-c56d8683a1fb0ee07bf830a3",
+      "finding_key": "sfk-a4557582f04c8f6310d9b57f",
       "finding_level": "warning",
       "ledger_id": "pldg-20260627-001-feature-intake",
       "owner_docs": [
@@ -519,7 +519,7 @@
         "subject_ref=8f377b33a"
       ],
       "finding_family": "audit_bundle_untracked_not_in_subject_ref",
-      "finding_key": "sfk-6c12127eebd7b877f2b48dc0",
+      "finding_key": "sfk-1dc7309ff8675ddb8b73f0a7",
       "finding_level": "info",
       "ledger_id": "pldg-20260627-001-feature-intake",
       "owner_docs": [

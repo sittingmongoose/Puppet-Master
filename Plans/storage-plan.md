@@ -15674,7 +15674,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines durable settings, credential references, sound assets, and delivery receipt records; GUI renders them elsewhere.
 depends_on: [CV-298, PS-124]
-unblocks: [F3-405, ATS-016]
+unblocks: [F3-405, RAP-039, ATS-016]
 acceptance_criteria:
   - Non-secret notification settings and sound manifests are durable and scope-aware.
   - Provider-specific destination profile payloads are persisted as credential refs and non-secret settings, not as raw tokens or URLs.

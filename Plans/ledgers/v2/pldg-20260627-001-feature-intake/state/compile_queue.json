@@ -80,6 +80,7 @@
     "F3-406",
     "SP-223",
     "RAP-038",
+    "RAP-039",
     "OSI-430",
     "ISI-019",
     "ATS-018",
@@ -88,9 +89,9 @@
     "WM-040"
   ],
   "cursor": {
-    "last_event_id": "evt-0029",
-    "next_action": "No open product-readiness, migration, or governance blockers remain for this ledger. Future work should use the sealed canonical Plans, or explicitly open a separate node compiler/runtime enablement phase.",
-    "next_event_id": "evt-0030"
+    "last_event_id": "evt-0030",
+    "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
+    "next_event_id": "evt-0031"
   },
   "future_compile_actions": [
     {
@@ -148,6 +149,7 @@
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
         "Plans/Permissions_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.md",
         "Plans/assistant-chat-design.md",
@@ -159,6 +161,7 @@
         "F3-405",
         "SP-222",
         "PS-124",
+        "RAP-039",
         "UCC-103",
         "WM-039",
         "ATS-016",
@@ -196,7 +199,7 @@
       ],
       "matrix_ref": "state/notifications_sounds_readiness_matrix.json",
       "status": "compiled",
-      "summary": "Compiled to canonical Plans in evt-0024; governance sealed in evt-0029."
+      "summary": "Compiled to canonical Plans in evt-0024, repaired with RAP-039 receipt projection in evt-0030, and governance sealed."
     },
     {
       "compiled_owner_docs": [
@@ -845,10 +848,11 @@
       "compiled_at_utc": "2026-06-28T10:15:30Z",
       "compiled_plan_unit_ids": [
         "RAP-037",
-        "RAP-038"
+        "RAP-038",
+        "RAP-039"
       ],
       "lane": "miscellaneous_feature_intake_compile",
-      "notes": "Compiled from pldg-20260627-001-feature-intake to live canonical Plans. No WorkNodes, NodeSeeds, executable queues, or implementation files created.",
+      "notes": "Compiled from pldg-20260627-001-feature-intake to live canonical Plans. No WorkNodes, NodeSeeds, executable queues, or implementation files created. Repair certification added RAP-039 for notification delivery receipt projection and export routing.",
       "queue_id": "compile-20260628-009",
       "source_atom_ids": [
         "atom-0005",
@@ -888,7 +892,12 @@
         "atom-0082",
         "atom-0083",
         "atom-0088",
-        "atom-0089"
+        "atom-0089",
+        "atom-0061",
+        "atom-0062",
+        "atom-0063",
+        "atom-0069",
+        "atom-0091"
       ],
       "source_refs": [
         "events.jsonl:evt-0024"
@@ -896,7 +905,8 @@
       "status": "compiled",
       "target_docs": [
         "Plans/Runtime_Artifacts_Panel.md"
-      ]
+      ],
+      "updated_at_utc": "2026-06-28T14:11:37Z"
     },
     {
       "compiled_at_utc": "2026-06-28T10:15:30Z",
@@ -1362,35 +1372,37 @@
     }
   ],
   "last_completed_action": "Completed explicit governance seal after compile, post-compile readiness-blocker repair, and migration metadata refresh; regenerated configured shards, refreshed evidence and Spec Lock, and reran the full governance validator suite.",
-  "last_event_id": "evt-0029",
+  "last_event_id": "evt-0030",
   "last_known_good_state": "Canonical Plans contain repaired compiled PlanUnits; Plans/.plan_index validates with 5298 PlanUnits / 18946 acceptance units; migration metadata, configured shards, Spec Lock, evidence bundles, plan graph, auto decisions, run-gates, and git diff hygiene all validate. Node readiness remains intentionally blocked_compiler_contract_incomplete and runtime_disabled.",
-  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/implementation_readiness_fifth_recheck_20260628.json",
-  "latest_audit_status": "sealed_governance__product_readiness_repaired__node_compiler_phase_boundary_remaining",
+  "latest_audit_ref": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_report.json",
+  "latest_audit_status": "repair_validated",
   "latest_objective_gate_spot_check": {
     "checked_at_utc": "2026-06-28T12:41:20Z",
+    "closed_phase_boundary_blocker_count": 1,
+    "closed_product_readiness_blocker_count": 9,
+    "forbidden_runtime_artifacts": "not_created",
+    "git_diff_check": "pass",
     "governance_status": "sealed",
     "implementation_handoff_status": "sealed_governance__product_readiness_repaired__node_compiler_phase_boundary_remaining",
-    "repair_required_blocker_count": 0,
-    "closed_product_readiness_blocker_count": 9,
-    "closed_phase_boundary_blocker_count": 1,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
     "plan_index_validate": "pass__5298_plan_units__18946_acceptance_units__node_readiness_blocked_compiler_contract_incomplete",
     "plan_migration_validate": "pass__5298_live_plan_units__212_batch_report_rows__212_batch_report_doc_entries",
     "pm_bootstrap_ledger_validate": "pass__94_atoms__29_events__17_compile_queue_items__2461_plan_units_checked",
     "pm_bootstrap_ledger_validate_bootstrap_system": "pass__42_atoms__12_events__4_compile_queue_items__123_plan_units_checked",
-    "shard_check": "pass__1055_shards__56_sources",
+    "repair_required_blocker_count": 0,
     "run_gates": "pass",
+    "runtime_enablement_status": "runtime_disabled",
+    "shard_check": "pass__1055_shards__56_sources",
     "validate_auto_decisions": "pass",
-    "verify_spec_lock": "pass",
     "validate_evidence": "pass",
     "validate_plan_graph": "pass",
-    "git_diff_check": "pass",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
-    "runtime_enablement_status": "runtime_disabled",
-    "forbidden_runtime_artifacts": "not_created"
+    "verify_spec_lock": "pass"
   },
+  "latest_post_repair_audit_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/post_repair_audit_report.json",
   "ledger_id": "pldg-20260627-001-feature-intake",
-  "next_action": "No open product-readiness, migration, or governance blockers remain for this ledger. Future work should use the sealed canonical Plans, or explicitly open a separate node compiler/runtime enablement phase.",
-  "next_safe_action": "Use sealed canonical Plans as the source for future implementation planning. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or runtime launches until that later phase explicitly allows them.",
+  "next_action": "Closed-world semantic repair is certified for this ledger. Future implementation/runtime compiler work requires a new explicit phase.",
+  "next_safe_action": "Use the repaired, sealed canonical Plans as source for future implementation planning. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or runtime launches until that later phase explicitly allows them.",
   "notes": "Compile content is complete, product-readiness blockers are repaired, and pm-plan-migration validate passes after preseal metadata refresh. Governance seal and blocked_compiler_contract_incomplete remain explicit later-phase boundaries; no forbidden runtime/governance artifacts were created.",
   "open_blockers": [],
   "partial_canonical_compile_detected": {
@@ -1399,6 +1411,7 @@
       "events.jsonl:evt-0024",
       "Plans/.plan_index/plan_units.jsonl"
     ],
+    "governance_sealed_at_utc": "2026-06-28T12:41:20Z",
     "missing_downstream_owner_units": [],
     "negative_constraints": [
       "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from this compile.",
@@ -1415,9 +1428,9 @@
       "ACD-429"
     ],
     "resolved_at_utc": "2026-06-28T10:15:30Z",
-    "status": "resolved_by_completed_compile_to_owner_docs",
-    "governance_sealed_at_utc": "2026-06-28T12:41:20Z"
+    "status": "resolved_by_completed_compile_to_owner_docs"
   },
+  "phase": "compiled_to_plans_governance_sealed",
   "previous_source_readiness_recheck_ref": "state/implementation_readiness_fourth_recheck_20260628.json",
   "prior_source_readiness_recheck_refs": [
     "state/implementation_readiness_recheck_20260628.json",
@@ -1461,28 +1474,28 @@
     "state/implementation_readiness_fourth_recheck_20260628.json",
     "state/implementation_readiness_fifth_recheck_20260628.json"
   ],
-  "source_readiness_recheck_ref": "state/implementation_readiness_fifth_recheck_20260628.json",
+  "source_readiness_recheck_ref_lineage_only": "state/implementation_readiness_fifth_recheck_20260628.json",
   "status": "compiled_to_plans_governance_sealed",
-  "terminal_ledger_event_id": "evt-0029",
-  "updated_at_utc": "2026-06-28T12:41:20Z",
+  "terminal_ledger_event_id": "evt-0030",
+  "updated_at_utc": "2026-06-28T14:12:53Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
-    "pm_bootstrap_ledger_validate_feature_intake": "pass__94_atoms__29_events__17_compile_queue_items__2461_plan_units_checked",
-    "pm_bootstrap_ledger_validate_bootstrap_system": "pass__42_atoms__12_events__4_compile_queue_items__123_plan_units_checked",
-    "plan_index_validate": "pass__5298_plan_units__18946_acceptance_units__node_readiness_blocked_compiler_contract_incomplete",
-    "plan_migration_validate": "pass__5298_live_plan_units__212_batch_report_rows__212_batch_report_doc_entries",
-    "shard_check": "pass",
-    "run_gates": "pass",
-    "validate_auto_decisions": "pass",
-    "verify_spec_lock": "pass",
-    "validate_evidence": "pass",
-    "validate_plan_graph": "pass",
     "git_diff_check": "pass",
     "governance_status": "sealed",
+    "last_validated_at_utc": "2026-06-28T14:12:53Z",
     "ledger_health": "pass_governance_sealed",
-    "last_validated_at_utc": "2026-06-28T12:41:20Z",
-    "post_compile_readiness_audit": "sealed_governance__product_readiness_repaired__node_compiler_phase_boundary_remaining",
-    "validator_warnings": []
-  },
-  "phase": "compiled_to_plans_governance_sealed"
+    "plan_index_validate": "pass__5299_plan_units__18950_acceptance_units__node_readiness_blocked_compiler_contract_incomplete",
+    "plan_migration_validate": "pass__5299_live_plan_units__212_batch_report_rows__212_batch_report_doc_entries",
+    "pm_bootstrap_ledger_validate_bootstrap_system": "pass__42_atoms__12_events__4_compile_queue_items__123_plan_units_checked",
+    "pm_bootstrap_ledger_validate_feature_intake": "pass__94_atoms__30_events__17_compile_queue_items__2462_plan_units_checked",
+    "post_compile_readiness_audit": "repair_validated__node_compiler_phase_boundary_remaining",
+    "run_gates": "pass",
+    "semantic_closure_validate": "pass__repair_required_count_0__closure_rows_5",
+    "shard_check": "pass",
+    "validate_auto_decisions": "pass",
+    "validate_evidence": "pass",
+    "validate_plan_graph": "pass",
+    "validator_warnings": [],
+    "verify_spec_lock": "pass"
+  }
 }

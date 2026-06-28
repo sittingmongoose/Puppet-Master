@@ -26,23 +26,27 @@
     "source_compile_readiness_integration_matrix": "state/source_compile_readiness_integration_matrix_20260628.json"
   },
   "governance_status": "sealed",
-  "last_event_id": "evt-0029",
-  "last_validation_summary": "Bootstrap ledger validators pass; PlanUnit index validate pass; pm-plan-migration validate pass; configured shard check, run-gates, auto-decision validation, Spec Lock verification, evidence validation, plan graph validation, and git diff --check pass.",
+  "last_event_id": "evt-0030",
+  "last_validation_summary": "Pending final post-repair validator stack after evt-0030; prior governance seal was green and will be refreshed if generated artifacts change.",
   "ledger_id": "pldg-20260627-001-feature-intake",
-  "notes": "Compiled to live canonical Plans; product-readiness blockers repaired; migration metadata refreshed and validating; governance_status=sealed. Node readiness remains blocked_compiler_contract_incomplete/runtime_disabled; no WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or runtime launches were created.",
+  "notes": "Compiled to live canonical Plans; closed-world semantic repair certified; governance_status=sealed. Node readiness remains blocked_compiler_contract_incomplete/runtime_disabled; no WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or runtime launches were created.",
   "phase": "compiled_to_plans_governance_sealed",
   "profile": "bootstrap_planning",
   "record_counts": {
     "blockers": 10,
-    "corrections": 6,
+    "corrections": 7,
     "decisions": 19,
     "design_atoms": 94,
-    "events": 29,
+    "events": 30,
     "questions": 17
   },
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
   "source_context": "User requested PM Bootstrap Planning Ledger for `Feature: <feature name>` on 2026-06-27. Jared then clarified this ledger covers `a number of miscellaneous items`; the first item is comparing PM inline chat visualizer features with the updated `Classic298/open-webui-plugins/inline-visualizer-v2` code because the upstream visualizer basis evolved and improved.",
   "status": "sealed",
   "title": "Miscellaneous Feature Intake Planning",
-  "updated_at_utc": "2026-06-28T12:41:20Z"
+  "updated_at_utc": "2026-06-28T13:59:18Z",
+  "latest_audit_ref": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_status": "repair_validated",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_report.json",
+  "latest_post_repair_audit_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/post_repair_audit_report.json"
 }

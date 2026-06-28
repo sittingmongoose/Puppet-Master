@@ -781,17 +781,18 @@
         "F3-406",
         "SP-223",
         "RAP-038",
+        "RAP-039",
         "OSI-430",
         "ISI-019",
         "ATS-018"
       ],
       "created_at_utc": "2026-06-27T17:13:41Z",
       "governance_status": "sealed",
-      "last_event_id": "evt-0029",
-      "last_updated_at": "2026-06-28T12:41:20",
-      "last_updated_at_utc": "2026-06-28T12:41:20Z",
+      "last_event_id": "evt-0030",
+      "last_updated_at": "2026-06-28T13:59:18",
+      "last_updated_at_utc": "2026-06-28T13:59:18Z",
       "ledger_id": "pldg-20260627-001-feature-intake",
-      "notes": "Compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed. Migration validation, PlanUnit index validation, bootstrap ledger validators, configured shard check, Spec Lock/evidence/auto_decision/plan graph validation, run-gates, and git diff --check pass. node_readiness_status remains blocked_compiler_contract_incomplete/runtime_disabled. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or runtime launches were created.",
+      "notes": "Compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs; closed-world semantic repair certified; governance_status=sealed. node_readiness_status remains blocked_compiler_contract_incomplete/runtime_disabled. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, production build tasks, or runtime launches were created.",
       "phase": "compiled_to_plans_governance_sealed",
       "primary_goal": "Collaboratively clarify and shape miscellaneous PM feature items, starting with inline chat visualizer parity against upstream inline-visualizer-v2, before any canonical Plans edits.",
       "resume_file": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/handoff.json",
@@ -822,9 +823,13 @@
       ],
       "status": "sealed",
       "title": "Miscellaneous Feature Intake Planning",
-      "updated_at_utc": "2026-06-28T11:58:03Z",
-      "validation_summary": "Bootstrap ledger validator pass; PlanUnit index validate pass; pm-plan-migration validate pass after preseal metadata refresh; git diff --check pass."
+      "updated_at_utc": "2026-06-28T13:59:18Z",
+      "validation_summary": "Bootstrap ledger validator pass; PlanUnit index validate pass; pm-plan-migration validate pass after preseal metadata refresh; git diff --check pass.",
+      "latest_audit_ref": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+      "latest_audit_status": "repair_validated",
+      "latest_audit_repair_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_report.json",
+      "latest_post_repair_audit_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/post_repair_audit_report.json"
     }
   ],
-  "updated_at_utc": "2026-06-28T11:58:03Z"
+  "updated_at_utc": "2026-06-28T13:59:18Z"
 }
