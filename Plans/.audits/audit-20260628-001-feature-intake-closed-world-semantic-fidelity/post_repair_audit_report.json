@@ -70,11 +70,17 @@
   "validator_results": {
     "git diff --check": "pass",
     "python3 -m py_compile governance/ledger/audit scripts": "pass",
+    "python3 -m unittest discover -s tests": "pass",
     "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity --require-closure-matrix --source-artifact semantic_risks.jsonl": "pass",
     "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake": "pass",
     "python3 scripts/pm-plan-index.py validate": "pass",
     "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits": "pass",
+    "python3 scripts/pm-plans-verify.py audit-governance": "pass",
     "python3 scripts/pm-plans-verify.py run-gates": "pass",
+    "python3 scripts/pm-plans-verify.py validate-auto-decisions": "pass",
+    "python3 scripts/pm-plans-verify.py validate-evidence": "pass",
+    "python3 scripts/pm-plans-verify.py validate-plan-graph": "pass",
+    "python3 scripts/pm-plans-verify.py verify-spec-lock": "pass",
     "python3 scripts/pm-shard-plans.py --check": "pass"
   }
 }
