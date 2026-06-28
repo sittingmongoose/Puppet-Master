@@ -18,7 +18,7 @@ Status: repair_validated
 
 ## Validators
 
-Passed: bootstrap ledger validate, plan migration validate, run-gates, semantic closure validate with required matrix, PlanUnit index validate, shard check, `git diff --check`, and Python compilation for the governance/ledger/audit scripts.
+Passed: bootstrap ledger validate, plan migration validate, run-gates, audit-governance, semantic closure validate with required matrix, PlanUnit index validate, shard check, auto-decisions, Spec Lock, evidence, plan graph, `python3 -m unittest discover -s tests`, `git diff --check`, and Python compilation for the governance/ledger/audit scripts.
 
 ## Boundary
 
