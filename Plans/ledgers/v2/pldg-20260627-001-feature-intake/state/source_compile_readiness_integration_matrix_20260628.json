@@ -1,0 +1,248 @@
+{
+  "schema_id": "pm.bootstrap_source_compile_readiness_matrix.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "matrix_id": "source_compile_readiness_integration_matrix_20260628",
+  "status": "superseded_by_evt_0024_compile__evt_0025_post_compile_readiness_audit",
+  "created_at_utc": "2026-06-28T08:14:30Z",
+  "source_refs": [
+    "state/implementation_readiness_review_20260628.json",
+    "state/inline_visualizer_v2_readiness_matrix.json",
+    "state/notifications_sounds_readiness_matrix.json",
+    "state/dry_method_compile_readiness_matrix.json",
+    "state/compaction_compile_readiness_matrix.json",
+    "subagent:019f0d3e-b218-72a0-9225-788fbe270f86",
+    "state/implementation_readiness_recheck_20260628.json",
+    "subagent:019f0d54-1b6e-7982-973c-0345021bd501",
+    "subagent:019f0d54-1c69-7010-a45e-45707f3b66f1",
+    "subagent:019f0d54-1d73-75b0-a736-d6ef4db01258",
+    "subagent:019f0d54-1e7b-7430-8e60-9b3a70995db2",
+    "subagent:019f0d54-1fbf-72a0-a6fe-302199b56e4a",
+    "subagent:019f0d54-2123-7263-b7bc-3455fe763078",
+    "state/implementation_readiness_third_recheck_20260628.json",
+    "subagent:019f0d7b-afdd-7d23-a024-2f3a7926a875",
+    "subagent:019f0d7b-dd81-7d90-bb38-0f8b41fb22ac",
+    "subagent:019f0d7c-0ba0-70f2-b2aa-e5af22bd6af7",
+    "subagent:019f0d7c-389e-7103-91f7-e5a981fc974d",
+    "subagent:019f0d7c-664a-77d3-a948-c51e83031212",
+    "state/implementation_readiness_fifth_recheck_20260628.json"
+  ],
+  "phase_boundary": {
+    "compile_opened": true,
+    "canonical_plans_edited": true,
+    "governance_status": "pending_seal",
+    "compile_queue_items": 17,
+    "ready_for_plan_compile_atoms": 0,
+    "post_compile_readiness_audit_status": "not_implementation_ready__repair_required_before_sealed_handoff"
+  },
+  "criteria_for_source_ready_for_explicit_compile": [
+    "Historical pre-compile criteria retained as source-lineage only; this matrix no longer represents current compiled state after evt-0024.",
+    "Current post-compile readiness state is recorded in state/implementation_readiness_fifth_recheck_20260628.json."
+  ],
+  "lane_rows": [
+    {
+      "row_id": "integration-inline-visualizer-v2",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0051",
+        "atom-0056",
+        "atom-0057",
+        "atom-0058",
+        "atom-0059",
+        "atom-0060",
+        "atom-0082",
+        "atom-0088"
+      ],
+      "linked_matrix": "state/inline_visualizer_v2_readiness_matrix.json",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Permissions_System.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "remaining_product_decision": false,
+      "gui_related": true
+    },
+    {
+      "row_id": "integration-notifications-sounds",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0052",
+        "atom-0061",
+        "atom-0062",
+        "atom-0063",
+        "atom-0064",
+        "atom-0065",
+        "atom-0066",
+        "atom-0067",
+        "atom-0068",
+        "atom-0069",
+        "atom-0070",
+        "atom-0084",
+        "atom-0091"
+      ],
+      "linked_matrix": "state/notifications_sounds_readiness_matrix.json",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "remaining_product_decision": false,
+      "gui_related": true
+    },
+    {
+      "row_id": "integration-compaction",
+      "lane": "compaction_compact_now",
+      "linked_atom_ids": [
+        "atom-0053",
+        "atom-0071",
+        "atom-0072",
+        "atom-0081",
+        "atom-0090"
+      ],
+      "linked_matrix": "state/compaction_compile_readiness_matrix.json",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Commands_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "remaining_product_decision": false,
+      "gui_related": true
+    },
+    {
+      "row_id": "integration-dry-method",
+      "lane": "dry_method_outside_plan_docs",
+      "linked_atom_ids": [
+        "atom-0054",
+        "atom-0073",
+        "atom-0074",
+        "atom-0075",
+        "atom-0076",
+        "atom-0077",
+        "atom-0083",
+        "atom-0089"
+      ],
+      "linked_matrix": "state/dry_method_compile_readiness_matrix.json",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/agent-rules-context.md",
+        "Plans/DRY_Rules.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Decision_Policy.md"
+      ],
+      "remaining_product_decision": false,
+      "gui_related": true
+    }
+  ],
+  "next_safe_action": "Wait for explicit compile request before editing canonical Plans. Use detailed lane matrices, linked atoms, and state/implementation_readiness_third_recheck_20260628.json as source input for that compile.",
+  "validator_checklist": [
+    "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
+    "confirm compile_queue.items=[]",
+    "confirm canonical_plan_targets=[]",
+    "confirm compiled_owner_docs=[]",
+    "confirm governance_status=not_started",
+    "confirm no canonical Plans/** prose or governance/index/evidence artifacts changed"
+  ],
+  "rollup_contract": {
+    "integration_rows_are_lossless": false,
+    "compiler_requirement": "Future compile must dereference each lane_rows[].linked_matrix and read that detailed matrix rows array for contracts, negative constraints, acceptance criteria, validation rows, owner routing, and source evidence. Source evidence may be row-local or resolved through linked_atom_ids plus the detailed matrix top-level source_refs. Integration lane_rows are a manifest/rollup only.",
+    "allowed_shape_note": "Detailed lane matrices use rows; this integration matrix uses lane_rows to prevent confusing summary rows with lossless lane details."
+  },
+  "pre_compile_hygiene_findings": [
+    {
+      "finding_id": "recheck-001",
+      "status": "recorded_in_atom_0080",
+      "summary": "Integration matrix is rollup-only; future compiler must dereference linked detailed matrices."
+    },
+    {
+      "finding_id": "recheck-002",
+      "status": "fixed_in_corr_0003",
+      "summary": "atom-0015 gui_related corrected to true."
+    },
+    {
+      "finding_id": "recheck-003",
+      "status": "recorded_in_atom_0081",
+      "summary": "Compaction newfeatures cleanup must cover both ACD-177 and ACD-414 and treat newfeatures as cleanup/source-lineage, not live owner."
+    },
+    {
+      "finding_id": "recheck-004",
+      "status": "recorded_in_atom_0082",
+      "summary": "Inline visualizer compile must pin concrete token recipes and bridge alias command boundary."
+    },
+    {
+      "finding_id": "recheck-005",
+      "status": "recorded_in_atom_0083",
+      "summary": "DRY compile must pin toggle key/enum, receipt placement, and GUI copy/density."
+    },
+    {
+      "finding_id": "recheck-006",
+      "status": "recorded_in_atom_0084",
+      "summary": "Notification compile must bound generic-webhook success predicates and make Settings placement explicit against the registry."
+    },
+    {
+      "finding_id": "recheck-007",
+      "status": "recorded_in_atom_0085",
+      "summary": "Stale ledger_registry evidence hashes are governance-only currentness work, not source-readiness blockers."
+    },
+    {
+      "finding_id": "recheck-011",
+      "status": "recorded_in_atom_0087",
+      "summary": "Third subjective/objective audit confirms all lanes are source-ready for explicit compile but not implementation-ready from current canonical Plans alone."
+    },
+    {
+      "finding_id": "recheck-012",
+      "status": "recorded_in_atom_0088",
+      "summary": "Inline visualizer compile must treat bridge aliases as host API aliases unless a user-visible external dispatch exists, and must bind 9 color ramps to PM-owned theme variables before implementation."
+    },
+    {
+      "finding_id": "recheck-013",
+      "status": "recorded_in_atom_0089",
+      "summary": "DRY compile must use app.agent_rules.dry_method_default_guard plus explicit stored/effective enums and receipt fields."
+    },
+    {
+      "finding_id": "recheck-014",
+      "status": "recorded_in_atom_0090",
+      "summary": "Compaction compile must remove Plans/newfeatures.md from all live owner slots and add Automated_Testing_System Compact Now acceptance coverage."
+    },
+    {
+      "finding_id": "recheck-015",
+      "status": "recorded_in_atom_0091",
+      "summary": "Notifications/sounds lane has no new product decision gap, but canonical implementation-ready claims require PlanUnits for destinations, Settings placement, sound lifecycle, bounded generic webhook predicates, and test-send validation."
+    },
+    {
+      "finding_id": "recheck-016",
+      "status": "fixed_in_corr_0005",
+      "summary": "Projection text and operating capsule refreshed to the third/latest readiness recheck while preserving prior rechecks as lineage."
+    }
+  ],
+  "updated_at_utc": "2026-06-28T10:51:13Z",
+  "superseded_by": "state/implementation_readiness_fifth_recheck_20260628.json"
+}

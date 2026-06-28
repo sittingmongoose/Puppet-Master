@@ -35,7 +35,7 @@
       "stdout_excerpt": "changed true; artifact_count 1064"
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -324,11 +324,11 @@
   "artifacts": [
     {
       "path": "Plans/00-plans-index.md",
-      "sha256": "1423b091a9caf8f4708d951cfd8daf793e4e069f600b9628654cfe7ec0047ee4"
+      "sha256": "05126f1cd579f5fe69943b779b31de24a55aa3840169bb1d78ac21642270b7ca"
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "55997dbf0a33935dbe4027f980a2df17fedaa0eee557cbe8f801c10020d08318"
+      "sha256": "c095a91635ea37e49f9958588e8f0ece44ded2216228703c30b151818e0a8101"
     },
     {
       "path": "Plans/Executor_Protocol.md",
@@ -336,7 +336,7 @@
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "376250c8c45bb2787282bbfe13cda6ceeca875096ca2c65d2c3863133e843e38"
+      "sha256": "6a6973d1b36666fc7cd9a557700da639a0d0045cc3b177bbb5ab919d190f3123"
     },
     {
       "path": "Plans/Goal_Runtime_System.md",
@@ -352,7 +352,7 @@
     },
     {
       "path": "Plans/Permissions_System.md",
-      "sha256": "7a7c451c4367fe93257ee08d522f3a37ec275aa46f036130e30060e49b4f0940"
+      "sha256": "d6156ef7d2dcf06217ce1334dcb57dfa7a187389f90e9f03ba41ee75ed6df69a"
     },
     {
       "path": "Plans/Plan_To_Node_Compilation.md",
@@ -364,7 +364,7 @@
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
-      "sha256": "d0e1a8d86d1173158be821337eba7abff838b536273e7401f5bc9f095e0875f1"
+      "sha256": "0331495d9c2dd50d25a9487177ba937fa0d4f8ebcb01f314dde604be8f334d2d"
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
@@ -380,43 +380,43 @@
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "1b82fea2867455d899a286e64ff48d03abe2472198963447837ace5bbd1eac18"
+      "sha256": "a1c5f48ae9802e3dcd9b4e85816f4dc0e1d2571bb80eafce0e55bb0b824fb37b"
     },
     {
       "path": "Plans/storage-plan.md",
-      "sha256": "421f6c197603891ad2daea75dfa54dc5410690606bcfa942bafbca582b8ad632"
+      "sha256": "d3aba7a51ff4db7925f8e867d0b5b2408cdc6f7f6310ca8452ae9baa384181b2"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "97bf63956dff69d97fea9f0f20025a52bf899762735ff128be2e91ca346c061b"
+      "sha256": "6687d30c384a93380a5ed40e104fe16944ff631402a8ae58432e1022570eecdf"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "4147fb4013a09fb7271a290abcdddcc18d930326b3441344e91f7addcf39639f"
+      "sha256": "d0af4aa54171f2688deca02b19679ee3eb36b8dc641cd75eff127a121d1dd7cc"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "f8a642072e09451f5e8dcf0328900c8114906a75fafc337cb5792cb4542821cf"
+      "sha256": "66be9c04bf2eba454dbd0fde7fe1f15e388cac108c254eeb07f0aab16c1a89a3"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "1c13920894d7715f840a18fd5e68d9d392b23c8c6f838f5d997fda5142944772"
+      "sha256": "9602c9518c01bcb44ddacabb67238e6fa3343c5a820b56cf6cb5e5b8cd6b037c"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "9713c2770bcdc73a13fe040c351a0c931de469cec1d9d4ecdeb495993f5fba52"
+      "sha256": "b2b2b44fd9b393f6ade75506326d20c5d1d06880c55e000f3f53de6b18435c94"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "9dae60a60b7af483664734d1dfccc5f3f12cadf19197d2929b822b81fd8aaca3"
+      "sha256": "602446f4d276237c5ff62d8523fe6fdd3d16b88fcfc7472ff3019b0639f7acc2"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "fde6df5c849b61261a896df152cd49ced12cedd435423fe585b4b32995bca673"
+      "sha256": "101ee7debfdc2669bc538ef00ef6a933a603f388bbdad6150854867517bb3adf"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "c33842adb3163a58d26436490e36a42b99b8e776c8406002e931c89c7719af5a"
+      "sha256": "0fcbae535a6768a17255900538c028d878dbe73e7272cfaf4b3c690052bbe64b"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -428,11 +428,11 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "74f664269385a324a190f0d01baf9464a6f54f4498c0d44536198fb7578f640f"
+      "sha256": "3a84d5ba3f255135958bbfbbaf71ec6b04c6488034f3cd521af7a779e595a6b3"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "cc6013f655c75c10f90afbbe0a02c784c61c46c6451cdeebb9dff294cdc037cd"
+      "sha256": "f87ffe4c7600eb757eb3b2f0aa535288b96875124e551b27fedadcc78bcc9b9b"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -482,7 +482,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PASS: 5267 PlanUnits, 18824 acceptance units, coverage pass, node readiness blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index validates with 5298 PlanUnits, 18946 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "post-audit-repair-governance-seal",
@@ -592,7 +592,7 @@
     {
       "name": "node-readiness-boundary",
       "result": "PASS",
-      "details": "node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
+      "details": "node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no runtime compiler enablement was performed."
     },
     {
       "name": "audit-20260623-002-fff-schema-registry-repair",
@@ -603,6 +603,11 @@
       "name": "plan-migration-validate",
       "result": "PASS",
       "details": "PASS: pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary for pldg-20260626-001-feature-name."
+    },
+    {
+      "name": "feature-intake-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260627-001-feature-intake governance_status=sealed; node_readiness_report.status remains blocked_compiler_contract_incomplete/runtime_disabled; no runtime compiler enablement was performed."
     }
   ]
 }

@@ -1,0 +1,579 @@
+{
+  "schema_id": "pm.bootstrap_source_compile_readiness_matrix.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "matrix_id": "notifications_sounds_readiness_matrix_20260628",
+  "status": "source_ready_for_explicit_compile__compile_unopened",
+  "created_at_utc": "2026-06-28T08:14:30Z",
+  "source_refs": [
+    "state/implementation_readiness_review_20260628.json",
+    "subagent:019f0d3d-cf6f-7342-a426-164b1b9a08e9",
+    "subagent:019f0d3e-06bb-7e52-bc52-31958ebb0430",
+    "source_shards/peon_ping_notifications_comparison_20260627.json",
+    "records/design_atoms.jsonl:atom-0017-atom-0029",
+    "records/decisions.jsonl:dec-0009-dec-0013",
+    "external:official:Slack incoming webhooks:https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks",
+    "external:official:Discord execute webhook:https://discord.com/developers/docs/resources/webhook#execute-webhook",
+    "external:official:ntfy publish API:https://docs.ntfy.sh/publish/",
+    "external:official:Pushover API:https://pushover.net/api",
+    "external:official:Telegram Bot API:https://core.telegram.org/bots/api"
+  ],
+  "phase_boundary": {
+    "compile_opened": false,
+    "canonical_plans_edited": false,
+    "governance_status": "not_started"
+  },
+  "destination_matrix": [
+    {
+      "destination": "Slack webhook",
+      "required_fields": [
+        "webhook_url_secret_ref",
+        "display_name",
+        "event_filters"
+      ],
+      "auth_mode": "webhook_url_is_secret",
+      "receipt_semantics": "HTTP 200 with ok means accepted; no message id.",
+      "retry_semantics": "Retry 429/5xx/network only; permanent-disable on invalid/revoked URL."
+    },
+    {
+      "destination": "Discord webhook",
+      "required_fields": [
+        "webhook_url_secret_ref",
+        "optional_thread_or_channel_context",
+        "wait=true for test/live receipts"
+      ],
+      "auth_mode": "webhook_url_token_is_secret",
+      "receipt_semantics": "2xx accepted; with wait=true store message id.",
+      "retry_semantics": "Honor 429 rate headers; no PM state mutation from Discord."
+    },
+    {
+      "destination": "Generic webhook",
+      "required_fields": [
+        "url",
+        "method",
+        "headers",
+        "auth_mode none|bearer|basic|static_header|hmac_sha256",
+        "success_predicate"
+      ],
+      "auth_mode": "secret headers/tokens in OS store",
+      "receipt_semantics": "Default success is 2xx; optional response id pointer.",
+      "retry_semantics": "Retry 429/5xx/network; fail closed on auth/shape errors."
+    },
+    {
+      "destination": "ntfy",
+      "required_fields": [
+        "server_url",
+        "topic",
+        "optional_username_or_token",
+        "priority",
+        "tags",
+        "actions"
+      ],
+      "auth_mode": "topic/user/token treated sensitive; public topics treated sensitive by default",
+      "receipt_semantics": "2xx response id is queued receipt, not read proof.",
+      "retry_semantics": "Retry 429/5xx/network."
+    },
+    {
+      "destination": "Pushover",
+      "required_fields": [
+        "app_token_secret_ref",
+        "user_or_group_key_secret_ref",
+        "optional_device",
+        "optional_sound",
+        "optional_priority"
+      ],
+      "auth_mode": "token and user/group key secrets",
+      "receipt_semantics": "JSON status=1 accepted; emergency priority may return receipt.",
+      "retry_semantics": "Track quota headers/reset; no retry on invalid token/user."
+    },
+    {
+      "destination": "Telegram",
+      "required_fields": [
+        "bot_token_secret_ref",
+        "chat_id_sensitive_ref",
+        "optional_thread_id",
+        "parse_mode default plain/escaped"
+      ],
+      "auth_mode": "bot token secret; chat_id sensitive",
+      "receipt_semantics": "ok=true with message_id accepted.",
+      "retry_semantics": "Retry only when retry_after/429/5xx/network; no retry on blocked bot/chat errors."
+    },
+    {
+      "destination": "In-app toast/banner",
+      "required_fields": [
+        "local_event_id",
+        "attention_key",
+        "root_cause_key",
+        "severity",
+        "route",
+        "allowed_actions"
+      ],
+      "auth_mode": "none",
+      "receipt_semantics": "Render/dismiss/resolve remain distinct; dismissal never clears canonical condition.",
+      "retry_semantics": "Local projection retry only."
+    },
+    {
+      "destination": "System/tray",
+      "required_fields": [
+        "os_notification_capability",
+        "title",
+        "body",
+        "route_token",
+        "grouping_key"
+      ],
+      "auth_mode": "none",
+      "receipt_semantics": "Submitted/clicked/dismissed are projection receipts only; OS disabled is capability-disabled.",
+      "retry_semantics": "Do not treat OS disabled as provider delivery failure."
+    },
+    {
+      "destination": "Sound",
+      "required_fields": [
+        "event_category",
+        "sound_id",
+        "source_kind",
+        "volume",
+        "quiet_focus_policy"
+      ],
+      "auth_mode": "none; user assets are managed blobs not URLs",
+      "receipt_semantics": "Playback attempted/succeeded/unavailable.",
+      "retry_semantics": "Sound is never sole carrier of important state."
+    }
+  ],
+  "rows": [
+    {
+      "row_id": "notify-destination-record-schema",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0019",
+        "atom-0023",
+        "atom-0052",
+        "atom-0061"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[0]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md"
+      ],
+      "contract": "Notification destination records are scope-aware and secret-backed. Non-secret settings live in redb; uploaded/transcoded sound blobs live in PM-managed asset/blob storage; webhook and push tokens live only in OS credential storage by reference.",
+      "conceptual_keys": [
+        "notification_settings.v1:global",
+        "notification_settings.v1:project:{project_id}",
+        "notification_destination.v1:{scope}:{destination_id}",
+        "notification_sound_mapping.v1:{scope}:{event_category}",
+        "sound_asset_manifest.v1:{scope}:{sound_id}"
+      ],
+      "negative_constraints": [
+        "Do not store webhook URLs, bot tokens, app tokens, user keys, or static auth headers in plain project config or logs."
+      ],
+      "gui_related": false,
+      "remaining_product_decision": false,
+      "generic_webhook_success_predicate_contract": {
+        "default_success": "HTTP status 2xx",
+        "allowed_predicate_atoms": [
+          "status_class_is",
+          "status_code_equals",
+          "header_exists",
+          "header_equals_literal",
+          "json_pointer_exists",
+          "json_pointer_equals_literal"
+        ],
+        "composition": "bounded AND/OR expression, max 5 atoms, no loops, no network, no script execution",
+        "secrets": "predicates may reference secret refs only by opaque id; predicate evaluation must not log secret values",
+        "negative_constraints": [
+          "No arbitrary JavaScript, shell, regex-with-catastrophic-backtracking, dynamic imports, or provider-specific code snippets as predicates."
+        ]
+      }
+    },
+    {
+      "row_id": "notify-payload-redaction-trust-copy",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0025",
+        "atom-0052",
+        "atom-0062"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[0]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "envelope": [
+        "delivery_attempt_id",
+        "source_event_ref",
+        "attention_key",
+        "root_cause_key",
+        "project_ref",
+        "severity",
+        "event_family",
+        "title",
+        "body",
+        "owner_route",
+        "projection_trust",
+        "redaction_profile_ref",
+        "source_refs",
+        "allowed_action_ids"
+      ],
+      "contract": "External copy is short, redacted, and trust-qualified. Stale/degraded projection trust is named in payload copy. External buttons/links open PM routes only and do not resolve blockers remotely.",
+      "negative_constraints": [
+        "Never include raw secrets, webhook URLs, tokens, private paths, full prompts, full logs, screenshots, raw diff bodies, or unredacted account identities.",
+        "Discord/Slack disable broad mention behavior by default."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "notify-retry-rate-receipt-contract",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0019",
+        "atom-0052",
+        "atom-0063"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[0]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "contract": "Create one NotificationDeliveryAttemptReceipt per destination attempt with provider kind, destination id, event id, status class, HTTP status, provider request/message id if available, retry count, next retry time, redaction profile, request digest, response digest, and secret refs only.",
+      "transient_failures": [
+        "network timeout",
+        "408",
+        "429",
+        "5xx"
+      ],
+      "permanent_until_edited_or_retested": [
+        "malformed payload",
+        "revoked/invalid token",
+        "missing chat/user/topic",
+        "forbidden destination",
+        "provider capability disabled"
+      ],
+      "retry_policy": "Honor Retry-After/provider reset first; otherwise exponential jitter, capped, with visible degraded status after final retry.",
+      "negative_constraints": [
+        "Provider receipts never become canonical alert truth.",
+        "External destination dismissal never resolves PM blocked episodes."
+      ],
+      "gui_related": false,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "notify-settings-gui-command-wiring",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0020",
+        "atom-0027",
+        "atom-0052",
+        "atom-0064"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[1]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "settings_surface": "Settings > General > Notifications & Sounds",
+      "fields": [
+        "master notification enable",
+        "in-app toast/banner",
+        "system/tray",
+        "sound enable",
+        "global volume",
+        "per-event routing matrix",
+        "quiet/focus rules",
+        "destination list",
+        "destination secret status",
+        "sound library",
+        "sound mapping",
+        "upload/import/export",
+        "preview",
+        "test-send"
+      ],
+      "states": [
+        "inherited",
+        "overridden",
+        "disabled",
+        "unsupported",
+        "audio unavailable",
+        "OS notification unavailable",
+        "secret missing",
+        "network blocked",
+        "rate-limited",
+        "testing",
+        "failed",
+        "degraded/stale",
+        "empty destinations",
+        "empty custom library",
+        "unsupported pack",
+        "no audio device"
+      ],
+      "command_ids_for_compile": [
+        "cmd.settings.open_notifications",
+        "cmd.notifications.destination.create",
+        "cmd.notifications.destination.update",
+        "cmd.notifications.destination.delete",
+        "cmd.notifications.destination.toggle",
+        "cmd.notifications.destination.test",
+        "cmd.notifications.mapping.update",
+        "cmd.notifications.override.set",
+        "cmd.sound.preview",
+        "cmd.sound.upload",
+        "cmd.sound.pack.import",
+        "cmd.sound.asset.delete",
+        "cmd.sound.asset.restore",
+        "cmd.sound.asset.export",
+        "cmd.sound.mapping.set"
+      ],
+      "negative_constraints": [
+        "Do not silently create a new top-level Settings tab; if compile chooses one, update the 19-tab registry intentionally."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false,
+      "settings_registry_contract": {
+        "placement": "Settings > General > Notifications & Sounds",
+        "top_level_tab_policy": "Do not create a new top-level Settings tab unless the Settings registry is intentionally updated during compile.",
+        "registry_note": "Compile should reconcile this placement against the existing General settings surface and 19-tab registry."
+      }
+    },
+    {
+      "row_id": "notify-global-project-overrides",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0029",
+        "atom-0052",
+        "atom-0065"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[2]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "precedence": [
+        "built-in defaults",
+        "global notification defaults",
+        "project override",
+        "runtime safety constraints"
+      ],
+      "contract": "Project settings inherit from or override global defaults. Runtime safety constraints still win: quiet/mute cannot hide canonical blocked or security-sensitive conditions.",
+      "negative_constraints": [
+        "Do not allow per-project override inheritance to hide blocked/security-sensitive events."
+      ],
+      "gui_related": false,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "sound-catalog-default-mappings",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0021",
+        "atom-0026",
+        "atom-0052",
+        "atom-0066"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[4]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "contract": "Ship only clean built-in sounds whose license/source is original, generated-for-PM, or permissively licensed with attribution metadata.",
+      "manifest_fields": [
+        "sound_id",
+        "display_name",
+        "category",
+        "duration",
+        "loudness",
+        "checksum",
+        "source/license",
+        "built-in/custom/imported source kind",
+        "fallback_status"
+      ],
+      "default_audible_mappings": [
+        "input/approval required",
+        "blocked/escalated",
+        "failures",
+        "rate/resource limits",
+        "long-running completion"
+      ],
+      "visual_only_by_default": [
+        "routine run start",
+        "routine run complete",
+        "artifact published",
+        "repeated-prompt/user-spam"
+      ],
+      "negative_constraints": [
+        "Do not bundle PeonPing-style voice packs by default until licensing is verified."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "sound-upload-asset-lifecycle",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0022",
+        "atom-0052",
+        "atom-0067"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[3]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md"
+      ],
+      "accepted_formats": [
+        "WAV",
+        "MP3",
+        "OGG"
+      ],
+      "validation": [
+        "MIME/header validation",
+        "path sanitization",
+        "decode proof"
+      ],
+      "limits": {
+        "max_source_file_mib": 5,
+        "max_decoded_duration_seconds": 10,
+        "warn_above_seconds": 3
+      },
+      "lifecycle": [
+        "normalize to PM-managed playback copy",
+        "target consistent loudness",
+        "trim leading/trailing silence",
+        "content-hash duplicate linking/relabeling",
+        "soft delete while referenced",
+        "built-ins can be hidden/disabled but not deleted",
+        "export manifest plus user-owned assets, never secrets"
+      ],
+      "negative_constraints": [
+        "Do not let uploaded sounds escape PM-managed asset storage as executable files or URLs."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "peonping-openpeon-import-map",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0024",
+        "atom-0052",
+        "atom-0068"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[5]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "contract": "Treat PeonPing/OpenPeon as source-lineage/import compatibility, not bundled runtime or licensed asset authority.",
+      "category_mapping": {
+        "session.start": "routine_run_start",
+        "task.complete": "routine_or_long_running_completion",
+        "task.acknowledge": "acknowledgement_visual_or_optional_sound",
+        "input.required": "input_or_approval_required",
+        "task.error": "failure",
+        "resource.limit": "rate_or_resource_limit",
+        "user.spam": "repeated_prompt_user_spam"
+      },
+      "unsupported_behavior": [
+        "Unknown categories import as unmapped/disabled with warnings.",
+        "Unsupported formats are rejected row-by-row.",
+        "Unknown manifest versions require manual review.",
+        "Unsafe paths are rejected."
+      ],
+      "negative_constraints": [
+        "Do not copy third-party sound assets without licensing verification.",
+        "Do not import PeonPing shell/PowerShell hook runtime into PM canon."
+      ],
+      "gui_related": false,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "preview-test-send-accessibility",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0025",
+        "atom-0027",
+        "atom-0052",
+        "atom-0069"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[1]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "contract": "Preview is local playback only and never external delivery. Test-send is explicit, rate-limited, labeled as test, masks secrets, records success/failure receipt, and never mutates PM alert state. Sound is never the sole carrier of important information.",
+      "accessibility": [
+        "Quiet/focus windows apply only to advisory noise.",
+        "Blocked/security-sensitive conditions remain visible and routeable.",
+        "Audio-device failure hides or labels controls without noisy error toasts."
+      ],
+      "negative_constraints": [
+        "Do not let test-send resolve or dismiss PM conditions.",
+        "Do not emit error-toasts for audio backend absence."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "notify-delivery-validation-no-secret-evidence",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0027",
+        "atom-0052",
+        "atom-0070"
+      ],
+      "gap_source": "implementation_readiness_review.notifications_sounds_peonping.gaps[6]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "validation_rows": [
+        "render test",
+        "redaction test",
+        "auth-missing test",
+        "provider-error mock",
+        "rate-limit mock",
+        "success receipt mock",
+        "no-secret-log assertion",
+        "manual/live test-send path requiring explicit user action"
+      ],
+      "mock_live_boundary": "Automated tests default to mock transport. Live sends require explicit user action and enabled destination.",
+      "negative_constraints": [
+        "Do not persist destination secrets in receipts, screenshots, logs, exports, or failure evidence."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    }
+  ],
+  "external_provider_docs_verified_at_utc": "2026-06-28T08:14:30Z",
+  "external_provider_docs": [
+    "external:official:Slack incoming webhooks:https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks",
+    "external:official:Discord execute webhook:https://discord.com/developers/docs/resources/webhook#execute-webhook",
+    "external:official:ntfy publish API:https://docs.ntfy.sh/publish/",
+    "external:official:Pushover API:https://pushover.net/api",
+    "external:official:Telegram Bot API:https://core.telegram.org/bots/api"
+  ]
+}

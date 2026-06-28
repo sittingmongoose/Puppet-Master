@@ -1,0 +1,124 @@
+{
+  "schema_id": "pm.bootstrap_dry_method_defaults_matrix.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-28T05:58:27Z",
+  "updated_at_utc": "2026-06-28T05:58:27Z",
+  "source_refs": [
+    "chat:dry-method-outside-planned-docs",
+    "chat:dry-method-defaults-accepted",
+    "q-0014",
+    "q-0015",
+    "q-0016",
+    "dec-0017",
+    "atom-0042",
+    "atom-0043",
+    "atom-0044",
+    "atom-0045",
+    "atom-0046",
+    "atom-0047",
+    "atom-0048",
+    "atom-0049"
+  ],
+  "accepted_defaults": [
+    {
+      "default_id": "dry-default-001",
+      "question_ref": "q-0014",
+      "summary": "DRY Method is default-on PM application-level assistant behavior outside planned docs.",
+      "settings_behavior": "The default DRY guard is user-disableable. Target-project-specific DRY conventions remain project-level rules and explicit project/user rules still apply through normal precedence.",
+      "negative_constraints": [
+        "Do not make DRY Method opt-in by default.",
+        "Do not hard-code DRY Method so the user cannot turn it off.",
+        "Do not erase explicit project/user instructions when the default DRY guard is disabled."
+      ],
+      "gui_related": true
+    },
+    {
+      "default_id": "dry-default-002",
+      "question_ref": "q-0015",
+      "summary": "Exploratory chat may proceed with a visible caveat when the DRY owner/source route is unresolved.",
+      "mutation_behavior": "Canonical or implementation-changing work blocks mutation, asks for clarification, or creates a bounded open item until the owner/source route is resolved.",
+      "negative_constraints": [
+        "Do not silently mutate canonical or implementation files when the DRY owner/source route is unresolved.",
+        "Do not block ordinary exploratory discussion when a caveated answer is sufficient.",
+        "Do not let unresolved owner/source uncertainty become duplicate canon."
+      ],
+      "gui_related": false
+    },
+    {
+      "default_id": "dry-default-003",
+      "question_ref": "q-0016",
+      "summary": "Assistant Chat shows compact visible rules/DRY evidence and what/why explanations when DRY Method materially affects a turn or run.",
+      "visible_states": [
+        "DRY applied",
+        "DRY degraded",
+        "DRY disabled",
+        "owner/source route found",
+        "owner/source route unresolved",
+        "mutation blocked",
+        "exploratory caveat used",
+        "existing owner/component/helper/schema reused",
+        "rules missing",
+        "rules stale"
+      ],
+      "negative_constraints": [
+        "Do not hide trust-affecting missing/stale rule-source state in logs only.",
+        "Do not present a generic blocked/error label without the owner/source reason and next safe action.",
+        "Do not flood routine turns when DRY has no material effect."
+      ],
+      "gui_related": true
+    },
+    {
+      "default_id": "dry-default-004",
+      "summary": "Turning off the default DRY Method guard does not disable other safety/source-authority boundaries.",
+      "disabled_state_boundary": "Disabled DRY Method removes mandatory DRY-specific block/caveat behavior. It does not override explicit user instructions, project rules, safety policy, secret handling, canonical Plans authority when working on PM Plans, governance phase boundaries, or normal source-control hygiene.",
+      "negative_constraints": [
+        "Do not interpret DRY Method off as permission to violate PM source authority or governance phase boundaries.",
+        "Do not interpret DRY Method off as permission to ignore explicit user/project instructions or safety rules.",
+        "Do not allow disabled DRY Method to create false canonical claims."
+      ],
+      "gui_related": false
+    }
+  ],
+  "validation_rows": [
+    {
+      "validation_id": "dry-val-001",
+      "summary": "All prompt construction routes consume the same Instruction Bundle assembly and rules pipeline.",
+      "expected_result": "Assistant, Interview, Orchestrator, delegated child-run, document-builder, and code-generation routes do not carry separate prompt-builder-specific DRY prose.",
+      "gui_related": false
+    },
+    {
+      "validation_id": "dry-val-002",
+      "summary": "Default-on behavior is verified.",
+      "expected_result": "A new/default PM configuration applies DRY Method outside planned docs without user opt-in.",
+      "gui_related": false
+    },
+    {
+      "validation_id": "dry-val-003",
+      "summary": "User-disableable behavior is verified.",
+      "expected_result": "A user can disable the default DRY guard, and the assistant visibly discloses the disabled state when relevant.",
+      "gui_related": true
+    },
+    {
+      "validation_id": "dry-val-004",
+      "summary": "Unresolved owner/source fallback is verified.",
+      "expected_result": "Exploratory chat can continue with a caveat; canonical or implementation-changing mutation blocks or records a bounded open item.",
+      "gui_related": true
+    },
+    {
+      "validation_id": "dry-val-005",
+      "summary": "What/why explanation is verified.",
+      "expected_result": "Assistant Chat explains the relevant owner/source route, blocked reason, degraded/off state, and next safe action when DRY behavior materially changes the outcome.",
+      "gui_related": true
+    },
+    {
+      "validation_id": "dry-val-006",
+      "summary": "Rules provenance is verified.",
+      "expected_result": "Run receipts preserve rules provenance such as application/project rule hashes where relevant, without creating a shadow instruction source.",
+      "gui_related": false
+    }
+  ],
+  "phase_boundary": {
+    "status": "source_prepared_for_future_explicit_compile",
+    "notes": "This matrix is ledger source only. It does not open compile, edit canonical Plans, create PlanUnit indexes, create WorkNodes or NodeSeeds, create executable queues, write implementation files, or refresh governance artifacts."
+  }
+}

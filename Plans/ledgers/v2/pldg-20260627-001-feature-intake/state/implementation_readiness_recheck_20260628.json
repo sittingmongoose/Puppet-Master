@@ -1,0 +1,151 @@
+{
+  "schema_id": "pm.bootstrap_implementation_readiness_recheck.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-28T08:33:00Z",
+  "status": "source_ready_for_explicit_compile__compile_unopened",
+  "verdict": {
+    "objective": "Active ledger mechanics pass; lane source packets are sufficient for future compile without new product decisions; canonical Plans remain incomplete because compile is unopened.",
+    "subjective": "Strong source packet for a spec compiler, not enough for an implementer to build from current Plans alone."
+  },
+  "subagents": [
+    {
+      "agent_id": "019f0d54-1b6e-7982-973c-0345021bd501",
+      "lane": "ledger_mechanics_objective",
+      "outcome": "pass_with_precompile_hygiene_findings"
+    },
+    {
+      "agent_id": "019f0d54-1c69-7010-a45e-45707f3b66f1",
+      "lane": "inline_visualizer_v2",
+      "outcome": "source_ready_compile_pending"
+    },
+    {
+      "agent_id": "019f0d54-1d73-75b0-a736-d6ef4db01258",
+      "lane": "notifications_sounds_peonping",
+      "outcome": "source_ready_compile_pending"
+    },
+    {
+      "agent_id": "019f0d54-1e7b-7430-8e60-9b3a70995db2",
+      "lane": "dry_method_outside_plan_docs",
+      "outcome": "source_ready_compile_pending"
+    },
+    {
+      "agent_id": "019f0d54-1fbf-72a0-a6fe-302199b56e4a",
+      "lane": "compaction_compact_now",
+      "outcome": "source_ready_compile_pending"
+    },
+    {
+      "agent_id": "019f0d54-2123-7263-b7bc-3455fe763078",
+      "lane": "cross_owner_compile_readiness",
+      "outcome": "source_ready_compile_pending"
+    }
+  ],
+  "objective_checks": [
+    "bootstrap ledger validator pass with zero warnings after recheck updates",
+    "compile_queue.items remains []",
+    "canonical_plan_targets remains []",
+    "compiled_owner_docs remains []",
+    "ready_for_plan_compile_atoms remains 0",
+    "governance_status remains not_started",
+    "canonical Plans and generated governance artifacts remain untouched in this pass"
+  ],
+  "source_ready_lanes": [
+    "inline_visualizer_v2",
+    "notifications_sounds_peonping",
+    "compaction_compact_now",
+    "dry_method_outside_plan_docs"
+  ],
+  "pre_compile_hygiene_findings": [
+    {
+      "finding_id": "recheck-001",
+      "status": "recorded_in_atom_0080",
+      "summary": "Integration matrix is rollup-only; future compiler must dereference linked detailed matrices."
+    },
+    {
+      "finding_id": "recheck-002",
+      "status": "fixed_in_corr_0003",
+      "summary": "atom-0015 gui_related corrected to true."
+    },
+    {
+      "finding_id": "recheck-003",
+      "status": "recorded_in_atom_0081",
+      "summary": "Compaction newfeatures cleanup must cover both ACD-177 and ACD-414 and treat newfeatures as cleanup/source-lineage, not live owner."
+    },
+    {
+      "finding_id": "recheck-004",
+      "status": "recorded_in_atom_0082",
+      "summary": "Inline visualizer compile must pin concrete token recipes and bridge alias command boundary."
+    },
+    {
+      "finding_id": "recheck-005",
+      "status": "recorded_in_atom_0083",
+      "summary": "DRY compile must pin toggle key/enum, receipt placement, and GUI copy/density."
+    },
+    {
+      "finding_id": "recheck-006",
+      "status": "recorded_in_atom_0084",
+      "summary": "Notification compile must bound generic-webhook success predicates and make Settings placement explicit against the registry."
+    },
+    {
+      "finding_id": "recheck-007",
+      "status": "recorded_in_atom_0085",
+      "summary": "Stale ledger_registry evidence hashes are governance-only currentness work, not source-readiness blockers."
+    }
+  ],
+  "no_new_product_questions": true,
+  "compile_boundary": {
+    "compile_opened": false,
+    "canonical_plans_edited": false,
+    "governance_status": "not_started",
+    "worknodes_or_nodeseeds_created": false,
+    "implementation_files_touched": false
+  },
+  "source_refs": [
+    "chat:subjective-objective-recheck-again",
+    "records/design_atoms.jsonl:atom-0079-atom-0085",
+    "records/corrections.jsonl:corr-0003",
+    "records/decisions.jsonl:dec-0019",
+    "events.jsonl:evt-0019",
+    "events.jsonl:evt-0020"
+  ],
+  "objective_gate_results": {
+    "checked_at_utc": "2026-06-28T09:01:12Z",
+    "shard_check": {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "docs_checked": 56,
+      "shards_checked": 1042,
+      "failures": []
+    },
+    "run_gates": {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "fail_governance_currentness_only",
+      "product_source_readiness_blocker": false,
+      "failures": [
+        {
+          "check": "validate_plan_graph",
+          "error": "artifact_hash_stale",
+          "artifact": "Plans/ledgers/v2/ledger_registry.json",
+          "expected": "6b0fc52e459aa11e328e0048cef428e57f05ad86e178428a07239d80db28774d",
+          "actual": "6be3ec25d5e74580afea6a80cf6ad135e68738965f7967dd656ea184094714a2",
+          "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+        },
+        {
+          "check": "validate_evidence",
+          "error": "artifact_hash_stale",
+          "artifact": "Plans/ledgers/v2/ledger_registry.json",
+          "expected": "6b0fc52e459aa11e328e0048cef428e57f05ad86e178428a07239d80db28774d",
+          "actual": "6be3ec25d5e74580afea6a80cf6ad135e68738965f7967dd656ea184094714a2",
+          "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json"
+        },
+        {
+          "check": "validate_evidence",
+          "error": "artifact_hash_stale",
+          "artifact": "Plans/ledgers/v2/ledger_registry.json",
+          "expected": "6b0fc52e459aa11e328e0048cef428e57f05ad86e178428a07239d80db28774d",
+          "actual": "6be3ec25d5e74580afea6a80cf6ad135e68738965f7967dd656ea184094714a2",
+          "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+        }
+      ]
+    }
+  }
+}

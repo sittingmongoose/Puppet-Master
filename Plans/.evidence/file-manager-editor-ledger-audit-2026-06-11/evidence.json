@@ -18,7 +18,7 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "cc6013f655c75c10f90afbbe0a02c784c61c46c6451cdeebb9dff294cdc037cd"
+      "sha256": "f87ffe4c7600eb757eb3b2f0aa535288b96875124e551b27fedadcc78bcc9b9b"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -84,7 +84,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PASS: 5267 PlanUnits, 18824 acceptance units, coverage pass, node readiness blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index validates with 5298 PlanUnits, 18946 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -199,7 +199,7 @@
     {
       "name": "node-readiness-boundary",
       "result": "PASS",
-      "details": "node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
+      "details": "node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no runtime compiler enablement was performed."
     },
     {
       "name": "audit-20260623-002-fff-schema-registry-repair",
@@ -210,6 +210,11 @@
       "name": "plan-migration-validate",
       "result": "PASS",
       "details": "PASS: pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary for pldg-20260626-001-feature-name."
+    },
+    {
+      "name": "feature-intake-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260627-001-feature-intake governance_status=sealed; node_readiness_report.status remains blocked_compiler_contract_incomplete/runtime_disabled; no runtime compiler enablement was performed."
     }
   ],
   "commands_run": [
@@ -313,7 +318,7 @@
       "stdout_excerpt": "Final polish pass: no whitespace errors; exit_code=0."
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -325,7 +330,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
       "exit_code": 0
     },
     {

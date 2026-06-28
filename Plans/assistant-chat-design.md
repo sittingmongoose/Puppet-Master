@@ -1873,7 +1873,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipel
   - **Get Shit Done (GSD):** Context engineering, sized context files, fresh context per plan. See [GSD](https://github.com/gsd-build/get-shit-done).
   - **yume:** Session recovery, checkpoints, persistent state. See [yume](https://github.com/aofp/yume).
 - **Application:** Where applicable, implement or plan for: context compilation for chat (e.g. conversation summary + recent turns + plan), compaction-aware re-reads, and clear boundaries so the agent knows what is "current" vs "summarized".
-- **User-triggered "Compact session":** The user can trigger **"Compact session"** (or "Summarize and continue") in chat -- e.g. via slash command or menu -- which runs the same compaction pipeline as auto-compact (Plans/newfeatures.md §10), with clear UI feedback (e.g. "Compacting...").
+- **User-triggered "Compact session":** The user can trigger **"Compact session"** (or "Summarize and continue") in chat -- e.g. via slash command, menu, or the chat context circle's Compact Now action -- which runs the same compaction pipeline as auto-compact through the live Prompt Pipeline owners, with clear UI feedback (e.g. "Compacting..."). Plans/newfeatures.md §10 remains source-lineage only for this historical reference.
 
 ### 17.1 Deterministic bundle ordering (Instruction / Work / Memory)
 
@@ -11605,8 +11605,15 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   User-triggered "Compact session" or "Summarize and continue" in chat runs the
-  same compaction pipeline as auto-compact and shows clear UI feedback such as
-  "Compacting...".
+  same compaction pipeline as auto-compact when invoked by slash command, menu,
+  or the chat context circle's Compact Now action. The entrypoint dispatches
+  cmd.chat.compact_context only after explicit user choice, shows clear UI
+  feedback such as "Compacting...", emits context.compaction.started,
+  context.compaction.completed, and context.compaction.failed or an equivalent
+  visible failure/degraded state, reports already_running, cancelled, no_op,
+  degraded, unavailable, retry_scheduled, completed, or failed command results,
+  and treats Plans/newfeatures.md §10 as
+  source-lineage only rather than live owner prose.
 gui_related: true
 gui_classification_reason: Compact-session command/menu entrypoint and feedback are visible chat UI.
 depends_on: [ACD-176]
@@ -11614,30 +11621,57 @@ unblocks: []
 acceptance_criteria:
   - Compact session can be invoked by the user from chat.
   - User-triggered compaction runs the same pipeline as auto-compact.
+  - The chat context circle Compact Now click path dispatches cmd.chat.compact_context only after explicit user choice.
   - Visible feedback is shown during compaction.
+  - Already-running, cancelled, no-op, degraded, unavailable, retry, reload, completed, and failed outcomes remain visible or receipt-backed.
+  - Failure or unavailable compaction produces context.compaction.failed or an equivalent visible degraded state with next-action copy.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
+  - Compact Now chat context circle acceptance fixture
 risk_class: compact_session_ui
 reasoning_tier: standard
 context_scope: context_truncation
 implementation_surfaces:
   - Plans/assistant-chat-design.md
-  - Plans/newfeatures.md
   - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: compact_session_chat_entrypoint
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0086
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-owner-cleanup-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0090
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/questions.jsonl:q-0013
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl:dec-0015
 preserved_exact_tokens:
   - "Compact session"
   - "Summarize and continue"
+  - "Compact Now"
+  - "cmd.chat.compact_context"
+  - "context.compaction.started"
+  - "context.compaction.completed"
+  - "context.compaction.failed"
   - "Compacting..."
-negative_constraints: []
+  - "already_running"
+  - "cancelled"
+  - "no_op"
+  - "retry_scheduled"
+  - "Plans/newfeatures.md"
+  - "newfeatures.md"
+  - "§10 auto-compact"
+negative_constraints:
+  - Do not revive Plans/newfeatures.md as a live implementation surface or owner hint for Compact Now, manual compaction, or auto-compact behavior.
+  - Do not dispatch Compact Now from hover alone; explicit click/choice is required.
+  - Do not treat manual Compact Now alone as a new cache lineage unless logical run lineage changes.
 owner_hints:
   - Plans/assistant-chat-design.md
-  - Plans/newfeatures.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/UI_Command_Catalog.md
+owner_boundary_notes:
+  - Plans/newfeatures.md is historical/source-lineage for this compaction reference, not a live implementation owner.
 ```
 
 ### ACD-178 - Assistant Turn Bundle Ordering
@@ -21836,11 +21870,19 @@ source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0064
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0065
   - source_ref:Plans/newfeatures.md:1121
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-owner-cleanup-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0071
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0090
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/questions.jsonl:q-0013
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl:dec-0015
 preserved_exact_tokens: ["newfeatures.md", "§3", "§7", "§10 auto-compact", "§15.11", "§15.15", "§15.16", "W.16", "AC-16", "AC-25", "AC-35", "AC-66"]
 negative_constraints:
   - Do not revive newfeatures.md as the live owner for auto-compact, terminal, browser, hot-reload, or virtualization behavior.
   - Do not renumber W.16 acceptance criteria merely to close holes.
-owner_hints: [Plans/assistant-chat-design.md, Plans/newfeatures.md, Plans/Prompt_Pipeline.md, Plans/UI_Command_Catalog.md]
+owner_hints: [Plans/assistant-chat-design.md, Plans/Prompt_Pipeline.md, Plans/UI_Command_Catalog.md]
+owner_boundary_notes:
+  - Plans/newfeatures.md is preserved only as source-lineage or compatibility evidence for stale assistant-chat references.
 ```
 
 ## Ledger Compile Addendum - pldg-20260615-001
@@ -22877,4 +22919,217 @@ owner_hints:
 - Plans/storage-plan.md
 - Plans/Runtime_Artifacts_Panel.md
 - Plans/Glossary.md
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Assistant Chat owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### ACD-427 - Inline Visualizer V2 Stream And Host Bridge
+
+```yaml
+plan_unit_id: ACD-427
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Inline visualizer v2 uses PM-native host-fed streaming: the host detects `visualize(title=…)`,
+  `@@@VIZ-START`, and `@@@VIZ-END` envelopes outside tool_calls, reasoning, code_execution, and code fences,
+  feeds sanitized progressive fragments to the sandboxed inline visual module over PM-controlled postMessage,
+  and renders via safe-cut partial HTML parsing, append-only reconciliation, serialized script execution,
+  preservation of script-populated containers, TreeWalker exclusions, marker false-positive avoidance,
+  guarded fallback loops, and zero-flicker finalization. Visualizer host calls use the CV-300 bridge registry:
+  `copyText` aliases `copyToClipboard(text: string): Promise<boolean>`, `toast` is host-local localized
+  visualizer feedback only, `saveState`/`loadState` use PM-managed per-message visual-state, and every call carries
+  a typed bridge envelope with bridge_call_id, visualizer_artifact_id, message_id, method, args, and origin_nonce plus
+  an `{ ok, value?, error_code?, message?, retryable? }` result. In Rust + Slint builds, iframe/postMessage semantics
+  are mapped through the PM-owned isolated webview adapter rather than direct parent DOM or raw storage access.
+gui_related: true
+gui_classification_reason: Inline visualizer streaming, cards, feedback, and bridge behavior are visible chat UI.
+depends_on: [ACD-168, ACD-169, ACD-170, ACD-171, ACD-172, CV-300]
+unblocks: [F3-404, SP-221, PS-123, RAP-037, ATS-015]
+acceptance_criteria:
+  - Visual envelopes route to the inline visual module, not Markdown code fences.
+  - Tool calls, reasoning, code_execution, and code fences do not falsely trigger visual capture.
+  - Finalization does not flicker, remount chart canvases or SVGs, or replace script-populated containers.
+  - Question-flow embedded visuals still omit sendPrompt and cannot bypass PM draft state.
+  - Bridge aliases do not create a second private command payload language.
+  - Bridge envelopes validate origin/nonce, method schema, artifact identity, and return/error shape through the shared registry.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - inline visualizer stream and bridge fixtures
+risk_class: visualizer_stream_bridge_drift
+reasoning_tier: high
+context_scope: assistant_chat_inline_visualizer_v2
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: inline_visualizer_v2_stream_bridge
+  create_worknodes: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-stream-feed
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-incremental-reconciliation
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-bridge-alias-map
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0051
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0056
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0057
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0082
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+preserved_exact_tokens:
+  - "visualize(title=…)"
+  - "@@@VIZ-START"
+  - "@@@VIZ-END"
+  - "safe-cut"
+  - "TreeWalker"
+  - "copyText"
+  - "toast"
+  - "saveState"
+  - "loadState"
+  - "copyToClipboard(text: string): Promise<boolean>"
+  - "bridge_call_id"
+  - "visualizer_artifact_id"
+  - "origin_nonce"
+  - "Rust + Slint"
+  - "webview"
+negative_constraints:
+  - No parent DOM scraping.
+  - No allow-same-origin.
+  - No raw parent localStorage.
+  - No Markdown code fence routing.
+  - No tool_calls/reasoning/code_execution marker capture.
+  - Do not treat visualizer toast as Slack/Discord/webhook notification delivery.
+  - Do not route bridge calls through a second private payload language outside CV-300.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+```
+
+### ACD-428 - Notification Trust Copy And Remote Action Boundary
+
+```yaml
+plan_unit_id: ACD-428
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat and in-app notification copy use the shared notification payload contract for short,
+  redacted, projection-qualified copy. Stale `projection_freshness` or degraded `projection_health` is named in
+  copy when relevant, external buttons and links open PM routes only, and remote destination dismissal never resolves
+  PM blocked episodes or canonical conditions. Slack and Discord broad mention behavior is disabled by default.
+gui_related: true
+gui_classification_reason: Notification copy, in-app toasts/banners, and route actions are user-visible chat and shell presentation.
+depends_on: [CV-298]
+unblocks: [F3-405, ATS-016]
+acceptance_criteria:
+  - Notification copy names stale projection_freshness or degraded projection_health when relevant.
+  - External notification actions open PM routes and do not remotely resolve blockers.
+  - In-app dismissal, external dismissal, and canonical resolution remain distinct states.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - notification redaction and route-action fixtures
+risk_class: notification_trust_copy_leak
+reasoning_tier: high
+context_scope: assistant_chat_notifications
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: notification_trust_copy_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-payload-redaction-trust-copy
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0062
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0091
+preserved_exact_tokens:
+  - "Slack"
+  - "Discord"
+  - "projection_trust"
+  - "projection_freshness"
+  - "projection_health"
+  - "allowed_action_ids"
+  - "External buttons/links"
+negative_constraints:
+  - Never include raw secrets, webhook URLs, tokens, private paths, full prompts, full logs, screenshots, raw diff bodies, or unredacted account identities.
+  - External buttons/links must not resolve blockers remotely.
+  - Discord/Slack broad mentions are disabled by default.
+stale_retired_dispositions:
+  - "`projection_trust` is compatibility/source-lineage vocabulary only for notifications; active copy uses `projection_freshness` and `projection_health`."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-429 - DRY Method What And Why Disclosure
+
+```yaml
+plan_unit_id: ACD-429
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat shows compact what/why disclosure when DRY Method materially affects a turn, is disabled,
+  is degraded by missing or stale rules, blocks a canonical or implementation-changing mutation, or allows
+  exploratory chat with an unresolved-owner caveat. Visible states include DRY applied, DRY degraded,
+  DRY disabled, rules missing, rules stale, owner/source route found, owner/source route unresolved,
+  mutation blocked, exploratory caveat used, and existing owner reused. Routine turns with no material
+  DRY effect may keep details in receipts/provenance only to avoid flooding the chat.
+gui_related: true
+gui_classification_reason: DRY Method what/why disclosure is visible Assistant Chat state and explanatory copy.
+depends_on: [ARC-036, CV-299]
+unblocks: [F3-406, ATS-018]
+acceptance_criteria:
+  - Trust-affecting missing or stale rule-source state is visible, not logs-only.
+  - Canonical or implementation-changing mutation blocks explain what happened, why, and the next safe action.
+  - Routine no-effect DRY turns do not flood the message stream.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - DRY Method chat disclosure fixtures
+risk_class: dry_method_transparency_gap
+reasoning_tier: high
+context_scope: assistant_chat_dry_method
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: dry_method_chat_disclosure
+  create_worknodes: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-chat-what-why
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-003
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0054
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0074
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl:dec-0017
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/questions.jsonl:q-0016
+preserved_exact_tokens:
+  - "using the dry method"
+  - "default"
+  - "the user can turn it off"
+  - "clear to the user what and why those things are happening"
+  - "DRY applied"
+  - "DRY degraded"
+  - "DRY disabled"
+negative_constraints:
+  - Do not hide trust-affecting DRY state in logs only.
+  - Do not create a second visible rules model separate from the runtime Instruction Bundle.
+  - Do not flood routine turns when DRY has no material effect.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Contracts_V0.md
 ```

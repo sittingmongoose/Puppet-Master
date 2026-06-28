@@ -1,0 +1,162 @@
+{
+  "schema_id": "pm.bootstrap_implementation_readiness_fourth_recheck.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-28T09:43:00Z",
+  "status": "source_ready_for_compile_repair__partial_canonical_compile_detected__canonical_plans_not_implementation_ready",
+  "goal_note": "User asked to redo the subjective/objective check with parallel agents and dedicated goals. A new Codex goal could not be created because a prior compile goal was still active, so the audit was tracked in-plan and executed with fresh read-only lane agents.",
+  "user_request_exact_tokens": [
+    "subjective and objective check again",
+    "write yourself a new goal",
+    "spawn agents in parallel",
+    "as many as needed",
+    "dedicated /goal"
+  ],
+  "objective_verdict": {
+    "ledger_source_content_readiness": "pass_for_future_compile",
+    "ledger_projection_handoff_readiness": "fail_until_partial_compile_projection_is_reconciled",
+    "canonical_plans_implementation_readiness": "fail",
+    "canonical_partial_compile_detected": true,
+    "canonical_plan_partial_owner_doc": "Plans/assistant-chat-design.md",
+    "no_new_product_questions": true,
+    "implementation_handoff_allowed": false,
+    "governance_artifacts_edited": false,
+    "worknodes_or_nodeseeds_created": false,
+    "implementation_files_touched": false
+  },
+  "subjective_verdict": "I would hand the ledger source to a careful Plans compiler/spec editor after reconciling the partial Assistant Chat compile. I would not hand the current canonical Plans to implementers: partial ACD PlanUnits create false confidence while downstream owner docs, tests, indexes, shards, and governance evidence are incomplete or stale.",
+  "subagents": {
+    "inline_visualizer_v2": "subagent:019f0d92-9817-7ca2-85a8-fcf8d325ad20",
+    "notifications_sounds_peonping": "subagent:019f0d93-8678-76b1-b6f5-738650fb5e27",
+    "dry_method_outside_plan_docs": "subagent:019f0d93-b332-77b2-a706-0cc8a613703b",
+    "compaction_compact_now": "subagent:019f0d93-e1b5-72a2-b639-2e1653dc4f13",
+    "cross_owner_adjudication": "subagent:019f0d94-072a-7af2-917e-cd130e3cdde4"
+  },
+  "partial_canonical_compile_detected": {
+    "detected_at_utc": "2026-06-28T09:43:00Z",
+    "status": "partial_compile_projection_drift_detected",
+    "owner_doc": "Plans/assistant-chat-design.md",
+    "evidence_refs": [
+      "Plans/assistant-chat-design.md:11602",
+      "Plans/assistant-chat-design.md:21816",
+      "Plans/assistant-chat-design.md:22892",
+      "Plans/assistant-chat-design.md:22896",
+      "Plans/assistant-chat-design.md:22971",
+      "Plans/assistant-chat-design.md:23025"
+    ],
+    "partial_plan_units_or_edits": [
+      "ACD-177 compaction owner cleanup",
+      "ACD-414 newfeatures source-lineage boundary note",
+      "ACD-427 Inline Visualizer V2 Stream And Host Bridge",
+      "ACD-428 Notification Trust Copy And Remote Action Boundary",
+      "ACD-429 DRY Method What And Why Disclosure"
+    ],
+    "missing_downstream_owner_units": [
+      "F3-404/F3-405/F3-406 Final GUI units",
+      "SP-221/SP-222 storage units",
+      "PS-123 permission units",
+      "RAP-037 runtime artifact projection unit",
+      "ATS-015+ acceptance units",
+      "CV-298/CV-299/CV-300 contracts units",
+      "UCC-103 and WM-039 notification command/wiring units",
+      "ARC-036/PP-057/DR-036/DP-063/OSI-430/ISI-019 DRY route/owner units"
+    ],
+    "negative_constraints": [
+      "Do not hand partial Assistant Chat PlanUnits to implementation as a complete packet.",
+      "Do not regenerate shards/evidence/Spec_Lock/plan_graph/auto_decisions without an explicit governance seal phase.",
+      "Do not delete or revert user/assistant worktree changes without explicit instruction.",
+      "Do not compile only from the integration rollup; dereference detailed lane matrices."
+    ]
+  },
+  "lane_findings": [
+    {
+      "lane": "inline_visualizer_v2",
+      "objective_verdict": "source_content_pass__canonical_plans_fail",
+      "subjective_verdict": "ACD-427 exists, but token ramps, library allowlist, permissions, runtime artifacts, storage, and ATS coverage are not owner-complete.",
+      "key_gaps": [
+        "F3-404 missing",
+        "SP-221 missing",
+        "RAP-037 missing",
+        "ATS-015 missing",
+        "9 color ramps not in Final GUI",
+        "expanded library candidates not in Final GUI/Permissions"
+      ],
+      "gui_sorted": "source-complete; canonical GUI incomplete"
+    },
+    {
+      "lane": "notifications_sounds_peonping",
+      "objective_verdict": "source_content_pass__canonical_plans_fail",
+      "subjective_verdict": "Provider/destination/source details are strong, but storage/contracts/permissions/settings/commands/wiring/tests are not canonicalized.",
+      "key_gaps": [
+        "destination schemas missing",
+        "secret refs missing",
+        "delivery receipts missing",
+        "Settings > General > Notifications & Sounds missing",
+        "sound upload lifecycle missing",
+        "test-send validation missing"
+      ],
+      "gui_sorted": "source-complete; canonical Settings and sound GUI incomplete"
+    },
+    {
+      "lane": "dry_method_outside_plan_docs",
+      "objective_verdict": "source_content_pass__canonical_plans_fail",
+      "subjective_verdict": "ACD-429 exists, but the default guard setting, receipt fields, storage/event placement, route tests, and stale Orchestrator-local prose remain incomplete.",
+      "key_gaps": [
+        "app.agent_rules.dry_method_default_guard not canonicalized in owners",
+        "effective-state enum missing from Contracts/storage",
+        "Automated Testing packet missing",
+        "stale Orchestrator DRY/widget prose remains"
+      ],
+      "gui_sorted": "Assistant Chat disclosure partial; Settings/receipts incomplete"
+    },
+    {
+      "lane": "compaction_compact_now",
+      "objective_verdict": "source_content_pass__canonical_plans_fail",
+      "subjective_verdict": "The chat context circle and Compact Now command path are mostly canonical, but ATS coverage, residual newfeatures prose cleanup, and compact failure-state semantics are still missing.",
+      "key_gaps": [
+        "Automated_Testing_System Compact Now packet missing",
+        "Plans/newfeatures.md §10 prose remains in assistant-chat-design.md",
+        "context.compaction.failed or equivalent failure event/copy not clearly canonical"
+      ],
+      "gui_sorted": "core GUI pass; tests and failure states incomplete"
+    }
+  ],
+  "cross_lane_findings": [
+    "Live Plans/assistant-chat-design.md now contains partial pldg-20260627-001-feature-intake compile output while ledger projections still described canonical Plans as untouched.",
+    "Generated PlanUnit index artifacts are stale and do not match live Plan IDs after partial ACD edits.",
+    "Assistant Chat shards and governance evidence are stale because canonical Plans changed without a shard/governance phase.",
+    "Readiness matrices are source-rich and mostly source-ready, but the source baseline is operationally dirty until the partial compile is either completed or intentionally backed out by user request.",
+    "Integration matrix is rollup-only; future compile must dereference detailed lane matrices."
+  ],
+  "objective_gates_observed": {
+    "checked_at_utc": "2026-06-28T09:43:00Z",
+    "pm_bootstrap_ledger_validate": "pass_before_this_projection_update__92_atoms_5_corrections_22_events",
+    "plan_index_validate": "fail_stale_generated_index_artifacts__plan_unit_ids_do_not_match_live_plans",
+    "shard_check": "fail_assistant_chat_design_source_hash_and_shard_body_stale",
+    "run_gates": "fail_assistant_chat_design_and_ledger_registry_hash_stale__shard_mismatch",
+    "git_diff_check": "pass",
+    "canonical_implementation_handoff_blocker": true,
+    "product_source_readiness_blocker": false
+  },
+  "new_ledger_records": {
+    "event_id": "evt-0023",
+    "atom_ids": [
+      "atom-0093",
+      "atom-0094"
+    ],
+    "correction_id": "corr-0006"
+  },
+  "next_safe_action": "Reconcile the partial Assistant Chat compile before implementation handoff: either complete the compile across all owner docs and then regenerate allowed indexes/governance in explicit phases, or explicitly restore the lane to true ledger-only before a fresh compile.",
+  "source_refs": [
+    "chat:subjective-objective-recheck-again-fourth",
+    "subagent:019f0d92-9817-7ca2-85a8-fcf8d325ad20",
+    "subagent:019f0d93-8678-76b1-b6f5-738650fb5e27",
+    "subagent:019f0d93-b332-77b2-a706-0cc8a613703b",
+    "subagent:019f0d93-e1b5-72a2-b639-2e1653dc4f13",
+    "subagent:019f0d94-072a-7af2-917e-cd130e3cdde4",
+    "Plans/assistant-chat-design.md:22892",
+    "state/inline_visualizer_v2_readiness_matrix.json",
+    "state/notifications_sounds_readiness_matrix.json",
+    "state/compaction_compile_readiness_matrix.json",
+    "state/dry_method_compile_readiness_matrix.json"
+  ]
+}

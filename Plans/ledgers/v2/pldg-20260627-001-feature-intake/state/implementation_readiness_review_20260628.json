@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.implementation_readiness_review.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-28T07:19:53Z",
+  "source_ref": "chat:deep-implementation-readiness-review-request",
+  "user_request_exact_tokens": [
+    "I don\u2019t want you to look at",
+    "0 open questions",
+    "0 candidate atoms",
+    "0 blockers",
+    "0 unresolved contradictions",
+    "0 compile-open items",
+    "validator: pass",
+    "warnings: []",
+    "actually look through it, read it",
+    "The ledger and the plans",
+    "use subagents",
+    "subjective and objective opinion",
+    "Be thorough"
+  ],
+  "method": {
+    "read_scope": [
+      "Plans/00-plans-index.md",
+      "active ledger records and state projections",
+      "canonical owner docs referenced by each lane",
+      "subagent read-only section reviews across large docs"
+    ],
+    "subagents": {
+      "inline_visualizer_v2": "subagent:019f0d0f-16be-7e91-8a71-c145962a442f",
+      "notifications_sounds_peonping": "subagent:019f0d0f-17c3-7310-80c9-159f3e76701d",
+      "compaction_compact_now": "subagent:019f0d0f-18aa-7373-9249-7a2992aa79f1",
+      "dry_method_outside_plan_docs": "subagent:019f0d0f-198a-71f3-b3b8-8e96f63999a5"
+    },
+    "important_boundary": "This review records source-lineage and readiness gaps only. It does not compile the ledger into canonical Plans."
+  },
+  "overall_verdict": {
+    "strict_implementation_ready": false,
+    "ledger_source_prepared": true,
+    "canonical_plans_ready": false,
+    "objective_summary": "The ledger has accepted atoms and answered product questions, but the new miscellaneous items are not all represented in canonical owner docs with behavior, GUI, storage, command/wiring, security, and validation coverage.",
+    "subjective_summary": "I would not hand the whole bundle to an implementer as ready-to-build from Plans alone. I would hand it to a compiler/spec editor as a strong source packet with explicit gaps to close before implementation."
+  },
+  "lane_verdicts": [
+    {
+      "lane": "inline_visualizer_v2",
+      "strict_verdict": "not_fully_implementation_ready",
+      "ledger_status": "source_prepared_with_accepted_scope",
+      "canonical_status": "partially_covered_by_older_sandboxed_visual_module_model",
+      "gui_status": "gui_related_classification_clean_but_v2_ui_tokens_not_canonicalized",
+      "gaps": [
+        "No dedicated visualizer readiness matrix exists yet.",
+        "Canonical Plans do not yet define the PM-native streaming marker/feed and incremental reconciliation contract.",
+        "Accepted bridge aliases copyText, toast, saveState, and loadState are not reconciled with canonical bridge names such as copyToClipboard and requestResize.",
+        "Accepted token/UI deltas such as nine color ramps, data-accent, aria-invalid, focus-visible, localized feedback, and audio-off default are not canonicalized.",
+        "Expanded library candidates Vega-Lite, ECharts, Plotly, and vis-network are ledger-only and not versioned allowlist entries in Plans.",
+        "Visualizer-specific automated tests are not canonicalized."
+      ],
+      "subagent_ref": "subagent:019f0d0f-16be-7e91-8a71-c145962a442f"
+    },
+    {
+      "lane": "notifications_sounds_peonping",
+      "strict_verdict": "not_implementation_ready",
+      "ledger_status": "scope_accepted_and_source_prepared",
+      "canonical_status": "underlying_attention_and_sparse_sound_hooks_only",
+      "gui_status": "central_settings_intent_captured_in_ledger_but_not_final_gui_command_wiring",
+      "gaps": [
+        "Slack, Discord, generic webhook, ntfy, Pushover, and Telegram destination contracts lack canonical payload templates, required fields, auth modes, retry/backoff, rate-limit handling, and receipt shapes.",
+        "Notifications/Sounds settings surface lacks canonical placement, field list, empty/error/disabled states, test-send interaction model, command IDs, and wiring rows.",
+        "Global default plus per-project override storage and inheritance rules are accepted but not canonicalized.",
+        "Uploaded/custom sounds lack canonical max size, duration, format normalization/transcoding, duplicate handling, manifest, deletion/restore, and export behavior.",
+        "Built-in normal notification sound catalog, naming, categories, licensing/source rule, and default event mappings are not specified.",
+        "PeonPing/OpenPeon compatibility needs a manifest mapping and unsupported/unknown sound behavior.",
+        "Destination-specific delivery tests and redaction/no-secret proof are not canonicalized."
+      ],
+      "subagent_ref": "subagent:019f0d0f-17c3-7310-80c9-159f3e76701d"
+    },
+    {
+      "lane": "compaction_compact_now",
+      "strict_verdict": "near_ready_but_not_fully_canonical",
+      "ledger_status": "implementation_ready_in_ledger_source_prepared_for_future_compile",
+      "canonical_status": "chat_circle_ui_and_command_path_are_strong; stale_owner_and_test_gaps_remain",
+      "gui_status": "Compact Now affordance itself is implementation-ready in canonical Plans",
+      "gaps": [
+        "ACD-177 still carries Plans/newfeatures.md live owner/source residue that must be cleaned in a future explicit compile under ACD-414 routing.",
+        "Compaction-specific acceptance coverage exists in the ledger readiness matrix but is not yet canonical Automated_Testing_System.md prose."
+      ],
+      "subagent_ref": "subagent:019f0d0f-18aa-7373-9249-7a2992aa79f1"
+    },
+    {
+      "lane": "dry_method_outside_plan_docs",
+      "strict_verdict": "not_implementation_ready_from_canonical_plans",
+      "ledger_status": "defaults_accepted_and_source_prepared",
+      "canonical_status": "single_rules_pipeline_exists_but_default_on_off_and_visible_states_are_ledger_only",
+      "gui_status": "settings_and_Assistant_Chat_visibility_require_canonicalization",
+      "gaps": [
+        "Default-on, user-disableable DRY behavior is accepted in the ledger but not canonicalized as application-level behavior.",
+        "Visible DRY what/why states are not yet named in Assistant Chat or Final GUI canon.",
+        "Rules provenance fields are split between agent-rules-context and Contracts/storage owners.",
+        "DRY-specific tests for shared prompt routes, default on/off, fallback, visible explanation, and provenance are not canonicalized.",
+        "Stale local DRY framing in orchestrator-subagent-integration should route to the real owner docs instead of re-owning guidance."
+      ],
+      "subagent_ref": "subagent:019f0d0f-198a-71f3-b3b8-8e96f63999a5"
+    }
+  ],
+  "next_process_question": {
+    "question_id": "q-0017",
+    "question": "Should the next step be a ledger-only implementation-readiness tightening pass that creates exact readiness matrices/contracts before compile, or an explicit compile where these gaps are resolved directly in canonical Plans?"
+  },
+  "recommended_next_action": "Do a short ledger-only tightening pass first for inline visualizer and notifications/sounds, while carrying the compaction and DRY compile gaps into an explicit future compile plan."
+}

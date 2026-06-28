@@ -326,7 +326,7 @@ The following rows are required for the promoted Section 15 feature set and the 
 | Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
 | Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
 | Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
-| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; emit started/completed/failed events and return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed status |
 | Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |
 | Goal status update icon, `/goal again`, or natural-language update request | `cmd.chat.goal.update` | Assistant Chat status/menu / composer / slash-command dispatcher | Goal Runtime controller | Submit an active-goal update through the Goal Runtime event envelope without inventing concrete payload schemas in Wiring_Matrix |
 | Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
@@ -1690,7 +1690,7 @@ plan_unit_id: WM-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity.'
+canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, context.compaction.failed or equivalent visible degraded-state wiring, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible project/thread command wiring rows.'
 split_recommended: false
@@ -1718,11 +1718,19 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0030
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
 preserved_exact_tokens:
 - 'Minimum required rows'
 - 'project switcher'
 - 'thread details'
 - 'compaction'
+- 'Compact Now'
+- 'context.compaction.failed'
+- 'already_running'
+- 'cancelled'
+- 'no_op'
+- 'retry_scheduled'
 - 'restore branch'
 - 'cmd.chat'
 - 'cmd.project'
@@ -3174,4 +3182,144 @@ owner_hints:
 - Plans/00-plans-index.md
 - Plans/Crosswalk.md
 - Plans/Wiring_Matrix.md
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Wiring Matrix owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### WM-039 - Notifications And Sounds Settings Wiring
+
+```yaml
+plan_unit_id: WM-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  Notifications and Sounds wiring maps `cmd.settings.open_notifications` to Settings > General > Notifications & Sounds;
+  destination create/update/delete/toggle/test commands to notification destination storage, credential custody, live-send
+  authority, delivery service, and receipt projection; mapping/override commands to global/project override records; and
+  sound preview/upload/pack import/asset delete/asset restore/asset export/mapping set commands to sound asset validation,
+  manifest storage, PM-managed blobs, and local-only preview. Destination create/update wiring validates provider-specific
+  Slack, Discord, generic webhook, ntfy, Pushover, and Telegram profile payloads against CV-298 before writing non-secret
+  settings and credential refs. This PlanUnit records wiring obligations only and does not generate wiring JSON.
+gui_related: true
+gui_classification_reason: Defines user-visible settings command wiring and command-to-surface behavior.
+depends_on: [UCC-103, F3-405, CV-298, SP-222, PS-124]
+unblocks: [ATS-016]
+acceptance_criteria:
+  - Destination test-send wiring requires explicit user action, enabled destination, masking, rate limit, and receipt recording.
+  - Provider-specific destination payloads are validated before storage or live-send test wiring can proceed.
+  - Sound preview wiring stays local-only and cannot send remote notifications.
+  - Global/project override wiring follows built-in < global < project < runtime safety constraints.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Notifications and Sounds wiring fixtures
+risk_class: notification_wiring_gap
+reasoning_tier: high
+context_scope: notifications_sounds_wiring
+implementation_surfaces:
+  - Plans/Wiring_Matrix.md
+  - future Settings command wiring
+node_compile_hint:
+  mode: notifications_sounds_settings_wiring
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-settings-gui-command-wiring
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-global-project-overrides
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
+source_atom_ids: [atom-0064, atom-0065, atom-0068]
+preserved_exact_tokens:
+  - "cmd.settings.open_notifications"
+  - "cmd.notifications.destination.create"
+  - "cmd.notifications.destination.update"
+  - "cmd.notifications.destination.delete"
+  - "cmd.notifications.destination.toggle"
+  - "cmd.notifications.destination.test"
+  - "cmd.notifications.mapping.update"
+  - "cmd.notifications.override.set"
+  - "cmd.sound.preview"
+  - "cmd.sound.upload"
+  - "cmd.sound.pack.import"
+  - "cmd.sound.asset.delete"
+  - "cmd.sound.asset.restore"
+  - "cmd.sound.asset.export"
+  - "cmd.sound.mapping.set"
+negative_constraints:
+  - Do not generate wiring JSON, WorkNodes, or executable queues during this compile phase.
+  - Do not wire local preview through remote delivery.
+  - Do not let quiet/mute override blocked or security-sensitive notifications.
+owner_hints:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+```
+
+### WM-040 - DRY Method Settings Wiring
+
+```yaml
+plan_unit_id: WM-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  DRY Method settings wiring maps `cmd.settings.agent_rules.dry_method_default_guard.set` from Settings > General >
+  Agent Rules to `app.agent_rules.dry_method_default_guard` storage, emits
+  `settings.agent_rules.dry_method_default_guard.updated`, refreshes Assistant Chat and run-detail DRY disclosure
+  projections, and records receipt provenance for enabled and disabled_by_user states. This wiring does not generate
+  wiring JSON and does not disable explicit instructions, safety, secrets, source authority, governance, permissions,
+  or source-control hygiene when the default DRY guard is turned off.
+gui_related: true
+gui_classification_reason: Defines user-visible settings toggle wiring and disclosure refresh behavior.
+depends_on: [UCC-104, CV-299, SP-223, ACD-429]
+unblocks: [ATS-018]
+acceptance_criteria:
+  - The Settings toggle writes only enabled or disabled_by_user to the DRY default-guard setting.
+  - Assistant Chat and run-detail disclosures refresh after the setting changes.
+  - Disabled DRY state remains receipt-backed and does not bypass non-DRY authority boundaries.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - DRY Method settings wiring fixture
+risk_class: dry_method_settings_wiring_gap
+reasoning_tier: high
+context_scope: dry_method_settings_wiring
+implementation_surfaces:
+  - Plans/Wiring_Matrix.md
+  - future Settings command wiring
+node_compile_hint:
+  mode: dry_method_settings_wiring
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-chat-what-why
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0074
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+source_atom_ids: [atom-0073, atom-0074, atom-0089]
+decision_refs: [dec-0016, dec-0017]
+preserved_exact_tokens:
+  - "cmd.settings.agent_rules.dry_method_default_guard.set"
+  - "app.agent_rules.dry_method_default_guard"
+  - "enabled"
+  - "disabled_by_user"
+  - "settings.agent_rules.dry_method_default_guard.updated"
+  - "DRY applied"
+  - "DRY degraded"
+  - "DRY disabled"
+negative_constraints:
+  - Do not generate wiring JSON, WorkNodes, or executable queues during this compile phase.
+  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
+  - Do not hide trust-affecting DRY state in backend logs only.
+owner_hints:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
 ```

@@ -1,0 +1,135 @@
+{
+  "schema_id": "pm.implementation_readiness_repair.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-28T11:16:30Z",
+  "event_id": "evt-0026",
+  "status": "product_readiness_repaired_pending_governance_seal_and_node_compiler_phase_boundary",
+  "closed_blockers": [
+    {
+      "blocker_id": "blk-0001",
+      "status": "repaired",
+      "summary": "Replaced active notification projection_trust usage with projection_freshness/projection_health and retained projection_trust only as compatibility/source-lineage vocabulary.",
+      "resolution_refs": [
+        "Plans/Contracts_V0.md#CV-298",
+        "Plans/assistant-chat-design.md#ACD-428"
+      ]
+    },
+    {
+      "blocker_id": "blk-0002",
+      "status": "repaired",
+      "summary": "Canonicalized event_category routing, provider-specific destination profile fields, idempotency, rate-limit, mention, success-predicate, and receipt semantics for Slack, Discord, generic webhook, ntfy, Pushover, and Telegram.",
+      "resolution_refs": [
+        "Plans/Contracts_V0.md#CV-298",
+        "Plans/storage-plan.md#SP-222",
+        "Plans/FinalGUISpec.md#F3-405",
+        "Plans/UI_Command_Catalog.md#UCC-103",
+        "Plans/Wiring_Matrix.md#WM-039",
+        "Plans/Automated_Testing_System.md#ATS-016"
+      ]
+    },
+    {
+      "blocker_id": "blk-0003",
+      "status": "repaired",
+      "summary": "Canonicalized built-in normal notification sound catalog metadata, source/license/default mappings, and manifest fields.",
+      "resolution_refs": [
+        "Plans/storage-plan.md#SP-222",
+        "Plans/FinalGUISpec.md#F3-405",
+        "Plans/Automated_Testing_System.md#ATS-016"
+      ]
+    },
+    {
+      "blocker_id": "blk-0004",
+      "status": "repaired",
+      "summary": "Added CV-300 bridge registry plus typed envelope, return/error shape, origin_nonce checks, state namespace/quota, reload/export/purge behavior, and aligned consumers.",
+      "resolution_refs": [
+        "Plans/Contracts_V0.md#CV-300",
+        "Plans/assistant-chat-design.md#ACD-427",
+        "Plans/FinalGUISpec.md#F3-381",
+        "Plans/storage-plan.md#SP-221",
+        "Plans/Permissions_System.md#PS-123",
+        "Plans/Automated_Testing_System.md#ATS-015"
+      ]
+    },
+    {
+      "blocker_id": "blk-0005",
+      "status": "repaired",
+      "summary": "Repaired Compact Now semantics so context-circle click reveals/arms the action, dispatch waits for explicit user choice, and cmd.chat.compact_context has result/status lifecycle coverage.",
+      "resolution_refs": [
+        "Plans/Contracts_V0.md#CV-190",
+        "Plans/assistant-chat-design.md#ACD-177",
+        "Plans/UI_Command_Catalog.md#UCC-060",
+        "Plans/Wiring_Matrix.md#WM-019",
+        "Plans/FinalGUISpec.md#F3-132",
+        "Plans/Automated_Testing_System.md#ATS-017"
+      ]
+    },
+    {
+      "blocker_id": "blk-0006",
+      "status": "repaired",
+      "summary": "Decided the Rust + Slint host path as a PM-owned isolated webview adapter that maps iframe/postMessage semantics to native bridge messages under equivalent sandbox policy.",
+      "resolution_refs": [
+        "Plans/Contracts_V0.md#CV-300",
+        "Plans/assistant-chat-design.md#ACD-427",
+        "Plans/FinalGUISpec.md#F3-381",
+        "Plans/FinalGUISpec.md#F3-404",
+        "Plans/Permissions_System.md#PS-123"
+      ]
+    },
+    {
+      "blocker_id": "blk-0007",
+      "status": "repaired",
+      "summary": "Added DRY Method Settings command and wiring PlanUnits with exact toggle payload, event, storage binding, disclosure refresh, and explanatory help copy.",
+      "resolution_refs": [
+        "Plans/UI_Command_Catalog.md#UCC-104",
+        "Plans/Wiring_Matrix.md#WM-040",
+        "Plans/FinalGUISpec.md#F3-406",
+        "Plans/Automated_Testing_System.md#ATS-018"
+      ]
+    },
+    {
+      "blocker_id": "blk-0008",
+      "status": "repaired",
+      "summary": "Repaired non-dereferenceable matrix row IDs to iv2-automated-tests, iv2-library-allowlist-policy, iv2-persistence-reload-security, and dry-val-* row IDs.",
+      "resolution_refs": [
+        "Plans/Automated_Testing_System.md#ATS-015",
+        "Plans/Permissions_System.md#PS-123",
+        "Plans/storage-plan.md#SP-221",
+        "Plans/Runtime_Artifacts_Panel.md#RAP-037",
+        "Plans/Prompt_Pipeline.md#PP-057",
+        "Plans/Decision_Policy.md#DP-063",
+        "Plans/storage-plan.md#SP-223"
+      ]
+    },
+    {
+      "blocker_id": "blk-0009",
+      "status": "repaired",
+      "summary": "Added current pldg-20260627 feature-intake source lineage to ACD-414 while preserving Plans/newfeatures.md as source-lineage only.",
+      "resolution_refs": [
+        "Plans/assistant-chat-design.md#ACD-414"
+      ]
+    },
+    {
+      "blocker_id": "blk-0010",
+      "status": "closed_phase_boundary",
+      "summary": "Product-source blocker repairs are complete. Governance seal, stale generated migration/governance metadata, and blocked_compiler_contract_incomplete remain explicit phase boundaries for a later governance/build phase, not product-source repair blockers in this pass.",
+      "resolution_refs": [
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Spec_Lock.json",
+        "Plans/_shards/**",
+        "Plans/.evidence/**"
+      ]
+    }
+  ],
+  "plan_index_validation": {
+    "status": "pass",
+    "plan_unit_count": 5298,
+    "acceptance_unit_count": 18946,
+    "node_readiness_status": "blocked_compiler_contract_incomplete"
+  },
+  "negative_constraints": [
+    "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+    "Spec_Lock, shards, evidence, plan_graph, and auto_decisions remain pending explicit governance seal.",
+    "blocked_compiler_contract_incomplete remains an intentional build-phase latch."
+  ]
+}

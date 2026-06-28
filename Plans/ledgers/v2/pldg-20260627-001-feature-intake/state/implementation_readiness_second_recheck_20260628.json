@@ -1,0 +1,150 @@
+{
+  "schema_id": "pm.bootstrap_implementation_readiness_second_recheck.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-28T08:55:25Z",
+  "status": "source_ready_for_explicit_compile__compile_unopened",
+  "source_ref": "chat:subjective-objective-recheck-again",
+  "user_request_exact_tokens": [
+    "So do the subjective and objective check again.",
+    "write yourself a new goal",
+    "spawn agents in parallel",
+    "as many as needed",
+    "Split the work into independent pieces",
+    "Give each agent its own dedicated /goal"
+  ],
+  "goal_note": "A tool-level goal was already active in this thread from a prior compile directive, so this recheck was executed under the newest user request without opening compile. Each subagent prompt carried a dedicated read-only /goal.",
+  "subagents": [
+    {
+      "agent_id": "019f0d67-a4cf-70c2-a085-e94001a30a53",
+      "lane": "inline_visualizer_v2",
+      "outcome": "source_ready_compile_pending__canonical_not_implementation_ready"
+    },
+    {
+      "agent_id": "019f0d67-a5d9-7e92-a557-4f325d6bda48",
+      "lane": "notifications_sounds_peonping",
+      "outcome": "source_ready_compile_pending__canonical_not_implementation_ready"
+    },
+    {
+      "agent_id": "019f0d67-a6e1-7691-85e4-27d3bda09aef",
+      "lane": "compaction_compact_now",
+      "outcome": "source_ready_compile_pending__compact_now_circle_canonical__stale_owner_and_test_compile_gaps_remain"
+    },
+    {
+      "agent_id": "019f0d67-a80c-7812-a7bb-aa08fee77771",
+      "lane": "dry_method_outside_plan_docs",
+      "outcome": "source_ready_compile_pending__canonical_not_implementation_ready"
+    },
+    {
+      "agent_id": "019f0d67-a96a-7f43-a68a-e076702845d0",
+      "lane": "cross_lane_governance_readiness",
+      "outcome": "ledger_source_readiness_pass__governance_green_and_canonical_implementation_readiness_fail"
+    }
+  ],
+  "objective_verdict": {
+    "ledger_source_readiness": "pass",
+    "canonical_plans_implementation_readiness": "fail_until_explicit_compile",
+    "governance_green": "fail_governance_currentness_only__ledger_registry_evidence_hash_stale",
+    "no_new_product_questions": true,
+    "compile_opened": false,
+    "canonical_plans_edited": false,
+    "worknodes_or_nodeseeds_created": false,
+    "implementation_files_touched": false
+  },
+  "subjective_verdict": "I would hand this to a careful Plans compiler/spec editor. I would not hand current canonical Plans alone to an implementer for the miscellaneous bundle, because the accepted source details have not been compiled into owner PlanUnits.",
+  "lane_findings": [
+    {
+      "lane": "inline_visualizer_v2",
+      "source_ready": true,
+      "canonical_ready": false,
+      "summary": "Ledger source pins the v2 streaming protocol, bridge aliases, visual tokens, library policy, persistence/security, and tests. Canonical Plans still hold the older sandbox/postMessage visual-module baseline and lack `visualize(title=...)`, `@@@VIZ-START`, `@@@VIZ-END`, `copyText`, `toast`, `saveState`, `loadState`, `9 color ramps`, `data-accent`, Vega-Lite, ECharts, Plotly, vis-network, and visualizer-specific test rows.",
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "lane": "notifications_sounds_peonping",
+      "source_ready": true,
+      "canonical_ready": false,
+      "summary": "Ledger source pins destination records, redacted payloads, retries/receipts, `Settings > General > Notifications & Sounds`, command/wiring expectations, sound catalog/upload lifecycle, PeonPing/OpenPeon compatibility, preview/test-send, and no-secret tests. Canonical Plans still have only broad attention and optional sound-effect coverage.",
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "lane": "compaction_compact_now",
+      "source_ready": true,
+      "canonical_ready": "partial",
+      "summary": "The chat context circle and Compact Now dispatch semantics are canonical enough for the GUI behavior. Remaining compile work is stale `Plans/newfeatures.md` owner cleanup for ACD-177/ACD-414 plus canonical Automated_Testing_System acceptance coverage.",
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "lane": "dry_method_outside_plan_docs",
+      "source_ready": true,
+      "canonical_ready": false,
+      "summary": "Ledger source pins default-on/user-disableable DRY, visible what/why states, provenance, prompt-route conformance, fallback/disabled boundary, and stale-owner retargeting. Canonical Plans do not yet pin the application-level default, exact setting key/enum, Assistant Chat visible states, receipt placement, or DRY-specific conformance tests.",
+      "gui_related": true,
+      "remaining_product_decision": false
+    }
+  ],
+  "ledger_repairs_applied": [
+    {
+      "repair_id": "second-recheck-repair-001",
+      "summary": "Moved `Plans/newfeatures.md` out of `cmp-owner-cleanup-001.owner_docs` into `source_lineage_docs` and `cleanup_targets` so the matrix no longer treats it as a live compaction owner.",
+      "files": [
+        "state/compaction_compile_readiness_matrix.json"
+      ],
+      "linked_correction_id": "corr-0004"
+    },
+    {
+      "repair_id": "second-recheck-repair-002",
+      "summary": "Added `Plans/assistant-chat-design.md` to the DRY prompt-route conformance owner docs and `Plans/Contracts_V0.md` to the DRY stale-owner retarget owner docs.",
+      "files": [
+        "state/dry_method_compile_readiness_matrix.json"
+      ],
+      "linked_correction_id": "corr-0004"
+    },
+    {
+      "repair_id": "second-recheck-repair-003",
+      "summary": "Clarified that detailed matrix source evidence may be row-local or resolved through linked atoms plus matrix-level source refs.",
+      "files": [
+        "state/source_compile_readiness_integration_matrix_20260628.json"
+      ],
+      "linked_correction_id": "corr-0004"
+    },
+    {
+      "repair_id": "second-recheck-repair-004",
+      "summary": "Refreshed stored run-gates actual hash for the governance-currentness-only ledger_registry evidence failure.",
+      "files": [
+        "state/implementation_readiness_recheck_20260628.json"
+      ],
+      "linked_correction_id": "corr-0004"
+    }
+  ],
+  "validators_observed": {
+    "bootstrap_ledger_validator": "pass",
+    "shard_check": "pass",
+    "run_gates": "fail_governance_currentness_only__ledger_registry_evidence_hash_stale",
+    "run_gates_checked_at_utc": "2026-06-28T09:01:12Z",
+    "ledger_registry_actual_hash": "6be3ec25d5e74580afea6a80cf6ad135e68738965f7967dd656ea184094714a2",
+    "ledger_registry_expected_hash": "6b0fc52e459aa11e328e0048cef428e57f05ad86e178428a07239d80db28774d",
+    "failing_evidence_paths": [
+      "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json"
+    ],
+    "plan_index_validate": "pass_reported_by_cross_lane_agent__node_readiness_blocked_compiler_contract_incomplete",
+    "product_source_readiness_blocker": false
+  },
+  "next_safe_action": "Wait for Jared's explicit compile request before editing canonical Plans. Future compile must use the detailed lane matrices, this second recheck file, and linked atoms as source input.",
+  "source_refs": [
+    "subagent:019f0d67-a4cf-70c2-a085-e94001a30a53",
+    "subagent:019f0d67-a5d9-7e92-a557-4f325d6bda48",
+    "subagent:019f0d67-a6e1-7691-85e4-27d3bda09aef",
+    "subagent:019f0d67-a80c-7812-a7bb-aa08fee77771",
+    "subagent:019f0d67-a96a-7f43-a68a-e076702845d0",
+    "state/inline_visualizer_v2_readiness_matrix.json",
+    "state/notifications_sounds_readiness_matrix.json",
+    "state/compaction_compile_readiness_matrix.json",
+    "state/dry_method_compile_readiness_matrix.json",
+    "state/source_compile_readiness_integration_matrix_20260628.json",
+    "state/implementation_readiness_recheck_20260628.json"
+  ]
+}

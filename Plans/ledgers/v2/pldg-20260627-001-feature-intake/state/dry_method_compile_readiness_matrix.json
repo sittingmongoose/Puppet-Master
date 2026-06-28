@@ -1,0 +1,223 @@
+{
+  "schema_id": "pm.bootstrap_source_compile_readiness_matrix.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "matrix_id": "dry_method_compile_readiness_matrix_20260628",
+  "status": "source_ready_for_explicit_compile__compile_unopened",
+  "created_at_utc": "2026-06-28T08:14:30Z",
+  "source_refs": [
+    "state/implementation_readiness_review_20260628.json",
+    "state/dry_method_defaults_matrix.json",
+    "subagent:019f0d3e-7a59-7b30-9c64-7ee1ace04e12",
+    "records/design_atoms.jsonl:atom-0039-atom-0049",
+    "records/decisions.jsonl:dec-0016-dec-0017"
+  ],
+  "phase_boundary": {
+    "compile_opened": false,
+    "canonical_plans_edited": false,
+    "governance_status": "not_started"
+  },
+  "rows": [
+    {
+      "row_id": "dry-app-default",
+      "lane": "dry_method_outside_plan_docs",
+      "linked_atom_ids": [
+        "atom-0046",
+        "atom-0054",
+        "atom-0073"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/agent-rules-context.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "contract": "PM ships DRY Method as default-on application-level assistant behavior through the single rules pipeline and Instruction Bundle. User can disable the default guard. Project-specific DRY conventions remain project-level rules.",
+      "negative_constraints": [
+        "Do not make DRY Method opt-in by default.",
+        "Do not hard-code DRY Method so the user cannot turn it off."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false,
+      "settings_key_contract": {
+        "settings_namespace_key": "app.agent_rules.dry_method_default_guard",
+        "stored_enum": [
+          "enabled",
+          "disabled_by_user"
+        ],
+        "default": "enabled",
+        "scope": "application-level PM assistant/agent behavior through the single rules pipeline; project-specific DRY conventions remain project-level rules",
+        "off_boundary": "disabled_by_user disables only the default DRY guard and DRY-specific caveat/block behavior; it does not disable explicit user/project instructions, safety, secrets, source authority, governance boundaries, or source-control hygiene"
+      }
+    },
+    {
+      "row_id": "dry-chat-what-why",
+      "lane": "dry_method_outside_plan_docs",
+      "linked_atom_ids": [
+        "atom-0044",
+        "atom-0047",
+        "atom-0054",
+        "atom-0074"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "visible_states": [
+        "DRY applied",
+        "DRY degraded",
+        "DRY disabled",
+        "rules missing",
+        "rules stale",
+        "owner/source route found",
+        "owner/source route unresolved",
+        "mutation blocked",
+        "exploratory caveat used",
+        "existing owner reused"
+      ],
+      "negative_constraints": [
+        "Do not hide trust-affecting missing/stale rule-source state in logs only.",
+        "Do not flood routine turns when DRY has no material effect."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false,
+      "receipt_and_copy_contract": {
+        "effective_state_enum": [
+          "applied",
+          "not_material",
+          "degraded_rules_missing",
+          "degraded_rules_stale",
+          "disabled_by_user",
+          "blocked_owner_unresolved",
+          "caveated_owner_unresolved"
+        ],
+        "receipt_fields": [
+          "dry_method_effective_state",
+          "dry_method_reason",
+          "dry_method_source_refs",
+          "instruction_bundle_ref",
+          "rules_application_sha256",
+          "rules_project_sha256"
+        ],
+        "visible_copy_policy": "Show compact what/why copy only when DRY materially affected the turn, was disabled, degraded, missing/stale, blocked a canonical/implementation-changing mutation, or allowed exploratory chat with a caveat.",
+        "routine_policy": "Routine turns with no material DRY effect may keep details in receipt/provenance only to avoid flooding the chat."
+      }
+    },
+    {
+      "row_id": "dry-rules-provenance",
+      "lane": "dry_method_outside_plan_docs",
+      "linked_atom_ids": [
+        "atom-0045",
+        "atom-0054",
+        "atom-0075"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/agent-rules-context.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "contract": "Every run/turn that assembles rules records an instruction-bundle provenance ref, including rules_application_sha256 and rules_project_sha256 or equivalent stable hashes, plus missing/stale/degraded flags when applicable.",
+      "negative_constraints": [
+        "No shadow instruction source.",
+        "Do not let Contracts_V0 run.started minima under-enumerate rules provenance."
+      ],
+      "gui_related": false,
+      "remaining_product_decision": false,
+      "run_started_minimum_fields_for_compile": [
+        "instruction_bundle_ref",
+        "rules_application_sha256",
+        "rules_project_sha256",
+        "dry_method_effective_state",
+        "dry_method_reason"
+      ]
+    },
+    {
+      "row_id": "dry-prompt-route-static-conformance",
+      "lane": "dry_method_outside_plan_docs",
+      "linked_atom_ids": [
+        "atom-0045",
+        "atom-0054",
+        "atom-0076"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/agent-rules-context.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "validation_rows": [
+        "Assistant prompt route uses shared Instruction Bundle",
+        "Interview prompt route uses shared Instruction Bundle",
+        "Orchestrator prompt route uses shared Instruction Bundle",
+        "delegated child-run route inherits same assembly ordering",
+        "document-builder and code-generation routes do not carry prompt-builder-local DRY prose",
+        "default-on/off and fallback/block behavior are tested"
+      ],
+      "negative_constraints": [
+        "Do not allow parallel prompt-construction routes with different rule assembly order or names."
+      ],
+      "gui_related": false,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "dry-fallback-disabled-boundary",
+      "lane": "dry_method_outside_plan_docs",
+      "linked_atom_ids": [
+        "atom-0043",
+        "atom-0049",
+        "atom-0054",
+        "atom-0077"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Policy.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Permissions_System.md"
+      ],
+      "contract": "Exploratory chat proceeds with visible caveat when owner/source cannot be resolved; canonical or implementation-changing mutation blocks, asks clarification, or records bounded open item. DRY off removes DRY-specific block/caveat behavior only and does not bypass explicit instructions, safety, secrets, source authority, governance boundaries, or source-control hygiene.",
+      "negative_constraints": [
+        "Do not interpret DRY Method off as permission to violate PM source authority or governance phase boundaries."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "dry-stale-owner-retarget",
+      "lane": "dry_method_outside_plan_docs",
+      "linked_atom_ids": [
+        "atom-0054",
+        "atom-0077"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "contract": "Retire Orchestrator-local DRY Method/widget-catalog prose as active owner text; keep subagent registry/platform reuse as consumer examples only where they point to current owners. Resolve orphaned Contracts_V0 header residue during explicit compile.",
+      "negative_constraints": [
+        "Do not treat old widget/code paths as live DRY Method owners."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    }
+  ]
+}

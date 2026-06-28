@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "cc6013f655c75c10f90afbbe0a02c784c61c46c6451cdeebb9dff294cdc037cd"
+      "sha256": "f87ffe4c7600eb757eb3b2f0aa535288b96875124e551b27fedadcc78bcc9b9b"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "42483cffb4d83db49729d53b36ce71abbe76c8bebbd9acd7876b938b6005c918"
+      "sha256": "a30be1e1d020ce75a1a4b3af539a389c21c7f9ef22441386e3b77b1015592f10"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "74f664269385a324a190f0d01baf9464a6f54f4498c0d44536198fb7578f640f"
+      "sha256": "3a84d5ba3f255135958bbfbbaf71ec6b04c6488034f3cd521af7a779e595a6b3"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "ea523777871b5dee3dfa66654ddb7dca56b6ba9616eb7f21905a40214f5b470b"
+      "sha256": "6f39b2e5da98f1a2a62870689e195f1a04c045a7021ac5495e1c6edcd730c877"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "97bf63956dff69d97fea9f0f20025a52bf899762735ff128be2e91ca346c061b"
+      "sha256": "6687d30c384a93380a5ed40e104fe16944ff631402a8ae58432e1022570eecdf"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "4147fb4013a09fb7271a290abcdddcc18d930326b3441344e91f7addcf39639f"
+      "sha256": "d0af4aa54171f2688deca02b19679ee3eb36b8dc641cd75eff127a121d1dd7cc"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "f8a642072e09451f5e8dcf0328900c8114906a75fafc337cb5792cb4542821cf"
+      "sha256": "66be9c04bf2eba454dbd0fde7fe1f15e388cac108c254eeb07f0aab16c1a89a3"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "1c13920894d7715f840a18fd5e68d9d392b23c8c6f838f5d997fda5142944772"
+      "sha256": "9602c9518c01bcb44ddacabb67238e6fa3343c5a820b56cf6cb5e5b8cd6b037c"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "9713c2770bcdc73a13fe040c351a0c931de469cec1d9d4ecdeb495993f5fba52"
+      "sha256": "b2b2b44fd9b393f6ade75506326d20c5d1d06880c55e000f3f53de6b18435c94"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "9dae60a60b7af483664734d1dfccc5f3f12cadf19197d2929b822b81fd8aaca3"
+      "sha256": "602446f4d276237c5ff62d8523fe6fdd3d16b88fcfc7472ff3019b0639f7acc2"
     }
   ],
   "checks": [
@@ -80,7 +80,7 @@
       "result": "PASS"
     },
     {
-      "details": "PASS: 5267 PlanUnits, 18824 acceptance units, coverage pass, node readiness blocked_compiler_contract_incomplete.",
+      "details": "PlanUnit index validates with 5298 PlanUnits, 18946 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -95,7 +95,7 @@
       "result": "PASS"
     },
     {
-      "details": "node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+      "details": "node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no runtime compiler enablement was performed.",
       "name": "node-readiness-boundary",
       "result": "PASS"
     },
@@ -238,6 +238,11 @@
       "name": "plan-migration-validate",
       "result": "PASS",
       "details": "PASS: pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary for pldg-20260626-001-feature-name."
+    },
+    {
+      "name": "feature-intake-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260627-001-feature-intake governance_status=sealed; node_readiness_report.status remains blocked_compiler_contract_incomplete/runtime_disabled; no runtime compiler enablement was performed."
     }
   ],
   "commands_run": [
@@ -252,7 +257,7 @@
       "stdout_excerpt": "status=pass; plan_unit_count=5036; acceptance_unit_count=17890; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
@@ -291,7 +296,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -311,7 +316,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
       "exit_code": 0
     },
     {
