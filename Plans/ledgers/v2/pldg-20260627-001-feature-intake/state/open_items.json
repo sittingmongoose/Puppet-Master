@@ -58,6 +58,7 @@
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
         "Plans/Permissions_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.md",
         "Plans/assistant-chat-design.md",
@@ -69,6 +70,7 @@
         "F3-405",
         "SP-222",
         "PS-124",
+        "RAP-039",
         "UCC-103",
         "WM-039",
         "ATS-016",
@@ -106,7 +108,7 @@
       ],
       "matrix_ref": "state/notifications_sounds_readiness_matrix.json",
       "status": "compiled",
-      "summary": "Compiled to canonical Plans in evt-0024; governance sealed in evt-0029."
+      "summary": "Compiled to canonical Plans in evt-0024, repaired with RAP-039 receipt projection in evt-0030, and governance sealed."
     },
     {
       "compiled_owner_docs": [
@@ -215,17 +217,17 @@
     }
   ],
   "governance_status": "sealed",
-  "last_event_id": "evt-0029",
+  "last_event_id": "evt-0030",
   "latest_objective_gate_spot_check": {
-    "checked_at_utc": "2026-06-28T12:41:20Z",
+    "checked_at_utc": "2026-06-28T13:59:18Z",
     "governance_status": "sealed",
-    "implementation_handoff_status": "sealed_governance__product_readiness_repaired__node_compiler_phase_boundary_remaining",
+    "implementation_handoff_status": "repair_validated",
     "repair_required_blocker_count": 0,
     "closed_product_readiness_blocker_count": 9,
     "closed_phase_boundary_blocker_count": 1,
     "plan_index_validate": "pass__5298_plan_units__18946_acceptance_units__node_readiness_blocked_compiler_contract_incomplete",
     "plan_migration_validate": "pass__5298_live_plan_units__212_batch_report_rows__212_batch_report_doc_entries",
-    "pm_bootstrap_ledger_validate": "pass__94_atoms__29_events__17_compile_queue_items__2461_plan_units_checked",
+    "pm_bootstrap_ledger_validate": "pending_final_validation_after_evt_0030",
     "pm_bootstrap_ledger_validate_bootstrap_system": "pass__42_atoms__12_events__4_compile_queue_items__123_plan_units_checked",
     "shard_check": "pass__1055_shards__56_sources",
     "run_gates": "pass",
@@ -239,7 +241,7 @@
     "forbidden_runtime_artifacts": "not_created"
   },
   "ledger_id": "pldg-20260627-001-feature-intake",
-  "notes": "Product PlanUnits are compiled, readiness blockers are repaired, migration metadata is current, and governance is sealed. Remaining phase boundary is blocked_compiler_contract_incomplete / runtime_disabled for the future node compiler contract.",
+  "notes": "Closed-world semantic repair certified; no open product questions, blockers, unclassified candidates, unresolved contradictions, deferred product decisions, or governance-seal items remain. Node readiness remains blocked_compiler_contract_incomplete by design.",
   "open_blockers": [],
   "open_questions": [],
   "pending_items": [
@@ -419,12 +421,11 @@
     }
   ],
   "schema_id": "pm.bootstrap_open_items.v1",
-  "source_readiness_recheck_ref": "state/implementation_readiness_fifth_recheck_20260628.json",
-  "status": "no_open_product_or_governance_blockers_node_compiler_boundary_remaining",
+  "status": "repair_validated_no_open_product_or_governance_blockers_node_compiler_boundary_remaining",
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "updated_at_utc": "2026-06-28T12:41:20Z",
+  "updated_at_utc": "2026-06-28T13:59:18Z",
   "sealed_governance": [
     {
       "item_id": "gov-sealed-0001",
@@ -439,5 +440,10 @@
       ],
       "summary": "Explicit governance seal completed; run-gates, shard check, Spec Lock, evidence, plan graph, auto decisions, migration, PlanUnit index, bootstrap ledger validators, and git diff hygiene pass."
     }
-  ]
+  ],
+  "latest_audit_ref": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+  "latest_audit_status": "repair_validated",
+  "latest_audit_repair_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/repair_report.json",
+  "latest_post_repair_audit_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "source_readiness_recheck_ref_lineage_only": "state/implementation_readiness_fifth_recheck_20260628.json"
 }

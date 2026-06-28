@@ -1491,7 +1491,7 @@
         "future notification and sound tests",
         "future vision bridge tests"
       ],
-      "line_count": 1444,
+      "line_count": 1445,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -1534,7 +1534,7 @@
         "vision_bridge_validation_gap",
         "weak_test_oracle"
       ],
-      "sha256": "8026605b3b0e25f20fe9034c7bc02caf66ecbd3fea5192bac3392a97a67f43a1",
+      "sha256": "50e341a6fca8ff1f1b474cd75d3e7fb2b4a81c13249e4f20644b9a2b187f152a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -3402,7 +3402,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "c095a91635ea37e49f9958588e8f0ece44ded2216228703c30b151818e0a8101",
+      "sha256": "fddea41fd8328fde727db9551a1c5fc52186d48ff17138a37af79850af5c8675",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 298,
@@ -8856,7 +8856,7 @@
         "vision_disclosure_leak",
         "visualizer_sandbox_escape"
       ],
-      "sha256": "d6156ef7d2dcf06217ce1334dcb57dfa7a187389f90e9f03ba41ee75ed6df69a",
+      "sha256": "3550c81041bd3eebe4aadf89cbc6203c6a6a5e9cffc9c0c731cfa07c52d6e944",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 124
@@ -10587,9 +10587,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 9,
-        "True": 28
+        "True": 29
       },
-      "heading_count": 80,
+      "heading_count": 81,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -10601,6 +10601,7 @@
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/storage-plan.md",
         "future History artifact/evidence inspector",
+        "future Runtime Artifacts notification receipt rows",
         "future Teacher activity detail rows",
         "future derived vision-description artifact rows",
         "future generated media artifact browser",
@@ -10611,9 +10612,9 @@
         "future runtime artifact rows",
         "future runtime artifacts panel"
       ],
-      "line_count": 1525,
+      "line_count": 1598,
       "path": "Plans/Runtime_Artifacts_Panel.md",
-      "plan_unit_count": 37,
+      "plan_unit_count": 38,
       "plan_unit_ids": [
         "RAP-002",
         "RAP-032",
@@ -10651,7 +10652,8 @@
         "RAP-035",
         "RAP-036",
         "RAP-037",
-        "RAP-038"
+        "RAP-038",
+        "RAP-039"
       ],
       "reasoning_tiers": [
         "high",
@@ -10676,6 +10678,7 @@
         "identity_open_export_drift",
         "inline_visualizer_artifact_projection_gap",
         "mvp_scope_drift",
+        "notification_receipt_projection_gap",
         "owner_drift",
         "owner_identity_drift",
         "preview_identity_drift",
@@ -10696,22 +10699,23 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "0331495d9c2dd50d25a9487177ba937fa0d4f8ebcb01f314dde604be8f334d2d",
+      "sha256": "931198e147e0c7ebbdc0d134a65185dccc65c9e5f9f67232e291245d5ae9d439",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 36,
+        "accepted": 37,
         "retired": 1
       },
       "title": "Runtime Artifacts Panel — SSOT",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 36
+        "requirement": 37
       },
       "validation_surfaces": [
         "DRY receipt projection fixtures",
         "Future Assistant Chat inline display off but durable receipt available test.",
         "Future Runtime Artifacts receipt browsing tests.",
         "Inline visualizer artifact projection fixtures",
+        "Notification delivery receipt Runtime Artifacts projection fixtures",
         "future Runtime Artifacts plans-to-code receipt projection review",
         "future Runtime Artifacts receipt projection review",
         "git diff --check",
@@ -11338,7 +11342,7 @@
         "storage_plan_drift",
         "teach_memory_persistence_drift"
       ],
-      "sha256": "d3aba7a51ff4db7925f8e867d0b5b2408cdc6f7f6310ca8452ae9baa384181b2",
+      "sha256": "d95c97964c299676a314399d255f44b73389e87207984357085ea1a808a53789",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 222,
@@ -11807,7 +11811,7 @@
         "ui_command_compatibility_drift",
         "vision_command_drift"
       ],
-      "sha256": "92c4d125c24ec94f27454f3ed2a0e24af4a833c9af5466c53bfa6b2d316506d8",
+      "sha256": "f56d0f0efc1f61acb089c82c95ecc4b0e9d473554b2ff286801aac9dcbc31113",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 103,
@@ -12334,7 +12338,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-06-28T12:11:04Z",
+  "generated_at_utc": "2026-06-28T14:01:53Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -12343,12 +12347,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3035,
-      "True": 2263
+      "True": 2264
     },
-    "plan_unit_count": 5298,
+    "plan_unit_count": 5299,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5113,
+      "accepted": 5114,
       "deferred": 7,
       "retired": 178
     },
@@ -12389,7 +12393,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4389,
+      "requirement": 4390,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

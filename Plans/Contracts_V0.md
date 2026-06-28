@@ -18503,7 +18503,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines shared notification payload, destination, receipt, retry, and predicate data contracts; GUI renders them elsewhere.
 depends_on: []
-unblocks: [ACD-428, SP-222, PS-124, F3-405, UCC-103, WM-039, ATS-016]
+unblocks: [ACD-428, SP-222, PS-124, F3-405, UCC-103, RAP-039, WM-039, ATS-016]
 acceptance_criteria:
   - Delivery envelopes and receipts exclude raw secret material and preserve redaction/profile evidence.
   - Provider-specific destination profiles are canonical for Slack, Discord, generic webhook, ntfy, Pushover, and Telegram.

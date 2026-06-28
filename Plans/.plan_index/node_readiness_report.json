@@ -26,12 +26,6 @@
           ]
         },
         {
-          "plan_unit_id": "F3-405",
-          "remaining_depends_on": [
-            "UCC-103"
-          ]
-        },
-        {
           "plan_unit_id": "POA-050",
           "remaining_depends_on": [
             "RAP-033"
@@ -76,12 +70,6 @@
           "remaining_depends_on": [
             "T-160",
             "T-161"
-          ]
-        },
-        {
-          "plan_unit_id": "UCC-103",
-          "remaining_depends_on": [
-            "F3-405"
           ]
         },
         {
@@ -139,14 +127,6 @@
             "T-161",
             "T-162",
             "T-163"
-          ]
-        },
-        {
-          "plan_unit_id": "ATS-016",
-          "remaining_depends_on": [
-            "F3-405",
-            "UCC-103",
-            "WM-039"
           ]
         },
         {
@@ -257,32 +237,25 @@
             "SP-217",
             "T-160"
           ]
-        },
-        {
-          "plan_unit_id": "WM-039",
-          "remaining_depends_on": [
-            "F3-405",
-            "UCC-103"
-          ]
         }
       ]
     }
   ],
   "dependency_graph_summary": {
     "build_order_available": false,
-    "build_order_blocked_node_count": 32,
-    "cycle_blocker_count": 13,
-    "depends_on_edge_count": 11143,
-    "downstream_blocked_node_count": 19,
-    "edge_count": 13048,
-    "node_count": 5298,
-    "true_cycle_component_count": 4,
-    "unblocks_edge_count": 1905,
+    "build_order_blocked_node_count": 28,
+    "cycle_blocker_count": 11,
+    "depends_on_edge_count": 11146,
+    "downstream_blocked_node_count": 17,
+    "edge_count": 13055,
+    "node_count": 5299,
+    "true_cycle_component_count": 3,
+    "unblocks_edge_count": 1909,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-28T12:11:04Z",
+  "generated_at_utc": "2026-06-28T14:01:53Z",
   "gui_related_units": {
-    "count": 2263,
+    "count": 2264,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3887,8 +3860,8 @@
         "source_location": {
           "heading": "ATS-017 - Compact Now And Manual Compaction Acceptance Tests",
           "heading_level": 3,
-          "heading_line": 1287,
-          "line": 1289,
+          "heading_line": 1288,
+          "line": 1290,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -3898,8 +3871,8 @@
         "source_location": {
           "heading": "ATS-018 - DRY Method Route Toggle Receipt And Visibility Tests",
           "heading_level": 3,
-          "heading_line": 1364,
-          "line": 1366,
+          "heading_line": 1365,
+          "line": 1367,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -20030,6 +20003,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-039",
+        "source_location": {
+          "heading": "RAP-039 - Notification Delivery Receipt Projection And Export Routing",
+          "heading_level": 3,
+          "heading_line": 1527,
+          "line": 1529,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Run_Graph_View.md",
         "plan_unit_id": "RGV-001",
         "source_location": {
@@ -25185,10 +25169,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5298,
+  "plan_unit_count": 5299,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1045,
+      "high": 1046,
       "low": 5,
       "standard": 4248
     },
@@ -26618,6 +26602,7 @@
       "notification_command_catalog_gap": 1,
       "notification_contract_secret_or_retry_drift": 1,
       "notification_escalation_drift": 1,
+      "notification_receipt_projection_gap": 1,
       "notification_secret_exfiltration": 1,
       "notification_settings_gui_gap": 1,
       "notification_storage_secret_leak": 1,
@@ -27992,7 +27977,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5113,
+      "accepted": 5114,
       "deferred": 7,
       "retired": 178
     },
@@ -28033,7 +28018,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4389,
+      "requirement": 4390,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

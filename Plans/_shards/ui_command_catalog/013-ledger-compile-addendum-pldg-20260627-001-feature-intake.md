@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L7483-L7616
 
-Source SHA256: `92c4d125c24ec94f27454f3ed2a0e24af4a833c9af5466c53bfa6b2d316506d8`
+Source SHA256: `f56d0f0efc1f61acb089c82c95ecc4b0e9d473554b2ff286801aac9dcbc31113`
 
 ---
 
@@ -28,7 +28,7 @@ canonical_text: >-
   preview is local only and must not send external notifications.
 gui_related: true
 gui_classification_reason: Defines user-visible settings, destination, mapping, preview, upload, import/export, and test-send commands.
-depends_on: [CV-298, F3-405, PS-124]
+depends_on: [CV-298, PS-124]
 unblocks: [WM-039, ATS-016]
 acceptance_criteria:
   - Every Notifications & Sounds GUI control routes through a stable command ID.

@@ -55,14 +55,6 @@
       ]
     },
     {
-      "plan_unit_id": "ATS-016",
-      "remaining_depends_on": [
-        "F3-405",
-        "UCC-103",
-        "WM-039"
-      ]
-    },
-    {
       "plan_unit_id": "CV-291",
       "remaining_depends_on": [
         "T-161"
@@ -107,12 +99,6 @@
       "plan_unit_id": "F3-401",
       "remaining_depends_on": [
         "POA-050"
-      ]
-    },
-    {
-      "plan_unit_id": "F3-405",
-      "remaining_depends_on": [
-        "UCC-103"
       ]
     },
     {
@@ -238,24 +224,11 @@
       ]
     },
     {
-      "plan_unit_id": "UCC-103",
-      "remaining_depends_on": [
-        "F3-405"
-      ]
-    },
-    {
       "plan_unit_id": "W-074",
       "remaining_depends_on": [
         "F2-191",
         "PS-118",
         "SP-218"
-      ]
-    },
-    {
-      "plan_unit_id": "WM-039",
-      "remaining_depends_on": [
-        "F3-405",
-        "UCC-103"
       ]
     }
   ],
@@ -280,12 +253,6 @@
       "remaining_depends_on": [
         "SP-217",
         "SP-218"
-      ]
-    },
-    {
-      "plan_unit_id": "F3-405",
-      "remaining_depends_on": [
-        "UCC-103"
       ]
     },
     {
@@ -336,12 +303,6 @@
       ]
     },
     {
-      "plan_unit_id": "UCC-103",
-      "remaining_depends_on": [
-        "F3-405"
-      ]
-    },
-    {
       "plan_unit_id": "W-074",
       "remaining_depends_on": [
         "F2-191",
@@ -354,19 +315,12 @@
     {
       "component_id": "cycle-001",
       "plan_unit_ids": [
-        "F3-405",
-        "UCC-103"
-      ]
-    },
-    {
-      "component_id": "cycle-002",
-      "plan_unit_ids": [
         "POA-050",
         "RAP-033"
       ]
     },
     {
-      "component_id": "cycle-003",
+      "component_id": "cycle-002",
       "plan_unit_ids": [
         "F2-191",
         "PS-118",
@@ -375,7 +329,7 @@
       ]
     },
     {
-      "component_id": "cycle-004",
+      "component_id": "cycle-003",
       "plan_unit_ids": [
         "0PI-060",
         "CV-291",
@@ -431,14 +385,6 @@
       ]
     },
     {
-      "plan_unit_id": "ATS-016",
-      "remaining_depends_on": [
-        "F3-405",
-        "UCC-103",
-        "WM-039"
-      ]
-    },
-    {
       "plan_unit_id": "EP-106",
       "remaining_depends_on": [
         "CV-291",
@@ -545,13 +491,6 @@
         "F3-399",
         "SP-217",
         "T-160"
-      ]
-    },
-    {
-      "plan_unit_id": "WM-039",
-      "remaining_depends_on": [
-        "F3-405",
-        "UCC-103"
       ]
     }
   ],
@@ -4700,6 +4639,11 @@
       "edge_type": "depends_on",
       "from": "ATS-016",
       "to": "PS-124"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-016",
+      "to": "RAP-039"
     },
     {
       "edge_type": "depends_on",
@@ -31733,6 +31677,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RAP-039",
+      "to": "CV-298"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-039",
+      "to": "PS-124"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-039",
+      "to": "SP-222"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RGV-002",
       "to": "RGV-001"
     },
@@ -49929,11 +49888,6 @@
     {
       "edge_type": "depends_on",
       "from": "UCC-103",
-      "to": "F3-405"
-    },
-    {
-      "edge_type": "depends_on",
-      "from": "UCC-103",
       "to": "PS-124"
     },
     {
@@ -62384,6 +62338,11 @@
     {
       "edge_type": "unblocks",
       "from": "CV-298",
+      "to": "RAP-039"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-298",
       "to": "SP-222"
     },
     {
@@ -65109,6 +65068,11 @@
     {
       "edge_type": "unblocks",
       "from": "PS-124",
+      "to": "RAP-039"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PS-124",
       "to": "SP-222"
     },
     {
@@ -65170,6 +65134,11 @@
       "edge_type": "unblocks",
       "from": "RAP-038",
       "to": "ATS-018"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "RAP-039",
+      "to": "ATS-016"
     },
     {
       "edge_type": "unblocks",
@@ -65330,6 +65299,11 @@
       "edge_type": "unblocks",
       "from": "SP-222",
       "to": "F3-405"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "SP-222",
+      "to": "RAP-039"
     },
     {
       "edge_type": "unblocks",
@@ -65797,7 +65771,7 @@
       "to": "ATS-018"
     }
   ],
-  "generated_at_utc": "2026-06-28T12:11:04Z",
+  "generated_at_utc": "2026-06-28T14:01:53Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -76893,8 +76867,8 @@
       "source_location": {
         "heading": "ATS-017 - Compact Now And Manual Compaction Acceptance Tests",
         "heading_level": 3,
-        "heading_line": 1287,
-        "line": 1289,
+        "heading_line": 1288,
+        "line": 1290,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -76910,8 +76884,8 @@
       "source_location": {
         "heading": "ATS-018 - DRY Method Route Toggle Receipt And Visibility Tests",
         "heading_level": 3,
-        "heading_line": 1364,
-        "line": 1366,
+        "heading_line": 1365,
+        "line": 1367,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -139529,6 +139503,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "notifications_sounds_receipt_projection",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-039",
+      "reasoning_tier": "high",
+      "risk_class": "notification_receipt_projection_gap",
+      "source_location": {
+        "heading": "RAP-039 - Notification Delivery Receipt Projection And Export Routing",
+        "heading_level": 3,
+        "heading_line": 1527,
+        "line": 1529,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "run_graph_owner_surface",
       "gui_related": true,
       "owner_doc": "Plans/Run_Graph_View.md",
@@ -155870,14 +155861,14 @@
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
   "summary": {
     "build_order_available": false,
-    "build_order_blocked_node_count": 32,
-    "cycle_blocker_count": 13,
-    "depends_on_edge_count": 11143,
-    "downstream_blocked_node_count": 19,
-    "edge_count": 13048,
-    "node_count": 5298,
-    "true_cycle_component_count": 4,
-    "unblocks_edge_count": 1905,
+    "build_order_blocked_node_count": 28,
+    "cycle_blocker_count": 11,
+    "depends_on_edge_count": 11146,
+    "downstream_blocked_node_count": 17,
+    "edge_count": 13055,
+    "node_count": 5299,
+    "true_cycle_component_count": 3,
+    "unblocks_edge_count": 1909,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

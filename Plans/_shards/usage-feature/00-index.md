@@ -1,6 +1,6 @@
 # Shard Index: Plans/usage-feature.md
 
-Generated: 2026-06-28T12:30:39Z
+Generated: 2026-06-28T14:07:39Z
 
 Source SHA256: `8f6c33d23e0cfc5914538e069799baa40749e818630dcc84cec362095d335405`
 

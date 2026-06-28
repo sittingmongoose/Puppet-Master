@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L18473-L18723
 
-Source SHA256: `c095a91635ea37e49f9958588e8f0ece44ded2216228703c30b151818e0a8101`
+Source SHA256: `fddea41fd8328fde727db9551a1c5fc52186d48ff17138a37af79850af5c8675`
 
 ---
 
@@ -41,7 +41,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines shared notification payload, destination, receipt, retry, and predicate data contracts; GUI renders them elsewhere.
 depends_on: []
-unblocks: [ACD-428, SP-222, PS-124, F3-405, UCC-103, WM-039, ATS-016]
+unblocks: [ACD-428, SP-222, PS-124, F3-405, UCC-103, RAP-039, WM-039, ATS-016]
 acceptance_criteria:
   - Delivery envelopes and receipts exclude raw secret material and preserve redaction/profile evidence.
   - Provider-specific destination profiles are canonical for Slack, Discord, generic webhook, ntfy, Pushover, and Telegram.

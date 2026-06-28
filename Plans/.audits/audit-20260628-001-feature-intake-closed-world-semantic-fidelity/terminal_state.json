@@ -1,0 +1,17 @@
+{
+  "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+  "baseline_ref": "909d47699",
+  "effective_terminal_report": "post_repair_audit_report.json",
+  "historical_audit_report": "audit_report.json",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "matrix_status_counts": {
+    "repaired": 5
+  },
+  "observation_ref": "HEAD",
+  "open_repair_required_count": 0,
+  "original_repair_required_count": 5,
+  "schema_id": "pm.audit_terminal_state.v1",
+  "subject_ref": "8f377b33a",
+  "terminal_repair_state": "repair_validated",
+  "updated_at_utc": "2026-06-28T14:06:35Z"
+}

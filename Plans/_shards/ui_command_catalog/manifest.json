@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-28T12:30:39Z",
+  "generated_at_utc": "2026-06-28T14:07:39Z",
   "index_path": "Plans/_shards/ui_command_catalog/00-index.md",
-  "index_sha256": "ad01b6c04d54e83747b59d6acc1b5726bcf911b5d1c176e7b75e297db7211442",
+  "index_sha256": "e33d6f5b6954dbad499f989ea112c7c052396c2a9abd45a212a4e5c1840dd9e9",
   "manifest_path": "Plans/_shards/ui_command_catalog/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/ui_command_catalog/001-preamble.md",
-      "sha256": "6f9e8ccbb05de8a1d352b81158df4d36ab26f6b92df29aad067c19dab2f03f73",
+      "sha256": "d1841f4db696c1fd1b9e526dd7d0538a5448f9fdcaa38f6420a5addc99a7788b",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/ui_command_catalog/002-canonical-owner-section-requirements.md",
-      "sha256": "5369c7fcb1faded0b06c1348942e12998f1fd62908e4fed90038228e698f8996",
+      "sha256": "eb08c334cf671f485a01304b4695f87c3289b5bf270636d811d81738345a73a8",
       "shard_id": "002",
       "source_line_end": 21,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/ui_command_catalog/003-0.-scope.md",
-      "sha256": "61e1a72d882c8088e3f716e991570cd8e4d5234628a6fd543912d082f2ccaf57",
+      "sha256": "d40e52a0b6655d94e183b784bbf47ec2c78eb61615ffc5ab0aa18ec49445fbf1",
       "shard_id": "003",
       "source_line_end": 30,
       "source_line_start": 23,
@@ -35,7 +35,7 @@
     {
       "heading": "1. Naming rules",
       "path": "Plans/_shards/ui_command_catalog/004-1.-naming-rules.md",
-      "sha256": "7f6f360c022e8aaf9cc0b31b97f13aed0568f100d5dfbd42fd90d4eaacf8757b",
+      "sha256": "c2d5d2133b39073619c18728bc679df55f1ba8be11c5167c8dabcdc9591877ab",
       "shard_id": "004",
       "source_line_end": 40,
       "source_line_start": 32,
@@ -44,7 +44,7 @@
     {
       "heading": "2. Canonical command IDs",
       "path": "Plans/_shards/ui_command_catalog/005-2.-canonical-command-ids.md",
-      "sha256": "38725757bd73f4888fbfe1dfb16de3145812396f21895191a1a01cdbcb34ba96",
+      "sha256": "012a48eb4e87aa5dde027353f7b633bb4ba6d4fcf89fe7a47eb828a44f418215",
       "shard_id": "005",
       "source_line_end": 1126,
       "source_line_start": 42,
@@ -53,7 +53,7 @@
     {
       "heading": "References",
       "path": "Plans/_shards/ui_command_catalog/006-references.md",
-      "sha256": "108cdb710aa28f361b673eabd0dfbb79a2de42f4a26418cda16093e61f16ecae",
+      "sha256": "368dd64a3adcfecd06388df5ac7082f84b26362dbf3d92a684b30bbb61324a0b",
       "shard_id": "006",
       "source_line_end": 1220,
       "source_line_start": 1127,
@@ -62,7 +62,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/ui_command_catalog/007-owner-consumer-map.md",
-      "sha256": "dfb73efb3b1060dca2fb49eb1041449f9060b906e7300b48d0ee59035d225b43",
+      "sha256": "eb56b81f16a4fd22c3087d6bfb4f7a2dadc3aaea10bf9f1cb76f7627dc2cacfc",
       "shard_id": "007",
       "source_line_end": 1226,
       "source_line_start": 1222,
@@ -71,7 +71,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/ui_command_catalog/008-planunits.md",
-      "sha256": "d04471e5902b7d0695c5e80a6c12037715d1125ea8197ae37338b8ae6c60c597",
+      "sha256": "5199018a45a3ce6c948c36dff7753c692ce4d49597e33ac5c0dda3a85f5a0c39",
       "shard_id": "008",
       "source_line_end": 6837,
       "source_line_start": 1228,
@@ -80,7 +80,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/ui_command_catalog/009-migration-coverage.md",
-      "sha256": "02d0c52aa9753e339d825079fcb5c8f66f9c5d89aa950a3dab244920ffdde98d",
+      "sha256": "76601a4961f0396dacc519b6ccc8ddab3471ddc83d783e53deda3644a2556aed",
       "shard_id": "009",
       "source_line_end": 6849,
       "source_line_start": 6839,
@@ -89,7 +89,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/ui_command_catalog/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "43de4e47957c35b7839c9e4bac19c7322ea08208a5ad49baffa87f5c0bc702b4",
+      "sha256": "81de2f97af947e0f5ad29dac323d0d4db43f140a1aa6f57f43008bae49024073",
       "shard_id": "010",
       "source_line_end": 6995,
       "source_line_start": 6852,
@@ -98,7 +98,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/ui_command_catalog/011-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "53777bddbce98a6dc618632f8b5ec0881f9feb512a0552415d923ab591545137",
+      "sha256": "510ce73d9dbfcf458ef9480b2a0fae2e489f34956d38183371a99614b799ff1d",
       "shard_id": "011",
       "source_line_end": 7039,
       "source_line_start": 6997,
@@ -107,7 +107,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/ui_command_catalog/012-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "59c5c8e8e368bca857a7f031d778ccb353f045a48e0b1aca2f5659fa0c04245c",
+      "sha256": "c0b984956e63e538a527de8be3fa0752c3630f7a21574bc5fa710e16f9c46013",
       "shard_id": "012",
       "source_line_end": 7481,
       "source_line_start": 7042,
@@ -116,7 +116,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/ui_command_catalog/013-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "8e7cb668534e817d86dfefb1846793f976ff448d06a4b19041e7ef575319809f",
+      "sha256": "87ce705b43ed39889e3bc19ce2a965f9d7320be0144bc307430218f7d3109d7d",
       "shard_id": "013",
       "source_line_end": 7616,
       "source_line_start": 7483,
@@ -126,6 +126,6 @@
   "source": {
     "line_count": 7616,
     "path": "Plans/UI_Command_Catalog.md",
-    "sha256": "92c4d125c24ec94f27454f3ed2a0e24af4a833c9af5466c53bfa6b2d316506d8"
+    "sha256": "f56d0f0efc1f61acb089c82c95ecc4b0e9d473554b2ff286801aac9dcbc31113"
   }
 }

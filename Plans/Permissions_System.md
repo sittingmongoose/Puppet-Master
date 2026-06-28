@@ -8380,7 +8380,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines credential custody and send authority for notification integrations rather than visual presentation.
 depends_on: [CV-298]
-unblocks: [SP-222, F3-405, ATS-016]
+unblocks: [SP-222, F3-405, RAP-039, ATS-016]
 acceptance_criteria:
   - Live test-send and remote delivery require an enabled destination plus explicit authority.
   - Receipts and UI surfaces store/display secret refs or masked values only.

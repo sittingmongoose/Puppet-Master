@@ -1,40 +1,40 @@
 # Shard Index: Plans/storage-plan.md
 
-Generated: 2026-06-28T12:30:39Z
+Generated: 2026-06-28T14:07:39Z
 
-Source SHA256: `d3aba7a51ff4db7925f8e867d0b5b2408cdc6f7f6310ca8452ae9baa384181b2`
+Source SHA256: `d95c97964c299676a314399d255f44b73389e87207984357085ea1a808a53789`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `c9ec4cf13bf259f25c577c623dcfa6c6bf24fe60ba4e0b0887925ffade609d8b`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L169 `7ce2575ac1eaccbaede5239cef1b59e48e575ce9f98df9bd143a2f99709147aa`
-- [003 - Summary](003-summary.md) L171-L175 `3e8561c05a1674b689e5979fff54ec26f15ad55758edadd371e275b71ca32114`
-- [004 - Table of Contents](004-table-of-contents.md) L177-L188 `a7402168e1026fcf8499dfc1098fabca7dc54e63739337d515cde0dc8f555eb6`
-- [005 - 1. Definitions and concepts](005-1.-definitions-and-concepts.md) L190-L228 `dd363e74bcba8320ba52f951d7b67f3b0dea16a8c2f2b83b1c033a46bb4f5e14`
-- [006 - 2. How we're going to do it](006-2.-how-we-re-going-to-do-it.md) L229-L1502 `49cd0a9e0ff3d7f0d70e234df59c0968a0f0094e7bf6913ab05052f306c55346`
-- [007 - 3. Implementation checklist](007-3.-implementation-checklist.md) L1504-L1519 `8a8310d73758503e3e11538e279ab3de5a4a63577d68cf3032803e4bdcb27fd6`
-- [008 - 4. Impact on chat (Assistant / Interview)](008-4.-impact-on-chat-assistant-interview.md) L1521-L1747 `d305593b0426f8bc8b725f83f0eaa54469f490b2e7974c7d8b4f8c70307a4652`
-- [009 - 5. Gaps and how we address them](009-5.-gaps-and-how-we-address-them.md) L1748-L1834 `53154d1aad44a2d00ed68869bcbcc4e301c9cd9277424d669bc6416bd6c51256`
-- [010 - 6. Potential problems and solutions](010-6.-potential-problems-and-solutions.md) L1836-L1859 `6abd93d24a7b5642daf39691ccc9c5a9f577297cd962f2e95aeb408b857594a8`
-- [011 - 7. Enhancements](011-7.-enhancements.md) L1861-L1871 `84961f529dbb471b158810fe1946e860fc00d324c97716356ddc849c7b0cbf76`
-- [012 - 8. Implementation order and testing](012-8.-implementation-order-and-testing.md) L1873-L1993 `8c00bc8d918aeb688e63a896193b7cbbec1cddc1a42bc4bd58dc21d877b96e20`
-- [013 - Version history](013-version-history.md) L1995-L2002 `ed7840091e0f0e6548664f5170d99cdd3a2ec9f56562c42794678bb9574248a4`
-- [014 - Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)](014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md) L2004-L2041 `ea2fb783217962d98cc412d1f1ad2346d15d95ed0b909b25b2c0a781501c2c05`
-- [015 - Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)](015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md) L2042-L2056 `9cdab9626d93ee5b9cc2f12bed8463a6309d912cd5b01dd09d660536bf06262a`
-- [016 - Runtime Attempt / Safe Point / Queue Analysis Canonical Alignment (2026-03-09)](016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md) L2057-L2111 `6c1afdcd2163369da7cdee9936b3412174e7eb23c0774405bbf19a94f432ffd8`
-- [017 - Runtime Recovery Persistence and Restart Canonical Alignment (2026-03-09)](017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md) L2112-L2132 `a5ee8db9ba93a02ef482915bd76a1a9b94d149bb6d1f7e7672368a412a0b9f04`
-- [018 - Permission Snapshot Storage and Safe-Point Namespace Addendum](018-permission-snapshot-storage-and-safe-point-namespace-addendum.md) L2133-L2164 `0f7a762f46888c828749aff6955c9cc8ad601473f7448af4c100193b5f2e9dc6`
-- [019 - Assistant Worktree Binding Storage Addendum](019-assistant-worktree-binding-storage-addendum.md) L2166-L2171 `9428642ad8bd986928c0c8beba9d6ced0e58698d9d87a811417407d0eb77566e`
-- [020 - 8. Web content caching persistence](020-8.-web-content-caching-persistence.md) L2172-L2226 `0f3d1a5d8df88765ab6a797ab091343d423a7b98d6174d364c27d7d73f10b8f2`
-- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L2228-L2232 `19ae70f519e2a1520d4c53d33ce05d159ecbb147854fe26880ddbc4fe19cdf7f`
-- [022 - PlanUnits](022-planunits.md) L2234-L14823 `49698d1f5e3a7ede9bd684abf05c69af09aed89c120acc7a5f78124111629e12`
-- [023 - Migration Coverage](023-migration-coverage.md) L14825-L14835 `8ef865b1ef22424d8429709a05f7e829e3dc01828bbb32d45bb255528cf063f5`
-- [024 - Ledger Compile Addendum - pldg-20260614-001](024-ledger-compile-addendum-pldg-20260614-001.md) L14837-L14877 `399e382a3f3aff43bf010ae5252cd8b5937a5576dd4aced3700da542328dde95`
-- [025 - Ledger Compile Addendum - pldg-20260616-001](025-ledger-compile-addendum-pldg-20260616-001.md) L14879-L14951 `9ceb46ac7a96778bf1ea74ef04ba0cda096157936e9fad556d3535a62885f818`
-- [026 - Ledger Compile Addendum - pldg-20260616-002](026-ledger-compile-addendum-pldg-20260616-002.md) L14953-L15069 `6048941b9a211efec0055ff8d37a727a9006fd2d4ec8da6d5a7389cb96217a73`
-- [027 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L15072-L15167 `279cd4a646f9612c8714b832cd71ceb89a4cc3488254acebcaf84cdbf4b07cd8`
-- [028 - Ledger Compile Addendum - pldg-20260622-001-fff](028-ledger-compile-addendum-pldg-20260622-001-fff.md) L15169-L15262 `65dd5ec1ee1005fc4c4531860813912f06b70757b028c2ab21d2b66a8d7ba0af`
-- [029 - Ledger Compile Addendum - pldg-20260626-001-feature-name](029-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L15265-L15584 `bd98951876f2b3a782e8a210ace73fb344a112416075666d2b72eed74c051719`
-- [030 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L15586-L15803 `fea3c7a3e3ba8ce722648695a4d6f12fe4a50d4ca87aecc2fb5f123458138d80`
+- [001 - Preamble](001-preamble.md) L1-L1 `e0ee3929de607a5eb5cdd5601362ecaa6d070909dc7279f519d342a71e4f0ae8`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L169 `8a85e3de40447b2aa3617bf9c2961abbf7ba8013fc1d111fb2035a0b99959755`
+- [003 - Summary](003-summary.md) L171-L175 `06c84abcf6fde2d4336a9bb7e51200d9843ec2dc2e9e7ca0a6aa35bc8b30924d`
+- [004 - Table of Contents](004-table-of-contents.md) L177-L188 `17d6b3e0673c992b45ee4383c1e0a39875df3dce8003d37d4a95394d7525482f`
+- [005 - 1. Definitions and concepts](005-1.-definitions-and-concepts.md) L190-L228 `405c986106b8bb886a594a24dbaf4533203fb5f0645993032b6172e63d307dac`
+- [006 - 2. How we're going to do it](006-2.-how-we-re-going-to-do-it.md) L229-L1502 `a275f4248b7932c56212fda37a3209efecb78a16679bba927d8b9e0f2a540ce2`
+- [007 - 3. Implementation checklist](007-3.-implementation-checklist.md) L1504-L1519 `56ce1c0e04e9903797fa95c862455461b4dec18c31d8b3865e129045b0474ae0`
+- [008 - 4. Impact on chat (Assistant / Interview)](008-4.-impact-on-chat-assistant-interview.md) L1521-L1747 `b90db35fd25a353fd1ac37a4e627d5acda1cc0914622a005052814d9f4da934f`
+- [009 - 5. Gaps and how we address them](009-5.-gaps-and-how-we-address-them.md) L1748-L1834 `c5a8acbe32d78e09bf574ff1b80478fc53b60db2edba5d16deca0c87166fd3a2`
+- [010 - 6. Potential problems and solutions](010-6.-potential-problems-and-solutions.md) L1836-L1859 `69a91183ac73a9c9f704fab3212e220bad93077c49549fae053d1606d5f7ea3e`
+- [011 - 7. Enhancements](011-7.-enhancements.md) L1861-L1871 `203f9f45e2888782580bbb4145bd72a4c5e84b74b799e6374417b6378e95e68b`
+- [012 - 8. Implementation order and testing](012-8.-implementation-order-and-testing.md) L1873-L1993 `3e9071c7e33393b314db73302c05662387ce801c3e993459e0d1bde7a67d02b6`
+- [013 - Version history](013-version-history.md) L1995-L2002 `b646bbcda83b12160411d00a77fb2505ba77b3d972d688bb19a4b228c0b16859`
+- [014 - Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)](014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md) L2004-L2041 `3b4a1301fd6de2f45e70301412ab5d6992c7da97502c631c3ee4c4b3cb711413`
+- [015 - Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)](015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md) L2042-L2056 `951b47ec6dce8db808e64651a4098a7063ed42756b031398f4498a543890319d`
+- [016 - Runtime Attempt / Safe Point / Queue Analysis Canonical Alignment (2026-03-09)](016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md) L2057-L2111 `806a301b88170136ebc976491c40493283a73a53d2fc12996e59ba1850b2a935`
+- [017 - Runtime Recovery Persistence and Restart Canonical Alignment (2026-03-09)](017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md) L2112-L2132 `d880f1cc56767859f659ce5f2b4cb0efd0a1496dac70e440fe8e160978616bc7`
+- [018 - Permission Snapshot Storage and Safe-Point Namespace Addendum](018-permission-snapshot-storage-and-safe-point-namespace-addendum.md) L2133-L2164 `8832d4edca136075b77ba73aa721fd2763d7e99084cd83d6caa740e29077fbb4`
+- [019 - Assistant Worktree Binding Storage Addendum](019-assistant-worktree-binding-storage-addendum.md) L2166-L2171 `c9cce0088fb3b2d77b99d7d392dbcd5b621c920badfdfea021c786a5b534d569`
+- [020 - 8. Web content caching persistence](020-8.-web-content-caching-persistence.md) L2172-L2226 `5c6ae9179d4e013d8c3f6e8a889f4bff4caf067bf24103d38144dc459d5abdfb`
+- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L2228-L2232 `cc48249b557f7d92ee1281dba703a6b030c9d8ffff1717512b7ccf17071ff468`
+- [022 - PlanUnits](022-planunits.md) L2234-L14823 `e2125fd968bb7c20fdd3ea30abbec4e680db85dd6c3c1e55c33db9ee49c2e73c`
+- [023 - Migration Coverage](023-migration-coverage.md) L14825-L14835 `a2a9f5ca9c933e4e9164ac96f5b0cadc245a1fbcb44f4a8f598220c594d61846`
+- [024 - Ledger Compile Addendum - pldg-20260614-001](024-ledger-compile-addendum-pldg-20260614-001.md) L14837-L14877 `ee8cb1de33266a1bbea862f47b86ebb561a9412058333c6675123030029d29c3`
+- [025 - Ledger Compile Addendum - pldg-20260616-001](025-ledger-compile-addendum-pldg-20260616-001.md) L14879-L14951 `209250f353063cb0ec7548e46b16292db147c03de4069c851709ede1f5da774e`
+- [026 - Ledger Compile Addendum - pldg-20260616-002](026-ledger-compile-addendum-pldg-20260616-002.md) L14953-L15069 `c81b54b20d7787ba011a1ce561bdc18d6f3ce55b5f09843a5d3f4182d458141a`
+- [027 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L15072-L15167 `8e626fa9cae77963663da3be6880e36aa6bcd34a06f41321ff793f777c7b0a36`
+- [028 - Ledger Compile Addendum - pldg-20260622-001-fff](028-ledger-compile-addendum-pldg-20260622-001-fff.md) L15169-L15262 `64de084f2d5a6568cd4240c1c318b4ea910caf0e1ce1808e30a41d76b4136128`
+- [029 - Ledger Compile Addendum - pldg-20260626-001-feature-name](029-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L15265-L15584 `9968fb9691045a0d206acb9a4223ae222f699ddf2f6f03c34ba5ee23a0a87d33`
+- [030 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L15586-L15803 `65bb38bec048a1bc3eee9685d54cd54426e082ec848319c9381adf3dc235d3d6`

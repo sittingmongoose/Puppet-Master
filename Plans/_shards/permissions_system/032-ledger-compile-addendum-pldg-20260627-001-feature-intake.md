@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L8288-L8431
 
-Source SHA256: `d6156ef7d2dcf06217ce1334dcb57dfa7a187389f90e9f03ba41ee75ed6df69a`
+Source SHA256: `3550c81041bd3eebe4aadf89cbc6203c6a6a5e9cffc9c0c731cfa07c52d6e944`
 
 ---
 
@@ -103,7 +103,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines credential custody and send authority for notification integrations rather than visual presentation.
 depends_on: [CV-298]
-unblocks: [SP-222, F3-405, ATS-016]
+unblocks: [SP-222, F3-405, RAP-039, ATS-016]
 acceptance_criteria:
   - Live test-send and remote delivery require an enabled destination plus explicit authority.
   - Receipts and UI surfaces store/display secret refs or masked values only.

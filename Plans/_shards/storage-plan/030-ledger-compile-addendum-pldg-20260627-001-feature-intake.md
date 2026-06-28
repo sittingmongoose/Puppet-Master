@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L15586-L15803
 
-Source SHA256: `d3aba7a51ff4db7925f8e867d0b5b2408cdc6f7f6310ca8452ae9baa384181b2`
+Source SHA256: `d95c97964c299676a314399d255f44b73389e87207984357085ea1a808a53789`
 
 ---
 
@@ -99,7 +99,7 @@ canonical_text: >-
 gui_related: false
 gui_classification_reason: Defines durable settings, credential references, sound assets, and delivery receipt records; GUI renders them elsewhere.
 depends_on: [CV-298, PS-124]
-unblocks: [F3-405, ATS-016]
+unblocks: [F3-405, RAP-039, ATS-016]
 acceptance_criteria:
   - Non-secret notification settings and sound manifests are durable and scope-aware.
   - Provider-specific destination profile payloads are persisted as credential refs and non-secret settings, not as raw tokens or URLs.

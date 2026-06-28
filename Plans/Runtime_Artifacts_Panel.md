@@ -1523,3 +1523,76 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
 ```
+
+### RAP-039 - Notification Delivery Receipt Projection And Export Routing
+
+```yaml
+plan_unit_id: RAP-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  Runtime Artifacts projects NotificationDeliveryAttemptReceipt and notification/sound test-send/export evidence without
+  becoming the delivery, storage, permission, or alert-state owner. Notification delivery receipt artifacts preserve
+  delivery_attempt_id, source_event_ref, destination id, provider kind, event category, status class, HTTP status,
+  provider request/message id when available, retry count, next retry time, redaction profile, request digest, response
+  digest, idempotency key, and secret refs only. The projection exposes inspect, Show in Ledger, Show source event, and
+  export routes through canonical receipt/source refs, marks mock versus live test-send evidence, and redacts raw
+  secrets, webhook URLs, tokens, private paths, screenshots, raw diff bodies, full prompts, full logs, and unredacted
+  identities from rows, previews, exports, and screenshots.
+gui_related: true
+gui_classification_reason: Runtime artifact rows, receipt inspection, export availability, and test-send evidence projection are user-visible UI.
+depends_on: [CV-298, SP-222, PS-124]
+unblocks: [ATS-016]
+acceptance_criteria:
+  - Notification delivery receipts are inspectable and exportable through Runtime Artifacts without replacing contract, storage, or permission authority.
+  - Test-send evidence distinguishes mock delivery, live delivery, provider error, retry, and permanent failure states.
+  - Exported receipt bundles preserve canonical receipt/source refs and disclose redactions or omitted evidence.
+  - Secret material, webhook URLs, tokens, private paths, screenshots, raw diff bodies, full prompts, full logs, and unredacted identities never appear in rows, previews, exports, or screenshots.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Notification delivery receipt Runtime Artifacts projection fixtures
+risk_class: notification_receipt_projection_gap
+reasoning_tier: high
+context_scope: notifications_sounds_receipt_projection
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - future Runtime Artifacts notification receipt rows
+node_compile_hint:
+  mode: notification_delivery_receipt_projection
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-payload-redaction-trust-copy
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:preview-test-send-accessibility
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0062
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0069
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0091
+source_atom_ids: [atom-0061, atom-0062, atom-0063, atom-0069, atom-0091]
+preserved_exact_tokens:
+  - "NotificationDeliveryAttemptReceipt"
+  - "delivery_attempt_id"
+  - "source_event_ref"
+  - "HTTP status"
+  - "provider request/message id"
+  - "retry count"
+  - "redaction profile"
+  - "request digest"
+  - "response digest"
+  - "secret refs only"
+  - "test-send"
+  - "export"
+negative_constraints:
+  - Do not make Runtime Artifacts Panel the owner of notification delivery, storage, credential custody, or alert-state truth.
+  - Do not expose raw secrets, webhook URLs, tokens, private paths, screenshots, raw diff bodies, full prompts, full logs, or unredacted identities.
+  - Do not represent mock delivery as live provider success.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+```
