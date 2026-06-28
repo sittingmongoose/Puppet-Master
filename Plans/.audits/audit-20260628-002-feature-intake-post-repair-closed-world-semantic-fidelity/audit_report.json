@@ -1,0 +1,240 @@
+{
+  "actionable_findings": [],
+  "audit_id": "audit-20260628-002-feature-intake-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "909d47699",
+  "closure_reuse": {
+    "reopened_count": 0,
+    "reused_finding_keys": [
+      "sfk-86db9520ada607519d81d553",
+      "sfk-e19d99c878fe5bb3003d1896",
+      "sfk-2c2724eecefb5f4a899ed133",
+      "sfk-66961e9860756a5854b98333",
+      "sfk-43dea7138d4c7af4469d8d25"
+    ],
+    "rows": 5
+  },
+  "closure_reuse_count": 5,
+  "families": {
+    "audit_bundle_untracked_not_in_subject_ref": 1,
+    "audit_observation": 12,
+    "closure_registry_currentness_failure": 1,
+    "compile_target_present": 1664,
+    "compiled_atom_detail_present": 6075,
+    "dependency_cycle": 1,
+    "dependency_edge_present": 394,
+    "diff_validator_failure": 1,
+    "forbidden_artifact_absent": 9,
+    "index_governance_observed": 518,
+    "ledger_projection_present": 96,
+    "ledger_projection_stale_readiness_ref": 1,
+    "lineage_weak_row_atom_alignment": 2,
+    "node_readiness_phase_boundary": 1,
+    "notification_receipt_artifact_owner_gap": 1,
+    "owner_route_present": 78,
+    "planunit_claim_present": 2632,
+    "planunit_source_atom_ids_sparse": 1,
+    "reciprocal_lineage_present": 226,
+    "schema_contract_identity_present": 468,
+    "source_lineage_supported_sparse_metadata": 1360
+  },
+  "finding_count": 13537,
+  "generated_at_utc": "2026-06-28T15:10:23Z",
+  "info_count": 12178,
+  "ledger_consistency": {
+    "audit_id": "audit-20260628-002-feature-intake-post-repair-closed-world-semantic-fidelity",
+    "baseline_ref": "909d47699",
+    "findings": [],
+    "ledger_id": "pldg-20260627-001-feature-intake",
+    "notes": [
+      "Audit-only observations do not stale or restamp ledger latest_audit_* projections."
+    ],
+    "observation_ref": "HEAD",
+    "projection_agreement": {
+      "compiled_plan_unit_count": 39,
+      "governance_status": "sealed",
+      "latest_audit_status": "repair_validated",
+      "latest_post_repair_audit_report": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/post_repair_audit_report.json",
+      "open_blockers": 0,
+      "open_questions": 0
+    },
+    "projection_files_checked": [
+      "manifest.json",
+      "state/current.json",
+      "state/handoff.json",
+      "state/open_items.json",
+      "state/compile_queue.json",
+      "state/operating_capsule.json",
+      "validation/ledger_health.json",
+      "Plans/ledgers/v2/ledger_registry.json"
+    ],
+    "schema_id": "pm.ledger_consistency_report.v1",
+    "status": "pass",
+    "subject_ref": "1ff67a1b0"
+  },
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "machine_warning_row_count": 1364,
+  "next_action": "TERMINAL_NO_REPAIR_REQUIRED for this audit-only bundle; no repair lane is required from audit-002.",
+  "non_actionable_warning_count": 4,
+  "non_actionable_warnings": [
+    {
+      "evidence": [
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/post_repair_audit_report.json"
+      ],
+      "finding_family": "planunit_source_atom_ids_sparse",
+      "finding_key": "sfk-2d0d5128335b39b25eafb726",
+      "plan_unit_ids": [
+        "0PI-063",
+        "ACD-177",
+        "ACD-414",
+        "ACD-427",
+        "ACD-428",
+        "ACD-429",
+        "ARC-036",
+        "ATS-015",
+        "ATS-016",
+        "ATS-017",
+        "ATS-018",
+        "CV-298",
+        "CV-299",
+        "CV-300",
+        "DP-063",
+        "DR-036",
+        "F3-132",
+        "F3-404",
+        "F3-405",
+        "F3-406",
+        "ISI-019",
+        "OSI-430",
+        "PP-057",
+        "PS-123",
+        "PS-124",
+        "RAP-037",
+        "RAP-038",
+        "SP-119",
+        "SP-221",
+        "SP-222",
+        "SP-223",
+        "UCC-060",
+        "UCC-103",
+        "UCC-104",
+        "UF-011",
+        "WM-019",
+        "WM-039",
+        "WM-040"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [],
+      "summary": "38 compiled PlanUnits rely on direct source_lineage rather than complete source_atom_ids; prior repair bundle classifies this as warning-only and reciprocal lineage remains supported."
+    },
+    {
+      "evidence": [
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md"
+      ],
+      "finding_family": "node_readiness_phase_boundary",
+      "finding_key": "sfk-f3c5bd6c13f47fdd3d97a050",
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "source_atom_ids": [],
+      "summary": "Node readiness remains blocked by compiler/runtime boundary by design; no executable node artifacts are authorized."
+    },
+    {
+      "evidence": [
+        "Plans/.audits/audit-20260628-002-feature-intake-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl"
+      ],
+      "finding_family": "audit_bundle_untracked_not_in_subject_ref",
+      "finding_key": "sfk-600af2985eb6947431507d29",
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "source_atom_ids": [],
+      "summary": "This audit bundle is intentionally written after subject_ref under the audit-only write boundary; observation_ref records HEAD."
+    },
+    {
+      "evidence": [
+        "Plans/Automated_Testing_System.md:1184",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:302"
+      ],
+      "finding_family": "lineage_weak_row_atom_alignment",
+      "finding_key": "sfk-1e9987ca0da5d7aa5e7b4df0",
+      "plan_unit_ids": [
+        "ATS-015"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [
+        "atom-0088"
+      ],
+      "summary": "ATS-015 cites the inline visualizer automated-test matrix row while using a consolidated source atom; source_lineage remains present and this is non-actionable."
+    },
+    {
+      "evidence": [
+        "Plans/Permissions_System.md:8404",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:538"
+      ],
+      "finding_family": "lineage_weak_row_atom_alignment",
+      "finding_key": "sfk-d02c96cd574c358c6d82fc5e",
+      "plan_unit_ids": [
+        "PS-124"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [
+        "atom-0062",
+        "atom-0068",
+        "atom-0069",
+        "atom-0091"
+      ],
+      "summary": "PS-124 cites a validation matrix row whose linked atoms are broader than the PlanUnit source atom list; source_lineage remains present and this is non-actionable."
+    }
+  ],
+  "observation_ref": "HEAD",
+  "repair_required_count": 0,
+  "schema_id": "pm.closed_world_semantic_audit_report.v1",
+  "scope": {
+    "changed_live_plan_docs": 17,
+    "classification_coverage_percent": 100.0,
+    "classified_rows": 9628,
+    "compiled_atoms": 94,
+    "compiled_plan_units": 39,
+    "manifest_rows": 9628,
+    "schema_contract_identity_rows_added": 234
+  },
+  "semantic_observation_count": 1,
+  "semantic_risk_count": 5,
+  "semantic_warning_count": 4,
+  "source_artifacts": {
+    "atom_fidelity_matrix.jsonl": 9628,
+    "audit_scope_manifest.jsonl": 9628,
+    "closure_reuse.jsonl": 5,
+    "ledger_consistency.json": "pass",
+    "owner_routing_findings.jsonl": 39,
+    "planunit_source_claims.jsonl": 3865,
+    "semantic_risks.jsonl": 5
+  },
+  "status": "PASS_WITH_WARNINGS",
+  "subagent_results": [
+    {
+      "agent": "Ohm",
+      "status": "pass",
+      "summary": "No repair-required source-lineage drift; sparse source_atom_ids warning remains non-actionable."
+    },
+    {
+      "agent": "Meitner",
+      "status": "pass",
+      "summary": "No owner drift, duplicate ownership, or missing consumer alignment; warnings are non-actionable."
+    },
+    {
+      "agent": "Mill",
+      "status": "pass",
+      "summary": "No forbidden tracked WorkNode/NodeSeed/runtime/build artifacts in the tracked diff ranges; prior repair evidence remains valid."
+    }
+  ],
+  "subject_ref": "1ff67a1b0",
+  "validator_summary": {
+    "all_passed": true,
+    "mutated_outside_audit_dir": false,
+    "non_audit_side_effects": [],
+    "result_count": 14,
+    "status": "pass"
+  },
+  "warning_count": 1364
+}
