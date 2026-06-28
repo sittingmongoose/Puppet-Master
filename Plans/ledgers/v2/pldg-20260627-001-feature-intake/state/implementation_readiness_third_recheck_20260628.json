@@ -1,0 +1,134 @@
+{
+  "schema_id": "pm.bootstrap_implementation_readiness_third_recheck.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "created_at_utc": "2026-06-28T09:18:00Z",
+  "status": "source_ready_for_explicit_compile__compile_unopened__canonical_plans_not_implementation_ready",
+  "goal_note": "User asked to redo the subjective/objective check with parallel agents and dedicated goals. Main agent synthesized read-only lane audits and local owner-doc checks; no canonical Plans or governance artifacts were edited.",
+  "user_request_exact_tokens": [
+    "subjective and objective check again",
+    "write yourself a new goal",
+    "spawn agents in parallel",
+    "as many as needed",
+    "dedicated /goal"
+  ],
+  "objective_verdict": {
+    "ledger_source_readiness": "pass_with_precision_atoms_added",
+    "canonical_plans_implementation_readiness": "fail_until_explicit_compile",
+    "no_new_product_questions": true,
+    "compile_opened": false,
+    "canonical_plans_edited": false,
+    "plan_index_edited": false,
+    "governance_artifacts_edited": false,
+    "worknodes_or_nodeseeds_created": false,
+    "implementation_files_touched": false
+  },
+  "subjective_verdict": "I would hand the ledger to a careful Plans compiler/spec editor. I would not hand current canonical Plans alone to an implementer for these miscellaneous items. The ledger now contains the extra source guardrails needed to prevent the future compile from guessing on visualizer token recipes, DRY toggle/receipt semantics, compaction stale-owner cleanup, or notification provider materialization.",
+  "subagents": {
+    "inline_visualizer_v2": "subagent:019f0d7b-afdd-7d23-a024-2f3a7926a875",
+    "notifications_sounds_peonping": "subagent:019f0d7b-dd81-7d90-bb38-0f8b41fb22ac",
+    "compaction_compact_now": "subagent:019f0d7c-0ba0-70f2-b2aa-e5af22bd6af7",
+    "dry_method_outside_plan_docs": "subagent:019f0d7c-389e-7103-91f7-e5a981fc974d",
+    "cross_owner_adjudication": "subagent:019f0d7c-664a-77d3-a948-c51e83031212"
+  },
+  "lane_findings": [
+    {
+      "lane": "inline_visualizer_v2",
+      "objective_verdict": "source_ready_for_compile__canonical_plans_not_ready",
+      "subjective_verdict": "Baseline visualizer canon exists, but v2 streaming markers, safe-cut reconciliation, bridge aliases, token recipes, library candidates, and tests remain ledger-only until compile.",
+      "ledger_precision_added_atom_ids": [
+        "atom-0088"
+      ],
+      "canonical_plan_gaps": [
+        "visualize(title=...) / @@@VIZ-START / @@@VIZ-END markers",
+        "safe-cut streaming reconciliation",
+        "copyText/toast/saveState/loadState alias boundary",
+        "9 color ramps and data-accent token recipe",
+        "expanded library candidates and visualizer-specific tests"
+      ],
+      "gui_sorted": "source-ready after token/alias guardrail; canonical GUI PlanUnits still required"
+    },
+    {
+      "lane": "notifications_sounds_peonping",
+      "objective_verdict": "source_ready_for_compile__canonical_plans_not_ready",
+      "subjective_verdict": "Notification/sound source is strong enough for compile. Canonical Plans still lack destination schemas, settings surface, command/wiring, sound upload lifecycle, and provider-specific receipt semantics.",
+      "ledger_precision_added_atom_ids": [
+        "atom-0091"
+      ],
+      "canonical_plan_gaps": [
+        "Slack",
+        "Discord",
+        "ntfy",
+        "Pushover",
+        "Telegram",
+        "PeonPing/OpenPeon import compatibility",
+        "test-send",
+        "sound upload lifecycle",
+        "bounded generic-webhook success predicates"
+      ],
+      "gui_sorted": "settings/upload/sound UI is source-sorted; canonical GUI PlanUnits still required"
+    },
+    {
+      "lane": "compaction_compact_now",
+      "objective_verdict": "nearly_ready__compile_cleanup_required",
+      "subjective_verdict": "Compact Now behavior is substantially canonical, but ACD-177/ACD-414 still need stale newfeatures cleanup and Automated_Testing_System coverage.",
+      "ledger_precision_added_atom_ids": [
+        "atom-0090"
+      ],
+      "canonical_plan_gaps": [
+        "Plans/newfeatures.md still appears in ACD-177 implementation_surfaces/owner_hints and ACD-414 owner_hints",
+        "Automated_Testing_System lacks Compact Now/manual compaction acceptance packet"
+      ],
+      "gui_sorted": "canonical GUI behavior exists for hover/More Details/Compact Now dispatch; tests and stale owner cleanup still compile-pending"
+    },
+    {
+      "lane": "dry_method_outside_plan_docs",
+      "objective_verdict": "source_ready_for_compile__canonical_plans_not_ready",
+      "subjective_verdict": "Ledger preserves default-on/user-disableable/what-why DRY intent. Canonical docs do not yet carry the exact toggle key, effective-state enum, receipt fields, or Assistant Chat disclosure behavior.",
+      "ledger_precision_added_atom_ids": [
+        "atom-0089"
+      ],
+      "canonical_plan_gaps": [
+        "application-level default DRY versus project-level example wording",
+        "settings key/enum",
+        "visible DRY states",
+        "run.started provenance fields",
+        "stale Orchestrator-local DRY/widget-catalog prose"
+      ],
+      "gui_sorted": "source-ready after key/enum/receipt/copy guardrail; canonical GUI PlanUnits still required"
+    }
+  ],
+  "cross_lane_findings": [
+    "source_compile_readiness_integration_matrix_20260628.json is a rollup/manifest only; future compile must dereference detailed lane matrices and linked atoms.",
+    "state/operating_capsule.json had stale pointers to the first recheck; this projection has been refreshed to the third recheck.",
+    "run-gates failure remains stale generated ledger_registry evidence only; this is governance/currentness work for a future explicit governance phase, not a product source-readiness blocker."
+  ],
+  "ledger_repairs_applied": [
+    "Added atom-0087 through atom-0092.",
+    "Added corr-0005 for third recheck projection/source-precision corrections.",
+    "Updated inline visualizer, notifications, compaction, and DRY detailed matrices with precision guardrails.",
+    "Refreshed current/handoff/open_items/compile_queue/operating_capsule/manifest/registry projections to latest recheck refs.",
+    "Preserved compile unopened and governance not_started boundaries."
+  ],
+  "validators_observed_before_projection_update": {
+    "pm_bootstrap_ledger_validate": "pass at 2026-06-28T09:01:12Z before third projection update",
+    "pm_plan_index_validate": "pass at 2026-06-28T09:11:46Z; node_readiness_status=blocked_compiler_contract_incomplete",
+    "pm_shard_plans_check": "pass at 2026-06-28T09:11:30Z",
+    "pm_plans_verify_run_gates": "fail_governance_currentness_only__ledger_registry_evidence_hash_stale at 2026-06-28T09:11:30Z",
+    "git_diff_check": "pass before projection update"
+  },
+  "source_refs": [
+    "chat:subjective-objective-recheck-again-third",
+    "subagent:019f0d7b-afdd-7d23-a024-2f3a7926a875",
+    "subagent:019f0d7b-dd81-7d90-bb38-0f8b41fb22ac",
+    "subagent:019f0d7c-0ba0-70f2-b2aa-e5af22bd6af7",
+    "subagent:019f0d7c-389e-7103-91f7-e5a981fc974d",
+    "subagent:019f0d7c-664a-77d3-a948-c51e83031212",
+    "state/inline_visualizer_v2_readiness_matrix.json",
+    "state/notifications_sounds_readiness_matrix.json",
+    "state/compaction_compile_readiness_matrix.json",
+    "state/dry_method_compile_readiness_matrix.json",
+    "state/implementation_readiness_second_recheck_20260628.json",
+    "state/implementation_readiness_recheck_20260628.json"
+  ],
+  "next_safe_action": "Either compile this ledger to canonical Plans when Jared explicitly asks, or do another ledger-only review. Do not hand current canonical Plans alone to implementation."
+}

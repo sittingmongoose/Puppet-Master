@@ -10466,7 +10466,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
   context detail tabs, curated/raw views, under-message actions, and info-popovers that follow
-  Assistant Chat and Contracts label rules.
+  Assistant Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
+  Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and failed
+  command-result states.
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
@@ -10490,9 +10492,16 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0084"
+- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance"
+- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094"
 preserved_exact_tokens:
 - "More Details"
 - "Compact Now"
+- "context.compaction.failed"
+- "already_running"
+- "cancelled"
+- "no_op"
+- "retry_scheduled"
 - "Curated"
 - "Raw"
 - "under-message icon row"
@@ -10500,6 +10509,7 @@ preserved_exact_tokens:
 - "runtime identity fields"
 negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
+- "Compact Now failure must not be silent or logs-only."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -23985,16 +23995,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The visualizer host bridge is limited to async-safe sendPrompt, openLink, copyToClipboard,
-  and requestResize; _blank opens a new tab, _self navigation is blocked in sandboxed cards,
-  resize is host-constrained, question-flow embedded visual modules omit sendPrompt and expose
-  only the narrowed PM-managed question-draft bridge, and bridge calls preserve exact host
-  semantics for composer queueing, detached previews, theme injection, and height reporting.
+  The visualizer host bridge uses the typed CV-300 registry for async-safe sendPrompt, openLink, copyToClipboard,
+  requestResize, toast, saveState, and loadState, with copyText retained only as a compatibility alias for
+  copyToClipboard. _blank opens a new tab, _self navigation is blocked in sandboxed cards, resize is host-constrained,
+  question-flow embedded visual modules omit sendPrompt and expose only the narrowed PM-managed question-draft bridge,
+  and bridge calls preserve exact host semantics for composer queueing, detached previews, theme injection, height
+  reporting, typed return/error states, and native Rust + Slint webview adapter message mapping.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec widget or card behavior.
 split_recommended: false
-depends_on: []
+depends_on: [CV-300]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -24019,6 +24030,12 @@ preserved_exact_tokens:
 - "openLink(url: string, target?: \"_blank\" | \"_self\"): void"
 - "copyToClipboard(text: string): Promise<boolean>"
 - "requestResize(width?: number, height?: number): void"
+- "copyText"
+- "toast"
+- "saveState"
+- "loadState"
+- "Rust + Slint"
+- "webview"
 - "_blank"
 - "_self"
 - "question-flow embedded visuals do not receive `sendPrompt`"
@@ -25703,6 +25720,248 @@ owner_hints:
 compatibility_only_notes:
 - Concept/source-lineage references are preserved for routing and audit only; they do not make external plugins
   or PMConcept.html canonical implementation source.
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into GUI owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### F3-404 - Inline Visualizer V2 Tokens Components And Feedback States
+
+```yaml
+plan_unit_id: F3-404
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Inline visualizer v2 renders as a PM-native chat artifact with stable progressive-render states, no visible flicker
+  or remount during finalization, and fallback copy for Rendering visualization..., Streaming visualization unavailable,
+  Copied, Visualization ready, library unavailable, sandbox denied, render error, stream gap, and snapshot fallback.
+  The visualizer default style exposes nine PM color ramps, `data-accent`, pre-styled bare button, input, textarea,
+  select, table, details, summary, `dl[data-layout="grid"]`, SVG utility classes, `aria-invalid="true"`, and
+  `:focus-visible` hooks through Final GUI-owned variables such as `--pm-viz-ramp-{family}-{step}`. Native Rust + Slint
+  builds host the visible card through the PM-owned isolated webview adapter defined by CV-300, so loading, copied,
+  denied, render-error, and fallback states stay visually identical whether the runtime uses iframe/postMessage or the
+  native webview message bridge.
+gui_related: true
+gui_classification_reason: Defines visible inline visualizer presentation, tokens, components, feedback copy, and fallback states.
+depends_on: [ACD-427, CV-300]
+unblocks: [ATS-015]
+acceptance_criteria:
+  - Streaming visualizations have stable loading, degraded, copied, ready, denied, render-error, stream-gap, and snapshot-fallback states.
+  - Finalization preserves chart canvases, SVGs, and script-populated containers without visible remount flicker.
+  - PM visualizer tokens include neutral, accent, info, success, warning, danger, cyan, violet, and amber ramps with 50 through 950 steps.
+  - Component hooks cover the listed form/table/details/SVG/focus/error primitives without importing external CSS themes.
+  - Native webview adapter rendering preserves the same visible states and fallback copy as iframe/postMessage rendering.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Inline visualizer v2 GUI state fixtures
+risk_class: inline_visualizer_gui_underspecification
+reasoning_tier: high
+context_scope: inline_visualizer_v2_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - future Assistant Chat inline visualizer UI
+node_compile_hint:
+  mode: inline_visualizer_v2_gui_surface
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-visual-tokens-components-fallbacks
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0058
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+source_atom_ids: [atom-0058, atom-0088]
+preserved_exact_tokens:
+  - "Rendering visualization..."
+  - "Streaming visualization unavailable"
+  - "Copied"
+  - "Visualization ready"
+  - "library unavailable"
+  - "sandbox denied"
+  - "render error"
+  - "stream gap"
+  - "snapshot fallback"
+  - "data-accent"
+  - "`--pm-viz-ramp-{family}-{step}`"
+  - "Rust + Slint"
+  - "webview"
+negative_constraints:
+  - Do not render inline visualizer degradation as blank content.
+  - Do not let finalization remount visible chart or SVG containers when safe reconciliation can preserve them.
+  - Do not import external visual themes or CDN CSS for the default PM visualizer style.
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### F3-405 - Notifications And Sounds Settings Surface
+
+```yaml
+plan_unit_id: F3-405
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Settings > General > Notifications & Sounds provides the master notification enable, in-app toast/banner,
+  system/tray, sound enable, volume, per-event routing matrix, quiet/focus behavior, destination list and status,
+  sound library and mapping, upload/import/export, preview, and explicit test-send controls. The surface supports
+  Slack, Discord, generic webhook, ntfy, Pushover, Telegram, in-app toast/banner, system/tray, normal notification
+  sounds, custom uploaded sounds, and PeonPing/OpenPeon-compatible imported packs only after compatibility and
+  licensing checks. Provider forms expose only masked or ref-backed fields: Slack channel/mrkdwn/mention policy,
+  Discord thread/allowed_mentions/identity policy, generic webhook method/header/body template/success predicate, ntfy
+  server/topic/priority/tags/click policy, Pushover device/priority/sound/retry policy, and Telegram chat/thread/parse
+  mode/disable-notification fields. The routing matrix uses canonical event categories and default sound mappings, and
+  the sound library shows built-in normal notification sound entries with source/license/version/duration/hash metadata
+  beside uploaded and imported assets. Sound is never the sole carrier for important state, and missing audio support
+  hides or labels controls rather than failing silently.
+gui_related: true
+gui_classification_reason: Defines Settings GUI, notification destination controls, sound library controls, upload UI, preview, and test-send presentation.
+depends_on: [ACD-428, CV-298, SP-222, PS-124, UCC-103]
+unblocks: [ATS-016]
+acceptance_criteria:
+  - The settings path is exactly Settings > General > Notifications & Sounds, not a new top-level Settings tab.
+  - Users can configure destination routing, global/project overrides, quiet/focus behavior, sound mappings, and uploaded sounds from the GUI.
+  - Provider-specific forms expose the canonical fields without revealing raw secrets, webhook URLs, tokens, or private paths.
+  - Built-in normal notification sounds show source, license, version, duration, hash, and default mapping metadata.
+  - Preview is local only; test-send is explicit, labeled, rate-limited, masked, receipt-recorded, and never mutates alert state.
+  - Audio absence or disabled sound remains accessible through visible labels and non-audio state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Notifications and Sounds settings GUI fixtures
+risk_class: notification_settings_gui_gap
+reasoning_tier: high
+context_scope: notifications_sounds_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - future Settings > General > Notifications & Sounds UI
+node_compile_hint:
+  mode: notifications_sounds_settings_surface
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-settings-gui-command-wiring
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-catalog-default-mappings
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:sound-upload-asset-lifecycle
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:peonping-openpeon-import-map
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:preview-test-send-accessibility
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0052
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0065
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0066
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0067
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
+source_atom_ids: [atom-0052, atom-0064, atom-0065, atom-0066, atom-0067, atom-0068]
+decision_refs: [dec-0009, dec-0010, dec-0011, dec-0012, dec-0013]
+preserved_exact_tokens:
+  - "Settings > General > Notifications & Sounds"
+  - "Slack"
+  - "Discord"
+  - "ntfy"
+  - "Pushover"
+  - "Telegram"
+  - "toast"
+  - "system/tray"
+  - "sound"
+  - "custom uploaded sounds"
+  - "PeonPing"
+  - "OpenPeon"
+  - "preview"
+  - "test-send"
+  - "event_category"
+  - "source/license"
+  - "default sound mappings"
+  - "allowed_mentions"
+  - "parse mode"
+negative_constraints:
+  - Do not create a top-level Settings tab for notifications.
+  - Do not bundle PeonPing-style voice packs until license verification permits it.
+  - Do not make sound the sole carrier of blocked, approval-required, failure, or completion state.
+  - Do not let preview send external notifications.
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+```
+
+### F3-406 - DRY Method Settings And Visible State Placement
+
+```yaml
+plan_unit_id: F3-406
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The GUI exposes the application-level DRY Method default guard as a user-controllable setting for
+  `app.agent_rules.dry_method_default_guard` with default enabled and stored states enabled or disabled_by_user.
+  Assistant Chat and relevant run detail surfaces show compact DRY applied, DRY degraded, DRY disabled, rules missing,
+  rules stale, owner/source route found, owner/source route unresolved, mutation blocked, exploratory caveat used,
+  and existing owner reused states when the DRY Method materially affects trust, mutation, or routing. The setting uses
+  the UI_Command_Catalog and Wiring_Matrix commands for `cmd.settings.agent_rules.dry_method_default_guard.set`, and
+  help copy says: "DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user
+  instructions, safety, secrets, source authority, governance, permissions, and source-control rules still apply."
+gui_related: true
+gui_classification_reason: Defines visible setting placement and DRY state/disclosure presentation in GUI surfaces.
+depends_on: [ACD-429, ARC-036, CV-299, SP-223, UCC-104, WM-040]
+unblocks: [ATS-018]
+acceptance_criteria:
+  - Users can turn the default DRY Method guard off without disabling unrelated safety, source authority, governance, secrets, or source-control rules.
+  - Settings help text explains exactly what disabling DRY does and does not change.
+  - Trust-affecting missing or stale rule state is visible to the user, not logs-only.
+  - Routine no-effect turns avoid chat flooding while receipts still preserve provenance.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - DRY Method settings and disclosure GUI fixtures
+risk_class: dry_method_gui_transparency_gap
+reasoning_tier: high
+context_scope: dry_method_gui
+implementation_surfaces:
+  - Plans/FinalGUISpec.md
+  - future Assistant Chat DRY disclosure UI
+  - future Settings UI
+node_compile_hint:
+  mode: dry_method_gui_settings_disclosure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-chat-what-why
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-002
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-003
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0054
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0074
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+source_atom_ids: [atom-0054, atom-0073, atom-0074, atom-0083, atom-0089]
+decision_refs: [dec-0016, dec-0017]
+preserved_exact_tokens:
+  - "app.agent_rules.dry_method_default_guard"
+  - "enabled"
+  - "disabled_by_user"
+  - "DRY applied"
+  - "DRY degraded"
+  - "DRY disabled"
+  - "rules missing"
+  - "rules stale"
+  - "owner/source route unresolved"
+  - "mutation blocked"
+  - "exploratory caveat used"
+  - "cmd.settings.agent_rules.dry_method_default_guard.set"
+  - "DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user instructions, safety, secrets, source authority, governance, permissions, and source-control rules still apply."
+negative_constraints:
+  - Do not make DRY opt-in by default.
+  - Do not make it impossible for the user to turn off the default DRY guard.
+  - Do not treat disabled DRY as permission to bypass explicit user instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
+  - Do not hide trust-affecting DRY state in backend logs only.
+owner_hints:
+  - Plans/FinalGUISpec.md
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/storage-plan.md
 ```
 
 ### F3-403 - Teach Help Icon Teacher Thread And Guided Overlay GUI

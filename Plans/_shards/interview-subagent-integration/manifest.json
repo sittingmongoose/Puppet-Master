@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-06-27T15:59:00Z",
+  "generated_at_utc": "2026-06-28T12:30:39Z",
   "index_path": "Plans/_shards/interview-subagent-integration/00-index.md",
-  "index_sha256": "c886412751a2adfa926ef19f79dd39754f7c962352570604c07eb1cf66330a37",
+  "index_sha256": "4f5d56c87358bb2a08c5b3dd908b926f646c87ec2bd3318cbd9796c7e76a85aa",
   "manifest_path": "Plans/_shards/interview-subagent-integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/interview-subagent-integration/001-preamble.md",
-      "sha256": "c443f40669bd603aaf2a6b3b80abed2d74e0f2ffb4486551154bfcf7026cc0fe",
+      "sha256": "f47e8bd8d006e86dd508e715d3f0665667bf673fd8f3a42ecfaabf14e0b9d54c",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/interview-subagent-integration/002-canonical-owner-section-requirements.md",
-      "sha256": "c0752302e1e1c9f974fa6c98df552bc16da175b4727b9c88105da732e5d24165",
+      "sha256": "4a54a20e1605fbd1bddce784ce801899b347e5a0c76dda1f774c0126eab256bf",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/interview-subagent-integration/003-change-summary.md",
-      "sha256": "184835e0257c015facc052b5dc7010d6700d45d9e3570daaeb67628342906642",
+      "sha256": "e7cb8164fdbc8c556d6eea9bc72f85c00a24a5b8ded4886d71ff493be7001d54",
       "shard_id": "003",
       "source_line_end": 18,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "Interview runtime boundary and handoff lineage",
       "path": "Plans/_shards/interview-subagent-integration/004-interview-runtime-boundary-and-handoff-lineage.md",
-      "sha256": "c41f81a8a957016ab994cec8f0e8e39a3ba6fc4d2c0360f7a1826eaf154d8322",
+      "sha256": "424bb9e8531e625a32c2cc4846f8747936f5096ca99cbd5acfdafa927c340487",
       "shard_id": "004",
       "source_line_end": 54,
       "source_line_start": 20,
@@ -44,7 +44,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/interview-subagent-integration/005-owner-consumer-map.md",
-      "sha256": "1012301c235a0c7d0f411a63218adb663cc041db01b67acc548bbf283f178654",
+      "sha256": "5c9e1fe02606c57c0acfd7f8da02307146e96384ac6f31f92ac2ede78c38b3e0",
       "shard_id": "005",
       "source_line_end": 60,
       "source_line_start": 56,
@@ -53,7 +53,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/interview-subagent-integration/006-planunits.md",
-      "sha256": "93224ccbd89eb29a8bc025c558f23aa3b76388c9f1e621d0952ab3c4d4b8e99a",
+      "sha256": "e98b257e9f3e8ec9f17f0dba1b411e97133213c87bc13aeefb9138b11897d811",
       "shard_id": "006",
       "source_line_end": 983,
       "source_line_start": 62,
@@ -62,16 +62,25 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/interview-subagent-integration/007-migration-coverage.md",
-      "sha256": "6a1964a4dc56e5830b95799c74924c48b7f1cf8ad91053e2e7299da7e11268c7",
+      "sha256": "7b1d84393444552186b0e6d959012b055233511139862093b2fdf8f6b25699ee",
       "shard_id": "007",
       "source_line_end": 995,
       "source_line_start": 985,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
+      "path": "Plans/_shards/interview-subagent-integration/008-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "sha256": "25f443dbc82112a35b3b41e22496f3a598a8ad44ae8bb05710422673718054b4",
+      "shard_id": "008",
+      "source_line_end": 1053,
+      "source_line_start": 997,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 995,
+    "line_count": 1053,
     "path": "Plans/interview-subagent-integration.md",
-    "sha256": "0f4d8ad69a46d21900b069b855a37858524aa9c18732ec65547cf3cd2899a886"
+    "sha256": "09870b344b6b002b65b4525e209ddfc4638b45ffe8f2523a543c6ee02325e9a5"
   }
 }

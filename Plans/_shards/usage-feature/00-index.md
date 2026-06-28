@@ -1,35 +1,35 @@
 # Shard Index: Plans/usage-feature.md
 
-Generated: 2026-06-27T15:59:00Z
+Generated: 2026-06-28T12:30:39Z
 
-Source SHA256: `f36a9f06b8895a1798524dc3927ddc35e21f798849f9dcd5a232fc159dafda39`
+Source SHA256: `8f6c33d23e0cfc5914538e069799baa40749e818630dcc84cec362095d335405`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `2fb6ee4f9afc67a9e0e2c423050d85e5d5cfe28c3c43ebeebd9a9d35d2435364`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L18 `a4c7f3e82b9bcb3e2d3de6521b188ca3fe87106f589ead7ce2d6abd1215ecd51`
-- [003 - Plan Document Status](003-plan-document-status.md) L21-L27 `1b5e46ce35c80d1a0ff1b2903f4f3454e042ebc10eef782ae429625e04f4b50f`
-- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L29-L33 `496f1b017dc5982c9bcb010af152160d143078610785f5d79920394f710adf0b`
-- [005 - Storage dependency (implementation)](005-storage-dependency-implementation.md) L35-L93 `63030916666e663b04a796007a6c4d7b7337cd5b0c5e6906b975a6236223ed4c`
-- [006 - Executive Summary](006-executive-summary.md) L95-L97 `6b4b6937e2b9a85d0406bf22715e4a0f347b5fe86dde503d54cfbb1354c91017`
-- [007 - Relationship to Existing Docs](007-relationship-to-existing-docs.md) L99-L116 `1ce583a992b6b44b4b9f4b7b7662b46ff125179a2d46a6ff07c8f6ffccca641b`
-- [008 - External References (Competitive & Ecosystem)](008-external-references-competitive-ecosystem.md) L118-L126 `af13447f670cdcf6309f35998f10e0eff7dc27163828520ef18121c242fb4400`
-- [009 - Scope of the Usage Feature](009-scope-of-the-usage-feature.md) L128-L372 `2fd9ed42a47560584356410d35fc1c6477b3f04dba94b233abdb90e509838fcf`
-- [010 - Data and Backend (conceptual)](010-data-and-backend-conceptual.md) L373-L413 `f022bfcedc6f0bc771be7f9c5f1effdd37e6ecdc5e2331d26034cf49b3dccaad`
-- [011 - GUI Placement Options](011-gui-placement-options.md) L414-L431 `b0b06ac55cb674dd9994122da1d25acdd3d9ca2c4caf5991940dd6b3dac05b52`
-- [012 - Gaps (Current State vs. Desired)](012-gaps-current-state-vs.-desired.md) L432-L641 `b370c967cbb9552a41b20c623d5975414e39ab2979e2a410e2c2942473e4ca93`
-- [013 - Enhancements (Beyond Minimum)](013-enhancements-beyond-minimum.md) L643-L726 `f52b710047906fed0fc6379b94935b55b49abc1517daf32f5b7ed8f62223b412`
-- [014 - Out of Scope for This Plan](014-out-of-scope-for-this-plan.md) L728-L732 `245f3953505b9ee9de9988dbe73da8d51f875df22af70f93de3d24d12f1d9bbd`
-- [015 - Success Criteria](015-success-criteria.md) L734-L741 `377ae8c4bc6e99b73ad794f931d4e068128cfb52d807a115436dfda872382058`
-- [016 - Version History](016-version-history.md) L743-L758 `d596174463d4361baca7d7088b0c71c52592a3b00dfd04b730acc76b1269b9bd`
-- [017 - Widget-Composed Page Layout (Addendum -- 2026-02-23)](017-widget-composed-page-layout-addendum-2026-02-23.md) L759-L864 `e76cb4da20bbf006a802639aa7b9876f26e4d8baac8fd6a355446210b3c8032a`
-- [018 - Runtime Scheduler / Recovery Observability Addendum (2026-03-09)](018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) L866-L879 `d26019b5bbfd827251e1c358fd51c51cc48708ff5e61ad4fd0ebbd30d1e2723b`
-- [019 - Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)](019-source-control-github-actions-and-docker-manager-cost-attributio.md) L880-L897 `d78a1c2b74eef9cadfb1bb24dc745555ed5d9c9c96c6cf0f5d57dd274e0e51d0`
-- [020 - Cross-Surface Usage Routing Clarifications](020-cross-surface-usage-routing-clarifications.md) L899-L916 `3e1d149c45ac994d6d78a77e520f0fcb16a0370313e251b643b5fce177a755e6`
-- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L918-L922 `4fbba6f77257f078d2f7f8667f8b0047512817dab6248bb62e26a47d949f6a03`
-- [022 - PlanUnits](022-planunits.md) L924-L5001 `2917c286a4ddf9fa5e0c47233bba3f32e9bc2ff71d447da1c479f9d8f30b66ee`
-- [023 - Migration Coverage](023-migration-coverage.md) L5003-L5013 `2971a93c2f52c2dceca97e2e6d5e65c4dbabb003406aff6f531dfa5b1f585b51`
-- [024 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L5015-L5103 `ae64a1a3d09e0eb00d6f5e893fb924faa9de79af328f921dfba36d3573bdd16d`
-- [025 - Ledger Compile Addendum - pldg-20260626-001-feature-name](025-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L5106-L5198 `e5f5d1513949c144042e9800f95e7b6bb5f3cf58c36f1de314750d0568c90bcd`
+- [001 - Preamble](001-preamble.md) L1-L1 `e0420569e72630146288b4b2c8abeaa6f1269f42ba33120cd7747b6d78107943`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L18 `122c9796a88427c2cc7859abcbbfc0c342efe85ee6cec2c4254976d933407b74`
+- [003 - Plan Document Status](003-plan-document-status.md) L21-L27 `8d345eae2a2e44fd185a73fba3536dff9150dfd4eefff4b19783f1bef7243a34`
+- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L29-L33 `55aacbd12820c7636600910690c9b69b3ec510e531d98eaaa0466baa308ba042`
+- [005 - Storage dependency (implementation)](005-storage-dependency-implementation.md) L35-L93 `a9642d2bf6c1a4d59eee272c27364bf6570aeb1ed5752f942d6ea0d5de329eb8`
+- [006 - Executive Summary](006-executive-summary.md) L95-L97 `b96c2c4f907f81dbf478c5a474d5b23cb83a24e3f2c655553990c207b9be4a44`
+- [007 - Relationship to Existing Docs](007-relationship-to-existing-docs.md) L99-L116 `b131aad889e2fb96b132e8b9ccf7aef62630394e0731eec14889a143a229cbaa`
+- [008 - External References (Competitive & Ecosystem)](008-external-references-competitive-ecosystem.md) L118-L126 `880049bb1763c315ff3795a16633ec8b9bd33821f545304149edc88a45cc97ca`
+- [009 - Scope of the Usage Feature](009-scope-of-the-usage-feature.md) L128-L372 `e70efbf172d7d53609a0424a0def0839d3ac4ae2c2ca2e8ebcdad8e09f3541b2`
+- [010 - Data and Backend (conceptual)](010-data-and-backend-conceptual.md) L373-L413 `47c73c5436fc6b369603482b880af3db8e7315a345204aaf71f32dc08fa3f23b`
+- [011 - GUI Placement Options](011-gui-placement-options.md) L414-L431 `c0d1d740cbb75e6dff45a6c82441373910cea89fb135d4b74892c2a6cfb018cb`
+- [012 - Gaps (Current State vs. Desired)](012-gaps-current-state-vs.-desired.md) L432-L641 `e5d7d1974d426a79b890bfcc094fa54c537dbc115b6a67ecfec73b25bc166766`
+- [013 - Enhancements (Beyond Minimum)](013-enhancements-beyond-minimum.md) L643-L726 `4015499a584b108f5c4e01c7759fa142d9ea359a32f05955ee6d443c4cb427b0`
+- [014 - Out of Scope for This Plan](014-out-of-scope-for-this-plan.md) L728-L732 `318366771f2d3515a4390a697b9c5d678fd325f973bd75260a07e047d0dd4198`
+- [015 - Success Criteria](015-success-criteria.md) L734-L741 `7557b74971fa008090b86304fd1fd5fe650fc8f120edd5bf0eb88b20b56f3286`
+- [016 - Version History](016-version-history.md) L743-L758 `f8f61c3c4f6260d9eee8e422e3b0789d1ecb6a19ae2dc746e37b77692b6fc294`
+- [017 - Widget-Composed Page Layout (Addendum -- 2026-02-23)](017-widget-composed-page-layout-addendum-2026-02-23.md) L759-L864 `83f70d085964df99b63c5635196744953a5dfdc383dbfded8fc41d2b7fd95023`
+- [018 - Runtime Scheduler / Recovery Observability Addendum (2026-03-09)](018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) L866-L879 `212a98c5135dd252bb4a3cfbc939ea34c1b4b0f3b73c339e3f5458abffaa8017`
+- [019 - Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)](019-source-control-github-actions-and-docker-manager-cost-attributio.md) L880-L897 `7e18a5ab9465a5ac6198056b0c82e747d1bdaa8993236277e8e972d384351767`
+- [020 - Cross-Surface Usage Routing Clarifications](020-cross-surface-usage-routing-clarifications.md) L899-L916 `34c118b8b9c0d4eef2402d5f870223ae7d2e00fc806b6fd95d71cbe2471ec90c`
+- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L918-L922 `f16cd90114add7d77d010410ed2157fb63d2f532bc3a93d15617dccdbe655d61`
+- [022 - PlanUnits](022-planunits.md) L924-L5006 `b4ded443a1e4266472f784a59dfd6ec251cb136c5348ececec2e90179ea3f429`
+- [023 - Migration Coverage](023-migration-coverage.md) L5008-L5018 `cfc4e6fdff1054ca77fed233badb6daecc0522e9fcda7ba6650dc43e858ff7e2`
+- [024 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L5020-L5108 `d69c67de1ca58e5526f01b7c8ed8bd30c1e9f49cc676979595fc89e46f921918`
+- [025 - Ledger Compile Addendum - pldg-20260626-001-feature-name](025-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L5111-L5203 `aa3b013c4e097894744b7cd2192be1d581addd2c33e2de237fb5d544b7c3bd57`

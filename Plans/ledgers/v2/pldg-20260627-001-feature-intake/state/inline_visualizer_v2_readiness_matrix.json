@@ -1,0 +1,336 @@
+{
+  "schema_id": "pm.bootstrap_source_compile_readiness_matrix.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "matrix_id": "inline_visualizer_v2_readiness_matrix_20260628",
+  "status": "source_ready_for_explicit_compile__compile_unopened",
+  "created_at_utc": "2026-06-28T08:14:30Z",
+  "source_refs": [
+    "state/implementation_readiness_review_20260628.json",
+    "subagent:019f0d3d-9502-70a0-b9f5-a72d15e86b66",
+    "records/design_atoms.jsonl:atom-0007-atom-0016",
+    "records/design_atoms.jsonl:atom-0051",
+    "records/decisions.jsonl:dec-0003-dec-0008",
+    "Plans/assistant-chat-design.md:2500-2517",
+    "Plans/FinalGUISpec.md:3502-3521",
+    "Plans/storage-plan.md:1732-1743"
+  ],
+  "phase_boundary": {
+    "compile_opened": false,
+    "canonical_plans_edited": false,
+    "governance_status": "not_started"
+  },
+  "rows": [
+    {
+      "row_id": "iv2-stream-feed",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0007",
+        "atom-0008",
+        "atom-0012",
+        "atom-0051",
+        "atom-0056"
+      ],
+      "gap_source": "implementation_readiness_review.inline_visualizer_v2.gaps[1]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "contract": "Host detects visual stream envelopes using accepted tokens `visualize(title=\u2026)`, `@@@VIZ-START`, and `@@@VIZ-END`, then feeds sanitized progressive fragments into the sandboxed visual-module card over PM-controlled postMessage; iframe code never scans parent DOM.",
+      "acceptance_criteria": [
+        "Visual envelopes route to inline visual module, not Markdown code fences.",
+        "Tool calls, reasoning, code_execution, and code fences do not falsely trigger visual capture.",
+        "Stream gaps surface explicit degraded/fallback state."
+      ],
+      "negative_constraints": [
+        "No parent DOM scraping.",
+        "No allow-same-origin.",
+        "No Markdown code fence routing.",
+        "No tool_calls/reasoning/code_execution marker capture."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "iv2-incremental-reconciliation",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0007",
+        "atom-0015",
+        "atom-0051",
+        "atom-0056"
+      ],
+      "gap_source": "implementation_readiness_review.inline_visualizer_v2.gaps[1]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "contract": "Streaming render uses safe-cut partial HTML parsing, append-only reconciliation, serialized script execution, preservation of script-populated containers, TreeWalker exclusions, marker false-positive avoidance, guarded fallback loops, and zero-flicker finalization.",
+      "acceptance_criteria": [
+        "No flicker/remount of chart canvases or SVGs during finalization.",
+        "Script-populated containers remain stable.",
+        "Final stream state matches persisted/reloaded view."
+      ],
+      "negative_constraints": [
+        "Do not remount existing chart canvases/SVGs during finalization.",
+        "Do not replace live script-populated containers.",
+        "Do not silently drop stream gaps."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "iv2-bridge-alias-map",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0009",
+        "atom-0016",
+        "atom-0051",
+        "atom-0057"
+      ],
+      "gap_source": "implementation_readiness_review.inline_visualizer_v2.gaps[2]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "mapping": {
+        "copyText": "alias of copyToClipboard(text: string): Promise<boolean>",
+        "toast": "host-local localized visualizer feedback only; not Slack/Discord/webhook notification delivery",
+        "saveState": "PM-managed per-message visual-state output; not parent localStorage",
+        "loadState": "PM-managed per-message visual-state lookup with supplied fallback on miss/denial/corruption"
+      },
+      "acceptance_criteria": [
+        "Question-flow visuals still omit sendPrompt.",
+        "copyText/toast/saveState/loadState all resolve through PM bridge authority.",
+        "Alias use never creates a second command payload language."
+      ],
+      "negative_constraints": [
+        "No raw parent localStorage.",
+        "No question-flow bypass via sendPrompt.",
+        "No private command payload language."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false,
+      "owner_boundary_for_compile": {
+        "default": "copyText, toast, saveState, and loadState are visualizer host API aliases, not UICommand rows.",
+        "ui_command_exception": "Create UI_Command_Catalog and Wiring_Matrix rows only if a user-visible control dispatches outside the iframe host bridge.",
+        "alias_contracts": {
+          "copyText": "alias of copyToClipboard(text: string): Promise<boolean>",
+          "toast": "host-local localized visualizer feedback only; not Slack/Discord/webhook notification delivery",
+          "saveState": "PM-managed per-message visual-state output; not parent localStorage",
+          "loadState": "PM-managed per-message visual-state lookup with supplied fallback on miss/denial/corruption"
+        },
+        "negative_constraints": [
+          "No private command payload language.",
+          "No raw parent localStorage.",
+          "No notification delivery semantics for visualizer toast."
+        ]
+      }
+    },
+    {
+      "row_id": "iv2-visual-tokens-components-fallbacks",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0010",
+        "atom-0013",
+        "atom-0051",
+        "atom-0058"
+      ],
+      "gap_source": "implementation_readiness_review.inline_visualizer_v2.gaps[3]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "contract": "Add PM-native v2 defaults for 9 color ramps, data-accent, pre-styled bare button/input/textarea/select/table/details/summary/dl[data-layout=\"grid\"], SVG utility classes, aria-invalid=\"true\", and :focus-visible.",
+      "degraded_states": [
+        "Rendering visualization\u2026",
+        "Streaming visualization unavailable",
+        "Copied",
+        "Visualization ready",
+        "library unavailable",
+        "sandbox denied",
+        "render error",
+        "stream gap",
+        "snapshot fallback"
+      ],
+      "negative_constraints": [
+        "Do not copy Open WebUI CSS wholesale.",
+        "Do not hardcode replacement colors.",
+        "Audio chime remains optional, user-controlled, and off by default."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false,
+      "token_recipe_for_compile": {
+        "ramp_families": [
+          "neutral",
+          "accent",
+          "info",
+          "success",
+          "warning",
+          "danger",
+          "cyan",
+          "violet",
+          "amber"
+        ],
+        "step_recipe": [
+          "50",
+          "100",
+          "200",
+          "300",
+          "400",
+          "500",
+          "600",
+          "700",
+          "800",
+          "900",
+          "950"
+        ],
+        "css_variable_pattern": "--pm-viz-ramp-{family}-{step}",
+        "data_accent_values": [
+          "neutral",
+          "accent",
+          "info",
+          "success",
+          "warning",
+          "danger",
+          "cyan",
+          "violet",
+          "amber"
+        ],
+        "component_hooks": [
+          "button",
+          "input",
+          "textarea",
+          "select",
+          "table",
+          "details",
+          "summary",
+          "dl[data-layout=\"grid\"]",
+          "SVG utility classes",
+          "aria-invalid=\"true\"",
+          ":focus-visible"
+        ],
+        "owner_binding": "Final GUI theme owner must bind these variables to PM-owned theme tokens or explicit generated-for-PM values before implementation. Implementation must not invent ramp names or values locally."
+      }
+    },
+    {
+      "row_id": "iv2-library-allowlist-policy",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0011",
+        "atom-0014",
+        "atom-0051",
+        "atom-0059"
+      ],
+      "gap_source": "implementation_readiness_review.inline_visualizer_v2.gaps[4]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Permissions_System.md"
+      ],
+      "candidate_libraries": [
+        "Chart.js",
+        "D3",
+        "Vega-Lite",
+        "ECharts",
+        "Plotly",
+        "vis-network"
+      ],
+      "policy": "Default allowlist remains empty. Each candidate requires exact package name, exact pinned version, bundled asset ref, SHA-256/SRI integrity record, artifact metadata declaration, license/security review, performance budget, rendering capability scope, fallback behavior, upgrade/removal policy, and owner approval path before execution.",
+      "deferred": [
+        "Tone.js",
+        "Wavesurfer unless PM defines explicit audio or waveform visualization use cases"
+      ],
+      "negative_constraints": [
+        "No remote CDN scripts.",
+        "No cdnjs/cdn.jsdelivr.net/unpkg loading.",
+        "No dynamic imports.",
+        "No unvetted network requests.",
+        "No undeclared runtime script injection."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "iv2-persistence-reload-security",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0016",
+        "atom-0051",
+        "atom-0060"
+      ],
+      "gap_source": "implementation_readiness_review.inline_visualizer_v2.gaps[2]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Permissions_System.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "contract": "Persist source fragment, title/type/version, render config, approved bridge metadata, PM-managed state outputs, and visible fallback/error state. Reload re-renders from persisted source/config/state; screenshot or snapshot fallback is used only when re-render is impractical.",
+      "boundaries": [
+        "State scoped to project/thread/message/visualizer artifact.",
+        "Active stream chunks are ephemeral/session-bounded until committed.",
+        "Logs record metadata/refs, not arbitrary DOM contents, secrets, or full visual payloads unless export profile permits."
+      ],
+      "negative_constraints": [
+        "No arbitrary JS heap persistence.",
+        "No cross-chat/project/message state leak.",
+        "No same-origin escalation.",
+        "No secret-bearing diagnostics."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    },
+    {
+      "row_id": "iv2-automated-tests",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0015",
+        "atom-0051",
+        "atom-0060"
+      ],
+      "gap_source": "implementation_readiness_review.inline_visualizer_v2.gaps[5]",
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Permissions_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "validation_rows": [
+        "streaming marker parse/progressive render/finalize with false-positive fixtures",
+        "incremental reconciliation no flicker/no remount/serialized scripts",
+        "bridge alias behavior and question-flow sendPrompt omission",
+        "sandbox/network denial for allow-same-origin, parent.document, parent localStorage, CDN, dynamic import, unvetted network",
+        "visual token/accessibility states",
+        "library allowlist denial/fallback and allowed pinned-library execution",
+        "reload/export reconstruction and no state leakage",
+        "localized ready/copy/error feedback and audio-off default"
+      ],
+      "negative_constraints": [
+        "Do not call visualizer v2 ready without both visual UX and security-boundary tests."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    }
+  ]
+}

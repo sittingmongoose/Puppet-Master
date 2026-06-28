@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2234-L14820
+Source lines: L2234-L14823
 
-Source SHA256: `421f6c197603891ad2daea75dfa54dc5410690606bcfa942bafbca582b8ad632`
+Source SHA256: `d3aba7a51ff4db7925f8e867d0b5b2408cdc6f7f6310ca8452ae9baa384181b2`
 
 ---
 
@@ -6810,7 +6810,7 @@ plan_unit_id: SP-119
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: PM-generated CLI adapter config/projection files, prompt injected-context artifacts, provider-facing instruction projections, and prompt/cache affinity are derived runtime inputs with source refs, projection state, and lineage; Compact Now alone does not force a new cache lineage.
+canonical_text: PM-generated CLI adapter config/projection files, prompt injected-context artifacts, provider-facing instruction projections, and prompt/cache affinity are derived runtime inputs with source refs, projection state, and lineage; Compact Now alone does not force a new cache lineage unless it also changes logical run lineage.
 gui_related: false
 gui_classification_reason: This unit preserves backend derived artifact, instruction projection, and cache lineage boundaries.
 split_recommended: false
@@ -6837,6 +6837,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0077
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0090
 preserved_exact_tokens:
 - PM-generated CLI adapter config
 - projection files
@@ -6856,6 +6858,7 @@ preserved_exact_tokens:
 - rewind
 - replacement
 - Compact Now
+- logical run lineage
 negative_constraints:
 - PM-generated CLI adapter config and projection files are derived artifacts and MUST NOT become canonical ownership stores.
 - Manual Compact Now does not by itself force a new cache lineage unless it also changes the logical run lineage.

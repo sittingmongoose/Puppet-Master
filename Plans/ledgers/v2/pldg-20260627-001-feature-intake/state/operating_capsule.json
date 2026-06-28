@@ -25,16 +25,14 @@
     "Only after Jared explicitly requests a PlanUnit index phase: Plans/.plan_index/** outputs."
   ],
   "capsule_id": "cap-feature-intake-current",
-  "completion_blockers_visible_to_agent": [
-    "open_questions",
-    "unclassified_candidates",
-    "unresolved_contradictions",
-    "open_blockers",
-    "unsealed_governance",
-    "missing_gui_related_classification",
-    "worknode_creation_requested_before_contract"
-  ],
-  "current_phase": "active_conversational_planning",
+  "completion_blockers_visible_to_agent": [],
+  "current_phase": "compiled_pending_governance_seal",
+  "current_status": "compiled_product_readiness_repaired_pending_governance_seal",
+  "cursor": {
+    "last_event_id": "evt-0028",
+    "next_action": "Run explicit governance seal when requested; compile-to-Plans content is complete, product-readiness blockers are closed, and migration metadata is current.",
+    "next_event_id": "evt-0029"
+  },
   "forbidden_until_explicit_compile_or_governance_seal": [
     "Plans/.plan_index/**",
     "WorkNodes",
@@ -48,19 +46,75 @@
     "Plans/** live canonical plan prose before explicit compile",
     "generated governance artifacts before explicit governance seal"
   ],
-  "governance_status": "not_started",
-  "last_event_id": "evt-0012",
+  "governance_status": "pending_seal",
+  "last_completed_action": "Completed ledger-to-Plans compile, repaired post-compile product-readiness blockers, refreshed preseal migration metadata, regenerated allowed PlanUnit index outputs, and ran required validators.",
+  "last_event_id": "evt-0028",
+  "last_known_good_state": "Canonical Plans contain repaired compiled PlanUnits; Plans/.plan_index validates with 5298 PlanUnits / 18946 acceptance units; pm-plan-migration validate passes after preseal metadata refresh. Governance seal remains pending; node readiness remains intentionally blocked_compiler_contract_incomplete.",
+  "latest_audit_status": "product_readiness_and_migration_metadata_repaired_pending_governance_seal_and_node_compiler_phase_boundary",
+  "latest_objective_gate_spot_check": {
+    "checked_at_utc": "2026-06-28T11:58:03Z",
+    "closed_phase_boundary_blocker_count": 1,
+    "closed_product_readiness_blocker_count": 9,
+    "git_diff_check": "pass",
+    "governance_status": "pending_seal",
+    "implementation_handoff_status": "product_readiness_and_migration_metadata_repaired_pending_governance_seal_and_node_compiler_phase_boundary",
+    "plan_index_validate": "pass__5298_plan_units__18946_acceptance_units__node_readiness_blocked_compiler_contract_incomplete",
+    "plan_migration_validate": "pass__5298_live_plan_units__212_batch_report_rows__212_batch_report_doc_entries__preseal_metadata_refreshed",
+    "pm_bootstrap_ledger_validate": "pass__94_atoms__28_events__17_compile_queue_items__2461_plan_units_checked",
+    "repair_required_blocker_count": 0
+  },
   "ledger_id": "pldg-20260627-001-feature-intake",
   "ledger_profile": "bootstrap_planning",
+  "must_not_do": [
+    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from this compile.",
+    "Do not update Spec_Lock, generated shards, evidence bundles, plan_graph, or auto_decisions until an explicit governance seal phase.",
+    "Do not treat governance_status=pending_seal as sealed implementation handoff.",
+    "Do not treat Plans/newfeatures.md, PeonPing/OpenPeon, or external provider docs as live product owners unless a live PlanUnit says so."
+  ],
   "must_not_read_by_default": [
     "events.jsonl",
     "source_shards/**",
     "Plans/ledgers/work_items/**",
     "**/working_ledger.md"
   ],
-  "next_action": "Ask Jared to resolve q-0014 through q-0016 for the DRY Method outside planned docs item; keep the work ledger-only until explicit compile.",
-  "next_safe_action": "Continue the DRY Method outside planned docs planning conversation by settling default scope, unresolved-owner fallback, and visible Assistant Chat evidence.",
-  "phase": "active_conversational_planning",
+  "next_action": "Run explicit governance seal when requested; compile-to-Plans content is complete, product-readiness blockers are closed, and migration metadata is current.",
+  "next_safe_action": "Optional next phase is explicit governance seal. Node compiler remains disabled until the compiler contract is complete. Do not create WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks from compile.",
+  "open_blockers": [],
+  "partial_canonical_compile_detected": {
+    "detected_at_utc": "2026-06-28T09:43:00Z",
+    "evidence_refs": [
+      "events.jsonl:evt-0024",
+      "Plans/.plan_index/plan_units.jsonl",
+      "state/implementation_readiness_fifth_recheck_20260628.json"
+    ],
+    "negative_constraints": [
+      "Do not hand this packet to implementation as sealed-ready until blk-0001 through blk-0010 are closed.",
+      "Do not regenerate shards/evidence/Spec_Lock/plan_graph/auto_decisions without an explicit governance seal phase.",
+      "Do not create WorkNodes, NodeSeeds, executable queues, or implementation files from this audit."
+    ],
+    "remaining_readiness_blockers": [
+      "blk-0001",
+      "blk-0002",
+      "blk-0003",
+      "blk-0004",
+      "blk-0005",
+      "blk-0006",
+      "blk-0007",
+      "blk-0008",
+      "blk-0009",
+      "blk-0010"
+    ],
+    "resolved_at_utc": "2026-06-28T10:15:30Z",
+    "status": "resolved_by_completed_compile_to_owner_docs__superseded_by_evt_0025_readiness_audit"
+  },
+  "phase": "compiled_pending_governance_seal",
+  "previous_source_readiness_recheck_ref": "state/implementation_readiness_fourth_recheck_20260628.json",
+  "prior_source_readiness_recheck_refs": [
+    "state/implementation_readiness_recheck_20260628.json",
+    "state/implementation_readiness_second_recheck_20260628.json",
+    "state/implementation_readiness_third_recheck_20260628.json",
+    "state/implementation_readiness_fourth_recheck_20260628.json"
+  ],
   "required_end_of_turn_actions": [
     "append_turn_event",
     "upsert_design_atoms",
@@ -70,15 +124,19 @@
     "preserve_node_readiness_boundary"
   ],
   "schema_id": "pm.operating_capsule.v1",
-  "updated_at_utc": "2026-06-27T20:47:54Z",
+  "source_compile_readiness_status": "compiled_to_canonical_plans__readiness_repaired__migration_metadata_refreshed__governance_pending_seal",
+  "source_readiness_recheck_ref": "state/implementation_readiness_fifth_recheck_20260628.json",
+  "updated_at_utc": "2026-06-28T11:58:03Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
-    "governance_status": "not_started",
-    "last_validated_at_utc": "2026-06-27T20:47:54Z",
-    "ledger_health": "pass_active_conversational_planning",
-    "validator_warnings": [
-      "review gui_related=false on GUI-looking atom: atom-0016",
-      "review gui_related=false on GUI-looking atom: atom-0027"
-    ]
+    "git_diff_check": "pass",
+    "governance_status": "pending_seal",
+    "last_validated_at_utc": "2026-06-28T11:58:03Z",
+    "ledger_health": "pass_no_open_product_readiness_blockers_pending_governance_seal",
+    "plan_index_generate": "pass",
+    "plan_index_validate": "pass",
+    "plan_migration_validate": "pass_preseal_metadata_refreshed",
+    "post_compile_readiness_audit": "product_readiness_and_migration_metadata_repaired_pending_governance_seal_and_node_compiler_phase_boundary",
+    "validator_warnings": []
   }
 }

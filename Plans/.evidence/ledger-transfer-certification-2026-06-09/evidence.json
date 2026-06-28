@@ -24,7 +24,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PASS: 5267 PlanUnits, 18824 acceptance units, coverage pass, node readiness blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index validates with 5298 PlanUnits, 18946 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "node-readiness-status-preserved",
@@ -114,12 +114,17 @@
     {
       "name": "node-readiness-boundary",
       "result": "PASS",
-      "details": "node_readiness_status remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
+      "details": "node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no runtime compiler enablement was performed."
     },
     {
       "name": "plan-migration-validate",
       "result": "PASS",
       "details": "PASS: pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary for pldg-20260626-001-feature-name."
+    },
+    {
+      "name": "feature-intake-governance-seal",
+      "result": "PASS",
+      "details": "pldg-20260627-001-feature-intake governance_status=sealed; node_readiness_report.status remains blocked_compiler_contract_incomplete/runtime_disabled; no runtime compiler enablement was performed."
     }
   ],
   "commands_run": [
@@ -132,11 +137,11 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
       "exit_code": 0
     },
     {

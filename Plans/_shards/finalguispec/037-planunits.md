@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L3591-L24414
+Source lines: L3591-L24431
 
-Source SHA256: `376250c8c45bb2787282bbfe13cda6ceeca875096ca2c65d2c3863133e843e38`
+Source SHA256: `6a6973d1b36666fc7cd9a557700da639a0d0045cc3b177bbb5ab919d190f3123`
 
 ---
 
@@ -6886,7 +6886,9 @@ owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Thread headers expose context indicators, usage/status detail, compact-now intent, thread-scoped
   context detail tabs, curated/raw views, under-message actions, and info-popovers that follow
-  Assistant Chat and Contracts label rules.
+  Assistant Chat and Contracts label rules, including visible progress and failure/degraded feedback for explicit
+  Compact Now actions plus already-running, cancelled, no-op, unavailable, retry, reload, completed, and failed
+  command-result states.
 gui_related: true
 gui_classification_reason: This unit defines visible thread context, message details, action rows, and popovers.
 split_recommended: false
@@ -6910,9 +6912,16 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0084"
+- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance"
+- "Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094"
 preserved_exact_tokens:
 - "More Details"
 - "Compact Now"
+- "context.compaction.failed"
+- "already_running"
+- "cancelled"
+- "no_op"
+- "retry_scheduled"
 - "Curated"
 - "Raw"
 - "under-message icon row"
@@ -6920,6 +6929,7 @@ preserved_exact_tokens:
 - "runtime identity fields"
 negative_constraints:
 - "Compact Now must not dispatch compaction until the user chooses that action."
+- "Compact Now failure must not be silent or logs-only."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -20405,16 +20415,17 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The visualizer host bridge is limited to async-safe sendPrompt, openLink, copyToClipboard,
-  and requestResize; _blank opens a new tab, _self navigation is blocked in sandboxed cards,
-  resize is host-constrained, question-flow embedded visual modules omit sendPrompt and expose
-  only the narrowed PM-managed question-draft bridge, and bridge calls preserve exact host
-  semantics for composer queueing, detached previews, theme injection, and height reporting.
+  The visualizer host bridge uses the typed CV-300 registry for async-safe sendPrompt, openLink, copyToClipboard,
+  requestResize, toast, saveState, and loadState, with copyText retained only as a compatibility alias for
+  copyToClipboard. _blank opens a new tab, _self navigation is blocked in sandboxed cards, resize is host-constrained,
+  question-flow embedded visual modules omit sendPrompt and expose only the narrowed PM-managed question-draft bridge,
+  and bridge calls preserve exact host semantics for composer queueing, detached previews, theme injection, height
+  reporting, typed return/error states, and native Rust + Slint webview adapter message mapping.
 gui_related: true
 gui_classification_reason: >-
   This unit defines visible FinalGUISpec widget or card behavior.
 split_recommended: false
-depends_on: []
+depends_on: [CV-300]
 unblocks: []
 acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
@@ -20439,6 +20450,12 @@ preserved_exact_tokens:
 - "openLink(url: string, target?: \"_blank\" | \"_self\"): void"
 - "copyToClipboard(text: string): Promise<boolean>"
 - "requestResize(width?: number, height?: number): void"
+- "copyText"
+- "toast"
+- "saveState"
+- "loadState"
+- "Rust + Slint"
+- "webview"
 - "_blank"
 - "_self"
 - "question-flow embedded visuals do not receive `sendPrompt`"

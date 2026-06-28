@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L583-L2905
+Source lines: L583-L2913
 
-Source SHA256: `2616ba11aefb8faf615ec4cf1d46b4e7c42b572feab4fcaf2013b531828a0d8c`
+Source SHA256: `e8e5fb6fc706a46ddc32b85e529e3d6e983c02655ce51ef435ea9b886b4471cf`
 
 ---
 
@@ -1118,7 +1118,7 @@ plan_unit_id: WM-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity.'
+canonical_text: 'Minimum required rows cover project switcher, thread details, compaction, restore branch, and related shell/chat/history command wiring without losing canonical project/thread identity, including explicit Compact Now dispatch, context.compaction.failed or equivalent visible degraded-state wiring, and command-result statuses for already_running, cancelled, no_op, unavailable, retry_scheduled, completed, and failed.'
 gui_related: true
 gui_classification_reason: 'The unit defines user-visible project/thread command wiring rows.'
 split_recommended: false
@@ -1146,11 +1146,19 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Wiring_Matrix-S0030
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
 preserved_exact_tokens:
 - 'Minimum required rows'
 - 'project switcher'
 - 'thread details'
 - 'compaction'
+- 'Compact Now'
+- 'context.compaction.failed'
+- 'already_running'
+- 'cancelled'
+- 'no_op'
+- 'retry_scheduled'
 - 'restore branch'
 - 'cmd.chat'
 - 'cmd.project'

@@ -1,0 +1,320 @@
+{
+  "schema_id": "pm.implementation_readiness_recheck.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "audit_id": "implementation_readiness_fifth_recheck_20260628",
+  "created_at_utc": "2026-06-28T10:51:13Z",
+  "user_request_exact_tokens": [
+    "So do the subjective and objective check again.",
+    "write yourself a new goal",
+    "spawn agents in parallel",
+    "Give each agent its own dedicated /goal"
+  ],
+  "status": "not_implementation_ready__repair_required_before_sealed_handoff",
+  "objective_verdict": "not_ready_for_sealed_implementation_handoff__repair_required",
+  "subjective_verdict": "partially_ready_product_intent_strong_but_implementation_would_still_guess_on_specific_contracts",
+  "subagents": [
+    {
+      "agent_id": "019f0dcc-b839-7cc1-8894-ad978177b9b8",
+      "slice": "ledger_source_completeness",
+      "verdict": "partially_ready_projection_drift_governance_pending"
+    },
+    {
+      "agent_id": "019f0dcc-b947-7530-8a58-a92c1a8885b7",
+      "slice": "compiled_plan_fidelity",
+      "verdict": "not_ready_broken_source_lineage_anchors_and_acd414_weak_lineage"
+    },
+    {
+      "agent_id": "019f0dcc-ba7e-7511-8fd1-301aeb70a2e3",
+      "slice": "product_architecture_readiness",
+      "verdict": "not_ready_cross_feature_contract_gaps"
+    },
+    {
+      "agent_id": "019f0dcc-bbaf-79d0-b2cc-176f9c240cd2",
+      "slice": "owner_routing_ui_settings",
+      "verdict": "not_ready_for_provider_specific_config_and_dry_toggle_wiring"
+    },
+    {
+      "agent_id": "019f0dcc-bd12-7b62-9239-68a5f0b8048e",
+      "slice": "governance_index_mechanics",
+      "verdict": "product_source_mechanics_pass_governance_runtime_blocked"
+    },
+    {
+      "agent_id": "019f0dcd-7bf2-7aa0-a03a-9fdcd12a6790",
+      "slice": "external_reference_freshness",
+      "verdict": "no_stale_upstream_or_wrong_runtime_copy_found"
+    }
+  ],
+  "positive_findings": [
+    "All 35 compiled_plan_unit_ids exist in live Plans docs and carry gui_related.",
+    "Inline visualizer v2 preserves current upstream-relevant cues while rejecting unsafe Open WebUI assumptions such as allow-same-origin, parent DOM/localStorage, CDN/dynamic imports, and code-fence routing.",
+    "PeonPing/OpenPeon is treated as source-lineage/import compatibility, not as bundled asset authority or runtime-hook architecture.",
+    "Compact Now is substantially covered in chat/GUI/command/test docs, subject to CV-190/result-lifecycle repair.",
+    "Plan index validation passes with 5295 PlanUnits and 18914 acceptance units."
+  ],
+  "repair_required_blocker_ids": [
+    "blk-0001",
+    "blk-0002",
+    "blk-0003",
+    "blk-0004",
+    "blk-0005",
+    "blk-0006",
+    "blk-0007",
+    "blk-0008",
+    "blk-0009",
+    "blk-0010"
+  ],
+  "cross_lane_findings": [
+    {
+      "blocker_id": "blk-0001",
+      "severity": "high",
+      "lane": "notifications_sounds_peonping",
+      "summary": "Notification delivery uses projection_trust even though projection canon requires split projection_freshness and projection_health; repair CV-298 and ACD-428 or define an explicit compatibility alias.",
+      "gui_related": false,
+      "source_refs": [
+        "Plans/Contracts_V0.md:18474",
+        "Plans/storage-plan.md:137",
+        "Plans/storage-plan.md:682",
+        "Plans/FinalGUISpec.md:28",
+        "Plans/assistant-chat-design.md:2372",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/Contracts_V0.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "blocker_id": "blk-0002",
+      "severity": "high",
+      "lane": "notifications_sounds_peonping",
+      "summary": "Canonical Plans name Slack, Discord, generic webhook, ntfy, Pushover, Telegram, in-app toast/banner, system/tray, and sound destinations, but provider-specific destination fields, request formatting, rate limits, success semantics, idempotency, event-family/event-category enum, and default routing/sound mappings are not fully canonicalized.",
+      "gui_related": true,
+      "source_refs": [
+        "Plans/Contracts_V0.md:18474",
+        "Plans/storage-plan.md:15656",
+        "Plans/FinalGUISpec.md:25788",
+        "Plans/Permissions_System.md:8368",
+        "Plans/Wiring_Matrix.md:3195",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:25",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "blocker_id": "blk-0003",
+      "severity": "medium",
+      "lane": "notifications_sounds_peonping",
+      "summary": "Built-in normal notification sounds are named, but built-in sound catalog entries, license/source metadata, default mappings, and manifest fields are not fully canonicalized in owner docs.",
+      "gui_related": true,
+      "source_refs": [
+        "Plans/FinalGUISpec.md:25788",
+        "Plans/storage-plan.md:15656",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:375",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "blocker_id": "blk-0004",
+      "severity": "high",
+      "lane": "inline_visualizer_v2",
+      "summary": "Inline visualizer v2 adds copyText, toast, saveState, and loadState but older bridge canon limits methods to sendPrompt, openLink, copyToClipboard, and requestResize; repair requires one typed bridge method registry with envelopes, return/error shapes, origin/nonce checks, state namespace/quota, and reload behavior.",
+      "gui_related": true,
+      "source_refs": [
+        "Plans/FinalGUISpec.md:23985",
+        "Plans/assistant-chat-design.md:22923",
+        "Plans/storage-plan.md:15598",
+        "Plans/Permissions_System.md:8300",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Contracts_V0.md"
+      ]
+    },
+    {
+      "blocker_id": "blk-0005",
+      "severity": "medium",
+      "lane": "compaction_compact_now",
+      "summary": "CV-190 still says clicking the context circle means Compact Now, while newer GUI/chat docs require click to reveal Compact Now and dispatch only after explicit choice; cmd.chat.compact_context also needs result/status lifecycle for already-running, cancelled, no-op, degraded, unavailable, retry, and reload states.",
+      "gui_related": true,
+      "source_refs": [
+        "Plans/Contracts_V0.md:12040",
+        "Plans/FinalGUISpec.md:1420",
+        "Plans/usage-feature.md:164",
+        "Plans/UI_Command_Catalog.md:768",
+        "Plans/assistant-chat-design.md:11607",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "blocker_id": "blk-0006",
+      "severity": "medium",
+      "lane": "inline_visualizer_v2",
+      "summary": "Inline visualizer host technology remains ambiguous for Rust + Slint: docs say iframe/postMessage or equivalent isolation boundary, but the native host/webview adapter, sandbox enforcement mechanism, and postMessage mapping are not decided.",
+      "gui_related": true,
+      "source_refs": [
+        "Plans/assistant-chat-design.md:16525",
+        "Plans/Permissions_System.md:8300",
+        "Plans/Architecture_Invariants.md:391",
+        "Plans/Architecture_Invariants.md:393",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Permissions_System.md",
+        "Plans/Architecture_Invariants.md"
+      ]
+    },
+    {
+      "blocker_id": "blk-0007",
+      "severity": "medium",
+      "lane": "dry_method_outside_plan_docs",
+      "summary": "DRY Method default/user-disable behavior is specified, but no matching UI_Command_Catalog/Wiring_Matrix row pins the settings command/wiring; exact Settings/help copy should explain that disabling only removes the default DRY guard, not explicit project/user rules, safety, source authority, governance, secrets, permissions, or source-control hygiene.",
+      "gui_related": true,
+      "source_refs": [
+        "Plans/FinalGUISpec.md:25867",
+        "Plans/agent-rules-context.md:2313",
+        "Plans/assistant-chat-design.md:23055",
+        "Plans/Contracts_V0.md:18553",
+        "Plans/UI_Command_Catalog.md:7489",
+        "Plans/Wiring_Matrix.md:3195",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Automated_Testing_System.md"
+      ]
+    },
+    {
+      "blocker_id": "blk-0008",
+      "severity": "high",
+      "lane": "cross_lane_traceability",
+      "summary": "Ten compiled PlanUnits cite non-dereferenceable matrix row IDs: iv2-validation-plan, iv2-library-allowlist, iv2-persistence-reload-export-boundary, and dry-validation-*; repair source_lineage refs to iv2-automated-tests, iv2-library-allowlist-policy, iv2-persistence-reload-security, and dry-val-* row IDs.",
+      "gui_related": false,
+      "source_refs": [
+        "Plans/Automated_Testing_System.md:1182",
+        "Plans/Permissions_System.md:8328",
+        "Plans/storage-plan.md:15625",
+        "Plans/Runtime_Artifacts_Panel.md:1445",
+        "Plans/Automated_Testing_System.md:1384",
+        "Plans/Prompt_Pipeline.md:3929",
+        "Plans/Decision_Policy.md:3347",
+        "Plans/storage-plan.md:15760",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:230",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:84",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Decision_Policy.md"
+      ]
+    },
+    {
+      "blocker_id": "blk-0009",
+      "severity": "medium",
+      "lane": "compaction_compact_now",
+      "summary": "ACD-414 is listed as compiled for this ledger but its live source_lineage only points to pldg-20260614-001 and Plans/newfeatures.md; add current feature-intake lineage or remove it from the compiled unit list if ACD-177 fully owns the current compaction closure.",
+      "gui_related": true,
+      "source_refs": [
+        "Plans/assistant-chat-design.md:21860",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json:406",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/assistant-chat-design.md",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json",
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compile_queue.json"
+      ]
+    },
+    {
+      "blocker_id": "blk-0010",
+      "severity": "medium",
+      "lane": "governance_and_node_readiness",
+      "summary": "Implementation handoff remains blocked by pending governance seal, stale migration/governance metadata after live Plan edits, untracked referenced ledger state matrices, and node_readiness_report status blocked_compiler_contract_incomplete. This is not a product-source blocker but must be resolved before sealed implementation handoff.",
+      "gui_related": false,
+      "source_refs": [
+        "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/open_items.json:10",
+        "Plans/.plan_index/node_readiness_report.json",
+        "validator:pm-plan-migration.py validate",
+        "validator:pm-plans-verify.py run-gates",
+        "chat:subjective-objective-recheck-again-after-compile"
+      ],
+      "repair_targets": [
+        "Plans/Spec_Lock.json",
+        "Plans/_shards/**",
+        "Plans/.evidence/**",
+        "Plans/plan_graph.json",
+        "Plans/auto_decisions.jsonl",
+        "Plans/.plan_migration/**",
+        "Plans/.plan_index/node_readiness_report.json"
+      ]
+    }
+  ],
+  "objective_gates_observed": {
+    "pm_bootstrap_ledger_validate_before_audit_update": "pass",
+    "pm_plan_index_validate": "pass__5295_plan_units__18914_acceptance_units__node_readiness_blocked_compiler_contract_incomplete",
+    "git_diff_check": "pass",
+    "pm_plan_migration_validate": "fail__92_stale_batch_report_sha256_after__1_stale_final_summary_count",
+    "pm_plans_verify_run_gates": "fail_stale_generated_governance_metadata_pending_seal",
+    "pm_shard_plans_check": "fail_stale_shards_pending_seal",
+    "forbidden_artifacts_created": false,
+    "worknodes_created": false,
+    "nodeseeds_created": false,
+    "implementation_files_created": false
+  },
+  "external_reference_check": {
+    "inline_visualizer_v2_repo_head": "7db77c5320169d10fd2b5e0b1ee8ab09726d4d4d",
+    "inline_visualizer_v2_commit_date": "2026-06-16T09:21:52+02:00",
+    "peon_ping_repo_head": "9e698cf2de7e5159d9645fcd955611fcdcdd6225",
+    "peon_ping_commit_date": "2026-06-27T09:29:46-05:00",
+    "peonping_site_last_modified": "Sat, 27 Jun 2026 15:00:35 GMT"
+  },
+  "next_safe_action": "Run a bounded plan/ledger repair pass for blk-0001 through blk-0010, then regenerate PlanUnit index and run governance seal only when explicitly requested.",
+  "negative_constraints": [
+    "Do not mark this bundle implementation-ready for sealed handoff until repair-required blockers are closed.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from this audit.",
+    "Do not update Spec_Lock, shards, evidence, plan_graph, or auto_decisions except in an explicit governance seal phase.",
+    "Do not treat PeonPing/OpenPeon or external provider docs as live owners unless a live PlanUnit says so."
+  ],
+  "source_refs": [
+    "events.jsonl:evt-0025",
+    "records/blockers.jsonl:blk-0001-blk-0010",
+    "subagent:019f0dcc-b839-7cc1-8894-ad978177b9b8",
+    "subagent:019f0dcc-b947-7530-8a58-a92c1a8885b7",
+    "subagent:019f0dcc-ba7e-7511-8fd1-301aeb70a2e3",
+    "subagent:019f0dcc-bbaf-79d0-b2cc-176f9c240cd2",
+    "subagent:019f0dcc-bd12-7b62-9239-68a5f0b8048e",
+    "subagent:019f0dcd-7bf2-7aa0-a03a-9fdcd12a6790"
+  ]
+}

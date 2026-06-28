@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L21764-L21844
+Source lines: L21798-L21886
 
-Source SHA256: `4b3ec1fa89dfb260e10c32ff9d6033e8f31300ba37072e4951a0abd7dd87179b`
+Source SHA256: `76dd1941706c5cc52f0894785992f3515b26e7a152ef8095a3e478dc4fc7851e`
 
 ---
 
@@ -83,9 +83,17 @@ source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0064
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0065
   - source_ref:Plans/newfeatures.md:1121
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-owner-cleanup-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0071
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0090
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/questions.jsonl:q-0013
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl:dec-0015
 preserved_exact_tokens: ["newfeatures.md", "§3", "§7", "§10 auto-compact", "§15.11", "§15.15", "§15.16", "W.16", "AC-16", "AC-25", "AC-35", "AC-66"]
 negative_constraints:
   - Do not revive newfeatures.md as the live owner for auto-compact, terminal, browser, hot-reload, or virtualization behavior.
   - Do not renumber W.16 acceptance criteria merely to close holes.
-owner_hints: [Plans/assistant-chat-design.md, Plans/newfeatures.md, Plans/Prompt_Pipeline.md, Plans/UI_Command_Catalog.md]
+owner_hints: [Plans/assistant-chat-design.md, Plans/Prompt_Pipeline.md, Plans/UI_Command_Catalog.md]
+owner_boundary_notes:
+  - Plans/newfeatures.md is preserved only as source-lineage or compatibility evidence for stale assistant-chat references.
 ```

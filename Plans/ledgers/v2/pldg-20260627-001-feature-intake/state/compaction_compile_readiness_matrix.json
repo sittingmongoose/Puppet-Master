@@ -1,0 +1,160 @@
+{
+  "schema_id": "pm.bootstrap_source_compile_readiness_matrix.v1",
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "matrix_id": "compaction_compile_readiness_matrix_20260628",
+  "status": "source_ready_for_explicit_compile__compile_unopened",
+  "created_at_utc": "2026-06-28T08:14:30Z",
+  "source_refs": [
+    "state/implementation_readiness_review_20260628.json",
+    "state/compaction_readiness_matrix.json",
+    "subagent:019f0d3e-444a-77b0-a068-3cfeb13014db",
+    "records/questions.jsonl:q-0013",
+    "records/decisions.jsonl:dec-0015"
+  ],
+  "phase_boundary": {
+    "compile_opened": false,
+    "canonical_plans_edited": false,
+    "governance_status": "not_started"
+  },
+  "rows": [
+    {
+      "row_id": "cmp-owner-cleanup-001",
+      "lane": "compaction_compact_now",
+      "linked_atom_ids": [
+        "atom-0036",
+        "atom-0053",
+        "atom-0071"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "source_lineage_docs": [
+        "Plans/newfeatures.md"
+      ],
+      "cleanup_targets": [
+        "Plans/assistant-chat-design.md:ACD-177",
+        "Plans/assistant-chat-design.md:ACD-414"
+      ],
+      "contract": "Future compile must downgrade Plans/newfeatures.md for compaction/manual Compact Now/auto-compact to source-lineage or compatibility-only. It must not appear as a live owner, implementation surface, or owner hint for compaction behavior.",
+      "required_compile_actions": [
+        "Remove Plans/newfeatures.md from ACD-177 implementation_surfaces and owner_hints.",
+        "Keep newfeatures.md and \u00a710 auto-compact only in source_lineage, preserved_exact_tokens, compatibility_only_notes, stale_retired_dispositions, or owner_boundary_notes.",
+        "Do not delete historical tokens; retarget live behavior to Prompt_Pipeline plus explicit chat command surfaces.",
+        "Add owner_boundary_note where needed: Plans/newfeatures.md is historical/source-lineage for this compaction reference, not a live implementation owner."
+      ],
+      "negative_constraints": [
+        "Do not revive newfeatures.md as the live owner for auto-compact behavior."
+      ],
+      "gui_related": false,
+      "remaining_product_decision": false,
+      "forbidden_live_owner_slots": [
+        "owner_docs",
+        "owner_hints",
+        "implementation_surfaces",
+        "candidate_compile_owner_docs",
+        "live owner routing"
+      ],
+      "owner_boundary_for_compile": "Plans/newfeatures.md is source_lineage_docs / cleanup_targets only for Compact Now, manual compaction, and auto-compact. Preserve historical tokens, but do not route build behavior there."
+    },
+    {
+      "row_id": "cmp-automated-testing-acceptance",
+      "lane": "compaction_compact_now",
+      "linked_atom_ids": [
+        "atom-0037",
+        "atom-0053",
+        "atom-0072"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md"
+      ],
+      "proposed_plan_unit_title": "Compact Now And Manual Compaction Acceptance Tests",
+      "acceptance_rows": [
+        "Static owner cleanup proves Plans/newfeatures.md is not live owner/implementation_surface/owner_hint for compaction.",
+        "GUI test proves hover shows Usage/Tokens/Cost/More Details, click reveals Compact Now, and dispatch waits for explicit Compact Now choice.",
+        "Command test proves cmd.chat.compact_context payload { thread_id }, context.compaction.started/completed events, command palette exposure, and /compact reservation.",
+        "Prompt pipeline test proves system/persona/tool schemas, pinned context, compaction_immune blocks, reasoning replay/conversion, synthetic metadata, and post-filter role repair/abort are preserved.",
+        "Storage test proves manual Compact Now alone does not create a new cache lineage unless logical run lineage changes.",
+        "Boundary test proves no WorkNodes, NodeSeeds, executable queues, product code evidence, or runtime click-through proof is required before runtime exists."
+      ],
+      "negative_constraints": [
+        "Do not require product code evidence while no PM runtime exists."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false,
+      "plan_static_until_runtime_exists": true,
+      "compile_guardrail": "Automated_Testing_System coverage is required before an implementation-ready claim, but tests may remain plan/static acceptance coverage until PM runtime exists."
+    },
+    {
+      "row_id": "cmp-owner-map-non-owner-exclusions",
+      "lane": "compaction_compact_now",
+      "linked_atom_ids": [
+        "atom-0038",
+        "atom-0053",
+        "atom-0072"
+      ],
+      "ledger_resolution_status": "resolved_in_ledger_compile_pending",
+      "compile_disposition": "mandatory_compile_action",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Commands_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "non_owner_exclusions": [
+        "Plans/newfeatures.md source-lineage/compatibility/high-level summary only",
+        "Plans/ledgers/** source memory only",
+        "Plans/00-plans-index.md routing aid only",
+        "Codex chat behavior not PM evidence",
+        "PM product code not expected",
+        "Spec_Lock/shards/evidence/plan_graph/auto_decisions/PlanUnit index outputs/WorkNodes/NodeSeeds out of scope"
+      ],
+      "stale_retired_terms_to_preserve_exactly": [
+        "Plans/newfeatures.md",
+        "newfeatures.md",
+        "\u00a710 auto-compact",
+        "auto-compact",
+        "Compact session",
+        "Summarize and continue",
+        "Compacting...",
+        "Compact Now",
+        "little compact now in the circle in the chat window",
+        "/compact",
+        "cmd.chat.compact_context",
+        "context.compaction.started",
+        "context.compaction.completed",
+        "chat context circle",
+        "More Details",
+        "Context Detail Pane",
+        "This Codex chat is not in PM.",
+        "not relavent at all",
+        "It shouldnt be in code",
+        "Plans docs",
+        "no code for PM was written yet",
+        "compile unopened"
+      ],
+      "negative_constraints": [
+        "Do not erase compatibility/source-lineage terms while removing live owner status."
+      ],
+      "gui_related": true,
+      "remaining_product_decision": false
+    }
+  ]
+}

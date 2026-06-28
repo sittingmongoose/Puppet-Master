@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3371-L21730
+Source lines: L3371-L21764
 
-Source SHA256: `4b3ec1fa89dfb260e10c32ff9d6033e8f31300ba37072e4951a0abd7dd87179b`
+Source SHA256: `76dd1941706c5cc52f0894785992f3515b26e7a152ef8095a3e478dc4fc7851e`
 
 ---
 
@@ -8245,8 +8245,15 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   User-triggered "Compact session" or "Summarize and continue" in chat runs the
-  same compaction pipeline as auto-compact and shows clear UI feedback such as
-  "Compacting...".
+  same compaction pipeline as auto-compact when invoked by slash command, menu,
+  or the chat context circle's Compact Now action. The entrypoint dispatches
+  cmd.chat.compact_context only after explicit user choice, shows clear UI
+  feedback such as "Compacting...", emits context.compaction.started,
+  context.compaction.completed, and context.compaction.failed or an equivalent
+  visible failure/degraded state, reports already_running, cancelled, no_op,
+  degraded, unavailable, retry_scheduled, completed, or failed command results,
+  and treats Plans/newfeatures.md §10 as
+  source-lineage only rather than live owner prose.
 gui_related: true
 gui_classification_reason: Compact-session command/menu entrypoint and feedback are visible chat UI.
 depends_on: [ACD-176]
@@ -8254,30 +8261,57 @@ unblocks: []
 acceptance_criteria:
   - Compact session can be invoked by the user from chat.
   - User-triggered compaction runs the same pipeline as auto-compact.
+  - The chat context circle Compact Now click path dispatches cmd.chat.compact_context only after explicit user choice.
   - Visible feedback is shown during compaction.
+  - Already-running, cancelled, no-op, degraded, unavailable, retry, reload, completed, and failed outcomes remain visible or receipt-backed.
+  - Failure or unavailable compaction produces context.compaction.failed or an equivalent visible degraded state with next-action copy.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
+  - Compact Now chat context circle acceptance fixture
 risk_class: compact_session_ui
 reasoning_tier: standard
 context_scope: context_truncation
 implementation_surfaces:
   - Plans/assistant-chat-design.md
-  - Plans/newfeatures.md
   - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: compact_session_chat_entrypoint
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0086
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-owner-cleanup-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0090
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/questions.jsonl:q-0013
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/decisions.jsonl:dec-0015
 preserved_exact_tokens:
   - "Compact session"
   - "Summarize and continue"
+  - "Compact Now"
+  - "cmd.chat.compact_context"
+  - "context.compaction.started"
+  - "context.compaction.completed"
+  - "context.compaction.failed"
   - "Compacting..."
-negative_constraints: []
+  - "already_running"
+  - "cancelled"
+  - "no_op"
+  - "retry_scheduled"
+  - "Plans/newfeatures.md"
+  - "newfeatures.md"
+  - "§10 auto-compact"
+negative_constraints:
+  - Do not revive Plans/newfeatures.md as a live implementation surface or owner hint for Compact Now, manual compaction, or auto-compact behavior.
+  - Do not dispatch Compact Now from hover alone; explicit click/choice is required.
+  - Do not treat manual Compact Now alone as a new cache lineage unless logical run lineage changes.
 owner_hints:
   - Plans/assistant-chat-design.md
-  - Plans/newfeatures.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/UI_Command_Catalog.md
+owner_boundary_notes:
+  - Plans/newfeatures.md is historical/source-lineage for this compaction reference, not a live implementation owner.
 ```
 
 ### ACD-178 - Assistant Turn Bundle Ordering

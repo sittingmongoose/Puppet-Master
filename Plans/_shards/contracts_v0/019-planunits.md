@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2676-L16881
+Source lines: L2676-L16892
 
-Source SHA256: `55997dbf0a33935dbe4027f980a2df17fedaa0eee557cbe8f801c10020d08318`
+Source SHA256: `c095a91635ea37e49f9958588e8f0ece44ded2216228703c30b151818e0a8101`
 
 ---
 
@@ -9382,8 +9382,11 @@ owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
   Assistant chat-thread usage uses a shared context-detail contract instead of a
   chat-local side panel; the stale direct-click detail-open pattern is replaced
-  by hover info-popover plus More Details, and clicking the context circle means
-  Compact Now.
+  by hover info-popover plus More Details, and clicking the context circle reveals
+  or arms Compact Now without dispatching compaction until the user explicitly
+  chooses that action. `cmd.chat.compact_context` returns a visible command
+  result lifecycle for started, already_running, cancelled, no_op, degraded,
+  unavailable, retry_scheduled, completed, and failed states.
 gui_related: true
 gui_classification_reason: This unit defines user-visible thread usage interaction behavior.
 split_recommended: false
@@ -9392,7 +9395,8 @@ unblocks: [CV-191, CV-192, CV-193]
 acceptance_criteria:
   - "Hover shows the compact thread status module."
   - "More Details opens the context-detail editor-tab detail surface."
-  - "Clicking the context circle triggers Compact Now."
+  - "Clicking the context circle reveals or arms Compact Now but does not dispatch compaction before explicit user choice."
+  - "cmd.chat.compact_context reports started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed state to the visible caller."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -9410,12 +9414,19 @@ source_lineage:
 preserved_exact_tokens:
   - "More Details"
   - "Compact Now"
+  - "cmd.chat.compact_context"
+  - "explicit user choice"
+  - "already_running"
+  - "cancelled"
+  - "no_op"
+  - "retry_scheduled"
   - "hover info-popover"
   - "context-detail editor-tab detail-surface"
 stale_retired_dispositions:
   - "The stale direct-click detail-open pattern is retired."
 negative_constraints:
   - "Assistant chat-thread usage surfaces must not use a chat-local side panel as the shared detail contract."
+  - "Assistant chat-thread usage surfaces must not dispatch Compact Now from hover or from the context-circle click before the user chooses Compact Now."
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/assistant-chat-design.md

@@ -1426,7 +1426,7 @@ plan_unit_id: UF-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: Thread-scoped Usage appears as the chat context circle with hover-revealed Usage, Tokens, Cost, and More Details actions plus click-to-Compact Now behavior; More Details opens the editor-tab Context Detail Pane and app-wide Usage remains a separate surface.
+canonical_text: Thread-scoped Usage appears as the chat context circle with hover-revealed Usage, Tokens, Cost, and More Details actions plus explicit click-to-Compact Now behavior; More Details opens the editor-tab Context Detail Pane, Compact Now dispatches only after explicit choice and exposes failure/degraded feedback, and app-wide Usage remains a separate surface.
 gui_related: true
 gui_classification_reason: The unit defines user-visible chat Usage controls.
 split_recommended: false
@@ -1453,6 +1453,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0023
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
 preserved_exact_tokens:
 - context circle
 - Usage
@@ -1460,10 +1462,13 @@ preserved_exact_tokens:
 - Cost
 - More Details
 - Compact Now
+- context.compaction.failed
 - Context Detail Pane
 - app-wide Usage
 - OpenCode
 negative_constraints:
+- Compact Now must not dispatch from hover alone.
+- Compact Now failure must not be silent or logs-only.
 - OpenCode references are non-binding UX references and do not replace Puppet Master canonical behavior.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md'

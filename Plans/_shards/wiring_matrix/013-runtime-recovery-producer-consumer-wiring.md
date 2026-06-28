@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L320-L428
 
-Source SHA256: `2616ba11aefb8faf615ec4cf1d46b4e7c42b572feab4fcaf2013b531828a0d8c`
+Source SHA256: `e8e5fb6fc706a46ddc32b85e529e3d6e983c02655ce51ef435ea9b886b4471cf`
 
 ---
 
@@ -17,7 +17,7 @@ The following rows are required for the promoted Section 15 feature set and the 
 | Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
 | Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
 | Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
-| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; emit started/completed/failed events and return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed status |
 | Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |
 | Goal status update icon, `/goal again`, or natural-language update request | `cmd.chat.goal.update` | Assistant Chat status/menu / composer / slash-command dispatcher | Goal Runtime controller | Submit an active-goal update through the Goal Runtime event envelope without inventing concrete payload schemas in Wiring_Matrix |
 | Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |

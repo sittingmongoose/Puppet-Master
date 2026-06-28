@@ -1,22 +1,23 @@
 # Shard Index: Plans/UI_Command_Catalog.md
 
-Generated: 2026-06-27T15:59:00Z
+Generated: 2026-06-28T12:30:39Z
 
-Source SHA256: `6a616dd3375b758f7e0e381316974470e13d542971b54e55891e420823082e2a`
+Source SHA256: `92c4d125c24ec94f27454f3ed2a0e24af4a833c9af5466c53bfa6b2d316506d8`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `d8f65771b44514fb16440bd59722d610f1512512fb179168f6b3b21e509a09d2`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `605995c4a6e1dd7301b6aadf04231dc0c93f27e0289839acadb4cd2104b3ed6c`
-- [003 - 0. Scope](003-0.-scope.md) L23-L30 `8aecf82ed57ee693fdec45506e9d10a23bcea11274458e55d045f90bab39be32`
-- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `fdb1c49b35f6ccb2bb4e05106ac1a6f8917645b642a6059077446332dcc4999a`
-- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L1125 `f6b7c3ce7f6a3eb3be18e26438f54c117c0ffe5e28e52fc6bc2d7793e4bea073`
-- [006 - References](006-references.md) L1126-L1219 `62833852a1287961a447ddf4a51126e783003b4f99cc9e784b611fdc84be2d10`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L1221-L1225 `6548e0cd2635416639d4c0c7d6d4afc71a5acd1eeec49a3cbc9de440c51beff7`
-- [008 - PlanUnits](008-planunits.md) L1227-L6828 `4ee7b57dc54902905e1759d216a472347cecfee5f68480734dbb74c9f7602737`
-- [009 - Migration Coverage](009-migration-coverage.md) L6830-L6840 `515c503430ff511e3761628e6e885923a1926adf671a8fcfff0ea495397a0aac`
-- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6843-L6986 `7efa030b67905593dc36a4c4d8c1f2d414d73b7d42d5e3d73ea40e0998d984e5`
-- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L6988-L7030 `3806bb3d6946354978ce0ba0c258766e14c840346ae896fc15468ffe1e1cdbb2`
-- [012 - Ledger Compile Addendum - pldg-20260626-001-feature-name](012-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L7033-L7472 `956cd35d4b956a4f9aba68ae7e0e1e5222c167c598eb2c4fafe57b780098fc0f`
+- [001 - Preamble](001-preamble.md) L1-L1 `6f9e8ccbb05de8a1d352b81158df4d36ab26f6b92df29aad067c19dab2f03f73`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `5369c7fcb1faded0b06c1348942e12998f1fd62908e4fed90038228e698f8996`
+- [003 - 0. Scope](003-0.-scope.md) L23-L30 `61e1a72d882c8088e3f716e991570cd8e4d5234628a6fd543912d082f2ccaf57`
+- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `7f6f360c022e8aaf9cc0b31b97f13aed0568f100d5dfbd42fd90d4eaacf8757b`
+- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L1126 `38725757bd73f4888fbfe1dfb16de3145812396f21895191a1a01cdbcb34ba96`
+- [006 - References](006-references.md) L1127-L1220 `108cdb710aa28f361b673eabd0dfbb79a2de42f4a26418cda16093e61f16ecae`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L1222-L1226 `dfb73efb3b1060dca2fb49eb1041449f9060b906e7300b48d0ee59035d225b43`
+- [008 - PlanUnits](008-planunits.md) L1228-L6837 `d04471e5902b7d0695c5e80a6c12037715d1125ea8197ae37338b8ae6c60c597`
+- [009 - Migration Coverage](009-migration-coverage.md) L6839-L6849 `02d0c52aa9753e339d825079fcb5c8f66f9c5d89aa950a3dab244920ffdde98d`
+- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6852-L6995 `43de4e47957c35b7839c9e4bac19c7322ea08208a5ad49baffa87f5c0bc702b4`
+- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L6997-L7039 `53777bddbce98a6dc618632f8b5ec0881f9feb512a0552415d923ab591545137`
+- [012 - Ledger Compile Addendum - pldg-20260626-001-feature-name](012-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L7042-L7481 `59c5c8e8e368bca857a7f031d778ccb353f045a48e0b1aca2f5659fa0c04245c`
+- [013 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](013-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L7483-L7616 `8e7cb668534e817d86dfefb1846793f976ff448d06a4b19041e7ef575319809f`

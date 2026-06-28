@@ -1,59 +1,394 @@
 {
-  "compile_open_items": [
-    {
-      "item_id": "coi-0001",
-      "linked_question_ids": [
-        "q-0014",
-        "q-0015",
-        "q-0016"
-      ],
-      "status": "open",
-      "summary": "DRY Method outside planned docs is not implementation-ready for future compile until default rule scope, unresolved-owner fallback, and Assistant Chat visibility/audit boundary are settled."
-    }
-  ],
+  "blocker_count": 0,
+  "compile_open_items": [],
   "deferred_questions": [],
-  "governance_status": "not_started",
-  "last_event_id": "evt-0012",
-  "ledger_id": "pldg-20260627-001-feature-intake",
-  "notes": "DRY Method outside planned docs intake is recorded ledger-only. Accepted scope routes through the existing single rules pipeline and Instruction Bundle; q-0014 through q-0016 remain open for default application/project scope, unresolved-owner fallback, and visible Assistant Chat evidence. Compile remains unopened until explicit future request.",
-  "open_blockers": [],
-  "open_questions": [
+  "future_compile_actions": [
     {
-      "question_id": "q-0014",
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Permissions_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-427",
+        "CV-300",
+        "F3-404",
+        "SP-221",
+        "PS-123",
+        "RAP-037",
+        "ATS-015",
+        "0PI-063"
+      ],
+      "item_id": "compile-action-0001",
+      "lane": "inline_visualizer_v2",
+      "linked_atom_ids": [
+        "atom-0005",
+        "atom-0007",
+        "atom-0008",
+        "atom-0009",
+        "atom-0010",
+        "atom-0011",
+        "atom-0012",
+        "atom-0013",
+        "atom-0014",
+        "atom-0015",
+        "atom-0016",
+        "atom-0051",
+        "atom-0056",
+        "atom-0057",
+        "atom-0058",
+        "atom-0059",
+        "atom-0060",
+        "atom-0082",
+        "atom-0088"
+      ],
+      "matrix_ref": "state/inline_visualizer_v2_readiness_matrix.json",
+      "status": "compiled",
+      "summary": "Compiled to canonical Plans in evt-0024; governance sealed in evt-0029."
+    },
+    {
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Permissions_System.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-428",
+        "CV-298",
+        "F3-405",
+        "SP-222",
+        "PS-124",
+        "UCC-103",
+        "WM-039",
+        "ATS-016",
+        "0PI-063"
+      ],
+      "item_id": "compile-action-0002",
+      "lane": "notifications_sounds_peonping",
+      "linked_atom_ids": [
+        "atom-0017",
+        "atom-0018",
+        "atom-0019",
+        "atom-0020",
+        "atom-0021",
+        "atom-0022",
+        "atom-0023",
+        "atom-0024",
+        "atom-0025",
+        "atom-0026",
+        "atom-0027",
+        "atom-0028",
+        "atom-0029",
+        "atom-0052",
+        "atom-0061",
+        "atom-0062",
+        "atom-0063",
+        "atom-0064",
+        "atom-0065",
+        "atom-0066",
+        "atom-0067",
+        "atom-0068",
+        "atom-0069",
+        "atom-0070",
+        "atom-0084",
+        "atom-0091"
+      ],
+      "matrix_ref": "state/notifications_sounds_readiness_matrix.json",
+      "status": "compiled",
+      "summary": "Compiled to canonical Plans in evt-0024; governance sealed in evt-0029."
+    },
+    {
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-177",
+        "ACD-414",
+        "F3-132",
+        "UF-011",
+        "UCC-060",
+        "WM-019",
+        "SP-119",
+        "ATS-017",
+        "0PI-063"
+      ],
+      "item_id": "compile-action-0003",
+      "lane": "compaction_compact_now",
+      "linked_atom_ids": [
+        "atom-0030",
+        "atom-0032",
+        "atom-0033",
+        "atom-0034",
+        "atom-0036",
+        "atom-0037",
+        "atom-0038",
+        "atom-0053",
+        "atom-0071",
+        "atom-0072",
+        "atom-0081",
+        "atom-0090",
+        "atom-0094"
+      ],
+      "matrix_ref": "state/compaction_compile_readiness_matrix.json",
+      "status": "compiled",
+      "summary": "Compiled to canonical Plans in evt-0024; governance sealed in evt-0029."
+    },
+    {
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/DRY_Rules.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/agent-rules-context.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "ARC-036",
+        "PP-057",
+        "DR-036",
+        "DP-063",
+        "CV-299",
+        "ACD-429",
+        "F3-406",
+        "UCC-104",
+        "WM-040",
+        "SP-223",
+        "RAP-038",
+        "OSI-430",
+        "ISI-019",
+        "ATS-018",
+        "0PI-063"
+      ],
+      "item_id": "compile-action-0004",
+      "lane": "dry_method_outside_plan_docs",
       "linked_atom_ids": [
         "atom-0039",
+        "atom-0040",
         "atom-0041",
-        "atom-0045"
-      ],
-      "status": "open",
-      "summary": "Should DRY Method become a default application-level rule for all PM agent work while project-specific DRY conventions remain project-level, or remain project-level/opt-in only?"
-    },
-    {
-      "question_id": "q-0015",
-      "linked_atom_ids": [
         "atom-0042",
         "atom-0043",
-        "atom-0045"
+        "atom-0044",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047",
+        "atom-0048",
+        "atom-0049",
+        "atom-0054",
+        "atom-0073",
+        "atom-0074",
+        "atom-0075",
+        "atom-0076",
+        "atom-0077",
+        "atom-0083",
+        "atom-0089"
       ],
-      "status": "open",
-      "summary": "When the assistant cannot resolve a DRY owner/source route, should canonical or implementation-changing work block while exploratory chat proceeds with a caveat, or should all work proceed with warning?"
+      "matrix_ref": "state/dry_method_compile_readiness_matrix.json",
+      "status": "compiled",
+      "summary": "Compiled to canonical Plans in evt-0024; governance sealed in evt-0029."
+    }
+  ],
+  "governance_status": "sealed",
+  "last_event_id": "evt-0029",
+  "latest_objective_gate_spot_check": {
+    "checked_at_utc": "2026-06-28T12:41:20Z",
+    "governance_status": "sealed",
+    "implementation_handoff_status": "sealed_governance__product_readiness_repaired__node_compiler_phase_boundary_remaining",
+    "repair_required_blocker_count": 0,
+    "closed_product_readiness_blocker_count": 9,
+    "closed_phase_boundary_blocker_count": 1,
+    "plan_index_validate": "pass__5298_plan_units__18946_acceptance_units__node_readiness_blocked_compiler_contract_incomplete",
+    "plan_migration_validate": "pass__5298_live_plan_units__212_batch_report_rows__212_batch_report_doc_entries",
+    "pm_bootstrap_ledger_validate": "pass__94_atoms__29_events__17_compile_queue_items__2461_plan_units_checked",
+    "pm_bootstrap_ledger_validate_bootstrap_system": "pass__42_atoms__12_events__4_compile_queue_items__123_plan_units_checked",
+    "shard_check": "pass__1055_shards__56_sources",
+    "run_gates": "pass",
+    "validate_auto_decisions": "pass",
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass",
+    "validate_plan_graph": "pass",
+    "git_diff_check": "pass",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "runtime_enablement_status": "runtime_disabled",
+    "forbidden_runtime_artifacts": "not_created"
+  },
+  "ledger_id": "pldg-20260627-001-feature-intake",
+  "notes": "Product PlanUnits are compiled, readiness blockers are repaired, migration metadata is current, and governance is sealed. Remaining phase boundary is blocked_compiler_contract_incomplete / runtime_disabled for the future node compiler contract.",
+  "open_blockers": [],
+  "open_questions": [],
+  "pending_items": [
+    {
+      "gui_related": false,
+      "item_id": "phase-boundary-0001",
+      "source_refs": [
+        "records/blockers.jsonl:blk-0010",
+        "Plans/Spec_Lock.json",
+        "Plans/_shards/**",
+        "Plans/.evidence/**"
+      ],
+      "status": "pending_explicit_governance_seal",
+      "summary": "Governance seal and generated Spec_Lock/shard/evidence/plan_graph/auto_decisions refresh remain pending explicit governance phase."
     },
     {
-      "question_id": "q-0016",
-      "linked_atom_ids": [
-        "atom-0044"
+      "gui_related": false,
+      "item_id": "phase-boundary-0003",
+      "source_refs": [
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/Plan_To_Node_Compilation.md"
       ],
-      "status": "open",
-      "summary": "Should Assistant Chat show compact visible rules/DRY evidence per turn/run or keep it audit/receipt-only unless missing or stale?"
+      "status": "blocked_compiler_contract_incomplete",
+      "summary": "Node readiness remains intentionally blocked until the PlanUnit-to-NodeSeed-to-WorkNode compiler/runtime contract is enabled; no NodeSeeds, WorkNodes, executable queues, implementation files, or production build tasks were created."
+    }
+  ],
+  "phase_boundary_items": [
+    {
+      "gui_related": false,
+      "item_id": "phase-boundary-0003",
+      "source_refs": [
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "status": "blocked_compiler_contract_incomplete",
+      "summary": "Node readiness remains intentionally blocked until the PlanUnit-to-NodeSeed-to-WorkNode compiler/runtime contract is enabled; no NodeSeeds, WorkNodes, executable queues, implementation files, or production build tasks were created."
     }
   ],
   "post_compile_pending_items": [],
+  "pre_compile_hygiene_findings": [
+    {
+      "finding_id": "recheck-001",
+      "status": "recorded_in_atom_0080",
+      "summary": "Integration matrix is rollup-only; future compiler must dereference linked detailed matrices."
+    },
+    {
+      "finding_id": "recheck-002",
+      "status": "fixed_in_corr_0003",
+      "summary": "atom-0015 gui_related corrected to true."
+    },
+    {
+      "finding_id": "recheck-003",
+      "status": "recorded_in_atom_0081",
+      "summary": "Compaction newfeatures cleanup must cover both ACD-177 and ACD-414 and treat newfeatures as cleanup/source-lineage, not live owner."
+    },
+    {
+      "finding_id": "recheck-004",
+      "status": "recorded_in_atom_0082",
+      "summary": "Inline visualizer compile must pin concrete token recipes and bridge alias command boundary."
+    },
+    {
+      "finding_id": "recheck-005",
+      "status": "recorded_in_atom_0083",
+      "summary": "DRY compile must pin toggle key/enum, receipt placement, and GUI copy/density."
+    },
+    {
+      "finding_id": "recheck-006",
+      "status": "recorded_in_atom_0084",
+      "summary": "Notification compile must bound generic-webhook success predicates and make Settings placement explicit against the registry."
+    },
+    {
+      "finding_id": "recheck-007",
+      "status": "recorded_in_atom_0085",
+      "summary": "Stale ledger_registry evidence hashes are governance-only currentness work, not source-readiness blockers."
+    },
+    {
+      "finding_id": "recheck-008",
+      "status": "fixed_in_corr_0004",
+      "summary": "Compaction readiness matrix moved Plans/newfeatures.md out of live owner_docs into source_lineage_docs and cleanup_targets."
+    },
+    {
+      "finding_id": "recheck-009",
+      "status": "fixed_in_corr_0004",
+      "summary": "DRY readiness matrix added missing Assistant Chat and Contracts_V0 owner coverage for prompt-route conformance and stale-owner retargeting."
+    },
+    {
+      "finding_id": "recheck-010",
+      "status": "recorded_in_atom_0086",
+      "summary": "Second audit reaffirmed source-ready compile status while blocking false implementation-ready claims from current canonical Plans alone."
+    },
+    {
+      "finding_id": "recheck-011",
+      "status": "recorded_in_atom_0087",
+      "summary": "Third subjective/objective audit confirms all lanes are source-ready for explicit compile but not implementation-ready from current canonical Plans alone."
+    },
+    {
+      "finding_id": "recheck-012",
+      "status": "recorded_in_atom_0088",
+      "summary": "Inline visualizer compile must treat bridge aliases as host API aliases unless a user-visible external dispatch exists, and must bind 9 color ramps to PM-owned theme variables before implementation."
+    },
+    {
+      "finding_id": "recheck-013",
+      "status": "recorded_in_atom_0089",
+      "summary": "DRY compile must use app.agent_rules.dry_method_default_guard plus explicit stored/effective enums and receipt fields."
+    },
+    {
+      "finding_id": "recheck-014",
+      "status": "recorded_in_atom_0090",
+      "summary": "Compaction compile must remove Plans/newfeatures.md from all live owner slots and add Automated_Testing_System Compact Now acceptance coverage."
+    },
+    {
+      "finding_id": "recheck-015",
+      "status": "recorded_in_atom_0091",
+      "summary": "Notifications/sounds lane has no new product decision gap, but canonical implementation-ready claims require PlanUnits for destinations, Settings placement, sound lifecycle, bounded generic webhook predicates, and test-send validation."
+    },
+    {
+      "finding_id": "recheck-016",
+      "status": "fixed_in_corr_0005",
+      "summary": "Projection text and operating capsule refreshed to the third/latest readiness recheck while preserving prior rechecks as lineage."
+    },
+    {
+      "finding_id": "recheck-017",
+      "status": "recorded_in_atom_0093_corr_0006",
+      "summary": "Partial Assistant Chat compile output exists while ledger projections previously said canonical Plans were untouched/compile unopened."
+    },
+    {
+      "finding_id": "recheck-018",
+      "status": "recorded_in_atom_0094",
+      "summary": "Compaction compile must clean residual Plans/newfeatures.md §10 prose and define context.compaction.failed or equivalent failure/copy semantics."
+    },
+    {
+      "finding_id": "recheck-019",
+      "status": "observed_in_live_gates",
+      "summary": "Plan index, assistant-chat shards, and run-gates are stale/failing against the partial Assistant Chat compile and must wait for explicit compile/governance phases."
+    }
+  ],
+  "previous_source_readiness_recheck_ref": "state/implementation_readiness_fourth_recheck_20260628.json",
+  "prior_source_readiness_recheck_refs": [
+    "state/implementation_readiness_recheck_20260628.json",
+    "state/implementation_readiness_second_recheck_20260628.json",
+    "state/implementation_readiness_third_recheck_20260628.json",
+    "state/implementation_readiness_fourth_recheck_20260628.json"
+  ],
   "remaining_phase_boundaries": [
     {
-      "item_id": "rpb-0001",
-      "kind": "compile_boundary",
-      "status": "intentionally_blocked_until_explicit_future_phase",
-      "summary": "Canonical Plans, PlanUnit indexes, governance artifacts, NodeSeeds, WorkNodes, executable queues, and implementation files are out of scope until Jared explicitly requests compile, index, governance seal, or implementation work."
+      "item_id": "rpb-0002",
+      "kind": "node_compiler_boundary",
+      "status": "blocked_compiler_contract_incomplete",
+      "summary": "Node readiness remains intentionally blocked until the PlanUnit-to-NodeSeed-to-WorkNode compiler/runtime contract is enabled."
     }
   ],
   "resolved_contradictions": [
@@ -84,8 +419,25 @@
     }
   ],
   "schema_id": "pm.bootstrap_open_items.v1",
+  "source_readiness_recheck_ref": "state/implementation_readiness_fifth_recheck_20260628.json",
+  "status": "no_open_product_or_governance_blockers_node_compiler_boundary_remaining",
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "updated_at_utc": "2026-06-27T20:47:54Z"
+  "updated_at_utc": "2026-06-28T12:41:20Z",
+  "sealed_governance": [
+    {
+      "item_id": "gov-sealed-0001",
+      "status": "sealed",
+      "sealed_at_utc": "2026-06-28T12:41:20Z",
+      "source_refs": [
+        "events.jsonl:evt-0029",
+        "Plans/Spec_Lock.json",
+        "Plans/_shards/**",
+        "Plans/.evidence/**",
+        "reports/shard_report.json"
+      ],
+      "summary": "Explicit governance seal completed; run-gates, shard check, Spec Lock, evidence, plan graph, auto decisions, migration, PlanUnit index, bootstrap ledger validators, and git diff hygiene pass."
+    }
+  ]
 }

@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1227-L6828
+Source lines: L1228-L6837
 
-Source SHA256: `6a616dd3375b758f7e0e381316974470e13d542971b54e55891e420823082e2a`
+Source SHA256: `92c4d125c24ec94f27454f3ed2a0e24af4a833c9af5466c53bfa6b2d316506d8`
 
 ---
 
@@ -3295,7 +3295,7 @@ plan_unit_id: UCC-060
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, and supersede thread Usage command IDs through route/open Usage normalization.
+canonical_text: Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, emit context.compaction.started, context.compaction.completed, and context.compaction.failed or an equivalent visible failure/degraded state, return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed command results, and supersede thread Usage command IDs through route/open Usage normalization.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -3322,6 +3322,8 @@ node_compile_hint:
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0036
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
 preserved_exact_tokens:
 - cmd.chat.compact_context
 - cmd.chat.open_thread_context_details
@@ -3329,6 +3331,11 @@ preserved_exact_tokens:
 - cmd.chat.close_thread_context_details
 - context.compaction.started
 - context.compaction.completed
+- context.compaction.failed
+- already_running
+- cancelled
+- no_op
+- retry_scheduled
 - More Details
 - Compact Now
 - cmd.chat.open_thread_usage
@@ -3337,6 +3344,7 @@ preserved_exact_tokens:
 - route/open Usage context
 negative_constraints:
 - Hover-summary disclosure is passive UI and does not require its own stable command ID.
+- Compact Now must not dispatch from hover alone; it requires explicit click or command choice.
 - cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage are superseded and must not remain canonical IDs.
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md'
