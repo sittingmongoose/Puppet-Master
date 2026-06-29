@@ -920,7 +920,7 @@
   "adjacent_reference_docs": [
     "Plans/Provider_OpenCode.md"
   ],
-  "notes": "Free Models compile complete. Bootstrap ledger validator, PlanUnit index validate, and git diff --check passed; migration validation failed on stale migration artifacts outside compile scope. Governance seal remains pending.",
+  "notes": "Free Models compile complete. Bootstrap ledger validator, PlanUnit index validate, migration validation, configured shard check, governance validators, evidence validation, Spec Lock verification, and git diff --check passed. Governance seal is complete; node readiness remains blocked_compiler_contract_incomplete.",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
     "pm_plan_index_validate": "pass",
