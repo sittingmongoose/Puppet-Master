@@ -1,0 +1,1038 @@
+{
+  "all_passed": true,
+  "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+  "closure_registry_currentness_status": "pass",
+  "closure_registry_error_count": 0,
+  "commands": [
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl",
+      "name": "closure_registry_validate"
+    },
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "name": "closure_audit_dir_validate"
+    },
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260629-001-feature-name",
+      "name": "target_ledger_validate"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "name": "plan_index_validate"
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "name": "migration_validate"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py audit-governance",
+      "name": "audit_governance"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "name": "run_gates"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "name": "shard_check"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "name": "validate_auto_decisions"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "name": "validate_plan_graph"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "name": "verify_spec_lock"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "name": "validate_evidence"
+    },
+    {
+      "command": "python3 -m unittest tests/test_pm_audit_closure.py",
+      "name": "audit_closure_unittest"
+    },
+    {
+      "command": "git diff --check",
+      "name": "git_diff_check"
+    }
+  ],
+  "failed": [],
+  "generated_at_utc": "2026-06-29T20:15:34Z",
+  "git_status_after": [
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+  ],
+  "git_status_before": [
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+    "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+  ],
+  "ledger_id": "pldg-20260629-001-feature-name",
+  "mutated_outside_audit_dir": false,
+  "non_audit_side_effects": [],
+  "non_audit_status_after": [],
+  "non_audit_status_before": [],
+  "observation_ref": "HEAD",
+  "result_count": 14,
+  "results": [
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl",
+      "detail_keys": [
+        "validator_results.results.closure_registry_validate"
+      ],
+      "duration_seconds": 1.994,
+      "ended_at_utc": "2026-06-29T20:11:58Z",
+      "exact_tokens": [
+        "closure_registry_validate",
+        "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-5b94ea21ada2bca53a120dc2",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "closure_registry_validate",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:11:56Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"audit_dirs\": [],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 337,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"false_positive\": 4,\n      \"not_for_plan\": 20,\n      \"repaired\": 275,\n      \"source_lineage_only\": 27,\n      \"stale_retired\": 8\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": []\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "detail_keys": [
+        "validator_results.results.closure_audit_dir_validate"
+      ],
+      "duration_seconds": 4.033,
+      "ended_at_utc": "2026-06-29T20:15:34Z",
+      "exact_tokens": [
+        "closure_audit_dir_validate",
+        "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-80f22e2f865ce764e8435658",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "closure_audit_dir_validate",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:15:30Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"audit_dirs\": [\n    {\n      \"coverage_artifacts\": [\n        \"semantic_risks.jsonl\",\n        \"atom_fidelity_matrix.jsonl\",\n        \"planunit_source_claims.jsonl\",\n        \"owner_routing_findings.jsonl\",\n        \"ledger_consistency.json\",\n        \"validator_results.json\"\n      ],\n      \"errors\": [],\n      \"matrix_required\": false,\n      \"matrix_rows\": 0,\n      \"missing_coverage\": [],\n      \"original_repair_required_count\": 0,\n      \"path\": \"Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity\",\n      \"repair_impact_matrix\": {\n        \"extra_coverage\": [],\n        \"missing_coverage\": [],\n        \"path\": \"Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/repair_impact_matrix.jsonl\",\n        \"row_count\": 0\n      },\n      \"repair_required_count\": 0,\n      \"scope_manifest\": {\n        \"check_family_count\": 10,\n        \"classified_rows\": 0,\n        \"missing_check_families\": [],\n        \"path\": \"Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl\",\n        \"row_count\": 10428\n      },\n      \"source_artifacts\": {\n        \"finding_count\": 12581\n      },\n      \"terminal_repair_state\": \"no_repair_required\",\n      \"warnings\": [\n        \"no repair_closure_matrix.jsonl found for Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity; completeness check skipped\"\n      ]\n    }\n  ],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 337,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"false_positive\": 4,\n      \"not_for_plan\": 20,\n      \"repaired\": 275,\n      \"source_lineage_only\": 27,\n      \"stale_retired\": 8\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": [\n    \"no repair_closure_matrix.jsonl found for Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity; completeness check skipped\"\n  ]\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260629-001-feature-name",
+      "detail_keys": [
+        "validator_results.results.target_ledger_validate"
+      ],
+      "duration_seconds": 7.87,
+      "ended_at_utc": "2026-06-29T20:12:06Z",
+      "exact_tokens": [
+        "target_ledger_validate",
+        "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260629-001-feature-name",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-b3197a64b113ecad23b19341",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "target_ledger_validate",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:11:58Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260629-001-feature-name\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 298,\n    \"compile_queue_items\": 12,\n    \"corrections\": 12,\n    \"decisions\": 139,\n    \"events\": 45,\n    \"plan_units_checked\": 1788,\n    \"questions\": 119\n  },\n  \"warnings\": []\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "detail_keys": [
+        "validator_results.results.plan_index_validate"
+      ],
+      "duration_seconds": 24.372,
+      "ended_at_utc": "2026-06-29T20:12:30Z",
+      "exact_tokens": [
+        "plan_index_validate",
+        "python3 scripts/pm-plan-index.py validate",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-2f5db685ba59479ef6f91ef0",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "plan_index_validate",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:12:06Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-29T20:12:30Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 19037,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_compiler_contract_incomplete\",\n    \"plan_unit_count\": 5322\n  }\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "detail_keys": [
+        "validator_results.results.migration_validate"
+      ],
+      "duration_seconds": 25.62,
+      "ended_at_utc": "2026-06-29T20:12:56Z",
+      "exact_tokens": [
+        "migration_validate",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-e78850c153227fbe5a9aa2af",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "migration_validate",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:12:31Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "atomized_covered\": 42,\n      \"phase2b_batch_160_retired_bridge_disposition\": 1,\n      \"phase2b_batch_160_structural_dispositioned\": 3,\n      \"phase2b_batch_161_atomized_covered\": 35,\n      \"phase2b_batch_161_structural_dispositioned\": 3,\n      \"phase2b_batch_162_retired_bridge_disposition\": 1,\n      \"phase2b_batch_162_structural_dispositioned\": 3,\n      \"phase2b_batch_163_atomized\": 29,\n      \"phase2b_batch_164_atomized\": 30,\n      \"phase2b_batch_165_retired_bridge_disposition\": 1,\n      \"phase2b_batch_165_structural_dispositioned\": 3,\n      \"phase2b_batch_166_atomized\": 31,\n      \"phase2b_batch_167_retired_bridge_disposition\": 1,\n      \"phase2b_batch_167_structural_dispositioned\": 3,\n      \"phase2b_batch_168_atomized\": 20,\n      \"phase2b_batch_169_atomized\": 27,\n      \"phase2b_batch_169_structural_dispositioned\": 1,\n      \"phase2b_batch_170_atomized\": 2,\n      \"phase2b_batch_170_retired_bridge_disposition\": 1,\n      \"phase2b_batch_170_structural_dispositioned\": 3,\n      \"phase2b_batch_171_atomized\": 29,\n      \"phase2b_batch_172_atomized\": 1,\n      \"phase2b_batch_172_retired_bridge_disposition\": 1,\n      \"phase2b_batch_172_structural_dispositioned\": 3,\n      \"phase2b_batch_173_atomized\": 42,\n      \"phase2b_batch_174_atomized\": 33,\n      \"phase2b_batch_175_atomized\": 1,\n      \"phase2b_batch_176_atomized\": 1,\n      \"phase2b_batch_177_atomized\": 9,\n      \"phase2b_batch_178_atomized\": 14,\n      \"phase2b_batch_179_atomized\": 27,\n      \"phase2b_batch_180_generated_bridge_disposition\": 1,\n      \"phase2b_batch_180_structural_dispositioned\": 2,\n      \"phase2b_batch_181_atomized\": 23,\n      \"phase2b_batch_182_atomized\": 10,\n      \"phase2b_batch_183_atomized\": 21,\n      \"phase2b_batch_183_structural_dispositioned\": 1,\n      \"phase2b_batch_184_atomized\": 37,\n      \"phase2b_batch_184_structural_dispositioned\": 2,\n      \"phase2b_batch_185_atomized\": 7,\n      \"phase2b_batch_185_structural_dispositioned\": 1,\n      \"phase2b_batch_186_atomized\": 10,\n      \"phase2b_batch_186_structural_dispositioned\": 3,\n      \"phase2b_batch_187_generated_bridge_disposition\": 1,\n      \"phase2b_batch_187_structural_dispositioned\": 1,\n      \"phase2b_batch_188_atomized\": 24,\n      \"phase2b_batch_189_atomized\": 11,\n      \"phase2b_batch_189_structural_dispositioned\": 1,\n      \"phase2b_batch_190_atomized\": 12,\n      \"phase2b_batch_190_structural_dispositioned\": 1,\n      \"phase2b_batch_191_atomized\": 2,\n      \"phase2b_batch_191_atomized_split\": 1,\n      \"phase2b_batch_191_retired_bridge_disposition\": 1,\n      \"phase2b_batch_191_structural_dispositioned\": 3,\n      \"phase2b_batch_192_existing_planunit_covered\": 8,\n      \"phase2b_batch_192_structural_planunits_heading\": 1,\n      \"phase2b_batch_193_existing_planunit_covered\": 18,\n      \"phase2b_batch_193_structural_dispositioned\": 1,\n      \"phase2b_batch_194_anchor_mapped\": 8,\n      \"phase2b_batch_194_atomized\": 20,\n      \"phase2b_batch_194_atomized_split\": 4,\n      \"phase2b_batch_194_structural_dispositioned\": 5,\n      \"phase2b_batch_195_anchor_mapped\": 5,\n      \"phase2b_batch_195_atomized\": 25,\n      \"phase2b_batch_195_atomized_split\": 12,\n      \"phase2b_batch_195_existing_planunit_mapped\": 7,\n      \"phase2b_batch_195_structural_dispositioned\": 6,\n      \"phase2b_batch_196_atomized\": 6,\n      \"phase2b_batch_196_atomized_split\": 3,\n      \"phase2b_batch_196_structural_dispositioned\": 2,\n      \"phase2b_batch_197_retired_bridge_lineage\": 1,\n      \"phase2b_batch_197_structural_dispositioned\": 3,\n      \"phase2b_batch_198_atomized\": 3,\n      \"phase2b_batch_198_atomized_split\": 4,\n      \"phase2b_batch_198_retired_bridge_lineage\": 1,\n      \"phase2b_batch_198_structural_dispositioned\": 3,\n      \"phase2b_batch_198_structural_heading_mapped\": 2,\n      \"phase2b_batch_199_atomized_covered\": 26,\n      \"phase2b_batch_199_atomized_split\": 2,\n      \"phase2b_batch_199_structural_dispositioned\": 3,\n      \"phase2b_batch_200_atomized_covered\": 4,\n      \"phase2b_batch_200_atomized_split\": 3,\n      \"phase2b_batch_200_structural_dispositioned\": 5,\n      \"phase2b_batch_201_retired_bridge_lineage\": 1,\n      \"phase2b_batch_201_structural_dispositioned\": 3,\n      \"phase2b_batch_202_atomized_covered\": 42,\n      \"phase2b_batch_202_atomized_split\": 9,\n      \"phase2b_batch_202_structural_dispositioned\": 7,\n      \"phase2b_batch_203_atomized_covered\": 35,\n      \"phase2b_batch_203_atomized_split\": 5,\n      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 71,\n    \"live_plan_unit_count\": 5322,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3916,\n    \"unique_live_plan_unit_count\": 5322\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-plans-verify.py audit-governance",
+      "detail_keys": [
+        "validator_results.results.audit_governance"
+      ],
+      "duration_seconds": 10.714,
+      "ended_at_utc": "2026-06-29T20:13:07Z",
+      "exact_tokens": [
+        "audit_governance",
+        "python3 scripts/pm-plans-verify.py audit-governance",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-016031c11c40854dff4a129d",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "audit_governance",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:12:56Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"audit-governance\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-29T20:13:07Z\",\n  \"status\": \"pass\"\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "detail_keys": [
+        "validator_results.results.run_gates"
+      ],
+      "duration_seconds": 10.735,
+      "ended_at_utc": "2026-06-29T20:13:18Z",
+      "exact_tokens": [
+        "run_gates",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-5de0a3b48c8537305fecf557",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "run_gates",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:13:07Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-29T20:13:18Z\",\n  \"status\": \"pass\"\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "detail_keys": [
+        "validator_results.results.shard_check"
+      ],
+      "duration_seconds": 0.985,
+      "ended_at_utc": "2026-06-29T20:13:19Z",
+      "exact_tokens": [
+        "shard_check",
+        "python3 scripts/pm-shard-plans.py --check",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-ca47a1a8715f4dc26fd8dde9",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "shard_check",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:13:18Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"docs_checked\": 56,\n  \"failures\": [],\n  \"shards_checked\": 1067,\n  \"source_count\": 56,\n  \"status\": \"pass\"\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "detail_keys": [
+        "validator_results.results.validate_auto_decisions"
+      ],
+      "duration_seconds": 0.156,
+      "ended_at_utc": "2026-06-29T20:13:19Z",
+      "exact_tokens": [
+        "validate_auto_decisions",
+        "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-242c4cbcb106937f276a4543",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "validate_auto_decisions",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:13:19Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-29T20:13:19Z\",\n  \"status\": \"pass\"\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "detail_keys": [
+        "validator_results.results.validate_plan_graph"
+      ],
+      "duration_seconds": 0.861,
+      "ended_at_utc": "2026-06-29T20:13:20Z",
+      "exact_tokens": [
+        "validate_plan_graph",
+        "python3 scripts/pm-plans-verify.py validate-plan-graph",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-30cf1af0a93d9e864ed460cc",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "validate_plan_graph",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:13:19Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-plan-graph\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-29T20:13:20Z\",\n  \"status\": \"pass\"\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "detail_keys": [
+        "validator_results.results.verify_spec_lock"
+      ],
+      "duration_seconds": 0.16,
+      "ended_at_utc": "2026-06-29T20:13:20Z",
+      "exact_tokens": [
+        "verify_spec_lock",
+        "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-e25e8e28583fa963d8dc90c9",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "verify_spec_lock",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:13:20Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-29T20:13:20Z\",\n  \"status\": \"pass\"\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "detail_keys": [
+        "validator_results.results.validate_evidence"
+      ],
+      "duration_seconds": 0.915,
+      "ended_at_utc": "2026-06-29T20:13:21Z",
+      "exact_tokens": [
+        "validate_evidence",
+        "python3 scripts/pm-plans-verify.py validate-evidence",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-352e1bc7999bd8786635f92e",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "validate_evidence",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:13:20Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-06-29T20:13:21Z\",\n  \"status\": \"pass\"\n}",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "python3 -m unittest tests/test_pm_audit_closure.py",
+      "detail_keys": [
+        "validator_results.results.audit_closure_unittest"
+      ],
+      "duration_seconds": 0.165,
+      "ended_at_utc": "2026-06-29T20:13:21Z",
+      "exact_tokens": [
+        "audit_closure_unittest",
+        "python3 -m unittest tests/test_pm_audit_closure.py",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-3d76b15dedb2f9c087a9c12c",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "audit_closure_unittest",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:13:21Z",
+      "status": "pass",
+      "stderr_tail": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.036s\n\nOK",
+      "stdout_tail": "",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "command": "git diff --check",
+      "detail_keys": [
+        "validator_results.results.git_diff_check"
+      ],
+      "duration_seconds": 0.11,
+      "ended_at_utc": "2026-06-29T20:13:21Z",
+      "exact_tokens": [
+        "git_diff_check",
+        "git diff --check",
+        "status=pass",
+        "exit_code=0",
+        "side_effect_count=0"
+      ],
+      "exit_code": 0,
+      "finding_family": "validator_result",
+      "finding_key": "sfk-20fc6f43d5916de92d3201ad",
+      "finding_level": "info",
+      "git_status_added_lines": [],
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_report.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/closure_reuse.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/ledger_consistency.json",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/semantic_risks.jsonl",
+        "?? Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/validator_results.json"
+      ],
+      "git_status_removed_lines": [],
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "name": "git_diff_check",
+      "non_audit_status_added_lines": [],
+      "non_audit_status_removed_lines": [],
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "scripts/pm-audit-closure.py",
+        "scripts/pm-plans-verify.py",
+        "scripts/pm-plan-index.py",
+        "scripts/pm-plan-migration.py",
+        "scripts/pm-shard-plans.py"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "retried_with_pyyaml_path": false,
+      "side_effect_count": 0,
+      "source_atom_ids": [],
+      "started_at_utc": "2026-06-29T20:13:21Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+    }
+  ],
+  "schema_id": "pm.validator_results.v1",
+  "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+}
