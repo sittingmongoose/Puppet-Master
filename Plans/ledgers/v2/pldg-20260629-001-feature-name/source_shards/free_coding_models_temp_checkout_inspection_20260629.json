@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "source_shard_id": "free_coding_models_temp_checkout_inspection_20260629",
+  "ledger_id": "pldg-20260629-001-feature-name",
+  "created_at_utc": "2026-06-29T07:56:34Z",
+  "source_type": "external_github_repo_temporary_checkout_inspection",
+  "source_refs": [
+    "https://github.com/vava-nessa/free-coding-models",
+    "upstream_git_head:874842d49010591cd28200af9e68c8b365843c67",
+    "upstream_git_tag:v0.5.39"
+  ],
+  "local_path_policy": "The upstream repository was cloned into a temporary /tmp checkout for inspection, but the temp filesystem path is intentionally omitted from this ledger shard because it is local machine state and not product design state.",
+  "inspection_commands": [
+    "git clone --depth 1 --branch v0.5.39 https://github.com/vava-nessa/free-coding-models <temporary-checkout>",
+    "git rev-parse HEAD",
+    "git describe --tags --exact-match HEAD",
+    "rg -n quota/favorites/priority/router/schema/sync/probe/update/docker patterns in README.md and src/core/**",
+    "sed/nl inspection of src/core/quota-capabilities.js, src/core/provider-quota-fetchers.js, src/core/router-daemon.js, src/core/sync-set.js, src/core/token-usage-reader.js, src/core/favorites.js, and related TUI/help files"
+  ],
+  "observed_upstream_state": {
+    "git_head_sha": "874842d49010591cd28200af9e68c8b365843c67",
+    "exact_tag": "v0.5.39",
+    "important_runtime_files": [
+      "src/core/quota-capabilities.js",
+      "src/core/provider-quota-fetchers.js",
+      "src/core/router-daemon.js",
+      "src/core/sync-set.js",
+      "src/core/token-usage-reader.js",
+      "src/core/favorites.js",
+      "src/core/schema-normalizer.js",
+      "src/core/provider-key-tester.js",
+      "src/core/endpoint-installer.js"
+    ]
+  },
+  "quota_and_usage_notes": [
+    "Upstream distinguishes quota telemetry capabilities by provider, including `header`, `endpoint`, and `unknown` signal types, plus display modes such as `percent` and `ok` and reset cadences such as rolling, daily, monthly, none, and unknown.",
+    "Provider quota fetchers currently include endpoint polling for OpenRouter and SiliconFlow-style user-info parsing, with TTL caching, error backoff, and pending-request coalescing.",
+    "Upstream runtime also infers quota/rate-limit exhaustion from HTTP 429, quota/rate-limit text, retry headers, and provider response metadata. PM should map those into Usage pressure/cooldown evidence instead of copying upstream state stores.",
+    "Upstream token usage reader reads provider/model quota snapshots from its own token stats JSON. PM should not reuse the upstream file path or persistence shape directly; it should map the useful concepts into PM storage and Usage projections."
+  ],
+  "routing_and_priority_notes": [
+    "Upstream router sets use explicit priority order for selected models. The current router sorts by explicit priority first, then circuit state, then score, with the health score used as a tie-breaker rather than letting a low-priority faster model steal traffic.",
+    "Upstream favorites preserve insertion/order priority and support reorder up/down. TUI/help text describes router fallback order and a favorites-oriented fallback chain; PM's requested top-10 priority setting should adapt the concept natively.",
+    "Upstream circuit breaker state tracks CLOSED, HALF_OPEN, OPEN-like conditions, auth errors, stale/unsupported flags, cooldowns, consecutive failures, quota_exhausted, and quota details. PM should map these to existing health, availability, pressure, cooldown, and resolution-outcome concepts."
+  ],
+  "probe_sync_update_notes": [
+    "Upstream `sync-set` builds a router set from active routeable providers with API keys, ranks candidates, live-probes response and tool-call behavior, writes the best set, and signals daemon reload.",
+    "Upstream probing is useful source behavior but can spend free quota. PM needs native policy controls for probe cadence, confidence, cancellation, and quota cost.",
+    "Upstream web/server exposes router set management, reorder, sync, probe-all, and update behavior. PM should adapt concepts, not expose or depend on those endpoints as-is."
+  ],
+  "native_integration_notes": [
+    "Upstream supports Docker and a local daemon/web dashboard, but Jared explicitly said PM likely should not run it as Docker because the PM integration should be native.",
+    "PM should not inherit upstream telemetry, local config path, credential storage, external endpoint installer, daemon port, or self-update behavior without PM-owned security, storage, permissions, and FileSafe design."
+  ],
+  "pm_design_implications": [
+    "Free Models should reuse PM's Usage-owned pressure/cooldown/switch semantics from Multi-Account where possible.",
+    "The user's top-10 priority list should be authoritative among eligible models, with pressure/health/cooldown filtering and PM scoring as secondary signals.",
+    "Every Free Models row should preserve hidden upstream_provider, provider/model identity, quota signal confidence, source version/tag/SHA, and import disposition.",
+    "Every active upstream free/free-limited model can be shown under one PM provider if the GUI uses badges to make setup, quota, rate-limit, account, billing/free-limited, and confidence distinctions explicit."
+  ]
+}

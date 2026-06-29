@@ -1,0 +1,98 @@
+{
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "ledger_id": "pldg-20260629-001-feature-name",
+  "status": "pass_governance_sealed",
+  "last_event_id": "evt-0045",
+  "last_validated_at_utc": "2026-06-29T18:56:04Z",
+  "updated_at_utc": "2026-06-29T18:56:04Z",
+  "summary": {
+    "events": 45,
+    "design_atoms": 298,
+    "decisions": 139,
+    "questions": 119,
+    "corrections": 12,
+    "blockers": 0,
+    "compiled_atoms": 277,
+    "not_for_plan_atoms": 8,
+    "superseded_atoms": 9,
+    "rejected_atoms": 4,
+    "candidate_atoms": 0,
+    "open_questions": 0,
+    "deferred_questions": 0,
+    "open_blockers": 0,
+    "compile_queue_items": 12,
+    "compiled_plan_units": 23,
+    "governance_status": "sealed",
+    "governance_seal": "passed"
+  },
+  "blocking_defects": [],
+  "checks": [
+    {
+      "check_id": "compile-0001",
+      "status": "pass",
+      "summary": "Accepted Free Models atoms compiled to live canonical PlanUnits with source lineage."
+    },
+    {
+      "check_id": "index-0002",
+      "status": "pass",
+      "summary": "Allowed Plans/.plan_index outputs regenerated and validated after compile."
+    },
+    {
+      "check_id": "governance-0003",
+      "status": "pass",
+      "summary": "Governance seal completed in explicit seal scope: migration proof, shards, evidence, Spec Lock, auto_decision logging, and gates are current."
+    },
+    {
+      "check_id": "boundary-0004",
+      "status": "pass",
+      "summary": "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, runtime/build surfaces, implementation files, production build tasks, or final node queues were created."
+    }
+  ],
+  "validator_results": {
+    "pm_bootstrap_ledger_validate": {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260629-001-feature-name",
+      "status": "pass"
+    },
+    "pm_plan_index_validate": {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "plan_unit_count": 5322
+    },
+    "pm_plan_migration_validate": {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass",
+      "live_plan_unit_count": 5322
+    },
+    "pm_shard_plans_check": {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "docs_checked": 56,
+      "shards_checked": 1067
+    },
+    "pm_plans_verify_run_gates": {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass"
+    },
+    "pm_plans_verify_validate_auto_decisions": {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass"
+    },
+    "pm_plans_verify_validate_plan_graph": {
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "status": "pass"
+    },
+    "pm_plans_verify_verify_spec_lock": {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass"
+    },
+    "pm_plans_verify_validate_evidence": {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass"
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "status": "pass"
+    }
+  },
+  "notes": "Governance seal completed. Node readiness remains blocked_compiler_contract_incomplete by design; WorkNode/compiler implementation remains out of scope."
+}

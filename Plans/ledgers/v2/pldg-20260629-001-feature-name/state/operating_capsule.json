@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.operating_capsule.v1",
+  "ledger_id": "pldg-20260629-001-feature-name",
+  "capsule_id": "cap-free-models-current",
+  "ledger_profile": "bootstrap_planning",
+  "agent_task": "free_models_compile_governance_sealed",
+  "phase": "compiled_to_plans_governance_sealed",
+  "current_phase": "compiled_to_plans_governance_sealed",
+  "governance_status": "sealed",
+  "last_event_id": "evt-0045",
+  "updated_at_utc": "2026-06-29T18:56:04Z",
+  "next_action": "Free Models ledger gaps are closed, compiled to canonical Plans, indexed, and governance-sealed. Node readiness remains blocked_compiler_contract_incomplete until the WorkNode compiler contract exists; do not create WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files without a future explicit implementation scope.",
+  "next_safe_action": "Free Models ledger gaps are closed, compiled to canonical Plans, indexed, and governance-sealed. Node readiness remains blocked_compiler_contract_incomplete until the WorkNode compiler contract exists; do not create WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files without a future explicit implementation scope.",
+  "allowed_reads_default": [
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/operating_capsule.json",
+    "state/compile_queue.json",
+    "state/compile_disposition_matrix.json"
+  ],
+  "allowed_writes_after_compile": [
+    "Ledger projections may be corrected if validators find projection drift. Generated governance artifacts were refreshed in the explicit governance seal phase."
+  ],
+  "forbidden_until_explicit_governance_seal": [],
+  "forbidden_without_future_implementation_scope": [
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues",
+    "runtime/build surfaces",
+    "implementation files"
+  ],
+  "completion_blockers_visible_to_agent": [
+    "failed validators",
+    "worknode_creation_requested_before_contract"
+  ],
+  "required_end_of_turn_actions": [
+    "validate_ledger",
+    "validate_plan_index",
+    "validate_migration_if_present",
+    "validate_governance_artifacts",
+    "git_diff_check",
+    "report_sealed_governance_status"
+  ],
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_shard_plans_check": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_plan_graph": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "git_diff_check": "pass",
+    "ledger_health": "pass_governance_sealed",
+    "governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "no_nodeseed_candidates_created": true,
+    "last_validated_at_utc": "2026-06-29T18:56:04Z"
+  }
+}

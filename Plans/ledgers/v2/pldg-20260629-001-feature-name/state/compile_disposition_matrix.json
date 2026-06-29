@@ -1,0 +1,4235 @@
+{
+  "schema_id": "pm.bootstrap_compile_disposition_matrix.v1",
+  "ledger_id": "pldg-20260629-001-feature-name",
+  "updated_at_utc": "2026-06-29T18:56:04Z",
+  "governance_status": "sealed",
+  "compiled_plan_unit_ids": [
+    "MS-118",
+    "MS-119",
+    "MS-120",
+    "MS-121",
+    "MA-064",
+    "MA-065",
+    "UF-077",
+    "UF-078",
+    "CV-301",
+    "CV-302",
+    "SP-224",
+    "SP-225",
+    "PS-125",
+    "F3-407",
+    "F3-408",
+    "F3-409",
+    "RAP-040",
+    "RAP-041",
+    "EP-107",
+    "EP-108",
+    "PP-058",
+    "F2-193",
+    "0PI-064"
+  ],
+  "compiled_owner_docs": [
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/usage-feature.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md",
+    "Plans/Permissions_System.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/FileSafe.md",
+    "Plans/00-plans-index.md"
+  ],
+  "adjacent_reference_docs": [
+    "Plans/Provider_OpenCode.md"
+  ],
+  "summary": {
+    "compiled_to_plan_atoms": 277,
+    "not_for_plan_atoms": 8,
+    "superseded_atoms": 9,
+    "rejected_atoms": 4,
+    "deferred_atoms": 0,
+    "compiled_plan_units": 23
+  },
+  "dispositions": [
+    {
+      "atom_id": "atom-0001",
+      "status": "not_for_plan",
+      "compile_disposition": "non_applicable",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Preserved as ledger/process/source-lineage material, not compiled as product PlanUnit content."
+    },
+    {
+      "atom_id": "atom-0002",
+      "status": "not_for_plan",
+      "compile_disposition": "non_applicable",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Preserved as ledger/process/source-lineage material, not compiled as product PlanUnit content."
+    },
+    {
+      "atom_id": "atom-0003",
+      "status": "not_for_plan",
+      "compile_disposition": "non_applicable",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Preserved as ledger/process/source-lineage material, not compiled as product PlanUnit content."
+    },
+    {
+      "atom_id": "atom-0004",
+      "status": "not_for_plan",
+      "compile_disposition": "non_applicable",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Preserved as ledger/process/source-lineage material, not compiled as product PlanUnit content."
+    },
+    {
+      "atom_id": "atom-0005",
+      "status": "not_for_plan",
+      "compile_disposition": "non_applicable",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Preserved as ledger/process/source-lineage material, not compiled as product PlanUnit content."
+    },
+    {
+      "atom_id": "atom-0006",
+      "status": "not_for_plan",
+      "compile_disposition": "non_applicable",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Preserved as ledger/process/source-lineage material, not compiled as product PlanUnit content."
+    },
+    {
+      "atom_id": "atom-0007",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0008",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0009",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0010",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0011",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0012",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "EP-108",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0013",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0014",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0015",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "CV-302"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0016",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "CV-302"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0017",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0018",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "PS-125"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0019",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "PS-125",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0020",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0021",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0022",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0023",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0024",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0025",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0026",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "EP-108",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0027",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0028",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "EP-108"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0029",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0030",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0031",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0032",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0033",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "PS-125",
+        "EP-108",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0034",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-225"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0035",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0036",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0037",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0038",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0039",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0040",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0041",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "CV-302"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0042",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0043",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0044",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0045",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0046",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0047",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0048",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0049",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0050",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0051",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "SP-224",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0052",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "SP-224",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0053",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0054",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0055",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0056",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0057",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "SP-224",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0058",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "PS-125",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0059",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "PS-125",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0060",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "EP-108",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0061",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-225",
+        "EP-108"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0062",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0063",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "EP-108",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0064",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-225",
+        "EP-108",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0065",
+      "status": "not_for_plan",
+      "compile_disposition": "non_applicable",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Preserved as ledger/process/source-lineage material, not compiled as product PlanUnit content."
+    },
+    {
+      "atom_id": "atom-0066",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "SP-225",
+        "EP-108"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0067",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0068",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "MA-064",
+        "PS-125"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Permissions_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0069",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0070",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "SP-225",
+        "EP-108"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0071",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0072",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "MA-064",
+        "PS-125"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Permissions_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0073",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0074",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "MA-065",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0075",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0076",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "EP-108"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0077",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0078",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "MA-065",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0079",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0080",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "EP-108"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0081",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0082",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0083",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-407",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0084",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0085",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0086",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0087",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-407",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0088",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0089",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0090",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0091",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0092",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0093",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0094",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0095",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0096",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0097",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0098",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0099",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0100",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0101",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0102",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0103",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0104",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0105",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0106",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "EP-108"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0107",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "RAP-041"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0108",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0109",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0110",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "EP-108"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0111",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "RAP-041"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0112",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0113",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0114",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0115",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0116",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0117",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0118",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0119",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0120",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0121",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0122",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0123",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0124",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0125",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0126",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0127",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0128",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0129",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-224",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0130",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0131",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0132",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0133",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0134",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0135",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0136",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0137",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0138",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0139",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0140",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0141",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0142",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0143",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0144",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0145",
+      "status": "superseded",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Superseded by later accepted Free Models decisions and preserved for source-lineage audit only."
+    },
+    {
+      "atom_id": "atom-0146",
+      "status": "rejected",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Rejected by user for current Free Models scope and preserved as explicit non-goal/source lineage."
+    },
+    {
+      "atom_id": "atom-0147",
+      "status": "rejected",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Rejected by user for current Free Models scope and preserved as explicit non-goal/source lineage."
+    },
+    {
+      "atom_id": "atom-0148",
+      "status": "rejected",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Rejected by user for current Free Models scope and preserved as explicit non-goal/source lineage."
+    },
+    {
+      "atom_id": "atom-0149",
+      "status": "rejected",
+      "compile_disposition": "obsolete",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Rejected by user for current Free Models scope and preserved as explicit non-goal/source lineage."
+    },
+    {
+      "atom_id": "atom-0150",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0151",
+      "status": "not_for_plan",
+      "compile_disposition": "non_applicable",
+      "compiled_output_plan_unit_ids": [],
+      "compiled_owner_docs": [],
+      "notes": "Preserved as ledger/process/source-lineage material, not compiled as product PlanUnit content."
+    },
+    {
+      "atom_id": "atom-0152",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0153",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0154",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0155",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0156",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0157",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0158",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0159",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0160",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0161",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0162",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0163",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0164",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0165",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0166",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0167",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0168",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0169",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0170",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0171",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0172",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0173",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0174",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-407"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0175",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0176",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0177",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0178",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0179",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0180",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0181",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0182",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0183",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0184",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0185",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0186",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0187",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0188",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0189",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0190",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-407",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0191",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0192",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0193",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-224",
+        "PS-125"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0194",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0195",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0196",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "PS-125",
+        "EP-108",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0197",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-224",
+        "PS-125"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0198",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0199",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0200",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "PS-125",
+        "EP-108",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0201",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0202",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0203",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0204",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0205",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0206",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0207",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0208",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0209",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0210",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0211",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0212",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "RAP-041",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0213",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0214",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0215",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0216",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "RAP-041",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0217",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0218",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0219",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0220",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "RAP-041"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0221",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0222",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0223",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MA-065"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0224",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "RAP-041"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0225",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0226",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0227",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0228",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0229",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0230",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0231",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0232",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0233",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0234",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "EP-107",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0235",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "MA-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0236",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0237",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0238",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "EP-107",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0239",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "MA-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0240",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0241",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0242",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "CV-302",
+        "SP-224",
+        "RAP-041",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0243",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "MA-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0244",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0245",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0246",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "RAP-041",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0247",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "MA-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0248",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0249",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0250",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "CV-302",
+        "SP-224",
+        "RAP-041"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0251",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0252",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0253",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0254",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "RAP-041"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0255",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0256",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0257",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0258",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "CV-302",
+        "SP-224",
+        "RAP-041"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0259",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0260",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0261",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0262",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-078",
+        "CV-302",
+        "SP-224",
+        "RAP-041"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0263",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0264",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "SP-225",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0265",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0266",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-065",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0267",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0268",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "0PI-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0269",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0270",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-065",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0271",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-064",
+        "F3-409"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0272",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "0PI-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0273",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "0PI-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0274",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "0PI-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0275",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "CV-302"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0276",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "UF-078",
+        "CV-302",
+        "RAP-041",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0277",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-225",
+        "PS-125",
+        "EP-108",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0278",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-225",
+        "PS-125",
+        "EP-108",
+        "F2-193"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0279",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "CV-302"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0280",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "CV-302",
+        "PS-125"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0281",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0282",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-120",
+        "F3-409",
+        "PP-058"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0283",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0284",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "UF-077",
+        "UF-078",
+        "RAP-041",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0285",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-065",
+        "CV-302",
+        "F3-409",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0286",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-121",
+        "MA-065",
+        "UF-078",
+        "CV-302",
+        "F3-409",
+        "RAP-041",
+        "EP-107"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0287",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0288",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "SP-225",
+        "F3-408",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0289",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0290",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "CV-301",
+        "SP-224"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0291",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "CV-302",
+        "SP-225",
+        "F3-407",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0292",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "CV-302",
+        "SP-225",
+        "F3-407",
+        "RAP-040"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0293",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "MA-064",
+        "CV-302",
+        "PS-125"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0294",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-118",
+        "MA-064",
+        "CV-302",
+        "PS-125"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Permissions_System.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0295",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0296",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "MS-119",
+        "F3-408"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0297",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "PP-058",
+        "0PI-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/00-plans-index.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    },
+    {
+      "atom_id": "atom-0298",
+      "status": "compiled_to_plan",
+      "compile_disposition": "create_new_planunit",
+      "compiled_output_plan_unit_ids": [
+        "PP-058",
+        "0PI-064"
+      ],
+      "compiled_owner_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/00-plans-index.md"
+      ],
+      "notes": "Compiled to canonical Free Models PlanUnits in live Plans docs; ledger remains source lineage and governance seal is complete."
+    }
+  ],
+  "canonical_plan_targets": [
+    "Plans/Contracts_V0.md"
+  ],
+  "last_event_id": "evt-0045",
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_shard_plans_check": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_plan_graph": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "git_diff_check": "pass",
+    "ledger_health": "pass_governance_sealed",
+    "governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "no_nodeseed_candidates_created": true,
+    "last_validated_at_utc": "2026-06-29T18:56:04Z"
+  }
+}

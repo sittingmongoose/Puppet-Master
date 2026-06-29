@@ -1,6 +1,6 @@
 # Shard Index: Plans/Bootstrap_Planning_Migration.md
 
-Generated: 2026-06-28T14:07:39Z
+Generated: 2026-06-29T18:49:34Z
 
 Source SHA256: `8a636765a5a6e900b7affbaf985dfe5c58c406dfe2016fad376f63399b0aa698`
 

@@ -248,14 +248,14 @@
     "depends_on_edge_count": 11146,
     "downstream_blocked_node_count": 17,
     "edge_count": 13055,
-    "node_count": 5299,
+    "node_count": 5322,
     "true_cycle_component_count": 3,
     "unblocks_edge_count": 1909,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-06-28T14:01:53Z",
+  "generated_at_utc": "2026-06-29T18:19:05Z",
   "gui_related_units": {
-    "count": 2264,
+    "count": 2277,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -12567,6 +12567,39 @@
         }
       },
       {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-407",
+        "source_location": {
+          "heading": "F3-407 - Free Models Provider Catalog Settings And GitHub Attribution",
+          "heading_level": 3,
+          "heading_line": 26193,
+          "line": 26195,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-408",
+        "source_location": {
+          "heading": "F3-408 - Free Models Priority Refresh And Passive Update UX",
+          "heading_level": 3,
+          "heading_line": 26252,
+          "line": 26254,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-409",
+        "source_location": {
+          "heading": "F3-409 - Free Models Top-10 Setup Override And Availability UX",
+          "heading_level": 3,
+          "heading_line": 26316,
+          "line": 26318,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/feature-list.md",
         "plan_unit_id": "FL-008",
         "source_location": {
@@ -15075,6 +15108,28 @@
         }
       },
       {
+        "owner_doc": "Plans/Multi-Account.md",
+        "plan_unit_id": "MA-064",
+        "source_location": {
+          "heading": "MA-064 - Free Models Underlying Account Identity And Setup Delegation",
+          "heading_level": 3,
+          "heading_line": 4750,
+          "line": 4752,
+          "path": "Plans/Multi-Account.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Multi-Account.md",
+        "plan_unit_id": "MA-065",
+        "source_location": {
+          "heading": "MA-065 - Free Models Shared Pressure Cooldown And Bounded Switching",
+          "heading_level": 3,
+          "heading_line": 4807,
+          "line": 4809,
+          "path": "Plans/Multi-Account.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-002",
         "source_location": {
@@ -15841,6 +15896,50 @@
           "heading_level": 3,
           "heading_line": 7884,
           "line": 7886,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-118",
+        "source_location": {
+          "heading": "MS-118 - Free Models Wrapper Catalog And Route Readiness Identity",
+          "heading_level": 3,
+          "heading_line": 8034,
+          "line": 8036,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-119",
+        "source_location": {
+          "heading": "MS-119 - Free Models Auto Apply Source Resolver And Runtime Adapter Boundary",
+          "heading_level": 3,
+          "heading_line": 8097,
+          "line": 8099,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-120",
+        "source_location": {
+          "heading": "MS-120 - Free Models Top-10 Precedence And Deterministic Fallback Eligibility",
+          "heading_level": 3,
+          "heading_line": 8162,
+          "line": 8164,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-121",
+        "source_location": {
+          "heading": "MS-121 - Free Models Availability Reason Model And Setup Eligibility",
+          "heading_level": 3,
+          "heading_line": 8222,
+          "line": 8224,
           "path": "Plans/Models_System.md"
         }
       },
@@ -20010,6 +20109,28 @@
           "heading_level": 3,
           "heading_line": 1527,
           "line": 1529,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-040",
+        "source_location": {
+          "heading": "RAP-040 - Free Models Auto Apply Diagnostics And Runtime Evidence Projection",
+          "heading_level": 3,
+          "heading_line": 1604,
+          "line": 1606,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-041",
+        "source_location": {
+          "heading": "RAP-041 - Free Models Route Provenance And Usage Receipt Projection",
+          "heading_level": 3,
+          "heading_line": 1662,
+          "line": 1664,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -24315,6 +24436,28 @@
         }
       },
       {
+        "owner_doc": "Plans/usage-feature.md",
+        "plan_unit_id": "UF-077",
+        "source_location": {
+          "heading": "UF-077 - Free Models Paid Costed Fallback Gates And Budget Evidence",
+          "heading_level": 3,
+          "heading_line": 5209,
+          "line": 5211,
+          "path": "Plans/usage-feature.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/usage-feature.md",
+        "plan_unit_id": "UF-078",
+        "source_location": {
+          "heading": "UF-078 - Free Models Fallback Receipts And Immutable Request Provenance",
+          "heading_level": 3,
+          "heading_line": 5264,
+          "line": 5266,
+          "path": "Plans/usage-feature.md"
+        }
+      },
+      {
         "owner_doc": "Plans/UI_Wiring_Rules.md",
         "plan_unit_id": "UIW-001",
         "source_location": {
@@ -25169,12 +25312,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5299,
+  "plan_unit_count": 5322,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1046,
+      "high": 1068,
       "low": 5,
-      "standard": 4248
+      "standard": 4249
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -25371,6 +25514,7 @@
       "autonomous_qa_visual_status_config_knob": 1,
       "autonomous_qa_visual_status_symbols": 1,
       "availability_lifecycle_finish_reason_handling": 1,
+      "availability_reason_mapping_drift": 1,
       "backoff_expired_payload_loss": 1,
       "backoff_started_payload_loss": 1,
       "baseline_reference": 1,
@@ -25769,6 +25913,7 @@
       "create_github_project_flow_drift": 1,
       "create_local_project_flow_drift": 1,
       "credential_auth_surface": 1,
+      "credential_ownership_drift": 1,
       "credential_store_only_api_key_storage": 1,
       "crew_authority_widening": 1,
       "crew_aware_prd_plan_generation_hints": 1,
@@ -25909,6 +26054,7 @@
       "dev_session": 9,
       "dev_session_adoption_drift": 1,
       "devtools_boundary_drift": 1,
+      "diagnostics_projection_drift": 1,
       "direct_coding_plan_adapter_identity_facts": 1,
       "direct_coding_plan_and_opencode_surfaces": 1,
       "direct_coding_plan_runtime_surfaces": 1,
@@ -26083,6 +26229,7 @@
       "failure_taxonomy_drift": 1,
       "failure_warning_category_invariant": 1,
       "fallback_cost_routing": 1,
+      "fallback_dispatch_drift": 1,
       "fallback_e2e_snippets": 1,
       "false_completion": 7,
       "false_layout_failure": 1,
@@ -26241,6 +26388,7 @@
       "gui_config_wiring_permissions_commands_skills": 1,
       "gui_config_wiring_plugins_models_formatters": 1,
       "gui_cross_reference_ambiguity": 1,
+      "gui_density_and_attribution_drift": 1,
       "gui_discovery_route_drift": 1,
       "gui_extract_semantic_loss": 1,
       "gui_framework_detection_gap": 1,
@@ -26355,6 +26503,7 @@
       "implementation_readiness": 7,
       "implementation_sequence_drift": 4,
       "implementer_confirmation_guardrail": 1,
+      "import_snapshot_storage_drift": 1,
       "imported_handoff_state_drift": 1,
       "independent_per_subtask_selection_context": 1,
       "index_authority_and_compliance": 1,
@@ -26546,6 +26695,7 @@
       "model_alias_resolution": 1,
       "model_lifecycle_readiness_collapse": 1,
       "model_native_websearch_classification": 1,
+      "model_precedence_drift": 1,
       "model_refresh_threshold_actions": 1,
       "model_resolution_opacity": 1,
       "model_role_drift": 1,
@@ -26692,7 +26842,7 @@
       "owner_first_consumer_drift_blocking": 1,
       "owner_hint_effective_trigger_drift": 1,
       "owner_identity_drift": 2,
-      "owner_map_drift": 3,
+      "owner_map_drift": 4,
       "owner_map_guard_and_initial_seams": 1,
       "owner_map_gui_widget_usage_final_pass_seams": 1,
       "owner_map_routing_and_stale_consumer_seams": 1,
@@ -26900,6 +27050,7 @@
       "prepare_failure_worktree_race_limits": 1,
       "prepare_reset_workdir_source_drift": 1,
       "prepare_working_directory_semantics_drift": 1,
+      "pressure_switching_drift": 1,
       "preview_build_docker_actions_scope": 1,
       "preview_identity_drift": 1,
       "preview_ui_command_ids": 1,
@@ -26907,6 +27058,7 @@
       "pricing_metadata_versioning": 1,
       "primitive_schema_ownership_drift": 1,
       "priority_rate_limits_throttling_diagnostics": 1,
+      "priority_setup_gui_drift": 1,
       "priority_sticky_selection": 1,
       "product_auth_copy_billing_blur": 1,
       "product_scope_drift": 1,
@@ -26966,6 +27118,7 @@
       "prompt_message_injection_rust_example": 1,
       "prompt_pipeline_contract_ownership_drift": 1,
       "prompt_pipeline_drift": 46,
+      "prompt_route_identity_drift": 1,
       "prompt_size": 1,
       "prompt_web_action_payload_loss": 1,
       "provenance_boundary": 1,
@@ -27002,7 +27155,7 @@
       "provider_hook_dependency_drift": 1,
       "provider_identity_collapse": 1,
       "provider_identity_correlation_drift": 1,
-      "provider_identity_drift": 1,
+      "provider_identity_drift": 2,
       "provider_identity_snapshot_drift": 1,
       "provider_inventory_correction": 1,
       "provider_launcher_discovery_drift": 1,
@@ -27234,6 +27387,7 @@
       "rewrite_ui_auth_account_carry_through": 1,
       "risk_resolution": 4,
       "role_ordering_cancellation_tool_storage_drift": 1,
+      "rollback_diagnostics_storage_drift": 1,
       "rollout_scheduler_drift": 1,
       "root_state_git_clean_excludes_drift": 1,
       "route_activation_shell_state_boundary_drift": 1,
@@ -27244,6 +27398,7 @@
       "route_drift": 5,
       "route_extra_args_validation_bypass": 1,
       "route_fidelity": 1,
+      "route_identity_contract_drift": 1,
       "route_identity_drift": 2,
       "route_identity_loss": 1,
       "route_identity_shortcut": 1,
@@ -27261,6 +27416,7 @@
       "route_payload_ontology_fork": 1,
       "route_payload_selector_drift": 1,
       "route_primary_selector_competition": 1,
+      "route_provenance_projection_drift": 1,
       "route_resolver_alias_drift": 1,
       "route_selector_fallback_drift": 1,
       "route_selector_invalid_combo": 1,
@@ -27500,6 +27656,7 @@
       "source_lineage_changelog_drift": 1,
       "source_loss": 1,
       "source_preservation": 3,
+      "source_trust_and_secret_custody_drift": 1,
       "spec_lock_prohibited_behavior": 1,
       "spec_lock_protocol_boundary_drift": 1,
       "spec_lock_update_step_loss": 1,
@@ -27605,6 +27762,7 @@
       "surface_routing": 1,
       "surface_runtime_mapping_drift": 1,
       "surface_state_owner_drift": 1,
+      "surprise_spend": 1,
       "swift_ios_generated_plan_snippets": 1,
       "switch_reason_projection": 1,
       "switch_signal_weighting": 1,
@@ -27798,9 +27956,12 @@
       "unsafe_auto_commit": 1,
       "unsafe_execution_context": 1,
       "unsafe_external_effect": 1,
+      "unsafe_host_side_effect": 1,
       "unsafe_media_download_or_rendering_drift": 1,
       "unsafe_remote_mutation": 1,
+      "unsafe_runtime_activation": 1,
       "unsafe_scheme_or_cache_drift": 1,
+      "unsafe_upstream_adapter_contract": 1,
       "unsafe_url_guess": 1,
       "unsafe_worktree_reuse": 1,
       "unsupported_completion_claim": 1,
@@ -27812,11 +27973,14 @@
       "unverifiable_completion": 1,
       "unverified_execution_completion": 1,
       "unwired_gui": 1,
+      "update_status_gui_noise": 1,
       "updated_orchestrator_flow": 1,
       "upload_edge_case_drift": 1,
       "upload_normalization_drift": 1,
       "upstream_notes_anti_equivalence_guard": 1,
+      "upstream_runtime_adaptation_drift": 1,
       "usage_attention_acknowledged_semantics_drift": 1,
+      "usage_attribution_drift": 1,
       "usage_attribution_field_loss": 1,
       "usage_contract_drift": 1,
       "usage_disclosure": 1,
@@ -27977,7 +28141,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5114,
+      "accepted": 5137,
       "deferred": 7,
       "retired": 178
     },
@@ -28009,7 +28173,7 @@
       "gui_surface_rule": 1,
       "implementation_reference": 1,
       "optional_requirement": 1,
-      "owner_map": 2,
+      "owner_map": 3,
       "pricing_contract": 1,
       "provider_adapter_contract": 5,
       "provider_compatibility": 2,
@@ -28018,7 +28182,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4390,
+      "requirement": 4412,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

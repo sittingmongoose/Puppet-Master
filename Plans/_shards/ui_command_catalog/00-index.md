@@ -1,6 +1,6 @@
 # Shard Index: Plans/UI_Command_Catalog.md
 
-Generated: 2026-06-28T14:07:39Z
+Generated: 2026-06-29T18:49:34Z
 
 Source SHA256: `f56d0f0efc1f61acb089c82c95ecc4b0e9d473554b2ff286801aac9dcbc31113`
 

@@ -1,6 +1,6 @@
 # Shard Index: Plans/Widget_System.md
 
-Generated: 2026-06-28T14:07:39Z
+Generated: 2026-06-29T18:49:34Z
 
 Source SHA256: `51531bc129e256bbd7a05e9d4129a86fe32d393fee134336a53226b490342461`
 

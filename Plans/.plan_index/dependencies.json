@@ -65771,7 +65771,7 @@
       "to": "ATS-018"
     }
   ],
-  "generated_at_utc": "2026-06-28T14:01:53Z",
+  "generated_at_utc": "2026-06-29T18:19:04Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -66839,6 +66839,23 @@
         "heading_level": 3,
         "heading_line": 4744,
         "line": 4746,
+        "path": "Plans/00-plans-index.md"
+      },
+      "status": "accepted",
+      "unit_type": "owner_map"
+    },
+    {
+      "context_scope": "free_models_compile_owner_map",
+      "gui_related": false,
+      "owner_doc": "Plans/00-plans-index.md",
+      "plan_unit_id": "0PI-064",
+      "reasoning_tier": "standard",
+      "risk_class": "owner_map_drift",
+      "source_location": {
+        "heading": "0PI-064 - Free Models Compile Owner Map",
+        "heading_level": 3,
+        "heading_line": 4828,
+        "line": 4830,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -86208,6 +86225,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "free_models_import_adapter_contracts",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-301",
+      "reasoning_tier": "high",
+      "risk_class": "unsafe_upstream_adapter_contract",
+      "source_location": {
+        "heading": "CV-301 - Free Models Trusted Import Material And Adapter Receipt Contract",
+        "heading_level": 3,
+        "heading_line": 18729,
+        "line": 18731,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_identity_contracts",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-302",
+      "reasoning_tier": "high",
+      "risk_class": "route_identity_contract_drift",
+      "source_location": {
+        "heading": "CV-302 - Free Models Wrapper Identity And Route Eligibility Contract",
+        "heading_level": 3,
+        "heading_line": 18786,
+        "line": 18788,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -93365,6 +93416,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "free_models_executor_dispatch",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-107",
+      "reasoning_tier": "high",
+      "risk_class": "fallback_dispatch_drift",
+      "source_location": {
+        "heading": "EP-107 - Free Models Dispatch Fallback Attempt Bounds And In-Flight Isolation",
+        "heading_level": 3,
+        "heading_line": 6391,
+        "line": 6393,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_runtime_adapter_activation",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-108",
+      "reasoning_tier": "high",
+      "risk_class": "unsafe_runtime_activation",
+      "source_location": {
+        "heading": "EP-108 - Free Models PM-Owned Runtime Adapter Activation Boundary",
+        "heading_level": 3,
+        "heading_line": 6448,
+        "line": 6450,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/FileManager.md",
@@ -97847,6 +97932,23 @@
         "heading_level": 3,
         "heading_line": 13251,
         "line": 13253,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_filesafe_adapter_boundary",
+      "gui_related": false,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-193",
+      "reasoning_tier": "high",
+      "risk_class": "unsafe_host_side_effect",
+      "source_location": {
+        "heading": "F2-193 - Free Models Upstream Side Effect And Adapter Guard Boundary",
+        "heading_level": 3,
+        "heading_line": 13359,
+        "line": 13361,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104749,6 +104851,57 @@
         "heading_level": 3,
         "heading_line": 25889,
         "line": 25891,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_catalog_gui",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-407",
+      "reasoning_tier": "high",
+      "risk_class": "gui_density_and_attribution_drift",
+      "source_location": {
+        "heading": "F3-407 - Free Models Provider Catalog Settings And GitHub Attribution",
+        "heading_level": 3,
+        "heading_line": 26193,
+        "line": 26195,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_refresh_update_gui",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-408",
+      "reasoning_tier": "high",
+      "risk_class": "update_status_gui_noise",
+      "source_location": {
+        "heading": "F3-408 - Free Models Priority Refresh And Passive Update UX",
+        "heading_level": 3,
+        "heading_line": 26252,
+        "line": 26254,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_priority_setup_gui",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-409",
+      "reasoning_tier": "high",
+      "risk_class": "priority_setup_gui_drift",
+      "source_location": {
+        "heading": "F3-409 - Free Models Top-10 Setup Override And Availability UX",
+        "heading_level": 3,
+        "heading_line": 26316,
+        "line": 26318,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -112983,6 +113136,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "free_models_account_setup",
+      "gui_related": true,
+      "owner_doc": "Plans/Multi-Account.md",
+      "plan_unit_id": "MA-064",
+      "reasoning_tier": "high",
+      "risk_class": "credential_ownership_drift",
+      "source_location": {
+        "heading": "MA-064 - Free Models Underlying Account Identity And Setup Delegation",
+        "heading_level": 3,
+        "heading_line": 4750,
+        "line": 4752,
+        "path": "Plans/Multi-Account.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_pressure_and_switching",
+      "gui_related": true,
+      "owner_doc": "Plans/Multi-Account.md",
+      "plan_unit_id": "MA-065",
+      "reasoning_tier": "high",
+      "risk_class": "pressure_switching_drift",
+      "source_location": {
+        "heading": "MA-065 - Free Models Shared Pressure Cooldown And Bounded Switching",
+        "heading_level": 3,
+        "heading_line": 4807,
+        "line": 4809,
+        "path": "Plans/Multi-Account.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
@@ -117159,6 +117346,74 @@
         "heading_level": 3,
         "heading_line": 7884,
         "line": 7886,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_catalog_identity",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-118",
+      "reasoning_tier": "high",
+      "risk_class": "provider_identity_drift",
+      "source_location": {
+        "heading": "MS-118 - Free Models Wrapper Catalog And Route Readiness Identity",
+        "heading_level": 3,
+        "heading_line": 8034,
+        "line": 8036,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_auto_apply",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-119",
+      "reasoning_tier": "high",
+      "risk_class": "upstream_runtime_adaptation_drift",
+      "source_location": {
+        "heading": "MS-119 - Free Models Auto Apply Source Resolver And Runtime Adapter Boundary",
+        "heading_level": 3,
+        "heading_line": 8097,
+        "line": 8099,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_priority_and_fallback",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-120",
+      "reasoning_tier": "high",
+      "risk_class": "model_precedence_drift",
+      "source_location": {
+        "heading": "MS-120 - Free Models Top-10 Precedence And Deterministic Fallback Eligibility",
+        "heading_level": 3,
+        "heading_line": 8162,
+        "line": 8164,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_availability_and_setup",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-121",
+      "reasoning_tier": "high",
+      "risk_class": "availability_reason_mapping_drift",
+      "source_location": {
+        "heading": "MS-121 - Free Models Availability Reason Model And Setup Eligibility",
+        "heading_level": 3,
+        "heading_line": 8222,
+        "line": 8224,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -135899,6 +136154,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "free_models_prompt_pipeline_handoff",
+      "gui_related": false,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-058",
+      "reasoning_tier": "high",
+      "risk_class": "prompt_route_identity_drift",
+      "source_location": {
+        "heading": "PP-058 - Free Models Requested Effective Route Snapshot Handoff",
+        "heading_level": 3,
+        "heading_line": 3960,
+        "line": 3962,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "ledger_to_plans_compile",
       "gui_related": true,
       "owner_doc": "Plans/PRD_Builder.md",
@@ -138177,6 +138449,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "free_models_permissions",
+      "gui_related": false,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-125",
+      "reasoning_tier": "high",
+      "risk_class": "source_trust_and_secret_custody_drift",
+      "source_location": {
+        "heading": "PS-125 - Free Models Source Trust Credential And Probe Authority",
+        "heading_level": 3,
+        "heading_line": 8437,
+        "line": 8439,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "provider_stream_mapping_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
@@ -139514,6 +139803,40 @@
         "heading_level": 3,
         "heading_line": 1527,
         "line": 1529,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_auto_apply_diagnostics",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-040",
+      "reasoning_tier": "high",
+      "risk_class": "diagnostics_projection_drift",
+      "source_location": {
+        "heading": "RAP-040 - Free Models Auto Apply Diagnostics And Runtime Evidence Projection",
+        "heading_level": 3,
+        "heading_line": 1604,
+        "line": 1606,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_runtime_provenance",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-041",
+      "reasoning_tier": "high",
+      "risk_class": "route_provenance_projection_drift",
+      "source_location": {
+        "heading": "RAP-041 - Free Models Route Provenance And Usage Receipt Projection",
+        "heading_level": 3,
+        "heading_line": 1662,
+        "line": 1664,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -147102,6 +147425,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "free_models_import_storage",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-224",
+      "reasoning_tier": "high",
+      "risk_class": "import_snapshot_storage_drift",
+      "source_location": {
+        "heading": "SP-224 - Free Models Import Snapshot Alias And Currentness Storage",
+        "heading_level": 3,
+        "heading_line": 15809,
+        "line": 15811,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_activation_storage",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-225",
+      "reasoning_tier": "high",
+      "risk_class": "rollback_diagnostics_storage_drift",
+      "source_location": {
+        "heading": "SP-225 - Free Models Activation Quarantine Rollback And Diagnostics Storage",
+        "heading_level": 3,
+        "heading_line": 15861,
+        "line": 15863,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "skills_generated_tail_disposition",
       "gui_related": false,
       "owner_doc": "Plans/Skills_System.md",
@@ -153545,6 +153902,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "free_models_costed_fallback_usage",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-077",
+      "reasoning_tier": "high",
+      "risk_class": "surprise_spend",
+      "source_location": {
+        "heading": "UF-077 - Free Models Paid Costed Fallback Gates And Budget Evidence",
+        "heading_level": 3,
+        "heading_line": 5209,
+        "line": 5211,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "free_models_usage_receipts",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-078",
+      "reasoning_tier": "high",
+      "risk_class": "usage_attribution_drift",
+      "source_location": {
+        "heading": "UF-078 - Free Models Fallback Receipts And Immutable Request Provenance",
+        "heading_level": 3,
+        "heading_line": 5264,
+        "line": 5266,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "ui_wiring",
       "gui_related": true,
       "owner_doc": "Plans/UI_Wiring_Rules.md",
@@ -155866,7 +156257,7 @@
     "depends_on_edge_count": 11146,
     "downstream_blocked_node_count": 17,
     "edge_count": 13055,
-    "node_count": 5299,
+    "node_count": 5322,
     "true_cycle_component_count": 3,
     "unblocks_edge_count": 1909,
     "unresolved_reference_count": 0
