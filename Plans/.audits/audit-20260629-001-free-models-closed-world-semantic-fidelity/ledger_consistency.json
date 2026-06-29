@@ -1,0 +1,95 @@
+{
+  "audit_id": "audit-20260629-001-free-models-closed-world-semantic-fidelity",
+  "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+  "findings": [
+    {
+      "atom_ids": [],
+      "audit_id": "audit-20260629-001-free-models-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "notes"
+      ],
+      "evidence": [
+        "Plans/ledgers/v2/pldg-20260629-001-feature-name/state/compile_queue.json"
+      ],
+      "exact_tokens": [
+        "Free Models compile complete. Bootstrap ledger validator, PlanUnit index validate, and git diff --check passed; migration validation failed on stale migration artifacts outside compile scope. Governance seal remains pending."
+      ],
+      "finding_family": "compile_queue_governance_note_stale",
+      "finding_key": "sfk-efd04bdd70b5ae8d16202105",
+      "finding_level": "error",
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "observation_ref": "HEAD",
+      "owner_docs": [],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.audit_finding.v1",
+      "source_atom_ids": [],
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa",
+      "summary": "compile_queue.status/governance_status/validation_state say sealed, but compile_queue.notes still says governance seal remains pending.",
+      "support_projection_repair_required_via_semantic_risks": true
+    },
+    {
+      "atom_ids": [],
+      "audit_id": "audit-20260629-001-free-models-closed-world-semantic-fidelity",
+      "baseline_ref": "d6da6b229ff6e675b3be717c2fb92e42baab19b2",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "updated_at_utc"
+      ],
+      "evidence": [
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "exact_tokens": [
+        "2026-06-29T16:16:41Z"
+      ],
+      "finding_family": "ledger_registry_top_level_timestamp_stale",
+      "finding_key": "sfk-c69d7fbf0d257ba89b1d2d67",
+      "finding_level": "error",
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "observation_ref": "HEAD",
+      "owner_docs": [
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.audit_finding.v1",
+      "source_atom_ids": [],
+      "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa",
+      "summary": "ledger_registry top-level updated_at_utc 2026-06-29T16:16:41Z predates target ledger entry last_updated_at_utc 2026-06-29T18:56:04Z.",
+      "support_projection_repair_required_via_semantic_risks": true
+    }
+  ],
+  "ledger_id": "pldg-20260629-001-feature-name",
+  "notes": [
+    "Audit-only observations do not restamp ledger latest_audit_* projections."
+  ],
+  "observation_ref": "HEAD",
+  "projection_agreement": {
+    "compile_queue_governance_status": "sealed",
+    "compile_queue_notes": "Free Models compile complete. Bootstrap ledger validator, PlanUnit index validate, and git diff --check passed; migration validation failed on stale migration artifacts outside compile scope. Governance seal remains pending.",
+    "compiled_plan_unit_count": 23,
+    "current_governance_status": "sealed",
+    "handoff_governance_status": "sealed",
+    "open_blockers": 0,
+    "open_questions": 0,
+    "registry_entry_governance_status": "sealed",
+    "registry_entry_last_updated_at_utc": "2026-06-29T18:56:04Z",
+    "registry_top_updated_at_utc": "2026-06-29T16:16:41Z"
+  },
+  "projection_files_checked": [
+    "manifest.json",
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/compile_queue.json",
+    "state/operating_capsule.json",
+    "state/compile_disposition_matrix.json",
+    "validation/ledger_health.json",
+    "Plans/ledgers/v2/ledger_registry.json"
+  ],
+  "schema_id": "pm.ledger_consistency_report.v1",
+  "status": "blocked",
+  "subject_ref": "55e344021b89e8d81c04acf914fc8e68a4ba6efa"
+}
