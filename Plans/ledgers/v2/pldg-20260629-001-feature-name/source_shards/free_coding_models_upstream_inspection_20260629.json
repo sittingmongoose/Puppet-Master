@@ -1,0 +1,64 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "source_shard_id": "free_coding_models_upstream_inspection_20260629",
+  "ledger_id": "pldg-20260629-001-feature-name",
+  "created_at_utc": "2026-06-29T07:44:10Z",
+  "source_type": "external_github_repo_inspection",
+  "source_refs": [
+    "https://github.com/vava-nessa/free-coding-models",
+    "https://github.com/vava-nessa/free-coding-models/releases/tag/v0.5.39",
+    "https://www.npmjs.com/package/free-coding-models"
+  ],
+  "inspection_commands": [
+    "curl -sL 'https://api.github.com/repos/vava-nessa/free-coding-models/releases?per_page=12'",
+    "curl -sL 'https://api.github.com/repos/vava-nessa/free-coding-models/tags?per_page=20'",
+    "npm view free-coding-models name version description homepage repository.url license bin dist-tags versions time.modified --json",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/README.md'",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/sources.js'",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/src/core/provider-metadata.js'",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/src/core/config.js'",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/src/core/schema-normalizer.js'",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/src/core/updater.js'",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/.github/workflows/release.yml'",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/changelog/v0.5.39.md'",
+    "curl -sL 'https://raw.githubusercontent.com/vava-nessa/free-coding-models/main/LICENSE'"
+  ],
+  "observed_upstream_state": {
+    "npm_package": "free-coding-models",
+    "npm_latest_version": "0.5.39",
+    "npm_modified_at_utc": "2026-06-27T19:58:44.813Z",
+    "github_latest_release_tag": "v0.5.39",
+    "github_latest_release_published_at_utc": "2026-06-27T19:58:48Z",
+    "github_latest_tag_sha": "874842d49010591cd28200af9e68c8b365843c67",
+    "license": "MIT License with Enhanced Disclaimers",
+    "cli_bin": "free-coding-models",
+    "readme_catalog_claim": "~191 coding models across 20 active providers",
+    "readme_update_flow_claim": "Web UI has an update chip/popover and polls every 5 minutes.",
+    "release_workflow_shape": "On push to main or workflow_dispatch, compares package.json version against tags; if no tag exists, publishes to npm, creates GitHub release from changelog/vX.Y.Z.md, and can attach SBOM.",
+    "primary_catalog_file": "sources.js",
+    "provider_metadata_file": "src/core/provider-metadata.js",
+    "config_file": "src/core/config.js",
+    "schema_normalizer_file": "src/core/schema-normalizer.js",
+    "updater_file": "src/core/updater.js"
+  },
+  "release_pattern_notes": [
+    "Recent GitHub releases/tags are frequent; the latest inspected releases include v0.5.39, v0.5.38, v0.5.37, v0.5.36, v0.5.35, v0.5.34, v0.5.32, v0.5.31, v0.5.30, v0.5.29, v0.5.28, and v0.5.27.",
+    "Release notes contain catalog churn, provider/model additions, removals from free tiers, context-window/tier corrections, router priority/scoring behavior, probe/failover hardening, and provider-specific schema normalizers.",
+    "Per-version changelog files exist under changelog/vX.Y.Z.md and are used by the release workflow for GitHub release notes.",
+    "The upstream package includes self-update logic against npm latest; PM should not inherit that behavior directly without a PM-owned update policy."
+  ],
+  "latest_release_v0_5_39_summary": [
+    "Added groq qwen/qwen3.6-27b.",
+    "Added cloudflare @cf/zai-org/glm-5.2 and @cf/moonshotai/kimi-k2.5.",
+    "Added ovhcloud embedding models.",
+    "Added openrouter cohere/north-mini-code:free and nvidia/nemotron-3-ultra-550b-a55b:free.",
+    "Removed 11 OpenRouter models no longer on free tier.",
+    "Corrected context windows and tiers for several OpenRouter/Cloudflare models."
+  ],
+  "pm_design_implications": [
+    "Represent user-facing provider as one PM direct provider named Free Models while retaining upstream subprovider/auth/quota/source metadata.",
+    "Separate low-risk catalog metadata imports from higher-risk runtime behavior changes.",
+    "Record upstream version, tag, SHA, npm timestamp, release/changelog text, source file hashes, and PM import disposition for every import.",
+    "Do not import upstream telemetry, credential storage, self-update, local daemon, or external tool config writing behavior without explicit PM-owned design."
+  ]
+}
