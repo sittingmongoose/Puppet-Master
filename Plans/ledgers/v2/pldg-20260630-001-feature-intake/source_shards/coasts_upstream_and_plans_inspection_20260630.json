@@ -1,0 +1,125 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "shard_id": "src-20260630-coasts-upstream-and-plans-inspection",
+  "created_at_utc": "2026-06-30T19:44:00Z",
+  "source_type": "mixed_upstream_repo_and_canonical_plan_review",
+  "upstream": {
+    "repo_url": "https://github.com/coast-guard/coasts",
+    "local_clone_path": "/tmp/pm-upstream-coasts",
+    "commit_sha": "a62f5121ab60ec0b418a0baac5aa0a17c728c045",
+    "authority": "source-lineage inspiration only; not PM canon unless later accepted and compiled"
+  },
+  "upstream_summary": [
+    "Coasts describes itself as `Coasts (Containerized Hosts)`: a CLI, daemon, and web UI for multiple isolated development environments built around Git worktrees.",
+    "Core concepts include `Coastfile`, build-once/run-many instances, dynamic ports for every instance, checked-out canonical localhost ports for one active instance, offline-first local operation, local HTTPS/root-CA handling, and optional remote service control through SSH tunnels.",
+    "Runtime support is centered on `dind`; upstream names `sysbox` and `podman` but says only Docker-in-Docker is wired/tested. DinD uses `docker:dind` with `--privileged`.",
+    "Coasts separates build artifacts from running instances; build artifacts contain resolved config, rewritten compose, cached image tarballs, and manifests while secrets are extracted/encrypted separately.",
+    "Coasts includes concepts worth considering for PM: Host/Instance/Build/Port/Assignment separation, dynamic/canonical ports, primary-port quick links, private paths, shared service groups, clean test variants, snapshot-seeded volumes, logs/exec/service controls, and integration-test scenarios."
+  ],
+  "upstream_risks": [
+    "Do not copy privileged DinD as PM's canonical architecture without explicit capability and security gates.",
+    "Do not claim `sysbox` or `podman` support without PM-owned tests.",
+    "Do not blindly copy permissive local API/CORS posture, WebSocket terminal controls, file controls, or service mutation controls.",
+    "Host command secret extractors, Keychain/file/env extraction, bind mounts, SSH tunnels, remote passwordless sudo, `/data` mounts, rsync/mutagen sync, and `GatewayPorts clientspecified` all need PM-owned permission, FileSafe, redaction, and receipt treatment."
+  ],
+  "canonical_plan_evidence": [
+    {
+      "path": "Plans/Containers_Registry_and_Unraid.md",
+      "summary": "Canonical owner for Docker Manager, Docker/Compose/Kubernetes/Unraid surfaces, project-focused Docker Manager subviews, lifecycle/logs/inspect/attach/shell/stats/open-app minima, Compose scenarios for preview/test/development, access intelligence, cleanup advice, host policy, trust/proxy, and event-family registration."
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "summary": "Canonical owner for automated test discovery, capability reports, harness probes, strategy binding, receipts, screenshots/logs/browser/GUI/device evidence, blockers/gaps, and the rule that missing verification records blockers rather than pretending completion."
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "summary": "Canonical GUI direction is Rust + Slint with Docker Manager as a side-panel surface; no React/JS/HTML/CSS GUI transplant for PM."
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "summary": "Docker Manager commands live in `cmd.docker.*`; mutation semantics should route through canonical command ownership, not ad hoc upstream API actions."
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "summary": "Discovery is not execution approval; auto-discovered executable surfaces require permission before load/run."
+    },
+    {
+      "path": "Plans/FileSafe.md",
+      "summary": "Filesystem/spawn/runtime transport flows fail closed when guard-visible inputs are missing or stale and must preserve recovery/event logging."
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "summary": "Runtime evidence such as file changes, validation evidence, screenshots, browser recordings, traces, logs, receipts, retention, and redaction belongs in Runtime Artifacts."
+    }
+  ],
+  "subagent_synthesis": [
+    {
+      "agent_role": "pm_evidence_mapper",
+      "summary": "PM already has canonical Docker Manager and testing owners; no current canonical Coasts-specific feature exists. Native implementation is aligned if scoped through Docker Manager, ATS, Executor/Run Modes, Permissions/FileSafe, Contracts/storage, and Runtime Artifacts."
+    },
+    {
+      "agent_role": "pm_owner_adjudicator",
+      "summary": "No new owner doc is needed by default. Container host definitions route to Containers; testing to Automated Testing; lifecycle dispatch to Executor/Run Modes; storage/events to Contracts/storage; GUI to Docker Manager; permissions/security to Permissions/FileSafe; provider/tool integration to Tools/MCP/CLI providers."
+    },
+    {
+      "agent_role": "pm_drift_critic",
+      "summary": "Primary drift risks are accidental runtime unlock, duplicate Docker/control-plane ownership, FileSafe/storage bypass, testing harness confusion, separate website/upstream transplant, host identity drift, and secret leakage."
+    },
+    {
+      "agent_role": "pm_patch_planner",
+      "summary": "Suggested MVP: reusable host templates, run/stop/reset instances for project testing, Automated Testing binding, and logs/artifacts/receipts; Docker Manager should be the native surface."
+    },
+    {
+      "agent_role": "pm_fidelity_auditor",
+      "summary": "Feature is useful for testing only if it produces ATS capability/harness/strategy/receipt evidence; container startup alone is not completion."
+    },
+    {
+      "agent_role": "explorer",
+      "summary": "Upstream Coasts architecture and exact token inventory were inspected from `/tmp/pm-upstream-coasts`; no files were edited by the explorer."
+    }
+  ],
+  "exact_tokens_preserved": [
+    "containerized hosts",
+    "Coasts (Containerized Hosts)",
+    "Coastfile",
+    "Coastguard",
+    "coast",
+    "coastd",
+    "coast-service",
+    "coast run",
+    "coast assign",
+    "coast checkout",
+    "coast checkout --none",
+    "coast ssg run",
+    "dind",
+    "sysbox",
+    "podman",
+    "docker:dind",
+    "--privileged",
+    "socat",
+    "rsync",
+    "mutagen",
+    "ssh -L",
+    "ssh -R",
+    "GatewayPorts clientspecified",
+    "COAST_HOME",
+    "COAST_UI_DIR",
+    "COAST_API_PORT",
+    "COAST_SERVICE_PORT",
+    "COAST_VIRTUAL_PORT_BAND_START",
+    "COAST_VIRTUAL_PORT_BAND_END",
+    "DOCKER_TLS_CERTDIR",
+    "*_DYNAMIC_PORT",
+    "31415",
+    "31416",
+    "31420",
+    "49152-65535",
+    "42000-43000",
+    "~/.coast/state.db",
+    "~/.coast/image-cache",
+    "~/.coast/keystore.db"
+  ],
+  "recommendation": "Good to pursue natively as PM-owned Docker Manager plus Automated Testing capability, using Coasts for source-lineage ideas. Avoid adopting the separate Coasts website/control plane and avoid privileged DinD or remote/secret behavior without explicit PM capability, permission, FileSafe, and receipt design.",
+  "not_canonical_plan": true
+}

@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "shard_id": "src-20260701-subagent-hardening-synthesis",
+  "created_at_utc": "2026-07-01T12:42:00Z",
+  "source_type": "subagent_hardening_synthesis",
+  "not_canonical_plan": true,
+  "scope": "Synthesize four read-only subagent returns after the local implementation-readiness hardening write, preserving useful refinements without reopening filled gaps or writing canonical Plans.",
+  "subagent_results": [
+    {
+      "agent_id": "019f1d81-8e7a-70a0-b0cb-ab0fcf1fa401",
+      "focus": "runtime family rows",
+      "used_for": [
+        "RuntimeHostFamilyProfile compile cue",
+        "row-specific acceptance suite",
+        "explicit no-local-fallback/project-scoped-K8s/privileged-DinD-disabled tests"
+      ]
+    },
+    {
+      "agent_id": "019f1d81-b813-7713-8c49-3a44f04b19c0",
+      "focus": "schemas and lifecycle",
+      "used_for": [
+        "additional required host profile/instance/assignment fields",
+        "capability state enum refinements",
+        "TestRunReceipt host fields",
+        "lifecycle terminal-state distinctions"
+      ]
+    },
+    {
+      "agent_id": "019f1d81-f9b6-79a0-8efe-7a940449ad55",
+      "focus": "Docker/Hosts GUI IA and ATS adapter",
+      "used_for": [
+        "Docker/Hosts routed primary-content page, not new Activity Bar slot",
+        "host profile editor and instance detail compile cues",
+        "TestRunReceipt proof fields"
+      ]
+    },
+    {
+      "agent_id": "019f1d81-d7d9-7930-bab9-5c93bd8fc5f8",
+      "focus": "execution lanes and PM control plane",
+      "used_for": [
+        "HostCapabilityCommand naming",
+        "explicit blocker taxonomy",
+        "Runtime Artifacts projection boundary",
+        "Docker/Hosts owner-routing adjudication"
+      ]
+    }
+  ],
+  "important_temporal_note": "Some subagent findings describe the pre-hardening state where q-0024 was still open and implementation_ready_in_ledger was false. The local ledger was subsequently updated through evt-0029 before this synthesis. Those observations are preserved as source timing context, not current state.",
+  "incorporated_refinements": [
+    {
+      "refinement_id": "ref-001-runtime-host-family-profile",
+      "summary": "Runtime rows should compile as a RuntimeHostFamilyProfile/matrix shape with setup inputs, operations, probes, trust, gates, blocked states, receipts, cleanup policy, owner docs, Coasts source-lineage refs, and row-specific acceptance tests.",
+      "new_atom_id": "atom-0077",
+      "gui_related": false
+    },
+    {
+      "refinement_id": "ref-002-testrunreceipt-host-fields",
+      "summary": "TestRunReceipt host proof fields should be named explicitly: host_capability_ref, host_profile_id, host_instance_ref, host_assignment_ref, runtime_family, runtime_context_ref, compose_scenario_ref, image/build refs, port/access URL refs, preflight/launch/harness/cleanup receipt refs, retain-on-failure state, evidence refs, visual evidence refs, and blocker payload.",
+      "new_atom_id": "atom-0078",
+      "gui_related": false
+    },
+    {
+      "refinement_id": "ref-003-blocker-taxonomy-projection-boundary",
+      "summary": "Preserve blocked != failed with explicit blocker families and keep Runtime Artifacts as projection/evidence browsing rather than receipt truth.",
+      "new_atom_id": "atom-0079",
+      "gui_related": true
+    },
+    {
+      "refinement_id": "ref-004-docker-hosts-routed-page",
+      "summary": "Preserve Docker/Hosts as a routed primary-content Slint page/lab opened from Docker Manager and cross-surface routes, not a new Activity Bar slot; Docker Manager remains the side-panel owner.",
+      "new_atom_id": "atom-0080",
+      "gui_related": true
+    },
+    {
+      "refinement_id": "ref-005-host-capability-command",
+      "summary": "Refine atom-0073 with HostCapabilityCommand as the PM-owned command envelope; HostOperationRequest remains a dispatch/request payload shape if needed.",
+      "new_atom_id": "atom-0081",
+      "gui_related": false
+    }
+  ],
+  "negative_constraints_preserved": [
+    "Do not write canonical Plans in this pass.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files.",
+    "Do not promote Coasts, newtools.md compatibility bridges, or stale owner hints into product canon.",
+    "Do not copy Coasts local API, terminal, or file controls blindly.",
+    "Do not make Runtime Artifacts the receipt authority.",
+    "Do not create a new Activity Bar slot for Docker/Hosts."
+  ],
+  "implementation_readiness_result": "Subagent refinements are incorporated. The ledger remains implementation-ready as a ledger packet for a future explicit compile, not canonical Plans yet."
+}

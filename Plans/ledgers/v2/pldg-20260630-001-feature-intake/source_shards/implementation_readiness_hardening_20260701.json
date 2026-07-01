@@ -1,0 +1,1100 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "shard_id": "src-20260701-implementation-readiness-hardening",
+  "created_at_utc": "2026-07-01T12:20:00Z",
+  "source_type": "ledger_hardening_bundle",
+  "not_canonical_plan": true,
+  "user_request_exact": "Ok let’s fix the gaps",
+  "scope": "Close the implementation-readiness gaps recorded in source_shards/ledger_implementation_readiness_audit_20260701.json while staying ledger-only and preserving PM canonical owner routing.",
+  "precedence_rule": "PM canonical owner docs win conflicts. Coasts/Coast Guard remains source-lineage inspiration only where compatible. This hardening bundle does not write canonical Plans or enable runtime execution.",
+  "gap_resolution_summary": [
+    {
+      "gap_id": "gap-001-schema-contracts",
+      "status": "resolved_in_ledger",
+      "resolved_by_atom_ids": [
+        "atom-0066",
+        "atom-0067"
+      ]
+    },
+    {
+      "gap_id": "gap-002-runtime-family-rows",
+      "status": "resolved_in_ledger",
+      "resolved_by_atom_ids": [
+        "atom-0068"
+      ]
+    },
+    {
+      "gap_id": "gap-003-execution-lane-rows",
+      "status": "resolved_in_ledger",
+      "resolved_by_atom_ids": [
+        "atom-0069"
+      ]
+    },
+    {
+      "gap_id": "gap-004-docker-hosts-gui-ia",
+      "status": "resolved_in_ledger",
+      "resolved_by_atom_ids": [
+        "atom-0070"
+      ]
+    },
+    {
+      "gap_id": "gap-005-ats-adapter-contract",
+      "status": "resolved_in_ledger",
+      "resolved_by_atom_ids": [
+        "atom-0071"
+      ]
+    },
+    {
+      "gap_id": "gap-006-lifecycle-state-machine",
+      "status": "resolved_in_ledger",
+      "resolved_by_atom_ids": [
+        "atom-0072"
+      ]
+    },
+    {
+      "gap_id": "gap-007-command-routing-control-plane",
+      "status": "resolved_in_ledger",
+      "resolved_by_atom_ids": [
+        "atom-0073"
+      ]
+    },
+    {
+      "gap_id": "gap-008-source-lineage-candidates",
+      "status": "resolved_in_ledger",
+      "resolved_by_atom_ids": [
+        "atom-0074",
+        "atom-0075"
+      ]
+    }
+  ],
+  "core_contracts": {
+    "host_capability_ref": {
+      "purpose": "PM-owned cross-surface identity for a usable or blocked containerized host capability.",
+      "required_fields": [
+        "host_capability_ref",
+        "project_id",
+        "runtime_family",
+        "runtime_target_ref?",
+        "host_profile_id?",
+        "requested_capabilities[]",
+        "effective_capabilities[]",
+        "capability_state",
+        "trust_tier",
+        "permission_snapshot_id?",
+        "source_refs[]",
+        "created_at_utc",
+        "updated_at_utc",
+        "blocked_reason_code?",
+        "allowed_action_ids[]?"
+      ],
+      "negative_constraints": [
+        "Do not use backend ids such as `container_id`, `compose_project`, `kube_context`, or CI job id as the primary cross-PM host capability identity.",
+        "Do not treat discovery as execution approval."
+      ]
+    },
+    "host_profile_id": {
+      "purpose": "Stable PM-owned reusable template/profile id for host definitions.",
+      "required_fields": [
+        "host_profile_id",
+        "project_id",
+        "display_name",
+        "runtime_family",
+        "profile_version",
+        "owner_surface",
+        "source_kind",
+        "default_retention_policy",
+        "created_at_utc",
+        "updated_at_utc"
+      ],
+      "profile_fields": [
+        "compose_files[]",
+        "dockerfile_path?",
+        "build_context?",
+        "bake_target?",
+        "services[]",
+        "profiles[]",
+        "env_file_refs[]",
+        "mount_policy[]",
+        "network_policy",
+        "egress_policy",
+        "ports[]",
+        "health_checks[]",
+        "browser_profile_policy?",
+        "cleanup_policy",
+        "secret_ref_policy",
+        "coasts_lineage_refs[]?"
+      ],
+      "negative_constraints": [
+        "No raw secrets in profile records.",
+        "Mount, env, and secret refs must be FileSafe/Permissions visible before use."
+      ]
+    },
+    "host_instance": {
+      "purpose": "Concrete runtime instance derived from a profile or ad hoc host request.",
+      "required_fields": [
+        "host_instance_id",
+        "host_capability_ref",
+        "host_profile_id?",
+        "project_id",
+        "runtime_family",
+        "runtime_facts",
+        "instance_state",
+        "created_by_surface",
+        "created_for_ref?",
+        "started_at_utc?",
+        "stopped_at_utc?",
+        "retention_state",
+        "cleanup_receipt_ref?",
+        "blocked_reason_code?"
+      ],
+      "runtime_facts": [
+        "container_id?",
+        "compose_project?",
+        "podman_container_id?",
+        "sysbox_runtime_ref?",
+        "remote_host_ref?",
+        "kube_context?",
+        "namespace?",
+        "workload_ref?",
+        "ci_run_ref?",
+        "unraid_template_ref?",
+        "privileged_dind_session_ref?"
+      ],
+      "instance_state_enum": [
+        "planned",
+        "preflight_required",
+        "preflight_failed",
+        "ready",
+        "building",
+        "built",
+        "starting",
+        "running",
+        "degraded",
+        "blocked",
+        "stopping",
+        "stopped",
+        "failed",
+        "retained_for_debug",
+        "cleanup_pending",
+        "cleaned",
+        "orphaned",
+        "historical"
+      ]
+    },
+    "host_assignment": {
+      "purpose": "Binding between a host instance/capability and a PM consumer lane.",
+      "required_fields": [
+        "host_assignment_id",
+        "host_capability_ref",
+        "host_instance_id?",
+        "consumer_surface",
+        "consumer_ref",
+        "purpose",
+        "execution_unit_context_ref?",
+        "test_strategy_ref?",
+        "thread_id?",
+        "run_id?",
+        "attempt_id?",
+        "authority_state",
+        "started_at_utc?",
+        "ended_at_utc?",
+        "receipt_refs[]",
+        "cleanup_policy"
+      ],
+      "consumer_surface_enum": [
+        "assistant_chat",
+        "orchestrator",
+        "executor",
+        "automated_testing",
+        "tools",
+        "shell",
+        "integration_command",
+        "docker_hosts_gui"
+      ]
+    },
+    "build_artifact": {
+      "purpose": "Build output lineage for host profiles and instances.",
+      "required_fields": [
+        "build_artifact_id",
+        "host_profile_id?",
+        "host_instance_id?",
+        "source_refs[]",
+        "image_ref?",
+        "image_digest?",
+        "compose_project?",
+        "bake_target?",
+        "resolved_config_ref?",
+        "cache_ref?",
+        "manifest_ref?",
+        "created_at_utc",
+        "receipt_ref",
+        "redaction_profile"
+      ],
+      "negative_constraints": [
+        "Build artifacts do not store raw secrets, decrypted env values, or unredacted registry credentials."
+      ]
+    },
+    "port_access_record": {
+      "purpose": "Dynamic/canonical URL and port intelligence for host access and open-app actions.",
+      "required_fields": [
+        "port_access_ref",
+        "host_instance_id",
+        "service_name?",
+        "container_port?",
+        "host_port?",
+        "dynamic_url?",
+        "canonical_url?",
+        "primary",
+        "confidence",
+        "health_state",
+        "source",
+        "opened_by_command_id?",
+        "last_observed_at_utc",
+        "stale_window_expires_at_utc?",
+        "redaction_profile"
+      ],
+      "rules": [
+        "Dynamic URLs remain visible and usable for every running instance.",
+        "Canonical ports/URLs are convenience bindings for the active checked-out or selected instance only.",
+        "`cmd.docker.container.open` and Docker/Hosts open actions use the same access record rather than guessing a localhost URL."
+      ]
+    },
+    "capability_state_enum": [
+      "supported",
+      "available",
+      "needs_setup",
+      "degraded",
+      "blocked_permission",
+      "blocked_policy",
+      "blocked_filesafe",
+      "unsupported_runtime",
+      "unreachable",
+      "untrusted",
+      "stale_refresh_required",
+      "disabled_until_explicit_trust_approval",
+      "disabled_runtime_execution_not_enabled",
+      "historical_only"
+    ],
+    "receipt_payloads": {
+      "host_preflight_receipt": [
+        "receipt_id",
+        "host_capability_ref",
+        "host_profile_id?",
+        "runtime_family",
+        "probe_results[]",
+        "permission_snapshot_id?",
+        "filesafe_scope_ref?",
+        "trust_policy_result?",
+        "capability_state",
+        "blocked_reason_code?",
+        "allowed_action_ids[]?",
+        "created_at_utc"
+      ],
+      "host_execution_receipt": [
+        "receipt_id",
+        "host_assignment_id",
+        "host_instance_id",
+        "operation",
+        "command_id?",
+        "execution_unit_context_ref?",
+        "started_at_utc",
+        "completed_at_utc?",
+        "outcome",
+        "transcript_ref?",
+        "artifact_refs[]",
+        "port_access_refs[]",
+        "blocked_reason_code?",
+        "cleanup_required"
+      ],
+      "cleanup_retention_receipt": [
+        "receipt_id",
+        "host_instance_id",
+        "cleanup_policy",
+        "retention_state",
+        "retained_reason?",
+        "resources_removed[]",
+        "resources_retained[]",
+        "orphan_reconciliation_state?",
+        "completed_at_utc?"
+      ],
+      "blocker_payload": [
+        "blocked_reason_code",
+        "blocked_scope",
+        "runtime_family?",
+        "consumer_surface?",
+        "required_action",
+        "allowed_action_ids[]?",
+        "evidence_refs[]",
+        "user_visible_summary"
+      ]
+    }
+  },
+  "runtime_family_matrix": [
+    {
+      "runtime_family": "Docker/Compose",
+      "mvp_role": "default local path",
+      "supported_operations": [
+        "discover",
+        "configure",
+        "build",
+        "compose scenario up/down",
+        "run",
+        "stop",
+        "restart",
+        "expose endpoints",
+        "health",
+        "logs",
+        "bounded exec",
+        "artifacts",
+        "receipts",
+        "cleanup"
+      ],
+      "preflight_probes": [
+        "docker_available",
+        "compose_available",
+        "buildx_bake_probe",
+        "runtime_context_selected",
+        "compose_file_valid",
+        "port_conflict_check",
+        "permission_snapshot",
+        "filesafe_scope",
+        "stale_snapshot_refresh"
+      ],
+      "setup_inputs": [
+        "docker_binary_path?",
+        "compose_files[]",
+        "compose_project_strategy",
+        "build_context",
+        "dockerfile_path",
+        "services/profiles/env files",
+        "port mappings"
+      ],
+      "trust_tier": "local_runtime_with_permission_and_filesafe_gates",
+      "blocked_states": [
+        "docker_missing",
+        "compose_missing",
+        "stale_refresh_required",
+        "permission_denied",
+        "filesafe_blocked",
+        "port_conflict",
+        "compose_invalid"
+      ],
+      "receipts": [
+        "host_preflight_receipt",
+        "build_artifact",
+        "host_execution_receipt",
+        "cleanup_retention_receipt"
+      ],
+      "cleanup_behavior": "ephemeral by default; retain-on-failure; cleanup advisor and explicit retention receipt",
+      "acceptance_tests": [
+        "discover Docker/Compose capability",
+        "run compose scenario",
+        "open dynamic URL",
+        "collect logs/health",
+        "stop and cleanup with receipt"
+      ]
+    },
+    {
+      "runtime_family": "Podman",
+      "mvp_role": "capability-probed compatible alternate with visible limitations",
+      "supported_operations": [
+        "discover",
+        "build/run where compatible",
+        "compose-compatible scenario where available",
+        "logs",
+        "bounded exec",
+        "cleanup"
+      ],
+      "preflight_probes": [
+        "podman_available",
+        "docker_api_compatibility_probe",
+        "rootless_network_port_probe",
+        "compose_provider_probe",
+        "permission_snapshot",
+        "filesafe_scope"
+      ],
+      "setup_inputs": [
+        "podman path",
+        "compatibility socket/context?",
+        "compose provider?",
+        "profile limitations"
+      ],
+      "trust_tier": "alternate_runtime_probe_required",
+      "blocked_states": [
+        "unsupported_runtime",
+        "rootless_port_limit",
+        "compose_unsupported",
+        "docker_api_incompatible",
+        "permission_denied"
+      ],
+      "receipts": [
+        "host_preflight_receipt",
+        "host_execution_receipt",
+        "cleanup_retention_receipt"
+      ],
+      "cleanup_behavior": "same lifecycle as Docker when operations are supported; limitations visible in Docker/Hosts and Docker Manager",
+      "acceptance_tests": [
+        "probe Podman capability",
+        "show limitation states",
+        "run a compatible container when available"
+      ]
+    },
+    {
+      "runtime_family": "Sysbox",
+      "mvp_role": "non-privileged/rootless nested-runtime candidate where available",
+      "supported_operations": [
+        "discover Sysbox runtime",
+        "run nested-container host where runtime proves available",
+        "logs",
+        "bounded exec",
+        "cleanup"
+      ],
+      "preflight_probes": [
+        "sysbox_runtime_available",
+        "kernel/runtime_compatibility",
+        "nested_container_probe",
+        "permission_snapshot",
+        "filesafe_scope"
+      ],
+      "setup_inputs": [
+        "sysbox runtime selection",
+        "profile requiring nested runtime"
+      ],
+      "trust_tier": "special_runtime_probe_required",
+      "blocked_states": [
+        "sysbox_missing",
+        "kernel_unsupported",
+        "nested_runtime_probe_failed",
+        "permission_denied"
+      ],
+      "receipts": [
+        "host_preflight_receipt",
+        "host_execution_receipt",
+        "cleanup_retention_receipt"
+      ],
+      "cleanup_behavior": "retain-on-failure for nested runtime diagnostics; otherwise ephemeral cleanup",
+      "acceptance_tests": [
+        "detect Sysbox availability",
+        "block with explicit reason when unavailable",
+        "run nested smoke test when available"
+      ]
+    },
+    {
+      "runtime_family": "remote Docker over SSH",
+      "mvp_role": "trusted remote-host path only after explicit PM validation and host trust",
+      "supported_operations": [
+        "discover remote runtime",
+        "build/run/compose where authorized",
+        "logs",
+        "bounded exec",
+        "port/access forwarding when policy allows",
+        "cleanup"
+      ],
+      "preflight_probes": [
+        "ssh_known_host",
+        "remote_identity",
+        "remote_docker_available",
+        "host_trust_policy",
+        "proxy/network_policy",
+        "permission_snapshot",
+        "filesafe_sync_scope",
+        "secret_redaction_profile"
+      ],
+      "setup_inputs": [
+        "remote_host_ref",
+        "ssh credential handle",
+        "known-host trust",
+        "sync policy",
+        "remote compose/build context"
+      ],
+      "trust_tier": "remote_side_effect_high_risk",
+      "blocked_states": [
+        "host_untrusted",
+        "host_unreachable",
+        "network_blocked_by_policy",
+        "approval_required",
+        "remote_command_denied",
+        "filesafe_blocked"
+      ],
+      "receipts": [
+        "host_preflight_receipt",
+        "remote-side-effect receipt provenance",
+        "host_execution_receipt",
+        "cleanup_retention_receipt"
+      ],
+      "cleanup_behavior": "remote cleanup requires explicit target-bound receipt; uncertain remote outcomes become indeterminate_remote_outcome",
+      "acceptance_tests": [
+        "known-host failure blocks",
+        "remote Docker probe records trust state",
+        "remote mutation records approval_source/effective account/credential handle"
+      ]
+    },
+    {
+      "runtime_family": "Kubernetes namespaces",
+      "mvp_role": "project-scoped namespace/workload path, not cluster-admin",
+      "supported_operations": [
+        "select context/namespace",
+        "apply/diff",
+        "rollout status",
+        "logs",
+        "exec",
+        "port-forward",
+        "Helm preview/install where scoped",
+        "cleanup/rollback refs"
+      ],
+      "preflight_probes": [
+        "kubectl_available",
+        "kube_context_selected",
+        "namespace_allowed",
+        "rbac_verbs_allowed",
+        "manifest_or_helm_source_valid",
+        "stale_watch_refresh",
+        "permission_snapshot"
+      ],
+      "setup_inputs": [
+        "kube_context",
+        "namespace",
+        "manifest refs",
+        "helm refs?",
+        "workload focus"
+      ],
+      "trust_tier": "project_scoped_cluster_policy",
+      "blocked_states": [
+        "k8s_context_missing",
+        "namespace_denied",
+        "rbac_denied",
+        "host_untrusted",
+        "stale_refresh_required",
+        "cluster_wide_scope_not_enabled"
+      ],
+      "receipts": [
+        "host_preflight_receipt",
+        "kubernetes operation receipt",
+        "host_execution_receipt"
+      ],
+      "cleanup_behavior": "project-scoped rollback/cleanup only with explicit namespace/workload refs; cluster-wide default off",
+      "acceptance_tests": [
+        "diff before apply",
+        "logs/port-forward require fresh watch",
+        "cluster-wide controls default disabled"
+      ]
+    },
+    {
+      "runtime_family": "CI-hosted containers",
+      "mvp_role": "external ephemeral path",
+      "supported_operations": [
+        "dispatch authorized CI job",
+        "observe logs/status",
+        "collect artifacts",
+        "surface access URLs when produced",
+        "cleanup through provider policy when available"
+      ],
+      "preflight_probes": [
+        "provider_auth",
+        "workflow_available",
+        "secrets_policy",
+        "network_policy",
+        "artifact_policy",
+        "permission_snapshot"
+      ],
+      "setup_inputs": [
+        "ci_provider_ref",
+        "workflow/job ref",
+        "host profile mapping",
+        "artifact expectations"
+      ],
+      "trust_tier": "hosted_remote_side_effect",
+      "blocked_states": [
+        "provider_auth_missing",
+        "workflow_missing",
+        "secrets_unavailable",
+        "hosted_degraded",
+        "approval_required"
+      ],
+      "receipts": [
+        "remote dispatch receipt",
+        "host_preflight_receipt",
+        "host_execution_receipt",
+        "TestRunReceipt when testing"
+      ],
+      "cleanup_behavior": "ephemeral by provider; retain artifacts/logs per retention policy",
+      "acceptance_tests": [
+        "dispatch dry-run/readiness check",
+        "collect CI logs/artifacts",
+        "blocked state when auth/workflow missing"
+      ]
+    },
+    {
+      "runtime_family": "Unraid-hosted environments",
+      "mvp_role": "Publish/Unraid and host-template path",
+      "supported_operations": [
+        "generate/update template",
+        "publish chain follow-through",
+        "template repo status",
+        "host template validation",
+        "deployment linkage where authorized"
+      ],
+      "preflight_probes": [
+        "DockerHub/registry auth",
+        "template_repo_configured",
+        "Unraid template fields valid",
+        "permission_snapshot",
+        "secret_redaction"
+      ],
+      "setup_inputs": [
+        "template_repo_id",
+        "ca_profile",
+        "registry namespace/repository/tag/digest",
+        "host template profile"
+      ],
+      "trust_tier": "publish_chain_remote_side_effect",
+      "blocked_states": [
+        "template_repo_missing",
+        "registry_auth_missing",
+        "dirty_template_repo",
+        "approval_required",
+        "secret_redaction_required"
+      ],
+      "receipts": [
+        "publish_result_id",
+        "template generation receipt",
+        "host_preflight_receipt",
+        "cleanup_retention_receipt when hosted resources exist"
+      ],
+      "cleanup_behavior": "template repo changes use source-control/safe-point semantics; hosted resource cleanup requires explicit Unraid host authority",
+      "acceptance_tests": [
+        "generate template after publish",
+        "template repo dirty state blocks auto-push",
+        "Unraid remains under Docker Manager Publish / Unraid"
+      ]
+    },
+    {
+      "runtime_family": "privileged DinD",
+      "mvp_role": "critical-risk disabled until explicit trust/approval",
+      "supported_operations": [
+        "none by default",
+        "bounded nested-runtime test only after explicit scoped approval and PM-owned validation"
+      ],
+      "preflight_probes": [
+        "privileged_dind_policy_enabled",
+        "explicit_trust_approval",
+        "local_docker_available",
+        "no_secret_leak_policy",
+        "mount_policy",
+        "cleanup_plan"
+      ],
+      "setup_inputs": [
+        "privileged runtime profile",
+        "approval_scope_key",
+        "risk acknowledgement",
+        "cleanup retention policy"
+      ],
+      "trust_tier": "critical_risk_disabled_default",
+      "blocked_states": [
+        "disabled_until_explicit_trust_approval",
+        "approval_required",
+        "policy_denied",
+        "filesafe_blocked",
+        "secret_policy_blocked"
+      ],
+      "receipts": [
+        "host_preflight_receipt",
+        "approval receipt",
+        "host_execution_receipt if ever run",
+        "cleanup_retention_receipt"
+      ],
+      "cleanup_behavior": "always explicit cleanup/retention; retain-on-failure for diagnostics only when approved",
+      "acceptance_tests": [
+        "default blocked state visible",
+        "approval cannot be generic",
+        "privileged run records risk and cleanup receipts"
+      ]
+    }
+  ],
+  "execution_lane_matrix": [
+    {
+      "lane": "apps/services under test",
+      "authority_owner": "Plans/Automated_Testing_System.md with Executor intake",
+      "allowed_command_envelope": "launch app/service, dependency stack, Compose scenario, E2E harness, health/log/artifact capture",
+      "default_run_mode": "HTE through PM-owned dispatcher; DAE only if runtime execution is later enabled and provider policy allows it",
+      "transcript_policy": "test logs, harness output, browser/GUI/device evidence refs",
+      "secret_policy": "no raw secrets; env/credential refs only",
+      "cleanup_safe_point": "ephemeral cleanup by default, retain-on-failure for debugging",
+      "receipt_fields": [
+        "TestRunReceipt",
+        "host_preflight_receipt",
+        "host_assignment_id",
+        "port_access_refs",
+        "artifact_refs",
+        "cleanup_retention_receipt"
+      ],
+      "blocker_taxonomy": [
+        "missing_harness",
+        "runtime_unavailable",
+        "capability_blocked",
+        "manual_only_acceptance_not_allowed",
+        "blocked != failed"
+      ]
+    },
+    {
+      "lane": "PM work",
+      "authority_owner": "Plans/Executor_Protocol.md and Plans/Run_Modes.md",
+      "allowed_command_envelope": "PM-owned build/test/verification commands with worktree/cwd binding and safe-point policy",
+      "default_run_mode": "regular HTE unless explicit DAE-capable posture and provider policy allow; yolo remains DAE with mandatory guards",
+      "transcript_policy": "attempt transcript/result taxonomy under execution_unit_context",
+      "secret_policy": "permission snapshot and no-persist/no-echo secret handling",
+      "cleanup_safe_point": "safe point before mutation; cleanup/rollback receipt after host use",
+      "receipt_fields": [
+        "ExecutorIntakeReport",
+        "execution_unit_context_ref",
+        "host_assignment_id",
+        "host_execution_receipt",
+        "safe_point_receipt?",
+        "cleanup_retention_receipt"
+      ],
+      "blocker_taxonomy": [
+        "permission_denied",
+        "filesafe_blocked",
+        "stale_selection",
+        "runtime_disabled",
+        "runtime_unavailable"
+      ]
+    },
+    {
+      "lane": "provider tools",
+      "authority_owner": "Plans/Tools.md plus provider/account docs",
+      "allowed_command_envelope": "tool calls mediated by PM, using host_capability_ref as context/capability input rather than direct provider authority",
+      "default_run_mode": "HTE for hosted tool execution; DAE only through run-mode policy",
+      "transcript_policy": "tool.invoked/tool.denied events and sanitized outputs",
+      "secret_policy": "credential handles only; no raw provider or registry secrets",
+      "cleanup_safe_point": "tool-specific cleanup receipts when host resources are allocated",
+      "receipt_fields": [
+        "tool invocation event",
+        "permission_snapshot_id",
+        "host_preflight_receipt?",
+        "host_execution_receipt?"
+      ],
+      "blocker_taxonomy": [
+        "tool_denied",
+        "capability_missing",
+        "provider_policy_disallowed",
+        "host_assignment_blocked"
+      ]
+    },
+    {
+      "lane": "agent harnesses",
+      "authority_owner": "Plans/orchestrator-subagent-integration.md, Plans/Goal_Runtime_System.md, Plans/Executor_Protocol.md",
+      "allowed_command_envelope": "subagent/worker harness use bound to execution_unit_context, worktree/jail policy, host assignment, and inherited permission ceiling",
+      "default_run_mode": "inherits parent mode; DAE subagents stay jailed and reconcile only through PM",
+      "transcript_policy": "child run transcript plus host assignment receipts",
+      "secret_policy": "inherits parent/attempt permission snapshot; no child bypass",
+      "cleanup_safe_point": "per-attempt cleanup and orphan reconciliation",
+      "receipt_fields": [
+        "execution_unit_context_ref",
+        "host_assignment_id",
+        "host_execution_receipt",
+        "subagent outcome",
+        "cleanup_retention_receipt"
+      ],
+      "blocker_taxonomy": [
+        "child_permission_denied",
+        "dae_disallowed",
+        "host_unavailable",
+        "orphaned_instance"
+      ]
+    },
+    {
+      "lane": "shells",
+      "authority_owner": "Plans/UI_Command_Catalog.md, Plans/Permissions_System.md, Plans/FileSafe.md",
+      "allowed_command_envelope": "bounded docker exec/attach, kubectl exec, remote shell, or terminal-like action only when command id and target are approved",
+      "default_run_mode": "PM-audited session; no raw Coasts terminal/WebSocket control",
+      "transcript_policy": "bounded metadata by default; interactive transcript/stdin not persisted by default for privileged sessions",
+      "secret_policy": "stdin and secret-bearing output redacted/no-persist by default",
+      "cleanup_safe_point": "session close receipt and target release",
+      "receipt_fields": [
+        "command_invocation_id",
+        "approval_source",
+        "target",
+        "transport",
+        "started/completed_at",
+        "final_reason_code",
+        "host_execution_receipt"
+      ],
+      "blocker_taxonomy": [
+        "approval_required",
+        "policy_denied",
+        "target_not_running",
+        "stale_refresh_required"
+      ]
+    },
+    {
+      "lane": "integration commands",
+      "authority_owner": "Plans/Executor_Protocol.md, Plans/Tools.md, Plans/Automated_Testing_System.md",
+      "allowed_command_envelope": "database/API/service integration commands that need runtime context, declared egress, and service identity",
+      "default_run_mode": "HTE through PM tools by default",
+      "transcript_policy": "command output/logs/artifacts linked to attempt/test receipts",
+      "secret_policy": "declared secret refs and redaction profile; no raw env values in receipts",
+      "cleanup_safe_point": "service/container cleanup plus data reset where profile requires it",
+      "receipt_fields": [
+        "host_preflight_receipt",
+        "host_execution_receipt",
+        "TestRunReceipt?",
+        "artifact_refs",
+        "cleanup_retention_receipt"
+      ],
+      "blocker_taxonomy": [
+        "service_unhealthy",
+        "egress_blocked",
+        "secret_policy_blocked",
+        "integration_probe_failed"
+      ]
+    }
+  ],
+  "docker_hosts_gui_ia": {
+    "placement": "A native Slint `Docker/Hosts` expanded page/lab is accepted for richer host details. Docker Manager remains the canonical operational owner, side-panel command namespace, and source of container/Kubernetes command families; Docker/Hosts may be reached from Docker Manager, command palette, assistant/orchestrator deep links, and testing/receipt routes.",
+    "primary_views": [
+      "Overview",
+      "Profiles",
+      "Instances",
+      "Runtime Matrix",
+      "Host Lab Sessions",
+      "Access & Ports",
+      "Receipts & Artifacts",
+      "Settings"
+    ],
+    "overview_content": [
+      "project host readiness summary",
+      "requested/effective runtime capability",
+      "active assignments",
+      "blocked/degraded cards",
+      "recent receipts",
+      "cleanup recommendations"
+    ],
+    "profile_editor_fields": [
+      "display name",
+      "runtime family",
+      "compose files",
+      "Dockerfile/build context/Bake target",
+      "services/profiles/env file refs",
+      "port preferences",
+      "health checks",
+      "mount policy",
+      "network/egress policy",
+      "secret ref policy",
+      "cleanup/retention policy"
+    ],
+    "instance_detail_layout": [
+      "identity strip with host_instance_id and host_capability_ref",
+      "runtime facts",
+      "status timeline",
+      "logs/health/stats",
+      "access URLs",
+      "assignments",
+      "receipts",
+      "cleanup/retain actions"
+    ],
+    "runtime_matrix_view": [
+      "one row per runtime family",
+      "capability_state",
+      "preflight result",
+      "trust tier",
+      "supported operations",
+      "blocked reason",
+      "allowed actions",
+      "last validated timestamp"
+    ],
+    "host_lab_session_view": [
+      "scenario/test session",
+      "consumer surface",
+      "run/attempt/thread/test refs",
+      "live/retained state",
+      "logs/artifacts",
+      "cleanup disposition"
+    ],
+    "empty_setup_error_states": [
+      "no container-related project detected",
+      "runtime missing",
+      "permission required",
+      "FileSafe blocked",
+      "host untrusted",
+      "stale refresh required",
+      "unsupported runtime",
+      "disabled until explicit trust/approval"
+    ],
+    "negative_constraints": [
+      "Do not copy PMConcept.html HTML/CSS/demo code.",
+      "Do not create a separate Coasts website.",
+      "Do not make a new top-level Unraid shell panel.",
+      "Do not hide broad runtime detail in the old small Docker side-panel only."
+    ]
+  },
+  "ats_adapter_contract": {
+    "flow": [
+      "Test Capability Discovery detects containerized-host needs and candidate host families.",
+      "Test Harness Probe records whether selected host profile/scenario can launch.",
+      "TestStrategy binds required_capability_refs plus host_profile_id or host requirement shape.",
+      "ATS requests a host through host_capability_ref/host_profile_id, not backend ids.",
+      "Preflight emits host_preflight_receipt before execution.",
+      "Launch emits host_assignment_id, host_instance_id, port_access_refs, and artifact/log expectations.",
+      "TestRunReceipt records containerized execution evidence and cleanup/retention disposition."
+    ],
+    "compose_primary_rule": "Compose scenarios are the primary ATS path for web app preview, dependency stack bring-up, and full E2E, with a broader containerized test host adapter family underneath for non-Compose and runtime-specific hosts.",
+    "TestRunReceipt_additions": [
+      "host_capability_ref",
+      "host_profile_id?",
+      "host_instance_id?",
+      "host_assignment_id?",
+      "runtime_family",
+      "compose_scenario_id?",
+      "port_access_refs[]",
+      "host_preflight_receipt_ref",
+      "host_execution_receipt_ref",
+      "cleanup_retention_receipt_ref",
+      "blocked_reason_code?",
+      "retained_for_debug?"
+    ],
+    "negative_constraints": [
+      "Do not mark containerized execution successful without lane-appropriate receipts.",
+      "Do not make Compose the only possible ATS path.",
+      "Do not require human eyeballing for host/test completion."
+    ]
+  },
+  "lifecycle_state_machines": {
+    "profile_states": [
+      "draft",
+      "validating",
+      "ready",
+      "degraded",
+      "retired"
+    ],
+    "build_states": [
+      "not_built",
+      "preflight_required",
+      "building",
+      "built",
+      "stale",
+      "failed",
+      "historical"
+    ],
+    "instance_states": [
+      "planned",
+      "preflight_required",
+      "preflight_failed",
+      "ready",
+      "starting",
+      "running",
+      "degraded",
+      "blocked",
+      "stopping",
+      "stopped",
+      "failed",
+      "retained_for_debug",
+      "cleanup_pending",
+      "cleaned",
+      "orphaned",
+      "historical"
+    ],
+    "assignment_states": [
+      "requested",
+      "accepted",
+      "active",
+      "released",
+      "blocked",
+      "expired"
+    ],
+    "test_session_states": [
+      "planned",
+      "preflight",
+      "running",
+      "evidence_collecting",
+      "passed",
+      "failed",
+      "blocked",
+      "cleanup",
+      "retained_for_debug",
+      "complete"
+    ],
+    "required_transitions": [
+      "profile ready requires validation or explicit blocked/degraded state",
+      "instance running requires successful preflight and assignment or user-start command",
+      "failed test/session applies retain-on-failure unless policy says immediate cleanup",
+      "cleanup requires cleanup_retention_receipt",
+      "orphaned resources reconcile to retained_for_debug, cleaned, historical, or blocked with explicit reason"
+    ],
+    "negative_constraints": [
+      "Do not silently discard failed host instances before receipts/artifacts are available.",
+      "Do not infer cleanup from missing runtime resources; use reference_state and cleanup receipts."
+    ]
+  },
+  "control_plane_contract": {
+    "request_shape": {
+      "HostOperationRequest": [
+        "operation_id",
+        "source_surface",
+        "command_id?",
+        "requested_action",
+        "host_capability_ref?",
+        "host_profile_id?",
+        "host_instance_id?",
+        "execution_unit_context_ref?",
+        "permission_snapshot_id?",
+        "filesafe_scope_ref?",
+        "risk_class",
+        "preflight_required",
+        "allowed_action_ids[]?",
+        "expected_receipts[]"
+      ]
+    },
+    "routing_rules": [
+      "GUI commands use `cmd.docker.*` / `cmd.docker.k8s.*` or routed Docker/Hosts page actions.",
+      "Assistant Chat and Orchestrator requests resolve to HostOperationRequest before dispatch.",
+      "Executor/Tools/ATS consume host_capability_ref and host_assignment_id rather than calling a Coasts-like local API.",
+      "Terminal-like actions are audited host operations with bounded transcript policy.",
+      "File/artifact access routes through FileSafe and Runtime Artifacts projection."
+    ],
+    "host_vs_runtime_command_split": "Host-side commands such as lint/typecheck/format/git/package installs/static analysis/browser tests stay host/worktree side unless they need runtime services. Container-runtime commands are used for service context, database/API/integration work, runtime-specific tests, logs, exec, and artifact capture.",
+    "negative_constraints": [
+      "Do not copy Coasts HTTP `/api/v1`, permissive CORS, SSE/WebSocket terminal, or file/service controls blindly.",
+      "Do not route every command through a container just because a host exists.",
+      "Do not let container exec bypass Executor, Permissions, FileSafe, UI_Command_Catalog, or receipts."
+    ]
+  },
+  "source_lineage_classification": {
+    "atom-0009": "accepted as compatibility/source-lineage only: Coastfile, Git worktrees, dynamic/canonical ports, offline-first, and build-once/run-many are useful lineage concepts, not PM obligations unless separately accepted.",
+    "atom-0015": "accepted as PM-native requirement: dynamic URLs stay visible for every instance; canonical ports/URLs are convenience bindings for active selected/checked-out instance; access records drive Open App/Open Container actions.",
+    "atom-0019": "accepted as high-risk constraints: privileged DinD, remote/secret flows, SSH tunnels, bind mounts, terminal/file/service controls, and command secret extractors require PM gates or disabled states.",
+    "atom-0030": "accepted and resolved by the runtime/execution matrices: `whole thing for mvp` means complete matrix coverage plus precise blocked/unsupported states, not parity promises.",
+    "atom-0023": "accepted as PM command-routing rule: host-side vs container-runtime command split is mandatory.",
+    "atom-0024": "accepted as PM control-plane negative constraint: do not copy Coasts local API/terminal/file controls blindly."
+  },
+  "implementation_readiness_result": {
+    "implementation_ready_in_ledger": true,
+    "classification": "implementation-ready as a ledger packet for future compile, pending explicit user request to compile into canonical Plans",
+    "remaining_non_blocking_notes": [
+      "Canonical Plans are not written yet by instruction.",
+      "WorkNodes/NodeSeeds/executable queues/runtime dispatch remain intentionally not created.",
+      "Subagent evidence may be folded in later if it reveals refinements, but the known audit gaps are filled in this ledger."
+    ]
+  },
+  "owner_hints": [
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Run_Modes.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md",
+    "Plans/Permissions_System.md",
+    "Plans/FileSafe.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Tools.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/orchestrator-subagent-integration.md"
+  ],
+  "validation_notes": [
+    "This shard is source-lineage planning memory only. It does not create or update canonical Plans, Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, generated shards/evidence, plan_graph, or auto_decisions."
+  ]
+}

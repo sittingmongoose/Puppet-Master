@@ -1,0 +1,35 @@
+{
+  "created_at_utc": "2026-06-30T19:21:27Z",
+  "files": {
+    "blockers": "records/blockers.jsonl",
+    "compile_queue": "state/compile_queue.json",
+    "corrections": "records/corrections.jsonl",
+    "current_state": "state/current.json",
+    "decisions": "records/decisions.jsonl",
+    "design_atoms": "records/design_atoms.jsonl",
+    "events": "events.jsonl",
+    "handoff": "state/handoff.json",
+    "open_items": "state/open_items.json",
+    "operating_capsule": "state/operating_capsule.json",
+    "questions": "records/questions.jsonl"
+  },
+  "last_event_id": "evt-0033",
+  "last_validation_summary": "Bootstrap ledger validator passed after post-hardening subjective/objective readiness audit with zero errors and zero warnings.",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "notes": "Active conversational design/spec ledger for `containerized hosts` inspired by `https://github.com/coast-guard/coasts`. Accepted direction includes PM-native `Docker/Hosts`, full MVP runtime/execution scope, shared host identity, lifecycle defaults, Compose-primary ATS, adjusted evidence-mapped q-0020 through q-0023 defaults, implementation-readiness hardening, subagent refinements, and a validated post-hardening readiness audit. The ledger is implementation-ready as a source packet for future explicit compile, not canonical Plans yet and not code-implementation-ready until compile. No canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files were created.",
+  "phase": "conversation_intake",
+  "profile": "bootstrap_planning",
+  "record_counts": {
+    "events": 33,
+    "design_atoms": 82,
+    "decisions": 20,
+    "questions": 24,
+    "blockers": 0,
+    "corrections": 4
+  },
+  "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "source_context": "Jared asked to do the subjective/objective check again after gap hardening; the validator-clean audit found no remaining ledger-level implementation-readiness gaps.",
+  "status": "active",
+  "title": "Containerized Hosts Planning",
+  "updated_at_utc": "2026-07-01T14:03:37Z"
+}
