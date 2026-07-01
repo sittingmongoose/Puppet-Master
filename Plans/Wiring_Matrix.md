@@ -3259,6 +3259,85 @@ owner_hints:
   - Plans/storage-plan.md
 ```
 
+## Ledger Compile Addendum - pldg-20260701-001-feature-intake
+
+This addendum compiles first-run onboarding route wiring obligations from bootstrap ledger `pldg-20260701-001-feature-intake` into Wiring_Matrix ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, wiring JSON, generated governance artifacts, or a governance seal.
+
+### WM-041 - First-Run Onboarding CTA And Route Wiring
+
+```yaml
+plan_unit_id: WM-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Wiring_Matrix.md
+canonical_text: >-
+  First-run onboarding wiring maps the visible wizard CTAs to the UI_Command_Catalog onboarding command family and
+  owner-doc consumers. `Set up a paid provider`, `Use this provider`, `Sign in`, `Set up provider`, and `Reconnect`
+  open or resume provider/account setup with return context. `Skip for now` writes or references limited
+  `onboarding_setup_state` and opens Planning Wizard in limited setup state without marking Doctor/Health Ready.
+  `Review Free Models`, `Maybe later`, and `Continue to Planning Wizard` preserve the paid-provider-before-Free-Models
+  sequence and saved top-10 order. `Open Planning Wizard` routes to Planning Wizard as the first full app page after
+  setup or skip. The onboarding Teacher copy routes through Assistant Chat/Teacher contracts rather than a separate
+  Teacher surface. Health/Doctor `Set up provider` reuses the same provider setup route and return context. This PlanUnit
+  records wiring obligations only and does not generate wiring JSON.
+gui_related: true
+gui_classification_reason: Defines user-visible CTA routing, first-run step transitions, and cross-surface GUI route behavior.
+depends_on: [F3-411, UCC-106, CV-305, MA-066, MS-122, ACD-431, PWIZ-017]
+unblocks: [ATS-020]
+acceptance_criteria:
+  - Every accepted first-run CTA maps to a cataloged UI command or existing Teacher/Planning Wizard route.
+  - Skip routing preserves limited setup state and cannot produce a false-ready Health state.
+  - Provider setup return context routes back to onboarding, Planning Wizard limited state, Health, or the originating Free Models row/list as appropriate.
+  - Free Models review/defer wiring occurs only after the paid-provider prompt.
+  - Wiring consumes owner docs rather than redefining provider auth, model readiness, Teacher behavior, or Planning Wizard state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future first-run onboarding command wiring fixture
+  - future Health provider-setup return-route fixture
+risk_class: onboarding_wiring_gap
+reasoning_tier: high
+context_scope: first_run_onboarding_wiring
+implementation_surfaces:
+  - Plans/Wiring_Matrix.md
+  - future first-run onboarding route wiring
+node_compile_hint:
+  mode: first_run_onboarding_wiring
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+source_atom_ids: [atom-0016, atom-0032, atom-0033, atom-0035, atom-0036, atom-0037, atom-0038, atom-0040, atom-0041, atom-0042, atom-0043, atom-0045, atom-0046, atom-0047]
+decision_refs: [dec-0003, dec-0004, dec-0006, dec-0007, dec-0008]
+preserved_exact_tokens:
+  - "Set up a paid provider"
+  - "Use this provider"
+  - "Sign in"
+  - "Set up provider"
+  - "Reconnect"
+  - "Skip for now"
+  - "Review Free Models"
+  - "Maybe later"
+  - "Continue to Planning Wizard"
+  - "Open Planning Wizard"
+  - "onboarding_setup_state"
+  - "Provider setup is not finished"
+  - "Teacher"
+negative_constraints:
+  - Do not generate wiring JSON, WorkNodes, NodeSeeds, executable queues, or runtime dispatch during this compile phase.
+  - Do not route skip to the dense Home shell by default.
+  - Do not mark Doctor/Health as Ready when provider setup was skipped.
+  - Do not define UICommand payload/result schemas outside UI_Command_Catalog.
+  - Do not redefine provider/account readiness or Teacher behavior in Wiring_Matrix.
+owner_hints:
+  - Plans/Wiring_Matrix.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+  - Plans/Planning_Wizard.md
+```
+
 ### WM-040 - DRY Method Settings Wiring
 
 ```yaml

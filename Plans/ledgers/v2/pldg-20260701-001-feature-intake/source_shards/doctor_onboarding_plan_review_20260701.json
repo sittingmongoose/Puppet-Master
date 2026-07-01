@@ -1,0 +1,175 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "shard_id": "doctor_onboarding_plan_review_20260701",
+  "created_at_utc": "2026-07-01T18:26:07Z",
+  "source_type": "parallel_plan_review_synthesis",
+  "user_exact_tokens": [
+    "We need to rework the doctor feature and the onboarding flow.",
+    "thoroughly review the plans",
+    "figure out what it in there and what we will need to do",
+    "Our target demographic is vibecoders who don’t know how to do any of this stuff.",
+    "So every newbie friendly.",
+    "The onboarding experience should be simple and not expose too much to the user.",
+    "First I want you to see what we have in the plans doc.",
+    "write yourself a new goal and spawn agents in parallel",
+    "as many as needed",
+    "Split the work into independent pieces",
+    "The docs are too big for one subagent to read individually",
+    "mechanically split the docs up"
+  ],
+  "research_lanes": [
+    {
+      "agent_id": "019f1ee4-ceb0-7300-93a5-176ba53a6862",
+      "lane": "doctor_diagnostics",
+      "result": "Doctor/setup coverage is broad but fragmented across BinaryLocator, CLI providers, OpenCode, MCP, Tools, Runtime Artifacts, and FinalGUI/Health. OpenCode has the clearest concrete Doctor recovery path; other providers mostly have proof/readiness metadata and weaker shared recovery copy."
+    },
+    {
+      "agent_id": "019f1ee4-cf65-7cc2-abc9-f003211b462d",
+      "lane": "onboarding_first_run_ui",
+      "result": "Onboarding exists as primitives, not a complete journey: onboarding:v1, empty states, first-run hints, app-level ELI5, Settings help, and Teach/Teacher exist, but there is no staged open app -> pick project -> connect provider -> verify auth -> first successful ask/run flow."
+    },
+    {
+      "agent_id": "019f1ee4-d031-7771-838f-2ef34da56623",
+      "lane": "provider_account_setup",
+      "result": "Provider/account setup is strong at data-contract level: requested/effective provider selection, account identity, credential_ref, setup states, Free Models compact wrapper, and route-specific readiness. Logged in is not ready."
+    },
+    {
+      "agent_id": "019f1ee4-d0d4-71b1-8e9e-9781c4b99331",
+      "lane": "safety_permissions_redaction",
+      "result": "Permission/FileSafe/storage/redaction coverage is strong, but Doctor/onboarding lacks a single novice assembly. FileSafe should follow newer fail-closed contract; older graceful-degradation wording is a stale/conflict risk."
+    },
+    {
+      "agent_id": "019f1ee4-d16b-76c0-ba34-a537a19b85f7",
+      "lane": "owner_adjudication",
+      "result": "Doctor is not currently a single canonical owner doc. It is a cross-owner feature surface: FinalGUISpec owns visible Health/onboarding placement; subsystem docs own semantics; command docs route /doctor; Runtime Artifacts projects diagnostics."
+    }
+  ],
+  "existing_plan_coverage": [
+    {
+      "topic": "Settings and Health placement",
+      "summary": "FinalGUISpec defines unified Settings with General onboarding/preferences, Models/Providers, Auth, Health, and Advanced; legacy doctor.rs is merged into views/settings.slint Health tab.",
+      "source_refs": [
+        "Plans/FinalGUISpec.md:1261",
+        "Plans/FinalGUISpec.md:2384",
+        "Plans/FinalGUISpec.md:2557"
+      ]
+    },
+    {
+      "topic": "Onboarding primitives",
+      "summary": "FinalGUISpec has onboarding:v1 startup behavior, empty panels with onboarding content, first-run hints, and help affordances, but no complete first-run journey.",
+      "source_refs": [
+        "Plans/FinalGUISpec.md:868",
+        "Plans/FinalGUISpec.md:1844",
+        "Plans/FinalGUISpec.md:2306",
+        "Plans/FinalGUISpec.md:12775"
+      ]
+    },
+    {
+      "topic": "Teach/Teacher guided help",
+      "summary": "Teach/Teacher can launch from help icons, /teach, and natural language, with guided overlays and mutation confirmations; it is a strong optional support surface but risks overexposure if frontloaded.",
+      "source_refs": [
+        "Plans/FinalGUISpec.md:26061",
+        "Plans/assistant-chat-design.md:22756",
+        "Plans/UI_Command_Catalog.md:7403",
+        "Plans/Commands_System.md:3578"
+      ]
+    },
+    {
+      "topic": "Provider/account readiness",
+      "summary": "Multi-Account and Models_System own account/provider/model truth. Setup states include Logged out, Logging in, Logged in, Needs setup, Validating, Ready, Auth expired, Validation failed, Logging out, Disabled; logged in is not ready.",
+      "source_refs": [
+        "Plans/Multi-Account.md:543",
+        "Plans/Multi-Account.md:596",
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md:1476"
+      ]
+    },
+    {
+      "topic": "Provider-specific Doctor checks",
+      "summary": "BinaryLocator owns deterministic binary discovery and setup-health metadata; CLI bridged providers own route proof; OpenCode owns concrete server/auth/provider/version checks; direct providers should not be treated as CLI bridge requirements.",
+      "source_refs": [
+        "Plans/BinaryLocator_Spec.md:301",
+        "Plans/BinaryLocator_Spec.md:438",
+        "Plans/CLI_Bridged_Providers.md:1197",
+        "Plans/CLI_Bridged_Providers.md:1242",
+        "Plans/Provider_OpenCode.md:195"
+      ]
+    },
+    {
+      "topic": "Safety, permissions, and redaction",
+      "summary": "Permissions, FileSafe, storage, Runtime Artifacts, and Automated Testing already define allow/ask/deny, fail-closed guardrails, blocked recovery, diagnostic receipts, redacted exports, and proof requirements.",
+      "source_refs": [
+        "Plans/Permissions_System.md:929",
+        "Plans/FileSafe.md",
+        "Plans/storage-plan.md:15861",
+        "Plans/Runtime_Artifacts_Panel.md:1602",
+        "Plans/Automated_Testing_System.md"
+      ]
+    }
+  ],
+  "synthesis": [
+    "The current Plans have the ingredients for Doctor and onboarding, but not the simple, newbie-friendly vibecoder journey Jared asked for.",
+    "Doctor should initially be treated as a visible Health/onboarding surface that consumes owner-doc semantics, not as a new semantic owner, unless Jared accepts a new generic check registry/result aggregator.",
+    "The first-run path needs a staged flow with one primary next action per step and details hidden behind progressive disclosure.",
+    "Normal onboarding should avoid provider/runtime jargon, raw traces, source hashes, exact upstream payloads, quota/debug internals, and route/probe evidence unless the user opens details or support diagnostics.",
+    "Visible blockers must stay visible: auth expired, missing key/URL, provider offline, no eligible adapter, billing entity required, quota/rate-limit/cooldown, stale readiness before mutation, paid/costed fallback risk, unsupported/no route proof, GitHub missing scopes/secrets/environments.",
+    "Readiness must avoid false-green states: Logged in is not Ready; setup cannot be marked green without route-specific authenticated proof/receipt where the owner docs require it."
+  ],
+  "stale_or_conflict_risks": [
+    {
+      "risk": "Tools checklist says hide if server fails, while later Tools/MCP text says degraded/unavailable rows should stay visible after transient failure handling.",
+      "source_refs": [
+        "Plans/_shards/tools/013-12.-implementation-checklist-ordered-for-implementation-plan.md:25",
+        "Plans/_shards/tools/010-8.-implementation-details-and-technical-notes.md:179",
+        "Plans/_shards/mcp_integration/008-7.-effective-tool-availability-and-gui-surfacing.md:37"
+      ]
+    },
+    {
+      "risk": "Older FileSafe integration language mentions graceful degradation by disabling the guard on init failure; newer FileSafe language is fail-closed and should govern Doctor/onboarding.",
+      "source_refs": [
+        "Plans/_shards/filesafe/007-2.-implementation-details.md:14",
+        "Plans/_shards/filesafe/021-15.-system-integration-analysis.md:525"
+      ]
+    },
+    {
+      "risk": "usage-feature marks Doctor usage integration as deferred/optional, so usage/cost Doctor warnings should not be treated as completed global Doctor behavior.",
+      "source_refs": [
+        "Plans/usage-feature.md",
+        "Plans/_shards/usage-feature/022-planunits.md:2563"
+      ]
+    }
+  ],
+  "candidate_owner_docs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Commands_System.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Multi-Account.md",
+    "Plans/Models_System.md",
+    "Plans/BinaryLocator_Spec.md",
+    "Plans/CLI_Bridged_Providers.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/MCP_Integration.md",
+    "Plans/Tools.md",
+    "Plans/Permissions_System.md",
+    "Plans/FileSafe.md",
+    "Plans/storage-plan.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/usage-feature.md"
+  ],
+  "open_product_calls": [
+    "Should onboarding be a skippable guided setup, a required first-run gate until core checks pass, or a quiet checklist inside the app shell?",
+    "Should the default first-run provider path follow existing paid-provider-first sequencing with Free Models optional/later, or should Free Models be introduced earlier for vibecoders?",
+    "Should Doctor remain a Health tab/onboarding summary that consumes owner docs, or should this redesign define a new generic Doctor registry/result aggregator?",
+    "What first successful action should onboarding drive toward: ask a question about the project, run a non-mutating setup check, inspect project/files, or something else?"
+  ],
+  "non_actions": [
+    "No canonical Plans were edited.",
+    "No Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or updated.",
+    "No implementation files or legacy Iced app files were created."
+  ]
+}

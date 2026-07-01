@@ -3976,6 +3976,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ACD-431",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-431",
+      "to": "CS-053"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-431",
+      "to": "MS-117"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-431",
+      "to": "UCC-102"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "AI-001",
       "to": "AI-002"
     },
@@ -5213,6 +5233,71 @@
       "edge_type": "depends_on",
       "from": "ATS-019",
       "to": "SP-226"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "ACD-431"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "CV-305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "F2-155"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "F3-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "MA-066"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "MI-028"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "MI-029"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "MS-122"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "PWIZ-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "T-088"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "T-089"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "UCC-106"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-020",
+      "to": "WM-041"
     },
     {
       "edge_type": "depends_on",
@@ -11631,6 +11716,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-305",
+      "to": "MA-040"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-305",
+      "to": "MS-121"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -14286,6 +14381,61 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "ACD-426"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "CS-053"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "F2-155"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "F3-409"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "MA-040"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "MA-064"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "MI-028"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "MS-120"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "MS-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "T-088"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-411",
+      "to": "UCC-102"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "G-026",
       "to": "PP-056"
     },
@@ -16231,6 +16381,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "MA-066",
+      "to": "MA-040"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-066",
+      "to": "MA-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-066",
+      "to": "MA-044"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-066",
+      "to": "MA-064"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-066",
+      "to": "MS-121"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "MGAC-001",
       "to": "MGAC-043"
     },
@@ -17878,6 +18053,31 @@
       "edge_type": "depends_on",
       "from": "MS-117",
       "to": "P-055"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-122",
+      "to": "F3-409"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-122",
+      "to": "MA-040"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-122",
+      "to": "MA-064"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-122",
+      "to": "MS-120"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-122",
+      "to": "MS-121"
     },
     {
       "edge_type": "depends_on",
@@ -31343,6 +31543,26 @@
       "edge_type": "depends_on",
       "from": "PWIZ-016",
       "to": "SP-219"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-017",
+      "to": "ACD-431"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-017",
+      "to": "CV-305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-017",
+      "to": "F3-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-017",
+      "to": "PWIZ-001"
     },
     {
       "edge_type": "depends_on",
@@ -50786,6 +51006,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UCC-106",
+      "to": "ACD-431"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-106",
+      "to": "CS-053"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-106",
+      "to": "CV-305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-106",
+      "to": "F3-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-106",
+      "to": "MA-066"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-106",
+      "to": "UCC-102"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UF-001",
       "to": "UF-002"
     },
@@ -56696,6 +56946,41 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "WM-041",
+      "to": "ACD-431"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-041",
+      "to": "CV-305"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-041",
+      "to": "F3-411"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-041",
+      "to": "MA-066"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-041",
+      "to": "MS-122"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-041",
+      "to": "PWIZ-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-041",
+      "to": "UCC-106"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "WS-001",
       "to": "WS-002"
     },
@@ -59333,6 +59618,26 @@
       "edge_type": "unblocks",
       "from": "ACD-429",
       "to": "F3-406"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ACD-431",
+      "to": "ATS-020"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ACD-431",
+      "to": "F3-411"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ACD-431",
+      "to": "UCC-106"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "ACD-431",
+      "to": "WM-041"
     },
     {
       "edge_type": "unblocks",
@@ -63436,6 +63741,31 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "CV-305",
+      "to": "ATS-020"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-305",
+      "to": "F3-411"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-305",
+      "to": "PWIZ-017"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-305",
+      "to": "UCC-106"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-305",
+      "to": "WM-041"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "CW-002",
       "to": "CW-003"
     },
@@ -65021,6 +65351,46 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "F3-411",
+      "to": "ACD-431"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-411",
+      "to": "ATS-020"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-411",
+      "to": "CV-305"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-411",
+      "to": "MA-066"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-411",
+      "to": "MS-122"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-411",
+      "to": "PWIZ-017"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-411",
+      "to": "UCC-106"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F3-411",
+      "to": "WM-041"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "G-026",
       "to": "ATS-014"
     },
@@ -65173,6 +65543,26 @@
       "edge_type": "unblocks",
       "from": "MA-063",
       "to": "UF-074"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MA-066",
+      "to": "ATS-020"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MA-066",
+      "to": "F3-411"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MA-066",
+      "to": "UCC-106"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MA-066",
+      "to": "WM-041"
     },
     {
       "edge_type": "unblocks",
@@ -65373,6 +65763,21 @@
       "edge_type": "unblocks",
       "from": "MS-117",
       "to": "ATS-014"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MS-122",
+      "to": "ATS-020"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MS-122",
+      "to": "F3-411"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "MS-122",
+      "to": "MA-066"
     },
     {
       "edge_type": "unblocks",
@@ -66221,6 +66626,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PWIZ-017",
+      "to": "ATS-020"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PWIZ-017",
+      "to": "WM-041"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "RAP-029",
       "to": "F3-397"
     },
@@ -66866,6 +67281,21 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "UCC-106",
+      "to": "ATS-020"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-106",
+      "to": "PWIZ-017"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UCC-106",
+      "to": "WM-041"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "UF-074",
       "to": "F3-400"
     },
@@ -66998,9 +67428,14 @@
       "edge_type": "unblocks",
       "from": "WM-040",
       "to": "ATS-018"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "WM-041",
+      "to": "ATS-020"
     }
   ],
-  "generated_at_utc": "2026-07-01T16:54:35Z",
+  "generated_at_utc": "2026-07-01T20:42:02Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -75418,6 +75853,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "first_run_teacher_handoff",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-431",
+      "reasoning_tier": "standard",
+      "risk_class": "teacher_onboarding_overexposure",
+      "source_location": {
+        "heading": "ACD-431 - First-Run Teacher Handoff From Onboarding",
+        "heading_level": 3,
+        "heading_line": 23211,
+        "line": 23213,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Architecture_Invariants.md",
@@ -78187,6 +78639,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "first_run_onboarding_doctor_acceptance",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-020",
+      "reasoning_tier": "high",
+      "risk_class": "first_run_acceptance_gap",
+      "source_location": {
+        "heading": "ATS-020 - First-Run Onboarding Doctor And Planning Wizard Acceptance Tests",
+        "heading_level": 3,
+        "heading_line": 1540,
+        "line": 1542,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_criterion"
     },
     {
       "context_scope": "repo_agents",
@@ -87635,6 +88104,23 @@
         "heading_level": 3,
         "heading_line": 18936,
         "line": 18938,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "first_run_onboarding_contracts",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-305",
+      "reasoning_tier": "high",
+      "risk_class": "onboarding_handoff_state_drift",
+      "source_location": {
+        "heading": "CV-305 - Onboarding Setup State And Health Summary Contract",
+        "heading_level": 3,
+        "heading_line": 19030,
+        "line": 19032,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -106341,6 +106827,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "first_run_onboarding_doctor_health_gui",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-411",
+      "reasoning_tier": "high",
+      "risk_class": "first_run_gui_false_ready",
+      "source_location": {
+        "heading": "F3-411 - First-Run Provider Onboarding And Doctor Health GUI",
+        "heading_level": 3,
+        "heading_line": 26479,
+        "line": 26481,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/feature-list.md",
@@ -114620,6 +115123,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "first_run_provider_account_setup",
+      "gui_related": true,
+      "owner_doc": "Plans/Multi-Account.md",
+      "plan_unit_id": "MA-066",
+      "reasoning_tier": "high",
+      "risk_class": "account_setup_ready_state_drift",
+      "source_location": {
+        "heading": "MA-066 - First-Run Provider Account Setup Rows And Return Context",
+        "heading_level": 3,
+        "heading_line": 4867,
+        "line": 4869,
+        "path": "Plans/Multi-Account.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
@@ -118879,8 +119399,25 @@
       "source_location": {
         "heading": "MS-121 - Free Models Availability Reason Model And Setup Eligibility",
         "heading_level": 3,
-        "heading_line": 8222,
-        "line": 8224,
+        "heading_line": 8303,
+        "line": 8305,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "first_run_provider_model_setup",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-122",
+      "reasoning_tier": "high",
+      "risk_class": "provider_readiness_false_ready",
+      "source_location": {
+        "heading": "MS-122 - First-Run Paid Provider And Free Models Sequencing",
+        "heading_level": 3,
+        "heading_line": 8226,
+        "line": 8228,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -140681,6 +141218,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "first_run_planning_wizard_landing",
+      "gui_related": true,
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "plan_unit_id": "PWIZ-017",
+      "reasoning_tier": "high",
+      "risk_class": "planning_wizard_false_ready_handoff",
+      "source_location": {
+        "heading": "PWIZ-017 - First-Run Onboarding Entry And Limited Setup Landing",
+        "heading_level": 3,
+        "heading_line": 1340,
+        "line": 1342,
+        "path": "Plans/Planning_Wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "runtime_artifacts_retired_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
@@ -154230,6 +154784,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "first_run_onboarding_commands",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-106",
+      "reasoning_tier": "high",
+      "risk_class": "onboarding_command_gap",
+      "source_location": {
+        "heading": "UCC-106 - First-Run Onboarding Command Family",
+        "heading_level": 3,
+        "heading_line": 7710,
+        "line": 7712,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "usage_feature_generated_tail_batch_197",
       "gui_related": false,
       "owner_doc": "Plans/usage-feature.md",
@@ -157622,8 +158193,25 @@
       "source_location": {
         "heading": "WM-040 - DRY Method Settings Wiring",
         "heading_level": 3,
-        "heading_line": 3262,
-        "line": 3264,
+        "heading_line": 3341,
+        "line": 3343,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "first_run_onboarding_wiring",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-041",
+      "reasoning_tier": "high",
+      "risk_class": "onboarding_wiring_gap",
+      "source_location": {
+        "heading": "WM-041 - First-Run Onboarding CTA And Route Wiring",
+        "heading_level": 3,
+        "heading_line": 3266,
+        "line": 3268,
         "path": "Plans/Wiring_Matrix.md"
       },
       "status": "accepted",
@@ -157874,12 +158462,12 @@
     "build_order_available": false,
     "build_order_blocked_node_count": 48,
     "cycle_blocker_count": 20,
-    "depends_on_edge_count": 11249,
+    "depends_on_edge_count": 11306,
     "downstream_blocked_node_count": 28,
-    "edge_count": 13227,
-    "node_count": 5345,
+    "edge_count": 13314,
+    "node_count": 5354,
     "true_cycle_component_count": 5,
-    "unblocks_edge_count": 1978,
+    "unblocks_edge_count": 2008,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

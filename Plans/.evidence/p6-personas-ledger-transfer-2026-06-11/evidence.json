@@ -13,7 +13,7 @@
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "91bcd0b171815c2822094085d3e4a9d34e3fdf9c61dbb106a0eae64e9cf296a3"
+      "sha256": "fa3d584c388ec8c2d0837eac77d8053b35966f70336ccde5dd4337bb3e257360"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
@@ -73,7 +73,7 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "45c83f70b0a63ee76b570c6174852b7d79dd44efe500867feb5a02aee6dfe339"
+      "sha256": "b91f53a86e8ac90ed220455e9bf72576f98516f455b05185a4ba3eecf0e29352"
     },
     {
       "note": "Shard regeneration report.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "1b6152feaee90b8439916ed2ba2c144a67d2549fb0e5639a23c7ed47610b6797"
+      "sha256": "27f53d1f81ac05e5ea28aff8190eb78d1349c49904c9b2ece8a249f235be30a1"
     }
   ],
   "checks": [
@@ -236,7 +236,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index validates with 5298 PlanUnits, 18946 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
+      "details": "PASS: 5354 PlanUnits, 19184 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -351,7 +351,7 @@
     {
       "name": "node-readiness-boundary",
       "result": "PASS",
-      "details": "node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no runtime compiler enablement was performed."
+      "details": "PASS: node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     },
     {
       "name": "audit-20260623-002-fff-schema-registry-repair",

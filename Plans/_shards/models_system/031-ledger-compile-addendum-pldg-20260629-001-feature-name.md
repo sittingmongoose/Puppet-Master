@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8030-L8284
+Source lines: L8030-L8220
 
-Source SHA256: `08dd51d8fa8aca990bf03bf9ef28ea441bfe101dfa580031b178c6697e8067d2`
+Source SHA256: `056fde94e0a3c2cb427ccb80051ce9b356574db25f4853c5de88ad8cb0ec6274`
 
 ---
 
@@ -193,70 +193,6 @@ negative_constraints:
   - Do not silently reorder the user's saved top-10 list when Auto Apply imports validated Free Models entries.
   - Do not include recommended models, `Recommended for this section`, recommendation sorting/highlighting, recommendation confidence labels, local recommendation learning, online review lookup, or benchmark/probe calibration in the current Free Models version.
   - Do not hide requested/effective model differences when section settings override the global top-10.
-owner_hints:
-  - Plans/Models_System.md
-  - Plans/FinalGUISpec.md
-  - Plans/Multi-Account.md
-  - Plans/usage-feature.md
-```
-
-### MS-121 - Free Models Availability Reason Model And Setup Eligibility
-
-```yaml
-plan_unit_id: MS-121
-unit_type: requirement
-status: accepted
-owner_doc: Plans/Models_System.md
-canonical_text: >-
-  Free Models availability states are derived from underlying provider/account/model/setup/quota/policy facts and exposed through compact friendly labels while retaining canonical skip and pressure reasons. Normal unavailable reason priority is `Needs sign-in`, `Rate limited`, `Provider offline`, `No longer free`, `Update issue`, then `Unknown`, with `Multiple issues` when no single reason dominates. Setup actions delegate to the exact underlying PM provider/account setup surface, carry return context to the originating Free Models row/list, refresh eligibility on return, and keep saved top-10 order unchanged.
-gui_related: true
-gui_classification_reason: Defines user-visible availability labels, setup actions, compact row reasons, and detail expansion behavior.
-depends_on: []
-unblocks: []
-acceptance_criteria:
-  - Compact rows show one top plain reason or `Multiple issues`, while expanded details may show current skip reason, underlying provider/account, last checked time, last successful route if known, cooldown/Retry now state if known, and source/ref.
-  - "Setup labels map to account state: `Sign in`, `Set up provider`, or `Reconnect`."
-  - Setup cancel or failed auth returns to the originating Free Models row/list, keeps saved top-10 unchanged, refreshes eligibility if possible, and shows `Still needs sign-in` or `Could not connect` without separate notification.
-  - Friendly availability labels map to canonical failure/pressure/receipt records and never replace source identity.
-validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - Free Models availability reason mapping fixtures
-  - Free Models setup return-context fixtures
-risk_class: availability_reason_mapping_drift
-reasoning_tier: high
-context_scope: free_models_availability_and_setup
-implementation_surfaces:
-  - Plans/Models_System.md
-  - Plans/FinalGUISpec.md
-  - Plans/Multi-Account.md
-  - Plans/usage-feature.md
-  - Plans/Runtime_Artifacts_Panel.md
-node_compile_hint:
-  mode: free_models_availability_setup_planunit
-  create_worknodes: false
-  create_nodeseeds: false
-source_lineage:
-  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
-source_atom_ids: [atom-0084, atom-0085, atom-0086, atom-0088, atom-0089, atom-0090, atom-0114, atom-0115, atom-0119, atom-0120, atom-0123, atom-0127, atom-0130, atom-0132, atom-0134, atom-0136, atom-0161, atom-0163, atom-0165, atom-0167, atom-0169, atom-0170, atom-0173, atom-0174, atom-0228, atom-0232, atom-0236, atom-0240, atom-0244, atom-0248, atom-0251, atom-0255, atom-0257, atom-0259, atom-0261, atom-0263, atom-0265, atom-0266, atom-0267, atom-0269, atom-0270, atom-0271, atom-0285, atom-0286]
-preserved_exact_tokens:
-  - "Needs sign-in"
-  - "Rate limited"
-  - "Provider offline"
-  - "No longer free"
-  - "Update issue"
-  - "Unknown"
-  - "Multiple issues"
-  - "Set up provider"
-  - "Sign in"
-  - "Reconnect"
-  - "Still needs sign-in"
-  - "Could not connect"
-  - "originating Free Models row/list"
-negative_constraints:
-  - Do not collect or store underlying provider credentials inside the Free Models provider.
-  - Do not expose import/runtime jargon in the normal Free Models setup path.
-  - Do not create separate notifications for setup cancel or failed auth returns.
-  - Do not show raw provider error payloads in normal expanded availability rows.
 owner_hints:
   - Plans/Models_System.md
   - Plans/FinalGUISpec.md

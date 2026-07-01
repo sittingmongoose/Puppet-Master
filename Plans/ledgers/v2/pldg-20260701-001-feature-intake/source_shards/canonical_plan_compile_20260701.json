@@ -1,0 +1,150 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "shard_id": "canonical_plan_compile_20260701",
+  "created_at_utc": "2026-07-01T20:31:26Z",
+  "source_type": "canonical_plan_compile_summary",
+  "event_ref": "evt-0017",
+  "compile_status": "compiled_validated_pending_governance_seal",
+  "compiled_plan_unit_ids": [
+    "F3-411",
+    "MS-122",
+    "MA-066",
+    "CV-305",
+    "ACD-431",
+    "UCC-106",
+    "PWIZ-017",
+    "WM-041",
+    "ATS-020"
+  ],
+  "compiled_owner_docs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Contracts_V0.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Automated_Testing_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Contracts_V0.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "atom_disposition_summary": {
+    "compiled_to_plan": [
+      "atom-0006",
+      "atom-0007",
+      "atom-0008",
+      "atom-0010",
+      "atom-0015",
+      "atom-0016",
+      "atom-0024",
+      "atom-0025",
+      "atom-0027",
+      "atom-0029",
+      "atom-0031",
+      "atom-0032",
+      "atom-0033",
+      "atom-0034",
+      "atom-0035",
+      "atom-0036",
+      "atom-0037",
+      "atom-0038",
+      "atom-0039",
+      "atom-0040",
+      "atom-0041",
+      "atom-0042",
+      "atom-0043",
+      "atom-0044",
+      "atom-0045",
+      "atom-0046",
+      "atom-0047"
+    ],
+    "left_as_candidate_source_lineage_only": "atom-0011, atom-0012, atom-0013, atom-0014, atom-0017, atom-0018, atom-0019, atom-0020, atom-0021, atom-0022, atom-0023, atom-0026, atom-0028, atom-0030",
+    "not_for_plan_process_scaffold": "atom-0001, atom-0002, atom-0003, atom-0004, atom-0005, atom-0009"
+  },
+  "contradiction_dispositions": [
+    {
+      "item_id": "contradiction-0001",
+      "disposition": "resolved_in_compile",
+      "resolution": "Treat `hide if server fails` as run/tool invocation hiding or disabling for unavailable tools, not as permission to hide MCP/server rows from GUI, Doctor, Health, or onboarding. F3-411 and ATS-020 require degraded/unavailable rows to remain visible; owner canon T-088, T-089, MI-028, and MI-029 govern MCP/tool visibility."
+    },
+    {
+      "item_id": "contradiction-0002",
+      "disposition": "resolved_in_compile",
+      "resolution": "Treat older FileSafe graceful-degradation wording as stale lineage. F3-411 and ATS-020 consume fail-closed FileSafe readiness and F2-155; disabled guard initialization cannot be presented as Ready."
+    }
+  ],
+  "non_actions": [
+    "No WorkNodes were created.",
+    "No NodeSeeds were created.",
+    "No executable queues were created.",
+    "No implementation files or runtime dispatch were created.",
+    "No Spec_Lock, shards, evidence, plan_graph, or auto_decisions were updated.",
+    "Governance seal remains pending explicit request."
+  ],
+  "updated_at_utc": "2026-07-01T20:36:34Z",
+  "canonical_plan_targets": [
+    "Plans/Contracts_V0.md"
+  ],
+  "migration_validation_note": "pm-plan-migration validate currently reports stale migration proof hashes for changed owner docs; migration proof refresh is not performed in this compile pass because generated outputs are limited to Plans/.plan_index until an explicit migration/governance refresh is requested.",
+  "validation_commands_run": [
+    {
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
+      "result": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "result": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "result": "fail_stale_migration_proof_not_refreshed_in_compile_phase"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "result": "fail_pending_governance_seal_stale_shards"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "result": "fail_pending_governance_seal_stale_evidence_and_shards"
+    },
+    {
+      "command": "git diff --check",
+      "result": "pass"
+    }
+  ],
+  "validation_summary": {
+    "bootstrap_ledger_validator": "pass",
+    "plan_index_generate": "pass",
+    "plan_index_validate": "pass",
+    "plan_migration_validate": "fail_stale_migration_proof_not_refreshed_in_compile_phase",
+    "shard_check": "fail_pending_governance_seal_stale_shards",
+    "plans_verify_run_gates": "fail_pending_governance_seal_stale_evidence_and_shards",
+    "git_diff_check": "pass",
+    "governance_status": "pending_seal",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "no_worknodes_created": true,
+    "no_nodeseed_candidates_created": true,
+    "no_executable_queues_created": true,
+    "no_runtime_build_surfaces_created": true,
+    "no_implementation_files_created": true,
+    "latest_projection_updated_at_utc": "2026-07-01T20:36:34Z",
+    "ledger_health": "pass"
+  }
+}

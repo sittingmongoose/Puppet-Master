@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "shard_id": "onboarding_doctor_user_decisions_20260701",
+  "created_at_utc": "2026-07-01T18:49:06Z",
+  "source_type": "user_decision_batch",
+  "user_exact_tokens": [
+    "separate modal/wizard before the user enters the full shell.",
+    "Skippable guided setup.",
+    "Fee models appear after telling the user to setup paid providers.",
+    "Doctor remains as a health summary.",
+    "Just setup providers and tell the user that they can use the assistant chat to access teacher who can tell them anything they need to know.",
+    "After the setup, it dumps the user into the planning Wizard page."
+  ],
+  "canonical_interpretation": [
+    "First-run onboarding is a separate modal/wizard shown before the full shell.",
+    "The guided setup is skippable.",
+    "The onboarding wizard is scoped to provider setup, not a broad full-product tour.",
+    "`Fee models` is preserved exactly as user wording and interpreted in context as the existing Free Models surface unless Jared later corrects the term.",
+    "The setup flow should ask/tell users to set up paid providers before exposing Free Models.",
+    "Doctor remains a Health summary and should not become a generic Doctor registry/result aggregator in this redesign.",
+    "The wizard should tell users they can use Assistant Chat to access Teacher for explanations and help.",
+    "After setup completes, the app routes the user into the Planning Wizard page."
+  ],
+  "answered_questions": [
+    "q-0002",
+    "q-0003",
+    "q-0004",
+    "q-0005",
+    "q-0006"
+  ],
+  "new_open_question": "q-0007",
+  "non_actions": [
+    "No canonical Plans were edited.",
+    "No PMConcept.html changes were made.",
+    "No Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or updated."
+  ]
+}

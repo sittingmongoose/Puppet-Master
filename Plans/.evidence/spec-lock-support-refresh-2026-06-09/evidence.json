@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "45c83f70b0a63ee76b570c6174852b7d79dd44efe500867feb5a02aee6dfe339"
+      "sha256": "b91f53a86e8ac90ed220455e9bf72576f98516f455b05185a4ba3eecf0e29352"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -106,7 +106,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index validates with 5298 PlanUnits, 18946 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
+      "details": "PASS: 5354 PlanUnits, 19184 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -216,7 +216,7 @@
     {
       "name": "node-readiness-boundary",
       "result": "PASS",
-      "details": "node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no runtime compiler enablement was performed."
+      "details": "PASS: node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     },
     {
       "name": "audit-20260623-002-fff-spec-lock-refresh",

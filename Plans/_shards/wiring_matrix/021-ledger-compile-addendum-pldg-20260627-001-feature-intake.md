@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3187-L3325
+Source lines: L3187-L3260
 
-Source SHA256: `e8e5fb6fc706a46ddc32b85e529e3d6e983c02655ce51ef435ea9b886b4471cf`
+Source SHA256: `d0e6748a3fa3a920fc557eabe4c198ee2512b7948ff45642932f209e2ee2d566`
 
 ---
 
@@ -76,71 +76,6 @@ negative_constraints:
   - Do not generate wiring JSON, WorkNodes, or executable queues during this compile phase.
   - Do not wire local preview through remote delivery.
   - Do not let quiet/mute override blocked or security-sensitive notifications.
-owner_hints:
-  - Plans/Wiring_Matrix.md
-  - Plans/UI_Command_Catalog.md
-  - Plans/FinalGUISpec.md
-  - Plans/storage-plan.md
-```
-
-### WM-040 - DRY Method Settings Wiring
-
-```yaml
-plan_unit_id: WM-040
-unit_type: requirement
-status: accepted
-owner_doc: Plans/Wiring_Matrix.md
-canonical_text: >-
-  DRY Method settings wiring maps `cmd.settings.agent_rules.dry_method_default_guard.set` from Settings > General >
-  Agent Rules to `app.agent_rules.dry_method_default_guard` storage, emits
-  `settings.agent_rules.dry_method_default_guard.updated`, refreshes Assistant Chat and run-detail DRY disclosure
-  projections, and records receipt provenance for enabled and disabled_by_user states. This wiring does not generate
-  wiring JSON and does not disable explicit instructions, safety, secrets, source authority, governance, permissions,
-  or source-control hygiene when the default DRY guard is turned off.
-gui_related: true
-gui_classification_reason: Defines user-visible settings toggle wiring and disclosure refresh behavior.
-depends_on: [UCC-104, CV-299, SP-223, ACD-429]
-unblocks: [ATS-018]
-acceptance_criteria:
-  - The Settings toggle writes only enabled or disabled_by_user to the DRY default-guard setting.
-  - Assistant Chat and run-detail disclosures refresh after the setting changes.
-  - Disabled DRY state remains receipt-backed and does not bypass non-DRY authority boundaries.
-validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - DRY Method settings wiring fixture
-risk_class: dry_method_settings_wiring_gap
-reasoning_tier: high
-context_scope: dry_method_settings_wiring
-implementation_surfaces:
-  - Plans/Wiring_Matrix.md
-  - future Settings command wiring
-node_compile_hint:
-  mode: dry_method_settings_wiring
-  create_worknodes: false
-  create_nodeseeds: false
-source_lineage:
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-chat-what-why
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-001
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0074
-  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
-source_atom_ids: [atom-0073, atom-0074, atom-0089]
-decision_refs: [dec-0016, dec-0017]
-preserved_exact_tokens:
-  - "cmd.settings.agent_rules.dry_method_default_guard.set"
-  - "app.agent_rules.dry_method_default_guard"
-  - "enabled"
-  - "disabled_by_user"
-  - "settings.agent_rules.dry_method_default_guard.updated"
-  - "DRY applied"
-  - "DRY degraded"
-  - "DRY disabled"
-negative_constraints:
-  - Do not generate wiring JSON, WorkNodes, or executable queues during this compile phase.
-  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
-  - Do not hide trust-affecting DRY state in backend logs only.
 owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/UI_Command_Catalog.md

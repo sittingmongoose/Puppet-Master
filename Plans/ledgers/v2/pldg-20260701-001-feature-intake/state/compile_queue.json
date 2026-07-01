@@ -1,0 +1,765 @@
+{
+  "schema_id": "pm.bootstrap_compile_queue.v1",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "status": "compiled_governance_sealed",
+  "governance_status": "sealed",
+  "last_event_id": "evt-0018",
+  "terminal_ledger_event_id": "evt-0018",
+  "updated_at_utc": "2026-07-01T20:52:02Z",
+  "items": [
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-001",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_atom_ids": [
+        "atom-0006",
+        "atom-0007",
+        "atom-0008",
+        "atom-0010",
+        "atom-0015",
+        "atom-0016",
+        "atom-0024",
+        "atom-0025",
+        "atom-0027",
+        "atom-0029",
+        "atom-0031",
+        "atom-0032",
+        "atom-0033",
+        "atom-0034",
+        "atom-0035",
+        "atom-0036",
+        "atom-0037",
+        "atom-0038",
+        "atom-0039",
+        "atom-0040",
+        "atom-0041",
+        "atom-0042",
+        "atom-0043",
+        "atom-0044",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "F3-411"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-002",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Models_System.md"
+      ],
+      "source_atom_ids": [
+        "atom-0016",
+        "atom-0033",
+        "atom-0038",
+        "atom-0039",
+        "atom-0040",
+        "atom-0041",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "MS-122"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-003",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Multi-Account.md"
+      ],
+      "source_atom_ids": [
+        "atom-0010",
+        "atom-0016",
+        "atom-0033",
+        "atom-0034",
+        "atom-0040",
+        "atom-0041",
+        "atom-0042",
+        "atom-0044",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "MA-066"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-004",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Contracts_V0.md"
+      ],
+      "source_atom_ids": [
+        "atom-0034",
+        "atom-0042",
+        "atom-0044",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "CV-305"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-005",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "source_atom_ids": [
+        "atom-0007",
+        "atom-0035",
+        "atom-0043",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "ACD-431"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-006",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "source_atom_ids": [
+        "atom-0032",
+        "atom-0033",
+        "atom-0035",
+        "atom-0036",
+        "atom-0037",
+        "atom-0038",
+        "atom-0040",
+        "atom-0041",
+        "atom-0042",
+        "atom-0043",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "UCC-106"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-007",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Planning_Wizard.md"
+      ],
+      "source_atom_ids": [
+        "atom-0029",
+        "atom-0036",
+        "atom-0037",
+        "atom-0038",
+        "atom-0042",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "PWIZ-017"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-008",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Wiring_Matrix.md"
+      ],
+      "source_atom_ids": [
+        "atom-0016",
+        "atom-0032",
+        "atom-0033",
+        "atom-0035",
+        "atom-0036",
+        "atom-0037",
+        "atom-0038",
+        "atom-0040",
+        "atom-0041",
+        "atom-0042",
+        "atom-0043",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "WM-041"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    },
+    {
+      "schema_id": "pm.bootstrap_compile_queue_item.v1",
+      "queue_id": "cq-doctor-onboarding-009",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "status": "compiled",
+      "lane": "doctor_onboarding_first_run_compile",
+      "target_doc": "Plans/Contracts_V0.md",
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "source_atom_ids": [
+        "atom-0007",
+        "atom-0008",
+        "atom-0015",
+        "atom-0016",
+        "atom-0037",
+        "atom-0038",
+        "atom-0040",
+        "atom-0041",
+        "atom-0042",
+        "atom-0043",
+        "atom-0044",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047"
+      ],
+      "compiled_plan_unit_ids": [
+        "ATS-020"
+      ],
+      "compiled_outputs": [
+        "Plans/.evidence/**",
+        "Plans/.plan_index/acceptance_units.jsonl",
+        "Plans/.plan_index/coverage_report.json",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/doc_cards.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Spec_Lock.json",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/_shards/**",
+        "Plans/assistant-chat-design.md",
+        "Plans/plan_graph.json"
+      ],
+      "compile_disposition": "create_new_planunit",
+      "compiled_at_utc": "2026-07-01T20:34:05Z",
+      "notes": "Compiled PlanUnit output is governance sealed. No WorkNodes, NodeSeeds, executable queues, implementation files, runtime/build surfaces, production build tasks, or PlanCompile enablement were created.",
+      "governance_status": "sealed",
+      "sealed_at_utc": "2026-07-01T20:47:43Z"
+    }
+  ],
+  "compiled_owner_docs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Contracts_V0.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Automated_Testing_System.md"
+  ],
+  "compiled_plan_outputs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Contracts_V0.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "compiled_plan_unit_ids": [
+    "F3-411",
+    "MS-122",
+    "MA-066",
+    "CV-305",
+    "ACD-431",
+    "UCC-106",
+    "PWIZ-017",
+    "WM-041",
+    "ATS-020"
+  ],
+  "canonical_plan_targets": [
+    "Plans/Contracts_V0.md"
+  ],
+  "latest_audit_ref": "",
+  "latest_audit_status": "",
+  "notes": "Governance seal passed: migration proof, PlanUnit index, configured shards, evidence, Spec Lock, plan graph, auto decisions, run-gates, ledger validators, and git diff --check are green. Node readiness remains blocked_compiler_contract_incomplete and runtime_disabled.",
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "bootstrap_ledger_system_validator": "pass",
+    "plan_index_generate": "pass",
+    "plan_index_validate": "pass",
+    "plan_migration_validate": "pass",
+    "shard_generate": "pass",
+    "shard_check": "pass",
+    "plans_verify_run_gates": "pass",
+    "validate_auto_decisions": "pass",
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass",
+    "validate_plan_graph": "pass",
+    "git_diff_check": "pass",
+    "governance_status": "sealed",
+    "governance_seal": "passed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "runtime_enablement_status": "runtime_disabled",
+    "no_worknodes_created": true,
+    "no_nodeseed_candidates_created": true,
+    "no_executable_queues_created": true,
+    "no_final_node_manifests_created": true,
+    "no_runtime_build_surfaces_created": true,
+    "no_implementation_files_created": true,
+    "no_production_build_tasks_created": true,
+    "latest_projection_updated_at_utc": "2026-07-01T20:52:02Z",
+    "ledger_health": "pass_governance_sealed"
+  },
+  "atom_dispositions": {
+    "compiled_to_plan": {
+      "atom-0006": [
+        "F3-411"
+      ],
+      "atom-0007": [
+        "F3-411",
+        "ACD-431",
+        "ATS-020"
+      ],
+      "atom-0008": [
+        "F3-411",
+        "ATS-020"
+      ],
+      "atom-0010": [
+        "F3-411",
+        "MA-066"
+      ],
+      "atom-0015": [
+        "F3-411",
+        "ATS-020"
+      ],
+      "atom-0016": [
+        "F3-411",
+        "MS-122",
+        "MA-066",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0024": [
+        "F3-411"
+      ],
+      "atom-0025": [
+        "F3-411"
+      ],
+      "atom-0027": [
+        "F3-411"
+      ],
+      "atom-0029": [
+        "F3-411",
+        "PWIZ-017"
+      ],
+      "atom-0031": [
+        "F3-411"
+      ],
+      "atom-0032": [
+        "F3-411",
+        "UCC-106",
+        "WM-041"
+      ],
+      "atom-0033": [
+        "F3-411",
+        "MS-122",
+        "MA-066",
+        "UCC-106",
+        "WM-041"
+      ],
+      "atom-0034": [
+        "F3-411",
+        "MA-066",
+        "CV-305"
+      ],
+      "atom-0035": [
+        "F3-411",
+        "ACD-431",
+        "UCC-106",
+        "WM-041"
+      ],
+      "atom-0036": [
+        "F3-411",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041"
+      ],
+      "atom-0037": [
+        "F3-411",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0038": [
+        "F3-411",
+        "MS-122",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0039": [
+        "F3-411",
+        "MS-122"
+      ],
+      "atom-0040": [
+        "F3-411",
+        "MS-122",
+        "MA-066",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0041": [
+        "F3-411",
+        "MS-122",
+        "MA-066",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0042": [
+        "F3-411",
+        "MA-066",
+        "CV-305",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0043": [
+        "F3-411",
+        "ACD-431",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0044": [
+        "F3-411",
+        "MA-066",
+        "CV-305",
+        "ATS-020"
+      ],
+      "atom-0045": [
+        "F3-411",
+        "CV-305",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0046": [
+        "F3-411",
+        "CV-305",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ],
+      "atom-0047": [
+        "F3-411",
+        "MS-122",
+        "MA-066",
+        "ACD-431",
+        "CV-305",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041",
+        "ATS-020"
+      ]
+    }
+  },
+  "resolved_contradictions": [
+    {
+      "item_id": "contradiction-0001",
+      "disposition": "resolved_in_compile",
+      "resolution": "Treat `hide if server fails` as run/tool invocation hiding or disabling for unavailable tools, not as permission to hide MCP/server rows from GUI, Doctor, Health, or onboarding. F3-411 and ATS-020 require degraded/unavailable rows to remain visible; owner canon T-088, T-089, MI-028, and MI-029 govern MCP/tool visibility."
+    },
+    {
+      "item_id": "contradiction-0002",
+      "disposition": "resolved_in_compile",
+      "resolution": "Treat older FileSafe graceful-degradation wording as stale lineage. F3-411 and ATS-020 consume fail-closed FileSafe readiness and F2-155; disabled guard initialization cannot be presented as Ready."
+    }
+  ],
+  "source_lineage_pre_seal_candidate_compile_owner_docs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Contracts_V0.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Automated_Testing_System.md"
+  ]
+}

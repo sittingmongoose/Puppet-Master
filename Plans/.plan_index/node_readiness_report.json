@@ -420,17 +420,17 @@
     "build_order_available": false,
     "build_order_blocked_node_count": 48,
     "cycle_blocker_count": 20,
-    "depends_on_edge_count": 11249,
+    "depends_on_edge_count": 11306,
     "downstream_blocked_node_count": 28,
-    "edge_count": 13227,
-    "node_count": 5345,
+    "edge_count": 13314,
+    "node_count": 5354,
     "true_cycle_component_count": 5,
-    "unblocks_edge_count": 1978,
+    "unblocks_edge_count": 2008,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-01T16:54:35Z",
+  "generated_at_utc": "2026-07-01T20:42:02Z",
   "gui_related_units": {
-    "count": 2284,
+    "count": 2292,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3524,6 +3524,17 @@
         }
       },
       {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-431",
+        "source_location": {
+          "heading": "ACD-431 - First-Run Teacher Handoff From Onboarding",
+          "heading_level": 3,
+          "heading_line": 23211,
+          "line": 23213,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Architecture_Invariants.md",
         "plan_unit_id": "AI-007",
         "source_location": {
@@ -4059,6 +4070,17 @@
           "heading_level": 3,
           "heading_line": 1365,
           "line": 1367,
+          "path": "Plans/Automated_Testing_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Automated_Testing_System.md",
+        "plan_unit_id": "ATS-020",
+        "source_location": {
+          "heading": "ATS-020 - First-Run Onboarding Doctor And Planning Wizard Acceptance Tests",
+          "heading_level": 3,
+          "heading_line": 1540,
+          "line": 1542,
           "path": "Plans/Automated_Testing_System.md"
         }
       },
@@ -12808,6 +12830,17 @@
         }
       },
       {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-411",
+        "source_location": {
+          "heading": "F3-411 - First-Run Provider Onboarding And Doctor Health GUI",
+          "heading_level": 3,
+          "heading_line": 26479,
+          "line": 26481,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/feature-list.md",
         "plan_unit_id": "FL-008",
         "source_location": {
@@ -15338,6 +15371,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Multi-Account.md",
+        "plan_unit_id": "MA-066",
+        "source_location": {
+          "heading": "MA-066 - First-Run Provider Account Setup Rows And Return Context",
+          "heading_level": 3,
+          "heading_line": 4867,
+          "line": 4869,
+          "path": "Plans/Multi-Account.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
         "plan_unit_id": "MGAC-002",
         "source_location": {
@@ -16146,8 +16190,19 @@
         "source_location": {
           "heading": "MS-121 - Free Models Availability Reason Model And Setup Eligibility",
           "heading_level": 3,
-          "heading_line": 8222,
-          "line": 8224,
+          "heading_line": 8303,
+          "line": 8305,
+          "path": "Plans/Models_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Models_System.md",
+        "plan_unit_id": "MS-122",
+        "source_location": {
+          "heading": "MS-122 - First-Run Paid Provider And Free Models Sequencing",
+          "heading_level": 3,
+          "heading_line": 8226,
+          "line": 8228,
           "path": "Plans/Models_System.md"
         }
       },
@@ -20009,6 +20064,17 @@
           "heading_level": 3,
           "heading_line": 1139,
           "line": 1141,
+          "path": "Plans/Planning_Wizard.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-017",
+        "source_location": {
+          "heading": "PWIZ-017 - First-Run Onboarding Entry And Limited Setup Landing",
+          "heading_level": 3,
+          "heading_line": 1340,
+          "line": 1342,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -24138,6 +24204,17 @@
         }
       },
       {
+        "owner_doc": "Plans/UI_Command_Catalog.md",
+        "plan_unit_id": "UCC-106",
+        "source_location": {
+          "heading": "UCC-106 - First-Run Onboarding Command Family",
+          "heading_level": 3,
+          "heading_line": 7710,
+          "line": 7712,
+          "path": "Plans/UI_Command_Catalog.md"
+        }
+      },
+      {
         "owner_doc": "Plans/usage-feature.md",
         "plan_unit_id": "UF-002",
         "source_location": {
@@ -25419,8 +25496,19 @@
         "source_location": {
           "heading": "WM-040 - DRY Method Settings Wiring",
           "heading_level": 3,
-          "heading_line": 3262,
-          "line": 3264,
+          "heading_line": 3341,
+          "line": 3343,
+          "path": "Plans/Wiring_Matrix.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Wiring_Matrix.md",
+        "plan_unit_id": "WM-041",
+        "source_location": {
+          "heading": "WM-041 - First-Run Onboarding CTA And Route Wiring",
+          "heading_level": 3,
+          "heading_line": 3266,
+          "line": 3268,
           "path": "Plans/Wiring_Matrix.md"
         }
       },
@@ -25564,12 +25652,12 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5345,
+  "plan_unit_count": 5354,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1085,
+      "high": 1093,
       "low": 5,
-      "standard": 4255
+      "standard": 4256
     },
     "risk_class_counts": {
       "a11y_regression": 1,
@@ -25603,6 +25691,7 @@
       "account_routing_capability_metadata_snapshot": 1,
       "account_row_inspector_boundary": 1,
       "account_sensitive_cache_leak": 1,
+      "account_setup_ready_state_drift": 1,
       "account_state_enum_collapse": 1,
       "account_switch_audit_loss": 1,
       "account_switch_boundary": 1,
@@ -26547,6 +26636,8 @@
       "firecrawl_packet_conflict_reset_scope": 1,
       "firecrawl_provider_contract_drift": 18,
       "firecrawl_status_vocabulary": 1,
+      "first_run_acceptance_gap": 1,
+      "first_run_gui_false_ready": 1,
       "five_minute_stale_prune_example": 1,
       "fix_list_boundary_completed_ssot_crossrefs": 1,
       "follow_on_side_effect_drift": 1,
@@ -27029,6 +27120,9 @@
       "oauth_callback_token_overwrite": 1,
       "oauth_device_code_flow": 1,
       "offline_cached_blocked_identity_drift": 1,
+      "onboarding_command_gap": 1,
+      "onboarding_handoff_state_drift": 1,
+      "onboarding_wiring_gap": 1,
       "open_anchor_addition_fixes": 1,
       "open_contract_identity_fork": 1,
       "open_resolution_automation_defaults": 1,
@@ -27256,6 +27350,7 @@
       "planning_model": 1,
       "planning_source_context_drift": 1,
       "planning_ui_projection": 1,
+      "planning_wizard_false_ready_handoff": 1,
       "planning_wizard_runtime_drift": 1,
       "platform_acceptance_drift": 1,
       "platform_adapter_seam": 1,
@@ -27453,6 +27548,7 @@
       "provider_profiles_are_runtime_isolated": 1,
       "provider_project_context_ux_copy_boundary": 1,
       "provider_readiness_branches": 1,
+      "provider_readiness_false_ready": 1,
       "provider_recovery_label_drift": 1,
       "provider_response_guard_panic": 1,
       "provider_runtime_actor_envelope_gap": 1,
@@ -28065,6 +28161,7 @@
       "teacher_activity_contract_gap": 1,
       "teacher_activity_trace_gap": 1,
       "teacher_mutation_authority_drift": 1,
+      "teacher_onboarding_overexposure": 1,
       "teacher_persona_doc_guessing_drift": 1,
       "teacher_persona_scope_drift": 1,
       "teacher_pm_knowledge_guessing": 1,
@@ -28415,7 +28512,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5160,
+      "accepted": 5169,
       "deferred": 7,
       "retired": 178
     },
@@ -28456,7 +28553,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4434,
+      "requirement": 4442,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -28472,7 +28569,7 @@
       "structural_anchor": 5,
       "surface_default_policy": 1,
       "validation": 3,
-      "validation_criterion": 10,
+      "validation_criterion": 11,
       "validation_rule": 21,
       "variant_contract": 2
     }
