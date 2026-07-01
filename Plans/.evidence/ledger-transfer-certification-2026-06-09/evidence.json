@@ -24,7 +24,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index validates with 5298 PlanUnits, 18946 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
+      "details": "PASS: 5354 PlanUnits, 19184 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
     },
     {
       "name": "node-readiness-status-preserved",
@@ -114,7 +114,7 @@
     {
       "name": "node-readiness-boundary",
       "result": "PASS",
-      "details": "node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no runtime compiler enablement was performed."
+      "details": "PASS: node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
     },
     {
       "name": "plan-migration-validate",

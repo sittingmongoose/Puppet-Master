@@ -1,0 +1,110 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "shard_id": "assistant_provider_wizard_proposal_20260701",
+  "created_at_utc": "2026-07-01T19:34:22Z",
+  "source_type": "assistant_design_attempt",
+  "prompt_ref": "chat:take_attempt_at_wizard_design",
+  "proposal_status": "accepted_by_user",
+  "basis_refs": [
+    "source_shards/onboarding_doctor_user_decisions_20260701.json",
+    "Plans/FinalGUISpec.md:F3-409",
+    "Plans/Models_System.md:MS-120",
+    "Plans/Models_System.md:MS-121",
+    "Plans/assistant-chat-design.md:ACD-426",
+    "Plans/Planning_Wizard.md:PWIZ-001",
+    "Plans/Planning_Wizard.md:PWIZ-014"
+  ],
+  "proposed_flow": [
+    {
+      "screen_id": "setup-intro",
+      "title": "Connect Puppet Master to an AI provider",
+      "purpose": "Explain the one thing the app needs before it can help: at least one provider account.",
+      "body_copy": "Puppet Master needs an AI provider account before it can plan or code with you. Start with a paid provider for the most reliable setup. You can skip this and come back later.",
+      "primary_action": "Set up a paid provider",
+      "secondary_action": "Skip for now",
+      "notes": "No Settings tour, no model jargon, no provider internals, and no Doctor drill-down on the first screen."
+    },
+    {
+      "screen_id": "paid-provider-setup",
+      "title": "Set up a paid provider",
+      "purpose": "Let the user connect one paid provider with one obvious primary action.",
+      "body_copy": "Pick the provider account you want Puppet Master to use first. We will open the provider setup flow and bring you back here when it is done.",
+      "primary_action": "Use this provider",
+      "secondary_action": "Skip for now",
+      "row_actions": [
+        "Sign in",
+        "Set up provider",
+        "Reconnect"
+      ],
+      "row_statuses": [
+        "Connected",
+        "Needs sign-in",
+        "Could not connect"
+      ],
+      "notes": "Rows stay friendly and compact; expanded details may exist later, but not as the default path."
+    },
+    {
+      "screen_id": "free-models-after-paid-prompt",
+      "title": "Optional: Free Models",
+      "purpose": "Expose Fee/Free Models only after the paid-provider prompt has happened.",
+      "body_copy": "Free Models can help stretch your budget. They may need their own sign-in, quota, or provider setup. You can review them now or continue to Planning Wizard.",
+      "primary_action": "Review Free Models",
+      "secondary_action": "Maybe later",
+      "tertiary_action": "Continue to Planning Wizard",
+      "notes": "If opened, the Free Models top 10 remains global across all providers/models and does not use recommendation or coding-strength language."
+    },
+    {
+      "screen_id": "ready-and-teacher-handoff",
+      "title": "You are ready to plan",
+      "purpose": "Close setup, point to Assistant Chat/Teacher, and route into Planning Wizard.",
+      "body_copy": "Need help later? Ask Assistant Chat for Teacher. Try: 'What does this mean?' or 'Show me how to use this page.' Teacher explains the current screen from chat.",
+      "primary_action": "Open Planning Wizard",
+      "secondary_action": "Review setup",
+      "notes": "Completed setup routes to Planning Wizard with provider setup state carried forward."
+    }
+  ],
+  "skip_behavior": {
+    "candidate_rule": "Skip for now routes directly to Planning Wizard in a limited setup state rather than to the dense shell.",
+    "visible_copy": "Provider setup is not finished. You can still open Planning Wizard, but assistant features may need a provider before they can run.",
+    "health_state": "Doctor/Health shows provider setup as Needs setup, not Ready.",
+    "return_action": "Set up provider"
+  },
+  "doctor_health_summary": {
+    "candidate_role": "Doctor remains a compact Health summary after onboarding, not a setup wizard clone and not a generic result registry.",
+    "plain_status_labels": [
+      "Ready",
+      "Needs setup",
+      "Needs attention",
+      "Could not connect"
+    ],
+    "normal_visibility": "Show the simplest next action first, with advanced diagnostics behind details/support."
+  },
+  "handoff_to_planning_wizard": {
+    "candidate_rule": "The wizard should pass a structured onboarding_setup_state into the Planning Wizard route/seed, not a raw onboarding transcript.",
+    "minimum_fields": [
+      "setup_completed",
+      "setup_skipped",
+      "connected_provider_count",
+      "provider_warning_count",
+      "free_models_reviewed",
+      "health_summary_state"
+    ],
+    "visible_outcome": "Planning Wizard opens as the first full app page after setup or skip."
+  },
+  "open_review_points": [
+    "Confirm whether Skip for now should always route to Planning Wizard in limited state.",
+    "Confirm whether the Free Models screen should appear automatically after a paid provider connects or only as an optional next step.",
+    "Confirm the exact provider rows once the supported provider set is selected for first-run."
+  ],
+  "non_actions": [
+    "No canonical Plans were edited.",
+    "No PMConcept.html changes were made.",
+    "No Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or updated."
+  ],
+  "accepted_at_utc": "2026-07-01T19:57:35Z",
+  "accepted_source_ref": "source_shards/user_accepts_provider_wizard_proposal_20260701.json",
+  "acceptance_notes": [
+    "Jared accepted the candidate proposal with exact reply: `That all looks good.`"
+  ]
+}

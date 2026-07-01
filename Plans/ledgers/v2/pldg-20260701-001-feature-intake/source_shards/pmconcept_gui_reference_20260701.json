@@ -1,0 +1,115 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "shard_id": "pmconcept_gui_reference_20260701",
+  "created_at_utc": "2026-07-01T18:36:42Z",
+  "source_type": "gui_concept_reference",
+  "source_file": "Concepts/PMConcept.html",
+  "user_exact_tokens": [
+    "pmconcept.html",
+    "concept for GUI",
+    "not final"
+  ],
+  "inspection_method": [
+    "Read targeted HTML/CSS/source sections from Concepts/PMConcept.html.",
+    "Rendered the local file with installed Google Chrome through Playwright to inspect Home, Agent Config, and Settings states.",
+    "Did not edit Concepts/PMConcept.html."
+  ],
+  "concept_status": {
+    "canonical_status": "non_canonical_reference",
+    "summary": "PMConcept.html is useful visual/concept evidence for GUI direction, but it is not final product UI and must not override canonical Plans or accepted ledger decisions."
+  },
+  "relevant_gui_patterns": [
+    {
+      "pattern": "Top-level app spine",
+      "summary": "The concept uses a persistent top navigation with Home, Projects, Planning Wizard, Orchestrator, Usage, Agent Config, and Settings.",
+      "source_refs": [
+        "Concepts/PMConcept.html:8932",
+        "Concepts/PMConcept.html:8938"
+      ]
+    },
+    {
+      "pattern": "Home dashboard health/status widgets",
+      "summary": "Home/dashboard shows Orchestrator Status, Current Task, Platform Quota, and a System Health widget; this is useful as visual language for an ambient setup status card, but too dense for initial onboarding.",
+      "source_refs": [
+        "Concepts/PMConcept.html:9916",
+        "Concepts/PMConcept.html:10006"
+      ]
+    },
+    {
+      "pattern": "Agent Config provider overview",
+      "summary": "Agent Config includes provider status cards with Ready and Needs Setup states, plus an Effective Runtime inspector showing provider, model, auth family, account, provider source, and raw identity.",
+      "source_refs": [
+        "Concepts/PMConcept.html:12694",
+        "Concepts/PMConcept.html:12730",
+        "Concepts/PMConcept.html:12739"
+      ]
+    },
+    {
+      "pattern": "Provider account rows",
+      "summary": "Detailed provider rows use compact state badges such as ready, needs-setup, logged-in, validating, auth-expired, disconnected, with actions like Refresh, Revalidate, Update Key, and billing entity selection.",
+      "source_refs": [
+        "Concepts/PMConcept.html:3767",
+        "Concepts/PMConcept.html:3780",
+        "Concepts/PMConcept.html:12933"
+      ]
+    },
+    {
+      "pattern": "Usage provider health strip",
+      "summary": "Usage has a compact provider health strip summarizing 7 Ready, 1 Degraded, and 1 Unavailable across providers.",
+      "source_refs": [
+        "Concepts/PMConcept.html:11887",
+        "Concepts/PMConcept.html:11906"
+      ]
+    },
+    {
+      "pattern": "Settings Health & Doctor",
+      "summary": "Settings includes a System group with Authentication & Accounts, Health & Doctor, and Permissions & Rules. The Health & Doctor card has All Systems Go and Run Doctor Now; the inspector view has Run Doctor Checks and check categories CLI Tools, Git, Runtimes, Browser Tools, Capabilities, and Project Setup.",
+      "source_refs": [
+        "Concepts/PMConcept.html:13457",
+        "Concepts/PMConcept.html:13458",
+        "Concepts/PMConcept.html:13656",
+        "Concepts/PMConcept.html:13664",
+        "Concepts/PMConcept.html:14151"
+      ]
+    },
+    {
+      "pattern": "Project Setup wizard pattern",
+      "summary": "The Planning Wizard has a Project Setup step and multi-step workflow, but this is a planning-flow pattern, not a complete app first-run onboarding path.",
+      "source_refs": [
+        "Concepts/PMConcept.html:10451",
+        "Concepts/PMConcept.html:10499"
+      ]
+    },
+    {
+      "pattern": "ELI5 and Settings search",
+      "summary": "Settings includes an Interaction Mode (ELI5) toggle and search-based navigation, both useful patterns for a newbie-friendly setup path if simplified.",
+      "source_refs": [
+        "Concepts/PMConcept.html:13654",
+        "Concepts/PMConcept.html:13436"
+      ]
+    }
+  ],
+  "synthesis": [
+    "PMConcept.html supports using compact cards, state badges, health strips, and inspector-style details for the Doctor/onboarding redesign.",
+    "The concept also confirms a likely overexposure problem: full shell, code panes, terminal panes, Settings grids, Effective Runtime internals, and detailed provider rows are too much for first-run vibecoder onboarding.",
+    "The redesign should borrow the concept's visual grammar without copying its density into first-run.",
+    "A good direction is a simple Home/setup entry point with a small readiness summary and one primary action, with Agent Config, Settings Health & Doctor, Usage provider health, and support diagnostics as drill-down destinations.",
+    "The concept's Project Setup wizard is a useful staged-flow pattern, but it should not be mistaken for app onboarding."
+  ],
+  "negative_constraints": [
+    "Do not treat PMConcept.html as final GUI canon.",
+    "Do not make the dense Home/code/terminal/dashboard shell the required first-run experience for newbie vibecoders.",
+    "Do not expose Effective Runtime raw identity, requested/effective internals, provider source, auth family, account, quota details, or raw diagnostics in normal onboarding by default.",
+    "Do not turn Settings Health & Doctor into a hidden-only destination; onboarding should surface a simple check-my-setup entry before advanced details."
+  ],
+  "candidate_questions": [
+    "Should first-run onboarding appear as a simplified Home setup card/banner that uses PMConcept visual language before the full shell, or as a modal/wizard outside the normal shell?",
+    "Which PMConcept surfaces should be the drill-down destinations from the simple setup summary: Agent Config, Settings Health & Doctor, Usage provider health, support diagnostics, or all of them with progressive disclosure?"
+  ],
+  "non_actions": [
+    "No canonical Plans were edited.",
+    "No PMConcept.html changes were made.",
+    "No Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions were created or updated."
+  ]
+}

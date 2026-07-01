@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.bootstrap_open_items.v1",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "updated_at_utc": "2026-07-01T20:47:43Z",
+  "last_event_id": "evt-0018",
+  "governance_status": "sealed",
+  "open_questions": [],
+  "deferred_questions": [],
+  "open_blockers": [],
+  "unclassified_candidates": [],
+  "unresolved_contradictions": [],
+  "resolved_contradictions": [
+    {
+      "item_id": "contradiction-0001",
+      "disposition": "resolved_in_compile",
+      "resolution": "Treat `hide if server fails` as run/tool invocation hiding or disabling for unavailable tools, not as permission to hide MCP/server rows from GUI, Doctor, Health, or onboarding. F3-411 and ATS-020 require degraded/unavailable rows to remain visible; owner canon T-088, T-089, MI-028, and MI-029 govern MCP/tool visibility."
+    },
+    {
+      "item_id": "contradiction-0002",
+      "disposition": "resolved_in_compile",
+      "resolution": "Treat older FileSafe graceful-degradation wording as stale lineage. F3-411 and ATS-020 consume fail-closed FileSafe readiness and F2-155; disabled guard initialization cannot be presented as Ready."
+    }
+  ],
+  "compile_open_items": [],
+  "post_compile_pending_items": [],
+  "unsealed_governance": [],
+  "notes": "No open product questions, compile blockers, unresolved contradictions, active candidate atoms, or unsealed governance items remain for the accepted Doctor/onboarding packet."
+}
