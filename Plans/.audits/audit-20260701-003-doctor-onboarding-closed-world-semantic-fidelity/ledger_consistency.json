@@ -1,0 +1,330 @@
+{
+  "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+  "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+  "classification_counts": {
+    "exact_present": 152,
+    "missing_or_drift": 21,
+    "observation": 6,
+    "warning": 1
+  },
+  "latest_audit_projection_note": "latest_audit_ref/latest_audit_status are empty before this audit is completed; audit-only scope does not update ledger projections.",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "observation_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+  "projection_findings": [
+    {
+      "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "{'current_phase', 'validation_state.last_validated_at_utc', 'phase', 'validation_state.latest_projection_updated_at_utc', 'last_event_id', 'validation_state.node_readiness_status', 'governance_status', 'validation_state.ledger_health', 'validation_state.governance_status', 'updated_at_utc'}"
+      ],
+      "evidence": {
+        "expected": {
+          "current_phase": "compiled_governance_sealed",
+          "governance_status": "sealed",
+          "last_event_id": "evt-0018",
+          "phase": "compiled_governance_sealed",
+          "updated_at_utc": "2026-07-01T20:52:02Z"
+        },
+        "operating_capsule": {
+          "current_phase": "conversation_active",
+          "governance_status": "not_started",
+          "last_event_id": "evt-0015",
+          "phase": "conversation_active",
+          "updated_at_utc": "2026-07-01T20:03:24Z"
+        },
+        "validation_state_drift": [
+          "validation_state.governance_status=not_started expected sealed",
+          "validation_state.node_readiness_status=not_started expected blocked_compiler_contract_incomplete",
+          "validation_state.ledger_health=pass expected pass_governance_sealed",
+          "validation_state.latest_projection_updated_at_utc=2026-07-01T20:03:24Z expected 2026-07-01T20:52:02Z",
+          "validation_state.last_validated_at_utc=2026-07-01T20:03:24Z expected 2026-07-01T20:52:02Z"
+        ]
+      },
+      "exact_tokens": [
+        "{'governance_status=not_started expected sealed', 'last_event_id=evt-0015 expected evt-0018', 'current_phase=conversation_active expected compiled_governance_sealed', 'phase=conversation_active expected compiled_governance_sealed', 'validation_state.last_validated_at_utc=2026-07-01T20:03:24Z expected 2026-07-01T20:52:02Z', 'updated_at_utc=2026-07-01T20:03:24Z expected 2026-07-01T20:52:02Z', 'validation_state.governance_status=not_started expected sealed', 'validation_state.ledger_health=pass expected pass_governance_sealed', 'validation_state.latest_projection_updated_at_utc=2026-07-01T20:03:24Z expected 2026-07-01T20:52:02Z', 'validation_state.node_readiness_status=not_started expected blocked_compiler_contract_incomplete'}"
+      ],
+      "finding_family": "ledger_operating_capsule_projection_drift",
+      "finding_key": "sfk-635ea8974cc7f9be1c0a79d0",
+      "finding_level": "blocker",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/current.json",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/operating_capsule.json"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "ATS-020",
+        "CV-305",
+        "F3-411",
+        "MA-066",
+        "MS-122",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041"
+      ],
+      "repair_required": true,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "summary": "operating_capsule.json still describes the pre-compile conversation state while current/handoff/compile_queue/health are sealed at evt-0018."
+    },
+    {
+      "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "sealed_ledgers[].last_updated_at_utc",
+        "updated_at_utc"
+      ],
+      "evidence": {
+        "root_updated_at_utc": "2026-07-01T20:34:05Z",
+        "target_last_updated_at_utc": "2026-07-01T20:52:02Z"
+      },
+      "exact_tokens": [
+        "ledger_id=pldg-20260701-001-feature-intake",
+        "root.updated_at_utc=2026-07-01T20:34:05Z",
+        "sealed.last_updated_at_utc=2026-07-01T20:52:02Z"
+      ],
+      "finding_family": "ledger_registry_root_timestamp_stale",
+      "finding_key": "sfk-0be34b8e3a55f0c873b0f3f2",
+      "finding_level": "blocker",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "owner_docs": [
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "ATS-020",
+        "CV-305",
+        "F3-411",
+        "MA-066",
+        "MS-122",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041"
+      ],
+      "repair_required": true,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "summary": "ledger_registry.json top-level updated_at_utc predates the latest sealed target ledger row."
+    },
+    {
+      "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "compile_disposition",
+        "records/design_atoms.status",
+        "summary.not_for_plan_atoms"
+      ],
+      "evidence": {
+        "compile_disposition_counts": {
+          "compile_to_planunits": 23,
+          "create_new_planunit": 4,
+          "non_applicable": 6,
+          "source_lineage_only_pre_seal_candidate": 14
+        },
+        "status_counts": {
+          "compiled_to_plan": 27,
+          "not_for_plan": 20
+        }
+      },
+      "exact_tokens": [
+        "design_atoms status=not_for_plan count=20",
+        "non_applicable count=6",
+        "source_lineage_only_pre_seal_candidate count=14",
+        "summary.not_for_plan_atoms=6"
+      ],
+      "finding_family": "ledger_health_summary_count_drift",
+      "finding_key": "sfk-1e3e6b3f9de577e1bdfa0952",
+      "finding_level": "blocker",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/canonical_plan_compile_20260701.json",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/validation/ledger_health.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": true,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "summary": "ledger_health.json reports only the six non-applicable scaffold atoms as not_for_plan_atoms while design_atoms.jsonl has twenty not_for_plan records, including fourteen source-lineage-only pre-seal candidates."
+    },
+    {
+      "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "items[].target_doc",
+        "items[].target_docs"
+      ],
+      "evidence": {
+        "stale_targets": [
+          {
+            "expected_target_doc": "Plans/FinalGUISpec.md",
+            "plan_unit_ids": [
+              "F3-411"
+            ],
+            "queue_id": "cq-doctor-onboarding-001",
+            "target_doc": "Plans/Contracts_V0.md",
+            "target_docs": [
+              "Plans/FinalGUISpec.md"
+            ]
+          },
+          {
+            "expected_target_doc": "Plans/Models_System.md",
+            "plan_unit_ids": [
+              "MS-122"
+            ],
+            "queue_id": "cq-doctor-onboarding-002",
+            "target_doc": "Plans/Contracts_V0.md",
+            "target_docs": [
+              "Plans/Models_System.md"
+            ]
+          },
+          {
+            "expected_target_doc": "Plans/Multi-Account.md",
+            "plan_unit_ids": [
+              "MA-066"
+            ],
+            "queue_id": "cq-doctor-onboarding-003",
+            "target_doc": "Plans/Contracts_V0.md",
+            "target_docs": [
+              "Plans/Multi-Account.md"
+            ]
+          },
+          {
+            "expected_target_doc": "Plans/assistant-chat-design.md",
+            "plan_unit_ids": [
+              "ACD-431"
+            ],
+            "queue_id": "cq-doctor-onboarding-005",
+            "target_doc": "Plans/Contracts_V0.md",
+            "target_docs": [
+              "Plans/assistant-chat-design.md"
+            ]
+          },
+          {
+            "expected_target_doc": "Plans/UI_Command_Catalog.md",
+            "plan_unit_ids": [
+              "UCC-106"
+            ],
+            "queue_id": "cq-doctor-onboarding-006",
+            "target_doc": "Plans/Contracts_V0.md",
+            "target_docs": [
+              "Plans/UI_Command_Catalog.md"
+            ]
+          },
+          {
+            "expected_target_doc": "Plans/Planning_Wizard.md",
+            "plan_unit_ids": [
+              "PWIZ-017"
+            ],
+            "queue_id": "cq-doctor-onboarding-007",
+            "target_doc": "Plans/Contracts_V0.md",
+            "target_docs": [
+              "Plans/Planning_Wizard.md"
+            ]
+          },
+          {
+            "expected_target_doc": "Plans/Wiring_Matrix.md",
+            "plan_unit_ids": [
+              "WM-041"
+            ],
+            "queue_id": "cq-doctor-onboarding-008",
+            "target_doc": "Plans/Contracts_V0.md",
+            "target_docs": [
+              "Plans/Wiring_Matrix.md"
+            ]
+          },
+          {
+            "expected_target_doc": "Plans/Automated_Testing_System.md",
+            "plan_unit_ids": [
+              "ATS-020"
+            ],
+            "queue_id": "cq-doctor-onboarding-009",
+            "target_doc": "Plans/Contracts_V0.md",
+            "target_docs": [
+              "Plans/Automated_Testing_System.md"
+            ]
+          }
+        ]
+      },
+      "exact_tokens": [
+        "cq-doctor-onboarding-001:target_doc=Plans/Contracts_V0.md expected=Plans/FinalGUISpec.md",
+        "cq-doctor-onboarding-002:target_doc=Plans/Contracts_V0.md expected=Plans/Models_System.md",
+        "cq-doctor-onboarding-003:target_doc=Plans/Contracts_V0.md expected=Plans/Multi-Account.md",
+        "cq-doctor-onboarding-005:target_doc=Plans/Contracts_V0.md expected=Plans/assistant-chat-design.md",
+        "cq-doctor-onboarding-006:target_doc=Plans/Contracts_V0.md expected=Plans/UI_Command_Catalog.md",
+        "cq-doctor-onboarding-007:target_doc=Plans/Contracts_V0.md expected=Plans/Planning_Wizard.md",
+        "cq-doctor-onboarding-008:target_doc=Plans/Contracts_V0.md expected=Plans/Wiring_Matrix.md",
+        "cq-doctor-onboarding-009:target_doc=Plans/Contracts_V0.md expected=Plans/Automated_Testing_System.md"
+      ],
+      "finding_family": "compile_queue_target_doc_stale",
+      "finding_key": "sfk-a31dd763cd49746248d2e9de",
+      "finding_level": "blocker",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/compile_queue.json"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "ATS-020",
+        "F3-411",
+        "MA-066",
+        "MS-122",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041"
+      ],
+      "repair_required": true,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "summary": "compile_queue item target_doc remains the stale singular Contracts_V0 value for non-contract owner PlanUnits while target_docs carries the correct owner."
+    }
+  ],
+  "row_count": 180,
+  "schema_id": "pm.ledger_consistency_audit.v1",
+  "subject_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+  "warnings": [
+    {
+      "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "check_family": "ledger_projection_field",
+      "check_id": "chk-22d00942ee88cb30a7715452",
+      "classification": "warning",
+      "covered_artifacts": [
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/open_items.json"
+      ],
+      "detail_keys": [
+        "updated_at_utc"
+      ],
+      "evidence": [
+        "open_items is sealed at evt-0018 but timestamp predates current/health; content state agrees."
+      ],
+      "exact_tokens": [
+        "2026-07-01T20:47:43Z"
+      ],
+      "finding_level": "warning",
+      "human_check_id": "ledger_sync.open_items.updated_at_utc",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/open_items.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "source_atom_ids": [],
+      "subject_ref": "291d567e0b8c706df37a055391fa5be1a81e521f"
+    }
+  ]
+}
