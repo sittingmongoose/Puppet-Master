@@ -1,0 +1,114 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "shard_id": "src-20260701-second-subjective-objective-recheck",
+  "created_at_utc": "2026-07-01T14:35:19Z",
+  "source_type": "second_subjective_objective_readiness_recheck",
+  "not_canonical_plan": true,
+  "user_request_exact": "ok first do the subjective and objective check again",
+  "scope": "Re-run the subjective/objective implementation-readiness pressure test against the live ledger and current checkout before continuing gap fixing or compile work.",
+  "inputs_checked": [
+    "Plans/ledgers/v2/ledger_registry.json",
+    "state/handoff.json",
+    "state/current.json",
+    "state/open_items.json",
+    "state/operating_capsule.json",
+    "state/compile_queue.json",
+    "records/design_atoms.jsonl",
+    "records/decisions.jsonl",
+    "records/questions.jsonl",
+    "records/blockers.jsonl",
+    "source_shards/implementation_readiness_hardening_20260701.json",
+    "source_shards/subagent_hardening_synthesis_20260701.json",
+    "source_shards/post_hardening_readiness_audit_20260701.json",
+    "git status --short",
+    "git diff --stat",
+    "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
+    "python3 scripts/pm-plan-index.py validate",
+    "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+    "git diff --check"
+  ],
+  "objective_verdict": {
+    "ledger_content_implementation_ready_in_ledger": true,
+    "ready_for_future_explicit_compile_as_source_packet": true,
+    "canonical_plans_ready": false,
+    "code_implementation_ready": false,
+    "current_checkout_clean": false,
+    "current_checkout_blocker_id": "blk-0001",
+    "reason": "The ledger product intent remains implementation-ready as a source packet, but the live checkout contains partial canonical Plan addenda that are not reflected in the ledger compile state and currently fail PlanUnit/index validation.",
+    "ledger_validator": {
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "atoms": 82,
+      "decisions": 20,
+      "questions": 24,
+      "compile_queue_items": 0
+    },
+    "record_state": {
+      "accepted_atoms": 72,
+      "not_for_plan_atoms": 7,
+      "rejected_atoms": 1,
+      "superseded_atoms": 2,
+      "gui_related_true_atoms": 17,
+      "gui_related_false_atoms": 65,
+      "open_questions": 0,
+      "candidate_atoms": 0,
+      "unresolved_design_contradictions": 0
+    },
+    "worktree_findings": {
+      "modified_plan_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "partial_plan_insertions": 1166,
+      "ledger_state_still_conversation_intake": true,
+      "compile_queue_items": 0,
+      "plan_index_validate_status": "fail",
+      "plan_index_primary_failures": [
+        "stale_generated_index_artifact for Plans/.plan_index outputs",
+        "live_planunit_parse_errors in Plans/00-plans-index.md at line 4894",
+        "plan_unit_ids_do_not_match_live_plans"
+      ],
+      "migration_validate_status": "fail",
+      "migration_primary_failures": [
+        "same Plans/00-plans-index.md YAML parse error",
+        "stale_batch_report_sha256_after rows for touched docs",
+        "complete_final_summary_live_plan_unit_count_stale expected 5334 actual 5322"
+      ],
+      "git_diff_check_status": "pass"
+    }
+  },
+  "subjective_verdict": {
+    "assessment": "The ledger content is strong enough to hand to a careful compile pass. It has real schemas, matrices, lifecycle semantics, GUI IA, ATS adapter behavior, command/control-plane boundaries, and source-lineage classification. The thing I would not call clean is the current repository state: a partial compile is present and must be reconciled before we can honestly say the lane is clean or implementation-ready beyond the ledger packet.",
+    "confidence": "high for ledger-to-Plans compile readiness; not-ready for current-checkout implementation handoff until the partial Plan addenda are either completed through explicit compile or removed/reconciled.",
+    "remaining_product_design_gaps": [],
+    "remaining_process_or_checkout_gaps": [
+      "Partial canonical Plan addenda exist while the ledger says no canonical compile has been recorded.",
+      "Plan index validation fails until the partial PlanUnits are repaired/completed and allowed generated index outputs are refreshed in compile scope.",
+      "Migration validation fails because touched canonical docs no longer match the existing migration hash metadata; this is expected for a partial compile but blocks clean readiness."
+    ]
+  },
+  "preserved_negative_constraints": [
+    "Do not write or extend canonical Plans in this recheck pass.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, or legacy Iced app files.",
+    "Do not update Spec_Lock, generated shards/evidence, plan_graph, or auto_decisions in this recheck pass.",
+    "Do not revert existing working-tree changes without explicit user request.",
+    "Do not treat Coasts runtime claims as PM-supported runtime evidence.",
+    "Do not copy PMConcept.html HTML/CSS/demo code; it is directional GUI concept evidence only and the real product remains Slint."
+  ],
+  "recommended_next_actions": [
+    "If Jared wants compile next, continue the canonical compile deliberately: repair the YAML parse issue, finish all owner docs, generate allowed Plans/.plan_index outputs, and update ledger compile state.",
+    "If Jared wants to remain ledger-only, reconcile the partial canonical Plan addenda first rather than leaving the checkout half-compiled.",
+    "Do not start code implementation from the current checkout until the compile boundary is clean."
+  ],
+  "conclusion": "Subjectively and objectively: the ledger product intent is implementation-ready as a source packet, but the current checkout is not clean because partial canonical Plan edits already exist and fail index/migration validation."
+}

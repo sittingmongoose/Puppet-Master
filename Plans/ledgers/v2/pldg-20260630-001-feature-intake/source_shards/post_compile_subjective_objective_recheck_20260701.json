@@ -1,0 +1,193 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "shard_id": "src-20260701-post-compile-subjective-objective-recheck",
+  "created_at_utc": "2026-07-01T15:01:53Z",
+  "source_type": "post_compile_subjective_objective_readiness_recheck",
+  "not_canonical_plan": true,
+  "user_request_exact": "ok first do the subjective and objective check again",
+  "scope": "Repeat the subjective and objective implementation-readiness check against the current compiled ledger, live PlanUnits, validators, and worktree before doing any further repair.",
+  "inputs_checked": [
+    "Plans/ledgers/v2/ledger_registry.json",
+    "state/handoff.json",
+    "state/current.json",
+    "state/open_items.json",
+    "state/operating_capsule.json",
+    "state/compile_queue.json",
+    "records/design_atoms.jsonl",
+    "records/questions.jsonl",
+    "records/blockers.jsonl",
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/node_readiness_report.json",
+    "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
+    "python3 scripts/pm-plan-index.py validate",
+    "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+    "git diff --check"
+  ],
+  "objective_verdict": {
+    "implementation_ready_in_ledger": true,
+    "canonical_plans_compiled": true,
+    "compiled_plan_unit_count": 23,
+    "compiled_owner_doc_count": 20,
+    "code_implementation_ready": false,
+    "current_checkout_fully_validator_clean": false,
+    "blocking_gap_id": "blk-0002",
+    "blocking_gap_type": "migration_metadata_freshness_only",
+    "reason": "The ledger and compiled PlanUnits cover the product/spec intent, and bootstrap ledger validation, Plan index validation, and git diff whitespace checks pass. The remaining objective gap is stale .plan_migration metadata after the compile changed live Plans: 105 stale_batch_report_sha256_after rows and one stale final_validation_summary PlanUnit count row.",
+    "record_state": {
+      "design_atoms_total": 82,
+      "compiled_to_plan_atoms": 71,
+      "not_for_plan_atoms": 7,
+      "rejected_atoms": 1,
+      "superseded_atoms": 3,
+      "open_questions": 0,
+      "candidate_atoms": 0,
+      "deferred_atoms": 0,
+      "open_product_blockers": 0,
+      "open_process_blockers_after_this_check": 1
+    },
+    "compiled_plan_units": [
+      "0PI-065",
+      "CRAU-090",
+      "CRAU-091",
+      "CRAU-092",
+      "CV-303",
+      "CV-304",
+      "SP-226",
+      "PS-126",
+      "F2-194",
+      "RAP-042",
+      "ATS-019",
+      "EP-109",
+      "RM-048",
+      "T-166",
+      "MI-031",
+      "CBP-023",
+      "GRS-032",
+      "OSI-431",
+      "F3-410",
+      "UCC-105",
+      "ACD-430",
+      "OP-028",
+      "RGV-015"
+    ],
+    "compiled_owner_docs": [
+      "Plans/00-plans-index.md",
+      "Plans/Automated_Testing_System.md",
+      "Plans/CLI_Bridged_Providers.md",
+      "Plans/Containers_Registry_and_Unraid.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FileSafe.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/MCP_Integration.md",
+      "Plans/Orchestrator_Page.md",
+      "Plans/Permissions_System.md",
+      "Plans/Run_Graph_View.md",
+      "Plans/Run_Modes.md",
+      "Plans/Runtime_Artifacts_Panel.md",
+      "Plans/Tools.md",
+      "Plans/UI_Command_Catalog.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/orchestrator-subagent-integration.md",
+      "Plans/storage-plan.md"
+    ],
+    "validator_results": {
+      "bootstrap_ledger_validator": {
+        "status": "pass",
+        "errors": 0,
+        "warnings": 0,
+        "summary": {
+          "atoms": 82,
+          "decisions": 20,
+          "questions": 24,
+          "compile_queue_items": 1,
+          "plan_units_checked": 2895
+        },
+        "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
+        "checked_at_utc": "2026-07-01T14:58:57Z"
+      },
+      "plan_index_validate": {
+        "status": "pass",
+        "plan_unit_count": 5345,
+        "acceptance_unit_count": 19133,
+        "coverage_status": "pass",
+        "node_readiness_status": "blocked_compiler_contract_incomplete",
+        "command": "python3 scripts/pm-plan-index.py validate",
+        "checked_at_utc": "2026-07-01T14:58:57Z"
+      },
+      "plan_migration_validate": {
+        "status": "fail",
+        "failure_count": 106,
+        "failure_types": [
+          {
+            "error": "stale_batch_report_sha256_after",
+            "count": 105
+          },
+          {
+            "error": "complete_final_summary_live_plan_unit_count_stale",
+            "count": 1
+          }
+        ],
+        "affected_docs": [
+          "Plans/00-plans-index.md",
+          "Plans/CLI_Bridged_Providers.md",
+          "Plans/Containers_Registry_and_Unraid.md",
+          "Plans/Contracts_V0.md",
+          "Plans/Executor_Protocol.md",
+          "Plans/FileSafe.md",
+          "Plans/FinalGUISpec.md",
+          "Plans/MCP_Integration.md",
+          "Plans/Orchestrator_Page.md",
+          "Plans/Permissions_System.md",
+          "Plans/Run_Modes.md",
+          "Plans/Runtime_Artifacts_Panel.md",
+          "Plans/Tools.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/assistant-chat-design.md",
+          "Plans/orchestrator-subagent-integration.md",
+          "Plans/storage-plan.md"
+        ],
+        "live_plan_unit_count_stale": {
+          "expected": 5345,
+          "actual": 5322,
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json"
+        },
+        "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "checked_at_utc": "2026-07-01T14:58:57Z"
+      },
+      "git_diff_check": {
+        "status": "pass",
+        "command": "git diff --check",
+        "checked_at_utc": "2026-07-01T14:58:57Z"
+      }
+    },
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "governance_status": "pending_seal"
+  },
+  "subjective_verdict": {
+    "assessment": "I do not see remaining product/spec gaps in the ledger or compiled PlanUnits. The shape is now implementation-grade as product intent: identity and receipts, host profiles, lifecycle/preflight/degraded states, security gates, FileSafe boundaries, ATS/Executor/Run Modes/tool/provider/goal/subagent consumers, Docker/Hosts native Slint page IA, command catalog, Assistant/Orchestrator/Run Graph projections, and Runtime Artifacts evidence boundaries are all represented. The thing I would not call ready is the checkout as a validator-clean handoff, because migration metadata has not been refreshed after the compile.",
+    "confidence": "high for product intent and compiled PlanUnit readiness; medium-high for implementation handoff after migration metadata refresh; not code-ready until future implementation scope and node/runtime compiler readiness exist.",
+    "remaining_product_design_gaps": [],
+    "remaining_process_or_checkout_gaps": [
+      "Refresh allowed Plans/.plan_migration metadata so migration validation matches the live 5345 PlanUnit count and post-edit document hashes.",
+      "Keep governance_status=pending_seal until a separate explicit governance seal refreshes Spec_Lock, shards, evidence, plan_graph, and auto_decisions.",
+      "Keep node readiness blocked_compiler_contract_incomplete/runtime_disabled; no WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, or production build tasks should be created from this check."
+    ]
+  },
+  "preserved_negative_constraints": [
+    "Do not create WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, or production build tasks in this check pass.",
+    "Do not update Spec_Lock, shards, evidence, plan_graph, or auto_decisions without a separate explicit governance seal phase.",
+    "Do not treat Coasts runtime claims as PM-supported runtime evidence.",
+    "Do not copy PMConcept.html HTML/CSS/demo code; it is directional GUI concept evidence only and the real product remains Slint.",
+    "Do not call the checkout fully validator-clean while .plan_migration metadata remains stale.",
+    "Do not reopen product questions just because migration metadata needs a mechanical refresh."
+  ],
+  "recommended_next_actions": [
+    "Refresh only allowed .plan_migration metadata with the repo scripts, then rerun pm-plan-migration validation.",
+    "After migration validation passes, record final validation status in the ledger and keep governance_status=pending_seal.",
+    "Do not start code implementation until a future implementation/build scope is explicitly opened."
+  ],
+  "conclusion": "Subjectively: no remaining product/spec gaps. Objectively: the ledger and Plan index are clean, but the current checkout is not fully validator-clean until migration metadata is refreshed."
+}

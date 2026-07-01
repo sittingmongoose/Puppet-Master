@@ -1,0 +1,132 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "shard_id": "src-20260701-final-compile-validation",
+  "created_at_utc": "2026-07-01T15:09:12Z",
+  "source_type": "final_compile_validation",
+  "not_canonical_plan": true,
+  "scope": "Final validation after compiling the containerized-hosts ledger to canonical Plans, regenerating allowed Plans/.plan_index outputs, and refreshing allowed Plans/.plan_migration metadata only.",
+  "compiled_plan_unit_ids": [
+    "0PI-065",
+    "CRAU-090",
+    "CRAU-091",
+    "CRAU-092",
+    "CV-303",
+    "CV-304",
+    "SP-226",
+    "PS-126",
+    "F2-194",
+    "RAP-042",
+    "ATS-019",
+    "EP-109",
+    "RM-048",
+    "T-166",
+    "MI-031",
+    "CBP-023",
+    "GRS-032",
+    "OSI-431",
+    "F3-410",
+    "UCC-105",
+    "ACD-430",
+    "OP-028",
+    "RGV-015"
+  ],
+  "compiled_owner_docs": [
+    "Plans/00-plans-index.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/CLI_Bridged_Providers.md",
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/MCP_Integration.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Tools.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md"
+  ],
+  "allowed_generated_outputs": [
+    "Plans/.plan_index/plan_units.jsonl",
+    "Plans/.plan_index/doc_cards.json",
+    "Plans/.plan_index/dependencies.json",
+    "Plans/.plan_index/acceptance_units.jsonl",
+    "Plans/.plan_index/coverage_report.json",
+    "Plans/.plan_index/node_readiness_report.json"
+  ],
+  "allowed_migration_metadata_outputs": [
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json"
+  ],
+  "validator_results": {
+    "bootstrap_ledger_validator": {
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "summary": {
+        "atoms": 82,
+        "decisions": 20,
+        "questions": 24,
+        "corrections": 4,
+        "events": 38,
+        "compile_queue_items": 1,
+        "plan_units_checked": 2895
+      },
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
+      "checked_at_utc": "2026-07-01T15:11:33Z"
+    },
+    "plan_index_validate": {
+      "status": "pass",
+      "plan_unit_count": 5345,
+      "acceptance_unit_count": 19133,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_compiler_contract_incomplete",
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "checked_at_utc": "2026-07-01T15:08:52Z"
+    },
+    "plan_migration_validate": {
+      "status": "pass",
+      "live_plan_unit_count": 5345,
+      "unique_live_plan_unit_count": 5345,
+      "batch_report_rows": 212,
+      "batch_report_doc_entries": 212,
+      "failures": 0,
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "checked_at_utc": "2026-07-01T15:09:12Z"
+    },
+    "git_diff_check": {
+      "status": "pass",
+      "command": "git diff --check",
+      "checked_at_utc": "2026-07-01T15:08:52Z"
+    }
+  },
+  "governance_status": "pending_seal",
+  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "closed_blockers": [
+    "blk-0002"
+  ],
+  "ledger_atom_disposition_summary": {
+    "compiled_to_plan": 71,
+    "not_for_plan": 7,
+    "rejected": 1,
+    "superseded": 3,
+    "deferred": 0,
+    "ready_for_plan_compile": 0,
+    "candidate": 0
+  },
+  "preserved_negative_constraints": [
+    "Do not update Spec_Lock, shards, evidence, plan_graph, or auto_decisions during this compile phase.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, runtime/build surfaces, or legacy Iced app files.",
+    "Do not treat Coasts runtime claims as PM-supported runtime evidence.",
+    "Do not copy PMConcept.html HTML/CSS/demo code; it is directional GUI concept evidence only and the real product remains Slint.",
+    "Do not seal governance during this compile phase."
+  ],
+  "conclusion": "The ledger-to-Plans compile is validator-clean for bootstrap ledger, Plan index, migration metadata, and whitespace. Governance remains pending_seal by design because Plans and Plans/.plan_index changed and no explicit governance seal was requested."
+}

@@ -241,6 +241,72 @@ preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
 ```
 
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles containerized-host MCP projection obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+
+### MI-031 - MCP Containerized Host Runtime Context Projection
+
+```yaml
+plan_unit_id: MI-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MCP_Integration.md
+canonical_text: >-
+  MCP integration may project containerized-host runtime context to tools and bridged providers as capability context,
+  degraded-state context, or setup/preflight context, but MCP records do not become host identity truth or host mutation
+  authority. MCP-facing records reference host_capability_ref, host_profile_id, runtime_family, requested/effective
+  capability state, permission_snapshot_id, blocked_reason_code, and redaction profile when a tool or provider needs to
+  understand a non-default, remote, or containerized environment. Concrete Docker, Kubernetes, registry, SSH, or runtime
+  operations still route through Tools, Executor, Permissions, FileSafe, and HostCapabilityCommand envelopes.
+gui_related: false
+gui_classification_reason: MCP context projection is integration metadata and policy behavior, not GUI presentation.
+depends_on: [CV-303, CV-304, T-166, PS-126, F2-194]
+unblocks: [CBP-023]
+acceptance_criteria:
+  - MCP projections can carry host_capability_ref, host_profile_id, runtime_family, capability_state, and blocked_reason_code without serializing raw secrets.
+  - MCP availability and projected config do not authorize host execution, container exec, Docker socket access, SSH mutation, Kubernetes apply, or cleanup.
+  - Provider/model/account identity remains separate from Docker, Kubernetes, registry, SSH, or host runtime identity.
+  - Blocked, degraded, stale, unavailable, and unsupported host states remain visible to consuming tools instead of being silently normalized away.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future MCP host-context projection fixture
+risk_class: mcp_host_authority_drift
+reasoning_tier: standard
+context_scope: containerized_host_mcp_projection
+implementation_surfaces:
+  - Plans/MCP_Integration.md
+  - future MCP tool registry and provider bridge context payloads
+node_compile_hint:
+  mode: mcp_host_context_projection
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0025
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0047
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#core_contracts
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-005-host-capability-command
+source_atom_ids: [atom-0025, atom-0040, atom-0044, atom-0047, atom-0081]
+preserved_exact_tokens:
+  - "tools/MCP"
+  - "host_capability_ref"
+  - "host_profile_id"
+  - "provider bridges"
+  - "non-default, remote, or /containerized environments"
+negative_constraints:
+  - Do not let MCP records become host identity truth.
+  - Do not let provider/model/account identity carry Docker, Kubernetes, registry, SSH, or runtime identity.
+  - Do not serialize raw secrets, decrypted env values, registry credentials, or SSH material in MCP host context.
+owner_hints:
+  - Plans/MCP_Integration.md
+  - Plans/Tools.md
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Permissions_System.md
+```
+
 ### MI-003 - Underscore Only MCP Tool Identity
 
 ```yaml

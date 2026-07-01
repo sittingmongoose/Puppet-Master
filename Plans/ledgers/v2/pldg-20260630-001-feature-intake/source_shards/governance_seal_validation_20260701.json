@@ -1,0 +1,109 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "source_type": "governance_seal_validation",
+  "created_at_utc": "2026-07-01T16:12:15Z",
+  "summary": "Governance seal completed after the repeated subjective/objective readiness check. Generated shards, Spec Lock, evidence, plan graph validation, auto decisions validation, run-gates, PlanUnit index validation, plan migration validation, both bootstrap ledger validations, shard check, and git diff whitespace check pass. Direct Docker/Hosts GUI/workflow implementation-packet blocker blk-0003 remains open and implementation_ready_in_ledger remains false.",
+  "subjective_result": "The ledger is not implementation-ready as a direct Slint GUI/workflow build packet because blk-0003 remains open. The compiled Plan intent and owner coverage are strong and no missing canonical owner coverage was found.",
+  "objective_result": "The current checkout is governance-validator clean after explicit seal refresh: configured shards regenerated, sharding evidence synced, Spec_Lock hashes refreshed, evidence hash cascades refreshed, validate-plan-graph passed, validate-evidence passed, run-gates passed, and git diff --check passed.",
+  "governance_status": "sealed",
+  "implementation_ready_in_ledger": false,
+  "compiled_plan_intent_ready": true,
+  "direct_gui_workflow_build_packet_ready": false,
+  "current_checkout_compile_validators_clean": true,
+  "current_checkout_governance_validators_clean": true,
+  "open_blocker_ids": [
+    "blk-0003"
+  ],
+  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "generated_artifacts_refreshed": [
+    "Plans/_shards/**",
+    "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+    "Plans/.evidence/**/evidence.json",
+    "Plans/Spec_Lock.json"
+  ],
+  "validator_results": [
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "status": "pass",
+      "summary": {
+        "docs_generated": 56,
+        "shards_generated": 1085,
+        "source_count": 56
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "status": "pass",
+      "summary": {
+        "artifact_count": 1255
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass",
+      "summary": {
+        "live_plan_unit_count": 5345,
+        "unique_live_plan_unit_count": 5345,
+        "doc_count": 71
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "summary": {
+        "plan_unit_count": 5345,
+        "acceptance_unit_count": 19133,
+        "node_readiness_status": "blocked_compiler_contract_incomplete"
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "summary": {
+        "docs_checked": 56,
+        "shards_checked": 1085,
+        "source_count": 56
+      }
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass"
+    },
+    {
+      "cmd": "git diff --check",
+      "status": "pass"
+    }
+  ],
+  "negative_constraints_preserved": [
+    "Do not start code implementation to resolve blk-0003.",
+    "Do not copy PMConcept.html HTML/CSS/demo code; use it only as directional visual concept input.",
+    "Do not make Docker/Hosts a separate Coasts website, new Activity Bar slot, or separate Unraid panel.",
+    "Do not create WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, runtime dispatch, production build tasks, or legacy Iced app files.",
+    "Do not treat sealed governance as code/runtime implementation readiness."
+  ]
+}

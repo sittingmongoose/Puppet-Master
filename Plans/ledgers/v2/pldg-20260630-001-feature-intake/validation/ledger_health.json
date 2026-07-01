@@ -1,38 +1,57 @@
 {
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "ledger_id": "pldg-20260630-001-feature-intake",
-  "updated_at_utc": "2026-07-01T14:03:37Z",
-  "last_event_id": "evt-0033",
-  "status": "pass_post_hardening_readiness_audit",
+  "updated_at_utc": "2026-07-01T16:12:15Z",
+  "last_event_id": "evt-0041",
+  "status": "pass_governance_sealed",
   "summary": {
-    "events": 33,
+    "events": 41,
     "design_atoms": 82,
     "decisions": 20,
     "questions": 24,
     "corrections": 4,
-    "blockers": 0,
+    "blockers": 3,
     "candidate_atoms": 0,
+    "ready_for_plan_compile_atoms": 0,
+    "compiled_to_plan_atoms": 71,
+    "not_for_plan_atoms": 7,
+    "rejected_atoms": 1,
+    "superseded_atoms": 3,
     "open_questions": 0,
     "deferred_questions": 0,
-    "open_blockers": 0,
-    "compile_queue_items": 0,
-    "governance_status": "not_started"
+    "open_blockers": 1,
+    "compile_queue_items": 1,
+    "compiled_plan_units": 23,
+    "compiled_owner_docs": 20,
+    "governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "plan_migration_validate": "pass",
+    "direct_gui_workflow_build_packet_ready": false,
+    "compiled_plan_intent_ready": true,
+    "pm_plans_verify_run_gates": "pass",
+    "pm_shard_plans_check": "pass",
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass",
+    "validate_plan_graph": "pass",
+    "validate_auto_decisions": "pass",
+    "git_diff_check": "pass",
+    "governance_seal": "passed"
   },
   "validator": {
     "tool": "scripts/pm-bootstrap-ledger-validate.py",
     "last_result": "pass",
     "last_errors": [],
     "last_warnings": [],
-    "last_summary": {
+    "last_validated_at_utc": "2026-07-01T16:17:15Z",
+    "summary": {
       "atoms": 82,
-      "compile_queue_items": 0,
-      "corrections": 4,
       "decisions": 20,
-      "events_before_validation_event": 32,
-      "events_after_validation_event": 33,
-      "plan_units_checked": 0,
-      "questions": 24
+      "questions": 24,
+      "corrections": 4,
+      "events": 41,
+      "compile_queue_items": 1,
+      "plan_units_checked": 2895
     }
   },
-  "notes": "Post-hardening subjective/objective readiness audit recorded and validator-clean. Ledger is implementation-ready as a source packet for future explicit compile, not canonical Plans yet."
+  "notes": "Governance seal validators pass. Direct Docker/Hosts GUI/workflow implementation-packet detail remains open; governance_status=sealed does not imply implementation_ready_in_ledger=true."
 }
