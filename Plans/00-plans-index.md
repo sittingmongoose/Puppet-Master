@@ -4935,6 +4935,14 @@ source_lineage:
   - Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json
   - Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json
   - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0006
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0017
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0051
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0054
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0055
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0056
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0076
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0082
   - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json
   - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json
 source_atom_ids: [atom-0006, atom-0017, atom-0051, atom-0054, atom-0055, atom-0056, atom-0076, atom-0082]
