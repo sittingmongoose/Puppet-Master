@@ -66,6 +66,79 @@ BRIDGE_INVOKE_OPTIONS {
 }
 ```
 
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles containerized-host bridged-provider context obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+
+### CBP-023 - Bridged Provider Host Capability Context Projection
+
+```yaml
+plan_unit_id: CBP-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/CLI_Bridged_Providers.md
+canonical_text: >-
+  CLI-backed and bridged provider request envelopes may carry containerized-host capability context so provider tools can
+  understand the selected worktree/runtime environment, but that context is not direct host authority and does not make a
+  provider bridge the owner of containerized-host execution. ProviderRequestEnvelope-style payloads may include
+  host_capability_ref, host_profile_id, runtime_family, working_directory, requested/effective runtime, provider, model,
+  account descriptors, blocked/degraded state, and required receipt refs. Any host operation still resolves through
+  HostCapabilityCommand, Executor intake, Tools policy, Run Modes, Permissions, FileSafe, and cleanup/retention receipt
+  paths. OpenCode remains reference-only for this compile unless a later OpenCode-specific host hook is explicitly
+  accepted.
+gui_related: false
+gui_classification_reason: Provider bridge context is backend/provider routing behavior, not GUI presentation.
+depends_on: [T-166, MI-031, EP-109, RM-048, PS-126]
+unblocks: []
+acceptance_criteria:
+  - Bridged provider envelopes can reference host_capability_ref and host_profile_id as context while preserving requested/effective provider, model, and account identity.
+  - Provider bridge context does not authorize Docker, Kubernetes, SSH, shell, file, terminal, or cleanup operations by itself.
+  - Host unavailable, blocked, disabled, stale, or degraded states become normalized provider/tool blocker outcomes rather than silent fallback.
+  - OpenCode is not promoted to a generic host owner by this compile.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future bridged-provider host-context fixture
+risk_class: provider_bridge_host_authority_drift
+reasoning_tier: standard
+context_scope: bridged_provider_containerized_host_context
+implementation_surfaces:
+  - Plans/CLI_Bridged_Providers.md
+  - future ProviderRequestEnvelope and CLI bridge context payloads
+node_compile_hint:
+  mode: bridged_provider_host_context_projection
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0029
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0034
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0047
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#execution_lane_matrix
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-005-host-capability-command
+source_atom_ids: [atom-0029, atom-0034, atom-0040, atom-0044, atom-0047, atom-0053, atom-0069, atom-0081]
+preserved_exact_tokens:
+  - "provider bridges"
+  - "provider tools"
+  - "ProviderRequestEnvelope"
+  - "requested/effective runtime/provider/model/account descriptors"
+  - "working_directory"
+  - "host_capability_ref"
+  - "host_profile_id"
+negative_constraints:
+  - Do not treat provider bridge context as direct host authority.
+  - Do not silently fallback from a blocked host to a different runtime or host without evidence.
+  - Do not promote OpenCode to a generic containerized-host owner.
+owner_hints:
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Tools.md
+  - Plans/MCP_Integration.md
+  - Plans/Provider_OpenCode.md
+```
+
 ContractRef: Primitive:Provider, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
 `ProviderRequestEnvelope` is the canonical provider-facade handoff record above provider-specific command-line or HTTP encodings. The expanded identity bundle in `ProviderRequestEnvelope` MUST include run/thread/parent/child lineage, attempt identity when present, execution role, requested/effective runtime/provider/model/account descriptors, permission/tool-policy snapshot refs, working-directory or worktree identity, prompt parts, and retry/approval context. Provider-specific projections such as `BRIDGE_INVOKE_OPTIONS` may encode a subset for launch, but they must remain derivable from `ProviderRequestEnvelope` and must not replace it as the ownership boundary.

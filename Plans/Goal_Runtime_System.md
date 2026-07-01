@@ -87,6 +87,75 @@ owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
 
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles containerized-host Goal Runtime consumption obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+
+### GRS-032 - Goal Runtime Host Capability Consumption Boundary
+
+```yaml
+plan_unit_id: GRS-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime may request, consume, and certify work that depends on containerized-host capability, but it does not
+  dispatch host work directly and cannot treat blocked host state as completion evidence. Goals, child goals, and
+  verification or repair cycles pass host_capability_ref, host_profile_id, host_assignment_id, execution_unit_context_ref,
+  TestRunReceipt refs, host_preflight_receipt, host_execution_receipt, cleanup_retention_receipt, blocked_reason_code, and
+  Runtime Artifacts evidence refs through Executor, Automated Testing, Tools, and subagent boundaries. Goal completion
+  certification requires lane-appropriate host/test/cleanup receipts, explicit blocker payloads, or approved verification
+  exceptions; Runtime Artifacts remains projection and evidence browsing, not receipt truth.
+gui_related: false
+gui_classification_reason: Goal Runtime host-capability consumption and certification are backend/runtime behavior, not GUI presentation.
+depends_on: [EP-109, RM-048, T-166, ATS-019, RAP-042, CV-303]
+unblocks: [OSI-431, OP-028, RGV-015]
+acceptance_criteria:
+  - Goal and child-goal records can carry host_capability_ref, host_assignment_id, execution_unit_context_ref, and receipt refs without owning host mutation.
+  - GoalCompletionReceipt certification fails or blocks when required host/test/cleanup evidence is missing.
+  - Blocked host outcomes are preserved as blocked != failed and cannot be transformed into success.
+  - Runtime Artifacts links are used as evidence projection, not as the authoritative receipt source.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future GoalCompletionReceipt host-evidence fixture
+risk_class: goal_runtime_host_certification_drift
+reasoning_tier: high
+context_scope: goal_runtime_containerized_host_consumption
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - future GoalCompletionReceipt and child-goal runtime records
+node_compile_hint:
+  mode: goal_runtime_host_capability_consumption
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0078
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#execution_lane_matrix
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-002-testrunreceipt-host-fields
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-003-blocker-taxonomy-projection-boundary
+source_atom_ids: [atom-0040, atom-0044, atom-0053, atom-0069, atom-0078, atom-0079]
+preserved_exact_tokens:
+  - "agent harnesses"
+  - "execution_unit_context"
+  - "host_assignment_id"
+  - "blocked != failed"
+  - "GoalCompletionReceipt"
+negative_constraints:
+  - Do not let Goal Runtime dispatch host work directly.
+  - Do not certify completion from a blocked host state.
+  - Do not make Runtime Artifacts the receipt authority.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/Executor_Protocol.md
+  - Plans/Automated_Testing_System.md
+```
+
 ### GRS-002 - One Runtime Engine With Three Product Integrations
 
 ```yaml

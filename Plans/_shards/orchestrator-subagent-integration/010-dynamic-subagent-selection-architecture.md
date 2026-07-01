@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L208-L265
+Source lines: L208-L248
 
-Source SHA256: `a1c5f48ae9802e3dcd9b4e85816f4dc0e1d2571bb80eafce0e55bb0b824fb37b`
+Source SHA256: `97280928d0c60b7ddccb8a1caff521e76dd808c19219193d6bf816bc7283ed60`
 
 ---
 
@@ -49,20 +49,3 @@ pub enum ErrorPattern {
     RuntimeError,
 }
 ```
-
-### Subagent Selector
-Subagent selection preserves the same runtime identity packet used by the owner contract.
-
-Required runtime identity carry-through:
-- `requested_account_id`
-- `effective_account_id`
-- `requested_account_binding`
-- `requested_account_policy`
-- `operational_identity`
-- `tool_use_id`
-
-Rules:
-- Child-run routing keeps requested and effective account identity explicit.
-- `requested_account_binding` and `requested_account_policy` survive into delegated runtime selection and audit.
-- `operational_identity` and `tool_use_id` survive into lineage, approval, and usage joins.
-- Subagent selection is a `/consumer` of the shared runtime-account owner contracts: it preserves `requested_account_binding` and `operational_identity` without local substitute fields, keeps requested/effective account and `effective-account` disclosure aligned to `Plans/Contracts_V0.md`, `Plans/Multi-Account.md`, and `Plans/storage-plan.md`, and enforces owner/consumer boundaries for account-binding fields.

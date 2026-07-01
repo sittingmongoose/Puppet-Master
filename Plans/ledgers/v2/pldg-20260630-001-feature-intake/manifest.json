@@ -13,23 +13,23 @@
     "operating_capsule": "state/operating_capsule.json",
     "questions": "records/questions.jsonl"
   },
-  "last_event_id": "evt-0033",
-  "last_validation_summary": "Bootstrap ledger validator passed after post-hardening subjective/objective readiness audit with zero errors and zero warnings.",
+  "last_event_id": "evt-0041",
+  "last_validation_summary": "Governance seal recorded: all required governance validators pass after generated shard, evidence, Spec Lock, and evidence cascade refresh; direct GUI/workflow blocker blk-0003 remains open.",
   "ledger_id": "pldg-20260630-001-feature-intake",
-  "notes": "Active conversational design/spec ledger for `containerized hosts` inspired by `https://github.com/coast-guard/coasts`. Accepted direction includes PM-native `Docker/Hosts`, full MVP runtime/execution scope, shared host identity, lifecycle defaults, Compose-primary ATS, adjusted evidence-mapped q-0020 through q-0023 defaults, implementation-readiness hardening, subagent refinements, and a validated post-hardening readiness audit. The ledger is implementation-ready as a source packet for future explicit compile, not canonical Plans yet and not code-implementation-ready until compile. No canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files were created.",
-  "phase": "conversation_intake",
+  "notes": "Containerized hosts compile recorded to canonical Plans PlanUnits, allowed Plans/.plan_index outputs, allowed Plans/.plan_migration metadata refresh, generated shards, Spec Lock, and evidence refresh. Governance_status=sealed and validators pass. Direct Docker/Hosts GUI/workflow implementation-packet detail remains open; implementation_ready_in_ledger=false remains preserved. No WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, legacy Iced app files, or production build tasks were created.",
+  "phase": "compiled_containerized_hosts_governance_sealed",
   "profile": "bootstrap_planning",
   "record_counts": {
-    "events": 33,
+    "events": 41,
     "design_atoms": 82,
     "decisions": 20,
     "questions": 24,
-    "blockers": 0,
+    "blockers": 3,
     "corrections": 4
   },
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
-  "source_context": "Jared asked to do the subjective/objective check again after gap hardening; the validator-clean audit found no remaining ledger-level implementation-readiness gaps.",
-  "status": "active",
+  "source_context": "Compiled containerized-hosts ledger accepted atoms into 23 PlanUnits across 20 existing owner/consumer docs after resolving the partial compile blocker.",
+  "status": "sealed",
   "title": "Containerized Hosts Planning",
-  "updated_at_utc": "2026-07-01T14:03:37Z"
+  "updated_at_utc": "2026-07-01T16:12:15Z"
 }

@@ -1,22 +1,5 @@
 {
-  "active_ledgers": [
-    {
-      "canonical_plan_targets": [],
-      "created_at_utc": "2026-06-30T19:21:27Z",
-      "last_updated_at": "2026-07-01T14:03:37",
-      "last_updated_at_utc": "2026-07-01T14:03:37Z",
-      "ledger_id": "pldg-20260630-001-feature-intake",
-      "notes": "Active conversational design/spec ledger for `containerized hosts` inspired by `https://github.com/coast-guard/coasts`. Post-hardening subjective/objective readiness audit is validator-clean; no remaining ledger gaps, open questions, open blockers, candidate atoms, or compile queue items exist. Ledger is ready as a source packet for future explicit compile. No canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files were created.",
-      "phase": "conversation_intake",
-      "primary_goal": "Shape the accepted full-MVP `containerized hosts` idea from Coasts/source-lineage inspiration into clear, complete, testable PM-native project intent before any canonical Plans compile.",
-      "resume_file": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json",
-      "status": "active",
-      "title": "Containerized Hosts Planning",
-      "updated_at_utc": "2026-07-01T14:03:37Z",
-      "last_event_id": "evt-0033",
-      "implementation_readiness_in_ledger": true
-    }
-  ],
+  "active_ledgers": [],
   "compiled_ledgers": [
     {
       "canonical_plan_targets": [
@@ -958,6 +941,83 @@
         "no_nodeseed_candidates_created": true,
         "last_validated_at_utc": "2026-06-29T18:56:04Z"
       }
+    },
+    {
+      "canonical_plan_targets": [
+        "Plans/Contracts_V0.md"
+      ],
+      "created_at_utc": "2026-06-30T19:21:27Z",
+      "last_updated_at": "2026-07-01T16:12:15Z",
+      "last_updated_at_utc": "2026-07-01T16:12:15Z",
+      "ledger_id": "pldg-20260630-001-feature-intake",
+      "notes": "Compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, allowed Plans/.plan_migration metadata refresh, and explicit governance seal artifacts. Governance validators pass after generated shard, Spec Lock, evidence, plan graph, auto decisions, and run-gates refresh. Direct Docker/Hosts GUI/workflow implementation-packet detail remains open; implementation_readiness_in_ledger=false and direct_gui_workflow_build_packet_ready=false remain preserved. No WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, legacy Iced app files, or production build tasks were created.",
+      "phase": "compiled_containerized_hosts_governance_sealed",
+      "primary_goal": "Shape the accepted full-MVP `containerized hosts` idea from Coasts/source-lineage inspiration into clear, complete, testable PM-native project intent before any canonical Plans compile.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json",
+      "status": "sealed",
+      "title": "Containerized Hosts Planning",
+      "updated_at_utc": "2026-07-01T16:12:15Z",
+      "last_event_id": "evt-0041",
+      "implementation_readiness_in_ledger": false,
+      "current_checkout_ready": false,
+      "open_blockers_count": 1,
+      "governance_status": "sealed",
+      "compiled_owner_docs": [
+        "Plans/00-plans-index.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/MCP_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Run_Modes.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "compiled_plan_unit_ids": [
+        "0PI-065",
+        "CRAU-090",
+        "CRAU-091",
+        "CRAU-092",
+        "CV-303",
+        "CV-304",
+        "SP-226",
+        "PS-126",
+        "F2-194",
+        "RAP-042",
+        "ATS-019",
+        "EP-109",
+        "RM-048",
+        "T-166",
+        "MI-031",
+        "CBP-023",
+        "GRS-032",
+        "OSI-431",
+        "F3-410",
+        "UCC-105",
+        "ACD-430",
+        "OP-028",
+        "RGV-015"
+      ],
+      "latest_audit_ref": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/governance_seal_validation_20260701.json",
+      "latest_audit_status": "governance_sealed_with_direct_gui_workflow_gap_open",
+      "compiled_plan_intent_ready": true,
+      "direct_gui_workflow_build_packet_ready": false,
+      "current_checkout_compile_validators_clean": true,
+      "current_checkout_governance_validators_clean": true,
+      "open_blocker_ids": [
+        "blk-0003"
+      ]
     }
   ],
   "updated_at_utc": "2026-07-01T12:45:00Z"

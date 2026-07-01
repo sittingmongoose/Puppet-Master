@@ -1,0 +1,264 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "shard_id": "src-20260701-fourth-subjective-objective-recheck",
+  "created_at_utc": "2026-07-01T16:00:54Z",
+  "source_type": "fourth_subjective_objective_readiness_recheck",
+  "not_canonical_plan": true,
+  "user_request_exact": "ok first do the subjective and objective check again",
+  "scope": "Repeat the subjective/objective readiness check after the previous recheck and before any governance seal or implementation work, using local inspection plus three fresh read-only subagents.",
+  "subagents": [
+    {
+      "agent_id": "019f1e62-1df7-7fe1-8749-ea37631db75e",
+      "nickname": "Poincare",
+      "focus": "objective ledger/source-readiness consistency",
+      "verdict": "Not implementation-ready as a direct ledger/spec source for implementation; compiled-plan-intent ready and owner-routed, but direct Docker/Hosts GUI/workflow detail remains open."
+    },
+    {
+      "agent_id": "019f1e62-1f8e-78a0-983e-bc8e6cf0b9e9",
+      "nickname": "Bernoulli",
+      "focus": "canonical owner coverage and PlanUnit evidence mapping",
+      "verdict": "No missing canonical owner coverage for requested PM surfaces; coverage is product/spec coverage, not a direct implementation packet."
+    },
+    {
+      "agent_id": "019f1e62-215c-7393-8a19-3144b71c22c9",
+      "nickname": "Galileo",
+      "focus": "native GUI/workflow readiness and PMConcept.html fit",
+      "verdict": "Not direct Slint implementation-ready; owner routing and product intent are strong, but Docker/Hosts GUI/workflow packet is too compressed for a builder without inventing behavior."
+    }
+  ],
+  "inputs_checked": [
+    "Plans/ledgers/v2/ledger_registry.json",
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/compile_queue.json",
+    "state/operating_capsule.json",
+    "validation/ledger_health.json",
+    "records/blockers.jsonl",
+    "source_shards/third_subjective_objective_recheck_20260701.json",
+    "source_shards/implementation_readiness_hardening_20260701.json",
+    "Plans/.plan_index/node_readiness_report.json",
+    "Concepts/PMConcept.html",
+    "Plans/00-plans-index.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/CLI_Bridged_Providers.md",
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/MCP_Integration.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Tools.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md"
+  ],
+  "validator_results": {
+    "pm_bootstrap_ledger_validate": {
+      "status": "pass",
+      "command": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
+      "errors": 0,
+      "warnings": 0,
+      "summary_before_this_record": {
+        "atoms": 82,
+        "compile_queue_items": 1,
+        "corrections": 4,
+        "decisions": 20,
+        "events": 39,
+        "plan_units_checked": 2895,
+        "questions": 24
+      }
+    },
+    "pm_plan_index_validate": {
+      "status": "pass",
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "plan_unit_count": 5345,
+      "acceptance_unit_count": 19133,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_compiler_contract_incomplete"
+    },
+    "pm_plan_migration_validate": {
+      "status": "pass",
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "live_plan_unit_count": 5345,
+      "unique_live_plan_unit_count": 5345,
+      "failures": 0
+    },
+    "git_diff_check": {
+      "status": "pass",
+      "command": "git diff --check"
+    },
+    "pm_plans_verify_run_gates": {
+      "status": "fail_pending_governance_seal",
+      "primary_failure_classes": [
+        "stale Spec_Lock hashes",
+        "stale evidence hashes",
+        "stale shard bodies"
+      ]
+    },
+    "pm_shard_plans_check": {
+      "status": "fail_pending_governance_seal",
+      "primary_failure_classes": [
+        "source_hash_stale",
+        "source_line_count_stale",
+        "shard_body_mismatch"
+      ]
+    }
+  },
+  "objective_verdict": {
+    "overall": "mixed_not_direct_implementation_ready",
+    "compiled_plan_intent_ready": true,
+    "canonical_owner_coverage_missing": false,
+    "human_implementation_planning_ready": true,
+    "implementation_ready_as_direct_ledger_spec_source": false,
+    "direct_slint_gui_workflow_build_packet_ready": false,
+    "governance_sealed_ready": false,
+    "code_runtime_implementation_ready": false,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "governance_status": "pending_seal",
+    "compiled_plan_unit_count": 23,
+    "compiled_owner_doc_count": 20,
+    "open_blocker_id": "blk-0003"
+  },
+  "subjective_verdict": {
+    "assessment": "The ledger and compiled Plans are strong PM product intent: the owner map is right, Coasts remains source lineage only, Docker/Hosts is native Slint direction, and chat/orchestrator/executor/testing/tools/artifacts/storage/permissions surfaces are all covered. I would not hand it directly to a Slint implementer yet because too many UI/action/state choices would need to be invented during implementation.",
+    "confidence": "high for canonical owner coverage and product intent; medium-high that another focused GUI/workflow hardening pass is needed before direct implementation; not ready for runtime/code implementation while governance seal and node/compiler readiness remain pending."
+  },
+  "open_gaps": [
+    {
+      "gap_id": "gap-direct-gui-workflow-build-packet",
+      "status": "open",
+      "gap_type": "direct_gui_workflow_implementation_detail",
+      "summary": "Canonical PlanUnits define the Docker/Hosts page, owner routing, consumer surfaces, and visible states, but they do not yet provide a direct Slint build packet with component tree, route payloads, workflow transitions, selected-object model, side-panel-to-page affordance, empty/setup layouts, action availability matrix, and responsive density behavior.",
+      "gui_related": true,
+      "evidence_refs": [
+        "Plans/FinalGUISpec.md:F3-410",
+        "Plans/Containers_Registry_and_Unraid.md:CRAU-092",
+        "Plans/UI_Command_Catalog.md:UCC-105",
+        "Concepts/PMConcept.html",
+        "subagent:019f1e62-215c-7393-8a19-3144b71c22c9",
+        "subagent:019f1e62-1df7-7fe1-8749-ea37631db75e"
+      ]
+    },
+    {
+      "gap_id": "gap-concrete-command-id-matrix",
+      "status": "open",
+      "gap_type": "command_catalog_detail",
+      "summary": "Canonical command routing is owner-correct through HostCapabilityCommand and cmd.docker.* / cmd.docker.k8s.* families, but exact command ids and action/state availability are not enumerated for preflight, launch, start, stop, restart, Open App, Open Container, refresh, cleanup, retain, logs, receipts, approve, and blocked-action recovery.",
+      "gui_related": true,
+      "evidence_refs": [
+        "Plans/UI_Command_Catalog.md:UCC-105",
+        "Plans/Contracts_V0.md:CV-304",
+        "Plans/Executor_Protocol.md:EP-109",
+        "subagent:019f1e62-1f8e-78a0-983e-bc8e6cf0b9e9"
+      ]
+    },
+    {
+      "gap_id": "gap-per-surface-display-action-rules",
+      "status": "open",
+      "gap_type": "cross_surface_projection_detail",
+      "summary": "Assistant Chat, Orchestrator, Run Graph, and Runtime Artifacts have correct consumer/authority boundaries, but per-surface rendering rules remain high-level: card/chip/banner mapping, disabled-versus-hidden action behavior, stale/blocked next actions, and recovery copy need direct implementation detail.",
+      "gui_related": true,
+      "evidence_refs": [
+        "Plans/assistant-chat-design.md:ACD-430",
+        "Plans/Orchestrator_Page.md:OP-028",
+        "Plans/Run_Graph_View.md:RGV-015",
+        "Plans/Runtime_Artifacts_Panel.md:RAP-042",
+        "subagent:019f1e62-1f8e-78a0-983e-bc8e6cf0b9e9"
+      ]
+    },
+    {
+      "gap_id": "gap-canonical-lifecycle-workflow-detail",
+      "status": "open",
+      "gap_type": "state_machine_and_workflow_detail",
+      "summary": "Detailed profile/build/instance/assignment/test session state machines exist in source lineage and were partially compressed into canonical PlanUnits; a direct implementation packet should canonicalize the transition matrix, failure/blocked/degraded states, cleanup/retention paths, and Host Lab workflow steps.",
+      "gui_related": true,
+      "evidence_refs": [
+        "source_shards/implementation_readiness_hardening_20260701.json#lifecycle_state_machines",
+        "Plans/FinalGUISpec.md:F3-410",
+        "Plans/storage-plan.md:SP-226",
+        "Plans/Containers_Registry_and_Unraid.md:CRAU-091"
+      ]
+    },
+    {
+      "gap_id": "gap-stale-readiness-lineage-superseded",
+      "status": "superseded_by_latest_compact_state",
+      "gap_type": "source_lineage_projection_correction",
+      "summary": "Older source shard implementation_readiness_hardening_20260701.json contains implementation_ready_in_ledger=true, but evt-0039 and evt-0040 supersede it: implementation_ready_in_ledger=false, direct_gui_workflow_build_packet_ready=false.",
+      "gui_related": false,
+      "evidence_refs": [
+        "source_shards/implementation_readiness_hardening_20260701.json:implementation_ready_in_ledger=true",
+        "state/current.json",
+        "state/handoff.json",
+        "source_shards/third_subjective_objective_recheck_20260701.json",
+        "source_shards/fourth_subjective_objective_recheck_20260701.json"
+      ]
+    },
+    {
+      "gap_id": "gap-governance-seal-pending",
+      "status": "open_known_boundary",
+      "gap_type": "governance_freshness_boundary",
+      "summary": "run-gates and shard checks fail on stale Spec Lock, evidence, and generated shards because the explicit governance seal has not been run after the compile/index/migration changes.",
+      "gui_related": false,
+      "evidence_refs": [
+        "validator:python3 scripts/pm-plans-verify.py run-gates fail 2026-07-01T15:54:13Z",
+        "validator:python3 scripts/pm-shard-plans.py --check fail 2026-07-01T15:54:55Z",
+        "Plans/Spec_Lock.json",
+        "Plans/_shards/**",
+        "Plans/.evidence/**"
+      ]
+    },
+    {
+      "gap_id": "gap-node-readiness-dependency-cycles",
+      "status": "open_known_boundary",
+      "gap_type": "node_readiness_structural_boundary",
+      "summary": "The generated node-readiness report includes dependency cycles involving new containerized-host PlanUnits; this blocks automatic PlanUnit-to-node ordering but is not a missing product-owner coverage finding while PlanCompile remains disabled.",
+      "gui_related": false,
+      "evidence_refs": [
+        "Plans/.plan_index/node_readiness_report.json"
+      ]
+    }
+  ],
+  "preserved_exact_tokens": [
+    "Docker/Hosts",
+    "Slint",
+    "PMConcept.html",
+    "not a separate Coasts website",
+    "not a new Activity Bar slot",
+    "docker_manager",
+    "HostCapabilityCommand",
+    "HostOperationRequest",
+    "cmd.docker.*",
+    "cmd.docker.k8s.*",
+    "Open App",
+    "Open Container",
+    "blocked != failed",
+    "implementation_ready_in_ledger=true",
+    "implementation_ready_in_ledger=false",
+    "direct_gui_workflow_build_packet_ready=false",
+    "blocked_compiler_contract_incomplete",
+    "runtime_disabled"
+  ],
+  "preserved_negative_constraints": [
+    "Do not create WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, runtime/build surfaces, implementation files, production build tasks, or legacy Iced app files.",
+    "Do not update Spec_Lock, shards, evidence, plan_graph, or auto_decisions during this recheck.",
+    "Do not treat Coasts runtime claims as PM-supported runtime evidence.",
+    "Do not copy PMConcept.html HTML/CSS/demo code; it is directional GUI concept evidence only and the real product remains Slint.",
+    "Do not make Docker/Hosts a separate Coasts website, new Activity Bar slot, or separate Unraid panel.",
+    "Do not flatten governance pending, node-readiness blocked, source-lineage supersession, and direct GUI build-packet gaps into one readiness label."
+  ],
+  "recommended_next_actions": [
+    "Run a narrow canonical Plan hardening pass for the direct Docker/Hosts GUI/workflow packet before implementation if the next phase is implementation readiness: component/route shape, command ids, state/action matrix, per-surface display rules, lifecycle transitions, and responsive density.",
+    "If Jared accepts the current caveat as future implementation-hardening rather than a governance blocker, governance seal can proceed while preserving direct_gui_workflow_build_packet_ready=false.",
+    "Do not start code/runtime implementation from this audit."
+  ],
+  "conclusion": "Subjectively and objectively mixed: compiled PM product intent and owner coverage are strong; no missing canonical owner coverage was found; direct Slint GUI/workflow implementation packet detail remains open; governance seal and runtime/code readiness are pending by design."
+}

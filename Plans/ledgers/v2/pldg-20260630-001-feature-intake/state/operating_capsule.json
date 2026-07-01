@@ -4,13 +4,13 @@
   "capsule_id": "cap-feature-intake-current",
   "ledger_profile": "bootstrap_planning",
   "agent_task": "containerized_hosts_conversational_planning",
-  "phase": "conversation_intake",
-  "current_phase": "conversation_intake",
-  "governance_status": "not_started",
-  "last_event_id": "evt-0033",
-  "updated_at_utc": "2026-07-01T14:03:37Z",
-  "next_action": "Continue ledger-only planning, or compile accepted atoms into canonical Plans only if Jared explicitly requests compile.",
-  "next_safe_action": "Continue conversational planning inside this ledger only; do not write canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files unless Jared explicitly requests compile/implementation scope.",
+  "phase": "compiled_containerized_hosts_governance_sealed",
+  "current_phase": "compiled_containerized_hosts_governance_sealed",
+  "governance_status": "sealed",
+  "last_event_id": "evt-0041",
+  "updated_at_utc": "2026-07-01T16:12:15Z",
+  "next_action": "Resolve direct Docker/Hosts GUI/workflow implementation-packet gap before code/runtime implementation.",
+  "next_safe_action": "Use a future design-hardening pass for the Docker/Hosts Slint GUI/workflow build packet; do not start code/runtime implementation from the sealed governance state alone.",
   "allowed_reads_default": [
     "state/current.json",
     "state/handoff.json",
@@ -51,7 +51,8 @@
     "legacy Iced app recreation"
   ],
   "completion_blockers_visible_to_agent": [
-    "No ledger-readiness blockers remain after the post-hardening subjective/objective recheck; compile still requires explicit Jared request."
+    "Direct Docker/Hosts GUI/workflow implementation packet detail remains open: component/route shape, exact command ids, state/action matrix, per-surface display rules, lifecycle transitions, empty/setup/blocked/degraded layouts, side-panel-to-page affordance, and responsive density behavior.",
+    "Node readiness remains blocked_compiler_contract_incomplete / runtime_disabled; no WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, or production build tasks were created."
   ],
   "required_end_of_turn_actions": [
     "append ledger event for substantive turns",
@@ -61,11 +62,28 @@
   ],
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
-    "ledger_health": "pass_post_hardening_readiness_audit",
-    "governance_status": "not_started",
+    "plan_index_generate": "pass",
+    "plan_index_validate": "pass",
+    "plan_migration_validate": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_shard_plans_check": "pass",
+    "validate_auto_decisions": "pass",
+    "verify_spec_lock": "pass",
+    "validate_evidence": "pass",
+    "validate_plan_graph": "pass",
+    "git_diff_check": "pass",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "governance_status": "sealed",
+    "direct_gui_workflow_build_packet_ready": false,
+    "compiled_plan_intent_ready": true,
     "no_worknodes_created": true,
     "no_nodeseed_candidates_created": true,
-    "last_validated_at_utc": "2026-07-01T14:03:37Z",
-    "latest_projection_updated_at_utc": "2026-07-01T14:03:37Z"
+    "no_executable_queues_created": true,
+    "no_runtime_build_surfaces_created": true,
+    "no_implementation_files_created": true,
+    "last_validated_at_utc": "2026-07-01T16:12:15Z",
+    "latest_projection_updated_at_utc": "2026-07-01T16:12:15Z",
+    "ledger_health": "pass_governance_sealed",
+    "governance_seal": "passed"
   }
 }

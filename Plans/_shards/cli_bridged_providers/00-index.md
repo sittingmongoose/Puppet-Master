@@ -1,18 +1,19 @@
 # Shard Index: Plans/CLI_Bridged_Providers.md
 
-Generated: 2026-06-29T18:49:34Z
+Generated: 2026-07-01T16:09:24Z
 
-Source SHA256: `c8edb81d62c1337890538c77676ee3a44ddefe80d9d200bfddc651e8f89e15b5`
+Source SHA256: `02118acdedc6f719f198254b1a01064f5a674b35390524a4141613dd28381612`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `b6bf4759911d0a723d7edddf853a1ea8691c22134e4829f39274a832423ea4a0`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `575c28ec5ca3705a931eb122e7bea28af3163d0d4c60ffa64f8716caa1f5ca6f`
-- [003 - Purpose](003-purpose.md) L15-L34 `44a9aa9b9bd742b9753bb16fe0283d80a0886ee6ad8e10dbd89572e52518824c`
-- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L36-L129 `3025be6e886dc8d84ac17c90ade6ab9f726e6783a83c4e8b9d8b13aeebc30df6`
-- [005 - Owner / Consumer Map](005-owner-consumer-map.md) L131-L135 `23aec7b4a76d7dbfe69699f3820493a15ec0f1b3a9c47717786c262735d8cdc3`
-- [006 - PlanUnits](006-planunits.md) L137-L1055 `de379e185671f3a69954dd4b5159aca8d0809e92be535f1f245b78b8e129d8a8`
-- [007 - Migration Coverage](007-migration-coverage.md) L1057-L1067 `0684bf88afc2a8de8b445a8ce0e8b36d0a4be97ef35562572603e6758943865c`
-- [008 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1069-L1241 `02461874727aec2d856f7b9d41b3ec7a19a5e59dfc39a318fcdbc710fa7360e9`
+- [001 - Preamble](001-preamble.md) L1-L1 `c18e33099cb40037723650f8794909dbefcda43796ec2577021e7f34bfa45664`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `f9ffac10720fa3516fd0c432032eca4de2eb227e1824f7e6f754e9ce14cf0fe4`
+- [003 - Purpose](003-purpose.md) L15-L34 `5153d0a850238ca917cff307a074f08be6a449aabf16165f73ab69f108ebc04c`
+- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L36-L67 `6fb641412fb3055474975fc26e1e65625d62decff7c186903dbf5a49d04f3761`
+- [005 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L69-L202 `b49d7cfa06389254f5d48cfbb4e7ca66acc4ca23d26da883b28a54cf50ec0c92`
+- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L204-L208 `47b311ec6662397d1a97385f05a8338f7f20af5daff35a806c74bfb180670703`
+- [007 - PlanUnits](007-planunits.md) L210-L1128 `71d61e814f9376a8b0d9ad56faa22eeb6fed75aa91d6f752bff016152c60c2a5`
+- [008 - Migration Coverage](008-migration-coverage.md) L1130-L1140 `d3ea6bd695e0ac535df36e5908f8f9e19e4408c694b4f59cb570b1c05da160ad`
+- [009 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](009-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1142-L1314 `569be15aee42847f8a8fb216a47903083ddb0fafc125454d64500862296440ba`

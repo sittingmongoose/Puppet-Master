@@ -1,6 +1,6 @@
 # Shard Index: Plans/assistant-memory-subsystem.md
 
-Generated: 2026-06-29T18:49:34Z
+Generated: 2026-07-01T16:09:24Z
 
 Source SHA256: `3499a421184fcdcfbb419516be60af5c0f33ef8a082be8dfa388f90fa62c5729`
 

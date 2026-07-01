@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L25
+Source lines: L7-L26
 
-Source SHA256: `bc4bbc03e1f95de07300cf271a85c04dbe7ebe06675160cd902125401da2e824`
+Source SHA256: `bc51dc6b41d57a6e84caa44ba1fea89bce18079849ee203d1316746d758e633e`
 
 ---
 
@@ -24,6 +24,7 @@ Source SHA256: `bc4bbc03e1f95de07300cf271a85c04dbe7ebe06675160cd902125401da2e824
 - 2026-06-21: Retired `Plans/chain-wizard.md` and `Plans/chain-wizard-flexibility.md` from active product canon. Their `CW-*` and `CWF-*` PlanUnits are compatibility/source-lineage only and must not be accepted/indexed as active current-product truth.
 - 2026-06-26: Registered provider-update compile routing from ledger `pldg-20260624-001-provider-updates`: Gemini CLI is retired from active provider support, Gemini Direct remains API-key-backed, Antigravity CLI replaces Gemini CLI for the CLI-backed Google/agent route, Provider -> models catalogs are mandatory, media support splits input/output/generated-media routes, OpenAI/Codex subscription-backed image generation is mandatory alongside official OpenAI API-key image routes, and provider readiness stays route/model/account specific.
 - 2026-06-27: Registered miscellaneous PM History, PM-native vision_bridge / see_image, and Teach/Teacher owner routing compiled from ledger `pldg-20260626-001-feature-name`; PMConcept.html remains non-final source-lineage only, and this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, or governance-seal artifacts.
+- 2026-07-01: Registered containerized-hosts owner routing compiled from ledger `pldg-20260630-001-feature-intake`: `Docker/Hosts` is a native Slint routed page/lab reached from Docker Manager and cross-surface links, `docker_manager` remains the Activity Bar side-panel owner and command namespace, Coasts remains source-lineage inspiration only, runtime families are whole-MVP but capability-probed/gated, and this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or governance-seal artifacts.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

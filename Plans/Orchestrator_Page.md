@@ -459,6 +459,76 @@ owner_hints:
   - Plans/Orchestrator_Page.md
 ```
 
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles Orchestrator containerized-host projection obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+
+### OP-028 - Orchestrator Containerized Host Projection And Routes
+
+```yaml
+plan_unit_id: OP-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Orchestrator_Page.md
+canonical_text: >-
+  Orchestrator surfaces containerized-host readiness, assignment, blocker, access, and receipt projections for runs and
+  attempts that use host capability, while Docker Manager, Docker/Hosts, Executor, Run Modes, ATS, Permissions, FileSafe,
+  Tools, and Runtime Artifacts retain their owner roles. Orchestrator may show host readiness chips, blocked-action
+  payloads, active assignments, access URL pivots, receipt/evidence links, and Docker/Hosts routes from run details, but
+  it does not own local Docker, Kubernetes, SSH, shell, file, or cleanup mutation semantics and does not create a new
+  top-level Orchestrator tab for Hosts. Stale projections cannot authorize sensitive actions; all mutation or launch
+  requests resolve through HostCapabilityCommand and owner receipts.
+gui_related: true
+gui_classification_reason: This PlanUnit defines visible Orchestrator projections, chips, pivots, and routes.
+depends_on: [F3-410, UCC-105, GRS-032, EP-109, RAP-042]
+unblocks: [RGV-015]
+acceptance_criteria:
+  - Orchestrator run details can display host readiness, active assignments, blocked_reason_code, access pivots, and receipt links.
+  - Orchestrator routes to Docker/Hosts and Runtime Artifacts without owning Docker/Kubernetes mutation or cleanup policy.
+  - No new top-level Orchestrator Hosts tab is created by this compile.
+  - Stale or missing host projections degrade or block the visible affordance rather than authorizing sensitive actions.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Orchestrator host-projection fixture
+risk_class: orchestrator_host_projection_authority_drift
+reasoning_tier: standard
+context_scope: orchestrator_containerized_host_projection
+implementation_surfaces:
+  - Plans/Orchestrator_Page.md
+  - future Orchestrator run details and routes
+node_compile_hint:
+  mode: orchestrator_host_projection_routes
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0011
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#docker_hosts_gui_ia
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#control_plane_contract
+source_atom_ids: [atom-0011, atom-0040, atom-0041, atom-0073, atom-0075, atom-0079, atom-0080, atom-0081]
+preserved_exact_tokens:
+  - "no new top-level Orchestrator tab"
+  - "orchestrator/executor(or anything adjacent)"
+  - "Orchestrator/Executor run details"
+  - "Docker/Hosts"
+  - "HostCapabilityCommand"
+negative_constraints:
+  - Do not make Orchestrator the owner of local Docker, Kubernetes, SSH, shell, file, or cleanup mutation semantics.
+  - Do not create a new top-level Orchestrator Hosts tab.
+  - Do not let stale projections authorize sensitive actions.
+owner_hints:
+  - Plans/Orchestrator_Page.md
+  - Plans/Run_Graph_View.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
 ### OP-003 - Governance Runtime Record Envelope
 
 ```yaml

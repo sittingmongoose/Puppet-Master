@@ -1,21 +1,22 @@
 # Shard Index: Plans/Orchestrator_Page.md
 
-Generated: 2026-06-29T18:49:34Z
+Generated: 2026-07-01T16:09:24Z
 
-Source SHA256: `ed8d6eed25610d681f69a605aa39a58225f343b31053fa3a1c923153c28f2fc3`
+Source SHA256: `30effb9810d393ab13f290ee9560950d702e886a30c021d4ceeb6b12862b3924`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `71c55f9bd77211453543bc11138cc7341f65a0bd4abea73e42a75d0daef1a451`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L52 `7a903c4050fa759fa998f38e1b899c647fd1f13d5069163473a7e2d82f058bd2`
-- [003 - 1. Scope and canonical model](003-1.-scope-and-canonical-model.md) L55-L390 `2411bcc131f9fcd93db9768718298e76c56f91b0e8701d44e630a7634d661fe8`
-- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L392-L396 `c09aa5fb042b4b7b4cc5d82f99b35ddccff794b0a6ac56686d9de54ac3974318`
-- [005 - PlanUnits](005-planunits.md) L398-L1403 `150cb7e261efb3ab19de6af5dee361d6e5d2eb118a0751e82e42012778bacd7f`
-- [006 - Migration Coverage](006-migration-coverage.md) L1405-L1415 `9a84896b5e9712e8e4ae1d2f5bf5a3658d0dc135c4eb0f2978791d6bd1515f44`
-- [007 - Ledger Compile Addendum - pldg-20260614-001](007-ledger-compile-addendum-pldg-20260614-001.md) L1417-L1497 `28ecfcc068d8a524ee80fcb89f7d3cde0819a46e09ed7320221f3e13e370c3d0`
-- [008 - Ledger Compile Addendum - pldg-20260616-002](008-ledger-compile-addendum-pldg-20260616-002.md) L1499-L1602 `7e2b2998bcfc6d1563d0f4c08a47afbac4126a2d5ab34aff0e02c52a353a9bf3`
-- [009 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L1604-L1703 `d61eb7ac08d6ed416d0c2895e16e8a93251478d03860c1bb152a7c9e7b23f6cc`
-- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1706-L1846 `3a8230cadd8549c0038036f5bf63bf007bc35b375956e43b9731bdef6ab5c214`
-- [011 - Ledger Compile Addendum - pldg-20260626-001-feature-name](011-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1849-L2254 `81527d28817348a17ce2baa8dc6c6d81dd64ad3de091388cbe30e7a36773c4c2`
+- [001 - Preamble](001-preamble.md) L1-L1 `fa34aa9f610833fe8d4fbafe4baa1d967ab17b89c82db74d61525b18a679eb75`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L52 `99312d214390fbc0909bebea740ea9f286e3790acf07ed9799c7d22c6a652a25`
+- [003 - 1. Scope and canonical model](003-1.-scope-and-canonical-model.md) L55-L390 `9e53e9f0cb0067822e52a9fcb8bbda171307b51adbb2d21f0eb0bd72bed96827`
+- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L392-L396 `82f33e4ccd45699beb4921a4e7aac4210f854b43ccf7e19a5a4e5a26a5395712`
+- [005 - PlanUnits](005-planunits.md) L398-L460 `3ed1537460d6acf0b474219e77cb1423cce461adb8c031fb4cb9489e81e44377`
+- [006 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](006-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L462-L1473 `353b956e4537a60f7365fb03f952662327236f107ffba987822c31692d507482`
+- [007 - Migration Coverage](007-migration-coverage.md) L1475-L1485 `2e659962a70733d615f11b10264178d05ce813eec64c3ba65a4b947068907ea5`
+- [008 - Ledger Compile Addendum - pldg-20260614-001](008-ledger-compile-addendum-pldg-20260614-001.md) L1487-L1567 `a126d58cdd41174a74950f2275ecba45c5992023a04cd0c823dba28559f1d0d2`
+- [009 - Ledger Compile Addendum - pldg-20260616-002](009-ledger-compile-addendum-pldg-20260616-002.md) L1569-L1672 `2c79d78ed1951536a65cb4b4aca8fea168b0ef3bb1f16c1d44f1e2e7e48c5b74`
+- [010 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](010-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L1674-L1773 `089e66ad67e09af649f2b61da3ec5d965862b3c880cced58461bf3a8ae25d6bb`
+- [011 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](011-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L1776-L1916 `b132da85e6c9197d202114f8dd0771b0132ae9c87dceb57f51a73681f1472ed5`
+- [012 - Ledger Compile Addendum - pldg-20260626-001-feature-name](012-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L1919-L2324 `811e443efac4248ff1555a7e32861dca20b5c430e49410a3aeeb4ec22a1a30dc`

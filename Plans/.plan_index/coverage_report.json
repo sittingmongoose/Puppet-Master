@@ -1,24 +1,24 @@
 {
   "blockers": [],
   "field_coverage": {
-    "acceptance_criteria": 5322,
-    "canonical_text": 5322,
-    "context_scope": 5322,
-    "depends_on": 5322,
-    "gui_related": 5322,
-    "implementation_surfaces": 5322,
-    "node_compile_hint": 5322,
-    "owner_doc": 5322,
-    "plan_unit_id": 5322,
-    "reasoning_tier": 5322,
-    "risk_class": 5322,
-    "source_lineage": 5322,
-    "status": 5322,
-    "unblocks": 5322,
-    "unit_type": 5322,
-    "validation_surfaces": 5322
+    "acceptance_criteria": 5345,
+    "canonical_text": 5345,
+    "context_scope": 5345,
+    "depends_on": 5345,
+    "gui_related": 5345,
+    "implementation_surfaces": 5345,
+    "node_compile_hint": 5345,
+    "owner_doc": 5345,
+    "plan_unit_id": 5345,
+    "reasoning_tier": 5345,
+    "risk_class": 5345,
+    "source_lineage": 5345,
+    "status": 5345,
+    "unblocks": 5345,
+    "unit_type": 5345,
+    "validation_surfaces": 5345
   },
-  "generated_at_utc": "2026-06-29T18:19:05Z",
+  "generated_at_utc": "2026-07-01T15:29:00Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
@@ -469,11 +469,11 @@
         "structural_disposition": 8
       },
       "doc_count": 69,
-      "live_plan_unit_count": 5322,
+      "live_plan_unit_count": 5345,
       "source_preserving_unit_count": 0,
       "source_preserving_unit_ids": [],
       "span_count": 3916,
-      "unique_live_plan_unit_count": 5322
+      "unique_live_plan_unit_count": 5345
     },
     "coverage_rows": 3916,
     "coverage_span_ids_unique": true,
@@ -901,7 +901,7 @@
       "structural_disposition": 8
     },
     "final_status": "COMPLETE",
-    "live_plan_unit_count": 5322,
+    "live_plan_unit_count": 5345,
     "live_plan_unit_count_source": "current_live_plan_index",
     "next_batch_cursor": null,
     "nodeseeds_created": null,
@@ -930,7 +930,7 @@
   "source_scope": "top-level live Plans/*.md PlanUnit YAML fences",
   "status": "pass",
   "summary": {
-    "cycle_blocker_count": 11,
+    "cycle_blocker_count": 20,
     "doc_count": 71,
     "docs_with_plan_units": 71,
     "docs_without_plan_units": 0,
@@ -938,8 +938,8 @@
     "missing_gui_related_boolean_count": 0,
     "missing_required_metadata_count": 0,
     "parse_error_count": 0,
-    "plan_unit_count": 5322,
-    "unique_plan_unit_count": 5322,
+    "plan_unit_count": 5345,
+    "unique_plan_unit_count": 5345,
     "unresolved_dependency_reference_count": 0
   }
 }
