@@ -1,0 +1,121 @@
+{
+  "source_shard_id": "ledger_implementation_readiness_audit_20260701",
+  "created_at": "2026-07-01T00:00:00Z",
+  "created_by": "codex",
+  "source_type": "ledger_readiness_audit",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "user_request_exact": "I want you to subjectively and objectively look at what is in the ledger for this and see if it is implementation ready in the ledger(I know it needs to be in the plans to be fully implementation ready).  Don\u2019t rely on open questions and what not.  Read through it and see if we are missing anything.  Any gaps, etc.",
+  "assessment_result": {
+    "implementation_ready_in_ledger": false,
+    "classification": "directionally strong and compile-shapable, but not contract-complete enough for implementation without new design decisions",
+    "objective_basis": [
+      "The ledger validates mechanically and already records the native PM-owned direction, full MVP scope, broad runtime families, Docker/Hosts GUI page placement, owner routing, identity terms, lifecycle defaults, security defaults, and ATS testing intent.",
+      "Six pre-existing candidate atoms remain unclassified: Coasts source-lineage concepts, dynamic/canonical port and access URL intelligence, privileged/remote/secret risk guardrails, whole-MVP matrix guardrails, host-vs-runtime command routing, and Coasts local API/terminal/file-control risks.",
+      "Several accepted atoms are architectural intent rather than implementation contracts: they name required surfaces but do not define payload schemas, state machines, row-level runtime behavior, or acceptance tests tightly enough for an implementer to build without inventing missing rules."
+    ],
+    "subjective_judgment": "The direction is good and appropriately PM-native: it avoids copying Coasts blindly, keeps safety/permissions central, and correctly treats containerized hosts as shared PM infrastructure rather than a website transplant. The weak spot is that the ledger is still too broad and conceptual. I would not hand this to implementation yet without a focused hardening pass that converts the accepted intent into exact contracts, matrices, and UI interaction details."
+  },
+  "confirmed_strengths": [
+    {
+      "summary": "Native PM GUI and PM-owned backend direction is settled; no separate Coasts website transplant.",
+      "gui_related": true
+    },
+    {
+      "summary": "Coasts is preserved as source-lineage inspiration, not vendored execution authority.",
+      "gui_related": false
+    },
+    {
+      "summary": "Whole-MVP ambition is explicit: Docker/Compose, Podman, Sysbox, remote Docker SSH, Kubernetes namespaces, CI-hosted containers, Unraid, and privileged DinD are in scope as first-class or precisely blocked states.",
+      "gui_related": false
+    },
+    {
+      "summary": "Docker/Hosts page direction is accepted for expanded host lab details, with PMConcept.html treated as directional-only concept context and Slint as the intended product GUI technology.",
+      "gui_related": true
+    },
+    {
+      "summary": "Cross-surface host identity is named through host_capability_ref and host_profile_id for assistant, orchestrator/executor, ATS, tools, and adjacent PM surfaces.",
+      "gui_related": false
+    },
+    {
+      "summary": "Security posture is strong: fail-closed preflight, explicit trust/policy state, scoped mounts, redaction/no raw secrets, declared egress, approval evidence, isolated browser profiles, and cleanup/retention receipts.",
+      "gui_related": false
+    }
+  ],
+  "implementation_readiness_gaps": [
+    {
+      "gap_id": "gap-001-schema-contracts",
+      "severity": "blocker_for_implementation_readiness",
+      "summary": "Core data contracts are named but not defined: host_capability_ref, host_profile_id, host profile, host instance, host assignment, build artifact, port/access URL, capability state, preflight receipt, execution receipt, cleanup/retention receipt, and blocker payloads need field-level shapes and ownership.",
+      "gui_related": false,
+      "recommended_resolution": "Add a schema/data-contract matrix before compile or as an explicit compile-ready section."
+    },
+    {
+      "gap_id": "gap-002-runtime-family-rows",
+      "severity": "blocker_for_implementation_readiness",
+      "summary": "Runtime families are accepted, but each family lacks row-complete implementation rules for minimum supported operations, preflight probes, setup inputs, trust tier, security gates, expected blocked states, receipts, cleanup behavior, and acceptance tests.",
+      "gui_related": false,
+      "recommended_resolution": "Create a per-runtime family matrix for Docker/Compose, Podman, Sysbox, remote Docker SSH, Kubernetes namespaces, CI-hosted containers, Unraid, and privileged DinD."
+    },
+    {
+      "gap_id": "gap-003-execution-lane-rows",
+      "severity": "blocker_for_implementation_readiness",
+      "summary": "Execution lanes are named but not row-complete for apps/services under test, PM work, provider tools, agent harnesses, shells, and integration commands. The ledger needs allowed command envelopes, authority owner, default run mode, transcript policy, secret policy, cleanup/safe-point expectations, receipt fields, and blocker taxonomy by lane.",
+      "gui_related": false,
+      "recommended_resolution": "Create a per-execution lane matrix aligned to Executor/Orchestrator, Tools, ATS, Assistant Chat, Permissions/FileSafe, and Runtime Artifacts owners."
+    },
+    {
+      "gap_id": "gap-004-docker-hosts-gui-ia",
+      "severity": "major_gap",
+      "summary": "The Docker/Hosts page is accepted, but the ledger does not yet define concrete native Slint IA: nav placement, subviews/tabs, profile editor fields, instance detail layout, runtime capability matrix view, host lab session view, command affordances, empty/setup/error states, disabled/blocked affordances, and cross-surface routes.",
+      "gui_related": true,
+      "recommended_resolution": "Add a GUI IA/component pass for the Docker/Hosts page using PMConcept.html only as visual/interaction mood context, not implementation source."
+    },
+    {
+      "gap_id": "gap-005-ats-adapter-contract",
+      "severity": "major_gap",
+      "summary": "Compose-primary ATS testing is accepted, but the adapter contract is missing: how ATS requests a host, how capability discovery is represented, how TestStrategy binds to a host profile, how launch/preflight/harness probes report, and which TestRunReceipt fields prove containerized execution.",
+      "gui_related": false,
+      "recommended_resolution": "Define the ATS-to-host adapter flow and receipt contract before implementation."
+    },
+    {
+      "gap_id": "gap-006-lifecycle-state-machine",
+      "severity": "major_gap",
+      "summary": "Reusable profiles, ephemeral instances, retain-on-failure, cleanup, and retention are accepted, but the ledger lacks explicit state machines for profile/build/instance/assignment/test-session states, transitions, crash/restart recovery, and stale/orphaned resource reconciliation.",
+      "gui_related": false,
+      "recommended_resolution": "Add lifecycle state diagrams or tabular transitions with owner and receipt obligations."
+    },
+    {
+      "gap_id": "gap-007-command-routing-control-plane",
+      "severity": "major_gap",
+      "summary": "The ledger warns not to copy Coasts local API, terminal, and file controls blindly, but it needs a positive PM control-plane contract: how UI commands, assistant requests, orchestrator/executor dispatch, tool calls, terminal-like actions, and file/artifact access route through PM permissions, FileSafe, Command Catalog, and receipts.",
+      "gui_related": false,
+      "recommended_resolution": "Accept/refine the host-vs-container command routing split and define the PM-native control-plane boundary explicitly."
+    },
+    {
+      "gap_id": "gap-008-source-lineage-candidates",
+      "severity": "readiness_gap",
+      "summary": "The remaining Coasts-derived candidates include useful implementation material, especially dynamic/canonical ports and access URLs, but they need classification into accepted PM-native concepts, rejected source-lineage-only concepts, or compatibility-only notes.",
+      "gui_related": true,
+      "recommended_resolution": "Classify the six remaining candidate atoms and turn any accepted ones into concrete PM contracts or UI affordances."
+    }
+  ],
+  "not_missing_or_not_blocking": [
+    "The lack of canonical Plans output is intentional for this thread and is not counted as a ledger-readiness gap.",
+    "The lack of WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, and auto_decisions is intentional under the user instructions and is not counted as a product gap.",
+    "The existing Docker section in PMConcept.html being small is already addressed by the accepted Docker/Hosts page direction; the missing part is the detailed page IA, not the page-level choice."
+  ],
+  "recommended_next_pass": {
+    "name": "implementation-readiness hardening pass",
+    "intent": "Keep the native PM direction, then fill concrete contracts and matrices so compile can produce implementation-grade PlanUnits instead of broad architectural intent.",
+    "work_items": [
+      "Define core schemas and ids.",
+      "Complete runtime-family matrix.",
+      "Complete execution-lane matrix.",
+      "Specify Docker/Hosts page IA and component states.",
+      "Specify ATS host adapter and TestRunReceipt contract.",
+      "Specify lifecycle state machines and cleanup/recovery receipts.",
+      "Specify PM-native command/control-plane routing.",
+      "Classify the six remaining Coasts-derived candidate atoms."
+    ]
+  }
+}

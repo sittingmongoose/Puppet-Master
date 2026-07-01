@@ -1,5 +1,22 @@
 {
-  "active_ledgers": [],
+  "active_ledgers": [
+    {
+      "canonical_plan_targets": [],
+      "created_at_utc": "2026-06-30T19:21:27Z",
+      "last_updated_at": "2026-07-01T14:03:37",
+      "last_updated_at_utc": "2026-07-01T14:03:37Z",
+      "ledger_id": "pldg-20260630-001-feature-intake",
+      "notes": "Active conversational design/spec ledger for `containerized hosts` inspired by `https://github.com/coast-guard/coasts`. Post-hardening subjective/objective readiness audit is validator-clean; no remaining ledger gaps, open questions, open blockers, candidate atoms, or compile queue items exist. Ledger is ready as a source packet for future explicit compile. No canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files were created.",
+      "phase": "conversation_intake",
+      "primary_goal": "Shape the accepted full-MVP `containerized hosts` idea from Coasts/source-lineage inspiration into clear, complete, testable PM-native project intent before any canonical Plans compile.",
+      "resume_file": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json",
+      "status": "active",
+      "title": "Containerized Hosts Planning",
+      "updated_at_utc": "2026-07-01T14:03:37Z",
+      "last_event_id": "evt-0033",
+      "implementation_readiness_in_ledger": true
+    }
+  ],
   "compiled_ledgers": [
     {
       "canonical_plan_targets": [
@@ -943,5 +960,5 @@
       }
     }
   ],
-  "updated_at_utc": "2026-06-29T18:56:04Z"
+  "updated_at_utc": "2026-07-01T12:45:00Z"
 }

@@ -1,0 +1,82 @@
+{
+  "schema_id": "pm.bootstrap_source_shard.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "shard_id": "src-20260701-post-hardening-readiness-audit",
+  "created_at_utc": "2026-07-01T14:02:24Z",
+  "source_type": "post_hardening_readiness_audit",
+  "not_canonical_plan": true,
+  "user_request_exact": "ok first do the subjective and objective check again",
+  "scope": "Re-audit the live containerized-hosts ledger after implementation-readiness hardening and subagent synthesis, deciding whether meaningful ledger gaps remain before any explicit compile.",
+  "inputs_checked": [
+    "state/current.json",
+    "state/open_items.json",
+    "state/compile_queue.json",
+    "validation/ledger_health.json",
+    "records/design_atoms.jsonl#atom-0066..atom-0081",
+    "source_shards/implementation_readiness_hardening_20260701.json",
+    "source_shards/subagent_hardening_synthesis_20260701.json",
+    "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake"
+  ],
+  "objective_verdict": {
+    "implementation_ready_in_ledger": true,
+    "ready_for_future_explicit_compile": true,
+    "canonical_plans_ready": false,
+    "code_implementation_ready": false,
+    "reason": "The ledger is ready as a source packet for a future explicit compile, but canonical Plans have not been written and PM implementation work must still wait for compile into owner docs.",
+    "validator_state_before_audit": {
+      "status": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "atoms": 81,
+      "decisions": 20,
+      "questions": 24,
+      "compile_queue_items": 0
+    },
+    "open_items_state": {
+      "open_questions": 0,
+      "open_blockers": 0,
+      "candidate_atoms": 0,
+      "unresolved_contradictions": 0,
+      "compile_queue_items": 0
+    },
+    "coverage_confirmed": [
+      "PM-owned host identity and schema contracts",
+      "acceptance-ready field families and receipt refs",
+      "row-complete runtime-family matrix for the whole MVP",
+      "row-complete execution-lane matrix across PM work, provider tools, agent harnesses, shells, and integration commands",
+      "native Slint Docker/Hosts routed page IA with Docker Manager as Activity Bar owner",
+      "ATS containerized-host adapter and TestRunReceipt proof fields",
+      "host lifecycle state machines for profiles, builds, instances, assignments, and test sessions",
+      "PM-native host operation control plane and HostCapabilityCommand envelope",
+      "Coasts source-lineage classification and rejected/default-disabled upstream patterns",
+      "dynamic/canonical access URL intelligence with user-visible confidence, health, stale, and override state",
+      "blocked != failed taxonomy and Runtime Artifacts projection/evidence boundary"
+    ]
+  },
+  "subjective_verdict": {
+    "assessment": "I would hand this ledger to a compile pass now. The earlier weak spots were real, but the hardening pass converted them into concrete contracts, matrices, page IA, lifecycle semantics, and receipt requirements.",
+    "confidence": "high for ledger-to-Plans compile readiness; medium for first implementation complexity because the feature crosses many PM owners and runtime environments.",
+    "what_still_feels_risky": [
+      "The whole-MVP scope is broad, so compile should be careful and owner-sliced rather than one oversized container document.",
+      "Runtime families such as Sysbox, remote Docker SSH, Kubernetes namespaces, CI-hosted containers, Unraid-hosted environments, and privileged DinD must remain capability-probed, gated, blocked, or disabled according to the accepted rows instead of implied as universally available.",
+      "The native GUI needs careful Slint information architecture because the accepted Docker/Hosts page is dense and must remain routed from Docker Manager rather than becoming a new Activity Bar slot.",
+      "Coasts and PMConcept.html must remain source-lineage/directional evidence, not implementation templates or runtime proof."
+    ]
+  },
+  "gaps_after_recheck": [],
+  "residual_compile_risks_not_ledger_gaps": [
+    "Owner placement must preserve Docker Manager/Containers, FinalGUI, UI_Command_Catalog, ATS, Executor, Run_Modes, Permissions, FileSafe, Tools, storage, and Runtime Artifacts boundaries.",
+    "Compile must avoid promoting stale `newtools.md` compatibility bridges or Coasts runtime claims into product canon.",
+    "Compile should keep `Docker/Hosts` as a routed primary-content page/lab opened from Docker Manager and cross-surface links, not a new Activity Bar slot.",
+    "Implementation still needs future tests against real local/remote runtimes after canonical Plans exist."
+  ],
+  "negative_constraints_preserved": [
+    "Do not write canonical Plans until Jared explicitly asks to compile this ledger.",
+    "Do not create or update Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, auto_decisions, runtime/build surfaces, or implementation files in this ledger-only pass.",
+    "Do not make Runtime Artifacts the receipt authority.",
+    "Do not treat Coasts runtime claims as PM-supported runtime evidence.",
+    "Do not copy PMConcept.html HTML/CSS/demo code; it is directional GUI concept evidence only and the real product remains Slint.",
+    "Do not create a new Activity Bar slot for Docker/Hosts."
+  ],
+  "conclusion": "Subjectively and objectively, the ledger is now implementation-ready at the ledger/source-packet level for future explicit compile. It is not yet code-implementation-ready because PM canon still requires compile into live Plans first."
+}

@@ -1,0 +1,71 @@
+{
+  "schema_id": "pm.operating_capsule.v1",
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "capsule_id": "cap-feature-intake-current",
+  "ledger_profile": "bootstrap_planning",
+  "agent_task": "containerized_hosts_conversational_planning",
+  "phase": "conversation_intake",
+  "current_phase": "conversation_intake",
+  "governance_status": "not_started",
+  "last_event_id": "evt-0033",
+  "updated_at_utc": "2026-07-01T14:03:37Z",
+  "next_action": "Continue ledger-only planning, or compile accepted atoms into canonical Plans only if Jared explicitly requests compile.",
+  "next_safe_action": "Continue conversational planning inside this ledger only; do not write canonical Plans, generated governance artifacts, WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, or implementation files unless Jared explicitly requests compile/implementation scope.",
+  "allowed_reads_default": [
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/operating_capsule.json",
+    "state/compile_queue.json"
+  ],
+  "allowed_writes_after_turn": [
+    "events.jsonl",
+    "records/design_atoms.jsonl",
+    "records/decisions.jsonl",
+    "records/questions.jsonl",
+    "records/blockers.jsonl",
+    "records/corrections.jsonl",
+    "state/current.json",
+    "state/handoff.json",
+    "state/open_items.json",
+    "state/compile_queue.json",
+    "validation/ledger_health.json",
+    "manifest.json",
+    "Plans/ledgers/v2/ledger_registry.json"
+  ],
+  "forbidden_until_explicit_compile": [
+    "canonical Plans edits",
+    "Plans/.plan_index",
+    "Spec_Lock",
+    "shards",
+    "evidence",
+    "plan_graph",
+    "auto_decisions"
+  ],
+  "forbidden_without_future_implementation_scope": [
+    "WorkNodes",
+    "NodeSeeds",
+    "executable queues",
+    "runtime/build surfaces",
+    "implementation files",
+    "legacy Iced app recreation"
+  ],
+  "completion_blockers_visible_to_agent": [
+    "No ledger-readiness blockers remain after the post-hardening subjective/objective recheck; compile still requires explicit Jared request."
+  ],
+  "required_end_of_turn_actions": [
+    "append ledger event for substantive turns",
+    "update touched record streams",
+    "refresh compact state projections",
+    "validate ledger when scaffold or schema-sensitive records change"
+  ],
+  "validation_state": {
+    "bootstrap_ledger_validator": "pass",
+    "ledger_health": "pass_post_hardening_readiness_audit",
+    "governance_status": "not_started",
+    "no_worknodes_created": true,
+    "no_nodeseed_candidates_created": true,
+    "last_validated_at_utc": "2026-07-01T14:03:37Z",
+    "latest_projection_updated_at_utc": "2026-07-01T14:03:37Z"
+  }
+}
