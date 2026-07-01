@@ -1,0 +1,63 @@
+{
+  "audit_id": "audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity",
+  "baseline_ref": "5a5a54c4e6a5e5ae74a5dffb306872beacae9db5",
+  "coverage_count": 9147,
+  "covered_impact_rows": true,
+  "covered_original_scope": true,
+  "drift": {
+    "dependencies": false,
+    "ledger_projections": false,
+    "owner_routing": false,
+    "reciprocal_lineage": false,
+    "schema_identity": false
+  },
+  "findings": [],
+  "ledger_id": "pldg-20260630-001-feature-intake",
+  "observation_ref": "HEAD",
+  "original_scope_row_count": 9144,
+  "proof": {
+    "0PI-065_atom_qualified_source_lineage_present": true,
+    "0PI-065_source_atom_ids": [
+      "atom-0006",
+      "atom-0017",
+      "atom-0051",
+      "atom-0054",
+      "atom-0055",
+      "atom-0056",
+      "atom-0076",
+      "atom-0082"
+    ],
+    "changed_path_count": 148,
+    "forbidden_artifact_paths": [],
+    "ledger_pending_governance_tokens": [],
+    "ledger_sealed_projection_checks": {
+      "capsule.governance_status": true,
+      "current.governance_status": true,
+      "handoff.governance_status": true,
+      "health.status": true,
+      "open_items.governance_status": true,
+      "queue.governance_status": true,
+      "queue.validation_state.governance_status": true,
+      "queue.validation_state.pm_plans_verify_run_gates": true,
+      "queue.validation_state.pm_shard_plans_check": true,
+      "registry_row.governance_status": true
+    }
+  },
+  "repair_impact_row_count": 3,
+  "repair_required_count": 0,
+  "schema_id": "pm.post_repair_semantic_audit_report.v1",
+  "status": "PASS_WITH_WARNINGS",
+  "subject_ref": "b27308f96ed80c0bbe71d079cca5eb188026b0a1",
+  "warnings": [
+    {
+      "finding_family": "node_readiness_phase_boundary",
+      "repair_required": false,
+      "summary": "node_readiness_status remains blocked_compiler_contract_incomplete/runtime_disabled by design; no executable node artifacts created"
+    },
+    {
+      "finding_family": "direct_gui_workflow_build_packet_gap_preserved",
+      "repair_required": false,
+      "summary": "direct Docker/Hosts GUI workflow implementation packet remains intentionally open and is not a repair target for this audit"
+    }
+  ]
+}
