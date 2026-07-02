@@ -1,0 +1,223 @@
+{
+  "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+  "classification_counts": {
+    "exact_present": 18,
+    "warning": 2
+  },
+  "compile_queue": {
+    "compiled_plan_unit_ids": [
+      "F3-411",
+      "MS-122",
+      "MA-066",
+      "CV-305",
+      "ACD-431",
+      "UCC-106",
+      "PWIZ-017",
+      "WM-041",
+      "ATS-020"
+    ],
+    "queue_items": 9,
+    "target_doc_mismatches": []
+  },
+  "finding_level": "info",
+  "forbidden_artifacts": {
+    "hits": [],
+    "status": "pass"
+  },
+  "ledger_health_summary": {
+    "blockers": 0,
+    "candidate_atoms": 0,
+    "compile_queue_items": 9,
+    "compiled_owner_docs": 9,
+    "compiled_plan_units": 9,
+    "compiled_to_plan_atoms": 27,
+    "corrections": 0,
+    "decisions": 8,
+    "deferred_questions": 0,
+    "design_atoms": 47,
+    "events": 18,
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "non_applicable_atoms": 6,
+    "not_for_plan_atoms": 20,
+    "open_blockers": 0,
+    "open_questions": 0,
+    "questions": 7,
+    "ready_for_plan_compile_atoms": 0,
+    "rejected_atoms": 0,
+    "source_lineage_only_pre_seal_candidate_atoms": 14,
+    "superseded_atoms": 0
+  },
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+  "plan_index": {
+    "lineage_mismatches": [],
+    "reciprocal_lineage_units_ok": [
+      "ACD-431",
+      "ATS-020",
+      "CV-305",
+      "F3-411",
+      "MA-066",
+      "MS-122",
+      "PWIZ-017",
+      "UCC-106",
+      "WM-041"
+    ],
+    "target_plan_units_present": [
+      "ACD-431",
+      "ATS-020",
+      "CV-305",
+      "F3-411",
+      "MA-066",
+      "MS-122",
+      "PWIZ-017",
+      "UCC-106",
+      "WM-041"
+    ]
+  },
+  "projection_checks": [
+    {
+      "current_phase": "compiled_governance_sealed",
+      "governance_status": "sealed",
+      "last_event_id": "evt-0018",
+      "latest_audit_ref": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+      "latest_audit_status": "repair_validated",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "name": "current",
+      "phase": "compiled_governance_sealed",
+      "status": null,
+      "updated_at_utc": "2026-07-02T04:51:42Z"
+    },
+    {
+      "current_phase": "compiled_governance_sealed",
+      "governance_status": "sealed",
+      "last_event_id": "evt-0018",
+      "latest_audit_ref": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+      "latest_audit_status": "repair_validated",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "name": "handoff",
+      "phase": "compiled_governance_sealed",
+      "status": null,
+      "updated_at_utc": "2026-07-02T04:51:42Z"
+    },
+    {
+      "current_phase": null,
+      "governance_status": "sealed",
+      "last_event_id": "evt-0018",
+      "latest_audit_ref": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+      "latest_audit_status": "repair_validated",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "name": "compile_queue",
+      "phase": null,
+      "status": "compiled_governance_sealed",
+      "updated_at_utc": "2026-07-02T04:51:42Z"
+    },
+    {
+      "current_phase": "compiled_governance_sealed",
+      "governance_status": "sealed",
+      "last_event_id": "evt-0018",
+      "latest_audit_ref": null,
+      "latest_audit_status": null,
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "name": "operating_capsule",
+      "phase": "compiled_governance_sealed",
+      "status": null,
+      "updated_at_utc": "2026-07-02T04:51:42Z"
+    },
+    {
+      "current_phase": null,
+      "governance_status": "sealed",
+      "last_event_id": "evt-0018",
+      "latest_audit_ref": null,
+      "latest_audit_status": null,
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "name": "open_items",
+      "phase": null,
+      "status": null,
+      "updated_at_utc": "2026-07-02T04:51:42Z"
+    },
+    {
+      "current_phase": null,
+      "governance_status": null,
+      "last_event_id": "evt-0018",
+      "latest_audit_ref": null,
+      "latest_audit_status": null,
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "name": "ledger_health",
+      "phase": null,
+      "status": "pass_governance_sealed",
+      "updated_at_utc": "2026-07-02T04:51:42Z"
+    }
+  ],
+  "projection_findings": [],
+  "registry_sync": {
+    "root_updated_at_utc": "2026-07-02T04:51:42Z",
+    "target_latest_audit_ref": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md",
+    "target_latest_audit_status": "repair_validated"
+  },
+  "repair_required": false,
+  "row_count": 17,
+  "schema_id": "pm.semantic_audit.ledger_consistency.v1",
+  "status": "pass_with_warnings",
+  "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+  "warnings": [
+    {
+      "classification": "warning",
+      "detail_keys": [
+        "historical_audit_report",
+        "terminal_repair_certification"
+      ],
+      "exact_tokens": [
+        "audit_report.json",
+        "BLOCKED",
+        "repair_required_count=0"
+      ],
+      "finding_family": "historical_audit_report_lineage_warning",
+      "finding_key": "sfk-b3a62e4e86f0289c56132dad",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "owner_docs": [
+        "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/audit_report.json",
+        "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/post_repair_audit_report.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "source_atom_ids": [],
+      "summary": "Historical pre-repair audit report remains source lineage; terminal status is repair_validated."
+    },
+    {
+      "classification": "warning",
+      "detail_keys": [
+        "node_readiness_report",
+        "compiler_contract_status"
+      ],
+      "exact_tokens": [
+        "blocked_compiler_contract_incomplete",
+        "runtime_disabled"
+      ],
+      "finding_family": "node_readiness_compiler_contract_warning",
+      "finding_key": "sfk-462448cc2874b9f5aeeb3c86",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "owner_docs": [
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "plan_unit_ids": [
+        "F3-411",
+        "MS-122",
+        "MA-066",
+        "CV-305",
+        "ACD-431",
+        "UCC-106",
+        "PWIZ-017",
+        "WM-041",
+        "ATS-020"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [],
+      "summary": "Node readiness remains intentionally blocked until compiler contract exists."
+    }
+  ]
+}
