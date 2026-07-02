@@ -14886,7 +14886,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  storage-plan owns persistence and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Exact storage substrate and concrete `goal.*` event payload schemas remain deferred until promoted by storage/contract owners and must not weaken the required Goal Runtime fields. Goal_Runtime_System owns behavior semantics.
+  storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}, goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id}, goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual presentation.
 depends_on:
@@ -14897,12 +14897,12 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Goal Runtime durable state and append-only event-log records have a storage owner for persistence/projection and replay.
-  - Completion, degraded, stopped, blocked, child-goal, recovery, evidence-ref, revision, and retention-anchor fields are not lost when storage substrate is deferred.
+  - Completion, degraded, stopped, blocked, child-goal, recovery, evidence-ref, revision, and retention-anchor fields are preserved in append-only events and rebuilt projections.
   - storage-plan consumes Goal Runtime semantics from Plans/Goal_Runtime_System.md and does not redefine lifecycle policy.
-  - Concrete goal event payload schemas remain deferred until storage/contract owner registration.
+  - Stale goal_revision or expected_goal_revision writes are rejected or reconciled through compare-and-swap recovery rather than overwriting current state.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future Goal Runtime persistence review
+  - python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures
 risk_class: goal_runtime_persistence_owner_gap
 reasoning_tier: high
 context_scope: goal_runtime_storage
@@ -14911,6 +14911,7 @@ implementation_surfaces:
   - Plans/Goal_Runtime_System.md
   - Plans/Contracts_V0.md
   - Plans/Runtime_Artifacts_Panel.md
+  - Plans/goal_runtime_events.schema.json
 node_compile_hint:
   mode: goal_runtime_persistence_consumer
   create_worknodes: false
@@ -14938,11 +14939,13 @@ preserved_exact_tokens:
   - "expected_goal_revision"
   - "retention anchors"
   - "goal.*"
+  - "goal_state.v1:{project_id}:{goal_id}"
+  - "goal_event_log"
   - "payload schemas"
 negative_constraints:
-  - Do not let storage substrate deferral remove required Goal Runtime fields.
+  - Do not let projection rebuild or stale state overwrite append-only event truth.
   - Do not make storage-plan the semantic owner for Goal Runtime lifecycle policy.
-  - Do not invent concrete Goal Runtime event payload schemas in this consumer PlanUnit.
+  - Do not preserve GoalRunStarted or BuildStarted as a second persisted event naming family.
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Goal_Runtime_System.md
@@ -14960,7 +14963,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  storage-plan owns persistence and projection boundaries for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt records. Stored VerificationCycle fields preserve verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action alongside the broader GoalRun status projection. Stored records preserve goal_id, workgraph/worknode refs, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, defect signature, repair cycle, requested/effective provider/model/account refs, capability_lane, agent_role, write_mode, certification_tier, worktree lease refs, evidence refs, artifact refs, restart/model-switch lineage, and retention anchors. Stored VerificationReceipt fields include verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. Stored WorkNodeReceipt fields include executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. Stored GoalCompletionReceipt fields include child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Evidence refs distinguish acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. Concrete persisted event names and payload schemas remain deferred until contract/storage registration.
+  storage-plan owns persistence and projection boundaries for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt records. Stored VerificationCycle fields preserve verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action alongside the broader GoalRun status projection. Stored records preserve goal_id, workgraph/worknode refs, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, defect signature, repair cycle, requested/effective provider/model/account refs, capability_lane, agent_role, write_mode, certification_tier, worktree lease refs, evidence refs, artifact refs, restart/model-switch lineage, and retention anchors. Stored VerificationReceipt fields include verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. Stored WorkNodeReceipt fields include executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. Stored GoalCompletionReceipt fields include child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Evidence refs distinguish acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence. GoalRun replay rebuilds projections from append-only goal_run.* events, goal receipt records, WorkNode receipts, safe-point/source-control receipts, and Executor/Auditor receipt chains; older replan_generation attempts and safe points remain queryable as historical records but are never resumable when superseded.
 gui_related: false
 gui_classification_reason: Receipt and evidence persistence is backend storage behavior; GUI panels consume projections.
 depends_on:
@@ -14974,10 +14977,11 @@ acceptance_criteria:
   - Evidence, artifact, worktree lease, requested/effective runtime, capability lane, write mode, certification tier, restart, model-switch, verifier/executor/certifier identity, validator outcome, authority check, and unresolved-risk refs are not lost.
   - Evidence refs retain acceptance criteria, live evidence, tests, diffs, validator outputs, canonical evidence, source evidence, process evidence, and governance evidence classifications.
   - Runtime Artifacts and GUI surfaces consume projections instead of becoming durable truth.
-  - Concrete goal event names and payload schemas remain deferred until owner registration.
+  - GoalRun replay discloses stale, degraded, or unavailable projection state and falls back to record-backed inspection.
+  - Older replan_generation attempts and safe points remain queryable but not resumable when superseded.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future GoalRun storage contract review
+  - python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures
 risk_class: goalrun_evidence_persistence_gap
 reasoning_tier: high
 context_scope: goalrun_storage
@@ -14985,6 +14989,7 @@ implementation_surfaces:
   - Plans/storage-plan.md
   - Plans/Contracts_V0.md
   - Plans/Runtime_Artifacts_Panel.md
+  - Plans/goal_runtime_events.schema.json
   - Plans/WorktreeGitImprovement.md
   - Plans/Models_System.md
   - Plans/Multi-Account.md
@@ -15058,6 +15063,7 @@ negative_constraints:
   - Do not let storage deferral drop required receipt or evidence fields.
   - Do not make GUI projections durable source of truth.
   - Do not expand VerificationCycle.status beyond failed | passed | blocked; ready/running/provisional_success/verifying/failed_verification/repairing/certified/failed/blocked/cancelled/stopped are GoalRun/WorkNode projection lifecycle values.
+  - Do not resume superseded GoalRun attempts from stale projections.
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Contracts_V0.md
@@ -15186,6 +15192,7 @@ acceptance_criteria:
   - Path identity, display path, normalization, case, and symlink policy are explicit in cached results and receipts.
   - Frecency/history reset or disable removes future ranking use for the selected identity while durable receipts remain under Runtime Artifacts retention/redaction policy.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future cache identity tests for schema/ranking/policy/ignore/identity/manifest changes.
   - Future frecency reset versus durable receipt retention tests.
 risk_class: persistence_identity_drift
@@ -15235,6 +15242,7 @@ acceptance_criteria:
   - Stale remote_cache or ssh_manifest fallback is explicitly disclosed and never reported as fresh remote truth.
   - Remote cache keys contain no credential or secret material.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future SSH project with no local checkout test.
   - Future stale remote cache and wrong-branch invalidation tests.
 risk_class: remote_identity_drift

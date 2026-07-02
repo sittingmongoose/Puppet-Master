@@ -16948,32 +16948,31 @@ negative_constraints:
 owner_hints: [Plans/Contracts_V0.md, Plans/Orchestrator_Page.md, Plans/storage-plan.md, Plans/human-in-the-loop.md]
 ```
 
-### CV-280 - Concern Merge Split Supersession Deferred Authority
+### CV-280 - Concern Merge Split Supersession Future Scope
 
 ```yaml
 plan_unit_id: CV-280
-unit_type: deferred_decision
-status: deferred
+unit_type: future_scope_decision
+status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Concern merge, split, and supersession remain discussion-only until concern identity, routing, authority, and history rules are
-  promoted to contract-level field and event definitions. Orchestrator may display lineage and route to retained concern ids, but it
-  must not invent executable merge/split/supersession mutation authority from GUI or run-graph prose alone.
+  Concern merge, split, and supersession are explicit future/out-of-scope runtime mutation authority for the current implementation-readiness packet. Active concern lifecycle may display and route retained lineage ids using already registered concern identity, routing, and history fields, but executable merge/split/supersession mutations require a later dedicated contract/event registration. Orchestrator and Run Graph may display lineage and route to retained concern ids, but they must not invent executable merge/split/supersession mutation authority from GUI or run-graph prose alone.
 gui_related: false
-gui_classification_reason: The deferred authority is a contract/event mutation boundary, not GUI presentation.
+gui_classification_reason: Concern mutation authority is a contract/event boundary, not GUI presentation.
 depends_on: [CV-279, OP-020]
 unblocks: []
 acceptance_criteria:
-  - Concern lineage terms active, acknowledged, resolved, dismissed, resolution_kind, accepted_risk, merged, split, and superseded are preserved as source-lineage until field/event contracts are complete.
-  - Consumers may display and link lineage but cannot mutate concern history without a contract-level event definition.
+  - Concern lineage terms active, acknowledged, resolved, dismissed, resolution_kind, accepted_risk, merged, split, and superseded are preserved as display/search/source-lineage vocabulary for this implementation packet.
+  - Accepted runtime flow does not depend on executable concern merge/split/supersession mutation authority.
+  - Consumers may display and link lineage but cannot mutate concern history without a later contract-level event definition.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - manual contract owner review before promotion
-risk_class: deferred_contract_authority
+  - Plans/.plan_index/node_readiness_report.json
+risk_class: future_concern_mutation_authority
 reasoning_tier: high
 context_scope: concern_lineage_contract
 implementation_surfaces: [Plans/Contracts_V0.md, Plans/Orchestrator_Page.md, Plans/Run_Graph_View.md]
-node_compile_hint: {mode: deferred_contract_decision, create_worknodes: false}
+node_compile_hint: {mode: future_scope_not_required_for_current_runtime, create_worknodes: false}
 source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0054
   - source_ref:Plans/Run_Graph_View.md:36
@@ -17241,7 +17240,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Contracts_V0 owns shared envelope fields for Goal Runtime goal events and receipts, including goal_id, optional parent_goal_id, goal_revision, optional expected_goal_revision where compare-and-swap applies, receipt/degraded/stopped/blocked outcome refs, actor/execution_role, requested/effective provider/model/account refs, evidence refs, and approval/block refs. Goal_Runtime_System owns Goal Runtime semantics; storage-plan owns persistence/projection and concrete payload schemas; Permissions_System owns approval scope. CV-286 does not register concrete Goal event names or implementation-ready payload schemas.
+  Contracts_V0 owns shared envelope fields for Goal Runtime goal events and receipts, including goal_id, optional parent_goal_id, goal_revision, optional expected_goal_revision where compare-and-swap applies, receipt/degraded/stopped/blocked outcome refs, actor/execution_role, requested/effective provider/model/account refs, evidence refs, and approval/block refs. Goal_Runtime_System owns Goal Runtime semantics; storage-plan owns persistence/projection and concrete payload schemas; Permissions_System owns approval scope. CV-287 registers the concrete persisted Goal Runtime event names and cross-contract payload minima that consume this envelope.
 gui_related: false
 gui_classification_reason: Shared runtime envelope fields are contract/schema behavior, not visual presentation.
 depends_on:
@@ -17257,10 +17256,10 @@ acceptance_criteria:
   - Goal Runtime event and receipt records have stable shared envelope fields for goal identity, parent identity, revision, outcome refs, actor/execution role, requested/effective provider/model/account refs, evidence refs, and approval/block refs.
   - Goal_Runtime_System keeps behavior semantics while Contracts_V0 keeps cross-surface envelope names.
   - Storage and permission owners consume the shared envelope without redefining Goal Runtime lifecycle semantics.
-  - Concrete Goal event names and payload schemas remain deferred until registered by the Contracts/storage owners.
+  - Concrete Goal event names and cross-contract payload minima are registered by CV-287 and consumed by storage-plan projection rules.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future Goal Runtime contract/schema review
+  - python3 scripts/pm-plan-index.py validate
 risk_class: runtime_contract_owner_gap
 reasoning_tier: high
 context_scope: goal_runtime_shared_contracts
@@ -17298,7 +17297,7 @@ preserved_exact_tokens:
 negative_constraints:
   - Do not move Goal Runtime lifecycle semantics into Contracts_V0.
   - Do not infer provider/model/account identity from provider-native session ids alone.
-  - Do not treat CV-286 as implementation-ready concrete Goal event payload registration.
+  - Do not treat CV-286 alone as the concrete event registry; use CV-287 for concrete event names and payload minima.
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/Goal_Runtime_System.md
@@ -17308,38 +17307,39 @@ owner_hints:
   - Plans/Multi-Account.md
 ```
 
-### CV-287 - Deferred Goal Runtime Event Schema Registration Boundary
+### CV-287 - Goal Runtime Event Schema Registration
 
 ```yaml
 plan_unit_id: CV-287
-unit_type: deferred_decision
-status: deferred
+unit_type: requirement
+status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Concrete persisted Goal Runtime event names and cross-contract payload minima remain deferred until registered in Contracts_V0. Concrete Goal event payload schemas remain storage-owned in storage-plan when promoted. Goal_Runtime_System owns behavior and event semantics; this boundary prevents shared-envelope fields from being mistaken for complete implementation-ready event schema registration.
+  Contracts_V0 registers concrete persisted Goal Runtime event names and cross-contract payload minima. Canonical goal events are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, and goal.cancelled. Canonical Orchestrator GoalRun events are goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Existing transactional-outbox tokens GoalRunStarted and BuildStarted remain aliases for producer/outbox integration and must normalize into the canonical persisted event family before projection. Goal Runtime owns behavior and event semantics; storage-plan owns persistence, replay, projection keys, retention, and concrete stored payload schemas; Executor remains the producer/consumer boundary for scheduler, safe-point, WorkNode, and remediation events and is not re-owned by this goal event family. Every goal event payload carries event_name, schema_version, occurred_at_utc, project_id, optional thread_id, goal_id, optional parent_goal_id, goal_revision, optional expected_goal_revision, actor_ref, execution_role, requested and effective provider/model/account refs, correlation_id, optional causation_event_ref, optional idempotency_key, evidence_refs, artifact_refs, approval refs, and block refs. goal.created additionally carries objective, acceptance criteria, scope, constraints, budget, attachment refs, and model policy. goal.updated carries previous revision and objective/scope/constraint deltas. goal.replanned carries interruption class, impact, affected child goals or WorkNodes, stale/re-steer/cancel decisions, remaining evidence, new revision, and next action. goal.blocked carries blocker class, cause, affected scope, last attempted recovery, why autonomous recovery stopped, next safe action, and allowed_action_ids. Receipt events carry receipt kind, certification tier, validator outputs, child/worknode receipt refs, unresolved risks, and final certifier decision.
 gui_related: false
 gui_classification_reason: Event schema registration and owner boundaries are contract/governance behavior, not visual presentation.
 depends_on:
   - CV-286
   - GRS-005
   - GRS-007
-unblocks: []
+unblocks: [CV-288, SP-214, SP-215, GRS-012, GRS-019]
 acceptance_criteria:
-  - Implementers do not treat CV-286 shared envelope fields as complete concrete Goal event payload schemas.
-  - Future concrete Goal event registration names both Contracts_V0 and storage-plan owner responsibilities.
-  - Goal_Runtime_System remains the semantic owner for Goal Runtime event behavior.
+  - Concrete persisted goal and goal_run event names are enumerated and distinguish transactional-outbox aliases from canonical persisted names.
+  - Payload minima include revision/CAS, actor/execution role, provider/model/account refs, correlation/causation/idempotency, evidence/artifact refs, approval/block refs, and family-specific fields for created, updated, replanned, blocked, and receipt events.
+  - Storage projection and replay responsibilities are owned by storage-plan; Goal_Runtime_System remains semantic owner; Executor scheduler/safe-point/WorkNode/remediation events are not re-owned here.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future Goal Runtime event schema registration review
-risk_class: goal_event_schema_under_specified
+  - python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures
+risk_class: goal_event_schema_contract
 reasoning_tier: high
 context_scope: goal_runtime_shared_contracts
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
   - Plans/Goal_Runtime_System.md
+  - Plans/goal_runtime_events.schema.json
 node_compile_hint:
-  mode: deferred_goal_event_schema_registration
+  mode: goal_event_schema_registered
   create_worknodes: false
 source_lineage:
   - source_ref:audit-20260616-006-goal-runtime-system:SR-019
@@ -17348,11 +17348,13 @@ source_lineage:
 preserved_exact_tokens:
   - "Concrete persisted Goal Runtime event names"
   - "payload schemas"
-  - "deferred"
+  - "goal.created"
+  - "goal_run.started"
   - "shared-envelope fields"
 negative_constraints:
-  - Do not invent concrete Goal event payload schemas in this repair.
-  - Do not treat shared envelope registration as full event payload registration.
+  - Do not preserve GoalRunStarted or BuildStarted as a second persisted naming family.
+  - Do not treat storage projections as durable event truth.
+  - Do not let Goal Runtime event names replace Executor scheduler, safe-point, WorkNode, or remediation events.
 owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
@@ -17369,7 +17371,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Contracts_V0 owns the shared envelope for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt references. The envelope preserves goal_id, workgraph_ref, worknode_ref, verification_cycle_id, target_ref, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, repeated_signature_count, repair_strategy, next_required_action, route-open owner commands, page-local mutation semantics, receipt refs, evidence refs, adjudication refs, requested/effective runtime identity, write_mode, and certification_tier. The contract-owned VerificationCycle example shape preserves verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action. VerificationReceipt preserves verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt preserves executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt preserves child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Requested/effective provider/model/account meanings are owned by Models_System, Multi-Account, and provider-specific docs; write_mode authority and worktree lease semantics are owned by Permissions_System and WorktreeGitImprovement; this envelope only carries their references. Concrete goal event payload schemas remain deferred until promoted by contract and storage owners.
+  Contracts_V0 owns the shared envelope for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt references. The envelope preserves goal_id, workgraph_ref, worknode_ref, verification_cycle_id, target_ref, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, repeated_signature_count, repair_strategy, next_required_action, route-open owner commands, page-local mutation semantics, receipt refs, evidence refs, adjudication refs, requested/effective runtime identity, write_mode, and certification_tier. The contract-owned VerificationCycle example shape preserves verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action. VerificationReceipt preserves verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt preserves executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt preserves child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Requested/effective provider/model/account meanings are owned by Models_System, Multi-Account, and provider-specific docs; write_mode authority and worktree lease semantics are owned by Permissions_System and WorktreeGitImprovement; this envelope only carries their references. Concrete goal event names and payload minima are registered by CV-287 and stored/replayed under storage-plan.
 gui_related: false
 gui_classification_reason: Shared contract envelopes and receipt references are backend/runtime schema work, not visual presentation.
 depends_on:
@@ -17382,10 +17384,11 @@ acceptance_criteria:
   - VerificationCycle records preserve verification_cycle_id, target_ref, attempt, status failed | passed | blocked, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, next_required_action, evidence, and adjudication refs.
   - Receipt envelopes preserve requested/effective runtime identity, write_mode, certification_tier, verifier/executor/certifier identity, changed artifacts, validator outcomes, authority checks, evidence refs, and unresolved risks.
   - Route-open owner commands and page-local mutation semantics do not mint unauthorized panel-local mutations.
-  - Concrete goal event payload schemas remain deferred until owner registration.
+  - Concrete goal event payload minima are registered by CV-287 and storage-plan owns persistence/replay schemas.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future GoalRun contract registration review
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures
 risk_class: goalrun_contract_envelope_gap
 reasoning_tier: high
 context_scope: goalrun_shared_contracts
@@ -17457,7 +17460,7 @@ preserved_exact_tokens:
   - "repair-cycle refs"
   - "regression checks"
 negative_constraints:
-  - Do not invent concrete persisted goal event payload schemas in this PlanUnit.
+  - Do not invent additional persisted goal event names outside CV-287.
   - Do not let contract envelopes own Goal Runtime lifecycle semantics.
   - Do not expand VerificationCycle.status beyond failed | passed | blocked; ready/running/provisional_success/verifying/failed_verification/repairing/certified/failed/blocked/cancelled/stopped are GoalRun/WorkNode projection lifecycle values.
   - Do not mint unauthorized panel-local mutations.
@@ -17813,16 +17816,17 @@ canonical_text: >-
   Contracts_V0 owns the promoted shared discovery enum, event, and receipt envelope terms used by DiscoveryService and discover_paths. CV-291 is the canonical exact value registry for discovery-local enum fields; implementations must not depend on ledger source-lineage files to recover these values. Discovery-local surface_type values are assistant_chat_thread, assistant_chat_file_mention, quick_open, search_path_filter, file_manager, planning_wizard_source_picker, prd_builder_source_picker, orchestrator_agent, executor_agent, worknode_intake, runtime_artifacts, and agent_tool. Discovery-local intent values are context_acquisition, bug_fix, feature_work, refactor, test_repair, code_review, planning_context, source_selection, quick_open, file_navigation, mention_autocomplete, search_path_narrowing, audit_trace, implementation, and verification. Discovery-local target_kind values are file, directory, file_or_directory, module, test, doc, config, content_candidate, and mixed, and they must not alter the existing route_target.target_kind enum. Discovery-local path_kind values are file, directory, symlink, virtual_cache_entry, and remote_entry. Discovery-local match_type values are exact_path, prefix_path, fuzzy_path, basename, path_segment, extension, abbreviation, symbol_adjacent, frecency_boost, context_proximity, git_manifest, remote_manifest, and fallback_scan. Discovery-local freshness_state values are fresh, warming, stale, snapshot, and unknown. Discovery-local fallback_state values are none, index_cold, stale_index, fallback_scan, remote_cache, ssh_manifest, over_budget, disabled, unsupported, and backpressure. Discovery-local policy_decision values are allowed, redacted, hidden_by_policy, denied, and requires_approval. Discovery-local error_code values are no_results, invalid_query, unsupported_target_kind, project_identity_missing, index_unavailable, timeout, over_budget, permission_denied, policy_denied, remote_unavailable, ssh_auth_failed, stale_remote_cache, cancelled, backpressure, discovery_disabled, discovery_unsupported, ssh_unavailable, known_host_changed, remote_command_denied, manifest_missing, and receipt_missing. Receipt events are discovery.invoked, discovery.candidates_returned, discovery.selected, discovery.fallback, discovery.verified, discovery.disabled, discovery.unsupported, and discovery.backpressure. Receipt payloads preserve request_id, consumer_id, project/worktree or remote identity, query_digest, visible post-policy candidate_count, opaque/redaction-profiled selected_result_ids, freshness_state, fallback_state, policy_decision, source_index_generation, cache/ranking/policy/ignore/identity versions when cached, permission_snapshot_id, approval_scope_key, redaction_profile, SSH host trust fields when applicable, budget_ms, elapsed_ms, error_code, and verification_receipt_ref when available.
 gui_related: false
 gui_classification_reason: This is schema and event envelope ownership, not GUI presentation.
-depends_on: [CV-006, CV-038, CV-097, CV-101, CV-285, T-161]
+depends_on: [CV-006, CV-038, CV-097, CV-101, CV-285]
 unblocks: [T-161, ACD-422, ATS-011, RAP-031]
 acceptance_criteria:
   - CV-291 enumerates the complete canonical exact value registry for discovery-local surface_type, intent, target_kind, path_kind, match_type, freshness_state, fallback_state, policy_decision, error_code, and receipt_event.
   - Discovery enum values are namespaced as discovery-local and do not mutate route/open target enums.
   - Receipt payloads use post-policy candidate counts and opaque selected_result_ids.
   - SSH/remote trust and credential fields carry references only and never secret material.
+  - T-161 consumes this registry for discover_paths behavior; it is not a prerequisite for defining the canonical exact values.
 validation_surfaces:
-  - PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate
-  - Future discovery schema and receipt envelope tests.
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: contract_schema_drift
 reasoning_tier: standard
 context_scope: shared_discovery_contracts
@@ -18949,10 +18953,11 @@ canonical_text: >-
   assistant requests, orchestrator/executor dispatch, tool calls, terminal-like actions, and file/artifact access
   route through cmd.docker.*, cmd.docker.k8s.*, Executor, Permissions, FileSafe, Tools, UI_Command_Catalog, and
   receipts rather than Coasts HTTP `/api/v1`, permissive CORS, SSE/WebSocket terminal sessions, or file/service
-  controls.
+  controls. UI_Command_Catalog, Executor, Permissions, and FileSafe consume or enforce this envelope; they are not
+  prerequisites for defining the envelope itself.
 gui_related: false
 gui_classification_reason: Command envelopes and dispatch contracts are backend/control-plane requirements; GUI command surfaces are owned by UI_Command_Catalog and FinalGUISpec.
-depends_on: [CV-303, UCC-105, EP-109, PS-126, F2-194]
+depends_on: [CV-303]
 unblocks: [T-166, MI-031, CBP-023, OSI-431]
 acceptance_criteria:
   - HostCapabilityCommand carries authority, host identity, policy, transcript, cleanup, and receipt fields before dispatch.

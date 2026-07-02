@@ -1964,6 +1964,7 @@ acceptance_criteria:
   - GitHub Integration does not become the discovery behavior, search, or ranking owner.
   - No local substitution is presented as remote truth.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future remote cache disclosure tests.
   - Future no-local-substitution integration checks.
 risk_class: remote_cache_consumer_drift

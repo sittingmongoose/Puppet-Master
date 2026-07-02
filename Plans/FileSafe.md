@@ -13211,15 +13211,15 @@ canonical_text: >-
   FileSafe rules apply before and during DiscoveryService indexing and querying. FileSafe, ignore rules, secret exclusions, symlink policy, root/home scan guardrails, project/worktree boundaries, and remote/SSH authorized-root boundaries filter candidates before scoring or produce an equivalent no-leak guarantee. Denied or hidden_by_policy candidates are not success-shaped ranked results and must not leak blocked filenames, blocked counts, rank gaps, matched ranges, display paths, fallback diagnostics, health messages, or rank explanations. candidate_count is visible post-policy only, and selected_result_ids are opaque/redaction-profiled identifiers rather than raw unauthorized paths.
 gui_related: false
 gui_classification_reason: This is FileSafe policy and no-leak filtering, not direct GUI presentation.
-depends_on: [F2-188, F2-190, SP-217, SP-218]
+depends_on: [F2-188, F2-190, SP-217]
 unblocks: [PS-118, ATS-011, RAP-031]
 acceptance_criteria:
   - Policy-hidden paths cannot influence visible rank gaps, counts, summaries, or diagnostics.
   - Root/home and symlink guardrails apply before discovery indexing and query ranking.
   - Remote/SSH manifest entries are FileSafe-gated before dispatch and before local indexing.
 validation_surfaces:
-  - Future denied/hidden-by-policy no-leak tests.
-  - Future root/home refusal, ignore, symlink, and remote authorized-root tests.
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: filesafe_no_leak
 reasoning_tier: high
 context_scope: discovery_policy_filtering
@@ -13434,7 +13434,7 @@ canonical_text: >-
   permission, FileSafe, Executor/Tools, transcript, receipt, and cleanup contracts.
 gui_related: false
 gui_classification_reason: File, mount, secret, exec, and side-effect guards are backend safety behavior, not GUI presentation.
-depends_on: [CV-303, CV-304, PS-126]
+depends_on: [CV-303, CV-304]
 unblocks: [CRAU-091, EP-109, T-166, ATS-019]
 acceptance_criteria:
   - Host profiles and host operations expose FileSafe scope before mounts, env refs, secrets, docker.sock, bind mounts, remote sync, or exec are allowed.

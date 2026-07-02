@@ -1,0 +1,24 @@
+{
+  "schema_id": "pm.gui_automation_manifest.schema.v1",
+  "run_id": "gui-run-fr-001",
+  "scenario_id": "project-output-fixture",
+  "started_at_utc": "2026-07-02T00:00:00Z",
+  "ended_at_utc": "2026-07-02T00:00:01Z",
+  "status": "PASS",
+  "tool_name": "fixture-validator",
+  "tool_version": "1.0.0",
+  "timeline_path": "artifacts/gui/timeline.jsonl",
+  "summary_path": "artifacts/gui/summary.json",
+  "checks_path": "artifacts/gui/checks.json",
+  "recording_disabled_reason": "schema fixture only",
+  "artifacts": [
+    {
+      "artifact_id": "gui-artifact-fr-001",
+      "kind": "state",
+      "relative_path": "artifacts/gui/state.json",
+      "mime_type": "application/json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "size_bytes": 2
+    }
+  ]
+}

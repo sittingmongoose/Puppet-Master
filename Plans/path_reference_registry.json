@@ -1,212 +1,301 @@
 {
+  "schema_id": "pm.path_reference_registry.v1",
+  "generated_at_utc": "2026-07-02T00:00:00Z",
   "classifications": [
     {
-      "allowed_contexts": [
-        "Runtime artifact schema planning",
-        "PlanUnit implementation_surfaces before schema materialization"
-      ],
-      "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
-      "classification": "schema_to_materialize",
-      "evidence_refs": [
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "materialization_pattern": "Plans/runtime_artifact_<family>.schema.json",
-      "notes": "Runtime artifact schema refs are planned schema families, not current live target files until the schema materialization lane opens.",
       "raw_ref": "Plans/runtime_artifact_envelope.schema.json",
-      "validator_policy": "allow_until_materialized"
+      "classification": "live_target",
+      "surface_type": "concrete_path",
+      "match_kind": "exact",
+      "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
+      "evidence_refs": ["Plans/Runtime_Artifacts_Panel.md"],
+      "allowed_contexts": ["Runtime artifact schema payload validation", "PlanUnit implementation_surfaces after schema materialization"],
+      "validator_policy": "allow",
+      "notes": "The runtime artifact envelope schema is materialized as a concrete Plans schema file."
     },
     {
-      "allowed_contexts": [
-        "Runtime artifact schema planning",
-        "PlanUnit implementation_surfaces before schema materialization"
-      ],
-      "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
-      "classification": "schema_to_materialize",
-      "evidence_refs": [
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "materialization_pattern": "Plans/runtime_artifact_<family>.schema.json",
-      "notes": "The per-artifact schema family is intentionally deferred until the runtime-artifact schema materialization lane.",
       "raw_ref": "Plans/runtime_artifact_<type>.schema.json",
-      "validator_policy": "allow_until_materialized"
-    },
-    {
-      "allowed_contexts": [
-        "Raw path scanner findings"
-      ],
-      "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
-      "classification": "typo",
-      "evidence_refs": [
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "notes": "Panel-named schema path is not a canonical schema filename.",
-      "raw_ref": "Plans/Runtime_Artifacts_Panel.schema.json",
-      "replacement_ref": "Plans/runtime_artifact_envelope.schema.json",
-      "validator_policy": "warn"
-    },
-    {
-      "allowed_contexts": [
-        "Assistant chat security carry-through"
-      ],
-      "canonical_route": "Plans/assistant-chat-design.md",
-      "classification": "allowed_exception",
-      "evidence_refs": [
-        "Plans/assistant-chat-design.md"
-      ],
-      "notes": "assistant-chat-design remains the current owner until a dedicated security sanitization owner exists.",
-      "raw_ref": "Plans/security-sanitization.md",
-      "validator_policy": "allow"
-    },
-    {
-      "allowed_contexts": [
-        "Settings implementation surface mentions"
-      ],
-      "canonical_route": "Plans/FinalGUISpec.md",
-      "classification": "typo",
-      "evidence_refs": [
-        "Plans/00-plans-index.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "notes": "Settings is a projected surface routed through current owner docs, not a top-level Plans/Settings.md owner file.",
-      "raw_ref": "Plans/Settings.md",
-      "replacement_ref": "Plans/FinalGUISpec.md",
-      "validator_policy": "warn"
-    },
-    {
-      "allowed_contexts": [
-        "Legacy widget source-lineage tokens",
-        "Preserved exact tokens"
-      ],
-      "canonical_route": "Plans/Widget_System.md",
-      "classification": "historical_source_lineage_ref",
-      "evidence_refs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/00-plans-index.md"
-      ],
-      "notes": "Widget reference docs are preserved historical tokens; Widget_System owns active widget behavior.",
-      "raw_ref": "Plans/WIDGETS_VISUAL_REFERENCE.md",
-      "validator_policy": "allow"
-    },
-    {
-      "allowed_contexts": [
-        "Legacy widget source-lineage tokens",
-        "Preserved exact tokens"
-      ],
-      "canonical_route": "Plans/Widget_System.md",
-      "classification": "historical_source_lineage_ref",
-      "evidence_refs": [
-        "Plans/FinalGUISpec.md",
-        "Plans/00-plans-index.md"
-      ],
-      "notes": "Widget quick reference docs are preserved historical tokens; Widget_System owns active widget behavior.",
-      "raw_ref": "Plans/WIDGETS_QUICK_REFERENCE.md",
-      "validator_policy": "allow"
-    },
-    {
-      "allowed_contexts": [
-        "Legacy GUI concept input refs",
-        "FileManager source-lineage"
-      ],
-      "canonical_route": "Plans/FileManager.md",
-      "classification": "historical_source_lineage_ref",
-      "evidence_refs": [
-        "Plans/FileManager.md"
-      ],
-      "notes": "Composergui5 is retained as historical GUI concept input only.",
-      "raw_ref": "Plans/Composergui5-concept.html",
-      "validator_policy": "allow"
-    },
-    {
-      "allowed_contexts": [
-        "Legacy GUI concept input refs",
-        "FileManager source-lineage"
-      ],
-      "canonical_route": "Plans/FileManager.md",
-      "classification": "historical_source_lineage_ref",
-      "evidence_refs": [
-        "Plans/FileManager.md"
-      ],
-      "notes": "Bare Composergui5 token is a concept lineage label, not a live repo path.",
-      "raw_ref": "Composergui5",
-      "validator_policy": "allow"
-    },
-    {
-      "allowed_contexts": [
-        "GUI concept references",
-        "feature-list legacy link"
-      ],
-      "canonical_route": "Concepts/PMConcept.html",
-      "classification": "typo",
-      "evidence_refs": [
-        "Plans/feature-list.md",
-        "Plans/UI_Wiring_Rules.md"
-      ],
-      "notes": "The live concept input path is Concepts/PMConcept.html; PMConcept remains source-lineage, not canonical implementation HTML.",
-      "raw_ref": "Plans/PMConcept.html",
-      "replacement_ref": "Concepts/PMConcept.html",
-      "validator_policy": "warn"
-    },
-    {
-      "allowed_contexts": [
-        "GUI concept references",
-        "PMConcept lineage"
-      ],
-      "canonical_route": "Plans/UI_Wiring_Rules.md",
-      "classification": "historical_source_lineage_ref",
-      "evidence_refs": [
-        "Concepts/PMConcept.html",
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "notes": "PMConcept is concept/source-lineage input only.",
-      "raw_ref": "Concepts/PMConcept.html",
-      "validator_policy": "allow"
-    },
-    {
-      "allowed_contexts": [
-        "Packet process artifacts",
-        "Reconciliation reports"
-      ],
-      "canonical_route": "Plans/00-plans-index.md",
       "classification": "generated_process_artifact",
-      "evidence_refs": [
-        "Plans/Decision_Log.md",
-        "Plans/00-plans-index.md"
-      ],
-      "notes": "Research packet outputs are process artifacts to regenerate or revalidate, not canonical plan prose.",
-      "raw_ref": "Plans/.pipeline/research_packet.json",
-      "validator_policy": "allow"
+      "surface_type": "generated_family",
+      "match_kind": "exact",
+      "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
+      "evidence_refs": ["Plans/Runtime_Artifacts_Panel.md"],
+      "allowed_contexts": ["Runtime artifact schema family references", "PlanUnit implementation_surfaces that name the per-type schema family"],
+      "validator_policy": "allow",
+      "materialization_pattern": "Plans/runtime_artifact_<family>.schema.json",
+      "notes": "The literal placeholder refers to the governed per-type schema family, not a single file."
     },
     {
-      "allowed_contexts": [
-        "Legacy pipeline evidence",
-        "Source-lineage reports"
-      ],
+      "raw_ref": "Plans/runtime_artifact_*.schema.json",
+      "classification": "generated_process_artifact",
+      "surface_type": "generated_family",
+      "match_kind": "glob",
+      "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
+      "evidence_refs": ["Plans/Runtime_Artifacts_Panel.md"],
+      "allowed_contexts": ["Runtime artifact per-type schema files"],
+      "validator_policy": "allow",
+      "materialization_pattern": "Plans/runtime_artifact_<family>.schema.json",
+      "notes": "Per-type runtime artifact schemas are materialized as a governed schema family."
+    },
+    {
+      "raw_ref": "Plans/goal_runtime_events.schema.json",
+      "classification": "live_target",
+      "surface_type": "concrete_path",
+      "match_kind": "exact",
+      "canonical_route": "Plans/Contracts_V0.md",
+      "evidence_refs": ["Plans/Contracts_V0.md", "Plans/Goal_Runtime_System.md", "Plans/storage-plan.md"],
+      "allowed_contexts": ["Goal Runtime event schema references"],
+      "validator_policy": "allow",
+      "notes": "Goal Runtime event names and payload minima are materialized as a concrete schema file."
+    },
+    {
+      "raw_ref": "Plans/*.md",
+      "classification": "generated_process_artifact",
+      "surface_type": "generated_family",
+      "match_kind": "glob",
       "canonical_route": "Plans/00-plans-index.md",
-      "classification": "historical_source_lineage_ref",
-      "evidence_refs": [
-        "Plans/00-plans-index.md"
-      ],
-      "notes": "Ledger fidelity report is source-lineage only and is not a live target-path requirement.",
-      "raw_ref": "Plans/.pipeline/ledger_fidelity_report.txt",
-      "validator_policy": "allow"
+      "evidence_refs": ["Plans/00-plans-index.md", "Plans/Plan_Document_System.md", "Plans/Plan_To_Node_Compilation.md"],
+      "allowed_contexts": ["Plan owner document families", "Broad implementation_surfaces families"],
+      "validator_policy": "allow",
+      "notes": "Top-level Plans markdown owner docs are a governed document family; exact owner docs should be preferred when known."
     },
     {
-      "allowed_contexts": [
-        "Bootstrap ledger layout shorthand"
-      ],
+      "raw_ref": "Plans/ledgers/v2/*/manifest.json",
+      "classification": "generated_process_artifact",
+      "surface_type": "generated_family",
+      "match_kind": "glob",
       "canonical_route": "Plans/Planning_Ledger_System.md",
+      "evidence_refs": ["AGENTS.md", "Plans/Planning_Ledger_System.md"],
+      "allowed_contexts": ["Structured v2 ledger layout", "Source-lineage ledger implementation_surfaces"],
+      "validator_policy": "allow",
+      "notes": "Structured v2 ledgers use per-ledger manifest files."
+    },
+    {
+      "raw_ref": "Plans/ledgers/v2/*/*",
+      "classification": "generated_process_artifact",
+      "surface_type": "generated_family",
+      "match_kind": "glob",
+      "canonical_route": "Plans/Planning_Ledger_System.md",
+      "evidence_refs": ["AGENTS.md", "Plans/Planning_Ledger_System.md"],
+      "allowed_contexts": ["Structured v2 ledger generated family", "Ledger records, state, source shard, and validation surfaces"],
+      "validator_policy": "allow",
+      "notes": "Ledger records and projections are source/source-lineage memory, not canonical product prose."
+    },
+    {
+      "raw_ref": "Plans/.audits/audit-*/*",
+      "classification": "generated_process_artifact",
+      "surface_type": "process_artifact",
+      "match_kind": "glob",
+      "canonical_route": "Plans/00-plans-index.md",
+      "evidence_refs": ["Plans/00-plans-index.md", "Plans/Planning_Ledger_System.md", "Plans/Plan_Document_System.md"],
+      "allowed_contexts": ["Audit process artifacts", "Closed-world audit references"],
+      "validator_policy": "allow",
+      "notes": "Audit bundle paths are process artifacts to regenerate or verify, not canonical product prose."
+    },
+    {
+      "raw_ref": "Plans/.plan_index/**",
+      "classification": "generated_process_artifact",
+      "surface_type": "process_artifact",
+      "match_kind": "glob",
+      "canonical_route": "Plans/Plan_To_Node_Compilation.md",
+      "evidence_refs": ["Plans/Plan_To_Node_Compilation.md"],
+      "allowed_contexts": ["PlanUnit index outputs", "Node-readiness reporting"],
+      "validator_policy": "allow",
+      "notes": "Plan index artifacts are regenerated by scripts/pm-plan-index.py and must not be hand-edited."
+    },
+    {
+      "raw_ref": "Plans/.plan_migration/**",
+      "classification": "generated_process_artifact",
+      "surface_type": "process_artifact",
+      "match_kind": "glob",
+      "canonical_route": "Plans/Plan_Document_System.md",
+      "evidence_refs": ["Plans/Plan_Document_System.md"],
+      "allowed_contexts": ["Plan migration process artifacts", "Source-span lineage evidence"],
+      "validator_policy": "allow",
+      "notes": "Plan migration artifacts are process and lineage outputs, not implementation target files."
+    },
+    {
+      "raw_ref": "future ",
+      "classification": "allowed_exception",
+      "surface_type": "future_artifact",
+      "match_kind": "prefix",
+      "canonical_route": "Plans/00-plans-index.md",
+      "evidence_refs": ["Plans/00-plans-index.md", "Plans/Plan_To_Node_Compilation.md"],
+      "allowed_contexts": ["Explicit future implementation_surfaces", "Out-of-scope runtime or app artifacts"],
+      "validator_policy": "allow",
+      "notes": "Implementation surfaces prefixed with future are intentionally future artifacts and cannot count as clean-checkout concrete paths."
+    },
+    {
+      "raw_ref": "Plans/Runtime_Artifacts_Panel.schema.json",
       "classification": "typo",
-      "evidence_refs": [
-        "AGENTS.md",
-        "Plans/Planning_Ledger_System.md"
-      ],
-      "notes": "Structured v2 ledgers use per-ledger manifest files; no aggregate Plans/ledgers/v2/manifest.json exists.",
+      "surface_type": "concrete_path",
+      "match_kind": "exact",
+      "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
+      "evidence_refs": ["Plans/Runtime_Artifacts_Panel.md"],
+      "allowed_contexts": ["Raw path scanner findings"],
+      "validator_policy": "warn",
+      "replacement_ref": "Plans/runtime_artifact_envelope.schema.json",
+      "notes": "Panel-named schema path is not a canonical schema filename."
+    },
+    {
+      "raw_ref": "Plans/security-sanitization.md",
+      "classification": "allowed_exception",
+      "surface_type": "future_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/assistant-chat-design.md",
+      "evidence_refs": ["Plans/assistant-chat-design.md"],
+      "allowed_contexts": ["Assistant chat security carry-through"],
+      "validator_policy": "allow",
+      "notes": "assistant-chat-design remains the current owner until a dedicated security sanitization owner exists."
+    },
+    {
+      "raw_ref": "Plans/Settings.md",
+      "classification": "typo",
+      "surface_type": "concrete_path",
+      "match_kind": "exact",
+      "canonical_route": "Plans/FinalGUISpec.md",
+      "evidence_refs": ["Plans/00-plans-index.md", "Plans/FinalGUISpec.md"],
+      "allowed_contexts": ["Settings implementation surface mentions"],
+      "validator_policy": "warn",
+      "replacement_ref": "Plans/FinalGUISpec.md",
+      "notes": "Settings is a projected surface routed through current owner docs, not a top-level Plans/Settings.md owner file."
+    },
+    {
+      "raw_ref": "Plans/WIDGETS_VISUAL_REFERENCE.md",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "future_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/Widget_System.md",
+      "evidence_refs": ["Plans/FinalGUISpec.md", "Plans/00-plans-index.md"],
+      "allowed_contexts": ["Legacy widget source-lineage tokens", "Preserved exact tokens"],
+      "validator_policy": "allow",
+      "notes": "Widget reference docs are preserved historical tokens; Widget_System owns active widget behavior."
+    },
+    {
+      "raw_ref": "Plans/WIDGETS_QUICK_REFERENCE.md",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "future_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/Widget_System.md",
+      "evidence_refs": ["Plans/FinalGUISpec.md", "Plans/00-plans-index.md"],
+      "allowed_contexts": ["Legacy widget source-lineage tokens", "Preserved exact tokens"],
+      "validator_policy": "allow",
+      "notes": "Widget quick reference docs are preserved historical tokens; Widget_System owns active widget behavior."
+    },
+    {
+      "raw_ref": "Plans/Composergui5-concept.html",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "future_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/FileManager.md",
+      "evidence_refs": ["Plans/FileManager.md"],
+      "allowed_contexts": ["Legacy GUI concept input refs", "FileManager source-lineage"],
+      "validator_policy": "allow",
+      "notes": "Composergui5 is retained as historical GUI concept input only."
+    },
+    {
+      "raw_ref": "Composergui5",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "future_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/FileManager.md",
+      "evidence_refs": ["Plans/FileManager.md"],
+      "allowed_contexts": ["Legacy GUI concept input refs", "FileManager source-lineage"],
+      "validator_policy": "allow",
+      "notes": "Bare Composergui5 token is a concept lineage label, not a live repo path."
+    },
+    {
+      "raw_ref": "Plans/PMConcept.html",
+      "classification": "typo",
+      "surface_type": "concrete_path",
+      "match_kind": "exact",
+      "canonical_route": "Concepts/PMConcept.html",
+      "evidence_refs": ["Plans/feature-list.md", "Plans/UI_Wiring_Rules.md"],
+      "allowed_contexts": ["GUI concept references", "feature-list legacy link"],
+      "validator_policy": "warn",
+      "replacement_ref": "Concepts/PMConcept.html",
+      "notes": "The live concept input path is Concepts/PMConcept.html; PMConcept remains source-lineage, not canonical implementation HTML."
+    },
+    {
+      "raw_ref": "Concepts/PMConcept.html",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "concrete_path",
+      "match_kind": "exact",
+      "canonical_route": "Plans/UI_Wiring_Rules.md",
+      "evidence_refs": ["Concepts/PMConcept.html", "Plans/UI_Wiring_Rules.md", "Plans/FinalGUISpec.md"],
+      "allowed_contexts": ["GUI concept references", "PMConcept lineage"],
+      "validator_policy": "allow",
+      "notes": "PMConcept is concept/source-lineage input only."
+    },
+    {
+      "raw_ref": "Plans/.pipeline/research_packet.json",
+      "classification": "generated_process_artifact",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/00-plans-index.md",
+      "evidence_refs": ["Plans/Decision_Log.md", "Plans/00-plans-index.md"],
+      "allowed_contexts": ["Packet process artifacts", "Reconciliation reports"],
+      "validator_policy": "allow",
+      "notes": "Research packet outputs are process artifacts to regenerate or revalidate, not canonical plan prose."
+    },
+    {
+      "raw_ref": "Plans/.pipeline/ledger_fidelity_report.txt",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/00-plans-index.md",
+      "evidence_refs": ["Plans/00-plans-index.md"],
+      "allowed_contexts": ["Legacy pipeline evidence", "Source-lineage reports"],
+      "validator_policy": "allow",
+      "notes": "Ledger fidelity report is source-lineage only and is not a live target-path requirement."
+    },
+    {
       "raw_ref": "Plans/ledgers/v2/manifest.json",
-      "replacement_ref": "Plans/ledgers/v2/<ledger_id>/manifest.json",
-      "validator_policy": "warn"
+      "classification": "typo",
+      "surface_type": "generated_family",
+      "match_kind": "exact",
+      "canonical_route": "Plans/Planning_Ledger_System.md",
+      "evidence_refs": ["AGENTS.md", "Plans/Planning_Ledger_System.md"],
+      "allowed_contexts": ["Bootstrap ledger layout shorthand"],
+      "validator_policy": "warn",
+      "replacement_ref": "Plans/ledgers/v2/*/manifest.json",
+      "notes": "Structured v2 ledgers use per-ledger manifest files; no aggregate Plans/ledgers/v2/manifest.json exists."
+    },
+    {
+      "raw_ref": "crates/ui_commands/",
+      "classification": "allowed_exception",
+      "surface_type": "future_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/UI_Command_Catalog.md",
+      "evidence_refs": ["Plans/UI_Command_Catalog.md", "Plans/BinaryLocator_Spec.md"],
+      "allowed_contexts": ["Future typed command implementation crate", "Preserved source-lineage command tokens"],
+      "validator_policy": "allow",
+      "replacement_ref": "future typed UICommand implementation crate",
+      "notes": "The current repo has no runtime crate; typed UICommand implementation belongs to a future Rust/Slint build lane."
+    },
+    {
+      "raw_ref": "Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors",
+      "classification": "typo",
+      "surface_type": "concrete_path",
+      "match_kind": "doc_anchor",
+      "canonical_route": "Plans/FinalGUISpec.md",
+      "evidence_refs": ["Plans/FinalGUISpec.md"],
+      "allowed_contexts": ["Legacy Chain Wizard owner-anchor references"],
+      "validator_policy": "warn",
+      "replacement_ref": "Plans/FinalGUISpec.md",
+      "notes": "The anchor is source-lineage shorthand; implementation surfaces should name the owner doc."
+    },
+    {
+      "raw_ref": "Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD",
+      "classification": "typo",
+      "surface_type": "concrete_path",
+      "match_kind": "doc_anchor",
+      "canonical_route": "Plans/Prompt_Pipeline.md",
+      "evidence_refs": ["Plans/Prompt_Pipeline.md"],
+      "allowed_contexts": ["Legacy effective-resolution owner-anchor references"],
+      "validator_policy": "warn",
+      "replacement_ref": "Plans/Prompt_Pipeline.md",
+      "notes": "The anchor is source-lineage shorthand; implementation surfaces should name the owner doc."
     }
-  ],
-  "generated_at_utc": "2026-07-02T00:00:00Z",
-  "schema_id": "pm.path_reference_registry.v1"
+  ]
 }

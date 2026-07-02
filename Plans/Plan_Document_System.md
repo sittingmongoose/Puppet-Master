@@ -267,6 +267,7 @@ acceptance_criteria:
   - node_readiness_report analyzes future conversion readiness only.
   - No WorkNodes or executable build queues are produced by the index phase.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future PlanUnit index generator checks.
   - Future node-readiness report checks.
 risk_class: execution_boundary

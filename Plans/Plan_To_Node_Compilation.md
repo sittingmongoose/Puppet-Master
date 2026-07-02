@@ -4,7 +4,7 @@
 
 ## 0. Scope
 
-This document defines the safe interface between canonical PlanUnits and future executable build planning. The current allowed output is a PlanUnit index and node-readiness report. NodeSeed candidates, WorkNodes, executable queues, and final build tasks wait until this compiler contract is explicitly completed.
+This document defines the safe interface between canonical PlanUnits and executable build planning. The PlanUnit indexing phase still emits only a PlanUnit index and node-readiness report. Runtime PlanCompile may later materialize NodeSeed, WorkGraph, WorkNodeRequest, and WorkNodeRecord artifacts only through the explicit compiler, Executor intake, activation, and certification contracts below; generated index artifacts never create executable queues or final build tasks.
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Plan_Document_System.md
 
@@ -16,7 +16,7 @@ The safe bootstrap flow is:
 ledger design atom -> PlanUnit -> PlanUnit index -> node-readiness report -> future NodeSeed / WorkNode compiler -> future native Goal Mode execution
 ```
 
-The current phase ends at node-readiness reporting. It may analyze blockers, missing dependencies, validation coverage, risk, ambiguity, context scope, implementation surfaces, and gui_related routing inheritance. It does not create final WorkNodes or executable build tasks.
+The PlanUnit index phase ends at node-readiness reporting. It may analyze blockers, missing dependencies, validation coverage, risk, ambiguity, context scope, implementation surfaces, and gui_related routing inheritance. Runtime PlanCompile is a separate implementation surface: it can draft non-executable NodeSeed candidates, certify a WorkGraph draft, emit WorkNodeRequest records for Executor intake, and materialize WorkNodeRecord objects only after activation. The indexer itself does not create final WorkNodes or executable build tasks.
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Plan_Document_System.md
 
@@ -29,7 +29,7 @@ plan_unit_id: PNC-001
 unit_type: constraint
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: Plan docs contain stable PlanUnits and compilation hints, not final executable WorkNodes. The current system may generate a PlanUnit index and node-readiness report only. NodeSeed candidates and WorkNodes wait until the compiler contract is complete.
+canonical_text: Plan docs contain stable PlanUnits and compilation hints, not final executable WorkNodes. PlanUnit indexing generates a PlanUnit index and node-readiness report only. Runtime PlanCompile uses the accepted compiler contract to draft NodeSeed candidates, certify WorkGraph and WorkNodeRequest artifacts, and hand accepted requests to Executor; the indexer never emits runtime NodeSeeds, WorkNodes, executable queues, or final build tasks.
 gui_related: false
 gui_classification_reason: Compiler boundary and execution artifact policy are backend/governance behavior.
 depends_on: [PDS-003, PDS-006]
@@ -37,10 +37,10 @@ unblocks: [PNC-002, PNC-004, BPM-005]
 acceptance_criteria:
   - Plan docs do not embed final executable WorkNodes.
   - Readiness reports do not produce executable build tasks.
-  - NodeSeed candidate artifacts are absent until this doc defines their candidate contract.
+  - PlanUnit indexing does not emit NodeSeed candidate artifacts, WorkNodeRequests, or WorkNodes.
 validation_surfaces:
-  - Plan review for WorkNode language that implies executable tasks.
-  - Future node-readiness report status.
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/.plan_index/node_readiness_report.json
 risk_class: execution_boundary
 reasoning_tier: standard
 context_scope: plan_to_execution
@@ -59,9 +59,9 @@ source_lineage:
 preserved_exact_tokens: ["Plans/Plan_To_Node_Compilation.md", "NodeSeed", "WorkNode", "PlanUnit", "PlanUnit index", "node-readiness report", "Do not create WorkNodes", "not creating the work nodes", "cannot create the work nodes yet", "all the plans are complete"]
 negative_constraints:
   - Do not put final WorkNodes directly inside canonical plan docs.
-  - Do not generate NodeSeeds or WorkNodes before the Plan_To_Node_Compilation contract is complete.
+  - Do not generate NodeSeeds or WorkNodes from the PlanUnit index phase.
   - Do not create WorkNodes or executable build tasks during PlanUnit indexing.
-  - Do not generate NodeSeed candidates unless the Plan_To_Node_Compilation contract explicitly defines that candidate artifact.
+  - Do not dispatch NodeSeed candidates or WorkNodeRequests before Executor intake and activation certification.
 owner_hints: [Plans/Plan_To_Node_Compilation.md, Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
 ```
 
@@ -146,18 +146,18 @@ plan_unit_id: PNC-004
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: The node-readiness report catalogs whether PlanUnits are ready for future node conversion, why they are blocked, which dependencies or validators are missing, and whether runtime PlanCompile/node-artifact generation is disabled. It is an analysis artifact only.
+canonical_text: The node-readiness report catalogs whether PlanUnits are ready for runtime PlanCompile, why they are blocked, which dependencies or validators are missing, and whether the compiler contract is complete. It is an analysis artifact only and never materializes NodeSeed, WorkGraph, WorkNodeRequest, WorkNodeRecord, queue, or final build-task artifacts.
 gui_related: false
 gui_classification_reason: Readiness report generation is backend/governance behavior.
 depends_on: [PNC-001, PNC-002, PNC-003, PDS-006]
 unblocks: [BPM-005]
 acceptance_criteria:
   - If Plans are incomplete, readiness status records blocked_plans_incomplete.
-  - If the PlanCompile compiler contract is incomplete, readiness status records blocked_compiler_contract_incomplete while runtime_enablement_status records runtime_disabled.
+  - If the PlanCompile compiler contract is incomplete, readiness status records blocked_compiler_contract_incomplete; once accepted, runtime_enablement_status records contract_ready while the index phase still creates no runtime artifacts.
   - The report preserves gui_related routing inheritance without creating WorkNodes.
 validation_surfaces:
   - Plans/.plan_index/node_readiness_report.json
-  - Future PlanUnit index validator.
+  - python3 scripts/pm-plan-index.py validate
 risk_class: false_completion
 reasoning_tier: standard
 context_scope: plan_index
@@ -193,6 +193,7 @@ acceptance_criteria:
   - Future node artifacts preserve gui_related exactly from source PlanUnits.
   - Routing policy uses a configurable GUI-capable model/CLI without hardcoding a vendor or model name.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future compiler tests.
   - Future routing-policy tests.
 risk_class: routing_mismatch
@@ -234,6 +235,7 @@ acceptance_criteria:
   - Native Goal handoff respects the readiness boundary and does not create nodes before compiler completion.
   - Audit remains a distinct phase from compilation and execution.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future native Goal integration tests.
   - Future compiler boundary tests.
 risk_class: phase_boundary
@@ -262,7 +264,7 @@ plan_unit_id: PNC-008
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: The node-readiness report is a generated analysis artifact with status, status_reason, source_plan_unit_index, plan_unit_count, missing_required_metadata, dependency_graph_summary, build_order_blockers, risk_and_reasoning_summary, gui_related_units, runtime_enablement_status, no_worknodes_created, and next_required_action. It may recommend future grouping questions, but it must not create NodeSeed candidates or WorkNodes until an explicit later enablement PlanUnit accepts runtime launch and node-artifact generation.
+canonical_text: The node-readiness report is a generated analysis artifact with status, status_reason, source_plan_unit_index, plan_unit_count, missing_required_metadata, dependency_graph_summary, build_order_blockers, risk_and_reasoning_summary, gui_related_units, runtime_enablement_status, no_worknodes_created, and next_required_action. It may recommend grouping questions, but it must never create NodeSeed candidates or WorkNodes; runtime node artifacts belong only to PlanCompile/Executor activation after source indexes, acceptance units, strict schemas, and certification gates are current.
 gui_related: false
 gui_classification_reason: Readiness report structure and routing analysis are backend/orchestration behavior.
 depends_on: [PNC-001, PNC-002, PNC-003, PNC-004, PNC-005]
@@ -270,7 +272,7 @@ unblocks: [BPM-005]
 acceptance_criteria:
   - The report exposes dependency/build-order blockers separately from model/capability risk.
   - The report lists gui_related PlanUnits so future routing can inherit the boolean.
-  - The report explicitly states no_worknodes_created=true for the current readiness-only phase.
+  - The report explicitly states no_worknodes_created=true for index generation even when the compiler contract is complete.
 validation_surfaces:
   - Plans/.plan_index/node_readiness_report.json
   - Future node-readiness validator.
@@ -284,45 +286,51 @@ source_lineage:
   - source_ref:chat:implementation-readiness-review
 preserved_exact_tokens: ["status", "status_reason", "source_plan_unit_index", "plan_unit_count", "missing_required_metadata", "dependency_graph_summary", "build_order_blockers", "risk_and_reasoning_summary", "gui_related_units", "runtime_enablement_status", "blocked_compiler_contract_incomplete", "runtime_disabled", "no_worknodes_created", "next_required_action"]
 negative_constraints:
-  - Do not create NodeSeed candidates from a readiness report unless an explicit later enablement PlanUnit accepts runtime launch and node-artifact generation.
+  - Do not create NodeSeed candidates from a readiness report.
   - Do not create WorkNodes from node-readiness output.
 owner_hints: [Plans/Plan_To_Node_Compilation.md]
 ```
 
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
 
-## 4. Runtime-Disabled Compiler Algorithm
+## 4. Runtime Compiler Algorithm And Enablement
 
-The exact future PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm is intentionally runtime-disabled. Current work reserves interface fields and readiness reporting only.
+The PlanUnit-to-NodeSeed-to-WorkNode compiler contract is accepted for implementation. This acceptance authorizes builders to implement the compiler, schemas, and validators; it does not cause this docs/index repair to emit runtime artifacts, queues, implementation files, or WorkNodes.
 
 ```yaml
 plan_unit_id: PNC-007
-unit_type: deferred_decision
-status: deferred
+unit_type: requirement
+status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
-canonical_text: The exact PlanUnit-to-NodeSeed-to-WorkNode compiler algorithm remains runtime-disabled until an explicit later enablement PlanUnit accepts runtime PlanCompile launch and node-artifact generation. The current standard reserves fields and reports node-readiness without generating NodeSeed candidates or WorkNodes.
+canonical_text: >-
+  Runtime PlanCompile is enabled at the contract level by a deterministic PlanUnit to NodeSeed to WorkGraph to WorkNodeRequest to Executor intake boundary. The compiler reads the frozen PlanUnit index, acceptance-unit index, dependencies, implementation-surface classifications, validation surfaces, source-control/project context snapshot, and runtime policy snapshot. It excludes retired, source-lineage-only, explicit future, and out-of-scope PlanUnits; converts accepted implementation PlanUnits into non-executable NodeSeed candidates with source PlanUnit refs, acceptance refs, objective, owner area, typed implementation surfaces, read/write candidates, validators, risk, reasoning tier, gui_related, capability requirements, and dependency refs; runs NodeSeed review for coverage, exclusion disposition, missing validators, authority, and sizing; constructs a WorkGraph draft using only typed executable-order edges; emits WorkNodeRequest records only after graph certification; hands requests to Executor intake for source-control, authority, model, test, and scheduler validation; and allows WorkNodeRecord materialization only inside the activation transaction after Executor intake is accepted. Completion certification authority is Goal Runtime's certifier using Executor receipts, test evidence, source-control receipts, runtime artifact refs, unresolved-item disposition, and Auditor/verification receipts. The disabled-guard removal path is: PNC-007 accepted, CV-287 concrete event registration accepted, runtime artifact schemas materialized or future-scoped, dependency graph acyclic, strict handoff/runtime validators green, and node-readiness reporting runtime_enablement_status.compiler_contract_complete=true while no index-generated WorkNodes are emitted.
 gui_related: false
-gui_classification_reason: Runtime-disabled compiler algorithm design is not GUI implementation work.
+gui_classification_reason: Runtime compiler algorithm design is backend/orchestration behavior.
 depends_on: [PNC-001, PNC-002, PNC-003]
-unblocks: []
+unblocks: [PNC-009, PNC-010, PNC-012, PNC-013, GRS-024]
 acceptance_criteria:
-  - Readiness report marks blocked_compiler_contract_incomplete until runtime PlanCompile launch and node-artifact generation are explicitly enabled; runtime_enablement_status remains runtime_disabled while those guards apply.
-  - No executable node artifacts are produced by this deferred decision.
+  - The compiler algorithm names deterministic inputs, excluded dispositions, NodeSeed candidate fields, review gates, WorkGraph draft construction, WorkNodeRequest emission, Executor intake, activation, and completion certification authority.
+  - PlanUnit index generation reports compiler_contract_complete=true and runtime_enabled=true when Plans are otherwise ready, while still reporting no_worknodes_created=true and nodeseed_candidates_created=false for index generation.
+  - Runtime artifacts are produced only by implemented PlanCompile/Executor/Goal Runtime flows, never by editing Plans or regenerating Plans/.plan_index.
+  - Accepted runtime flow does not depend on unresolved deferred PlanUnits.
 validation_surfaces:
-  - Future compiler design review.
-  - Node-readiness report status.
-risk_class: deferred_algorithm
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/.plan_index/node_readiness_report.json
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: compiler_algorithm_contract
 reasoning_tier: high
-context_scope: future_compiler
-implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, future compiler]
-node_compile_hint: {mode: runtime_disabled, create_worknodes: false}
+context_scope: runtime_compiler
+implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/plans_to_code_handoff.schema.json, Plans/prd_planning_runtime_contracts.json, Plans/.plan_index/node_readiness_report.json]
+node_compile_hint: {mode: compiler_contract_complete, create_worknodes: false, create_nodeseeds: false, runtime_enabled: true, compiler_contract_complete: true}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0030
   - pldg-20260610-001-ledger-plan-system:q-0001
   - source_ref:chat:plan-to-node-deferred
 preserved_exact_tokens: ["PlanUnit index", "node-readiness report", "NodeSeed", "WorkNode"]
 negative_constraints:
-  - Do not generate NodeSeeds or WorkNodes before the Plan_To_Node_Compilation contract is complete.
+  - Do not generate NodeSeeds, WorkNodes, executable queues, final node manifests, implementation files, or production build tasks from this documentation repair or from PlanUnit index generation.
+  - Do not let PlanCompile bypass Executor intake, activation, Goal Runtime completion certification, or Auditor verification receipts.
 owner_hints: [Plans/Plan_To_Node_Compilation.md]
 ```
 
@@ -1228,8 +1236,8 @@ acceptance_criteria:
   - Node-readiness/index outputs do not create WorkNodes, NodeSeeds, queues, manifests, launches, implementation files, or build tasks.
   - Runtime conformance proof is not required for the disabled future compiler boundary.
 validation_surfaces:
-  - PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate
-  - Future node-readiness report no_worknodes_created=true check.
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/.plan_index/node_readiness_report.json
 risk_class: execution_boundary
 reasoning_tier: standard
 context_scope: plan_to_node_future_boundary

@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
 PATH_REFERENCE_REGISTRY = PLANS / "path_reference_registry.json"
 PATH_REFERENCE_REGISTRY_SCHEMA = PLANS / "path_reference_registry.schema.json"
+PLAN_UNITS_INDEX = PLANS / ".plan_index/plan_units.jsonl"
 
 
 def utc_now() -> str:
@@ -74,6 +75,18 @@ def ref_failure(path_error: dict[str, Any], ref_key: str = "ref") -> dict[str, A
     failure = dict(path_error)
     failure[ref_key] = failure.pop("path")
     return failure
+
+
+def registry_ref_matches(ref: str, row: dict[str, Any]) -> bool:
+    raw_ref = str(row.get("raw_ref", ""))
+    match_kind = row.get("match_kind", "exact")
+    if match_kind == "prefix":
+        return ref.startswith(raw_ref)
+    if match_kind == "glob":
+        return fnmatch.fnmatchcase(ref, raw_ref)
+    if match_kind == "doc_anchor":
+        return ref == raw_ref
+    return ref == raw_ref
 
 
 def sha256_file(path: Path) -> str:
@@ -835,10 +848,13 @@ def cmd_lint_path_refs(args: argparse.Namespace) -> dict[str, Any]:
         return report_status("lint-path-refs", failures)
 
     registry = load_json(PATH_REFERENCE_REGISTRY)
+    registry_rows = registry.get("classifications", [])
     seen: set[str] = set()
-    for index, row in enumerate(registry.get("classifications", []), 1):
+    for index, row in enumerate(registry_rows, 1):
         raw_ref = row.get("raw_ref")
         classification = row.get("classification")
+        surface_type = row.get("surface_type")
+        match_kind = row.get("match_kind")
         if raw_ref in seen:
             failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "duplicate_raw_ref"})
         seen.add(str(raw_ref))
@@ -880,8 +896,63 @@ def cmd_lint_path_refs(args: argparse.Namespace) -> dict[str, Any]:
             failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "typo_missing_replacement_ref"})
         if classification == "schema_to_materialize" and not row.get("materialization_pattern"):
             failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "schema_to_materialize_missing_pattern"})
+        if surface_type == "schema_to_materialize" and not row.get("materialization_pattern"):
+            failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "surface_schema_to_materialize_missing_pattern"})
+        if match_kind == "doc_anchor" and not row.get("replacement_ref"):
+            failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "doc_anchor_missing_replacement_ref"})
 
-    return report_status("lint-path-refs", failures, classifications_checked=len(registry.get("classifications", [])))
+    implementation_surface_count = 0
+    registry_typed_surface_count = 0
+    concrete_surface_count = 0
+    if PLAN_UNITS_INDEX.exists():
+        with PLAN_UNITS_INDEX.open("r", encoding="utf-8") as handle:
+            for line_number, line in enumerate(handle, 1):
+                if not line.strip():
+                    continue
+                unit = json.loads(line)
+                for surface in unit.get("implementation_surfaces", []) or []:
+                    if not isinstance(surface, str) or not surface:
+                        failures.append({
+                            "path": rel(PLAN_UNITS_INDEX),
+                            "line": line_number,
+                            "plan_unit_id": unit.get("plan_unit_id"),
+                            "error": "implementation_surface_not_string",
+                        })
+                        continue
+                    implementation_surface_count += 1
+                    matching_row = next((row for row in registry_rows if registry_ref_matches(surface, row)), None)
+                    if matching_row:
+                        registry_typed_surface_count += 1
+                        continue
+                    target_path, target_error = exact_path(surface)
+                    if target_error:
+                        failures.append({
+                            "path": rel(PLAN_UNITS_INDEX),
+                            "line": line_number,
+                            "plan_unit_id": unit.get("plan_unit_id"),
+                            "implementation_surface": surface,
+                            "error": "implementation_surface_missing_or_untyped",
+                            "surface_error": target_error.get("error"),
+                        })
+                    elif target_path is not None and not target_path.exists():
+                        failures.append({
+                            "path": rel(PLAN_UNITS_INDEX),
+                            "line": line_number,
+                            "plan_unit_id": unit.get("plan_unit_id"),
+                            "implementation_surface": surface,
+                            "error": "implementation_surface_missing_path",
+                        })
+                    else:
+                        concrete_surface_count += 1
+
+    return report_status(
+        "lint-path-refs",
+        failures,
+        classifications_checked=len(registry_rows),
+        implementation_surfaces_checked=implementation_surface_count,
+        implementation_surfaces_registry_typed=registry_typed_surface_count,
+        implementation_surfaces_concrete=concrete_surface_count,
+    )
 
 
 def iter_schema_dicts(value: Any, path: str = "$") -> list[tuple[str, dict[str, Any]]]:
@@ -1658,6 +1729,243 @@ def cmd_validate_plans_to_code_handoff_schema(args: argparse.Namespace) -> dict[
     )
 
 
+RUNTIME_ARTIFACT_TYPES = [
+    "code_diff",
+    "implementation_plan",
+    "reasoning_summary",
+    "validation_test",
+    "screenshot",
+    "evidence",
+    "document",
+    "restore_point",
+    "browser_recording",
+    "tool_llm_trace",
+    "context_snapshot",
+    "cost_usage",
+    "hitl_approval",
+    "failed_attempts",
+    "subagent_lineage",
+    "before_after_snapshot",
+    "suggested_next_steps",
+    "api_web_call",
+    "artifact_version",
+]
+
+RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS = {
+    "code_diff": ["changed_paths"],
+    "implementation_plan": ["plan_ref"],
+    "reasoning_summary": ["summary"],
+    "validation_test": ["test_ids"],
+    "screenshot": ["media_ref"],
+    "evidence": ["evidence_kind"],
+    "document": ["document_ref"],
+    "restore_point": ["safe_point_id"],
+    "browser_recording": ["browser_session_id"],
+    "tool_llm_trace": ["trace_ref"],
+    "context_snapshot": ["snapshot_ref"],
+    "cost_usage": ["usage_event_ref", "reasoning_tokens"],
+    "hitl_approval": ["approval_scope_key", "decision"],
+    "failed_attempts": ["attempt_refs"],
+    "subagent_lineage": ["parent_attempt_ref", "child_attempt_refs"],
+    "before_after_snapshot": ["before_ref", "after_ref"],
+    "suggested_next_steps": ["next_steps"],
+    "api_web_call": ["source_system", "redacted_request_ref", "redacted_response_ref"],
+    "artifact_version": ["logical_artifact_id", "artifact_version"],
+}
+
+
+def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+    envelope_path = PLANS / "runtime_artifact_envelope.schema.json"
+    fixture_path = ROOT / "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"
+    if not envelope_path.exists():
+        failures.append({"path": rel(envelope_path), "error": "missing_runtime_artifact_envelope_schema"})
+    if not fixture_path.exists():
+        failures.append({"path": rel(fixture_path), "error": "missing_runtime_artifact_fixture_matrix"})
+    if failures:
+        return report_status("validate-runtime-artifact-schemas", failures)
+
+    envelope = load_json(envelope_path)
+    fixtures = load_json(fixture_path)
+    valid_payloads = fixtures.get("valid_payloads", [])
+    payloads_by_type = {payload.get("artifact_type"): payload for payload in valid_payloads if isinstance(payload, dict)}
+
+    for artifact_type in RUNTIME_ARTIFACT_TYPES:
+        schema_path = PLANS / f"runtime_artifact_{artifact_type}.schema.json"
+        if not schema_path.exists():
+            failures.append({"path": rel(schema_path), "artifact_type": artifact_type, "error": "missing_runtime_artifact_type_schema"})
+            continue
+        schema = load_json(schema_path)
+        expected_id = f"pm.runtime_artifact.{artifact_type}.schema.v1"
+        if schema.get("$id") != expected_id:
+            failures.append({"path": rel(schema_path), "artifact_type": artifact_type, "error": "wrong_schema_id", "expected": expected_id})
+        payload = payloads_by_type.get(artifact_type)
+        if payload is None:
+            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_valid_payload_fixture"})
+            continue
+        for error in validate_schema(payload, envelope, envelope):
+            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "schema": rel(envelope_path), "error": error})
+        for error in validate_schema(payload, schema, schema):
+            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "schema": rel(schema_path), "error": error})
+        type_payload = payload.get("type_payload", {})
+        for field in RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS[artifact_type]:
+            if field not in type_payload and field not in payload:
+                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_type_payload_field", "field": field})
+        if artifact_type == "cost_usage" and type_payload.get("reasoning_tokens", -1) < 0:
+            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "reasoning_tokens_negative"})
+        if artifact_type in {"hitl_approval", "failed_attempts"} and not payload.get("receipt_refs"):
+            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "receipt_like_artifact_missing_receipt_refs"})
+
+    event_records = fixtures.get("event_records", [])
+    event_types = {record.get("artifact_type") for record in event_records if isinstance(record, dict)}
+    for artifact_type in RUNTIME_ARTIFACT_TYPES:
+        if artifact_type not in event_types:
+            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_event_record_fixture"})
+
+    for invalid in fixtures.get("invalid_payloads", []):
+        artifact_type = invalid.get("artifact_type")
+        payload = invalid.get("payload", {})
+        schema_path = PLANS / f"runtime_artifact_{artifact_type}.schema.json"
+        schema = load_json(schema_path) if schema_path.exists() else {}
+        schema_errors = validate_schema(payload, envelope, envelope) + validate_schema(payload, schema, schema)
+        custom_errors = []
+        if artifact_type in RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS:
+            type_payload = payload.get("type_payload", {})
+            custom_errors = [
+                field
+                for field in RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS[artifact_type]
+                if field not in type_payload and field not in payload
+            ]
+        if not schema_errors and not custom_errors:
+            failures.append({"path": rel(fixture_path), "invalid_fixture": invalid.get("case_id"), "error": "invalid_fixture_unexpectedly_valid"})
+
+    return report_status(
+        "validate-runtime-artifact-schemas",
+        failures,
+        artifact_types_checked=len(RUNTIME_ARTIFACT_TYPES),
+        valid_payload_fixture_count=len(valid_payloads),
+        event_record_fixture_count=len(event_records),
+    )
+
+
+GOAL_EVENT_NAMES = [
+    "goal.created",
+    "goal.scheduled",
+    "goal.progressed",
+    "goal.tool_check_recorded",
+    "goal.updated",
+    "goal.replanned",
+    "goal.child_status_changed",
+    "goal.evidence_captured",
+    "goal.verification_decided",
+    "goal.receipt_recorded",
+    "goal.completed",
+    "goal.degraded",
+    "goal.stopped",
+    "goal.blocked",
+    "goal.cancelled",
+    "goal_run.started",
+    "goal_run.replanned",
+    "goal_run.blocked",
+    "goal_run.certified",
+    "goal_run.cancelled",
+    "goal_run.stopped",
+]
+
+
+def cmd_validate_goal_runtime_event_fixtures(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+    schema_path = PLANS / "goal_runtime_events.schema.json"
+    fixture_path = ROOT / "tests/fixtures/goal_runtime_events/golden/minimal_goal_events.json"
+    if not schema_path.exists():
+        failures.append({"path": rel(schema_path), "error": "missing_goal_runtime_event_schema"})
+    if not fixture_path.exists():
+        failures.append({"path": rel(fixture_path), "error": "missing_goal_runtime_event_fixture"})
+    if failures:
+        return report_status("validate-goal-runtime-event-fixtures", failures)
+
+    schema = load_json(schema_path)
+    fixtures = load_json(fixture_path)
+    events = fixtures.get("events", [])
+    seen: set[str] = set()
+    for index, event in enumerate(events):
+        event_name = event.get("event_name") if isinstance(event, dict) else None
+        if event_name in seen:
+            failures.append({"path": rel(fixture_path), "event_name": event_name, "error": "duplicate_goal_event_fixture"})
+        seen.add(str(event_name))
+        for error in validate_schema(event, schema, schema):
+            failures.append({"path": rel(fixture_path), "event_index": index, "event_name": event_name, "error": error})
+        payload = event.get("payload", {}) if isinstance(event, dict) else {}
+        if event_name == "goal.created" and not all(key in payload for key in ["objective", "acceptance_criteria", "allowed_scope", "budget"]):
+            failures.append({"path": rel(fixture_path), "event_name": event_name, "error": "goal_created_missing_payload_minimum"})
+        if event_name == "goal.replanned" and not all(key in payload for key in ["interruption_class", "impact", "next_action"]):
+            failures.append({"path": rel(fixture_path), "event_name": event_name, "error": "goal_replanned_missing_payload_minimum"})
+        if event_name == "goal.blocked" and not all(key in payload for key in ["blocker_class", "cause", "allowed_action_ids"]):
+            failures.append({"path": rel(fixture_path), "event_name": event_name, "error": "goal_blocked_missing_payload_minimum"})
+
+    for event_name in GOAL_EVENT_NAMES:
+        if event_name not in seen:
+            failures.append({"path": rel(fixture_path), "event_name": event_name, "error": "missing_goal_event_fixture"})
+
+    return report_status(
+        "validate-goal-runtime-event-fixtures",
+        failures,
+        event_names_checked=len(GOAL_EVENT_NAMES),
+        fixture_event_count=len(events),
+    )
+
+
+def cmd_validate_project_output_fixtures(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+    fixture_root = ROOT / "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project"
+    required = [
+        ".puppet-master/project/requirements.md",
+        ".puppet-master/project/contracts/index.json",
+        ".puppet-master/project/plan.md",
+        ".puppet-master/project/plan_graph/index.json",
+        ".puppet-master/project/plan_graph/nodes/node-fr-001.json",
+        ".puppet-master/project/acceptance_manifest.json",
+        ".puppet-master/project/auto_decisions.jsonl",
+        ".puppet-master/project/traceability/requirements_quality_report.json",
+        ".puppet-master/project/traceability/requirements_coverage.json",
+        ".puppet-master/project/traceability/requirements_coverage.md",
+        "schema_payloads/test_strategy.json",
+        "schema_payloads/gui_automation_manifest.json",
+    ]
+    for rel_path in required:
+        if not (fixture_root / rel_path).exists():
+            failures.append({"path": str((fixture_root / rel_path).relative_to(ROOT)), "error": "missing_project_output_fixture"})
+    if failures:
+        return report_status("validate-project-output-fixtures", failures)
+
+    schema_targets = [
+        ("Plans/acceptance_manifest.schema.json", ".puppet-master/project/acceptance_manifest.json"),
+        ("Plans/requirements_coverage.schema.json", ".puppet-master/project/traceability/requirements_coverage.json"),
+        ("Plans/requirements_quality_report.schema.json", ".puppet-master/project/traceability/requirements_quality_report.json"),
+        ("Plans/test_strategy.schema.json", "schema_payloads/test_strategy.json"),
+        ("Plans/gui_automation_manifest.schema.json", "schema_payloads/gui_automation_manifest.json"),
+    ]
+    for schema_rel, instance_rel in schema_targets:
+        schema_path = ROOT / schema_rel
+        instance_path = fixture_root / instance_rel
+        for error in validate_against_schema(instance_path, schema_path):
+            failures.append({"path": str(instance_path.relative_to(ROOT)), "schema": schema_rel, "error": error})
+
+    coverage = load_json(fixture_root / ".puppet-master/project/traceability/requirements_coverage.json")
+    md_path = fixture_root / ".puppet-master/project/traceability/requirements_coverage.md"
+    json_req_ids = {row.get("req_id") for row in coverage.get("requirements", [])}
+    md_req_ids = set(re.findall(r"\b(?:FR|NFR|REQ)-[0-9]{3,}\b", md_path.read_text(encoding="utf-8")))
+    if json_req_ids != md_req_ids:
+        failures.append({
+            "path": str(md_path.relative_to(ROOT)),
+            "error": "requirements_coverage_md_json_id_mismatch",
+            "json_req_ids": sorted(json_req_ids),
+            "md_req_ids": sorted(md_req_ids),
+        })
+
+    return report_status("validate-project-output-fixtures", failures, fixture_root=str(fixture_root.relative_to(ROOT)))
+
+
 def compact_gate_report(report: dict[str, Any], sample_limit: int = 10) -> dict[str, Any]:
     return {
         "status": report.get("status"),
@@ -1733,6 +2041,9 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("check_project_artifact_requirements", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("validate_runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
+        ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
+        ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("check_shards", cmd_check_shards, argparse.Namespace(report=None)),
     ]
     checks = [
@@ -1766,6 +2077,9 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("project_artifacts", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
+        ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
+        ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
     ]
     checks = [
         run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
@@ -1789,6 +2103,9 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         project_artifacts=compact_gate_report(check_map["project_artifacts"]),
         plans_to_code_handoff_schema=compact_gate_report(check_map["plans_to_code_handoff_schema"]),
         prd_planning_runtime_contracts=compact_gate_report(check_map["prd_planning_runtime_contracts"]),
+        runtime_artifact_schemas=compact_gate_report(check_map["runtime_artifact_schemas"]),
+        goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
+        project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
         subcheck_timeout_seconds=timeout_seconds,
     )
 
@@ -1806,6 +2123,9 @@ COMMANDS = {
     "check-project-artifacts": cmd_check_project_artifact_requirements,
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
+    "validate-runtime-artifact-schemas": cmd_validate_runtime_artifact_schemas,
+    "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
+    "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
     "run-gates": cmd_run_gates,
     "audit-governance": cmd_audit_governance,
 }

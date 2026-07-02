@@ -1644,30 +1644,31 @@ owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
 
-### GRS-024 - Deferred Legacy Chain Wizard Compatibility And Plan Graph Decisions
+### GRS-024 - Legacy Chain Wizard Compatibility And Plan Graph Runtime Boundary
 
 ```yaml
 plan_unit_id: GRS-024
-unit_type: deferred_decision
-status: deferred
+unit_type: compatibility_disposition
+status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md. Any exact legacy Chain Wizard compatibility flow and exact PlanUnit-to-NodeSeed-to-WorkNode compiler runtime remain disabled. Goal Runtime may define invisible ledger-to-Plans execution and a future plan_graph_build template, but it must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks until Plans/Plan_To_Node_Compilation.md and a later explicit enablement allow runtime PlanCompile launch and node-artifact generation.
+  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md, and legacy Chain Wizard compatibility remains source-lineage-only unless a separate compatibility owner explicitly implements an import/display bridge. Goal Runtime may define invisible ledger-to-Plans execution and a plan_graph_build template that consumes the accepted Plan_To_Node_Compilation compiler contract, but Goal Runtime plan/index/governance phases still must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks. Runtime PlanCompile may create runtime artifacts only through the Plan_To_Node_Compilation compiler, Executor intake, activation, and completion certification chain.
 gui_related: false
-gui_classification_reason: Deferred legacy compatibility/compiler contract design is not a GUI implementation requirement.
+gui_classification_reason: Legacy compatibility/source-lineage and runtime compiler boundary design is not a GUI implementation requirement.
 depends_on:
   - GRS-003
   - GRS-018
+  - PNC-007
 unblocks: []
 acceptance_criteria:
   - Current Planning Wizard flow semantics route to Plans/Planning_Wizard.md.
-  - Any legacy Chain Wizard compatibility flow is represented as deferred rather than silently invented.
-  - Plan graph build remains runtime_disabled until explicit PlanCompile/node-artifact enablement.
-  - No node artifacts are produced by this deferred decision.
+  - Legacy Chain Wizard compatibility is source-lineage-only and is not required by accepted runtime flow.
+  - Plan graph build consumes the accepted Plan_To_Node_Compilation compiler contract without letting Goal Runtime bypass Executor intake.
+  - No node artifacts are produced by Goal Runtime documentation, index, or governance phases.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - Planning Wizard compatibility and compiler design reviews
-risk_class: deferred_compiler_boundary
+  - Plans/.plan_index/node_readiness_report.json
+risk_class: legacy_compiler_boundary
 reasoning_tier: high
 context_scope: chain_wizard_and_compiler
 implementation_surfaces:
@@ -1675,7 +1676,7 @@ implementation_surfaces:
   - Plans/Plan_To_Node_Compilation.md
   - Plans/chain-wizard-flexibility.md
 node_compile_hint:
-  mode: runtime_disabled
+  mode: legacy_chain_wizard_source_lineage_runtime_boundary
   create_worknodes: false
 source_lineage:
   - pldg-20260616-001-goal-runtime-system:atom-0015
@@ -1685,12 +1686,12 @@ source_lineage:
   - pldg-20260616-001-goal-runtime-system:q-0002
 preserved_exact_tokens:
   - "Plan graph goals come after compiler contract"
-  - "Plan graph build goal deferred"
+  - "Plan graph build"
   - "exact redesigned Chain Wizard flow"
   - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
 negative_constraints:
-  - Do not create NodeSeeds or WorkNodes before the Plan_To_Node_Compilation contract is complete.
-  - Do not invent the final Chain Wizard flow in this Goal Runtime compile.
+  - Do not make legacy Chain Wizard compatibility a dependency for accepted runtime flow.
+  - Do not let Goal Runtime bypass Plan_To_Node_Compilation, Executor intake, activation, or completion certification.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/Plan_To_Node_Compilation.md
@@ -1757,7 +1758,7 @@ owner_hints:
 Goal Runtime requires these data-shape families:
 
 - Goal state: `goal_id`, `parent_goal_id`, `status`, `objective`, `acceptance_criteria`, `non_goals`, `allowed_scope`, constraints, budget, `work_queue`, task list, `model_policy`, attachment manifest, child goals, `evidence_index`, evidence references, completion receipt, `goal_revision`, and recovery state.
-- Goal event log: `goal_events.jsonl` append-only events for creation, scheduling, worker progress, tool/check execution, user interruption, Goal Replan Event, goal update revisions, child-goal status, evidence capture, verifier/adjudicator decision, completion receipt, degraded receipt, stopped receipt, blocked state, and cancellation.
+- Goal event log: append-only events using the Contracts_V0 registered names `goal.created`, `goal.scheduled`, `goal.progressed`, `goal.tool_check_recorded`, `goal.updated`, `goal.replanned`, `goal.child_status_changed`, `goal.evidence_captured`, `goal.verification_decided`, `goal.receipt_recorded`, `goal.completed`, `goal.degraded`, `goal.stopped`, `goal.blocked`, and `goal.cancelled`, plus Orchestrator GoalRun projections from `goal_run.started`, `goal_run.replanned`, `goal_run.blocked`, `goal_run.certified`, `goal_run.cancelled`, and `goal_run.stopped`.
 - Goal update event fields: `goal_revision`, `previous_revision`, `objective_update`, `constraint_added`, `active_subgoals_notified`, and stale child goals.
 - Goal Completion Receipt: tier, changed files/artifacts, checklist disposition, checks run/skipped, evidence refs, validator outputs, child receipts, verifier/adjudicator decision, unresolved/open items, degraded-mode reason, and source-to-target mapping when applicable.
 - Child goal state: `child_goal_id`, `parent_goal_id`, `agent_id`, `status`, `objective`, `allowed_scope`, `write_policy`, `budget`, `task_list`, `result_artifacts`, `completion_receipt`, stale/re-steer state, and `recovery_state`.
@@ -1766,14 +1767,14 @@ Goal Runtime requires these data-shape families:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
-These data-shape bullets are Goal Runtime feature-local constraints; the adjacent owner docs carry only the shared envelope, persistence, and approval-scope registration needed for cross-owner routing. Concrete cross-owner Goal event names and payload schemas remain deferred to Contracts/storage registration and are not invented by this repair. `Plans/Goal_Runtime_System.md` remains the semantic owner for Goal Runtime behavior.
+These data-shape bullets are Goal Runtime feature-local constraints; adjacent owner docs carry the shared envelope, concrete event-name registry, persistence, replay, projection, retention, and approval-scope registration needed for cross-owner routing. Concrete cross-owner Goal event names and payload minima are registered in `Plans/Contracts_V0.md` and persisted/replayed through `Plans/storage-plan.md`. `Plans/Goal_Runtime_System.md` remains the semantic owner for Goal Runtime behavior.
 
 ## 4. Integration Surfaces
 
 - Assistant Chat consumes Goal Runtime for visible activation, status, task tracker, pause/resume/stop/clear/update controls, evidence/activity display, completion reports, and child-goal expansion.
 - Final GUI consumes Goal Runtime for Settings placement of worker and verifier/adjudicator model selectors.
 - Planning Ledger and Plan Document systems provide source-lineage and PlanUnit contracts for ledger-to-Plans goals.
-- Plan_To_Node_Compilation remains the boundary for future plan graph build goals and prevents NodeSeed/WorkNode creation before the compiler contract exists.
+- Plan_To_Node_Compilation owns the accepted compiler boundary for plan graph build goals and prevents PlanUnit indexing from creating NodeSeed/WorkNode artifacts.
 - Permissions_System resolves global approval policy; Goal Runtime invokes approval for high-risk goal actions.
 - Runtime_Artifacts_Panel and storage owners consume Goal Runtime evidence and receipt identities for browsing, retention, and redaction.
 - Models_System and Multi-Account own concrete requested/effective model and account resolution for Goal Runtime roles; provider-specific docs may contribute existing provider capability/model discovery surfaces, but exact Goal Runtime provider-default tier mappings remain deferred unless later promoted through a provider-specific hook.
@@ -1791,22 +1792,20 @@ Goal Runtime implementation is acceptable only when:
 - child direct writes require isolation, partitioning, or a parent-granted single-writer lease;
 - evidence is replayable for standard/strong tiers and raw logs are capped/redacted;
 - seal-phase governance validation uses the complete GRS-021 validator suite before accepting the sealed Goal Runtime packet;
-- WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, and final node queues are absent until the compiler contract allows them.
+- WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, and final node queues are absent from Goal Runtime plan/index/governance phases; runtime PlanCompile and Executor may materialize runtime artifacts only through the accepted compiler, intake, activation, and certification chain.
 
 ## 6. Plan-To-Node Readiness
 
-Current readiness is index-only. Goal Runtime PlanUnits expose runtime contracts, risk, validation surfaces, dependencies, and `gui_related` metadata for future compiler analysis. They do not create executable build tasks.
+Current readiness from Plans/.plan_index remains index-only. Goal Runtime PlanUnits expose runtime contracts, risk, validation surfaces, dependencies, and `gui_related` metadata for compiler analysis. They do not create executable build tasks during documentation, index generation, or governance repair.
 
-Node-readiness remains blocked by `Plans/Plan_To_Node_Compilation.md` until the compiler contract defines any future NodeSeed candidate and WorkNode artifact contracts.
+Node-readiness depends on `Plans/Plan_To_Node_Compilation.md` for compiler completeness and on Executor/Goal Runtime receipts for runtime certification. Index generation still reports that no NodeSeeds, WorkNodes, executable queues, final node manifests, production build tasks, or final node queues were created by the index phase.
 
 ## 7. Deferred, Retired, Compatibility, And Non-Goals
 
 Deferred:
 
 - exact legacy Chain Wizard compatibility flow after native Goal Mode exists;
-- exact PlanUnit-to-NodeSeed-to-WorkNode compiler contract;
 - final visual styling, iconography, and exact layout for Goal chip/status/task drawer;
-- first persistence substrate for native Goal state;
 - provider-specific default model-role tier mappings.
 
 Retired or non-goal:

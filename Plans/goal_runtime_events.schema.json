@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.goal_runtime_events.schema.v1",
+  "title": "Puppet Master Goal Runtime Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_name",
+    "schema_version",
+    "occurred_at_utc",
+    "project_id",
+    "goal_id",
+    "goal_revision",
+    "actor_ref",
+    "execution_role",
+    "requested_provider_ref",
+    "effective_provider_ref",
+    "requested_model_ref",
+    "effective_model_ref",
+    "requested_account_ref",
+    "effective_account_ref",
+    "correlation_id",
+    "evidence_refs",
+    "artifact_refs",
+    "payload"
+  ],
+  "properties": {
+    "event_name": {
+      "type": "string",
+      "enum": [
+        "goal.created",
+        "goal.scheduled",
+        "goal.progressed",
+        "goal.tool_check_recorded",
+        "goal.updated",
+        "goal.replanned",
+        "goal.child_status_changed",
+        "goal.evidence_captured",
+        "goal.verification_decided",
+        "goal.receipt_recorded",
+        "goal.completed",
+        "goal.degraded",
+        "goal.stopped",
+        "goal.blocked",
+        "goal.cancelled",
+        "goal_run.started",
+        "goal_run.replanned",
+        "goal_run.blocked",
+        "goal_run.certified",
+        "goal_run.cancelled",
+        "goal_run.stopped"
+      ]
+    },
+    "schema_version": {"type": "string", "const": "pm.goal_runtime_events.schema.v1"},
+    "occurred_at_utc": {"type": "string", "format": "date-time"},
+    "project_id": {"type": "string", "minLength": 1},
+    "thread_id": {"type": "string"},
+    "goal_id": {"type": "string", "minLength": 1},
+    "parent_goal_id": {"type": "string"},
+    "goal_revision": {"type": "integer", "minimum": 1},
+    "expected_goal_revision": {"type": "integer", "minimum": 1},
+    "actor_ref": {"type": "string", "minLength": 1},
+    "execution_role": {"type": "string", "minLength": 1},
+    "requested_provider_ref": {"type": "string", "minLength": 1},
+    "effective_provider_ref": {"type": "string", "minLength": 1},
+    "requested_model_ref": {"type": "string", "minLength": 1},
+    "effective_model_ref": {"type": "string", "minLength": 1},
+    "requested_account_ref": {"type": "string", "minLength": 1},
+    "effective_account_ref": {"type": "string", "minLength": 1},
+    "correlation_id": {"type": "string", "minLength": 1},
+    "causation_event_ref": {"type": "string"},
+    "idempotency_key": {"type": "string"},
+    "approval_ref": {"type": "string"},
+    "block_ref": {"type": "string"},
+    "evidence_refs": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "artifact_refs": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "payload": {
+      "type": "object",
+      "minProperties": 1
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema_id": "pm.test_strategy.schema.v1",
+  "project": "fixture-project",
+  "generatedAt": "2026-07-02T00:00:00Z",
+  "coverageLevel": "Standard",
+  "items": [
+    {
+      "id": "test-fr-001",
+      "sourcePhaseId": "FR-001",
+      "criterion": "Project-output fixture validates from a clean checkout.",
+      "testType": "schema",
+      "testFile": "scripts/pm-plans-verify.py",
+      "testName": "validate-project-output-fixtures",
+      "verificationCommand": "python3 scripts/pm-plans-verify.py validate-project-output-fixtures"
+    }
+  ]
+}

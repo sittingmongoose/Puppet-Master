@@ -2456,11 +2456,11 @@ owner_hints:
 
 ```yaml
 plan_unit_id: PP-037
-unit_type: deferred_reconciliation
-status: deferred
+unit_type: source_lineage_reconciliation
+status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  The P5 recovery packet preserves export taxonomy, export-family distinctions, source-layer enumeration, resolver actor inputs, deterministic resolver matrix, ranked candidates, winner, and fallback reason as reconciliation evidence rather than resolved implementation canon.
+  The P5 recovery packet is source-lineage-only reconciliation evidence for export taxonomy, export-family distinctions, source-layer enumeration, resolver actor inputs, deterministic resolver matrix, ranked candidates, winner, and fallback reason. It is not implementation canon for the current runtime/compiler packet and does not block accepted runtime flow.
 gui_related: true
 gui_classification_reason: The preserved recovery packet includes GUI/export/Orchestrator display grammar and cross-surface inspection gaps.
 split_recommended: false
@@ -2469,19 +2469,19 @@ depends_on:
   - "PP-036"
 unblocks: []
 acceptance_criteria:
-  - "P5 Export Resolver Gap Packet remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "P5 Export Resolver Gap Packet remains addressable as source-lineage-only reconciliation evidence."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
-risk_class: cross_owner_reconciliation_gap
+risk_class: source_lineage_reconciliation_not_current_blocker
 reasoning_tier: standard
 context_scope: prompt_pipeline_reconciliation_gap
 implementation_surfaces:
   - "Plans/Prompt_Pipeline.md"
 node_compile_hint:
-  mode: blocked_cross_owner_reconciliation
+  mode: source_lineage_only_not_required_for_current_runtime
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
@@ -2668,11 +2668,11 @@ owner_hints:
 
 ```yaml
 plan_unit_id: PP-041
-unit_type: deferred_reconciliation
-status: deferred
+unit_type: source_lineage_reconciliation
+status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Prompt Pipeline preserves unresolved operational gap evidence for newtools, Contracts, Permissions, Personas, storage/usage, tool/runtime surfaces, Source Control, and rewrite-era operational nouns without resolving ownership inside this batch.
+  Prompt Pipeline preserves operational gap evidence for newtools, Contracts, Permissions, Personas, storage/usage, tool/runtime surfaces, Source Control, and rewrite-era operational nouns as source-lineage-only reconciliation input. Ownership for current runtime/compiler implementation readiness is resolved by the active owner docs named by each current PlanUnit, not by this historical register.
 gui_related: false
 gui_classification_reason: This unit preserves cross-document owner gaps rather than visual presentation.
 split_recommended: false
@@ -2680,19 +2680,19 @@ depends_on:
   - "PP-039"
 unblocks: []
 acceptance_criteria:
-  - "Cross Doc Operational Gap Register remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "Cross Doc Operational Gap Register remains addressable as source-lineage-only reconciliation evidence."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
-risk_class: owner_adjudication_gap
+risk_class: source_lineage_owner_gap_not_current_blocker
 reasoning_tier: standard
 context_scope: prompt_pipeline_reconciliation_gap
 implementation_surfaces:
   - "Plans/Prompt_Pipeline.md"
 node_compile_hint:
-  mode: blocked_owner_adjudication
+  mode: source_lineage_only_not_required_for_current_runtime
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
@@ -2791,31 +2791,31 @@ owner_hints:
 
 ```yaml
 plan_unit_id: PP-043
-unit_type: deferred_decision
-status: deferred
+unit_type: source_lineage_residual_disposition
+status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Pathing migration candidates and source-lineage tail tokens are preserved as deferred decision evidence, including package/node, seam/package/node, content-addressed candidates, topic initialization context, and model-tail notes, without converting them into implementation requirements.
+  Pathing migration candidates and source-lineage tail tokens are preserved as source-lineage-only residuals, including package/node, seam/package/node, content-addressed candidates, topic initialization context, and model-tail notes, without converting them into implementation requirements or current runtime/compiler dependencies.
 gui_related: false
-gui_classification_reason: This unit preserves deferred pathing and lineage notes rather than visual presentation.
+gui_classification_reason: This unit preserves pathing and lineage notes rather than visual presentation.
 split_recommended: false
 depends_on:
   - "PP-039"
 unblocks: []
 acceptance_criteria:
-  - "Pathing Migration And Source Lineage Tail remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "Pathing Migration And Source Lineage Tail remains addressable as source-lineage-only residual evidence."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
   - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
   - "python3 scripts/pm-plan-index.py validate"
-risk_class: deferred_pathing_decision
+risk_class: source_lineage_pathing_residual_not_current_blocker
 reasoning_tier: standard
 context_scope: prompt_pipeline_reconciliation_gap
 implementation_surfaces:
   - "Plans/Prompt_Pipeline.md"
 node_compile_hint:
-  mode: deferred_decision
+  mode: source_lineage_residual_not_required_for_current_runtime
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"

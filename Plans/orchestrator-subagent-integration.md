@@ -31288,6 +31288,7 @@ acceptance_criteria:
   - Discovery receipts link to exact verification before root-cause claims, Executor handoff, or edits.
   - Ambient discovery is bounded by explicit trigger and skip rules.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future orchestrated no-path bug-fix test.
   - Future SSH-backed project context discovery test.
   - Future ambient trigger/skip rule tests.

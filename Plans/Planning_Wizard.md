@@ -1166,6 +1166,7 @@ acceptance_criteria:
   - Selected candidate provenance is preserved in Planning Context Capsules.
   - Discovery selection does not create WorkNodes, NodeSeeds, executable queues, or implementation work.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future Planning Wizard source pick local/SSH tests.
   - Future policy-hidden source no-leak tests.
 risk_class: planning_source_context_drift

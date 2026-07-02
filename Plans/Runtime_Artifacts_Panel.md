@@ -469,7 +469,7 @@ canonical_text: >-
   Generated media artifacts must project provider receipt metadata, generation parameters, provider/base response status, trace/request id where available, hashes, durable local artifact refs, original provider URL refs, expiry warnings, partial success/failure counts, and provenance caveats. MiniMax Image-01 URL outputs require 24-hour expiry disclosure; OpenAI/Codex Images 2 routes require account/route distinction and C2PA/SynthID caveats; subscription-backed routes require support-state and terms-risk refs. Antigravity OAuth/internal `gemini-3.1-flash-image` receipts require private/unofficial endpoint caveats, non-secret request/proof refs, image dimensions/hash, and support-state labels.
 gui_related: true
 gui_classification_reason: Generated media artifact browsing, expiry warnings, and provenance presentation are user-visible GUI behavior.
-depends_on: [RAP-032, MGAC-095, MGAC-096, POA-050]
+depends_on: [RAP-032, MGAC-095, MGAC-096]
 unblocks: []
 acceptance_criteria:
   - Generated media receipts include route/account/model identity and non-secret provider metadata.
@@ -968,6 +968,7 @@ acceptance_criteria:
   - Receipt browsing respects redaction_profile, policy_context, and permission_snapshot_id.
   - Discovery receipts link to exact verification receipts and final relevant summaries when available.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future Runtime Artifacts receipt browsing tests.
   - Future Assistant Chat inline display off but durable receipt available test.
 risk_class: receipt_redaction_retention_drift
@@ -1739,16 +1740,20 @@ canonical_text: >-
   container records remain authoritative; stale or missing owner records degrade the view. `blocked != failed` is
   preserved for permission_denied, user_declined, headless_ask_denied, filesafe_blocked, external_side_effect_blocked,
   network_blocked_by_policy, host_unreachable, host_untrusted, test_gap_policy, capability_unavailable,
-  projection_stale, needs_review, and indeterminate_remote_outcome.
+  projection_stale, needs_review, and indeterminate_remote_outcome. Containerized-host runtime artifact rows link
+  `host_preflight_receipt`, `host_execution_receipt`, `cleanup_retention_receipt`, `port_access_record`,
+  `permission_snapshot_id`, `filesafe_scope_ref`, `host_assignment_id`, `host_instance_id`, `runtime_context_ref`,
+  `blocked_reason_code`, `allowed_action_ids[]`, and `projection_health` back to Docker/Hosts and owner records.
 gui_related: true
 gui_classification_reason: Runtime Artifacts evidence browsing, logs, screenshots, traces, access URLs, and degraded projection states are user-visible panel behavior.
-depends_on: [CV-303, SP-226, CRAU-092, ATS-019, EP-109]
-unblocks: [F3-410, ACD-430, OP-028, RGV-015]
+depends_on: [CV-303, SP-226, ATS-019, EP-109]
+unblocks: [ACD-430, OP-028, RGV-015]
 acceptance_criteria:
   - Runtime Artifacts can show host/test/runtime evidence and receipt refs without replacing owner records as truth.
   - Stale, missing, blocked, and degraded owner records produce visible projection health rather than optimistic success.
   - Manual eyeballing, chat-only observation, and container-started claims cannot certify completion.
   - Blocked permission, FileSafe, policy, host, trust, test-gap, and projection outcomes remain blocked states, not failures.
+  - Containerized-host receipt rows expose the receipt family, owning record ref, stale/degraded projection health, blocked reason code, and allowed actions without becoming the receipt authority.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Runtime Artifacts containerized-host projection fixtures
