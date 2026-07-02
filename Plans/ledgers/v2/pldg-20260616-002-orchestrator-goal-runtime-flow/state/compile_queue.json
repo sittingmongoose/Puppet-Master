@@ -17,9 +17,9 @@
     "final_readiness_review_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/validation/final_readiness_review_20260616.json",
     "gui_impact_matrix_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/gui_impact_matrix.json",
     "open_item_resolution_workshop_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/open_item_resolution_workshop_20260616.json",
-    "post_seal_disposition": "compiled_to_live_planunits_governance_sealed_source_lineage_only; not an active compile plan; q-0007 through q-0009 remain ledger-only follow-up questions.",
+    "post_seal_disposition": "compiled_governance_sealed_questions_resolved_source_lineage_only_not_active",
     "ready_atom_ids": [],
-    "reason": "Final readiness review is pre-seal source-lineage. Accepted atoms have already been compiled and governance-sealed; no active compile plan remains. Continue q-0007 through q-0009 ledger-only unless Jared explicitly opens a new compile or design delta.",
+    "reason": "q-0007 through q-0009 are resolved by current PNC/GRS canonical contracts; no active compile plan remains.",
     "source_lineage_pre_seal_candidate_owner_docs": [
       "Plans/Goal_Runtime_System.md",
       "Plans/Orchestrator_Page.md",
@@ -143,7 +143,7 @@
       "atom-0103",
       "atom-0104"
     ],
-    "status": "source_lineage_compiled_governance_sealed_not_active",
+    "status": "source_lineage_compiled_governance_sealed_questions_resolved_not_active",
     "target_doc_groups": {
       "P0_owner_backbone_docs": [
         "Plans/00-plans-index.md",
@@ -221,7 +221,8 @@
         "Plans/rewrite-tie-in-memo.md"
       ]
     },
-    "verification_repair_loop_contract_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/verification_repair_loop_contract.json"
+    "verification_repair_loop_contract_ref": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/verification_repair_loop_contract.json",
+    "notes": "Archive17 projection repair closed stale post-seal questions as source-lineage and set the terminal ledger event to evt-0016. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, runtime dispatch, or final node queues were created."
   },
   "governance_status": "sealed",
   "items": [
@@ -459,8 +460,11 @@
   ],
   "last_event_id": "evt-0016",
   "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
-  "notes": "Orchestrator Goal Runtime Flow ledger compiled to live Plans PlanUnits and allowed Plans/.plan_index outputs, then completed an explicit governance seal that refreshed governance artifacts where allowed. Post-seal continuation remains ledger-only until Jared chooses the next safe planning lane; node/build artifacts remain forbidden until the compiler contract exists.",
+  "notes": "Archive17 projection repair closed stale post-seal questions as source-lineage and set the terminal ledger event to evt-0016. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, runtime dispatch, or final node queues were created.",
   "schema_id": "pm.plan_compile_queue.v1",
   "status": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
-  "updated_at_utc": "2026-06-17T04:09:59Z"
+  "updated_at_utc": "2026-07-02T20:25:00Z",
+  "terminal_ledger_event_id": "evt-0016",
+  "post_seal_disposition": "compiled_governance_sealed_questions_resolved_source_lineage_only_not_active",
+  "reason": "q-0007 through q-0009 are resolved by current PNC/GRS canonical contracts; no active compile plan remains."
 }

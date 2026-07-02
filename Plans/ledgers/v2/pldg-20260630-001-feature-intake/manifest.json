@@ -13,14 +13,14 @@
     "operating_capsule": "state/operating_capsule.json",
     "questions": "records/questions.jsonl"
   },
-  "last_event_id": "evt-0041",
-  "last_validation_summary": "Governance seal recorded: all required governance validators pass after generated shard, evidence, Spec Lock, and evidence cascade refresh; direct GUI/workflow blocker blk-0003 remains open.",
+  "last_event_id": "evt-0043",
+  "last_validation_summary": "Docker/Hosts blk-0003 closed as doc/build-packet blocker; validation/governance refresh pending after current Rust/Slint and wiring repairs.",
   "ledger_id": "pldg-20260630-001-feature-intake",
-  "notes": "Containerized hosts compile recorded to canonical Plans PlanUnits, allowed Plans/.plan_index outputs, allowed Plans/.plan_migration metadata refresh, generated shards, Spec Lock, and evidence refresh. Governance_status=sealed and validators pass. Direct Docker/Hosts GUI/workflow implementation-packet detail remains open; implementation_ready_in_ledger=false remains preserved. No WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, legacy Iced app files, or production build tasks were created.",
-  "phase": "compiled_containerized_hosts_governance_sealed",
+  "notes": "Containerized hosts compile has live Plans PlanUnits and Docker/Hosts builder-grade GUI/workflow packet closure. Code/runtime implementation remains disabled; no WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, legacy Iced app files, or production build tasks were created.",
+  "phase": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
   "profile": "bootstrap_planning",
   "record_counts": {
-    "events": 41,
+    "events": 43,
     "design_atoms": 82,
     "decisions": 20,
     "questions": 24,
@@ -31,5 +31,15 @@
   "source_context": "Compiled containerized-hosts ledger accepted atoms into 23 PlanUnits across 20 existing owner/consumer docs after resolving the partial compile blocker.",
   "status": "sealed",
   "title": "Containerized Hosts Planning",
-  "updated_at_utc": "2026-07-01T16:12:15Z"
+  "updated_at_utc": "2026-07-02T20:36:00Z",
+  "governance_status": "sealed",
+  "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+  "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next",
+  "last_updated_at_utc": "2026-07-02T20:36:00Z",
+  "open_blockers_count": 0,
+  "open_blocker_ids": [],
+  "direct_gui_workflow_build_packet_ready": true,
+  "implementation_ready_in_ledger": true,
+  "code_implementation_ready": false,
+  "implementation_readiness_in_ledger": true
 }

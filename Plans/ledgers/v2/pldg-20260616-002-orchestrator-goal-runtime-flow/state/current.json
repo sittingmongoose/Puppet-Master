@@ -95,9 +95,9 @@
     "Do not treat Doc Builder's conversational ledger phase as a Goal run by default.",
     "Do not treat Doc Builder invisible requirements-doc conversion as an Orchestrator WorkNode by default."
   ],
-  "next_safe_action": "Answer post-seal follow-up questions q-0007 through q-0009 to choose the next safe planning lane. Preserve the sealed compile/governance status; do not create WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues until the compiler contract exists.",
+  "next_safe_action": "No active compile action remains. q-0007 through q-0009 are resolved as source-lineage by the current PNC/GRS contracts. If future work opens this lane again, start a new explicit ledger or compile goal; this sealed ledger repair must not create WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, runtime dispatch, or final node queues.",
   "open_blockers_count": 0,
-  "open_questions_count": 3,
+  "open_questions_count": 0,
   "phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
   "ready_for_plan_compile_atoms": 0,
   "schema_id": "pm.bootstrap_ledger_current_state.v1",
@@ -124,23 +124,18 @@
   ],
   "status": "sealed",
   "title": "Orchestrator Goal Runtime Flow Rewrite",
-  "updated_at_utc": "2026-06-17T04:09:59Z",
+  "updated_at_utc": "2026-07-02T20:35:00Z",
   "validation_state": {
     "forbidden_artifacts": "not_created",
-    "git_diff_check": "pass",
     "governance_status": "sealed",
     "ledger_health": "pass_governance_sealed",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "node_readiness_status": "ready_for_node_compile",
+    "node_readiness_boundary": "contract_ready_only_no_runtime_artifacts_created",
     "pm_bootstrap_ledger_validate": "pass",
-    "pm_bootstrap_ledger_validate_summary": "104_atoms_16_events_1_compile_queue_item_2475_planunits_checked",
-    "pm_plan_index_generate": "pass_5065_planunits_18081_acceptance_units",
-    "pm_plan_index_validate": "pass_5065_planunits_node_readiness_blocked_compiler_contract_incomplete",
-    "pm_plan_migration_validate": "pass_after_governance_seal_refresh",
-    "run_gates": "pass_after_governance_seal_refresh",
-    "shard_check": "pass_after_governance_seal_refresh",
+    "pm_plan_index_validate": "pass_5354_planunits_ready_for_node_compile",
+    "pm_plan_migration_validate": "pass_after_archive17_hash_refresh",
     "strict_canonical_plan_target": "Plans/Goal_Runtime_System.md",
-    "validate_auto_decisions": "pass",
-    "validate_evidence": "pass_after_governance_seal_refresh",
-    "verify_spec_lock": "pass_after_governance_seal_refresh"
+    "pm_plan_index_generate": "pass_5354_planunits_19198_acceptance_units",
+    "pm_bootstrap_ledger_validate_summary": "104_atoms_16_events_1_compile_queue_item_2629_planunits_checked"
   }
 }

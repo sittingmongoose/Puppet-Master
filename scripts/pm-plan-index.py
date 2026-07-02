@@ -885,8 +885,8 @@ def node_readiness_report(
         "no_final_node_queues_created": True,
         "nodeseed_candidates_created": False,
         "next_required_action": (
-            "Accept an explicit runtime enablement PlanUnit and governance seal before generating runtime PlanCompile artifacts, NodeSeeds, WorkNodes, executable tasks, or final node queues. Run the separate governance seal after index artifacts stop changing."
-        ),
+            "Run the separate governance seal after index artifacts stop changing, then implement the native runtime compiler/Executor activation preflight from the accepted PNC-007 contract before any PlanCompile runtime artifacts, NodeSeeds, WorkNodes, executable tasks, or final node queues are materialized."
+        )
     }
 
 

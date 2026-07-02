@@ -4,12 +4,12 @@
   "capsule_id": "cap-feature-intake-current",
   "ledger_profile": "bootstrap_planning",
   "agent_task": "containerized_hosts_conversational_planning",
-  "phase": "compiled_containerized_hosts_governance_sealed",
+  "phase": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
   "current_phase": "compiled_containerized_hosts_governance_sealed",
   "governance_status": "sealed",
-  "last_event_id": "evt-0041",
-  "updated_at_utc": "2026-07-01T16:12:15Z",
-  "next_action": "Resolve direct Docker/Hosts GUI/workflow implementation-packet gap before code/runtime implementation.",
+  "last_event_id": "evt-0043",
+  "updated_at_utc": "2026-07-02T20:36:00Z",
+  "next_action": "Proceed to the PNC-007 native runtime compiler/Executor activation preflight as the next node-readiness implementation lane. Keep WorkNodes, NodeSeeds, WorkGraphs, WorkNodeRequests, executable queues, final node manifests, runtime dispatch, implementation files, and production build tasks out of this ledger until that lane explicitly opens.",
   "next_safe_action": "Use a future design-hardening pass for the Docker/Hosts Slint GUI/workflow build packet; do not start code/runtime implementation from the sealed governance state alone.",
   "allowed_reads_default": [
     "state/current.json",
@@ -85,5 +85,18 @@
     "latest_projection_updated_at_utc": "2026-07-01T16:12:15Z",
     "ledger_health": "pass_governance_sealed",
     "governance_seal": "passed"
-  }
+  },
+  "current_focus": "Docker/Hosts build-packet blocker closed in Plans; governance refresh and PNC-007 preflight remain next.",
+  "do_not_do": [
+    "Do not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks from this closure.",
+    "Do not treat PMConcept.html as final GUI or toolchain evidence."
+  ],
+  "pending_items": [
+    "Refresh governance/index/migration artifacts after current doc and wiring repairs.",
+    "PNC-007 native runtime compiler/Executor activation preflight is the next implementation-readiness lane."
+  ],
+  "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+  "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next",
+  "direct_gui_workflow_build_packet_ready": true,
+  "code_implementation_ready": false
 }

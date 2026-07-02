@@ -70,7 +70,7 @@
   "governance_status": "sealed",
   "last_event_id": "evt-0016",
   "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
-  "notes": "Compiled to live canonical Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after explicit governance refresh. A post-seal conversational continuation is open in ledger-only state with q-0007 through q-0009; this does not unseal or recompile the existing PlanUnits. Node readiness remains blocked_compiler_contract_incomplete. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
+  "notes": "Compiled to live canonical Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after explicit governance refresh. Archive17 projection repair resolved q-0007 through q-0009 as source-lineage by current PNC/GRS PlanUnits; no active compile plan remains. Current PlanUnit index readiness is contract-level ready_for_node_compile only. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, runtime dispatch, or final node queues were created.",
   "phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
   "profile": "bootstrap_planning",
   "record_counts": {
@@ -106,5 +106,5 @@
   ],
   "status": "sealed",
   "title": "Orchestrator Goal Runtime Flow Rewrite",
-  "updated_at_utc": "2026-06-17T04:09:59Z"
+  "updated_at_utc": "2026-07-02T20:25:00Z"
 }

@@ -110,22 +110,18 @@
     "governance_seal": "passed",
     "governance_status": "sealed",
     "gui_surface_contracts": 18,
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "node_readiness_status": "ready_for_node_compile",
     "non_applicable_atoms": 2,
     "open_blockers": 0,
     "open_item_resolution_workshop": "accepted_by_user_with_clarifications",
-    "open_questions": 3,
-    "plan_index_acceptance_units": 18081,
-    "plan_index_plan_units": 5065,
+    "open_questions": 0,
+    "plan_index_acceptance_units": 19198,
+    "plan_index_plan_units": 5354,
     "pm_bootstrap_ledger_validate": "pass",
-    "pm_plan_index_generate": "pass_5065_planunits_18081_acceptance_units",
-    "pm_plan_index_validate": "pass_5065_planunits_node_readiness_blocked_compiler_contract_incomplete",
+    "pm_plan_index_generate": "pass_5354_planunits_19198_acceptance_units",
+    "pm_plan_index_validate": "pass_5354_planunits_ready_for_node_compile",
     "pm_plan_migration_validate": "pass_after_governance_seal_refresh",
-    "post_seal_open_questions": [
-      "q-0007",
-      "q-0008",
-      "q-0009"
-    ],
+    "post_seal_open_questions": [],
     "questions": 9,
     "ready_for_plan_compile_atoms": 0,
     "run_gates": "pass_after_governance_seal_refresh",
@@ -134,9 +130,15 @@
       "Plans/Goal_Runtime_System.md"
     ],
     "unclassified_candidates": 0,
-    "pm_bootstrap_ledger_validate_summary": "104_atoms_16_events_1_compile_queue_item_2475_planunits_checked"
+    "pm_bootstrap_ledger_validate_summary": "104_atoms_16_events_1_compile_queue_item_2629_planunits_checked",
+    "post_seal_resolved_questions": [
+      "q-0007",
+      "q-0008",
+      "q-0009"
+    ],
+    "archive17_projection_repair": "q-0007 through q-0009 resolved as source-lineage; terminal_ledger_event_id set to evt-0016"
   },
-  "updated_at_utc": "2026-06-17T04:09:59Z",
+  "updated_at_utc": "2026-07-02T20:35:00Z",
   "warnings": [
     "Executable WorkNode/NodeSeed generation remains gated by the Plan_To_Node_Compilation compiler contract and scheduler/permission/readiness gates."
   ]
