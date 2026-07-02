@@ -19040,8 +19040,8 @@ canonical_text: >-
   `setup_skipped`, `connected_provider_count`, `provider_warning_count`, `free_models_reviewed`, and
   `health_summary_state`. `health_summary_state` uses canonical machine values such as `ready`, `needs_setup`,
   `needs_attention`, and `could_not_connect`, with GUI labels `Ready`, `Needs setup`, `Needs attention`, and `Could not
-  connect`. Optional fields may carry return context, limited setup reason, last setup action, source surface, and
-  provider/account refs, but the record never carries raw credentials, provider-native error payloads, secrets, raw
+  connect`. Optional fields may carry return context, limited setup reason, last setup action, source surface,
+  `assistant_chat_handoff_seed`, and provider/account refs, but the record never carries raw credentials, provider-native error payloads, secrets, raw
   diagnostics, source hashes, upstream refs, or an unbounded setup transcript.
 gui_related: false
 gui_classification_reason: Defines structured state fields and contract payload boundaries consumed by GUI surfaces, but not visual presentation itself.
@@ -19070,9 +19070,16 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0034
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0044
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
 source_atom_ids: [atom-0034, atom-0042, atom-0044, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0005, dec-0007, dec-0008]
 preserved_exact_tokens:
@@ -19083,6 +19090,7 @@ preserved_exact_tokens:
   - "provider_warning_count"
   - "free_models_reviewed"
   - "health_summary_state"
+  - "assistant_chat_handoff_seed"
   - "Ready"
   - "Needs setup"
   - "Needs attention"

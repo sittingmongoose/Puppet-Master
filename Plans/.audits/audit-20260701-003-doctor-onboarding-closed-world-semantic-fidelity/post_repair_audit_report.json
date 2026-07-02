@@ -1,0 +1,228 @@
+{
+  "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+  "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+  "closed_repair_required_count": 12,
+  "closure_matrix": {
+    "closed_findings": [
+      {
+        "closure_status": "repaired",
+        "finding_family": "reciprocal_source_lineage_atom_qualification",
+        "finding_key": "sfk-d77059aad13a97f6cdde66dc",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-001",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "1"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "reciprocal_source_atom_id_disagreement",
+        "finding_key": "sfk-3c9b5dbc51d0cf9a295cb500",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-002",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "2"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "ledger_operating_capsule_projection_drift",
+        "finding_key": "sfk-635ea8974cc7f9be1c0a79d0",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-003",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "3"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "ledger_registry_root_timestamp_stale",
+        "finding_key": "sfk-0be34b8e3a55f0c873b0f3f2",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-004",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "4"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "ledger_health_summary_count_drift",
+        "finding_key": "sfk-1e3e6b3f9de577e1bdfa0952",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-005",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "5"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "planunit_source_lineage_missing_source_ref",
+        "finding_key": "sfk-c6b44a39a77dd5c092e9ea69",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-006",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "6"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "compile_queue_target_doc_stale",
+        "finding_key": "sfk-a31dd763cd49746248d2e9de",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-007",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "7"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "planunit_preserved_exact_token_missing",
+        "finding_key": "sfk-6c1c3f86840868d121796012",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-008",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "8"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "planunit_preserved_exact_token_missing",
+        "finding_key": "sfk-14e39c5db4bde40c6ce66d53",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-009",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "9"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "dependency_edge_reciprocal_drift",
+        "finding_key": "sfk-d1bd4226cde58ebf29d82cd6",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-010",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "10"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "validator_closure_registry_currentness_failure",
+        "finding_key": "sfk-4295336d87f4f0b9df21a400",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-011",
+        "source_artifact": "validator_results.json",
+        "source_row": "results.closure_registry_validate"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "validator_target_audit_closure_failure",
+        "finding_key": "sfk-49196add0ba77692bc015ce1",
+        "registry_closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-012",
+        "source_artifact": "validator_results.json",
+        "source_row": "results.closure_audit_dir_validate"
+      }
+    ],
+    "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/repair_closure_matrix.jsonl",
+    "row_count": 12,
+    "status_counts": {
+      "repaired": 12
+    }
+  },
+  "errors": [],
+  "generated_at_utc": "2026-07-02T04:51:42Z",
+  "impact_matrix": {
+    "covered_rows": 12,
+    "extra_coverage": [],
+    "missing_coverage": [],
+    "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/repair_impact_matrix.jsonl",
+    "row_count": 12
+  },
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "new_repair_required_findings": [],
+  "non_actionable_warning_count": 1,
+  "observation_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+  "original_repair_required_count": 12,
+  "repair_evidence": {
+    "forbidden_artifacts_created": [],
+    "generated_surfaces_refreshed": [
+      "Plans/.plan_index/**",
+      "Plans/_shards/**",
+      "Plans/.evidence/plan-sharding-2026-06-09/**",
+      "Plans/Spec_Lock.json",
+      "Plans/plan_graph.json"
+    ],
+    "ledger_projection_files_repaired": [
+      "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/current.json",
+      "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/handoff.json",
+      "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/compile_queue.json",
+      "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/operating_capsule.json",
+      "Plans/ledgers/v2/pldg-20260701-001-feature-intake/validation/ledger_health.json",
+      "Plans/ledgers/v2/ledger_registry.json"
+    ],
+    "plan_units_repaired": [
+      "F3-411",
+      "MS-122",
+      "MA-066",
+      "CV-305",
+      "ACD-431",
+      "UCC-106",
+      "PWIZ-017",
+      "WM-041",
+      "ATS-020"
+    ]
+  },
+  "repair_required": false,
+  "repair_required_count": 0,
+  "schema_id": "pm.semantic_post_repair_audit_report.v1",
+  "scope_manifest": {
+    "classification_counts": {
+      "exact_present": 1357,
+      "missing_or_drift": 142,
+      "not_for_plan": 41,
+      "observation": 14,
+      "source_lineage_only": 15,
+      "stale_retired": 1,
+      "warning": 1
+    },
+    "classified_rows": 1571,
+    "coverage_percent": 100.0,
+    "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+    "required_families_present": [
+      "compile_target",
+      "compiled_atom_detail",
+      "dependency_edge",
+      "forbidden_artifact_check",
+      "index_governance_check",
+      "ledger_projection_field",
+      "owner_consumer_route",
+      "planunit_claim",
+      "reciprocal_source_lineage",
+      "schema_contract_identity"
+    ],
+    "row_count": 1571
+  },
+  "semantic_checks": {
+    "closure_matrix_coverage": "PASS",
+    "closure_registry": "PASS",
+    "dependencies": "PASS",
+    "forbidden_artifacts": "PASS",
+    "governance_regeneration_needed": "NO",
+    "ledger_projections": "PASS",
+    "original_scope_coverage": "PASS",
+    "owner_routing": "PASS",
+    "plan_index_regeneration_needed": "NO",
+    "reciprocal_lineage": "PASS",
+    "repair_impact_coverage": "PASS",
+    "schema_identity": "PASS"
+  },
+  "status": "PASS_WITH_WARNINGS",
+  "subject_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+  "updated_at_utc": "2026-07-02T04:56:42Z",
+  "validator_summary": {
+    "command_count": 16,
+    "failed": [],
+    "passed": [
+      "git-status-before",
+      "closure-validate",
+      "target-ledger",
+      "plan-index",
+      "plan-migration",
+      "audit-governance",
+      "run-gates",
+      "shard-check",
+      "auto-decisions",
+      "spec-lock",
+      "evidence",
+      "plan-graph",
+      "project-artifacts",
+      "unit-tests",
+      "git-diff-check",
+      "git-status-after"
+    ],
+    "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/repair_validator_results.json",
+    "status": "pass"
+  },
+  "warnings": [
+    "The historical audit_report.json remains BLOCKED because it records the original actionable rows; terminal state is repair_validated through this post-repair report and repair_closure_matrix.jsonl.",
+    "node_readiness_report remains blocked_compiler_contract_incomplete by design; no WorkNodes, NodeSeeds, queues, manifests, implementation files, or build tasks were created."
+  ]
+}

@@ -1,50 +1,4 @@
 {
-  "schema_id": "pm.bootstrap_ledger_health.v1",
-  "ledger_id": "pldg-20260701-001-feature-intake",
-  "updated_at_utc": "2026-07-01T20:52:02Z",
-  "last_event_id": "evt-0018",
-  "status": "pass_governance_sealed",
-  "summary": {
-    "events": 18,
-    "design_atoms": 47,
-    "decisions": 8,
-    "questions": 7,
-    "corrections": 0,
-    "blockers": 0,
-    "candidate_atoms": 0,
-    "ready_for_plan_compile_atoms": 0,
-    "compiled_to_plan_atoms": 27,
-    "not_for_plan_atoms": 6,
-    "rejected_atoms": 0,
-    "superseded_atoms": 0,
-    "open_questions": 0,
-    "deferred_questions": 0,
-    "open_blockers": 0,
-    "compile_queue_items": 9,
-    "compiled_plan_units": 9,
-    "compiled_owner_docs": 9,
-    "governance_status": "sealed",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
-    "governance_seal": "passed"
-  },
-  "validator": {
-    "tool": "scripts/pm-bootstrap-ledger-validate.py",
-    "last_result": "pass_governance_sealed",
-    "last_errors": [],
-    "last_warnings": [],
-    "last_validated_at_utc": "2026-07-01T20:52:02Z",
-    "summary": {
-      "atoms": 47,
-      "decisions": 8,
-      "questions": 7,
-      "corrections": 0,
-      "events": 18,
-      "compile_queue_items": 9,
-      "plan_units_checked": 1519,
-      "candidate_atoms": 0
-    }
-  },
-  "notes": "Governance seal passed. Node readiness remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled.",
   "checks": [
     {
       "check_id": "seal-0001",
@@ -76,5 +30,53 @@
       "status": "pass",
       "summary": "git diff --check passed. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, runtime/build surfaces, production build tasks, or PlanCompile runtime enablement were created."
     }
-  ]
+  ],
+  "last_event_id": "evt-0018",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "notes": "Governance seal passed. Node readiness remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled.",
+  "schema_id": "pm.bootstrap_ledger_health.v1",
+  "status": "pass_governance_sealed",
+  "summary": {
+    "blockers": 0,
+    "candidate_atoms": 0,
+    "compile_queue_items": 9,
+    "compiled_owner_docs": 9,
+    "compiled_plan_units": 9,
+    "compiled_to_plan_atoms": 27,
+    "corrections": 0,
+    "decisions": 8,
+    "deferred_questions": 0,
+    "design_atoms": 47,
+    "events": 18,
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "non_applicable_atoms": 6,
+    "not_for_plan_atoms": 20,
+    "open_blockers": 0,
+    "open_questions": 0,
+    "questions": 7,
+    "ready_for_plan_compile_atoms": 0,
+    "rejected_atoms": 0,
+    "source_lineage_only_pre_seal_candidate_atoms": 14,
+    "superseded_atoms": 0
+  },
+  "updated_at_utc": "2026-07-02T04:51:42Z",
+  "validator": {
+    "last_errors": [],
+    "last_result": "pass_governance_sealed",
+    "last_validated_at_utc": "2026-07-01T20:52:02Z",
+    "last_warnings": [],
+    "summary": {
+      "atoms": 47,
+      "candidate_atoms": 0,
+      "compile_queue_items": 9,
+      "corrections": 0,
+      "decisions": 8,
+      "events": 18,
+      "plan_units_checked": 1519,
+      "questions": 7
+    },
+    "tool": "scripts/pm-bootstrap-ledger-validate.py"
+  }
 }

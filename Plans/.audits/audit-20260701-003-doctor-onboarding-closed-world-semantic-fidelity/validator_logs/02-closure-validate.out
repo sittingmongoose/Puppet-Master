@@ -1,0 +1,78 @@
+{
+  "audit_dirs": [
+    {
+      "coverage_artifacts": [
+        "semantic_risks.jsonl",
+        "atom_fidelity_matrix.jsonl",
+        "planunit_source_claims.jsonl",
+        "owner_routing_findings.jsonl",
+        "ledger_consistency.json",
+        "validator_results.json"
+      ],
+      "errors": [],
+      "extra_coverage": [],
+      "matrix": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/repair_closure_matrix.jsonl",
+      "matrix_required": true,
+      "matrix_rows": 12,
+      "missing_coverage": [],
+      "open_matrix_rows": [],
+      "original_repair_required_count": 12,
+      "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+      "repair_impact_matrix": {
+        "extra_coverage": [],
+        "missing_coverage": [],
+        "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/repair_impact_matrix.jsonl",
+        "row_count": 12
+      },
+      "repair_required_count": 0,
+      "scope_manifest": {
+        "check_family_count": 10,
+        "classified_rows": 1571,
+        "missing_check_families": [],
+        "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+        "row_count": 1571
+      },
+      "source_artifacts": {
+        "finding_count": 392
+      },
+      "status_counts": {
+        "repaired": 12
+      },
+      "terminal_projection": {
+        "effective_terminal_report": "post_repair_audit_report.json",
+        "historical_audit_report": "audit_report.json",
+        "matrix_status_counts": {
+          "repaired": 12
+        },
+        "open_repair_required_count": 0,
+        "original_repair_required_count": 12,
+        "terminal_repair_state": "repair_validated"
+      },
+      "terminal_repair_state": "repair_validated",
+      "terminal_state_projection": {
+        "effective_terminal_report": "post_repair_audit_report.json",
+        "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/terminal_state.json",
+        "terminal_repair_state": "repair_validated"
+      },
+      "warnings": []
+    }
+  ],
+  "errors": [],
+  "registry": {
+    "errors": [],
+    "path": "Plans/.audits/_semantic_closure_registry.jsonl",
+    "row_count": 352,
+    "status_counts": {
+      "explicitly_deferred": 3,
+      "false_positive": 4,
+      "not_for_plan": 20,
+      "repaired": 290,
+      "source_lineage_only": 27,
+      "stale_retired": 8
+    },
+    "warnings": []
+  },
+  "schema_id": "pm.audit_closure.validator_report.v1",
+  "status": "pass",
+  "warnings": []
+}
