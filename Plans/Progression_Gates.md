@@ -311,6 +311,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/DRY_Rules.md#
 ## GATE-010 -- Wiring matrix validation
 
 `GATE-010` verifies canonical command binding and route-aware navigation normalization.
+`python3 scripts/pm-plans-verify.py validate-wiring-matrix` enforces the deterministic contract subset now: production matrix schema, catalog command coverage after exclusions, handler path shape, state selector, disabled-reason projection, receipt/event effect contract, accessibility contract, test evidence, and event-test requirements. Rust/Slint handler resolution and rendered/control test pass evidence remain implementation-certification obligations after the app tree exists.
 
 The gate must fail when any of the following are true:
 - a public wrapper command lacks declared normalization metadata

@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L144-L199
+Source lines: L144-L203
 
-Source SHA256: `14eb404da1cb1d6e601b5eb4def272d087cae91eeddff0e0ad5803b613004e2a`
+Source SHA256: `706b23aeae0e3a6b18fd2b9f9790023b13f5094d62a12bc95f330dc441beb64a`
 
 ---
 
@@ -14,7 +14,7 @@ This addendum closes the GUI wiring defects from the PMConcept readiness report.
 
 ### Production JSON artifact
 
-`Plans/Wiring_Matrix.production.json` is the production wiring-matrix JSON artifact for the current GUI/PMConcept repair packet and validates against `Plans/Wiring_Matrix.schema.json`. It contains one map entry per schema-valid production command/control binding, keyed by `ui_element_id`, with `ui_command_id`, `handler_location`, expected event types, acceptance checks, and required evidence. `Plans/Wiring_Matrix.production.exclusions.json` records command-family roots, parser false positives, glob tokens, invalid historical aliases, and compatibility-only namespace roots that must not count as production coverage.
+`Plans/Wiring_Matrix.production.json` is the production wiring-matrix JSON artifact for the current GUI/PMConcept repair packet and validates against `Plans/Wiring_Matrix.schema.json`. It contains one map entry per schema-valid production command/control binding, keyed by `ui_element_id`, with `ui_command_id`, `handler_location`, expected event types, acceptance checks, required evidence, typed state selector, disabled-reason projection, effect contract, accessibility contract, and test evidence. `Plans/Wiring_Matrix.production.exclusions.json` records command-family roots, parser false positives, glob tokens, invalid historical aliases, and compatibility-only namespace roots that must not count as production coverage.
 
 The schema command pattern now allows underscores in every command segment so accepted namespaces such as `cmd.source_control.*`, `cmd.prd_builder.*`, `cmd.planning_wizard.*`, and `cmd.plan_compile.*` can be represented without inventing alternate command names.
 
@@ -27,14 +27,18 @@ The schema command pattern now allows underscores in every command segment so ac
 | Control-like nodes inventoried | 1284 |
 | Inline-handler controls | 339 |
 | Controls containing `cmd.*` tokens | 71 |
-| Controls with accessibility gaps | 267 |
-| Controls with local/demo/mock markers | 64 |
+| Controls with accessibility gaps | 250 |
+| Controls with local/demo markers | 13 |
+| Concept fixture-only controls | 64 |
 | Production wiring required | 44 |
 | Production-intended controls missing a command | 0 |
-| Concept-only controls pending owner adjudication before promotion | 1175 |
+| Concept-only controls already owner-adjudicated as source-lineage | 1175 |
+| Concept-only controls pending owner adjudication before promotion | 0 |
+| Production accessibility gaps | 0 |
+| Production accessibility contracts added | 17 |
 | Retired or re-scoped non-launch controls | 1 |
 
-Controls marked `concept_fixture_only` are source-lineage fixtures only and cannot satisfy acceptance evidence. Controls marked `concept_only_needs_owner_adjudication` remain source-lineage concept controls until an owner doc promotes them and adds command, state selector, disabled reason, handler, receipt/event effect, and test evidence. Controls marked `retired_or_rescoped_non_launch_authority` include stale `START`, `BUILD`, and `Approve & Continue` launch semantics.
+Controls marked `concept_fixture_only` are source-lineage fixtures only and cannot satisfy acceptance evidence. Controls marked `concept_only_owner_adjudicated` are already adjudicated as concept/source-lineage only; they are not production evidence and are not promoted unless a canonical owner doc accepts the behavior and a production wiring row supplies command, state selector, disabled reason, handler, receipt/event effect, accessibility contract, and test evidence. `concept_only_pending_owner_adjudication` is currently 0. Controls marked `retired_or_rescoped_non_launch_authority` include stale `START`, `BUILD`, and `Approve & Continue` launch semantics.
 
 ### Approve And Build wiring rule
 

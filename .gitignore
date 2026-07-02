@@ -37,6 +37,8 @@ local.json
 
 # Volatile Puppet Master runtime data
 .puppet-master/
+!tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/
+!tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/.puppet-master/**
 transfer_state/
 codex_goal_transfer_kit/
 

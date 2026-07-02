@@ -153,7 +153,7 @@ depends_on: [PNC-001, PNC-002, PNC-003, PDS-006]
 unblocks: [BPM-005]
 acceptance_criteria:
   - If Plans are incomplete, readiness status records blocked_plans_incomplete.
-  - If the PlanCompile compiler contract is incomplete, readiness status records blocked_compiler_contract_incomplete; once accepted, runtime_enablement_status records contract_ready while the index phase still creates no runtime artifacts.
+  - If the PlanCompile compiler contract is incomplete, readiness status records blocked_compiler_contract_incomplete; once PNC-007 is accepted, runtime_enablement_status records the compiler contract as complete, but readiness remains blocked_runtime_certification_incomplete until the PNC-019 executable lifecycle certification harness passes and records evidence.
   - The report preserves gui_related routing inheritance without creating WorkNodes.
 validation_surfaces:
   - Plans/.plan_index/node_readiness_report.json
@@ -303,14 +303,14 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-  Runtime PlanCompile is enabled at the contract level by a deterministic PlanUnit to NodeSeed to WorkGraph to WorkNodeRequest to Executor intake boundary. The compiler reads the frozen PlanUnit index, acceptance-unit index, dependencies, implementation-surface classifications, validation surfaces, source-control/project context snapshot, and runtime policy snapshot. It excludes retired, source-lineage-only, explicit future, and out-of-scope PlanUnits; converts accepted implementation PlanUnits into non-executable NodeSeed candidates with source PlanUnit refs, acceptance refs, objective, owner area, typed implementation surfaces, read/write candidates, validators, risk, reasoning tier, gui_related, capability requirements, and dependency refs; runs NodeSeed review for coverage, exclusion disposition, missing validators, authority, and sizing; constructs a WorkGraph draft using only typed executable-order edges; emits WorkNodeRequest records only after graph certification; hands requests to Executor intake for source-control, authority, model, test, and scheduler validation; and allows WorkNodeRecord materialization only inside the activation transaction after Executor intake is accepted. Completion certification authority is Goal Runtime's certifier using Executor receipts, test evidence, source-control receipts, runtime artifact refs, unresolved-item disposition, and Auditor/verification receipts. The disabled-guard removal path is: PNC-007 accepted, CV-287 concrete event registration accepted, runtime artifact schemas materialized or future-scoped, dependency graph acyclic, strict handoff/runtime validators green, and node-readiness reporting runtime_enablement_status.compiler_contract_complete=true while no index-generated WorkNodes are emitted.
+  Runtime PlanCompile is accepted as an implementation contract by a deterministic PlanUnit to NodeSeed to WorkGraph to WorkNodeRequest to Executor intake boundary. The compiler reads the frozen PlanUnit index, acceptance-unit index, dependencies, implementation-surface classifications, validation surfaces, source-control/project context snapshot, and runtime policy snapshot. It excludes retired, source-lineage-only, explicit future, and out-of-scope PlanUnits; converts accepted implementation PlanUnits into non-executable NodeSeed candidates with source PlanUnit refs, acceptance refs, objective, owner area, typed implementation surfaces, read/write candidates, validators, risk, reasoning tier, gui_related, capability requirements, and dependency refs; runs NodeSeed review for coverage, exclusion disposition, missing validators, authority, and sizing; constructs a WorkGraph draft using only typed executable-order edges; emits WorkNodeRequest records only after graph certification; hands requests to Executor intake for source-control, authority, model, test, and scheduler validation; and allows WorkNodeRecord materialization only inside the activation transaction after Executor intake is accepted. Completion certification authority is Goal Runtime's certifier using Executor receipts, test evidence, source-control receipts, runtime artifact refs, unresolved-item disposition, and Auditor/verification receipts. The readiness-guard removal path is: PNC-007 accepted, CV-287 concrete event registration accepted, runtime artifact schemas materialized or future-scoped, dependency graph acyclic, strict handoff/runtime validators green, PNC-019 executable lifecycle certification harness passed with recorded evidence, and node-readiness reporting runtime_enablement_status.compiler_contract_complete=true plus executable_lifecycle_certification_complete=true while no index-generated WorkNodes are emitted.
 gui_related: false
 gui_classification_reason: Runtime compiler algorithm design is backend/orchestration behavior.
 depends_on: [PNC-001, PNC-002, PNC-003]
 unblocks: [PNC-009, PNC-010, PNC-012, PNC-013, GRS-024]
 acceptance_criteria:
   - The compiler algorithm names deterministic inputs, excluded dispositions, NodeSeed candidate fields, review gates, WorkGraph draft construction, WorkNodeRequest emission, Executor intake, activation, and completion certification authority.
-  - PlanUnit index generation reports compiler_contract_complete=true and runtime_enabled=true when Plans are otherwise ready, while still reporting no_worknodes_created=true and nodeseed_candidates_created=false for index generation.
+  - PlanUnit index generation reports compiler_contract_complete=true when Plans are otherwise ready, but reports runtime_enabled=false and executable_lifecycle_certification_complete=false until the PNC-019 harness has passed and recorded evidence, while still reporting no_worknodes_created=true and nodeseed_candidates_created=false for index generation.
   - Runtime artifacts are produced only by implemented PlanCompile/Executor/Goal Runtime flows, never by editing Plans or regenerating Plans/.plan_index.
   - Accepted runtime flow does not depend on unresolved deferred PlanUnits.
 validation_surfaces:
@@ -322,7 +322,7 @@ risk_class: compiler_algorithm_contract
 reasoning_tier: high
 context_scope: runtime_compiler
 implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/plans_to_code_handoff.schema.json, Plans/prd_planning_runtime_contracts.json, Plans/.plan_index/node_readiness_report.json]
-node_compile_hint: {mode: compiler_contract_complete, create_worknodes: false, create_nodeseeds: false, runtime_enabled: true, compiler_contract_complete: true}
+node_compile_hint: {mode: compiler_contract_complete, create_worknodes: false, create_nodeseeds: false, runtime_enabled: false, compiler_contract_complete: true, runtime_blocked_until: executable_lifecycle_certification_evidence}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0030
   - pldg-20260610-001-ledger-plan-system:q-0001

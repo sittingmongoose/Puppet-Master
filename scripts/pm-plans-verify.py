@@ -1966,6 +1966,144 @@ def cmd_validate_project_output_fixtures(args: argparse.Namespace) -> dict[str, 
     return report_status("validate-project-output-fixtures", failures, fixture_root=str(fixture_root.relative_to(ROOT)))
 
 
+COMMAND_TOKEN_RE = re.compile(r"(?<![A-Za-z0-9_])cmd\.[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*(?![A-Za-z0-9_])")
+HANDLER_LOCATION_RE = re.compile(r"^(crate::)?[A-Za-z_][A-Za-z0-9_]*(::[A-Za-z_][A-Za-z0-9_]*)+$")
+
+
+def wiring_command_excluded(command_id: str, excluded_tokens: list[str]) -> bool:
+    for token in excluded_tokens:
+        if "*" in token and fnmatch.fnmatchcase(command_id, token):
+            return True
+        if token.endswith("_") and command_id.startswith(token):
+            return True
+        if command_id == token:
+            return True
+    return False
+
+
+def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+    matrix_path = PLANS / "Wiring_Matrix.production.json"
+    schema_path = PLANS / "Wiring_Matrix.schema.json"
+    catalog_path = PLANS / "UI_Command_Catalog.md"
+    exclusions_path = PLANS / "Wiring_Matrix.production.exclusions.json"
+
+    for path in [matrix_path, schema_path, catalog_path, exclusions_path]:
+        if not path.exists():
+            failures.append({"path": rel(path), "error": "missing_wiring_matrix_input"})
+    if failures:
+        return report_status("validate-wiring-matrix", failures)
+
+    for error in validate_against_schema(matrix_path, schema_path):
+        failures.append({"path": rel(matrix_path), "schema": rel(schema_path), "error": error})
+
+    matrix = load_json(matrix_path)
+    entries = matrix.get("entries") if isinstance(matrix, dict) else None
+    if not isinstance(entries, dict):
+        failures.append({"path": rel(matrix_path), "error": "wiring_entries_not_object"})
+        return report_status("validate-wiring-matrix", failures)
+
+    exclusions = load_json(exclusions_path)
+    excluded_tokens = exclusions.get("excluded_tokens", []) if isinstance(exclusions, dict) else []
+    if not isinstance(excluded_tokens, list) or not all(isinstance(token, str) for token in excluded_tokens):
+        failures.append({"path": rel(exclusions_path), "error": "invalid_wiring_excluded_tokens"})
+        excluded_tokens = []
+
+    catalog_text = catalog_path.read_text(encoding="utf-8")
+    catalog_commands = set(COMMAND_TOKEN_RE.findall(catalog_text))
+    production_commands: set[str] = set()
+    event_rows = 0
+    typed_contract_rows = 0
+
+    for key, row in entries.items():
+        row_path = f"{rel(matrix_path)}#/entries/{key}"
+        if not isinstance(row, dict):
+            failures.append({"path": row_path, "error": "wiring_entry_not_object"})
+            continue
+        command_id = str(row.get("ui_command_id", ""))
+        production_commands.add(command_id)
+        if row.get("ui_element_id") != key:
+            failures.append({"path": row_path, "error": "ui_element_id_key_mismatch", "ui_element_id": row.get("ui_element_id")})
+        if row.get("example") is True:
+            failures.append({"path": row_path, "error": "example_row_in_production_wiring"})
+        handler_location = row.get("handler_location")
+        if not isinstance(handler_location, str) or not HANDLER_LOCATION_RE.search(handler_location):
+            failures.append({"path": row_path, "command_id": command_id, "error": "invalid_handler_location_shape"})
+
+        state_selector = row.get("state_selector")
+        disabled_projection = row.get("disabled_reason_projection")
+        if not isinstance(state_selector, str) or not state_selector.startswith("state."):
+            failures.append({"path": row_path, "command_id": command_id, "error": "missing_state_selector"})
+        if not isinstance(disabled_projection, str) or not disabled_projection.endswith(".disabled_reason"):
+            failures.append({"path": row_path, "command_id": command_id, "error": "missing_disabled_reason_projection"})
+
+        effect_contract = row.get("effect_contract")
+        if isinstance(effect_contract, dict):
+            typed_contract_rows += 1
+            effect_refs = effect_contract.get("receipt_or_event_refs", [])
+        else:
+            effect_refs = []
+            failures.append({"path": row_path, "command_id": command_id, "error": "missing_effect_contract"})
+
+        test_evidence = row.get("test_evidence", [])
+        evidence_kinds = {
+            item.get("evidence_kind")
+            for item in test_evidence
+            if isinstance(item, dict)
+        }
+        for required_kind in ["dispatcher_fixture", "state_projection", "receipt_or_event_assertion", "accessibility_regression"]:
+            if required_kind not in evidence_kinds:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "command_id": command_id,
+                        "error": "missing_wiring_test_evidence_kind",
+                        "evidence_kind": required_kind,
+                    }
+                )
+
+        expected_events = row.get("expected_event_types", [])
+        event_requirements = row.get("event_test_requirements", [])
+        if expected_events:
+            event_rows += 1
+            if "event_test" not in evidence_kinds:
+                failures.append({"path": row_path, "command_id": command_id, "error": "event_row_missing_event_test_evidence"})
+            if not isinstance(event_requirements, list) or not event_requirements:
+                failures.append({"path": row_path, "command_id": command_id, "error": "event_row_missing_event_test_requirements"})
+            for event_type in expected_events:
+                if event_type not in effect_refs:
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "command_id": command_id,
+                            "event_type": event_type,
+                            "error": "event_row_effect_contract_missing_event_ref",
+                        }
+                    )
+        elif not isinstance(event_requirements, list) or not event_requirements:
+            failures.append({"path": row_path, "command_id": command_id, "error": "no_event_row_missing_no_persist_test_requirement"})
+
+    missing_commands = sorted(
+        command_id
+        for command_id in catalog_commands
+        if command_id not in production_commands and not wiring_command_excluded(command_id, excluded_tokens)
+    )
+    for command_id in missing_commands:
+        failures.append({"path": rel(matrix_path), "command_id": command_id, "error": "catalog_command_missing_production_wiring"})
+
+    return report_status(
+        "validate-wiring-matrix",
+        failures,
+        production_entry_count=len(entries),
+        production_command_count=len(production_commands),
+        catalog_command_count=len(catalog_commands),
+        excluded_token_count=len(excluded_tokens),
+        event_row_count=event_rows,
+        typed_contract_row_count=typed_contract_rows,
+        missing_catalog_command_count=len(missing_commands),
+    )
+
+
 def compact_gate_report(report: dict[str, Any], sample_limit: int = 10) -> dict[str, Any]:
     return {
         "status": report.get("status"),
@@ -2026,6 +2164,58 @@ def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dic
     return report
 
 
+def cmd_validate_audit_status_index(args: argparse.Namespace) -> dict[str, Any]:
+    validator = ROOT / "scripts" / "pm-audit-status-index.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(validator), "validate"],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            timeout=timeout_seconds if timeout_seconds > 0 else None,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return report_status(
+            "validate-audit-status-index",
+            [
+                {
+                    "path": rel(validator),
+                    "error": "subprocess_timeout",
+                    "timeout_seconds": timeout_seconds,
+                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
+                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
+                }
+            ],
+        )
+    try:
+        report = json.loads(proc.stdout)
+    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
+        return report_status(
+            "validate-audit-status-index",
+            [
+                {
+                    "path": rel(validator),
+                    "error": "validator_output_not_json",
+                    "detail": str(exc),
+                    "stdout": proc.stdout,
+                    "stderr": proc.stderr,
+                    "returncode": proc.returncode,
+                }
+            ],
+        )
+    if proc.returncode != 0 and report.get("status") == "pass":
+        report["status"] = "fail"
+        report.setdefault("failures", []).append(
+            {"path": rel(validator), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
+        )
+    if proc.stderr:
+        report["stderr"] = proc.stderr
+    return report
+
+
 def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
     progress = progress_enabled(args)
     timeout_seconds = subcheck_timeout_seconds(args)
@@ -2044,6 +2234,8 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
+        ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
+        ("validate_audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("check_shards", cmd_check_shards, argparse.Namespace(report=None)),
     ]
     checks = [
@@ -2080,6 +2272,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
+        ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
+        ("audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
     ]
     checks = [
         run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
@@ -2106,6 +2300,8 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         runtime_artifact_schemas=compact_gate_report(check_map["runtime_artifact_schemas"]),
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
+        wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
+        audit_status_index=compact_gate_report(check_map["audit_status_index"]),
         subcheck_timeout_seconds=timeout_seconds,
     )
 
@@ -2126,6 +2322,8 @@ COMMANDS = {
     "validate-runtime-artifact-schemas": cmd_validate_runtime_artifact_schemas,
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
+    "validate-wiring-matrix": cmd_validate_wiring_matrix,
+    "validate-audit-status-index": cmd_validate_audit_status_index,
     "run-gates": cmd_run_gates,
     "audit-governance": cmd_audit_governance,
 }

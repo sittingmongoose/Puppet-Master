@@ -1,0 +1,8 @@
+{
+  "schema_id": "pm.project_plan_node.fixture.v1",
+  "node_id": "node-fr-001",
+  "title": "Fixture Project Output",
+  "requirement_refs": ["FR-001"],
+  "acceptance_check_ids": ["check-fr-001"],
+  "contract_refs": ["ProjectContract:FR-001"]
+}

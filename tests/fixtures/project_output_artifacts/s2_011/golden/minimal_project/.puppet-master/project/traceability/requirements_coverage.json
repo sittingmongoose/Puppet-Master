@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "generated_at_utc": "2026-07-02T00:00:00Z",
+  "project_graph_id": "fixture-plan-graph",
+  "requirements": [
+    {
+      "req_id": "FR-001",
+      "description": "The generated project package must include a requirement, a plan node, an acceptance check, traceability outputs, and schema-valid sidecar payloads that can be validated from a clean checkout.",
+      "node_ids": ["node-fr-001"],
+      "acceptance_check_ids": ["check-fr-001"],
+      "coverage_status": "covered"
+    }
+  ],
+  "uncovered_requirements": [],
+  "orphaned_node_requirement_refs": [],
+  "uncovered_acceptance": [],
+  "summary": {
+    "total_requirements": 1,
+    "covered": 1,
+    "partially_covered": 0,
+    "uncovered": 0,
+    "orphaned_refs": 0,
+    "uncovered_acceptance_count": 0
+  }
+}

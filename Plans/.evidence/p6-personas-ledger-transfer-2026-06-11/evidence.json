@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "87f6952d953cd045b09c2b6c460b156e1782cbccc7bbe04520feac62be77fe0e"
+      "sha256": "d293089ffcbc60898032642a84a63715bb6ba2c4411c9bb1891700e3aeb8d908"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "f360c18a7aee4bd18256f4f9d516ff273ec6d8195183edbdb18cb5493659ce4d"
+      "sha256": "2bfcc6e1123dfaeea24c11a689356761289e6c6d9f31df4a8275d36bafab9342"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -93,7 +93,7 @@
     {
       "note": "Project-local Codex config and agent TOMLs are explicitly trackable while other .codex scratch files remain ignored.",
       "path": ".gitignore",
-      "sha256": "edf6ddd16e804056a6886ca5e07c12d1023aed4d3b182a6bf354e95bfc94ad7f"
+      "sha256": "713ad05db8a146f63a15155eff41848ea52706ea05ace80373ae15b401f043db"
     },
     {
       "note": "Project-local Codex default model lock: gpt-5.5 with xhigh reasoning.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "68278cae3c63ad007d018cbf4230290275e9bc694560ed6b1ed4bf6d60acd909"
+      "sha256": "53ec38168d4e266d223b27ab69c89af38482f185f166202d568efb273fd0fd29"
     }
   ],
   "checks": [

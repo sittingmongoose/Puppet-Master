@@ -748,6 +748,12 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
     pnc_008 = next((unit for unit in units if unit_id(unit) == "PNC-008"), None)
     pnc_019 = next((unit for unit in units if unit_id(unit) == "PNC-019"), None)
     disabled_guards: list[dict[str, Any]] = []
+    executable_certification_guard = {
+        "plan_unit_id": "PNC-019",
+        "guard": "executable_lifecycle_certification_required",
+        "evidence": "PNC-019 states that static contract fixtures are only preconditions; enabled runtime readiness requires an executable lifecycle certification harness proving Approve And Build through PlanCompile, Executor intake, activation, queued entrypoint, Orchestrator projection, restarts, cancellation, testing evidence, and negative-case rejection.",
+        "source_location": pnc_019.get("source_location") if pnc_019 else None,
+    }
     compiler_hint = pnc_007.get("node_compile_hint", {}) if isinstance(pnc_007, dict) else {}
     compiler_contract_complete = (
         pnc_007 is not None
@@ -756,14 +762,16 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
     )
     if compiler_contract_complete:
         return {
-            "runtime_enabled": True,
+            "runtime_enabled": False,
             "owner_doc": "Plans/Plan_To_Node_Compilation.md",
-            "status": "compiler_contract_ready_index_non_emitting",
+            "status": "blocked_runtime_certification_incomplete",
             "compiler_contract_complete": True,
+            "executable_lifecycle_certification_complete": False,
             "runtime_enablement_ref": "PNC-007",
+            "runtime_blocked_by_ref": "PNC-019",
             "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
             "artifact_generation_policy": "PlanUnit indexing never emits NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts.",
-            "disabled_guards": [],
+            "disabled_guards": [executable_certification_guard],
             "certification_authority": "Goal Runtime completion receipt after Executor activation and receipt verification.",
         }
     if pnc_007 and pnc_007.get("status") == "deferred":
@@ -791,19 +799,13 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
             "validator": "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
         }
     )
-    disabled_guards.append(
-        {
-            "plan_unit_id": "PNC-019",
-            "guard": "executable_lifecycle_certification_required",
-            "evidence": "PNC-019 states that static contract fixtures are only preconditions; enabled runtime readiness requires an executable lifecycle certification harness proving Approve And Build through PlanCompile, Executor intake, activation, queued entrypoint, Orchestrator projection, restarts, cancellation, testing evidence, and negative-case rejection.",
-            "source_location": pnc_019.get("source_location") if pnc_019 else None,
-        }
-    )
+    disabled_guards.append(executable_certification_guard)
     return {
         "runtime_enabled": False,
         "owner_doc": "Plans/Plan_To_Node_Compilation.md",
         "status": "runtime_disabled",
         "compiler_contract_complete": False,
+        "executable_lifecycle_certification_complete": False,
         "disabled_guards": disabled_guards,
     }
 
@@ -816,16 +818,21 @@ def node_readiness_report(
     coverage_blocked = bool(coverage.get("blockers"))
     runtime_status = runtime_enablement_status(units)
     compiler_contract_incomplete = runtime_status.get("compiler_contract_complete") is False
+    runtime_certification_incomplete = runtime_status.get("executable_lifecycle_certification_complete") is False
     if coverage_blocked:
         status = "blocked_plans_incomplete"
     elif compiler_contract_incomplete:
         status = "blocked_compiler_contract_incomplete"
+    elif runtime_certification_incomplete:
+        status = "blocked_runtime_certification_incomplete"
     else:
         status = "ready_for_node_compile"
     if coverage_blocked:
         status_reason = "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
     elif compiler_contract_incomplete:
         status_reason = "Plans are indexed with required PlanUnit metadata, but the PlanCompile compiler contract remains incomplete and runtime node artifact generation remains disabled."
+    elif runtime_certification_incomplete:
+        status_reason = "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary."
     else:
         status_reason = "Plans are indexed with required PlanUnit metadata and an accepted PlanCompile compiler contract; the PlanUnit index remains non-emitting and native runtime implementation must materialize artifacts only through the compiler, Executor intake, activation, and Goal Runtime certification contracts."
     build_order_blockers = []
@@ -885,7 +892,7 @@ def node_readiness_report(
         "no_final_node_queues_created": True,
         "nodeseed_candidates_created": False,
         "next_required_action": (
-            "Run the separate governance seal after index artifacts stop changing, then implement the native runtime compiler/Executor activation preflight from the accepted PNC-007 contract before any PlanCompile runtime artifacts, NodeSeeds, WorkNodes, executable tasks, or final node queues are materialized."
+            "Materialize and run the PNC-019 executable lifecycle certification harness for Approve And Build through PlanCompile, Executor intake, activation, Orchestrator projection, testing evidence, restart/cancellation, and negative-case rejection before any PlanCompile runtime artifacts, NodeSeeds, WorkNodes, executable tasks, or final node queues are materialized."
         )
     }
 
@@ -1132,6 +1139,36 @@ def validate() -> dict[str, Any]:
         failures.append({"path": "Plans/.plan_index/node_readiness_report.json", "error": "no_worknodes_created_not_true"})
     if readiness.get("nodeseed_candidates_created") is not False:
         failures.append({"path": "Plans/.plan_index/node_readiness_report.json", "error": "nodeseed_candidates_created_not_false"})
+    indexed_pnc_019 = next((unit for unit in plan_units if unit_id(unit) == "PNC-019"), None)
+    readiness_runtime = readiness.get("runtime_enablement_status", {})
+    if isinstance(indexed_pnc_019, dict) and indexed_pnc_019.get("status") == "accepted":
+        certification_complete = readiness_runtime.get("executable_lifecycle_certification_complete") is True
+        if not certification_complete:
+            if readiness.get("status") == "ready_for_node_compile":
+                failures.append(
+                    {
+                        "path": "Plans/.plan_index/node_readiness_report.json",
+                        "plan_unit_id": "PNC-019",
+                        "error": "pnc019_static_fixture_false_ready",
+                    }
+                )
+            if readiness_runtime.get("runtime_enabled") is True:
+                failures.append(
+                    {
+                        "path": "Plans/.plan_index/node_readiness_report.json",
+                        "plan_unit_id": "PNC-019",
+                        "error": "pnc019_runtime_enabled_without_executable_certification",
+                    }
+                )
+            disabled_guards = readiness_runtime.get("disabled_guards", [])
+            if not any(isinstance(guard, dict) and guard.get("plan_unit_id") == "PNC-019" for guard in disabled_guards):
+                failures.append(
+                    {
+                        "path": "Plans/.plan_index/node_readiness_report.json",
+                        "plan_unit_id": "PNC-019",
+                        "error": "pnc019_missing_runtime_readiness_guard",
+                    }
+                )
     if len(acceptance) != sum(len(as_list(unit.get("acceptance_criteria"))) for unit in plan_units):
         failures.append({"path": "Plans/.plan_index/acceptance_units.jsonl", "error": "acceptance_unit_count_mismatch"})
 

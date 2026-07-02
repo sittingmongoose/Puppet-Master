@@ -4,7 +4,7 @@ Source: `Plans/Progression_Gates.md`
 
 Source lines: L229-L244
 
-Source SHA256: `68b1b2cca109eacddb3d7b4246d67ecb83cd862cd9430302f03e66c5b15c8405`
+Source SHA256: `ee317f3f4b90686b4b5f04cda15081d9510deb47832c773857b52334b4bdda34`
 
 ---
 

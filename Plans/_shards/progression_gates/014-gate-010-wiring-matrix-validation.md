@@ -2,15 +2,16 @@
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L311-L335
+Source lines: L311-L336
 
-Source SHA256: `68b1b2cca109eacddb3d7b4246d67ecb83cd862cd9430302f03e66c5b15c8405`
+Source SHA256: `ee317f3f4b90686b4b5f04cda15081d9510deb47832c773857b52334b4bdda34`
 
 ---
 
 ## GATE-010 -- Wiring matrix validation
 
 `GATE-010` verifies canonical command binding and route-aware navigation normalization.
+`python3 scripts/pm-plans-verify.py validate-wiring-matrix` enforces the deterministic contract subset now: production matrix schema, catalog command coverage after exclusions, handler path shape, state selector, disabled-reason projection, receipt/event effect contract, accessibility contract, test evidence, and event-test requirements. Rust/Slint handler resolution and rendered/control test pass evidence remain implementation-certification obligations after the app tree exists.
 
 The gate must fail when any of the following are true:
 - a public wrapper command lacks declared normalization metadata
