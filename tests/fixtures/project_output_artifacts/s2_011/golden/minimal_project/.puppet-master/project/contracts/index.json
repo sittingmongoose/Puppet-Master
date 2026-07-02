@@ -1,0 +1,11 @@
+{
+  "schema_id": "pm.project_contract_index.fixture.v1",
+  "project_id": "fixture-project",
+  "contracts": [
+    {
+      "contract_id": "ProjectContract:FR-001",
+      "path": "fr-001.json",
+      "requirement_refs": ["FR-001"]
+    }
+  ]
+}

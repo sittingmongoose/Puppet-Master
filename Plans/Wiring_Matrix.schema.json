@@ -51,7 +51,13 @@
         "handler_location",
         "expected_event_types",
         "acceptance_checks",
-        "evidence_required"
+        "evidence_required",
+        "state_selector",
+        "disabled_reason_projection",
+        "effect_contract",
+        "accessibility_contract",
+        "test_evidence",
+        "event_test_requirements"
       ],
       "properties": {
         "ui_element_id": {
@@ -96,6 +102,120 @@
           "type": "string",
           "minLength": 1,
           "description": "Description of what evidence must exist to prove this wiring works (e.g., \"Test exercising cmd.github.connect dispatch returns expected events\", \"Screenshot or headless render showing button exists\")."
+        },
+        "state_selector": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^state\\.[a-z][A-Za-z0-9_.]*$",
+          "description": "Typed projection selector that controls whether the UI command can be shown or dispatched."
+        },
+        "disabled_reason_projection": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^state\\.[a-z][A-Za-z0-9_.]*\\.disabled_reason$",
+          "description": "Typed projection selector for the disabled reason surfaced by the UI before dispatch."
+        },
+        "effect_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "effect_kind",
+            "description",
+            "receipt_or_event_refs"
+          ],
+          "properties": {
+            "effect_kind": {
+              "type": "string",
+              "enum": [
+                "event",
+                "receipt",
+                "route_open",
+                "ui_only",
+                "mixed"
+              ]
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1
+            },
+            "receipt_or_event_refs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "accessibility_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "role_or_semantics",
+            "keyboard_access",
+            "focus_management",
+            "disabled_announcement"
+          ],
+          "properties": {
+            "role_or_semantics": {
+              "type": "string",
+              "minLength": 1
+            },
+            "keyboard_access": {
+              "type": "string",
+              "minLength": 1
+            },
+            "focus_management": {
+              "type": "string",
+              "minLength": 1
+            },
+            "disabled_announcement": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "test_evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "test_id",
+              "evidence_kind",
+              "requirement"
+            ],
+            "properties": {
+              "test_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence_kind": {
+                "type": "string",
+                "enum": [
+                  "dispatcher_fixture",
+                  "state_projection",
+                  "receipt_or_event_assertion",
+                  "accessibility_regression",
+                  "event_test"
+                ]
+              },
+              "requirement": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "event_test_requirements": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
         },
         "example": {
           "type": "boolean",

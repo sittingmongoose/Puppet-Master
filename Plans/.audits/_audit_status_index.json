@@ -1,0 +1,1101 @@
+{
+  "generated_at_utc": "2026-07-02T23:33:25Z",
+  "reports": [
+    {
+      "audit_id": "audit-20260615-001-part-3-fable-cleanup",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260614-002-part-3-fable-cleanup",
+      "path": "Plans/.audits/audit-20260615-001-part-3-fable-cleanup/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260615-001-part-3-fable-cleanup",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260615-002-part-4-fable-cleanup",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260615-002-part-4-fable-cleanup/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260615-002-part-4-fable-cleanup",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260616-001-part-4-fable-cleanup",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260616-001-part-4-fable-cleanup/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260616-001-part-4-fable-cleanup",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260616-002-goal-runtime-system",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260616-002-goal-runtime-system/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260616-002-goal-runtime-system",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260616-003-goal-runtime-system",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260616-001-goal-runtime-system",
+      "path": "Plans/.audits/audit-20260616-003-goal-runtime-system/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260616-003-goal-runtime-system",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260616-004-goal-runtime-system",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260616-004-goal-runtime-system/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260616-004-goal-runtime-system",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260616-005-goal-runtime-system",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260616-005-goal-runtime-system/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260616-005-goal-runtime-system",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260616-006-goal-runtime-system",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260616-006-goal-runtime-system/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260616-006-goal-runtime-system",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260616-007-orchestrator-goal-runtime-flow",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "path": "Plans/.audits/audit-20260616-007-orchestrator-goal-runtime-flow/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260616-007-orchestrator-goal-runtime-flow",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260616-008-orchestrator-goal-runtime-flow-post-repair",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+      "path": "Plans/.audits/audit-20260616-008-orchestrator-goal-runtime-flow-post-repair/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260616-008-orchestrator-goal-runtime-flow-post-repair",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-001-orchestrator-goal-runtime-flow-post-repair-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-002-orchestrator-goal-runtime-flow-semantic-repair-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260617-003-orchestrator-goal-runtime-flow-head-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260617-004-orchestrator-goal-runtime-flow-post-repair-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-005-orchestrator-goal-runtime-flow-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "explicitly_deferred": 2,
+          "not_for_plan": 4,
+          "repaired": 24,
+          "source_lineage_only": 16
+        },
+        "matching_rows": 46,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-006-semantic-closure-registry-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-006-semantic-closure-registry-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260617-007-semantic-closure-registry-post-repair-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "explicitly_deferred": 2,
+          "not_for_plan": 5,
+          "repaired": 22,
+          "source_lineage_only": 14
+        },
+        "matching_rows": 43,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-007-semantic-closure-registry-post-repair-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-007-semantic-closure-registry-post-repair-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260617-008-semantic-closure-registry-repair-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "explicitly_deferred": 1,
+          "not_for_plan": 3,
+          "repaired": 10,
+          "source_lineage_only": 6
+        },
+        "matching_rows": 20,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-008-semantic-closure-registry-repair-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260617-008-semantic-closure-registry-repair-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-009-orchestrator-goal-runtime-flow-post-repair-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-010-orchestrator-goal-runtime-flow-post-repair-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260617-011-plans-to-code-handoff-post-compile",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/.audits/audit-20260617-011-plans-to-code-handoff-post-compile/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_GOVERNANCE_BLOCKERS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-011-plans-to-code-handoff-post-compile",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 53
+        },
+        "matching_rows": 53,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/.audits/audit-20260617-012-plans-to-code-handoff-deep-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED_WITH_FINDINGS",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260617-012-plans-to-code-handoff-deep-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 1
+        },
+        "matching_rows": 1,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/.audits/audit-20260617-013-plans-to-code-handoff-post-repair-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED_WITH_FINDINGS",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260617-013-plans-to-code-handoff-post-repair-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/.audits/audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_GOVERNANCE_STALE",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260617-014-plans-to-code-handoff-post-repair-clean-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/.audits/audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260618-001-plans-to-code-handoff-post-governance-deep-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/.audits/audit-20260618-002-plans-to-code-final-docs-repair-certification/FINAL_REPORT.md",
+      "reported_status": "PASS certified",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260618-002-plans-to-code-final-docs-repair-certification",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "explicitly_deferred": 4,
+          "not_for_plan": 4,
+          "repaired": 47,
+          "source_lineage_only": 12
+        },
+        "matching_rows": 67,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260617-001-plans-to-code-handoff",
+      "path": "Plans/.audits/audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair/FINAL_REPORT.md",
+      "reported_status": "PASS certified",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260618-003-plans-to-code-implementation-readiness-fidelity-repair",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 34,
+          "source_lineage_only": 24
+        },
+        "matching_rows": 58,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260618-004-plans-to-code-currentness-compatibility-repair/FINAL_REPORT.md",
+      "reported_status": "PASS_CERTIFIED",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260618-004-plans-to-code-currentness-compatibility-repair",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260618-005-plans-to-code-final-corrective-certification",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260618-005-plans-to-code-final-corrective-certification/FINAL_REPORT.md",
+      "reported_status": "PASS_CERTIFIED",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260618-005-plans-to-code-final-corrective-certification",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260618-006-prd-planning-wizard-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 20,
+          "stale_retired": 2
+        },
+        "matching_rows": 22,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260618-006-prd-planning-wizard-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260618-006-prd-planning-wizard-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260618-007-prd-planning-wizard-post-repair-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "not_for_plan": 28,
+          "repaired": 144,
+          "source_lineage_only": 4,
+          "stale_retired": 12
+        },
+        "matching_rows": 188,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260618-007-prd-planning-wizard-post-repair-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260618-007-prd-planning-wizard-post-repair-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260618-008-prd-planning-wizard-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "false_positive": 4,
+          "source_lineage_only": 2
+        },
+        "matching_rows": 6,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260618-008-prd-planning-wizard-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260618-008-prd-planning-wizard-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260618-009-prd-planning-wizard-post-closure-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 20
+        },
+        "matching_rows": 20,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260618-009-prd-planning-wizard-post-closure-fidelity/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260618-009-prd-planning-wizard-post-closure-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260619-001-prd-planning-wizard-final-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 32
+        },
+        "matching_rows": 32,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260619-001-prd-planning-wizard-final-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260619-001-prd-planning-wizard-final-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260619-002-prd-planning-wizard-head-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 30,
+          "source_lineage_only": 2
+        },
+        "matching_rows": 32,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260619-002-prd-planning-wizard-head-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "**BLOCKED**",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260619-002-prd-planning-wizard-head-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 26,
+          "source_lineage_only": 6
+        },
+        "matching_rows": 32,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260619-003-prd-planning-wizard-post-repair-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "false_positive": 2,
+          "repaired": 38
+        },
+        "matching_rows": 40,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "false_positive": 2,
+          "repaired": 30
+        },
+        "matching_rows": 32,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260619-005-prd-planning-wizard-latest-head-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260619-006-prd-planning-wizard-post-repair-head-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260619-007-prd-planning-wizard-head-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 6,
+          "stale_retired": 2
+        },
+        "matching_rows": 8,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+      "path": "Plans/.audits/audit-20260619-007-prd-planning-wizard-head-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260619-007-prd-planning-wizard-head-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260619-008-prd-planning-wizard-post-repair-head-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 10
+        },
+        "matching_rows": 10,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260619-009-prd-planning-wizard-latest-head-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 12
+        },
+        "matching_rows": 12,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+      "path": "Plans/.audits/audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260619-010-prd-planning-wizard-post-repair-head-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 8
+        },
+        "matching_rows": 8,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260623-001-fff-ledger-to-plans-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "**BLOCKED**. Scope coverage is **552/552 rows classified (100%)**.",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260623-001-fff-ledger-to-plans-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 2
+        },
+        "matching_rows": 2,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260623-002-fff-post-repair-closed-world-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260623-003-fff-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260623-003-fff-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260623-003-fff-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260625-001-provider-adjacent-plans",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260625-001-provider-adjacent-plans/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260625-001-provider-adjacent-plans",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260626-001-provider-updates-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 16
+        },
+        "matching_rows": 16,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260626-001-provider-updates-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260626-001-provider-updates-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260626-002-provider-updates-post-repair-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260624-001-provider-updates",
+      "path": "Plans/.audits/audit-20260626-002-provider-updates-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260626-002-provider-updates-post-repair-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260627-001-feature-name-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 10
+        },
+        "matching_rows": 10,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260627-001-feature-name-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260627-001-feature-name-closed-world-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260626-001-feature-name",
+      "path": "Plans/.audits/audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260627-002-feature-name-post-repair-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 10
+        },
+        "matching_rows": 10,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "path": "Plans/.audits/audit-20260628-001-feature-intake-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260628-001-feature-intake-closed-world-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260628-002-feature-intake-post-repair-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260627-001-feature-intake",
+      "path": "Plans/.audits/audit-20260628-002-feature-intake-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260628-002-feature-intake-post-repair-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260629-001-free-models-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 6
+        },
+        "matching_rows": 6,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": "pldg-20260629-001-feature-name",
+      "path": "Plans/.audits/audit-20260629-001-free-models-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260629-001-free-models-closed-world-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260629-002-free-models-post-repair-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 6
+        },
+        "matching_rows": 6,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260701-001-containerized-hosts-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260701-002-containerized-hosts-post-repair-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260630-001-feature-intake",
+      "path": "Plans/.audits/audit-20260701-002-containerized-hosts-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260701-002-containerized-hosts-post-repair-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 24
+        },
+        "matching_rows": 24,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_report_status_unstated_or_nonstandard",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": null,
+      "reported_status_family": "unknown",
+      "scope_key": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+      "superseded_by": null
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "path": "Plans/.audits/audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "PASS_WITH_WARNINGS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "superseded_by": null
+    }
+  ],
+  "schema_id": "pm.audit_status_index.v1",
+  "source": {
+    "closure_registry": "Plans/.audits/_semantic_closure_registry.jsonl",
+    "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
+  },
+  "summary": {
+    "closure_registry_row_count": 352,
+    "current_blocker_count": 0,
+    "historical_blocked_or_fail_report_count": 21,
+    "report_count": 59,
+    "reported_status_family_counts": {
+      "blocked_or_fail": 21,
+      "pass": 25,
+      "unknown": 13
+    }
+  }
+}

@@ -147,7 +147,7 @@ This addendum closes the GUI wiring defects from the PMConcept readiness report.
 
 ### Production JSON artifact
 
-`Plans/Wiring_Matrix.production.json` is the production wiring-matrix JSON artifact for the current GUI/PMConcept repair packet and validates against `Plans/Wiring_Matrix.schema.json`. It contains one map entry per schema-valid production command/control binding, keyed by `ui_element_id`, with `ui_command_id`, `handler_location`, expected event types, acceptance checks, and required evidence. `Plans/Wiring_Matrix.production.exclusions.json` records command-family roots, parser false positives, glob tokens, invalid historical aliases, and compatibility-only namespace roots that must not count as production coverage.
+`Plans/Wiring_Matrix.production.json` is the production wiring-matrix JSON artifact for the current GUI/PMConcept repair packet and validates against `Plans/Wiring_Matrix.schema.json`. It contains one map entry per schema-valid production command/control binding, keyed by `ui_element_id`, with `ui_command_id`, `handler_location`, expected event types, acceptance checks, required evidence, typed state selector, disabled-reason projection, effect contract, accessibility contract, and test evidence. `Plans/Wiring_Matrix.production.exclusions.json` records command-family roots, parser false positives, glob tokens, invalid historical aliases, and compatibility-only namespace roots that must not count as production coverage.
 
 The schema command pattern now allows underscores in every command segment so accepted namespaces such as `cmd.source_control.*`, `cmd.prd_builder.*`, `cmd.planning_wizard.*`, and `cmd.plan_compile.*` can be represented without inventing alternate command names.
 
@@ -160,14 +160,18 @@ The schema command pattern now allows underscores in every command segment so ac
 | Control-like nodes inventoried | 1284 |
 | Inline-handler controls | 339 |
 | Controls containing `cmd.*` tokens | 71 |
-| Controls with accessibility gaps | 267 |
-| Controls with local/demo/mock markers | 64 |
+| Controls with accessibility gaps | 250 |
+| Controls with local/demo markers | 13 |
+| Concept fixture-only controls | 64 |
 | Production wiring required | 44 |
 | Production-intended controls missing a command | 0 |
-| Concept-only controls pending owner adjudication before promotion | 1175 |
+| Concept-only controls already owner-adjudicated as source-lineage | 1175 |
+| Concept-only controls pending owner adjudication before promotion | 0 |
+| Production accessibility gaps | 0 |
+| Production accessibility contracts added | 17 |
 | Retired or re-scoped non-launch controls | 1 |
 
-Controls marked `concept_fixture_only` are source-lineage fixtures only and cannot satisfy acceptance evidence. Controls marked `concept_only_needs_owner_adjudication` remain source-lineage concept controls until an owner doc promotes them and adds command, state selector, disabled reason, handler, receipt/event effect, and test evidence. Controls marked `retired_or_rescoped_non_launch_authority` include stale `START`, `BUILD`, and `Approve & Continue` launch semantics.
+Controls marked `concept_fixture_only` are source-lineage fixtures only and cannot satisfy acceptance evidence. Controls marked `concept_only_owner_adjudicated` are already adjudicated as concept/source-lineage only; they are not production evidence and are not promoted unless a canonical owner doc accepts the behavior and a production wiring row supplies command, state selector, disabled reason, handler, receipt/event effect, accessibility contract, and test evidence. `concept_only_pending_owner_adjudication` is currently 0. Controls marked `retired_or_rescoped_non_launch_authority` include stale `START`, `BUILD`, and `Approve & Continue` launch semantics.
 
 ### Approve And Build wiring rule
 
@@ -199,15 +203,15 @@ ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/Contracts_V0
 <a id="section-4"></a>
 ## 4. Verification
 
-Wiring matrix entries are verified by **GATE-010** (see `Plans/Progression_Gates.md`).
+Wiring matrix entries are verified by **GATE-010** (see `Plans/Progression_Gates.md`) through `python3 scripts/pm-plans-verify.py validate-wiring-matrix`, `run-gates`, and `audit-governance`.
 
 ### 4.1 Schema validation
 All wiring matrix JSON artifacts MUST validate against `Plans/Wiring_Matrix.schema.json`.
-GATE-010 runs JSON Schema validation as its first check.
+GATE-010 runs JSON Schema validation as its first check and fails production rows that lack typed state selector, disabled-reason projection, effect contract, accessibility contract, test evidence, or event-test requirements.
 
 ### 4.2 Coverage
-Every `cmd.*` ID in `Plans/UI_Command_Catalog.md` MUST have at least one wiring matrix entry.
-GATE-010 extracts all command IDs from the catalog and verifies each has a corresponding entry.
+Every `cmd.*` ID in `Plans/UI_Command_Catalog.md` MUST have at least one wiring matrix entry unless `Plans/Wiring_Matrix.production.exclusions.json` records the token as a parser false positive, glob token, invalid historical alias, generic family root, or compatibility-only namespace root.
+GATE-010 extracts command IDs from the catalog, applies the exclusions, and verifies each remaining command has a corresponding production entry.
 Research-session and web-tool wiring entries must use the canonical command identities from `Plans/UI_Command_Catalog.md` and tool payload owners from `Plans/Tools.md`; stale local command aliases for research-session, web-tool, or terminal command identity are verification failures, not compatibility shortcuts.
 Terminal command-catalog coverage is not satisfied by `cmd.dev.start_session` and `cmd.dev.stop_session` alone; terminal action coverage includes reveal, show, rerun, split, close, clear, restart, terminate, kill, detach, reattach, and focus-session wiring rows with matching acceptance checks.
 When route/subject-aware matrix cells are backfilled, the old work-item ledger `w-20260316-160450` lines 748-941 may be used only as source-lineage evidence for per-cell justification; it does not replace generated JSON entries, and each incorporated detail must land in explicit `ui_element_id`, `ui_command_id`, handler, event, acceptance-check, and evidence fields.

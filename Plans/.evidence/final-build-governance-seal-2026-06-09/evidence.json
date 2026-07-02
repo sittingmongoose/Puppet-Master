@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "87f6952d953cd045b09c2b6c460b156e1782cbccc7bbe04520feac62be77fe0e"
+      "sha256": "d293089ffcbc60898032642a84a63715bb6ba2c4411c9bb1891700e3aeb8d908"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -18,7 +18,7 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "529dacf0e416cfbb440c3629d4b46e76991bf23832c411cdcc9fbb0596412545"
+      "sha256": "16faa935ec45f9a3e32941b77306f6b540d2e344ec08c23cc6a243c1a224529d"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "4cc151269d61d77baac444ea7fff1ebee4d5b6d07b8826e16bbc214fbb363848"
+      "sha256": "2851570dc9bd51abe965df295942b7603e42053027fdbde26662f44792c62454"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "d03c9b32950302911f4f4a4b9df40dec23ae6e64c386bec34ddf095323cb026b"
+      "sha256": "2650662d7088055d66d552ff6db315f26207461bea75b6d166c2f9412ccf44f4"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "98029fd07949039efea99f31102aa0dcda88ef8e9896f6611cfe5e87ae1a2124"
+      "sha256": "0cbf262fff6d5edf5027ba624b85890b4e6a43db573217b150853b77e08807e9"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "13018923719018e5523ed21a5ef983f26ea8f8e6019970f09d87c814707dcf0a"
+      "sha256": "d57acc973c1a494af53ca0b63bf3cc076eafc723415102e462d5af85d5fd8c23"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "626cd3453fd8044935486f2b7f845842512212a6195a3d786ef9ea43f551bcf2"
+      "sha256": "79b3393baf2444b6ed7e1ec38f8fa97eec839e1807762ef724d8d738428b873e"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "e18649fd6055362d59ec2a4d1cf3b91184c097a3fe15dfd3b66aa80770cac7fb"
+      "sha256": "721b7dd5a3c4f821b4deab3c91b3c2b2f7acf0347b3ac82192ce4c77f8401b73"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "54b482521ee544b21727f8239abf19d35ccfa84daab78b2c4883874ba148ec4f"
+      "sha256": "20754d29286601f4f747bed1bb28889893cb2e05be79b09b5d13b4442d315b7c"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "0eb9b71d4f0a9500f496f1854cc419ae30e3b2dc8c8df1cc7be2068860d3a9d9"
+      "sha256": "fbceb3323aa2fa4586617d20becec688533a5ce6522da9458f9ec35ce7ee5e95"
     }
   ],
   "checks": [

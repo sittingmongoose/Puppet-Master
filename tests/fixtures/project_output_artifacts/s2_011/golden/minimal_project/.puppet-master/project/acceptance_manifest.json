@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.acceptance_manifest.schema.v1",
+  "graph_id": "fixture-plan-graph",
+  "generated_at_utc": "2026-07-02T00:00:00Z",
+  "project_id": "fixture-project",
+  "nodes": [
+    {
+      "node_id": "node-fr-001",
+      "evidence_required": {
+        "schema_id": "pm.evidence.schema.v1",
+        "path": "traceability/requirements_coverage.json"
+      },
+      "checks": [
+        {
+          "check_id": "check-fr-001",
+          "description": "Validate the fixture project output packet.",
+          "commands": [
+            {
+              "cmd": "python3 scripts/pm-plans-verify.py validate-project-output-fixtures",
+              "expect_exit_code": 0
+            }
+          ],
+          "contract_refs": ["ProjectContract:FR-001"]
+        }
+      ]
+    }
+  ]
+}
