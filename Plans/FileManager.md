@@ -4457,6 +4457,7 @@ acceptance_criteria:
   - Hidden paths are absent without leaking blocked names or counts.
   - Local filters are disclosed when they refine visible results.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future File Manager type-ahead discovery tests.
   - Future remote/SSH file navigation no-leak tests.
 risk_class: filemanager_discovery_consumer_drift

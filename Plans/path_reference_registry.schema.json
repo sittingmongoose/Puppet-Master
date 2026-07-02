@@ -27,6 +27,15 @@
             ],
             "type": "string"
           },
+          "match_kind": {
+            "enum": [
+              "exact",
+              "glob",
+              "prefix",
+              "doc_anchor"
+            ],
+            "type": "string"
+          },
           "evidence_refs": {
             "items": {
               "type": "string"
@@ -46,6 +55,16 @@
           "replacement_ref": {
             "type": "string"
           },
+          "surface_type": {
+            "enum": [
+              "concrete_path",
+              "generated_family",
+              "process_artifact",
+              "schema_to_materialize",
+              "future_artifact"
+            ],
+            "type": "string"
+          },
           "validator_policy": {
             "enum": [
               "fail",
@@ -59,6 +78,8 @@
         "required": [
           "raw_ref",
           "classification",
+          "surface_type",
+          "match_kind",
           "canonical_route",
           "evidence_refs",
           "allowed_contexts",

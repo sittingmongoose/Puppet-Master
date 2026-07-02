@@ -8127,7 +8127,7 @@ implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
   - Plans/Personas.md
   - Plans/Prompt_Pipeline.md
-  - Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
+  - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: chain_wizard_deterministic_builder_persona_resolver
   create_worknodes: false
@@ -8176,7 +8176,7 @@ context_scope: builder_personas
 implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
   - Plans/storage-plan.md
-  - Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
+  - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: chain_wizard_review_pass_persona_key_contract
   create_worknodes: false
@@ -8226,7 +8226,7 @@ reasoning_tier: high
 context_scope: builder_personas
 implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
-  - Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
+  - Plans/FinalGUISpec.md
   - Plans/Personas.md
 node_compile_hint:
   mode: chain_wizard_builder_persona_settings_config
@@ -8274,7 +8274,7 @@ reasoning_tier: high
 context_scope: builder_personas
 implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
-  - Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+  - Plans/Prompt_Pipeline.md
   - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: chain_wizard_builder_requested_effective_runtime_record

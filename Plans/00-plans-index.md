@@ -4398,16 +4398,17 @@ canonical_text: >-
   Native PM-owned fff-inspired discovery is routed as one shared path/context discovery substrate. Tools owns DiscoveryService and discover_paths behavior; Contracts_V0 owns promoted shared enum/event/receipt envelopes; storage, worktree, FileSafe, and Permissions owners govern persistence, remote/cache/SSH identity, no-leak filtering, permission snapshots, host trust, credential handles, and redaction; GUI and agent docs consume the shared substrate without re-owning ranking or schema semantics. Instant Grep, grep, and codesearch remain the content regex and exact content verification owners. Direct fff and OpenCode details are source-lineage/reference/prototype-only, and this compile creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, Spec_Lock, shards, evidence, plan_graph, or auto_decisions.
 gui_related: false
 gui_classification_reason: This is owner-map and governance routing for discovery behavior, not direct GUI implementation.
-depends_on: [0PI-014, 0PI-029, T-160, T-161, T-162, CV-291]
+depends_on: [0PI-014, 0PI-029]
 unblocks: [F3-399, ACD-422, OSI-429, ATS-011]
 acceptance_criteria:
   - Owner routing points behavior to Tools and shared schema envelopes to Contracts_V0.
   - Cursor-style regex acceleration remains Instant Grep / SparseNgramIndex, not DiscoveryService.
   - fff and OpenCode are preserved only as source-lineage/reference/prototype evidence unless product direction changes.
   - Current product terms remain PRD Builder and Planning Wizard, with legacy wizard names compatibility-only.
+  - CV-291, T-160, T-161, and T-162 are owner-routing references from this index map, not PlanUnit build-order prerequisites.
 validation_surfaces:
-  - PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260622-001-fff
-  - PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: owner_drift
 reasoning_tier: standard
 context_scope: cross_doc_owner_map

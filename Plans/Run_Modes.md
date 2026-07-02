@@ -1042,7 +1042,7 @@ canonical_text: >-
   remain `blocked != failed`.
 gui_related: false
 gui_classification_reason: Run-mode authority and blocked semantics are backend runtime policy, not GUI presentation.
-depends_on: [RM-003, RM-008, RM-009, PS-126, F2-194, EP-109]
+depends_on: [RM-003, RM-008, RM-009]
 unblocks: [T-166, CBP-023, GRS-032, OSI-431]
 acceptance_criteria:
   - Host capability context cannot authorize mutation outside ask/plan/regular/yolo run-mode constraints.

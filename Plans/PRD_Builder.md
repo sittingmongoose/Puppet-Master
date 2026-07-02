@@ -621,6 +621,7 @@ acceptance_criteria:
   - Selected candidate provenance is recorded in PRD source refs.
   - Denied/stale/fallback states are visible without leaking blocked path details.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future PRD Builder source picker local/SSH tests.
   - Future hidden-by-policy source no-leak tests.
 risk_class: prd_source_provenance_drift

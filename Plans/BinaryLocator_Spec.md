@@ -1416,7 +1416,7 @@ context_scope: gui
 implementation_surfaces:
   - Plans/BinaryLocator_Spec.md
   - Plans/FinalGUISpec.md
-  - crates/ui_commands/
+  - future typed UICommand implementation crate
 node_compile_hint:
   mode: binarylocator_ui_mapping_boundary
   create_worknodes: false

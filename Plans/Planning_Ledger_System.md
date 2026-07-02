@@ -121,7 +121,7 @@ validation_surfaces:
 risk_class: data_integrity
 reasoning_tier: standard
 context_scope: repo
-implementation_surfaces: [Plans/ledgers/v2/manifest.json, Plans/ledgers/v2/*/events.jsonl, Plans/ledgers/v2/*/records, Plans/ledgers/v2/*/state, Plans/ledgers/v2/*/source_shards]
+implementation_surfaces: [Plans/ledgers/v2/*/manifest.json, Plans/ledgers/v2/*/events.jsonl, Plans/ledgers/v2/*/records, Plans/ledgers/v2/*/state, Plans/ledgers/v2/*/source_shards]
 node_compile_hint: {mode: source_memory_only, create_worknodes: false}
 source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0003

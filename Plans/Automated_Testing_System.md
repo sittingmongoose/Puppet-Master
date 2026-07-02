@@ -749,6 +749,7 @@ acceptance_criteria:
   - Tests prove denied/hidden candidates cannot leak through counts, selected ids, rank gaps, summaries, diagnostics, or receipts.
   - Tests prove no WorkNodes, NodeSeeds, executable queues, final node manifests, runtime launches, implementation files, or production build tasks are created by this compile/index lane.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future DiscoveryService conformance suite.
   - Future Assistant Chat visibility and toggle tests.
   - Future SSH/no-local-fallback tests.

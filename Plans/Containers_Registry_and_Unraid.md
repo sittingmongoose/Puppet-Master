@@ -5844,16 +5844,23 @@ canonical_text: >-
   Orchestrator/Executor run details, ATS sessions, Runtime Artifacts, assistant links, and receipts; it is not a new
   Activity Bar slot, not a separate Coasts website, not a PMConcept.html transplant, and not a separate Unraid panel.
   Dynamic URLs remain visible and usable for running instances while canonical ports/URLs are convenience bindings for
-  the active selected or checked-out instance.
+  the active selected or checked-out instance. The Docker/Hosts route payload is
+  `{route_target: "docker_hosts", owner_surface: "docker_manager", project_id, repo_id?, workspace_root_id?,
+  source_surface, subview, focus_kind?, host_capability_ref?, host_profile_id?, host_instance_id?,
+  host_assignment_id?, runtime_family?, runtime_context_ref?, port_access_ref?, receipt_ref?, blocked_sequence?}`.
+  Runtime families, host profiles, host instances, access records, and receipt refs are PM identities; raw Docker,
+  Kubernetes, Unraid, or Coasts-local ids are backend facts only and must not replace PM identity.
 gui_related: true
 gui_classification_reason: This unit defines the user-visible Docker/Hosts page/lab boundary and navigation relationship to Docker Manager.
-depends_on: [CRAU-007, CRAU-090, CRAU-091, F3-410, UCC-105]
-unblocks: [ACD-430, OP-028, RGV-015, RAP-042]
+depends_on: [CRAU-007, CRAU-090, CRAU-091, UCC-105]
+unblocks: [ACD-430, OP-028, RGV-015]
 acceptance_criteria:
   - Docker/Hosts is reachable as a routed primary-content page/lab from Docker Manager and cross-surface links.
   - Docker Manager remains the Activity Bar side-panel owner and command namespace.
   - Expanded Host Lab detail is not trapped in the small Docker side-panel and does not create a separate website or Unraid shell panel.
   - Access actions use structured port_access_record data and do not guess low-confidence localhost URLs.
+  - Docker/Hosts route payloads include owner_surface, source_surface, subview, and the relevant PM host/profile/instance/access/receipt identity refs before focusing a detail view.
+  - Raw container, pod, service, or provider endpoint ids are displayed only as backend facts under PM host identity.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Docker/Hosts routing and Docker Manager command namespace fixtures

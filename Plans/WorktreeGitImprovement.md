@@ -5067,17 +5067,18 @@ status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
 canonical_text: >-
   WorktreeGitImprovement owns the repo, branch, worktree, SSH root, and remote project authority boundary consumed by DiscoveryService. Discovery keeps local worktrees, branches, SSH roots, requested_remote_identity, effective_remote_identity, host/root/repo/branch/worktree refs, and cache provenance separate. SSH discovery must pass for a project with no local checkout and must never substitute download-edit-upload authority or an unrelated local path for authorized remote identity/path verification.
+  Storage, FileSafe, and permission consumers use this authority boundary; cache, policy, and redaction references here are cross-owner interface references, not prerequisites for defining remote worktree authority.
 gui_related: false
 gui_classification_reason: This is repository/worktree/remote authority, not visual presentation.
-depends_on: [W-017, W-072, W-073, SP-218, F2-191, PS-118]
+depends_on: [W-017, W-072, W-073]
 unblocks: [ATS-011, GI-033]
 acceptance_criteria:
   - Discovery receipts distinguish requested and effective local/remote identity.
   - Branch/worktree switches cannot reuse stale wrong-branch discovery indexes as fresh truth.
   - Exact verification cannot use unrelated local paths for remote or SSH-selected results.
 validation_surfaces:
-  - Future wrong-branch cache invalidation test.
-  - Future SSH no-local-checkout discovery and verification test.
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: remote_worktree_authority_drift
 reasoning_tier: high
 context_scope: repo_worktree_remote_identity

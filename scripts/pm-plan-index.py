@@ -748,6 +748,24 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
     pnc_008 = next((unit for unit in units if unit_id(unit) == "PNC-008"), None)
     pnc_019 = next((unit for unit in units if unit_id(unit) == "PNC-019"), None)
     disabled_guards: list[dict[str, Any]] = []
+    compiler_hint = pnc_007.get("node_compile_hint", {}) if isinstance(pnc_007, dict) else {}
+    compiler_contract_complete = (
+        pnc_007 is not None
+        and pnc_007.get("status") == "accepted"
+        and bool(compiler_hint.get("compiler_contract_complete"))
+    )
+    if compiler_contract_complete:
+        return {
+            "runtime_enabled": True,
+            "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+            "status": "compiler_contract_ready_index_non_emitting",
+            "compiler_contract_complete": True,
+            "runtime_enablement_ref": "PNC-007",
+            "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
+            "artifact_generation_policy": "PlanUnit indexing never emits NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts.",
+            "disabled_guards": [],
+            "certification_authority": "Goal Runtime completion receipt after Executor activation and receipt verification.",
+        }
     if pnc_007 and pnc_007.get("status") == "deferred":
         disabled_guards.append(
             {
@@ -804,11 +822,12 @@ def node_readiness_report(
         status = "blocked_compiler_contract_incomplete"
     else:
         status = "ready_for_node_compile"
-    status_reason = (
-        "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
-        if coverage_blocked
-        else "Plans are indexed with required PlanUnit metadata, but the PlanCompile compiler contract remains incomplete, runtime node artifact generation is disabled, and executable lifecycle certification evidence is absent until explicit runtime enablement."
-    )
+    if coverage_blocked:
+        status_reason = "PlanUnit coverage or required metadata is incomplete; see missing_required_metadata and coverage_report blockers."
+    elif compiler_contract_incomplete:
+        status_reason = "Plans are indexed with required PlanUnit metadata, but the PlanCompile compiler contract remains incomplete and runtime node artifact generation remains disabled."
+    else:
+        status_reason = "Plans are indexed with required PlanUnit metadata and an accepted PlanCompile compiler contract; the PlanUnit index remains non-emitting and native runtime implementation must materialize artifacts only through the compiler, Executor intake, activation, and Goal Runtime certification contracts."
     build_order_blockers = []
     if deps.get("unresolved_references"):
         build_order_blockers.append({"blocker_type": "unresolved_dependency_references", "items": deps["unresolved_references"]})

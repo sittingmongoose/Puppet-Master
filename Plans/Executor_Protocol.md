@@ -6264,6 +6264,7 @@ acceptance_criteria:
   - Verifier may use discovery to find evidence targets but still requires exact evidence.
   - Discovery output cannot satisfy verifier pass criteria without exact verification.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future Builder no-path orientation test.
   - Future Verifier exact evidence follow-up test.
   - Future SSH no-local-checkout Executor task test.

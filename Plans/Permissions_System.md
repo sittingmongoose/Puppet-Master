@@ -7883,6 +7883,7 @@ acceptance_criteria:
   - SSH known-host/auth/passphrase/remote-command failures are explicit policy states, not fresh local successes.
   - Receipts preserve permission snapshots and redaction profiles sufficient for audit without leaking protected paths or credentials.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future permission-gated discovery tests.
   - Future SSH auth, known-host, passphrase, remote command denial, and redaction tests.
 risk_class: permission_trust_leak
