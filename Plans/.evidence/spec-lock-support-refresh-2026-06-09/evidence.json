@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "b91f53a86e8ac90ed220455e9bf72576f98516f455b05185a4ba3eecf0e29352"
+      "sha256": "34725ddcb042e119ab943efe5e207e6cd29970b1d9d11e8761781daec078be68"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -10,7 +10,7 @@
     },
     {
       "path": "Plans/plan_graph.json",
-      "sha256": "d26878ea4e12ac77016b9a98824924d5afa53960506aa6ec9b9c2bd7b9417726"
+      "sha256": "977843b817c0181a7e4882a072d4a86134d8d4eec24c88b309c25f4a6580beec"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -106,7 +106,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PASS: 5354 PlanUnits, 19184 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index validates after Doctor/onboarding repair; node_readiness remains blocked_compiler_contract_incomplete by design."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -232,6 +232,16 @@
       "name": "feature-intake-governance-seal",
       "result": "PASS",
       "details": "pldg-20260627-001-feature-intake governance_status=sealed; node_readiness_report.status remains blocked_compiler_contract_incomplete/runtime_disabled; no runtime compiler enablement was performed."
+    },
+    {
+      "name": "semantic-repair-closure",
+      "result": "PASS",
+      "details": "Closed 12 repair-required rows for audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity; post_repair_audit_report.json reports repair_required_count=0."
+    },
+    {
+      "name": "no-forbidden-artifacts",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime/build surfaces, or production build tasks were created by this bounded repair."
     }
   ],
   "commands_run": [
@@ -248,7 +258,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -280,7 +290,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -374,6 +384,14 @@
     },
     {
       "cmd": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity --require-closure-matrix",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 -m unittest discover -s tests",
       "exit_code": 0
     }
   ],

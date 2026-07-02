@@ -1,0 +1,17 @@
+{
+  "audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+  "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+  "effective_terminal_report": "post_repair_audit_report.json",
+  "historical_audit_report": "audit_report.json",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "matrix_status_counts": {
+    "repaired": 12
+  },
+  "observation_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+  "open_repair_required_count": 0,
+  "original_repair_required_count": 12,
+  "schema_id": "pm.audit_terminal_state.v1",
+  "subject_ref": "291d567e0b8c706df37a055391fa5be1a81e521f",
+  "terminal_repair_state": "repair_validated",
+  "updated_at_utc": "2026-07-02T04:51:42Z"
+}

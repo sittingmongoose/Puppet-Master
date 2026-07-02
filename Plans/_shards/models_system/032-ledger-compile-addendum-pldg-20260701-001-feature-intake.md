@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8222-L8365
+Source lines: L8222-L8372
 
-Source SHA256: `056fde94e0a3c2cb427ccb80051ce9b356574db25f4853c5de88ad8cb0ec6274`
+Source SHA256: `406b3d1e8b4517facac8f80e9b5fe4ae8b535c095a7c337b75ff5e043877d152`
 
 ---
 
@@ -56,10 +56,17 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
 source_atom_ids: [atom-0016, atom-0033, atom-0038, atom-0039, atom-0040, atom-0041, atom-0047]
 decision_refs: [dec-0004, dec-0008]
 preserved_exact_tokens:

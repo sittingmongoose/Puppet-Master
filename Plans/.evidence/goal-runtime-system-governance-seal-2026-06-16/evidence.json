@@ -10,35 +10,35 @@
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "b824671b5edfee493929996179c1892dd34c1a6ac3631c3a2ad143899ab49c9a"
+      "sha256": "c31d1756cca31208e21ecbc6c4e44ecd72447596cb5abcf2230eefdee16ecc2f"
     },
     {
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "fa3d584c388ec8c2d0837eac77d8053b35966f70336ccde5dd4337bb3e257360"
+      "sha256": "97438ff075ddc69027838768a23223b2f2f72bac71819c99049d1850f8a3c6e1"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "4619f2f227c095feda077c6d6244c0ba36ee76e05ff671d1ae26d24f94629eda"
+      "sha256": "1a2ad8ca2b311822cbbae7978ccffee5c036b16fefa19bc530f6495ff6bcdcc6"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "52ca779227251c80accdf8e049ed442b07adc6f2b6e2e999f3c6d720f362d027"
+      "sha256": "e062826d31a947f68512c17f224176fcd24aebc66f9fd83ecb9002659d66e566"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "9d465f345d555663b7850b9997e5b5524eecf3a23724691174e533f889fb0d1f"
+      "sha256": "f90bac6f648746a8bae9f9d99880615c403c6cdf76b8358330ca443caa62f214"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "f6730cc559d097cda47c511e2d17351b2a8f6ee6bdaf44fd063d5c48fc4fda4b"
+      "sha256": "5cc781988e706023d45771604b17186b5721d802f571e470ab62af768acc4db3"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "40ad35bdbdcc22d2db13a022c0f0747cc5a93417d408093146a68ce16f6a3850"
+      "sha256": "73f84c2b2ad16d0d9953ece9d8da045be30e833656d6349b3b768a1a449d1357"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "b2a93749988c864b608d790d843e7800d6584a54286dce2841efe559649a3977"
+      "sha256": "4bb5500a4a5510821a8f93be4254b08fc2c5baa151f8a03d2641d776880a4d64"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
@@ -62,11 +62,11 @@
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "8a244ba4384d7f875ee1c825115a9e4f6914cf554a80e205b992a6e4a424bc50"
+      "sha256": "4d5cd9036d5cf86649614405e7a7d8f570075dc788a8f25ddf41eb7ac1268a44"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "4bc901b6004c1d7eb9d26607f1fd9deb98fb0a698f242e4745c9daf200449b69"
+      "sha256": "c47ad73fd004ff7839ad0e48f60012512a4042c7959ae884948e3d026fcb22ae"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -78,15 +78,15 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "fd343173991fe8f764e54387b3a366a34b781583d12acab359f7137d642bfeb9"
+      "sha256": "26cc283a15440c566e0077e1f21bac0f443ea764a994b590b575509efa63c5c1"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "b91f53a86e8ac90ed220455e9bf72576f98516f455b05185a4ba3eecf0e29352"
+      "sha256": "34725ddcb042e119ab943efe5e207e6cd29970b1d9d11e8761781daec078be68"
     },
     {
       "path": "Plans/plan_graph.json",
-      "sha256": "d26878ea4e12ac77016b9a98824924d5afa53960506aa6ec9b9c2bd7b9417726"
+      "sha256": "977843b817c0181a7e4882a072d4a86134d8d4eec24c88b309c25f4a6580beec"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -94,7 +94,7 @@
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "7701cf8ab6039abc0b81ba533c9ed2f86d4374d74264c4257af7060e523f1cfb"
+      "sha256": "b4a54dbeccccd7aad3d592ed50bf6f925f79153df425c973cdfded9859ec7932"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json",
@@ -167,7 +167,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PASS: 5354 PlanUnits, 19184 acceptance units, coverage_status=pass, node_readiness_status=blocked_compiler_contract_incomplete."
+      "details": "PlanUnit index validates after Doctor/onboarding repair; node_readiness remains blocked_compiler_contract_incomplete by design."
     },
     {
       "name": "migration-validate",
@@ -303,6 +303,16 @@
       "name": "feature-intake-governance-seal",
       "result": "PASS",
       "details": "pldg-20260627-001-feature-intake governance_status=sealed; node_readiness_report.status remains blocked_compiler_contract_incomplete/runtime_disabled; no runtime compiler enablement was performed."
+    },
+    {
+      "name": "semantic-repair-closure",
+      "result": "PASS",
+      "details": "Closed 12 repair-required rows for audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity; post_repair_audit_report.json reports repair_required_count=0."
+    },
+    {
+      "name": "no-forbidden-artifacts",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime/build surfaces, or production build tasks were created by this bounded repair."
     }
   ],
   "commands_run": [
@@ -356,7 +366,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; errors=0; warnings=0; plan_units_checked=892"
     },
@@ -386,7 +396,7 @@
       "stdout_excerpt": "status=pass; live_plan_unit_count=5045; source_preserving_unit_count=0"
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -406,7 +416,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260627-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -524,6 +534,14 @@
     },
     {
       "cmd": "PYTHONDONTWRITEBYTECODE=1 python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity --require-closure-matrix",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 -m unittest discover -s tests",
       "exit_code": 0
     }
   ],

@@ -69,7 +69,14 @@
         "ContractName:Plans/PRD_Builder.md",
         "ContractName:Plans/Planning_Wizard.md",
         "ContractName:Plans/prd_planning_runtime_contracts.json",
-        "ContractName:Plans/prd_planning_runtime_contracts.schema.json"
+        "ContractName:Plans/prd_planning_runtime_contracts.schema.json",
+        "ContractName:Plans/FinalGUISpec.md",
+        "ContractName:Plans/Models_System.md",
+        "ContractName:Plans/Multi-Account.md",
+        "ContractName:Plans/Contracts_V0.md",
+        "ContractName:Plans/assistant-chat-design.md",
+        "ContractName:Plans/UI_Command_Catalog.md",
+        "ContractName:Plans/Wiring_Matrix.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -157,6 +164,41 @@
           "kind": "file",
           "ref": "Plans/prd_planning_runtime_contracts.schema.json",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/FinalGUISpec.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Models_System.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Multi-Account.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Contracts_V0.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/assistant-chat-design.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/UI_Command_Catalog.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Wiring_Matrix.md",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -228,6 +270,41 @@
         {
           "kind": "file",
           "ref": "Plans/prd_planning_runtime_contracts.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/FinalGUISpec.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Models_System.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Multi-Account.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Contracts_V0.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/assistant-chat-design.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/UI_Command_Catalog.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Wiring_Matrix.md",
           "note": "Registered canonical owner doc coverage."
         }
       ],

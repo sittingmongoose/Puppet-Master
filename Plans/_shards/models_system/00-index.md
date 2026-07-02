@@ -1,42 +1,42 @@
 # Shard Index: Plans/Models_System.md
 
-Generated: 2026-07-01T20:46:48Z
+Generated: 2026-07-02T04:39:31Z
 
-Source SHA256: `056fde94e0a3c2cb427ccb80051ce9b356574db25f4853c5de88ad8cb0ec6274`
+Source SHA256: `406b3d1e8b4517facac8f80e9b5fe4ae8b535c095a7c337b75ff5e043877d152`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `f34348963fff926e93772735e75a8c325e6290a282ac8b27ee0f7eff5e670a86`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `8288c3b407aeeacb0f7daba385e11c118e10c4d34fa53708f7492c30d374e1df`
-- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L11-L30 `6ee0edc31b82284e5e12a29ae7ade8ac872aaccd8495d1ea0d953c72a3d87b7b`
-- [004 - Provider/model precedence and settings resolution](004-provider-model-precedence-and-settings-resolution.md) L32-L199 `03562ac47f377a21cbe5ddaf0fb5211ae73440d53fc6f2bfaefe610ee1f1687f`
-- [005 - 1. Canonical model identifier](005-1.-canonical-model-identifier.md) L201-L241 `d60b866daade3fcb03d46b4b369ce0a160f89634cf3e1930bd5f9281b1f2bd99`
-- [006 - 2. Model and runtime selection priority](006-2.-model-and-runtime-selection-priority.md) L242-L265 `30307d0d3d77336a51dca67724ce15fa1c094cc120e9e78809188b97af0402ff`
-- [007 - 3. Model options configuration](007-3.-model-options-configuration.md) L266-L281 `40420325bb7fea2ca836e6bcb58b027b2d2a073200cfc31ae9f07f3df72bb6ca`
-- [008 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L283-L520 `c1c5d2a5f4a6c857fc75b11d57e67f1e52e7c1ee038b777afe560e19544b7413`
-- [009 - 4. Model availability and error handling](009-4.-model-availability-and-error-handling.md) L522-L641 `4bbe654e6c030a9e10deac2829953605e064b743ac5a4942c9b65219095d2efc`
-- [010 - 5. Per-Persona runtime preferences](010-5.-per-persona-runtime-preferences.md) L642-L679 `fbb4ed95b2321afd6ed066c9d5386c82ef50c3c468ea94501209548477d9a61c`
-- [011 - 6. Variants system](011-6.-variants-system.md) L681-L790 `02b7e5c782705ab313ee115cd392b45aa86ce252ebc1ef2d33091307a47904b4`
-- [012 - 7. GUI requirements](012-7.-gui-requirements.md) L792-L847 `1cc5c1e3794eb43cb58596b12e535c902245d662dd32be7757ade95114f88411`
-- [013 - 8. OpenCode baseline and Puppet Master deltas](013-8.-opencode-baseline-and-puppet-master-deltas.md) L848-L870 `6a3105846e570144093f9163a6cc2a0a2b28b1d5e47537dc92ba410c547a0b67`
-- [014 - 9. Acceptance criteria](014-9.-acceptance-criteria.md) L872-L906 `eeb23fbfbacefbe1b777b9f6ff1097a43f1ed0755b64ea5ae272008a352247c3`
-- [015 - 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)](015-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md) L907-L1231 `292b8983ba1d51ee8ef3eecdad17951d366ee8e0fb3d350dfb6a883a89870f8a`
-- [016 - Provider Failure-Class Alignment Addendum (2026-03-08)](016-provider-failure-class-alignment-addendum-2026-03-08.md) L1233-L1240 `113cc6f00558745030fcb3f6f42472fb7dd5a44fbc34ee9847bc9d5f5f2c4b92`
-- [017 - Runtime Retry / Fallback Ownership Addendum (2026-03-09)](017-runtime-retry-fallback-ownership-addendum-2026-03-09.md) L1241-L1256 `cebc4915660661700523844e76da2f57f5b79db9ea3f287fb0f188d73cb8da4c`
-- [018 - Requested/Effective Model and Retry Ownership Canonical Alignment (2026-03-09)](018-requested-effective-model-and-retry-ownership-canonical-alignmen.md) L1257-L1264 `69f89ed1fd0d27edc766660e8a35040dc4b338c50de62487e5b87f5967d6d12d`
-- [019 - Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)](019-model-selection-versus-runtime-retry-ownership-consolidation-add.md) L1265-L1274 `ad7b010a4dfc230a5d153ed3bd863de74ee1800222becbac16dfcdbd40ff3944`
-- [020 - Requested / Effective Model Snapshot Alignment](020-requested-effective-model-snapshot-alignment.md) L1275-L1303 `3d769f77e8a1d0dfb25945ae4b4f76b00a47f10ac1b507ff0ac6f52129cc29d0`
-- [021 - Provider/model selection policy and audit addendum](021-provider-model-selection-policy-and-audit-addendum.md) L1305-L1381 `042fa9ccca6be0ff8f816b9142d56e0ee717da6b5a4391f30e1b3eeeb1f5ff9c`
-- [022 - Owner / Consumer Map](022-owner-consumer-map.md) L1383-L1387 `7d38e43d80b567ea143a5249ca5bca4b12db1e72fa36f2d8bc2222bf4aec2569`
-- [023 - PlanUnits](023-planunits.md) L1389-L7399 `c27f292cecb6e7839a48004b7afdd8e205e9082295b60b95aa83f217198b5aa3`
-- [024 - Migration Coverage](024-migration-coverage.md) L7401-L7411 `5b2d789fa0ba7497ad775ceea0e526ee4bdeb5bebdeb4c1536a622b3b5f9b6b8`
-- [025 - Ledger Compile Addendum - pldg-20260614-001](025-ledger-compile-addendum-pldg-20260614-001.md) L7413-L7448 `f2f2c5b40b5766e77b3104ac767584e2b18f1da836e5186cfa8c4fb0a9c905df`
-- [026 - Ledger Compile Addendum - pldg-20260616-001](026-ledger-compile-addendum-pldg-20260616-001.md) L7450-L7509 `bcaccae81d1b5be4b72f4e5b6d0b0141ff99d5e0dec6bb7abe566b18d609ebb4`
-- [027 - Ledger Compile Addendum - pldg-20260616-002](027-ledger-compile-addendum-pldg-20260616-002.md) L7511-L7596 `9dd06a22bde6adc582621671623cf588dc4082d2145ab350844762c7f541e475`
-- [028 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L7598-L7726 `9f0b3e902830f2a3ccd6416ad86da591024d41b47860f3a1ec202af399eb6342`
-- [029 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L7729-L7786 `0e7d5630083293acd71d02f434a39f597a355a6ecd702958655a3984f256fdb9`
-- [030 - Ledger Compile Addendum - pldg-20260626-001-feature-name](030-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L7789-L8028 `2383d44c9fbe1e11420333d3205acb91fe4a2f4de73adb6acc6f46d1cd205ad1`
-- [031 - Ledger Compile Addendum - pldg-20260629-001-feature-name](031-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L8030-L8220 `410aeeed4606399bc4d394082c9824f39c1a4c029e2264c4b334d7cde05f1ad9`
-- [032 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](032-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L8222-L8365 `6db53d9d6af500d053cf046217ce274ecb70913115cbd72f78e4fee8d6068dbc`
+- [001 - Preamble](001-preamble.md) L1-L1 `52401b87c3663ceee9f2a64ec82f195552b051f64af23d7c7754c0c615b97a09`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `994e9771ca3950c14f2d83f81155717ec38202e28f9147a5d41513ee3c0528e6`
+- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L11-L30 `22e12265cabdb4e5be96b3732b62d5dde9590583d79fe7f8941274bc2f3f3931`
+- [004 - Provider/model precedence and settings resolution](004-provider-model-precedence-and-settings-resolution.md) L32-L199 `003efb16d9ddcb0cd642cb63bde54a82f99394897e6f35911c5888aa8f7141a2`
+- [005 - 1. Canonical model identifier](005-1.-canonical-model-identifier.md) L201-L241 `28288d8a43da000710dd3b2a3ebc60681d920e5ec866e23b24e25b4f54d2f879`
+- [006 - 2. Model and runtime selection priority](006-2.-model-and-runtime-selection-priority.md) L242-L265 `a001515242461bb135bf9e96e14f32d9eabf9a33d95d966e02a22920bfc9b5d2`
+- [007 - 3. Model options configuration](007-3.-model-options-configuration.md) L266-L281 `c93e6c17baaf01b4322efabbc4cae0e0144d3f45d957b4004aa47b7d9ffe3cf0`
+- [008 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L283-L520 `44979c07f6f8aa51c90d2331c3d88bf1045bce9f3506a1e59094dc0bf9ccab94`
+- [009 - 4. Model availability and error handling](009-4.-model-availability-and-error-handling.md) L522-L641 `2d1bac3bf74734a659929130d056bea012f922210f7859c5e3dd38a8579ae66d`
+- [010 - 5. Per-Persona runtime preferences](010-5.-per-persona-runtime-preferences.md) L642-L679 `98ab5889c3b5822cbd3966960e3e06f1b70ba91becabd098f1a9c33069b8a4ce`
+- [011 - 6. Variants system](011-6.-variants-system.md) L681-L790 `dd964b272b5fa7fa393587558816ec96c4e55c03ab54e81d60f83917544bc693`
+- [012 - 7. GUI requirements](012-7.-gui-requirements.md) L792-L847 `1d98ac8e9fb6502540b70d009a6d4f3cbc6a0ad6986f9f56b477b05e72fc5f3a`
+- [013 - 8. OpenCode baseline and Puppet Master deltas](013-8.-opencode-baseline-and-puppet-master-deltas.md) L848-L870 `ad809aac66c42c94d6b705d39e4e44ce6cc63dd97606bb2920601b330ab971f5`
+- [014 - 9. Acceptance criteria](014-9.-acceptance-criteria.md) L872-L906 `840372de51bdac7a1f8ef963be4807a69352cb635341cbba8c6c0dd4002b281d`
+- [015 - 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)](015-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md) L907-L1231 `50b64472e223f5f64cbbbb71e286b5705c0476a26b5777c70f765db59dc511b8`
+- [016 - Provider Failure-Class Alignment Addendum (2026-03-08)](016-provider-failure-class-alignment-addendum-2026-03-08.md) L1233-L1240 `3e6fb3ac815d8876b9f9c349d5435e7abdede2e5431935c4ec26d6a78a4144ab`
+- [017 - Runtime Retry / Fallback Ownership Addendum (2026-03-09)](017-runtime-retry-fallback-ownership-addendum-2026-03-09.md) L1241-L1256 `aa7811e4eaf668697855ad5cbadc554736e56ef77dd315e225d0fb9c5d811847`
+- [018 - Requested/Effective Model and Retry Ownership Canonical Alignment (2026-03-09)](018-requested-effective-model-and-retry-ownership-canonical-alignmen.md) L1257-L1264 `d72ff0388c962fa9838f05266c5b05e3369a4250d61bbc1dd66e5d3099252bdb`
+- [019 - Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)](019-model-selection-versus-runtime-retry-ownership-consolidation-add.md) L1265-L1274 `d012c26402c801a00272e755aaca7297b1bd183ed39aa801485dfc058d6bf703`
+- [020 - Requested / Effective Model Snapshot Alignment](020-requested-effective-model-snapshot-alignment.md) L1275-L1303 `1e5b1c0e841faad46c563766263b780bc1a5a59b6055d36e523f64f72611e694`
+- [021 - Provider/model selection policy and audit addendum](021-provider-model-selection-policy-and-audit-addendum.md) L1305-L1381 `104748dbac76c260f2675c89350d9128dc3bc0e759f4d4fc0e1bdfc9636b4511`
+- [022 - Owner / Consumer Map](022-owner-consumer-map.md) L1383-L1387 `44e036ea8db89f30a2a8c8ec5730a3b10a921e9371da52d20f74afbf72029f25`
+- [023 - PlanUnits](023-planunits.md) L1389-L7399 `c13b42f9282354f2f2132bf2cea2c579df1a3f95850207d2aa804f090e7d23ed`
+- [024 - Migration Coverage](024-migration-coverage.md) L7401-L7411 `1a6f7fab145674fb21bc6257a50c4e1b117c286869540a34aa8460973eb5f275`
+- [025 - Ledger Compile Addendum - pldg-20260614-001](025-ledger-compile-addendum-pldg-20260614-001.md) L7413-L7448 `d6bc2306d53b71ad2a831137ca90decc87fba7cc7807fd9e07f713f3616a1e9c`
+- [026 - Ledger Compile Addendum - pldg-20260616-001](026-ledger-compile-addendum-pldg-20260616-001.md) L7450-L7509 `b4872b99b103e3f7aba204a2a77827665b3c2d3a4e72fbde414e6331075ab8b3`
+- [027 - Ledger Compile Addendum - pldg-20260616-002](027-ledger-compile-addendum-pldg-20260616-002.md) L7511-L7596 `20de108fd3c0fe6f3c1cc847bf3f60275289f13904c40cd8cd5c6cac00eaaecd`
+- [028 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L7598-L7726 `80f060adbfb2abb184e8e7f7d25a06b251e40b4e3d1ef2f219aa7d5929c7a8f3`
+- [029 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L7729-L7786 `6b0deef72cd888ba7c8cecfa11538dbd70c1fbb3f56bb31f525df12fed780286`
+- [030 - Ledger Compile Addendum - pldg-20260626-001-feature-name](030-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L7789-L8028 `433e637688d68ce27e827ad47daf18e5aecc135ce1304300a4161a7e877cba41`
+- [031 - Ledger Compile Addendum - pldg-20260629-001-feature-name](031-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L8030-L8220 `38d3cb7500fecb30d6cde2ad0cfce61cc8237a7b446978f0d1d9c60bd048a266`
+- [032 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](032-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L8222-L8372 `a44126ac1f526a1c402f7059b9f9da5c2c725056000767653d2b8868d7727ed8`

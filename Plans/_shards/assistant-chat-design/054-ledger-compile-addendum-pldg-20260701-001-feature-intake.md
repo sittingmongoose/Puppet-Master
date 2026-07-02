@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23207-L23282
+Source lines: L23207-L23286
 
-Source SHA256: `fa3d584c388ec8c2d0837eac77d8053b35966f70336ccde5dd4337bb3e257360`
+Source SHA256: `97438ff075ddc69027838768a23223b2f2f72bac71819c99049d1850f8a3c6e1`
 
 ---
 
@@ -55,11 +55,15 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0007
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
-source_atom_ids: [atom-0007, atom-0035, atom-0037, atom-0043, atom-0046, atom-0047]
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+source_atom_ids: [atom-0007, atom-0035, atom-0043, atom-0047]
 decision_refs: [dec-0006, dec-0008]
 preserved_exact_tokens:
   - "assistant chat to access teacher"

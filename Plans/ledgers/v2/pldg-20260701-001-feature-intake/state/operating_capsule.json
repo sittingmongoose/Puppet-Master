@@ -1,16 +1,5 @@
 {
-  "schema_id": "pm.operating_capsule.v1",
-  "ledger_id": "pldg-20260701-001-feature-intake",
-  "capsule_id": "cap-feature-intake-current",
-  "ledger_profile": "bootstrap_planning",
-  "agent_task": "doctor_onboarding_conversational_planning",
-  "phase": "conversation_active",
-  "current_phase": "conversation_active",
-  "governance_status": "not_started",
-  "last_event_id": "evt-0015",
-  "updated_at_utc": "2026-07-01T20:03:24Z",
-  "next_action": "Await explicit compile request or further refinements. The accepted wizard packet is ledger-level implementation-ready by content review.",
-  "next_safe_action": "Continue ledger-only conversational planning; do not compile, seal governance, edit PMConcept.html, or create runtime/build artifacts without explicit scope.",
+  "agent_task": "doctor_onboarding_compiled_governance_sealed",
   "allowed_reads_default": [
     "state/current.json",
     "state/handoff.json",
@@ -33,7 +22,12 @@
     "manifest.json",
     "Plans/ledgers/v2/ledger_registry.json"
   ],
-  "forbidden_until_explicit_compile": [
+  "capsule_id": "cap-feature-intake-current",
+  "completion_blockers_visible_to_agent": [
+    "No open product questions remain; accepted Doctor/onboarding packet is compiled into live Plans and governance sealed. Future code implementation still waits for the Plan-to-code/WorkNode compiler contract."
+  ],
+  "current_phase": "compiled_governance_sealed",
+  "forbidden_until_explicit_future_scope": [
     "canonical Plans edits",
     "Plans/.plan_index",
     "Spec_Lock",
@@ -50,26 +44,48 @@
     "implementation files",
     "legacy Iced app recreation"
   ],
-  "completion_blockers_visible_to_agent": [
-    "No open product questions remain; accepted wizard packet is ledger-level implementation-ready, but explicit compile is required before canonical Plans edits. Recorded contradiction risks must be reconciled during compile."
-  ],
+  "governance_status": "sealed",
+  "last_event_id": "evt-0018",
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "ledger_profile": "bootstrap_planning",
+  "next_action": "Governance seal complete; await follow-up design, audit, repair certification, or implementation-planning request.",
+  "next_safe_action": "Maintain sealed ledger/source-lineage state; do not create WorkNodes, NodeSeeds, executable queues, final node manifests, runtime/build surfaces, implementation files, production build tasks, or PlanCompile runtime enablement without explicit future scope.",
+  "phase": "compiled_governance_sealed",
   "required_end_of_turn_actions": [
     "append ledger event for substantive turns",
     "update touched record streams",
     "refresh compact state projections",
     "validate ledger when scaffold or schema-sensitive records change"
   ],
+  "schema_id": "pm.operating_capsule.v1",
+  "updated_at_utc": "2026-07-02T04:51:42Z",
   "validation_state": {
+    "bootstrap_ledger_system_validator": "pass",
     "bootstrap_ledger_validator": "pass",
-    "governance_status": "not_started",
-    "node_readiness_status": "not_started",
-    "no_worknodes_created": true,
-    "no_nodeseed_candidates_created": true,
+    "git_diff_check": "pass",
+    "governance_seal": "passed",
+    "governance_status": "sealed",
+    "last_validated_at_utc": "2026-07-01T20:52:02Z",
+    "latest_projection_updated_at_utc": "2026-07-02T04:51:42Z",
+    "ledger_health": "pass_governance_sealed",
     "no_executable_queues_created": true,
-    "no_runtime_build_surfaces_created": true,
+    "no_final_node_manifests_created": true,
     "no_implementation_files_created": true,
-    "last_validated_at_utc": "2026-07-01T20:03:24Z",
-    "latest_projection_updated_at_utc": "2026-07-01T20:03:24Z",
-    "ledger_health": "pass"
+    "no_nodeseed_candidates_created": true,
+    "no_production_build_tasks_created": true,
+    "no_runtime_build_surfaces_created": true,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "plan_index_generate": "pass",
+    "plan_index_validate": "pass",
+    "plan_migration_validate": "pass",
+    "plans_verify_run_gates": "pass",
+    "runtime_enablement_status": "runtime_disabled",
+    "shard_check": "pass",
+    "shard_generate": "pass",
+    "validate_auto_decisions": "pass",
+    "validate_evidence": "pass",
+    "validate_plan_graph": "pass",
+    "verify_spec_lock": "pass"
   }
 }

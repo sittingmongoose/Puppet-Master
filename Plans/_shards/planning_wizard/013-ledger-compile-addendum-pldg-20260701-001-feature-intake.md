@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1336-L1412
+Source lines: L1336-L1420
 
-Source SHA256: `9ffd44c38a9161ff5dba739da6bf83a1c0a05bbcc45d48fdb2d51350caa06058`
+Source SHA256: `8d2bb22f3b60fad2dce3931daddd1af4f2eb91f47f75b197130b8b1b1418cb72`
 
 ---
 
@@ -30,7 +30,7 @@ canonical_text: >-
   implementation files, or runtime/build surfaces as part of the handoff.
 gui_related: true
 gui_classification_reason: Defines visible Planning Wizard landing behavior, limited setup reminder copy, and CTA presentation.
-depends_on: [PWIZ-001, CV-305, F3-411, ACD-431]
+depends_on: [PWIZ-001, CV-305, F3-411, ACD-431, UCC-106]
 unblocks: [WM-041, ATS-020]
 acceptance_criteria:
   - Completed first-run setup opens Planning Wizard as the first full app page.
@@ -53,10 +53,18 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
-  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0029
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
   - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json
 source_atom_ids: [atom-0029, atom-0036, atom-0037, atom-0038, atom-0042, atom-0045, atom-0046, atom-0047]
 decision_refs: [dec-0007, dec-0008]
 preserved_exact_tokens:
