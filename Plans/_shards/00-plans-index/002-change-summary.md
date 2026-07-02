@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L27
+Source lines: L7-L28
 
-Source SHA256: `04008a1d57a5ecc7805569edf5eb8b5d6d362abcb643dbc8d8f929fea9636498`
+Source SHA256: `a5294e511f4e9df29fcc0c6df6dcdda7da884e2c6304e3ad644b771ff1801711`
 
 ---
 
@@ -26,6 +26,7 @@ Source SHA256: `04008a1d57a5ecc7805569edf5eb8b5d6d362abcb643dbc8d8f929fea9636498
 - 2026-06-27: Registered miscellaneous PM History, PM-native vision_bridge / see_image, and Teach/Teacher owner routing compiled from ledger `pldg-20260626-001-feature-name`; PMConcept.html remains non-final source-lineage only, and this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, or governance-seal artifacts.
 - 2026-07-01: Registered containerized-hosts owner routing compiled from ledger `pldg-20260630-001-feature-intake`: `Docker/Hosts` is a native Slint routed page/lab reached from Docker Manager and cross-surface links, `docker_manager` remains the Activity Bar side-panel owner and command namespace, Coasts remains source-lineage inspiration only, runtime families are whole-MVP but capability-probed/gated, and this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or governance-seal artifacts.
 - 2026-07-02: Registered GUI / PMConcept implementation-readiness repair artifacts: `Plans/PMConcept_Control_Reconciliation.json` inventories PMConcept controls and dispositions, `Plans/Wiring_Matrix.production.json` is the schema-validated production wiring matrix, `Plans/Wiring_Matrix.production.exclusions.json` records parser/generic/compatibility exclusions, and PMConcept remains concept/source-lineage only rather than canonical implementation HTML/CSS/demo state.
+- 2026-07-02: Refreshed Rust/Slint currentness routing: the active GUI/toolchain target is Rust stable 1.96.1 plus Slint 1.17.0 as verified from official stable release sources on 2026-07-02; PMConcept terminal transcripts and demo version strings are fixture/source-lineage only, and runtime implementation must reverify stable releases before code/build work.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

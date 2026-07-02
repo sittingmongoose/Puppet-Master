@@ -130,7 +130,7 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 **Date:** 2026-02-22
 **Status:** Authoritative specification for AI agent implementation
-**Tech Stack:** Rust + Slint 1.15.1 (.slint markup compiled via slint_build)
+**Tech Stack:** Rust stable 1.96.1 + Slint 1.17.0 (.slint markup compiled via slint_build)
 **Renderer:** Default winit + Skia; fallback winit + FemtoVG-wgpu; emergency software renderer
 
 ---
@@ -163,7 +163,7 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 ## 1. Executive Summary
 
-This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.15.1 implementation. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with three user-facing theme families (Retro Dark, Retro Light, Basic Modern) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.0 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with three user-facing theme families (Retro Dark, Retro Light, Basic Modern) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
 
 The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
 
@@ -194,14 +194,16 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 
 | Component | Technology | Notes |
 |-----------|-----------|-------|
-| Language | Rust | All logic, state management, and Slint bridge code |
-| UI Framework | Slint 1.15.1 | `.slint` markup files compiled via `slint_build` in `build.rs` |
+| Language | Rust stable 1.96.1 | All logic, state management, and Slint bridge code; verified current stable on 2026-07-02 |
+| UI Framework | Slint 1.17.0 | `.slint` markup files compiled via `slint_build` in `build.rs`; verified current stable on 2026-07-02 |
 | Default Renderer | winit + Skia | Best quality and performance |
 | Fallback Renderer | winit + FemtoVG-wgpu | When Skia is unavailable |
 | Emergency Renderer | Software renderer | Headless/CI environments |
 | Persistence (layout) | redb | Durable KV store for layout state, preferences, editor state |
 | Persistence (events) | seglog | Canonical event ledger for usage, chat, orchestrator events |
 | Search | Tantivy | Full-text search index over seglog projections |
+
+Toolchain currentness is a certification input, not PMConcept evidence. Runtime implementation or production build packets must re-check the official Rust stable channel and Slint current stable release before code work starts; stale PMConcept terminal transcripts or demo version strings are concept fixtures only.
 
 ### 2.2 What Is NOT Used
 
@@ -970,7 +972,7 @@ User-facing selector contract:
 
 **Pixel grid and paper texture:** Generated as tiled images from Rust at startup using `SharedPixelBuffer`. Applied via `Image` elements with appropriate tiling. Do NOT use `RenderingNotifier` -- use `SharedPixelBuffer` as it is backend-agnostic and simpler.
 
-**Important:** `ImageFit.repeat` may not exist in Slint 1.15.1. If unavailable, tile the image manually using a `GridLayout` or `Flickable` with repeated `Image` elements, or generate a single large tile that covers the viewport.
+**Important:** `ImageFit.repeat` availability must be checked against current stable Slint before implementation. If unavailable or unsuitable, tile the image manually using a `GridLayout` or `Flickable` with repeated `Image` elements, or generate a single large tile that covers the viewport.
 
 **Conditional overlays:** Paper texture and pixel grid are optional overlay components at the root, bound to `Theme.retro-effects-enabled`. Implementations must not branch component logic on theme; only the presence/absence of these overlay nodes changes.
 
@@ -2080,7 +2082,7 @@ All themes must show visible focus indicators:
 ### 13.4 Screen Reader Support
 
 Slint's screen reader support is limited. Mitigations:
-- Set `accessible-role` and `accessible-label` properties on all interactive components where available in Slint 1.15.1
+- Set `accessible-role` and `accessible-label` properties on all interactive components where available in current stable Slint
 - Panel state (docked/floating) announced via accessible labels
 - Theme name available to assistive technology
 - Keyboard shortcuts prominently documented and discoverable via command palette
@@ -2482,7 +2484,7 @@ cargo check
 
 | Risk | Severity | Mitigation |
 |------|----------|------------|
-| **`ImageFit.repeat` may not exist in Slint 1.15.1** | Medium | Use `SharedPixelBuffer` to generate tiles at the viewport size; or manually tile via `GridLayout` with repeated `Image` elements. Test at build time; if unavailable, use fallback approach. |
+| **`ImageFit.repeat` availability may differ by current stable Slint release** | Medium | Use `SharedPixelBuffer` to generate tiles at the viewport size; or manually tile via `GridLayout` with repeated `Image` elements. Test at build time; if unavailable or unsuitable, use fallback approach. |
 | **Multi-window lifecycle edge cases** | High | State machine in Rust manages window create/destroy. On floating window close -> dock or collapse; update layout state. Test: focus management between main and floating windows; data sync when floating window is open; re-dock after window was on disconnected monitor. |
 | **Limited screen reader support** | Medium | Keyboard navigation is comprehensive (§13.3). Set `accessible-role` and `accessible-label` where Slint supports them. Document limitations. Basic theme provides maximum readability. |
 | **No built-in context menu** | Low | Custom `ContextMenu` widget using `TouchArea` pointer events. Positioned at mouse coordinates. Styled per theme. Clipboard operations (Copy/Paste/Select All) delegate to Slint's native `TextInput.copy()` / `.paste()` / `.select-all()` — no custom clipboard state management needed. |
@@ -2582,7 +2584,7 @@ LF-007 stale-reference cleanup applies to this appendix and to `Plans/assistant-
 
 These decisions are final and must not be revisited during implementation:
 
-1. **Slint 1.15.1** -- no other UI framework
+1. **Slint 1.17.0 on Rust stable 1.96.1, verified 2026-07-02** -- no other UI framework; reverify official stable releases before runtime implementation
 2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
 3. **No React/JS/TS/HTML/CSS** -- pure Rust + Slint shell
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
@@ -4961,7 +4963,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   FinalGUISpec follows DRY_Rules and Contracts_V0, uses Puppet Master naming and deterministic
-  defaults, and establishes Rust plus Slint 1.15.1 with slint_build and renderer choices as the
+  defaults, and establishes Rust stable 1.96.1 plus Slint 1.17.0 with slint_build and renderer choices as the
   authoritative implementation baseline.
 gui_related: true
 gui_classification_reason: >-
@@ -4991,7 +4993,8 @@ preserved_exact_tokens:
 - "Plans/DRY_Rules.md"
 - "Plans/Contracts_V0.md"
 - "Puppet Master"
-- "Slint 1.15.1"
+- "Rust stable 1.96.1"
+- "Slint 1.17.0"
 - "slint_build"
 - "winit + Skia"
 - "FemtoVG-wgpu"
@@ -5042,7 +5045,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0022"
 preserved_exact_tokens:
 - "Iced-based GUI"
-- "Slint 1.15.1"
+- "Slint 1.17.0"
 - "IDE-shell layout"
 - "Activity Bar"
 - "Primary Content"
@@ -5154,7 +5157,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0024"
 preserved_exact_tokens:
 - "Rust"
-- "Slint 1.15.1"
+- "Slint 1.17.0"
 - "slint_build"
 - "winit + Skia"
 - "winit + FemtoVG-wgpu"
@@ -14343,7 +14346,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Because Slint screen reader support is limited, interactive components set `accessible-role`
-  and `accessible-label` where available in Slint 1.15.1, panel dock/floating state and theme
+  and `accessible-label` where available in current stable Slint, panel dock/floating state and theme
   name are exposed to assistive technology, and keyboard shortcuts are discoverable via
   command palette.
 gui_related: true
@@ -14371,7 +14374,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0138"
 preserved_exact_tokens:
-- "Slint 1.15.1"
+- "Slint 1.17.0"
 - "accessible-role"
 - "accessible-label"
 - "docked/floating"
@@ -16414,8 +16417,8 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `ImageFit.repeat may not exist in Slint 1.15.1` risk is mitigated as follows: Use
-  SharedPixelBuffer generated tiles or manual GridLayout tiling and test at build time.
+  The `ImageFit.repeat` availability risk is mitigated as follows: Check current stable Slint,
+  then use SharedPixelBuffer generated tiles or manual GridLayout tiling and test at build time.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -16442,7 +16445,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
 preserved_exact_tokens:
 - "ImageFit.repeat"
-- "Slint 1.15.1"
+- "Slint 1.17.0"
 - "SharedPixelBuffer"
 - "GridLayout"
 negative_constraints: []
@@ -18078,7 +18081,7 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Implementation decisions are final for Slint 1.15.1, winit+Skia with FemtoVG-wgpu fallback,
+  Implementation decisions are final for Slint 1.17.0 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
   no React/JS/TS/HTML/CSS shell, IDE shell layout, three theme families, Settings restructure,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
@@ -18107,7 +18110,8 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0158"
 preserved_exact_tokens:
-- "Slint 1.15.1"
+- "Rust stable 1.96.1"
+- "Slint 1.17.0"
 - "winit + Skia"
 - "winit + FemtoVG-wgpu"
 - "No React/JS/TS/HTML/CSS"

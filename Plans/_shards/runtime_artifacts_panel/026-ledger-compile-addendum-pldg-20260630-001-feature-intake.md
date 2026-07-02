@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L1722-L1813
+Source lines: L1723-L1818
 
-Source SHA256: `df360a7c9769f8607bb51be205eabaff52f522a9225d03cb996c2470052e37f9`
+Source SHA256: `ba8114974270324cc723cf88c113d78278b4975fd0c6305207c45b0ad4acc42d`
 
 ---
 
@@ -28,16 +28,20 @@ canonical_text: >-
   container records remain authoritative; stale or missing owner records degrade the view. `blocked != failed` is
   preserved for permission_denied, user_declined, headless_ask_denied, filesafe_blocked, external_side_effect_blocked,
   network_blocked_by_policy, host_unreachable, host_untrusted, test_gap_policy, capability_unavailable,
-  projection_stale, needs_review, and indeterminate_remote_outcome.
+  projection_stale, needs_review, and indeterminate_remote_outcome. Containerized-host runtime artifact rows link
+  `host_preflight_receipt`, `host_execution_receipt`, `cleanup_retention_receipt`, `port_access_record`,
+  `permission_snapshot_id`, `filesafe_scope_ref`, `host_assignment_id`, `host_instance_id`, `runtime_context_ref`,
+  `blocked_reason_code`, `allowed_action_ids[]`, and `projection_health` back to Docker/Hosts and owner records.
 gui_related: true
 gui_classification_reason: Runtime Artifacts evidence browsing, logs, screenshots, traces, access URLs, and degraded projection states are user-visible panel behavior.
-depends_on: [CV-303, SP-226, CRAU-092, ATS-019, EP-109]
-unblocks: [F3-410, ACD-430, OP-028, RGV-015]
+depends_on: [CV-303, SP-226, ATS-019, EP-109]
+unblocks: [ACD-430, OP-028, RGV-015]
 acceptance_criteria:
   - Runtime Artifacts can show host/test/runtime evidence and receipt refs without replacing owner records as truth.
   - Stale, missing, blocked, and degraded owner records produce visible projection health rather than optimistic success.
   - Manual eyeballing, chat-only observation, and container-started claims cannot certify completion.
   - Blocked permission, FileSafe, policy, host, trust, test-gap, and projection outcomes remain blocked states, not failures.
+  - Containerized-host receipt rows expose the receipt family, owning record ref, stale/degraded projection health, blocked reason code, and allowed actions without becoming the receipt authority.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Runtime Artifacts containerized-host projection fixtures

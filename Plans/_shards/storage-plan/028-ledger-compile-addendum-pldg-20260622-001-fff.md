@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L15169-L15262
+Source lines: L15175-L15270
 
-Source SHA256: `3a676cd5f10d01235809b09ba1f6e29a872ed6035aaa403bfa8ee9e1c01b426d`
+Source SHA256: `a8fc7140e89880a7e51e4d554d50ff962ec073852fffe1c29ca3ccf4a84d5140`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - Path identity, display path, normalization, case, and symlink policy are explicit in cached results and receipts.
   - Frecency/history reset or disable removes future ranking use for the selected identity while durable receipts remain under Runtime Artifacts retention/redaction policy.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future cache identity tests for schema/ranking/policy/ignore/identity/manifest changes.
   - Future frecency reset versus durable receipt retention tests.
 risk_class: persistence_identity_drift
@@ -77,6 +78,7 @@ acceptance_criteria:
   - Stale remote_cache or ssh_manifest fallback is explicitly disclosed and never reported as fresh remote truth.
   - Remote cache keys contain no credential or secret material.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future SSH project with no local checkout test.
   - Future stale remote cache and wrong-branch invalidation tests.
 risk_class: remote_identity_drift

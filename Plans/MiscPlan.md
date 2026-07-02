@@ -1127,13 +1127,13 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 **Known risks**
 
-- **Slint key API:** Key event handling depends on Slint's key-event API (e.g. `FocusScope` `key-pressed` callback, `KeyEvent` struct). Behavior may differ by Slint version; implementer should confirm the integration point against Slint 1.15.1 docs and document it in the implementation plan.
+- **Slint key API:** Key event handling depends on Slint's key-event API (e.g. `FocusScope` `key-pressed` callback, `KeyEvent` struct). Behavior may differ by Slint version; implementer should confirm the integration point against current stable Slint docs and document it in the implementation plan.
 - **Skill discovery on Windows path case:** Discovery paths (e.g. `.puppet-master/skills`, `.claude/skills`, `.agents/skills`) may behave differently on Windows (case-insensitivity, path separators). First-wins deduplication by name should account for case-normalization if needed.
 - **platform_specs skill injection:** Each provider (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini) receives the skill list through a versioned `platform_specs` injection contract that records platform_id, runner_id/runtime_identity, skill/package identity, injection timing, capability/permission boundary, environment/secret boundary, compatibility matrix, failure/fallback behavior, audit/evidence refs, override policy, and owner approval path. Runner integration must validate that contract before `list_skills_for_agent` injects skills.
 
 **Before implementation plan**
 
-- Confirm Slint key-event API (Slint 1.15.1): where key events are captured (window vs focused widget, via `FocusScope`) and how KeyMap is applied.
+- Confirm Slint key-event API against Slint 1.17.0 or the current stable release reverified before implementation: where key events are captured (window vs focused widget, via `FocusScope`) and how KeyMap is applied.
 - Confirm platform_specs (or equivalent) documents skill injection for each platform so the implementation plan can wire `list_skills_for_agent` per runner.
 
 ---
@@ -5372,7 +5372,7 @@ plan_unit_id: M-068
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Shortcuts and Skills implementation planning must explicitly confirm Slint 1.15.1 key-event integration, Windows path-case behavior for skill discovery, and platform_specs skill injection per provider.
+canonical_text: Shortcuts and Skills implementation planning must explicitly confirm Slint 1.17.0 or current-stable key-event integration, Windows path-case behavior for skill discovery, and platform_specs skill injection per provider.
 gui_related: true
 gui_classification_reason: The unit affects GUI key handling, Skills list behavior, and provider-visible skill integration.
 split_recommended: true
@@ -5381,7 +5381,7 @@ depends_on:
 - M-048
 unblocks: []
 acceptance_criteria:
-- Slint key-event capture location and KeyMap application are confirmed against Slint 1.15.1 docs.
+- Slint key-event capture location and KeyMap application are confirmed against Slint 1.17.0 or current stable docs before implementation.
 - Skill discovery handles Windows path case and separators as needed.
 - platform_specs or equivalent documents how each provider receives skill list, paths, content, environment, prompt injection, or tools.
 - list_skills_for_agent remains stubbed until platform-specific delivery is defined.
@@ -5400,7 +5400,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0084
 preserved_exact_tokens:
-- Slint 1.15.1
+- Slint 1.17.0
 - FocusScope
 - KeyEvent
 - Windows path case

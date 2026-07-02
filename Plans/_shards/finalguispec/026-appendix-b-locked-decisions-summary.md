@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L2564-L2584
+Source lines: L2583-L2603
 
-Source SHA256: `444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02`
+Source SHA256: `a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02
 
 These decisions are final and must not be revisited during implementation:
 
-1. **Slint 1.15.1** -- no other UI framework
+1. **Slint 1.17.0 on Rust stable 1.96.1, verified 2026-07-02** -- no other UI framework; reverify official stable releases before runtime implementation
 2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
 3. **No React/JS/TS/HTML/CSS** -- pure Rust + Slint shell
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel

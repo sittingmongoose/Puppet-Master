@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7713-L7799
+Source lines: L7714-L7809
 
-Source SHA256: `74dd10ebe04ed651d00c997e89f269957c527d284c25cd0798d03edc59f10ca2`
+Source SHA256: `be9446be79e1dcfb60de9c47670401a8a8cec8102d13669ce9acbad9e16bba5c`
 
 ---
 
@@ -28,10 +28,17 @@ canonical_text: >-
   secret_access_policy, destructive_command_policy, preflight_required, allowed_action_ids, and expected receipt refs when
   relevant. HostOperationRequest remains a dispatch/request payload shape below the command envelope when needed. Docker
   and Kubernetes command families continue to live under cmd.docker.* and cmd.docker.k8s.* ownership, with Docker/Hosts
-  as a routed destination rather than a new Activity Bar owner.
+  as a routed destination rather than a new Activity Bar owner. Registered Docker/Hosts command ids include
+  `cmd.docker.hosts.open`, `cmd.docker.host.refresh`, `cmd.docker.host.preflight`,
+  `cmd.docker.host.profile.save`, `cmd.docker.host.session.launch`, `cmd.docker.host.instance.start`,
+  `cmd.docker.host.instance.stop`, `cmd.docker.host.instance.restart`, `cmd.docker.host.access.open_app`,
+  `cmd.docker.host.instance.retain`, and `cmd.docker.host.receipt.open`, in addition to existing
+  `cmd.docker.run`, `cmd.docker.stop`, `cmd.docker.restart`, `cmd.docker.container.open`,
+  `cmd.docker.container.view_logs`, `cmd.docker.container.attach_shell`, `cmd.docker.cleanup.scan`, and
+  `cmd.docker.cleanup.prune` where exact semantics match.
 gui_related: true
 gui_classification_reason: This PlanUnit defines user-visible command routes and affordances for GUI, chat, orchestrator, and run-graph surfaces.
-depends_on: [CV-304, EP-109, PS-126, F2-194]
+depends_on: [CV-304]
 unblocks: [F3-410, ACD-430, OP-028, RGV-015]
 acceptance_criteria:
   - Docker/Hosts commands and access pivots are registered through UI_Command_Catalog rather than ad hoc page-local payloads.
@@ -39,6 +46,8 @@ acceptance_criteria:
   - cmd.docker.* and cmd.docker.k8s.* command families preserve Docker Manager command namespace ownership.
   - Command dispatch carries authority, FileSafe, network, secret, destructive-command, preflight, and receipt expectations before mutation.
   - Direct Coasts HTTP API, permissive CORS, SSE/WebSocket terminal, and file/service controls are not copied as PM command authority.
+  - Every Docker/Hosts toolbar, card, detail-row, access, lifecycle, receipt, and cleanup action maps to one registered command id and a HostCapabilityCommand payload, or remains disabled with blocked/degraded display evidence.
+  - Command fixtures cover missing authority, missing FileSafe scope, missing receipt expectation, stale projection mutation denial, low-confidence port access denial, and cleanup/retain receipt requirements.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future UI command catalog host-command fixture

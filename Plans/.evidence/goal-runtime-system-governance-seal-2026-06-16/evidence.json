@@ -2,43 +2,43 @@
   "artifacts": [
     {
       "path": "Plans/Goal_Runtime_System.md",
-      "sha256": "e9efed5d1958c33638a2c8c0c0cc189271d5e693d7efd498f6d6e68d3a4f39d1"
+      "sha256": "39976ba2de9955eddea57ef902eeafc4da31f7072ee975955fbd5d3068bf5b10"
     },
     {
       "path": "Plans/00-plans-index.md",
-      "sha256": "04008a1d57a5ecc7805569edf5eb8b5d6d362abcb643dbc8d8f929fea9636498"
+      "sha256": "a5294e511f4e9df29fcc0c6df6dcdda7da884e2c6304e3ad644b771ff1801711"
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02"
+      "sha256": "a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384"
     },
     {
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "97438ff075ddc69027838768a23223b2f2f72bac71819c99049d1850f8a3c6e1"
+      "sha256": "ec38f3391976aad49726daab107e568198c82a29652e5ef6715aea85fc7e1ea4"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "6b2e40b445c6898b5f2196b3e881390bcfc429afb30a0a1352b169a2b6dfc5c4"
+      "sha256": "98029fd07949039efea99f31102aa0dcda88ef8e9896f6611cfe5e87ae1a2124"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "acb42dfd2bbc816980febbd4e156f45eb7d16158c733de3671154439edd2efc0"
+      "sha256": "13018923719018e5523ed21a5ef983f26ea8f8e6019970f09d87c814707dcf0a"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "04133907fa5aa5a13d33405d71cfa45a13526bd2da00f0fc24aa89aeaa79a7d8"
+      "sha256": "626cd3453fd8044935486f2b7f845842512212a6195a3d786ef9ea43f551bcf2"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "49c31c6731091bc07f4827ffa6725976928ef62dd6db9326deeb9c3718d9af97"
+      "sha256": "e18649fd6055362d59ec2a4d1cf3b91184c097a3fe15dfd3b66aa80770cac7fb"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "0e587b3e39c58e0f2f07f2b4723b563f340d9db8b51f05e334ab9366424ab081"
+      "sha256": "54b482521ee544b21727f8239abf19d35ccfa84daab78b2c4883874ba148ec4f"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "769230fdb1472ba5319d656a0595740270ae7a0cec04f02668d42063fbcaa8e6"
+      "sha256": "0eb9b71d4f0a9500f496f1854cc419ae30e3b2dc8c8df1cc7be2068860d3a9d9"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
@@ -62,15 +62,15 @@
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "df1be9a05b40d677d03b96e4fc45c83ac7e18fd8007d8deb768d500d43f3b4dc"
+      "sha256": "9935fec81fb7dfa6b649420b35ad08cea31875caba5597b4b472b334bd190200"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "b7843b8fa47a5afa0ee39242e639fcc8f9deecdc6243efe24ef8941b9bf5a41f"
+      "sha256": "ed7e0cbbfeebad483d0de8222d0fef1db209520f23edb315f7342d28a870bdf5"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
-      "sha256": "7aca6d1ee796544da3d86f23e4c0cc65cacdea1b653b2508c42567922dd65162"
+      "sha256": "6132b2543676ba4b0d5e379a5a0a7eb4a685305a848d203fb789278495a925a5"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -78,11 +78,11 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "33301bdd709da9c387ba51956be775ac068529102fc211da1f40cd860d36bab1"
+      "sha256": "f360c18a7aee4bd18256f4f9d516ff273ec6d8195183edbdb18cb5493659ce4d"
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "b8e697b496875d23ba9bb78091465dd66e9298f2e872eb7a246c834ab23943da"
+      "sha256": "87f6952d953cd045b09c2b6c460b156e1782cbccc7bbe04520feac62be77fe0e"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -94,7 +94,7 @@
     },
     {
       "path": "Plans/ledgers/v2/ledger_registry.json",
-      "sha256": "b4a54dbeccccd7aad3d592ed50bf6f925f79153df425c973cdfded9859ec7932"
+      "sha256": "44f85e2e5f2b612d051fb81651580214657e9fe1c1b679092cd56c46d8e264de"
     },
     {
       "path": "Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system/manifest.json",

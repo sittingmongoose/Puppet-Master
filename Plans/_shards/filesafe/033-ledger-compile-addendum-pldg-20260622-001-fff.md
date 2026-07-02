@@ -4,7 +4,7 @@ Source: `Plans/FileSafe.md`
 
 Source lines: L13201-L13244
 
-Source SHA256: `9a245704a35dc4162bed38d7d309cee2719981dc81997bc3392e285c29f6f5e5`
+Source SHA256: `464f6f0bc065388f96005298308f00cfe57510d8190a62d4a6bec53d3222d1db`
 
 ---
 
@@ -21,15 +21,15 @@ canonical_text: >-
   FileSafe rules apply before and during DiscoveryService indexing and querying. FileSafe, ignore rules, secret exclusions, symlink policy, root/home scan guardrails, project/worktree boundaries, and remote/SSH authorized-root boundaries filter candidates before scoring or produce an equivalent no-leak guarantee. Denied or hidden_by_policy candidates are not success-shaped ranked results and must not leak blocked filenames, blocked counts, rank gaps, matched ranges, display paths, fallback diagnostics, health messages, or rank explanations. candidate_count is visible post-policy only, and selected_result_ids are opaque/redaction-profiled identifiers rather than raw unauthorized paths.
 gui_related: false
 gui_classification_reason: This is FileSafe policy and no-leak filtering, not direct GUI presentation.
-depends_on: [F2-188, F2-190, SP-217, SP-218]
+depends_on: [F2-188, F2-190, SP-217]
 unblocks: [PS-118, ATS-011, RAP-031]
 acceptance_criteria:
   - Policy-hidden paths cannot influence visible rank gaps, counts, summaries, or diagnostics.
   - Root/home and symlink guardrails apply before discovery indexing and query ranking.
   - Remote/SSH manifest entries are FileSafe-gated before dispatch and before local indexing.
 validation_surfaces:
-  - Future denied/hidden-by-policy no-leak tests.
-  - Future root/home refusal, ignore, symlink, and remote authorized-root tests.
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: filesafe_no_leak
 reasoning_tier: high
 context_scope: discovery_policy_filtering

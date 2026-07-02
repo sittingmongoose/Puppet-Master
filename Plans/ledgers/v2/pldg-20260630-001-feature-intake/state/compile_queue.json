@@ -1,11 +1,11 @@
 {
   "schema_id": "pm.bootstrap_compile_queue.v1",
   "ledger_id": "pldg-20260630-001-feature-intake",
-  "status": "compiled_containerized_hosts_governance_sealed",
+  "status": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
   "governance_status": "sealed",
-  "last_event_id": "evt-0041",
-  "terminal_ledger_event_id": "evt-0041",
-  "updated_at_utc": "2026-07-01T16:12:15Z",
+  "last_event_id": "evt-0043",
+  "terminal_ledger_event_id": "evt-0043",
+  "updated_at_utc": "2026-07-02T20:36:00Z",
   "items": [
     {
       "queue_id": "pcq-0001",
@@ -187,13 +187,19 @@
       "created_at_utc": "2026-07-01T14:53:50Z",
       "compiled_at_utc": "2026-07-01T14:53:50Z",
       "readiness_recheck_ref": "source_shards/fourth_subjective_objective_recheck_20260701.json",
-      "direct_gui_workflow_build_packet_ready": false,
-      "open_blocker_ids": [
-        "blk-0003"
-      ],
+      "direct_gui_workflow_build_packet_ready": true,
+      "open_blocker_ids": [],
       "governance_status": "sealed",
       "governance_sealed_at_utc": "2026-07-01T16:12:15Z",
-      "governance_validation_ref": "source_shards/governance_seal_validation_20260701.json"
+      "governance_validation_ref": "source_shards/governance_seal_validation_20260701.json",
+      "build_packet_closure_ref": "events.jsonl:evt-0042",
+      "updated_at_utc": "2026-07-02T20:36:00Z",
+      "code_implementation_ready": false,
+      "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next",
+      "terminal_ledger_event_id": "evt-0043",
+      "phase": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
+      "last_event_id": "evt-0043"
     }
   ],
   "compiled_owner_docs": [
@@ -275,8 +281,8 @@
     "Plans/Contracts_V0.md"
   ],
   "candidate_compile_owner_docs": [],
-  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/fourth_subjective_objective_recheck_20260701.json",
-  "latest_audit_status": "mixed_direct_gui_workflow_gap_pending_reconfirmed",
+  "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+  "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next",
   "notes": "Compiled PlanUnits are product/spec owner-coverage ready and compile validators pass. Fourth subjective/objective recheck found no missing canonical owner coverage, but direct Docker/Hosts GUI/workflow implementation-packet detail remains open; governance seal is complete and validators pass.",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
@@ -286,9 +292,9 @@
     "git_diff_check": "pass",
     "pm_plans_verify_run_gates": "pass",
     "pm_shard_plans_check": "pass",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "node_readiness_status": "ready_for_node_compile",
     "governance_status": "sealed",
-    "direct_gui_workflow_build_packet_ready": false,
+    "direct_gui_workflow_build_packet_ready": true,
     "compiled_plan_intent_ready": true,
     "no_worknodes_created": true,
     "no_nodeseed_candidates_created": true,
@@ -302,10 +308,26 @@
     "validate_plan_graph": "pass",
     "validate_auto_decisions": "pass",
     "governance_seal": "passed",
-    "ledger_health": "pass_governance_sealed"
+    "ledger_health": "pass_governance_sealed",
+    "code_implementation_ready": false,
+    "current_checkout_governance_validators_clean": true
   },
   "post_compile_validation_outputs": [
     "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
     "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json"
-  ]
+  ],
+  "phase": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
+  "open_blocker_ids": [],
+  "open_blockers_count": 0,
+  "direct_gui_workflow_build_packet_ready": true,
+  "implementation_ready_in_ledger": true,
+  "code_implementation_ready": false,
+  "current_checkout_governance_validators_clean": true,
+  "current_checkout_ready": true,
+  "last_updated_at_utc": "2026-07-02T20:36:00Z",
+  "implementation_readiness_in_ledger": true,
+  "current_checkout_compile_validators_clean": true,
+  "record_counts": {
+    "events": 43
+  }
 }

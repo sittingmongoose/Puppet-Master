@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L25594-L25644
+Source lines: L25615-L25666
 
-Source SHA256: `444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02`
+Source SHA256: `a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384`
 
 ---
 
@@ -29,6 +29,7 @@ acceptance_criteria:
   - Local sort/filter behavior is disclosed when it changes visible order.
   - Rank explanations are coarse and no-leak.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future GUI/agent ranking parity tests.
   - Future GUI stale/fallback/denied/no-results/hidden-by-policy state tests.
 risk_class: gui_discovery_route_drift

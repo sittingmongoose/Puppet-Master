@@ -1,5 +1,5 @@
 {
-  "adjudicated_at_utc": "2026-07-02T00:00:00Z",
+  "adjudicated_at_utc": "2026-07-02T20:30:00Z",
   "dispositions": [
     {
       "classification": "filled_current_contract",
@@ -35,6 +35,12 @@
       "classification": "concept_fixture_only",
       "disposition": "Mock/stub markers in PMConcept are concept/source-lineage fixture labels and are not implementation blockers for canonical Plans.",
       "signal": "mock/stub",
+      "target": "Concepts/PMConcept.html"
+    },
+    {
+      "classification": "concept_fixture_only",
+      "disposition": "PMConcept demo terminal strings, localhost flow labels, browser-runtime snippets, and stale Rust/Slint version text are fixture/source-lineage examples only. Current toolchain authority lives in Plans/FinalGUISpec.md and Plans/PMConcept_Control_Reconciliation.json.",
+      "signal": "demo/mock/stale_toolchain_strings",
       "target": "Concepts/PMConcept.html"
     },
     {
@@ -97,6 +103,72 @@
         "cwf-lifecycle-canonical-blocked-state",
         "cwf-lifecycle-blocked-clear-rule"
       ]
+    },
+    {
+      "target": "Plans/OpenCode_Coverage_Matrix.md:241",
+      "signal": "future disabled_plugins field consistency gap",
+      "classification": "archive17_governed_owner_consistency_gap",
+      "disposition": "The disabled_plugins frontmatter mismatch is a bounded cross-owner consistency finding recorded in a coverage matrix, not an unresolved placeholder inside canonical product prose. It remains governed by the Plugins_System/Personas owner contract before implementation promotion."
+    },
+    {
+      "target": "Plans/Run_Graph_View.md:81",
+      "signal": "not yet clearly define",
+      "classification": "source_lineage_gap_superseded_by_later_planunits",
+      "disposition": "This audit-note sentence is source-lineage context from an earlier run-focus sweep. Later Run Graph and Orchestrator PlanUnits own historical/live focus behavior; the note is not current implementation authority."
+    },
+    {
+      "target": "Plans/Prompt_Pipeline.md:536",
+      "signal": "still carry tier-era runtime assumptions",
+      "classification": "source_lineage_gap_superseded_by_identity_contracts",
+      "disposition": "This second-sweep audit note records old tier-era pressure. Current owner contracts route runtime identity through requested/effective snapshot refs and compatibility-only tier labels; the note is not a live TODO."
+    },
+    {
+      "target": "Plans/Project_Output_Artifacts.md:47",
+      "signal": "not yet fully aligned",
+      "classification": "archive17_governed_artifact_identity_gap",
+      "disposition": "The artifact/file-opening alignment sentence is an explicit bounded owner-gap note tied to FileManager and Runtime_Artifacts_Panel, not an empty placeholder. Implementation promotion must use those owner contracts and current wiring evidence."
+    },
+    {
+      "target": "Plans/newtools.md:450",
+      "signal": "codebase fields do not yet exist",
+      "classification": "legacy_codebase_source_lineage_only",
+      "disposition": "This line references removed legacy implementation paths such as interview/state.rs and app.rs. It is preserved only as migration/source-lineage evidence for the rebuild and is not live Rust/Slint implementation authority."
+    },
+    {
+      "target": "Plans/orchestrator-subagent-integration.md:1086",
+      "signal": "code not yet present",
+      "classification": "legacy_implementation_note_source_lineage_only",
+      "disposition": "The old implementation-presence note belongs to source-lineage extraction material. Current Orchestrator/Subagent authority is the accepted PlanUnit contract set; this sentence does not permit or require recreating the removed legacy app."
+    },
+    {
+      "target": "Plans/Progression_Gates.md:148",
+      "signal": "not yet enforced by run-gates",
+      "classification": "governed_gate_integration_scope_note",
+      "disposition": "GATE-011 through GATE-014 are explicitly named future/currentness scope boundaries for traceability and Document Set packaging integration. The line is a governed coverage statement, not a hidden TODO or stub."
+    },
+    {
+      "target": "Plans/Planning_Wizard.md#PWIZ-012",
+      "signal": "TODO/TBD/stub/placeholder vocabulary",
+      "classification": "zero_incomplete_policy_vocabulary",
+      "disposition": "PWIZ-012 intentionally defines the zero-incomplete policy and therefore names banned marker vocabulary as policy terms. These words are not unresolved incomplete content in this PlanUnit."
+    },
+    {
+      "target": "Plans/Progression_Gates.md#PG-059",
+      "signal": "TODO/TBD/stub/placeholder vocabulary",
+      "classification": "zero_incomplete_policy_vocabulary",
+      "disposition": "PG-059 intentionally mirrors the zero-incomplete policy vocabulary for gate enforcement. The marker words are policy terms, not incomplete plan content."
+    },
+    {
+      "target": "Plans/Document_Packaging_Policy.md#pointer-stub-contract",
+      "signal": "pointer stub",
+      "classification": "domain_term_not_placeholder",
+      "disposition": "Pointer stub is a formal Document Set packaging artifact and deterministic derived-file contract, not a placeholder implementation marker."
+    },
+    {
+      "target": "Plans/FinalGUISpec.md#visualizer-library-allowlist",
+      "signal": "TBD visualizer third-party JS library allowlist",
+      "classification": "governed_allowlist_closed_by_empty_default",
+      "disposition": "The visualizer library allowlist remains closed by default unless a library is bundled, versioned, reviewed, and explicitly approved. The preserved TBD token is lineage for the closed allowlist decision, not implementation incompleteness."
     }
   ],
   "schema_id": "pm.zero_incomplete_disposition.v1"

@@ -10883,10 +10883,10 @@
                       <p>- Draft stable PlanUnits from accepted planning state.<br>- Carry dependency, risk, validation, and GUI-routing metadata.<br>- Preserve source refs for compile traceability.</p>
                       <h2>Stage: Node Readiness</h2>
                       <p><strong>Surface:</strong> Plan Compile</p>
-                      <p>- Produce node-readiness metadata only.<br>- Keep WorkNode creation disabled until the compiler contract exists.<br>- Project compile progress into Orchestrator without making it scheduler truth.</p>
+                      <p>- Produce node-readiness metadata only.<br>- Use the accepted PNC-007 compiler contract as the runtime-readiness boundary while this concept fixture remains non-emitting.<br>- Project compile progress into Orchestrator without making it scheduler truth.</p>
                       <h2>Stage: Orchestrator Handoff</h2>
                       <p><strong>Surface:</strong> Orchestrator Plan Compile</p>
-                      <p>- Publish the approved compile state for later handoff.<br>- Keep runtime dispatch disabled until explicitly enabled.</p>
+                      <p>- Publish the approved compile state for later handoff.<br>- Materialize runtime artifacts only through compiler, Executor intake, activation, and Goal Runtime certification contracts.</p>
                     </div>
                   </div>
                 </div>
@@ -19539,7 +19539,7 @@ policies for tenant isolation, and add migration script.</textarea>
   function showExecMock(id) {
     const el = document.getElementById("exec-mock-content");
     if(id === "exec") {
-      el.innerHTML = "<h1>Plan Compile State</h1><h2>Stage: PRD Intake</h2><p><strong>Surface:</strong> PRD Builder</p><p>- Normalize requirements intake.<br>- Preserve accepted constraints, source refs, and out-of-scope notes.<br>- Prepare the Planning Wizard ledger snapshot.</p><h2>Stage: PlanUnits</h2><p><strong>Surface:</strong> Planning Wizard</p><p>- Draft stable PlanUnits from accepted planning state.<br>- Carry dependency, risk, validation, and GUI-routing metadata.<br>- Preserve source refs for compile traceability.</p><h2>Stage: Node Readiness</h2><p><strong>Surface:</strong> Plan Compile</p><p>- Produce node-readiness metadata only.<br>- Keep WorkNode creation disabled until the compiler contract exists.<br>- Project compile progress into Orchestrator without making it scheduler truth.</p><h2>Stage: Orchestrator Handoff</h2><p><strong>Surface:</strong> Orchestrator Plan Compile</p><p>- Publish the approved compile state for later handoff.<br>- Keep runtime dispatch disabled until explicitly enabled.</p>";
+      el.innerHTML = "<h1>Plan Compile State</h1><h2>Stage: PRD Intake</h2><p><strong>Surface:</strong> PRD Builder</p><p>- Normalize requirements intake.<br>- Preserve accepted constraints, source refs, and out-of-scope notes.<br>- Prepare the Planning Wizard ledger snapshot.</p><h2>Stage: PlanUnits</h2><p><strong>Surface:</strong> Planning Wizard</p><p>- Draft stable PlanUnits from accepted planning state.<br>- Carry dependency, risk, validation, and GUI-routing metadata.<br>- Preserve source refs for compile traceability.</p><h2>Stage: Node Readiness</h2><p><strong>Surface:</strong> Plan Compile</p><p>- Produce node-readiness metadata only.<br>- Use the accepted PNC-007 compiler contract as the runtime-readiness boundary while this concept fixture remains non-emitting.<br>- Project compile progress into Orchestrator without making it scheduler truth.</p><h2>Stage: Orchestrator Handoff</h2><p><strong>Surface:</strong> Orchestrator Plan Compile</p><p>- Publish the approved compile state for later handoff.<br>- Materialize runtime artifacts only through compiler, Executor intake, activation, and Goal Runtime certification contracts.</p>";
     } else if(id === "manifest") {
       el.innerHTML = "<h1>Handoff Manifest</h1><p>This manifest records the approved compile state before Orchestrator handoff.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"state\": \"ready_for_plan_compile\",\n  \"handoff_target\": \"orchestrator.plan_compile\",\n  \"artifacts\": [\n    \"PlanUnit index\",\n    \"node-readiness report\",\n    \"source-ref matrix\"\n  ]\n}</pre>";
     }

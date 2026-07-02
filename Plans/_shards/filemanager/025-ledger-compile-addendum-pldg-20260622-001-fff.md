@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4440-L4481
+Source lines: L4440-L4482
 
-Source SHA256: `ba0cc77c58e87cbe7a2158c0805bbb4381ca4ade1907b50de26dbb0b83fbf690`
+Source SHA256: `4ea1e4cb9c50c00f7ecb6570db41f7e583199c5c0c655d72d0a2995c7d1b0998`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - Hidden paths are absent without leaking blocked names or counts.
   - Local filters are disclosed when they refine visible results.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future File Manager type-ahead discovery tests.
   - Future remote/SSH file navigation no-leak tests.
 risk_class: filemanager_discovery_consumer_drift

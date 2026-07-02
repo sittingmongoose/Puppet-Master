@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L3701-L24541
+Source lines: L3720-L24562
 
-Source SHA256: `444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02`
+Source SHA256: `a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384`
 
 ---
 
@@ -1254,7 +1254,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   FinalGUISpec follows DRY_Rules and Contracts_V0, uses Puppet Master naming and deterministic
-  defaults, and establishes Rust plus Slint 1.15.1 with slint_build and renderer choices as the
+  defaults, and establishes Rust stable 1.96.1 plus Slint 1.17.0 with slint_build and renderer choices as the
   authoritative implementation baseline.
 gui_related: true
 gui_classification_reason: >-
@@ -1284,7 +1284,8 @@ preserved_exact_tokens:
 - "Plans/DRY_Rules.md"
 - "Plans/Contracts_V0.md"
 - "Puppet Master"
-- "Slint 1.15.1"
+- "Rust stable 1.96.1"
+- "Slint 1.17.0"
 - "slint_build"
 - "winit + Skia"
 - "FemtoVG-wgpu"
@@ -1335,7 +1336,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0022"
 preserved_exact_tokens:
 - "Iced-based GUI"
-- "Slint 1.15.1"
+- "Slint 1.17.0"
 - "IDE-shell layout"
 - "Activity Bar"
 - "Primary Content"
@@ -1447,7 +1448,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0024"
 preserved_exact_tokens:
 - "Rust"
-- "Slint 1.15.1"
+- "Slint 1.17.0"
 - "slint_build"
 - "winit + Skia"
 - "winit + FemtoVG-wgpu"
@@ -10636,7 +10637,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Because Slint screen reader support is limited, interactive components set `accessible-role`
-  and `accessible-label` where available in Slint 1.15.1, panel dock/floating state and theme
+  and `accessible-label` where available in current stable Slint, panel dock/floating state and theme
   name are exposed to assistive technology, and keyboard shortcuts are discoverable via
   command palette.
 gui_related: true
@@ -10664,7 +10665,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0138"
 preserved_exact_tokens:
-- "Slint 1.15.1"
+- "Slint 1.17.0"
 - "accessible-role"
 - "accessible-label"
 - "docked/floating"
@@ -12707,8 +12708,8 @@ unit_type: constraint
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The `ImageFit.repeat may not exist in Slint 1.15.1` risk is mitigated as follows: Use
-  SharedPixelBuffer generated tiles or manual GridLayout tiling and test at build time.
+  The `ImageFit.repeat` availability risk is mitigated as follows: Check current stable Slint,
+  then use SharedPixelBuffer generated tiles or manual GridLayout tiling and test at build time.
 gui_related: true
 gui_classification_reason: >-
   This unit preserves one row of the user-visible Slint migration risks and mitigations table.
@@ -12735,7 +12736,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
 preserved_exact_tokens:
 - "ImageFit.repeat"
-- "Slint 1.15.1"
+- "Slint 1.17.0"
 - "SharedPixelBuffer"
 - "GridLayout"
 negative_constraints: []
@@ -14371,7 +14372,7 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Implementation decisions are final for Slint 1.15.1, winit+Skia with FemtoVG-wgpu fallback,
+  Implementation decisions are final for Slint 1.17.0 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
   no React/JS/TS/HTML/CSS shell, IDE shell layout, three theme families, Settings restructure,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
@@ -14400,7 +14401,8 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0158"
 preserved_exact_tokens:
-- "Slint 1.15.1"
+- "Rust stable 1.96.1"
+- "Slint 1.17.0"
 - "winit + Skia"
 - "winit + FemtoVG-wgpu"
 - "No React/JS/TS/HTML/CSS"

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L22531-L22615
+Source lines: L22531-L22617
 
-Source SHA256: `97438ff075ddc69027838768a23223b2f2f72bac71819c99049d1850f8a3c6e1`
+Source SHA256: `ec38f3391976aad49726daab107e568198c82a29652e5ef6715aea85fc7e1ea4`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - The exact setting path, label, default, and description match the compiled contract.
   - Turning the setting off never hides permission, approval, safety, trust-affecting fallback/stale, exact-verification, receipt, or final-summary information.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future Assistant Chat visibility on/off tests.
   - Future permission prompt not suppressed by chat visibility setting test.
 risk_class: user_visible_transparency_drift
@@ -71,6 +72,7 @@ acceptance_criteria:
   - Hidden-by-policy paths are not shown as candidates and do not leak through counts or rank gaps.
   - Mention selection does not become content correctness proof.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future Assistant Chat file mention ranking parity test.
   - Future hidden-by-policy mention autocomplete no-leak test.
 risk_class: chat_file_mention_drift

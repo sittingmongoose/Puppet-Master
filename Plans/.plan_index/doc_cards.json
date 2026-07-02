@@ -52,7 +52,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 5001,
+      "line_count": 5002,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 65,
       "plan_unit_ids": [
@@ -188,7 +188,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "e04f5f28a6e12cd5c41351353dee4554d1d7060bfe8bbab92b83a280bf4fa725",
+      "sha256": "a5294e511f4e9df29fcc0c6df6dcdda7da884e2c6304e3ad644b771ff1801711",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 65
@@ -1613,7 +1613,7 @@
         "future provider setup health registry",
         "future typed UICommand implementation crate"
       ],
-      "line_count": 1748,
+      "line_count": 1749,
       "path": "Plans/BinaryLocator_Spec.md",
       "plan_unit_count": 26,
       "plan_unit_ids": [
@@ -1676,7 +1676,7 @@
         "validation_coverage",
         "validation_outcome_drift"
       ],
-      "sha256": "91b8a3f203021dd7ac4f905b18a198dbc0f06a7b3d07ad1854eb2d0610844f50",
+      "sha256": "2e09bcc480993cdcb2784ff083b4b74c78a552979e441ad22465aaf984a4e97e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 26
@@ -4821,7 +4821,7 @@
         "future provider settings UI",
         "future run control UI"
       ],
-      "line_count": 26664,
+      "line_count": 26668,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 411,
       "plan_unit_ids": [
@@ -5275,7 +5275,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "023fd522b6e9940c39beae4ce7b4d1160856c03d97c1cb4e344c5244f7384233",
+      "sha256": "a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 410,
@@ -6558,7 +6558,7 @@
         "temporary_instrumentation_lifecycle_drift",
         "worktree_cleanup_dependency_distinction_drift"
       ],
-      "sha256": "a93953009970854fa81476fb0c19d280bef0edec25356137d74ec8d4d65fcb3f",
+      "sha256": "6efd1f14efc90c9d0eaa3701fa3bc82e1a0a605259c5707bc92a355b13da5b24",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 83
@@ -12562,7 +12562,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-02T17:44:59Z",
+  "generated_at_utc": "2026-07-02T20:29:20Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

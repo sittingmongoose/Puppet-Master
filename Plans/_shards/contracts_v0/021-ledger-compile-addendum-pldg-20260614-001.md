@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L16906-L16985
+Source lines: L16906-L16984
 
-Source SHA256: `d9395b5d304088a5fa7320c64e4d025fd575284fab29902d39e42f74a558b791`
+Source SHA256: `f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e`
 
 ---
 
@@ -53,32 +53,31 @@ negative_constraints:
 owner_hints: [Plans/Contracts_V0.md, Plans/Orchestrator_Page.md, Plans/storage-plan.md, Plans/human-in-the-loop.md]
 ```
 
-### CV-280 - Concern Merge Split Supersession Deferred Authority
+### CV-280 - Concern Merge Split Supersession Future Scope
 
 ```yaml
 plan_unit_id: CV-280
-unit_type: deferred_decision
-status: deferred
+unit_type: future_scope_decision
+status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Concern merge, split, and supersession remain discussion-only until concern identity, routing, authority, and history rules are
-  promoted to contract-level field and event definitions. Orchestrator may display lineage and route to retained concern ids, but it
-  must not invent executable merge/split/supersession mutation authority from GUI or run-graph prose alone.
+  Concern merge, split, and supersession are explicit future/out-of-scope runtime mutation authority for the current implementation-readiness packet. Active concern lifecycle may display and route retained lineage ids using already registered concern identity, routing, and history fields, but executable merge/split/supersession mutations require a later dedicated contract/event registration. Orchestrator and Run Graph may display lineage and route to retained concern ids, but they must not invent executable merge/split/supersession mutation authority from GUI or run-graph prose alone.
 gui_related: false
-gui_classification_reason: The deferred authority is a contract/event mutation boundary, not GUI presentation.
+gui_classification_reason: Concern mutation authority is a contract/event boundary, not GUI presentation.
 depends_on: [CV-279, OP-020]
 unblocks: []
 acceptance_criteria:
-  - Concern lineage terms active, acknowledged, resolved, dismissed, resolution_kind, accepted_risk, merged, split, and superseded are preserved as source-lineage until field/event contracts are complete.
-  - Consumers may display and link lineage but cannot mutate concern history without a contract-level event definition.
+  - Concern lineage terms active, acknowledged, resolved, dismissed, resolution_kind, accepted_risk, merged, split, and superseded are preserved as display/search/source-lineage vocabulary for this implementation packet.
+  - Accepted runtime flow does not depend on executable concern merge/split/supersession mutation authority.
+  - Consumers may display and link lineage but cannot mutate concern history without a later contract-level event definition.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - manual contract owner review before promotion
-risk_class: deferred_contract_authority
+  - Plans/.plan_index/node_readiness_report.json
+risk_class: future_concern_mutation_authority
 reasoning_tier: high
 context_scope: concern_lineage_contract
 implementation_surfaces: [Plans/Contracts_V0.md, Plans/Orchestrator_Page.md, Plans/Run_Graph_View.md]
-node_compile_hint: {mode: deferred_contract_decision, create_worknodes: false}
+node_compile_hint: {mode: future_scope_not_required_for_current_runtime, create_worknodes: false}
 source_lineage:
   - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0054
   - source_ref:Plans/Run_Graph_View.md:36

@@ -4,7 +4,7 @@ Source: `Plans/Runtime_Artifacts_Panel.md`
 
 Source lines: L414-L639
 
-Source SHA256: `df360a7c9769f8607bb51be205eabaff52f522a9225d03cb996c2470052e37f9`
+Source SHA256: `ba8114974270324cc723cf88c113d78278b4975fd0c6305207c45b0ad4acc42d`
 
 ---
 
@@ -66,7 +66,7 @@ canonical_text: >-
   Generated media artifacts must project provider receipt metadata, generation parameters, provider/base response status, trace/request id where available, hashes, durable local artifact refs, original provider URL refs, expiry warnings, partial success/failure counts, and provenance caveats. MiniMax Image-01 URL outputs require 24-hour expiry disclosure; OpenAI/Codex Images 2 routes require account/route distinction and C2PA/SynthID caveats; subscription-backed routes require support-state and terms-risk refs. Antigravity OAuth/internal `gemini-3.1-flash-image` receipts require private/unofficial endpoint caveats, non-secret request/proof refs, image dimensions/hash, and support-state labels.
 gui_related: true
 gui_classification_reason: Generated media artifact browsing, expiry warnings, and provenance presentation are user-visible GUI behavior.
-depends_on: [RAP-032, MGAC-095, MGAC-096, POA-050]
+depends_on: [RAP-032, MGAC-095, MGAC-096]
 unblocks: []
 acceptance_criteria:
   - Generated media receipts include route/account/model identity and non-secret provider metadata.

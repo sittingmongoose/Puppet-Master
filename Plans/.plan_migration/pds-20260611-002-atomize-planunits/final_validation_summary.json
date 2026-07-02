@@ -10,7 +10,7 @@
       "traceability": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0001"
     }
   ],
-  "compiler_contract_status": "blocked_compiler_contract_incomplete",
+  "compiler_contract_status": "compiler_contract_ready_index_non_emitting",
   "completed_batch": {
     "audit_only": true,
     "batch_id": "phase2b-212-contracts-v0-residual-justification-audit",
@@ -459,7 +459,7 @@
   "docs_still_source_preserving_count": 0,
   "forbidden_governance_artifacts_changed": [],
   "forbidden_governance_artifacts_confirmed_not_updated": [],
-  "generated_at_utc": "2026-07-02T16:50:13Z",
+  "generated_at_utc": "2026-07-02T20:30:02Z",
   "governance_seal_required": false,
   "implementation_files_created": false,
   "live_plan_unit_count": 5354,
@@ -468,12 +468,12 @@
   "no_executable_build_tasks_created": true,
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
-  "node_readiness_status": "blocked_compiler_contract_incomplete",
+  "node_readiness_status": "ready_for_node_compile",
   "nodeseed_candidates_created": false,
   "notes": [
     "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
     "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
-    "Node readiness remains blocked_compiler_contract_incomplete; runtime enablement remains runtime_disabled because PlanCompile runtime launch and node artifact generation are not enabled."
+    "Node readiness remains ready_for_node_compile; runtime enablement remains compiler_contract_ready_index_non_emitting because PlanCompile runtime launch and node artifact generation are not enabled."
   ],
   "pre_conversion_preserved_in_place_rows": 0,
   "pre_conversion_repair": {
@@ -493,7 +493,7 @@
   "production_build_tasks_created": false,
   "residual_source_preserving_plan_units": [],
   "run_id": "pds-20260611-002-atomize-planunits",
-  "runtime_enablement_status": "runtime_disabled",
+  "runtime_enablement_status": "compiler_contract_ready_index_non_emitting",
   "schema_id": "pm.plan_migration.phase2_final_validation_summary.v2",
   "scope": "Phase 2 Plan standardization currentness finalized for pds-20260611-002-atomize-planunits without broad Plan re-conversion.",
   "seal_phase_required": [],
@@ -511,7 +511,7 @@
     "required_current_commands": [
       "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-plan-index.py validate",
-      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pds-20260611-002-atomize-planunits",
       "python3 scripts/pm-plans-verify.py run-gates",
       "python3 scripts/pm-shard-plans.py --check",
       "git diff --check"

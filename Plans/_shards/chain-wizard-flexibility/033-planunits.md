@@ -4,7 +4,7 @@ Source: `Plans/chain-wizard-flexibility.md`
 
 Source lines: L2320-L9932
 
-Source SHA256: `fd1623b031dd532cc48b9c2453424830fcbf423cbaa175ffadd8d37b0daeeff3`
+Source SHA256: `c440749e7b8562af34dc9b1a1201165b0170c005336e2bf96b468b936094a547`
 
 ---
 
@@ -5818,7 +5818,7 @@ implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
   - Plans/Personas.md
   - Plans/Prompt_Pipeline.md
-  - Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
+  - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: chain_wizard_deterministic_builder_persona_resolver
   create_worknodes: false
@@ -5867,7 +5867,7 @@ context_scope: builder_personas
 implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
   - Plans/storage-plan.md
-  - Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
+  - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: chain_wizard_review_pass_persona_key_contract
   create_worknodes: false
@@ -5917,7 +5917,7 @@ reasoning_tier: high
 context_scope: builder_personas
 implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
-  - Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors
+  - Plans/FinalGUISpec.md
   - Plans/Personas.md
 node_compile_hint:
   mode: chain_wizard_builder_persona_settings_config
@@ -5965,7 +5965,7 @@ reasoning_tier: high
 context_scope: builder_personas
 implementation_surfaces:
   - Plans/chain-wizard-flexibility.md
-  - Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+  - Plans/Prompt_Pipeline.md
   - Plans/FinalGUISpec.md
 node_compile_hint:
   mode: chain_wizard_builder_requested_effective_runtime_record

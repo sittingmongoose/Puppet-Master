@@ -22,6 +22,7 @@
 - 2026-06-27: Registered miscellaneous PM History, PM-native vision_bridge / see_image, and Teach/Teacher owner routing compiled from ledger `pldg-20260626-001-feature-name`; PMConcept.html remains non-final source-lineage only, and this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, or governance-seal artifacts.
 - 2026-07-01: Registered containerized-hosts owner routing compiled from ledger `pldg-20260630-001-feature-intake`: `Docker/Hosts` is a native Slint routed page/lab reached from Docker Manager and cross-surface links, `docker_manager` remains the Activity Bar side-panel owner and command namespace, Coasts remains source-lineage inspiration only, runtime families are whole-MVP but capability-probed/gated, and this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or governance-seal artifacts.
 - 2026-07-02: Registered GUI / PMConcept implementation-readiness repair artifacts: `Plans/PMConcept_Control_Reconciliation.json` inventories PMConcept controls and dispositions, `Plans/Wiring_Matrix.production.json` is the schema-validated production wiring matrix, `Plans/Wiring_Matrix.production.exclusions.json` records parser/generic/compatibility exclusions, and PMConcept remains concept/source-lineage only rather than canonical implementation HTML/CSS/demo state.
+- 2026-07-02: Refreshed Rust/Slint currentness routing: the active GUI/toolchain target is Rust stable 1.96.1 plus Slint 1.17.0 as verified from official stable release sources on 2026-07-02; PMConcept terminal transcripts and demo version strings are fixture/source-lineage only, and runtime implementation must reverify stable releases before code/build work.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
@@ -190,7 +191,7 @@ The project is intentionally adapting an OpenCode-style architecture and is mid-
 - **Providers** behind one unified **event model**
 - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
 - **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
-- **UI rewrite**: Rust + Slint (winit; Skia default)
+- **UI rewrite**: Rust stable 1.96.1 + Slint 1.17.0 as verified on 2026-07-02 (winit; Skia default; reverify official stable releases before runtime implementation)
 - **Auth**: subscription-first; Gemini Direct (`gemini`, direct key-only/API-key-backed) remains active, while Gemini CLI (`gemini_cli`) is retired from active provider support and preserved only as source-lineage/compatibility terminology. Antigravity CLI is the active CLI-backed Google/agent route replacing the stale Gemini CLI route. Provider identity, requested/effective auth, account identity, account/plan UI, quota/usage labels, media capabilities, and setup/health are route-, account-, and model-dependent across direct providers, CLI-backed providers, coding-plan providers, and generated-media routes.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD

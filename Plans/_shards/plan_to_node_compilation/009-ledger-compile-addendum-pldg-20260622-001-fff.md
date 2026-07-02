@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L1211-L1254
+Source lines: L1219-L1262
 
-Source SHA256: `858f6110a44926c0db2dbd7b1ba06f308960860d9e66e16adba90e1d6f3ad00b`
+Source SHA256: `3cb52bfe1be3a7b491e7dc982c18c5daa4fe9d2cc9d4c0adafebb5b2aa175546`
 
 ---
 
@@ -28,8 +28,8 @@ acceptance_criteria:
   - Node-readiness/index outputs do not create WorkNodes, NodeSeeds, queues, manifests, launches, implementation files, or build tasks.
   - Runtime conformance proof is not required for the disabled future compiler boundary.
 validation_surfaces:
-  - PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate
-  - Future node-readiness report no_worknodes_created=true check.
+  - python3 scripts/pm-plan-index.py validate
+  - Plans/.plan_index/node_readiness_report.json
 risk_class: execution_boundary
 reasoning_tier: standard
 context_scope: plan_to_node_future_boundary

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6247-L6385
+Source lines: L6247-L6386
 
-Source SHA256: `ebea79168c58573e4bee31bc623baa0d719de169323c615032e680f03482be7e`
+Source SHA256: `d166a4de287145e9f90b6a4ec20aaab8792a88fb70873ba27824e883bfc63909`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - Verifier may use discovery to find evidence targets but still requires exact evidence.
   - Discovery output cannot satisfy verifier pass criteria without exact verification.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future Builder no-path orientation test.
   - Future Verifier exact evidence follow-up test.
   - Future SSH no-local-checkout Executor task test.

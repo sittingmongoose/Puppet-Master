@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "b8e697b496875d23ba9bb78091465dd66e9298f2e872eb7a246c834ab23943da"
+      "sha256": "87f6952d953cd045b09c2b6c460b156e1782cbccc7bbe04520feac62be77fe0e"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -18,7 +18,7 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "2683707b81ffe5a548c64ead36cd9ce931ca1c4c75ce753dbaf7865d168b3673"
+      "sha256": "529dacf0e416cfbb440c3629d4b46e76991bf23832c411cdcc9fbb0596412545"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -106,7 +106,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index validates after Doctor/onboarding repair; node_readiness remains blocked_compiler_contract_incomplete by design."
+      "details": "PASS: plan_unit_count=5354; acceptance_unit_count=19198; node_readiness_status=ready_for_node_compile; coverage_status=pass."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -242,6 +242,26 @@
       "name": "no-forbidden-artifacts",
       "result": "PASS",
       "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime/build surfaces, or production build tasks were created by this bounded repair."
+    },
+    {
+      "name": "docker-hosts-blk-0003-closure",
+      "result": "PASS",
+      "details": "PASS: blk-0003 closed as documentation/build-packet blocker by evt-0042 with F3-410/CRAU-092/UCC-105 evidence; code/runtime implementation remains disabled."
+    },
+    {
+      "name": "toolchain-currentness",
+      "result": "PASS",
+      "details": "PASS: Rust stable 1.96.1 and Slint 1.17.0 verified on 2026-07-02; PMConcept stale terminal strings are fixture-only."
+    },
+    {
+      "name": "pmconcept-concept-scope",
+      "result": "PASS",
+      "details": "PASS: PMConcept remains concept/source-lineage only; production GUI authority is FinalGUISpec, Wiring Matrix, UI Command Catalog, and owner docs."
+    },
+    {
+      "name": "zero-incomplete-disposition",
+      "result": "PASS",
+      "details": "PASS: zero_incomplete_disposition.json contains governed dispositions for TODO/TBD/stub/placeholder/mock/demo/empty-section/duplicate-heading signals, including PMConcept demo/toolchain fixture text."
     }
   ],
   "commands_run": [
@@ -258,7 +278,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -290,7 +310,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260630-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -392,6 +412,26 @@
     },
     {
       "cmd": "python3 -m unittest discover -s tests",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits --write-report",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates --quiet-progress --subcheck-timeout-seconds 120",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py audit-governance --quiet-progress --subcheck-timeout-seconds 120",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 -m pytest",
       "exit_code": 0
     }
   ],

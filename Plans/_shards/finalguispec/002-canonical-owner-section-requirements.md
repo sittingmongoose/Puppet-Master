@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L4-L136
 
-Source SHA256: `444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02`
+Source SHA256: `a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384`
 
 ---
 
@@ -137,7 +137,7 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 **Date:** 2026-02-22
 **Status:** Authoritative specification for AI agent implementation
-**Tech Stack:** Rust + Slint 1.15.1 (.slint markup compiled via slint_build)
+**Tech Stack:** Rust stable 1.96.1 + Slint 1.17.0 (.slint markup compiled via slint_build)
 **Renderer:** Default winit + Skia; fallback winit + FemtoVG-wgpu; emergency software renderer
 
 ---

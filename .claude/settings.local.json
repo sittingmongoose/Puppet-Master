@@ -23,7 +23,12 @@
       "Bash(python3 -c ' *)",
       "Bash(grep -n \"plan_unit_id: OSI-005$\\\\|plan_unit_id: OSI-006$\\\\|plan_unit_id: OSI-009$\\\\|plan_unit_id: OSI-011$\" orchestrator-subagent-integration.md)",
       "Bash(mkdir -p /Users/jaredsmacbookair/.claude/jobs/54e93b07/tmp/reports)",
-      "Bash(nohup python3 -c \"\nfrom datetime import datetime, timedelta\nimport time\nfrom zoneinfo import ZoneInfo\ntz = ZoneInfo\\('Europe/Athens'\\)\ntarget = datetime\\(2026,7,2,23,11,0,tzinfo=tz\\)\nnow = datetime.now\\(tz\\)\nsecs = \\(target-now\\).total_seconds\\(\\)\nprint\\('sleeping', secs\\)\nif secs>0: time.sleep\\(secs\\)\nprint\\('LIMIT RESET REACHED at', datetime.now\\(tz\\).isoformat\\(\\)\\)\n\" > /Users/jaredsmacbookair/.claude/jobs/54e93b07/tmp/sleeper.log 2>&1)"
+      "Bash(nohup python3 -c \"\nfrom datetime import datetime, timedelta\nimport time\nfrom zoneinfo import ZoneInfo\ntz = ZoneInfo\\('Europe/Athens'\\)\ntarget = datetime\\(2026,7,2,23,11,0,tzinfo=tz\\)\nnow = datetime.now\\(tz\\)\nsecs = \\(target-now\\).total_seconds\\(\\)\nprint\\('sleeping', secs\\)\nif secs>0: time.sleep\\(secs\\)\nprint\\('LIMIT RESET REACHED at', datetime.now\\(tz\\).isoformat\\(\\)\\)\n\" > /Users/jaredsmacbookair/.claude/jobs/54e93b07/tmp/sleeper.log 2>&1)",
+      "Read(//Users/jaredsmacbookair/.claude/jobs/54e93b07/tmp/reports/**)",
+      "Bash(awk -F: '{print $1}')",
+      "Bash(awk -F- '{print $2}')",
+      "Bash(awk 'NR>1 && $1!=prev+1 {print \"gap/extra after\", prev, \"->\", $1} {prev=$1}')",
+      "Bash(awk -F- '{print $2+0}')"
     ]
   }
 }

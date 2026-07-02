@@ -1,11 +1,11 @@
 {
   "schema_id": "pm.bootstrap_ledger_health.v1",
   "ledger_id": "pldg-20260630-001-feature-intake",
-  "updated_at_utc": "2026-07-01T16:12:15Z",
-  "last_event_id": "evt-0041",
+  "updated_at_utc": "2026-07-02T20:36:00Z",
+  "last_event_id": "evt-0043",
   "status": "pass_governance_sealed",
   "summary": {
-    "events": 41,
+    "events": 43,
     "design_atoms": 82,
     "decisions": 20,
     "questions": 24,
@@ -19,14 +19,14 @@
     "superseded_atoms": 3,
     "open_questions": 0,
     "deferred_questions": 0,
-    "open_blockers": 1,
+    "open_blockers": 0,
     "compile_queue_items": 1,
     "compiled_plan_units": 23,
     "compiled_owner_docs": 20,
-    "governance_status": "sealed",
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "governance_status": "pending_refresh_after_currentness_and_wiring_docs",
+    "node_readiness_status": "ready_for_node_compile",
     "plan_migration_validate": "pass",
-    "direct_gui_workflow_build_packet_ready": false,
+    "direct_gui_workflow_build_packet_ready": true,
     "compiled_plan_intent_ready": true,
     "pm_plans_verify_run_gates": "pass",
     "pm_shard_plans_check": "pass",
@@ -35,14 +35,15 @@
     "validate_plan_graph": "pass",
     "validate_auto_decisions": "pass",
     "git_diff_check": "pass",
-    "governance_seal": "passed"
+    "governance_seal": "passed",
+    "code_implementation_ready": false
   },
   "validator": {
     "tool": "scripts/pm-bootstrap-ledger-validate.py",
     "last_result": "pass",
     "last_errors": [],
     "last_warnings": [],
-    "last_validated_at_utc": "2026-07-01T16:17:15Z",
+    "last_validated_at_utc": "2026-07-02T20:20:00Z",
     "summary": {
       "atoms": 82,
       "decisions": 20,
@@ -53,5 +54,9 @@
       "plan_units_checked": 2895
     }
   },
-  "notes": "Governance seal validators pass. Direct Docker/Hosts GUI/workflow implementation-packet detail remains open; governance_status=sealed does not imply implementation_ready_in_ledger=true."
+  "notes": "Docker/Hosts blk-0003 is closed as a doc/build-packet blocker; rerun validators after current doc/wiring repairs. Code/runtime implementation remains disabled.",
+  "phase": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
+  "governance_status": "sealed",
+  "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+  "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next"
 }

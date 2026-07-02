@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L1947-L1988
+Source lines: L1947-L1989
 
-Source SHA256: `7f64028be832f86d78a04d59920b22469f0d81b0c9f2316968f960c170eb2f5b`
+Source SHA256: `0ad8bc23678e22e9a9063f70e3a8aba7a309281dab870c13f3d5cab02581073c`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - GitHub Integration does not become the discovery behavior, search, or ranking owner.
   - No local substitution is presented as remote truth.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future remote cache disclosure tests.
   - Future no-local-substitution integration checks.
 risk_class: remote_cache_consumer_drift

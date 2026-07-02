@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-02T16:50:45Z",
+  "generated_at_utc": "2026-07-02T20:30:06Z",
   "index_path": "Plans/_shards/permissions_system/00-index.md",
-  "index_sha256": "16c677a80a635e90cee5e2c48cd005e352f9670cf8115f86221c6bed8d55d3b4",
+  "index_sha256": "1f5f61509746ab72aa7881e623e8ceb07c66afeab7ae6097be298eaff7228822",
   "manifest_path": "Plans/_shards/permissions_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/permissions_system/001-preamble.md",
-      "sha256": "3bc9c9da1e1de7d35f91a22cc20ec8a2c033697234e42f9ce88741f2a45ef503",
+      "sha256": "fb053de6f04e56dab3a04688ba88df25d013a9fbfd206ef3bf9a6c0f6eee222a",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/permissions_system/002-canonical-owner-section-requirements.md",
-      "sha256": "dce9a9ce3ea62436f65a0d03de8809a6c2ea31830bd9eb81a1b5d32f7f4da62e",
+      "sha256": "6b250214a99a8a2bd7a99095846906334571716e2771270660e0ab4c86ccaf4d",
       "shard_id": "002",
       "source_line_end": 10,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/permissions_system/003-0.-scope-and-ssot-status.md",
-      "sha256": "e94ca27b78c38406343b3eff4885e589c39f18ba175e60d03e13a1fec44ab5ec",
+      "sha256": "d46278d0704bd29346f3fa5ab7e7b237ec04b112f44e8d1b9496b94fdcfc7d26",
       "shard_id": "003",
       "source_line_end": 32,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "Canonical data-shape reconciliation",
       "path": "Plans/_shards/permissions_system/004-canonical-data-shape-reconciliation.md",
-      "sha256": "24735890804461cab62ce8373ebc946ba884589b18b6752e60f8a953d6e5e863",
+      "sha256": "ad903dbf43370a0fa3ab3df9eb18b7d9ed72eb18ae80ae7492458e8166d1b483",
       "shard_id": "004",
       "source_line_end": 87,
       "source_line_start": 34,
@@ -44,7 +44,7 @@
     {
       "heading": "1. Definitions and scope",
       "path": "Plans/_shards/permissions_system/005-1.-definitions-and-scope.md",
-      "sha256": "480ad76281146dcbddb377393ad453707d162e030b42255241a62bdaa99b3d98",
+      "sha256": "84dd83caf97d6b7b6a043499e73b60a340578e707f6cc3cc168e6fd31a693976",
       "shard_id": "005",
       "source_line_end": 169,
       "source_line_start": 89,
@@ -53,7 +53,7 @@
     {
       "heading": "2. Permission actions",
       "path": "Plans/_shards/permissions_system/006-2.-permission-actions.md",
-      "sha256": "71d96e74623b11cebc8e37bd21722a9aa53d3372b0aa3cbc7f1d2ae577545e9f",
+      "sha256": "e53778c7982a488510765f4ae37e521dd396483f7ba4b4df9bceb22b1c2aba82",
       "shard_id": "006",
       "source_line_end": 279,
       "source_line_start": 171,
@@ -62,7 +62,7 @@
     {
       "heading": "3. Granular rules",
       "path": "Plans/_shards/permissions_system/007-3.-granular-rules.md",
-      "sha256": "ee7f31f22793a82f367519b23dc28c80fa93ad7617cb0fc5aea377947cf5267c",
+      "sha256": "c66ecfe7c5a8b106e2d394b7d5af83a81c0a389ed857d5a062682375fa9f5bad",
       "shard_id": "007",
       "source_line_end": 310,
       "source_line_start": 281,
@@ -71,7 +71,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/permissions_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "4273678c21ac3283fc41b2545cb0b023ba0947a75b25b1a6fcd53b749a58f672",
+      "sha256": "a6a57fb65326a1e40a5c2706f108ae2c6e07e324aae5f3a2aec866f3d02825cb",
       "shard_id": "008",
       "source_line_end": 447,
       "source_line_start": 312,
@@ -80,7 +80,7 @@
     {
       "heading": "4. Special guards",
       "path": "Plans/_shards/permissions_system/009-4.-special-guards.md",
-      "sha256": "f3df3222834213281f18ccde1789a8b2bb383da639c560e3ffa9d6f2a22b3fdf",
+      "sha256": "4b05f49be9e2c8ab175d7335e44ca8c9341c8627905a62e6abebc2648c50b72a",
       "shard_id": "009",
       "source_line_end": 496,
       "source_line_start": 448,
@@ -89,7 +89,7 @@
     {
       "heading": "5. Tool permission keys",
       "path": "Plans/_shards/permissions_system/010-5.-tool-permission-keys.md",
-      "sha256": "bb5cfceb324479a4d9c8bdda6cd2786e9e4c9b1968bb1009db6da5bfc0effc9c",
+      "sha256": "dc14828d657e333011d2a2f50b8da1daa7c26520483c0ff1c5cd3f468afdf228",
       "shard_id": "010",
       "source_line_end": 532,
       "source_line_start": 498,
@@ -98,7 +98,7 @@
     {
       "heading": "6. Ask flow semantics",
       "path": "Plans/_shards/permissions_system/011-6.-ask-flow-semantics.md",
-      "sha256": "771019378ce88fe8dde3b63d012ee8875573de017aa5f4f12c5cef4efeae4a19",
+      "sha256": "2ebd300d70673a492a8a5fdec926068c3d1757942e8f40318162594898910d48",
       "shard_id": "011",
       "source_line_end": 632,
       "source_line_start": 534,
@@ -107,7 +107,7 @@
     {
       "heading": "7. Deterministic defaults",
       "path": "Plans/_shards/permissions_system/012-7.-deterministic-defaults.md",
-      "sha256": "25720a3fd6f96371369eed02e8364128bd367ad54f6651f4a7bf5904ce83e083",
+      "sha256": "6d99013c88d1a79b46cc73f71866fbb45870aecae8a9fe5d1f20507670b57e55",
       "shard_id": "012",
       "source_line_end": 663,
       "source_line_start": 633,
@@ -116,7 +116,7 @@
     {
       "heading": "8. Resolution algorithm",
       "path": "Plans/_shards/permissions_system/013-8.-resolution-algorithm.md",
-      "sha256": "0d5a24ac8f72e791dcc052fcd3fd98a2e0fd54460aaee9864016cdaa9388bff2",
+      "sha256": "fa2ffe731ac3658d143526e110eae2c9bc7090ece2c1c896e38c21fc970dc784",
       "shard_id": "013",
       "source_line_end": 711,
       "source_line_start": 665,
@@ -125,7 +125,7 @@
     {
       "heading": "9. Persistence and storage",
       "path": "Plans/_shards/permissions_system/014-9.-persistence-and-storage.md",
-      "sha256": "75d3f5467ef9e226bcb36f6aa7c270ed1121bfab5acce49727bee4bd960af5de",
+      "sha256": "12aa5a1917a064bce86680cf4874ed8f2caf1c61cd304716a648d57e313f0981",
       "shard_id": "014",
       "source_line_end": 781,
       "source_line_start": 713,
@@ -134,7 +134,7 @@
     {
       "heading": "10. GUI requirements",
       "path": "Plans/_shards/permissions_system/015-10.-gui-requirements.md",
-      "sha256": "ff489af2eb742bdaa5f0ef86d2f98a50bd5ccacd8acb215cd6f8601af3520ecb",
+      "sha256": "0bd7e94d1923ba764b639dc0a6cef5bdc2b7058d25c2896252f312a009cdb2e8",
       "shard_id": "015",
       "source_line_end": 936,
       "source_line_start": 783,
@@ -143,7 +143,7 @@
     {
       "heading": "10A. Security model",
       "path": "Plans/_shards/permissions_system/016-10a.-security-model.md",
-      "sha256": "ed77cf146623c87be548314cf9acc2d1c372e9cc5835ac25fc5e06a135377628",
+      "sha256": "a6e186292c7027d87ade0579b5953b769b1ecc9bab53cefe6a5abcbaa37a307f",
       "shard_id": "016",
       "source_line_end": 967,
       "source_line_start": 938,
@@ -152,7 +152,7 @@
     {
       "heading": "11. OpenCode baseline and Puppet Master deltas",
       "path": "Plans/_shards/permissions_system/017-11.-opencode-baseline-and-puppet-master-deltas.md",
-      "sha256": "0f90079f79ebbfe42f19d466c700d15a833e056f5724a25418770cff0ab0b134",
+      "sha256": "bccf0ba1bd1808d81e0dc2662b7eb1a5fc3f5e22cb6775808c77ac934d07e184",
       "shard_id": "017",
       "source_line_end": 990,
       "source_line_start": 969,
@@ -161,7 +161,7 @@
     {
       "heading": "12. Acceptance criteria",
       "path": "Plans/_shards/permissions_system/018-12.-acceptance-criteria.md",
-      "sha256": "7de57781aae23b3ba837fa7f0145db5d7179d46b297a34ec8fbfcd0220902a66",
+      "sha256": "6c3c46927011710dec75577a435b7c4d36e351b03c640cdb0c89bdfaa06951c7",
       "shard_id": "018",
       "source_line_end": 1044,
       "source_line_start": 992,
@@ -170,7 +170,7 @@
     {
       "heading": "12A. DockerHub / Unraid remote-side-effect guard addendum",
       "path": "Plans/_shards/permissions_system/019-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md",
-      "sha256": "b377eac05786208a2dfe53669d7eb1df201a1b07f3abb6614200115d32b60c05",
+      "sha256": "6db15e8222fefe33dcf796fc1ac43be24e5fcec3c5b0358bbbf5985eee07da07",
       "shard_id": "019",
       "source_line_end": 1098,
       "source_line_start": 1045,
@@ -179,7 +179,7 @@
     {
       "heading": "Runtime blocked-Outcome Integration Addendum (2026-03-08)",
       "path": "Plans/_shards/permissions_system/020-runtime-blocked-outcome-integration-addendum-2026-03-08.md",
-      "sha256": "852c1ef6929637305c7c4f0bec95321d925153e4d933d555e24194886d75243d",
+      "sha256": "d2fdd67915251be7f7fb8aef3599eb72ec5d88505295f60c3a52a04384c63196",
       "shard_id": "020",
       "source_line_end": 1253,
       "source_line_start": 1100,
@@ -188,7 +188,7 @@
     {
       "heading": "Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)",
       "path": "Plans/_shards/permissions_system/021-source-control-github-actions-and-docker-manager-permission-adde.md",
-      "sha256": "1075c02025bc4cbc0c76e8c0fc0d7f0cc9bbbec7de8becb8e176d6d0a31c17e6",
+      "sha256": "b692b912d96143adff9fd111e004ce4a78fa3bb9ae17435bc8ca2843170be025",
       "shard_id": "021",
       "source_line_end": 1281,
       "source_line_start": 1255,
@@ -197,7 +197,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/permissions_system/022-owner-consumer-map.md",
-      "sha256": "301e679e712f8af5792f4535748f79135628985ffffa6c3e1e9384483d6a04f6",
+      "sha256": "c53a9a6dfda429ee2ef82ac62a5e168897361599b0e34196983c51708069fb86",
       "shard_id": "022",
       "source_line_end": 1287,
       "source_line_start": 1283,
@@ -206,7 +206,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/permissions_system/023-planunits.md",
-      "sha256": "7c74cfe03178851d50a87cff81b442218e805db1d2db0ed30d21f3a12c005f50",
+      "sha256": "5c0570a32b2969ee7fd74aac7607080a6357cd56a501a123c65e60dfee2a8665",
       "shard_id": "023",
       "source_line_end": 7513,
       "source_line_start": 1289,
@@ -215,7 +215,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/permissions_system/024-migration-coverage.md",
-      "sha256": "8a94936a442c236695c878ef132f87412fd8bf6a14987a8a8cb2adbbc14f7bee",
+      "sha256": "d70961dca9c09f182b48d2b4021dde097a0db0e64f6e7f13654adb0f11d170d6",
       "shard_id": "024",
       "source_line_end": 7530,
       "source_line_start": 7515,
@@ -224,7 +224,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-002",
       "path": "Plans/_shards/permissions_system/025-ledger-compile-addendum-pldg-20260614-002.md",
-      "sha256": "daab1b7ad701869e41dbd66d8a9010b6e6905a393c594fc68a673b89556283da",
+      "sha256": "7db3e60290d767e7a367c2a3fe1c5c2f693315810b8619a5b31831ece0ad3e3a",
       "shard_id": "025",
       "source_line_end": 7575,
       "source_line_start": 7532,
@@ -233,7 +233,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-001",
       "path": "Plans/_shards/permissions_system/026-ledger-compile-addendum-pldg-20260616-001.md",
-      "sha256": "3b34445d89eab38a7de004bf1b3c33bf865e336798f8b3a57b0d0e33d401d32b",
+      "sha256": "cccf828a62783eeea19bcc1e8b513e8e9fe5eb1e90e36bbc40e8fb0e4eecc959",
       "shard_id": "026",
       "source_line_end": 7632,
       "source_line_start": 7577,
@@ -242,7 +242,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260616-002",
       "path": "Plans/_shards/permissions_system/027-ledger-compile-addendum-pldg-20260616-002.md",
-      "sha256": "62c06abb6be08bca0a86628f1024030b4a330539d3c02798c98c6355ce568cda",
+      "sha256": "f990580646678d478be4f382a356e498e0341e4c1e67026989e7da13d72d688d",
       "shard_id": "027",
       "source_line_end": 7696,
       "source_line_start": 7634,
@@ -251,7 +251,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/permissions_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "dcd4eefc355dbcd48a3509e63d8e1b6c4901645902786ba190849b644c3c37e0",
+      "sha256": "0509005c7dd632e0c5ef951d32e736bc87b5ae7adb4b085d53212093c4f012e1",
       "shard_id": "028",
       "source_line_end": 7754,
       "source_line_start": 7698,
@@ -260,7 +260,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/permissions_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "8c2dbc59ca2d913a5244840a30dbd59cf781eb6745220b941b1342a843409ee4",
+      "sha256": "80af2d5292d268d9e0dc0ef4ba8435a0858606d3e2ad5cf87b487e64b646daeb",
       "shard_id": "029",
       "source_line_end": 7864,
       "source_line_start": 7757,
@@ -269,52 +269,52 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/permissions_system/030-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "593445c196182a491c3894a8bb84d030eff41978b8686c5b76bfe439b82fee49",
+      "sha256": "04c4bbfa17331ef7950d85a6240a8047ba36f26267cb218492e19d5af1c88c12",
       "shard_id": "030",
-      "source_line_end": 7906,
+      "source_line_end": 7907,
       "source_line_start": 7866,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/permissions_system/031-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "92d602de0c5d636d55eed147e5683a6568fbb4b5a32b082bb279cef68d3383b3",
+      "sha256": "ca831c18bc8d27fad86104774ce32f366a5f0626c7930abc7ea3a641a62d76d7",
       "shard_id": "031",
-      "source_line_end": 8286,
-      "source_line_start": 7909,
+      "source_line_end": 8287,
+      "source_line_start": 7910,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/permissions_system/032-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "ce1315bc678d17776d81c68fcce889c341894ccf389fa74b7ddc184a0f7b1508",
+      "sha256": "83f8a6f7324de21423cb9d937bff8fbe4882b135b36524a55af9cfb8da6d48ba",
       "shard_id": "032",
-      "source_line_end": 8431,
-      "source_line_start": 8288,
+      "source_line_end": 8432,
+      "source_line_start": 8289,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260629-001-feature-name",
       "path": "Plans/_shards/permissions_system/033-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
-      "sha256": "2789ec92686c1b6ab6f2050ccbacb3d1195a7173fed218ffdb7274a3a2f89afe",
+      "sha256": "a6571aea5d01d86c8ec6cfd7d968a366b1849d208c16deca8353762bf0820281",
       "shard_id": "033",
-      "source_line_end": 8492,
-      "source_line_start": 8433,
+      "source_line_end": 8493,
+      "source_line_start": 8434,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/permissions_system/034-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "7a7b915966ce2986ac692662ae2b9ff3de3ff379bfed29b7645c981589806f9d",
+      "sha256": "43ae63c047f439f2ba362753e27630fabfbc37d658418b9bd1f54a0c55a4b896",
       "shard_id": "034",
-      "source_line_end": 8591,
-      "source_line_start": 8494,
+      "source_line_end": 8592,
+      "source_line_start": 8495,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 8591,
+    "line_count": 8592,
     "path": "Plans/Permissions_System.md",
-    "sha256": "70b83a0dd96818cc93d128017e86d70798f2521d635972448c2d1acb3f1917dd"
+    "sha256": "45b5c8f5fd34f160c7c2ccc770d61ed2be5f7ec1927f97d82b94d7071f9c3d50"
   }
 }

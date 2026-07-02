@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L731-L802
+Source lines: L731-L803
 
-Source SHA256: `4edc1e0b06918a767998ff78d3464e38d1651ace6c7a5998b98970ba77693fb0`
+Source SHA256: `208c779811898d6e012410391de67f680e4dab94fff0a105c2f3e7c25de76beb`
 
 ---
 
@@ -29,6 +29,7 @@ acceptance_criteria:
   - Tests prove denied/hidden candidates cannot leak through counts, selected ids, rank gaps, summaries, diagnostics, or receipts.
   - Tests prove no WorkNodes, NodeSeeds, executable queues, final node manifests, runtime launches, implementation files, or production build tasks are created by this compile/index lane.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future DiscoveryService conformance suite.
   - Future Assistant Chat visibility and toggle tests.
   - Future SSH/no-local-fallback tests.

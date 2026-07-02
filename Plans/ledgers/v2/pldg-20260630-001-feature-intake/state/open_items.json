@@ -1,34 +1,25 @@
 {
   "schema_id": "pm.bootstrap_open_items.v1",
   "ledger_id": "pldg-20260630-001-feature-intake",
-  "updated_at_utc": "2026-07-01T16:12:15Z",
-  "last_event_id": "evt-0041",
+  "updated_at_utc": "2026-07-02T20:36:00Z",
+  "last_event_id": "evt-0043",
   "governance_status": "sealed",
   "open_questions": [],
   "deferred_questions": [],
-  "open_blockers": [
-    {
-      "blocker_id": "blk-0003",
-      "severity": "medium",
-      "blocker_type": "direct_gui_workflow_implementation_packet_gap",
-      "summary": "Compiled Plan intent and owner coverage are strong and no missing canonical owner coverage was found, but the Docker/Hosts GUI/workflow packet is still too compressed for direct Slint implementation without another hardening pass covering component/route shape, command ids, state/action matrix, per-surface display rules, lifecycle transitions, empty/setup/blocked/degraded layouts, side-panel-to-page affordance, and responsive density behavior.",
-      "gui_related": true,
-      "source_ref": "source_shards/governance_seal_validation_20260701.json"
-    }
-  ],
+  "open_blockers": [],
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "compile_open_items": [],
   "post_compile_pending_items": [
-    "Direct Docker/Hosts GUI/workflow implementation packet detail remains open: component/route shape, exact command ids, state/action matrix, per-surface display rules, lifecycle transitions, empty/setup/blocked/degraded layouts, side-panel-to-page affordance, and responsive density behavior.",
-    "Node readiness remains blocked_compiler_contract_incomplete / runtime_disabled; no WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, or production build tasks were created."
+    "PNC-007 native runtime compiler/Executor activation preflight remains the next implementation-readiness lane before any runtime/code work.",
+    "No WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, or production build tasks were created by the Docker/Hosts blocker closure."
   ],
   "unsealed_governance": [],
-  "notes": "Governance seal is complete and validators pass, but direct Docker/Hosts GUI/workflow implementation-packet detail remains open. Sealed governance does not mean code/runtime implementation readiness.",
+  "notes": "Docker/Hosts blk-0003 is closed as a doc/build-packet blocker. Runtime/code implementation remains disabled until PNC-007 and green governance.",
   "implementation_readiness_gaps": [
     {
       "gap_id": "gap-direct-gui-workflow-build-packet",
-      "status": "open",
+      "status": "resolved_by_evt_0042",
       "gap_type": "direct_gui_workflow_implementation_detail",
       "summary": "Canonical PlanUnits define the Docker/Hosts page, owner routing, consumer surfaces, and visible states, but they do not yet provide a direct Slint build packet with component tree, route payloads, workflow transitions, selected-object model, side-panel-to-page affordance, empty/setup layouts, action availability matrix, and responsive density behavior.",
       "gui_related": true,
@@ -38,12 +29,27 @@
         "Plans/UI_Command_Catalog.md:UCC-105",
         "Concepts/PMConcept.html",
         "subagent:019f1e62-215c-7393-8a19-3144b71c22c9",
-        "subagent:019f1e62-1df7-7fe1-8749-ea37631db75e"
-      ]
+        "subagent:019f1e62-1df7-7fe1-8749-ea37631db75e",
+        "Plans/Contracts_V0.md:CV-303",
+        "Plans/storage-plan.md:SP-226",
+        "Plans/Runtime_Artifacts_Panel.md:RAP-042",
+        "Plans/assistant-chat-design.md:ACD-430",
+        "Plans/Orchestrator_Page.md:OP-028",
+        "Plans/Run_Graph_View.md:RGV-015",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/PMConcept_Control_Reconciliation.json",
+        "subagent:019f2472-3f3d-7ca0-87f5-d94dfe227412",
+        "subagent:019f2472-4059-7170-985f-991f39e16c5c",
+        "subagent:019f2476-0c6b-79e0-9d1c-718151d9a46c",
+        "subagent:019f2476-4003-7fe1-b207-7792c537f115",
+        "subagent:019f2476-5d1b-7e02-852d-e75ac549c041",
+        "subagent:019f2476-8c60-7e62-ab16-dd81e18b84ef"
+      ],
+      "resolution_summary": "Closed blk-0003 as a documentation/build-packet blocker: live PlanUnits and wiring/reconciliation artifacts now cover Docker/Hosts component and route shape, command/state/action matrix expectations, per-surface display rules, lifecycle states, empty/setup/blocked/degraded layouts, side-panel-to-page ownership, responsive density tests, and PMConcept concept-only boundaries. This does not create or authorize runtime dispatch, WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks."
     },
     {
       "gap_id": "gap-concrete-command-id-matrix",
-      "status": "open",
+      "status": "resolved_by_evt_0042",
       "gap_type": "command_catalog_detail",
       "summary": "Canonical command routing is owner-correct through HostCapabilityCommand and cmd.docker.* / cmd.docker.k8s.* families, but exact command ids and action/state availability are not enumerated for preflight, launch, start, stop, restart, Open App, Open Container, refresh, cleanup, retain, logs, receipts, approve, and blocked-action recovery.",
       "gui_related": true,
@@ -51,12 +57,29 @@
         "Plans/UI_Command_Catalog.md:UCC-105",
         "Plans/Contracts_V0.md:CV-304",
         "Plans/Executor_Protocol.md:EP-109",
-        "subagent:019f1e62-1f8e-78a0-983e-bc8e6cf0b9e9"
-      ]
+        "subagent:019f1e62-1f8e-78a0-983e-bc8e6cf0b9e9",
+        "Plans/FinalGUISpec.md:F3-410",
+        "Plans/Containers_Registry_and_Unraid.md:CRAU-092",
+        "Plans/Contracts_V0.md:CV-303",
+        "Plans/storage-plan.md:SP-226",
+        "Plans/Runtime_Artifacts_Panel.md:RAP-042",
+        "Plans/assistant-chat-design.md:ACD-430",
+        "Plans/Orchestrator_Page.md:OP-028",
+        "Plans/Run_Graph_View.md:RGV-015",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/PMConcept_Control_Reconciliation.json",
+        "subagent:019f2472-3f3d-7ca0-87f5-d94dfe227412",
+        "subagent:019f2472-4059-7170-985f-991f39e16c5c",
+        "subagent:019f2476-0c6b-79e0-9d1c-718151d9a46c",
+        "subagent:019f2476-4003-7fe1-b207-7792c537f115",
+        "subagent:019f2476-5d1b-7e02-852d-e75ac549c041",
+        "subagent:019f2476-8c60-7e62-ab16-dd81e18b84ef"
+      ],
+      "resolution_summary": "Closed blk-0003 as a documentation/build-packet blocker: live PlanUnits and wiring/reconciliation artifacts now cover Docker/Hosts component and route shape, command/state/action matrix expectations, per-surface display rules, lifecycle states, empty/setup/blocked/degraded layouts, side-panel-to-page ownership, responsive density tests, and PMConcept concept-only boundaries. This does not create or authorize runtime dispatch, WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks."
     },
     {
       "gap_id": "gap-per-surface-display-action-rules",
-      "status": "open",
+      "status": "resolved_by_evt_0042",
       "gap_type": "cross_surface_projection_detail",
       "summary": "Assistant Chat, Orchestrator, Run Graph, and Runtime Artifacts have correct consumer/authority boundaries, but per-surface rendering rules remain high-level: card/chip/banner mapping, disabled-versus-hidden action behavior, stale/blocked next actions, and recovery copy need direct implementation detail.",
       "gui_related": true,
@@ -65,12 +88,26 @@
         "Plans/Orchestrator_Page.md:OP-028",
         "Plans/Run_Graph_View.md:RGV-015",
         "Plans/Runtime_Artifacts_Panel.md:RAP-042",
-        "subagent:019f1e62-1f8e-78a0-983e-bc8e6cf0b9e9"
-      ]
+        "subagent:019f1e62-1f8e-78a0-983e-bc8e6cf0b9e9",
+        "Plans/FinalGUISpec.md:F3-410",
+        "Plans/Containers_Registry_and_Unraid.md:CRAU-092",
+        "Plans/UI_Command_Catalog.md:UCC-105",
+        "Plans/Contracts_V0.md:CV-303",
+        "Plans/storage-plan.md:SP-226",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/PMConcept_Control_Reconciliation.json",
+        "subagent:019f2472-3f3d-7ca0-87f5-d94dfe227412",
+        "subagent:019f2472-4059-7170-985f-991f39e16c5c",
+        "subagent:019f2476-0c6b-79e0-9d1c-718151d9a46c",
+        "subagent:019f2476-4003-7fe1-b207-7792c537f115",
+        "subagent:019f2476-5d1b-7e02-852d-e75ac549c041",
+        "subagent:019f2476-8c60-7e62-ab16-dd81e18b84ef"
+      ],
+      "resolution_summary": "Closed blk-0003 as a documentation/build-packet blocker: live PlanUnits and wiring/reconciliation artifacts now cover Docker/Hosts component and route shape, command/state/action matrix expectations, per-surface display rules, lifecycle states, empty/setup/blocked/degraded layouts, side-panel-to-page ownership, responsive density tests, and PMConcept concept-only boundaries. This does not create or authorize runtime dispatch, WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks."
     },
     {
       "gap_id": "gap-canonical-lifecycle-workflow-detail",
-      "status": "open",
+      "status": "resolved_by_evt_0042",
       "gap_type": "state_machine_and_workflow_detail",
       "summary": "Detailed profile/build/instance/assignment/test session state machines exist in source lineage and were partially compressed into canonical PlanUnits; a direct implementation packet should canonicalize the transition matrix, failure/blocked/degraded states, cleanup/retention paths, and Host Lab workflow steps.",
       "gui_related": true,
@@ -78,8 +115,24 @@
         "source_shards/implementation_readiness_hardening_20260701.json#lifecycle_state_machines",
         "Plans/FinalGUISpec.md:F3-410",
         "Plans/storage-plan.md:SP-226",
-        "Plans/Containers_Registry_and_Unraid.md:CRAU-091"
-      ]
+        "Plans/Containers_Registry_and_Unraid.md:CRAU-091",
+        "Plans/Containers_Registry_and_Unraid.md:CRAU-092",
+        "Plans/UI_Command_Catalog.md:UCC-105",
+        "Plans/Contracts_V0.md:CV-303",
+        "Plans/Runtime_Artifacts_Panel.md:RAP-042",
+        "Plans/assistant-chat-design.md:ACD-430",
+        "Plans/Orchestrator_Page.md:OP-028",
+        "Plans/Run_Graph_View.md:RGV-015",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/PMConcept_Control_Reconciliation.json",
+        "subagent:019f2472-3f3d-7ca0-87f5-d94dfe227412",
+        "subagent:019f2472-4059-7170-985f-991f39e16c5c",
+        "subagent:019f2476-0c6b-79e0-9d1c-718151d9a46c",
+        "subagent:019f2476-4003-7fe1-b207-7792c537f115",
+        "subagent:019f2476-5d1b-7e02-852d-e75ac549c041",
+        "subagent:019f2476-8c60-7e62-ab16-dd81e18b84ef"
+      ],
+      "resolution_summary": "Closed blk-0003 as a documentation/build-packet blocker: live PlanUnits and wiring/reconciliation artifacts now cover Docker/Hosts component and route shape, command/state/action matrix expectations, per-surface display rules, lifecycle states, empty/setup/blocked/degraded layouts, side-panel-to-page ownership, responsive density tests, and PMConcept concept-only boundaries. This does not create or authorize runtime dispatch, WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks."
     },
     {
       "gap_id": "gap-stale-readiness-lineage-superseded",
@@ -112,13 +165,19 @@
     },
     {
       "gap_id": "gap-node-readiness-dependency-cycles",
-      "status": "open_known_boundary",
+      "status": "resolved_by_current_plan_index_validation",
       "gap_type": "node_readiness_structural_boundary",
-      "summary": "The generated node-readiness report includes dependency cycles involving new containerized-host PlanUnits; this blocks automatic PlanUnit-to-node ordering but is not a missing product-owner coverage finding while PlanCompile remains disabled.",
+      "summary": "PlanUnit index validation currently reports node_readiness_status=ready_for_node_compile; runtime/code activation still waits for PNC-007 and governance, not dependency-cycle repair.",
       "gui_related": false,
       "evidence_refs": [
         "Plans/.plan_index/node_readiness_report.json"
       ]
     }
-  ]
+  ],
+  "phase": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
+  "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+  "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next",
+  "open_blocker_ids": [],
+  "open_blockers_count": 0,
+  "next_action": "Proceed to the PNC-007 native runtime compiler/Executor activation preflight as the next node-readiness implementation lane. Keep WorkNodes, NodeSeeds, WorkGraphs, WorkNodeRequests, executable queues, final node manifests, runtime dispatch, implementation files, and production build tasks out of this ledger until that lane explicitly opens."
 }

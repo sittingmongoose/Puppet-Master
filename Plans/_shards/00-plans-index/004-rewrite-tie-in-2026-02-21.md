@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L188-L208
+Source lines: L189-L209
 
-Source SHA256: `04008a1d57a5ecc7805569edf5eb8b5d6d362abcb643dbc8d8f929fea9636498`
+Source SHA256: `a5294e511f4e9df29fcc0c6df6dcdda7da884e2c6304e3ad644b771ff1801711`
 
 ---
 
@@ -13,7 +13,7 @@ The project is intentionally adapting an OpenCode-style architecture and is mid-
 - **Providers** behind one unified **event model**
 - **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
 - **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
-- **UI rewrite**: Rust + Slint (winit; Skia default)
+- **UI rewrite**: Rust stable 1.96.1 + Slint 1.17.0 as verified on 2026-07-02 (winit; Skia default; reverify official stable releases before runtime implementation)
 - **Auth**: subscription-first; Gemini Direct (`gemini`, direct key-only/API-key-backed) remains active, while Gemini CLI (`gemini_cli`) is retired from active provider support and preserved only as source-lineage/compatibility terminology. Antigravity CLI is the active CLI-backed Google/agent route replacing the stale Gemini CLI route. Provider identity, requested/effective auth, account identity, account/plan UI, quota/usage labels, media capabilities, and setup/health are route-, account-, and model-dependent across direct providers, CLI-backed providers, coding-plan providers, and generated-media routes.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD

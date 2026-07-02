@@ -25,7 +25,7 @@ BinaryLocator diagnostics must not define `/outcome` or reason-code taxonomies a
 
 
 - Platform name is **Puppet Master** only. (ContractRef: Invariant:INV-010)
-- UI toolkit is **Slint 1.15.1**; Iced is legacy. (ContractRef: SchemaID:spec_lock)
+- UI toolkit is **Slint 1.17.0 on Rust stable 1.96.1** as verified on 2026-07-02; Iced is legacy. (ContractRef: SchemaID:spec_lock)
 - Storage is **seglog + redb + Tantivy**; SQLite is forbidden. (ContractRef: SchemaID:spec_lock)
 
 ### Canonical sources (reference, don't duplicate)
@@ -545,15 +545,15 @@ plan_unit_id: BS-003
 unit_type: constraint
 status: accepted
 owner_doc: Plans/BinaryLocator_Spec.md
-canonical_text: BinaryLocator inherits the locked Puppet Master platform name, Slint 1.15.1 UI toolkit decision, and seglog/redb/Tantivy storage stack while preserving the SQLite prohibition.
+canonical_text: BinaryLocator inherits the locked Puppet Master platform name, Slint 1.17.0 on Rust stable 1.96.1 UI toolkit decision, and seglog/redb/Tantivy storage stack while preserving the SQLite prohibition.
 gui_related: true
-gui_classification_reason: The locked decision span includes the user-interface toolkit requirement Slint 1.15.1 and the legacy Iced prohibition.
+gui_classification_reason: The locked decision span includes the user-interface toolkit requirement Slint 1.17.0 on Rust stable 1.96.1 and the legacy Iced prohibition.
 split_recommended: false
 depends_on: [BS-002]
 unblocks: [BS-005, BS-019]
 acceptance_criteria:
   - The platform name remains Puppet Master only.
-  - UI toolkit references use Slint 1.15.1 and treat Iced as legacy.
+  - UI toolkit references use Slint 1.17.0 on Rust stable 1.96.1, reverified before implementation, and treat Iced as legacy.
   - Storage references use seglog, redb, and Tantivy.
   - SQLite remains forbidden.
 validation_surfaces:
@@ -573,7 +573,8 @@ source_lineage:
 preserved_exact_tokens:
   - "Canonical references and constraints (SSOT; DRY)"
   - "Puppet Master"
-  - "Slint 1.15.1"
+  - "Rust stable 1.96.1"
+  - "Slint 1.17.0"
   - "Iced is legacy"
   - "seglog + redb + Tantivy"
   - "SQLite is forbidden"

@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L14879-L14951
+Source lines: L14879-L14954
 
-Source SHA256: `3a676cd5f10d01235809b09ba1f6e29a872ed6035aaa403bfa8ee9e1c01b426d`
+Source SHA256: `a8fc7140e89880a7e51e4d554d50ff962ec073852fffe1c29ca3ccf4a84d5140`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
 canonical_text: >-
-  storage-plan owns persistence and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Exact storage substrate and concrete `goal.*` event payload schemas remain deferred until promoted by storage/contract owners and must not weaken the required Goal Runtime fields. Goal_Runtime_System owns behavior semantics.
+  storage-plan owns persistence, replay, and projection boundaries for Goal Runtime durable state, append-only goal event log, completion/degraded/stopped/blocked receipts, child-goal state, recovery state, evidence refs, goal_revision/expected_goal_revision, and retention anchors. Canonical persisted goal events registered by Contracts_V0 are goal.created, goal.scheduled, goal.progressed, goal.tool_check_recorded, goal.updated, goal.replanned, goal.child_status_changed, goal.evidence_captured, goal.verification_decided, goal.receipt_recorded, goal.completed, goal.degraded, goal.stopped, goal.blocked, goal.cancelled, plus Orchestrator GoalRun events goal_run.started, goal_run.replanned, goal_run.blocked, goal_run.certified, goal_run.cancelled, and goal_run.stopped. Storage persists them in an append-only goal_event_log and rebuilds disposable projections goal_state.v1:{project_id}:{goal_id}, goal_receipt.v1:{project_id}:{receipt_id}, goal_blocked_projection.v1:{project_id}:{goal_id}, goal_child_index.v1:{project_id}:{parent_goal_id}, goal_evidence_index.v1:{project_id}:{goal_id}, and goal_run_projection.v1:{project_id}:{goal_run_id}. Goal_Runtime_System owns behavior semantics; Contracts_V0 owns event-name and payload-minimum registration.
 gui_related: false
 gui_classification_reason: Goal Runtime persistence and projection ownership is backend storage behavior, not visual presentation.
 depends_on:
@@ -29,12 +29,12 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - Goal Runtime durable state and append-only event-log records have a storage owner for persistence/projection and replay.
-  - Completion, degraded, stopped, blocked, child-goal, recovery, evidence-ref, revision, and retention-anchor fields are not lost when storage substrate is deferred.
+  - Completion, degraded, stopped, blocked, child-goal, recovery, evidence-ref, revision, and retention-anchor fields are preserved in append-only events and rebuilt projections.
   - storage-plan consumes Goal Runtime semantics from Plans/Goal_Runtime_System.md and does not redefine lifecycle policy.
-  - Concrete goal event payload schemas remain deferred until storage/contract owner registration.
+  - Stale goal_revision or expected_goal_revision writes are rejected or reconciled through compare-and-swap recovery rather than overwriting current state.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future Goal Runtime persistence review
+  - python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures
 risk_class: goal_runtime_persistence_owner_gap
 reasoning_tier: high
 context_scope: goal_runtime_storage
@@ -43,6 +43,7 @@ implementation_surfaces:
   - Plans/Goal_Runtime_System.md
   - Plans/Contracts_V0.md
   - Plans/Runtime_Artifacts_Panel.md
+  - Plans/goal_runtime_events.schema.json
 node_compile_hint:
   mode: goal_runtime_persistence_consumer
   create_worknodes: false
@@ -70,11 +71,13 @@ preserved_exact_tokens:
   - "expected_goal_revision"
   - "retention anchors"
   - "goal.*"
+  - "goal_state.v1:{project_id}:{goal_id}"
+  - "goal_event_log"
   - "payload schemas"
 negative_constraints:
-  - Do not let storage substrate deferral remove required Goal Runtime fields.
+  - Do not let projection rebuild or stale state overwrite append-only event truth.
   - Do not make storage-plan the semantic owner for Goal Runtime lifecycle policy.
-  - Do not invent concrete Goal Runtime event payload schemas in this consumer PlanUnit.
+  - Do not preserve GoalRunStarted or BuildStarted as a second persisted event naming family.
 owner_hints:
   - Plans/storage-plan.md
   - Plans/Goal_Runtime_System.md

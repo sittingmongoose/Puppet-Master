@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L951-L995
+Source lines: L951-L996
 
-Source SHA256: `df360a7c9769f8607bb51be205eabaff52f522a9225d03cb996c2470052e37f9`
+Source SHA256: `ba8114974270324cc723cf88c113d78278b4975fd0c6305207c45b0ad4acc42d`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - Receipt browsing respects redaction_profile, policy_context, and permission_snapshot_id.
   - Discovery receipts link to exact verification receipts and final relevant summaries when available.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future Runtime Artifacts receipt browsing tests.
   - Future Assistant Chat inline display off but durable receipt available test.
 risk_class: receipt_redaction_retention_drift

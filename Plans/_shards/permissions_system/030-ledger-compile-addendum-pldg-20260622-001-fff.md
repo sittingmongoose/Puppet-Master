@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L7866-L7906
+Source lines: L7866-L7907
 
-Source SHA256: `70b83a0dd96818cc93d128017e86d70798f2521d635972448c2d1acb3f1917dd`
+Source SHA256: `45b5c8f5fd34f160c7c2ccc770d61ed2be5f7ec1927f97d82b94d7071f9c3d50`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - SSH known-host/auth/passphrase/remote-command failures are explicit policy states, not fresh local successes.
   - Receipts preserve permission snapshots and redaction profiles sufficient for audit without leaking protected paths or credentials.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future permission-gated discovery tests.
   - Future SSH auth, known-host, passphrase, remote command denial, and redaction tests.
 risk_class: permission_trust_leak

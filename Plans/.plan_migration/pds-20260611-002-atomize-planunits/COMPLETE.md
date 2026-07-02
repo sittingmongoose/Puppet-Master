@@ -20,8 +20,8 @@ Final cursor:
 - Active source-preserving PlanUnits: none
 - Source-lineage residual PlanUnits: `CV-001`
 - Unjustified source-preserving PlanUnits: none
-- Node readiness: `blocked_compiler_contract_incomplete` unless and until the compiler contract exists
-- Governance seal required before updating `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`
+- Node readiness: `ready_for_node_compile` at the accepted compiler-contract level; PlanCompile runtime launch and node artifact generation remain non-emitting
+- Governance artifacts have been refreshed for the current Archive17 seal repair; future canonical/index changes still require an explicit governance seal before updating `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`
 
 Completion notes:
 - All live `Plans/*.md` docs are either fine-grained enough, structurally dispositioned, or have an explicit source-lineage residual disposition.

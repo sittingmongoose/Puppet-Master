@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L18841-L19024
+Source lines: L18845-L19029
 
-Source SHA256: `d9395b5d304088a5fa7320c64e4d025fd575284fab29902d39e42f74a558b791`
+Source SHA256: `f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e`
 
 ---
 
@@ -119,10 +119,11 @@ canonical_text: >-
   assistant requests, orchestrator/executor dispatch, tool calls, terminal-like actions, and file/artifact access
   route through cmd.docker.*, cmd.docker.k8s.*, Executor, Permissions, FileSafe, Tools, UI_Command_Catalog, and
   receipts rather than Coasts HTTP `/api/v1`, permissive CORS, SSE/WebSocket terminal sessions, or file/service
-  controls.
+  controls. UI_Command_Catalog, Executor, Permissions, and FileSafe consume or enforce this envelope; they are not
+  prerequisites for defining the envelope itself.
 gui_related: false
 gui_classification_reason: Command envelopes and dispatch contracts are backend/control-plane requirements; GUI command surfaces are owned by UI_Command_Catalog and FinalGUISpec.
-depends_on: [CV-303, UCC-105, EP-109, PS-126, F2-194]
+depends_on: [CV-303]
 unblocks: [T-166, MI-031, CBP-023, OSI-431]
 acceptance_criteria:
   - HostCapabilityCommand carries authority, host identity, policy, transcript, cleanup, and receipt fields before dispatch.

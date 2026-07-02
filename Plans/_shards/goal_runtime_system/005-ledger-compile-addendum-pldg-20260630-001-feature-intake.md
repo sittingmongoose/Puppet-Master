@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L90-L1753
+Source lines: L90-L1754
 
-Source SHA256: `e9efed5d1958c33638a2c8c0c0cc189271d5e693d7efd498f6d6e68d3a4f39d1`
+Source SHA256: `39976ba2de9955eddea57ef902eeafc4da31f7072ee975955fbd5d3068bf5b10`
 
 ---
 
@@ -1565,30 +1565,31 @@ owner_hints:
   - Plans/Goal_Runtime_System.md
 ```
 
-### GRS-024 - Deferred Legacy Chain Wizard Compatibility And Plan Graph Decisions
+### GRS-024 - Legacy Chain Wizard Compatibility And Plan Graph Runtime Boundary
 
 ```yaml
 plan_unit_id: GRS-024
-unit_type: deferred_decision
-status: deferred
+unit_type: compatibility_disposition
+status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md. Any exact legacy Chain Wizard compatibility flow and exact PlanUnit-to-NodeSeed-to-WorkNode compiler runtime remain disabled. Goal Runtime may define invisible ledger-to-Plans execution and a future plan_graph_build template, but it must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks until Plans/Plan_To_Node_Compilation.md and a later explicit enablement allow runtime PlanCompile launch and node-artifact generation.
+  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md, and legacy Chain Wizard compatibility remains source-lineage-only unless a separate compatibility owner explicitly implements an import/display bridge. Goal Runtime may define invisible ledger-to-Plans execution and a plan_graph_build template that consumes the accepted Plan_To_Node_Compilation compiler contract, but Goal Runtime plan/index/governance phases still must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks. Runtime PlanCompile may create runtime artifacts only through the Plan_To_Node_Compilation compiler, Executor intake, activation, and completion certification chain.
 gui_related: false
-gui_classification_reason: Deferred legacy compatibility/compiler contract design is not a GUI implementation requirement.
+gui_classification_reason: Legacy compatibility/source-lineage and runtime compiler boundary design is not a GUI implementation requirement.
 depends_on:
   - GRS-003
   - GRS-018
+  - PNC-007
 unblocks: []
 acceptance_criteria:
   - Current Planning Wizard flow semantics route to Plans/Planning_Wizard.md.
-  - Any legacy Chain Wizard compatibility flow is represented as deferred rather than silently invented.
-  - Plan graph build remains runtime_disabled until explicit PlanCompile/node-artifact enablement.
-  - No node artifacts are produced by this deferred decision.
+  - Legacy Chain Wizard compatibility is source-lineage-only and is not required by accepted runtime flow.
+  - Plan graph build consumes the accepted Plan_To_Node_Compilation compiler contract without letting Goal Runtime bypass Executor intake.
+  - No node artifacts are produced by Goal Runtime documentation, index, or governance phases.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - Planning Wizard compatibility and compiler design reviews
-risk_class: deferred_compiler_boundary
+  - Plans/.plan_index/node_readiness_report.json
+risk_class: legacy_compiler_boundary
 reasoning_tier: high
 context_scope: chain_wizard_and_compiler
 implementation_surfaces:
@@ -1596,7 +1597,7 @@ implementation_surfaces:
   - Plans/Plan_To_Node_Compilation.md
   - Plans/chain-wizard-flexibility.md
 node_compile_hint:
-  mode: runtime_disabled
+  mode: legacy_chain_wizard_source_lineage_runtime_boundary
   create_worknodes: false
 source_lineage:
   - pldg-20260616-001-goal-runtime-system:atom-0015
@@ -1606,12 +1607,12 @@ source_lineage:
   - pldg-20260616-001-goal-runtime-system:q-0002
 preserved_exact_tokens:
   - "Plan graph goals come after compiler contract"
-  - "Plan graph build goal deferred"
+  - "Plan graph build"
   - "exact redesigned Chain Wizard flow"
   - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
 negative_constraints:
-  - Do not create NodeSeeds or WorkNodes before the Plan_To_Node_Compilation contract is complete.
-  - Do not invent the final Chain Wizard flow in this Goal Runtime compile.
+  - Do not make legacy Chain Wizard compatibility a dependency for accepted runtime flow.
+  - Do not let Goal Runtime bypass Plan_To_Node_Compilation, Executor intake, activation, or completion certification.
 owner_hints:
   - Plans/Goal_Runtime_System.md
   - Plans/Plan_To_Node_Compilation.md

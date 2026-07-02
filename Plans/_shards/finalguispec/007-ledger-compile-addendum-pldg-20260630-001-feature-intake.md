@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L237-L329
+Source lines: L239-L348
 
-Source SHA256: `444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02`
+Source SHA256: `a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384`
 
 ---
 
@@ -28,10 +28,24 @@ canonical_text: >-
   The page includes Overview, Profiles, Instances, Runtime Matrix, Host Lab Sessions, Access & Ports, Receipts & Artifacts,
   and Settings views, plus profile editor fields, instance identity/status/log/access/receipt layout, blocked/degraded
   cards, cleanup recommendations, and Open App/Open Container access affordances driven by port_access_record confidence,
-  health, staleness, and override state.
+  health, staleness, and override state. The page component tree is `DockerHostsPage` with
+  `DockerHostsHeader`, `HostScopeSelector`, `HostStatusStrip`, `DockerHostsSubnav`, `OverviewView`, `ProfilesView`,
+  `InstancesView`, `RuntimeMatrixView`, `HostLabSessionsView`, `AccessPortsView`, `ReceiptsArtifactsView`, and
+  `HostSettingsView`, plus shared `HostBlockedBanner`, `ProjectionHealthBanner`, `RuntimeFamilyRow`,
+  `HostProfileEditor`, `HostInstanceDetail`, `AccessTargetRow`, `ReceiptTimeline`, `CleanupRecommendationPanel`,
+  `ExplainStateButton`, and `EmptySetupPanel`. Profile states are `draft`, `validating`, `ready`, `degraded`,
+  `unsupported`, `blocked`, and `retired`; runtime-family states are `unavailable`, `probing`, `supported`,
+  `supported_with_limits`, `degraded`, `unsupported`, `disabled_until_approval`, and `blocked`; instance/session
+  states are `not_created`, `preflight_required`, `preflighting`, `preflight_passed`, `provisioning`, `starting`,
+  `running`, `unhealthy`, `stale`, `degraded`, `stopping`, `stopped`, `failed`, `blocked`, `cleanup_pending`,
+  `retained_for_debug`, `orphaned`, `cleaned`, and `historical`; access states are `discovering`,
+  `available_high_confidence`, `available_low_confidence`, `manual_override`, `stale`, `unhealthy`, `blocked`, and
+  `unavailable`. Current healthy data may enable normal actions; stale or degraded projections are inspectable but
+  lifecycle mutations require refresh or revalidation. Blocked cards always show `blocked_reason_code`, owner route,
+  receipt refs, and `allowed_action_ids[]`; dismissing a card never resolves the blocker.
 gui_related: true
 gui_classification_reason: This PlanUnit defines a native GUI page, views, layout, visible cards, and user-visible command affordances.
-depends_on: [CRAU-092, CV-303, SP-226, RAP-042, UCC-105]
+depends_on: [CRAU-092, CV-303, SP-226, UCC-105]
 unblocks: [ACD-430, OP-028, RGV-015]
 acceptance_criteria:
   - Docker/Hosts is reachable as a routed primary-content Slint page/lab from Docker Manager and cross-surface links.
@@ -40,6 +54,9 @@ acceptance_criteria:
   - Profile editing exposes runtime family, compose files, Dockerfile/build context/Bake target, services/profiles/env refs, ports, health checks, mount policy, network/egress policy, secret ref policy, and cleanup/retention policy.
   - Instance detail exposes host_instance_id, host_capability_ref, runtime facts, status timeline, logs/health/stats, access URLs, assignments, receipts, and cleanup/retain actions.
   - Empty, setup, blocked, degraded, stale, unsupported, and disabled-until-explicit-approval states remain visible.
+  - The component tree and lifecycle state matrix above are represented in the native Slint page model before coding begins.
+  - Stale, degraded, blocked, low-confidence access, and unsupported runtime-family layouts keep inspectable facts visible while disabling unsafe lifecycle actions.
+  - Tests cover Docker Manager opening Docker/Hosts as primary content, every toolbar/card action mapping to a registered command, stale projections disabling lifecycle mutation, low-confidence Open App disabling, blocked cards showing allowed actions, and mobile/tablet/desktop layouts preserving critical blockers.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future Slint Docker/Hosts page IA review

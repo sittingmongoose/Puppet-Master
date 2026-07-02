@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11057-L11234
+Source lines: L11057-L11235
 
-Source SHA256: `b12a0a0c0157faf67f35ded87b52b51b44a1b411f87674af097fc4de32470cf4`
+Source SHA256: `f5e37cdfdac714882358eb9c9862de6ff8ffd290346a10def36d323e39472e7b`
 
 ---
 
@@ -21,15 +21,15 @@ canonical_text: >-
   Puppet Master owns a native fff-inspired DiscoveryService as one shared substrate for agent tools and GUI surfaces from day one. DiscoveryService provides ranked path/context candidates under the same FileSafe, permissions, ignore, freshness, fallback, remote/cache/SSH, and no-leak policy envelope for Assistant Chat, Planning Wizard, PRD Builder, Orchestrator, Executor, File Manager, Quick Open, and compatible path-picking surfaces. Direct fff remains reference/evidence/prototype-only; product canon does not depend on a direct fff runtime dependency and does not create separate agent and GUI rankers.
 gui_related: false
 gui_classification_reason: This defines the shared backend/tool substrate; GUI consumers are covered in their owner docs.
-depends_on: [T-012, T-014, T-015, T-046, T-050, T-051, 0PI-060]
+depends_on: [T-012, T-014, T-015, T-046, T-050, T-051]
 unblocks: [T-161, T-162, CV-291, F3-399, ACD-422, OSI-429]
 acceptance_criteria:
   - Agent and GUI discovery consumers can route to the same DiscoveryService contract.
   - The same FileSafe, permissions, ignore, freshness, fallback, remote/cache/SSH, and no-leak policy envelope applies to every consumer.
   - Direct fff and OpenCode details remain source-lineage/reference/prototype-only.
 validation_surfaces:
-  - PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate
-  - Future DiscoveryService conformance tests for agent and GUI consumers.
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: shared_tool_contract_drift
 reasoning_tier: standard
 context_scope: cross_surface_discovery
@@ -77,8 +77,8 @@ acceptance_criteria:
   - Result payloads always carry freshness_state, fallback_state, policy_decision, provenance, and requires_exact_verification.
   - Ambient invocation is bounded to materially useful repo/source-location tasks and skipped for exact verified paths, pure chat, user denial, policy blocks, disabled/unsupported, or backpressure states.
 validation_surfaces:
-  - PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate
-  - Future discover_paths schema and receipt tests.
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: tool_schema_drift
 reasoning_tier: standard
 context_scope: discovery_tool_contract
@@ -122,8 +122,8 @@ acceptance_criteria:
   - Final content results and correctness claims come from content-search, AST/LSP, tests, or domain verification owners.
   - content_candidate is never treated as verified text content.
 validation_surfaces:
-  - PYTHONPATH=/tmp/pm_pyyaml python3 scripts/pm-plan-index.py validate
-  - Future tests proving content_candidate does not bypass grep/codesearch/Instant Grep verification.
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
 risk_class: content_search_boundary_drift
 reasoning_tier: standard
 context_scope: tools_search_boundary
@@ -164,6 +164,7 @@ acceptance_criteria:
   - Superseded GUI discovery queries cancel within the configured cancellation target.
   - Agent/background discovery cannot starve GUI queries or trigger unbounded refresh storms.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future scheduler tests for dedupe, cancellation, fairness, concurrency, and backpressure.
   - Future Assistant Chat and GUI degraded-state tests.
 risk_class: rollout_scheduler_drift

@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L17362-L17473
+Source lines: L17364-L17476
 
-Source SHA256: `d9395b5d304088a5fa7320c64e4d025fd575284fab29902d39e42f74a558b791`
+Source SHA256: `f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e`
 
 ---
 
@@ -18,7 +18,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Contracts_V0 owns the shared envelope for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt references. The envelope preserves goal_id, workgraph_ref, worknode_ref, verification_cycle_id, target_ref, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, repeated_signature_count, repair_strategy, next_required_action, route-open owner commands, page-local mutation semantics, receipt refs, evidence refs, adjudication refs, requested/effective runtime identity, write_mode, and certification_tier. The contract-owned VerificationCycle example shape preserves verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action. VerificationReceipt preserves verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt preserves executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt preserves child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Requested/effective provider/model/account meanings are owned by Models_System, Multi-Account, and provider-specific docs; write_mode authority and worktree lease semantics are owned by Permissions_System and WorktreeGitImprovement; this envelope only carries their references. Concrete goal event payload schemas remain deferred until promoted by contract and storage owners.
+  Contracts_V0 owns the shared envelope for GoalRun, WorkGraph, SubagentWave, VerificationCycle, DefectBundle, RepairWorkNode, VerificationReceipt, WorkNodeReceipt, and GoalCompletionReceipt references. The envelope preserves goal_id, workgraph_ref, worknode_ref, verification_cycle_id, target_ref, GoalRun/WorkNode projection status values ready, running, provisional_success, verifying, failed_verification, repairing, certified, failed, blocked, cancelled, and stopped, repeated_signature_count, repair_strategy, next_required_action, route-open owner commands, page-local mutation semantics, receipt refs, evidence refs, adjudication refs, requested/effective runtime identity, write_mode, and certification_tier. The contract-owned VerificationCycle example shape preserves verification_cycle_id, target_ref, attempt, status failed | passed | blocked only, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, and next_required_action. VerificationReceipt preserves verifier identity, findings, defect signatures, passed/failed/skipped validator outputs, repair-cycle refs, and regression checks. WorkNodeReceipt preserves executor identity, input refs, output refs, changed artifacts, validators run, evidence refs, and unresolved risks. GoalCompletionReceipt preserves child receipts, WorkNode receipts, changed artifacts, validator outcomes, authority checks, and final certifier decision. Requested/effective provider/model/account meanings are owned by Models_System, Multi-Account, and provider-specific docs; write_mode authority and worktree lease semantics are owned by Permissions_System and WorktreeGitImprovement; this envelope only carries their references. Concrete goal event names and payload minima are registered by CV-287 and stored/replayed under storage-plan.
 gui_related: false
 gui_classification_reason: Shared contract envelopes and receipt references are backend/runtime schema work, not visual presentation.
 depends_on:
@@ -31,10 +31,11 @@ acceptance_criteria:
   - VerificationCycle records preserve verification_cycle_id, target_ref, attempt, status failed | passed | blocked, typed VerificationFinding details, findings, defect_signatures, finding type, failing check, affected artifact/path/span, root_cause_key, repeated_signature_count, prior repair strategies, repair_strategy, next_required_action, evidence, and adjudication refs.
   - Receipt envelopes preserve requested/effective runtime identity, write_mode, certification_tier, verifier/executor/certifier identity, changed artifacts, validator outcomes, authority checks, evidence refs, and unresolved risks.
   - Route-open owner commands and page-local mutation semantics do not mint unauthorized panel-local mutations.
-  - Concrete goal event payload schemas remain deferred until owner registration.
+  - Concrete goal event payload minima are registered by CV-287 and storage-plan owns persistence/replay schemas.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
-  - future GoalRun contract registration review
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures
 risk_class: goalrun_contract_envelope_gap
 reasoning_tier: high
 context_scope: goalrun_shared_contracts
@@ -106,7 +107,7 @@ preserved_exact_tokens:
   - "repair-cycle refs"
   - "regression checks"
 negative_constraints:
-  - Do not invent concrete persisted goal event payload schemas in this PlanUnit.
+  - Do not invent additional persisted goal event names outside CV-287.
   - Do not let contract envelopes own Goal Runtime lifecycle semantics.
   - Do not expand VerificationCycle.status beyond failed | passed | blocked; ready/running/provisional_success/verifying/failed_verification/repairing/certified/failed/blocked/cancelled/stopped are GoalRun/WorkNode projection lifecycle values.
   - Do not mint unauthorized panel-local mutations.

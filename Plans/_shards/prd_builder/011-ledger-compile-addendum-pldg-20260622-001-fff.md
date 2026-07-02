@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L604-L648
+Source lines: L604-L649
 
-Source SHA256: `f736432fb9ffb839ae7f61dab15dc26b1470795af20ad58685717b4761ce6806`
+Source SHA256: `e44f6db85194a55be60bab4c87ccdf81357caae6f14c74c446ac093af8504118`
 
 ---
 
@@ -28,6 +28,7 @@ acceptance_criteria:
   - Selected candidate provenance is recorded in PRD source refs.
   - Denied/stale/fallback states are visible without leaking blocked path details.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future PRD Builder source picker local/SSH tests.
   - Future hidden-by-policy source no-leak tests.
 risk_class: prd_source_provenance_drift

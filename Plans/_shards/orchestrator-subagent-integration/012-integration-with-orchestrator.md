@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L340-L31379
+Source lines: L340-L31380
 
-Source SHA256: `97280928d0c60b7ddccb8a1caff521e76dd808c19219193d6bf816bc7283ed60`
+Source SHA256: `39085af57a200daf76e725266b53fd3e22dbc82751ce2ee91a6780c1f5a82b02`
 
 ---
 
@@ -30959,6 +30959,7 @@ acceptance_criteria:
   - Discovery receipts link to exact verification before root-cause claims, Executor handoff, or edits.
   - Ambient discovery is bounded by explicit trigger and skip rules.
 validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
   - Future orchestrated no-path bug-fix test.
   - Future SSH-backed project context discovery test.
   - Future ambient trigger/skip rule tests.

@@ -198,7 +198,7 @@
       "last_updated_at": "2026-06-17T04:09:59",
       "last_updated_at_utc": "2026-06-17T04:09:59Z",
       "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
-      "notes": "Compiled to live canonical Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after explicit governance refresh. A post-seal conversational continuation is open in ledger-only state with q-0007 through q-0009; this does not unseal or recompile the existing PlanUnits. Node readiness remains runtime_disabled. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
+      "notes": "Compiled to live canonical Plans PlanUnits and allowed Plans/.plan_index outputs; governance_status=sealed after explicit governance refresh. Archive17 projection repair resolved q-0007 through q-0009 as source-lineage by current PNC/GRS PlanUnits; no active compile plan remains. Current PlanUnit index readiness is contract-level ready_for_node_compile only. No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, runtime dispatch, or final node queues were created.",
       "phase": "compiled_orchestrator_goal_runtime_flow_governance_sealed",
       "primary_goal": "Plan the Orchestrator Goal Runtime flow rewrite, including the three Goal Mode functions, GoalRun/WorkGraph/WorkNode architecture, extensive bounded subagents, low-end/high-end agent split, verification repair loop, receipts, GUI/settings impacts, terminology cleanup, and backlink audit scope before canonical Plans edits.",
       "resume_file": "Plans/ledgers/v2/pldg-20260616-002-orchestrator-goal-runtime-flow/state/handoff.json",
@@ -223,7 +223,7 @@
       ],
       "status": "sealed",
       "title": "Orchestrator Goal Runtime Flow Rewrite",
-      "updated_at_utc": "2026-06-17T04:09:59Z"
+      "updated_at_utc": "2026-07-02T20:35:00Z"
     },
     {
       "candidate_compile_owner_docs": [],
@@ -997,27 +997,27 @@
       "created_at_utc": "2026-06-30T19:21:27Z",
       "current_checkout_compile_validators_clean": true,
       "current_checkout_governance_validators_clean": true,
-      "current_checkout_ready": false,
-      "direct_gui_workflow_build_packet_ready": false,
+      "current_checkout_ready": true,
+      "direct_gui_workflow_build_packet_ready": true,
       "governance_status": "sealed",
-      "implementation_readiness_in_ledger": false,
-      "last_event_id": "evt-0041",
-      "last_updated_at": "2026-07-01T16:12:15Z",
-      "last_updated_at_utc": "2026-07-01T16:12:15Z",
-      "latest_audit_ref": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/governance_seal_validation_20260701.json",
-      "latest_audit_status": "governance_sealed_with_direct_gui_workflow_gap_open",
+      "implementation_readiness_in_ledger": true,
+      "last_event_id": "evt-0043",
+      "last_updated_at": "2026-07-02T20:36:00Z",
+      "last_updated_at_utc": "2026-07-02T20:36:00Z",
+      "latest_audit_ref": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "latest_audit_status": "docker_hosts_build_packet_closed_governance_sealed_runtime_preflight_next",
       "ledger_id": "pldg-20260630-001-feature-intake",
-      "notes": "Compiled to live Plans PlanUnits, allowed Plans/.plan_index outputs, allowed Plans/.plan_migration metadata refresh, and explicit governance seal artifacts. Governance validators pass after generated shard, Spec Lock, evidence, plan graph, auto decisions, and run-gates refresh. Direct Docker/Hosts GUI/workflow implementation-packet detail remains open; implementation_readiness_in_ledger=false and direct_gui_workflow_build_packet_ready=false remain preserved. No WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, legacy Iced app files, or production build tasks were created.",
-      "open_blocker_ids": [
-        "blk-0003"
-      ],
-      "open_blockers_count": 1,
-      "phase": "compiled_containerized_hosts_governance_sealed",
+      "notes": "Compiled to live Plans PlanUnits, Docker/Hosts builder-grade GUI/workflow packet closure, and post-closure governance seal. implementation_readiness_in_ledger=true means source/docs packet readiness only; code/runtime implementation remains disabled until PNC-007 native runtime compiler/Executor activation preflight. No WorkNodes, NodeSeeds, executable queues, runtime/build surfaces, implementation files, legacy Iced app files, or production build tasks were created.",
+      "open_blocker_ids": [],
+      "open_blockers_count": 0,
+      "phase": "compiled_containerized_hosts_build_packet_closed_governance_sealed",
       "primary_goal": "Shape the accepted full-MVP `containerized hosts` idea from Coasts/source-lineage inspiration into clear, complete, testable PM-native project intent before any canonical Plans compile.",
       "resume_file": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json",
       "status": "sealed",
       "title": "Containerized Hosts Planning",
-      "updated_at_utc": "2026-07-01T16:12:15Z"
+      "updated_at_utc": "2026-07-02T20:36:00Z",
+      "code_implementation_ready": false,
+      "implementation_ready_in_ledger": true
     },
     {
       "canonical_plan_targets": [
@@ -1110,5 +1110,5 @@
       }
     }
   ],
-  "updated_at_utc": "2026-07-02T04:51:42Z"
+  "updated_at_utc": "2026-07-02T20:36:00Z"
 }
