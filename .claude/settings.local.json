@@ -9,7 +9,21 @@
       "Bash(unzip -o sunlight_shimmer-slang.zip -d sunlight_shimmer)",
       "Bash(grep -n -o '.\\\\{0,80\\\\}Est\\\\. Cost.\\\\{0,80\\\\}' Concepts/PMConcept.html)",
       "Bash(python3)",
-      "Bash(sort -n -k1)"
+      "Bash(sort -n -k1)",
+      "Bash(awk '{printf \"%8d  %s\\\\n\", $1, $2}')",
+      "Bash(awk -F: '$1 >= 5691 && $1 <= 8200')",
+      "Bash(awk -F: '$1 >= 7700 && $1 <= 15800')",
+      "Bash(awk -F: '$1 >= 15400 && $1 <= 23800')",
+      "Bash(awk -F: '$1 >= 23000')",
+      "Bash(awk -F: '$1 >= 28380 && $1 <= 31379')",
+      "Bash(awk -F: '$1 >= 2837 && $1 <= 6800')",
+      "Bash(awk -F: '$1 >= 6400 && $1 <= 13400')",
+      "Bash(awk -F: '$1 >= 12800 && $1 <= 20500')",
+      "Bash(awk -F: '$1 >= 19800 && $1 <= 26630')",
+      "Bash(python3 -c ' *)",
+      "Bash(grep -n \"plan_unit_id: OSI-005$\\\\|plan_unit_id: OSI-006$\\\\|plan_unit_id: OSI-009$\\\\|plan_unit_id: OSI-011$\" orchestrator-subagent-integration.md)",
+      "Bash(mkdir -p /Users/jaredsmacbookair/.claude/jobs/54e93b07/tmp/reports)",
+      "Bash(nohup python3 -c \"\nfrom datetime import datetime, timedelta\nimport time\nfrom zoneinfo import ZoneInfo\ntz = ZoneInfo\\('Europe/Athens'\\)\ntarget = datetime\\(2026,7,2,23,11,0,tzinfo=tz\\)\nnow = datetime.now\\(tz\\)\nsecs = \\(target-now\\).total_seconds\\(\\)\nprint\\('sleeping', secs\\)\nif secs>0: time.sleep\\(secs\\)\nprint\\('LIMIT RESET REACHED at', datetime.now\\(tz\\).isoformat\\(\\)\\)\n\" > /Users/jaredsmacbookair/.claude/jobs/54e93b07/tmp/sleeper.log 2>&1)"
     ]
   }
 }

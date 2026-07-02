@@ -66,8 +66,8 @@
         },
         "ui_command_id": {
           "type": "string",
-          "pattern": "^cmd\\.[a-z][a-z0-9]*(\\.[a-z][a-z0-9_]*)*$",
-          "description": "The UICommand ID dispatched by this element. Must start with \"cmd.\" and be lowercase dot-separated."
+          "pattern": "^cmd\\.[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$",
+          "description": "The UICommand ID dispatched by this element. Must start with \"cmd.\" and use lowercase dot-separated segments; underscores are allowed inside segments for accepted namespaces such as source_control, prd_builder, planning_wizard, and plan_compile."
         },
         "handler_location": {
           "type": "string",

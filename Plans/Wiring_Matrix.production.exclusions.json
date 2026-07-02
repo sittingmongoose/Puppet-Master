@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-07-02T15:53:33Z",
+  "excluded_tokens": [
+    "cmd.artifacts.show_in_",
+    "cmd.chat",
+    "cmd.docker",
+    "cmd.k8s",
+    "cmd.nav",
+    "cmd.orchestrator",
+    "cmd.orchestrator.open_",
+    "cmd.orchestrator.preview_",
+    "cmd.runtime"
+  ],
+  "reason": "Excluded from production wiring JSON because token is a generic family root, glob/parser artifact, invalid under schema, or explicit compatibility-only namespace root. Concrete aliases are handled in UI_Command_Catalog and PMConcept_Control_Reconciliation."
+}
