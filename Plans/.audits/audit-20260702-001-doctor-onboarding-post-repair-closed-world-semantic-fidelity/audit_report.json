@@ -1,0 +1,846 @@
+{
+  "actionable_findings_count": 0,
+  "artifact_row_counts": {
+    "atom_fidelity_matrix.jsonl": 1103,
+    "audit_scope_manifest.jsonl": 2003,
+    "closure_reuse.jsonl": 12,
+    "owner_routing_findings.jsonl": 144,
+    "planunit_source_claims.jsonl": 385,
+    "semantic_risks.jsonl": 14
+  },
+  "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+  "classification_counts": {
+    "exact_present": 1363,
+    "not_for_plan": 41,
+    "observation": 434,
+    "previously_closed": 149,
+    "source_lineage_only": 15,
+    "stale_retired": 1
+  },
+  "classified_scope_rows": 2003,
+  "closure_reuse": {
+    "finding_keys": [
+      "sfk-0be34b8e3a55f0c873b0f3f2",
+      "sfk-14e39c5db4bde40c6ce66d53",
+      "sfk-1e3e6b3f9de577e1bdfa0952",
+      "sfk-3c9b5dbc51d0cf9a295cb500",
+      "sfk-4295336d87f4f0b9df21a400",
+      "sfk-49196add0ba77692bc015ce1",
+      "sfk-635ea8974cc7f9be1c0a79d0",
+      "sfk-6c1c3f86840868d121796012",
+      "sfk-a31dd763cd49746248d2e9de",
+      "sfk-c6b44a39a77dd5c092e9ea69",
+      "sfk-d1bd4226cde58ebf29d82cd6",
+      "sfk-d77059aad13a97f6cdde66dc"
+    ],
+    "registry_hash_dry_run": "touched_rows=0",
+    "row_count": 12,
+    "status": "previously_closed_reused"
+  },
+  "compiled_atom_count": 27,
+  "compiled_plan_unit_ids": [
+    "F3-411",
+    "MS-122",
+    "MA-066",
+    "CV-305",
+    "ACD-431",
+    "UCC-106",
+    "PWIZ-017",
+    "WM-041",
+    "ATS-020"
+  ],
+  "coverage_percent": 100.0,
+  "design_atom_count": 47,
+  "findings": [
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "source_atom_ids",
+        "source_lineage"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-001",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "ACD-431:records/design_atoms.jsonl:atom-0007",
+        "ACD-431:records/design_atoms.jsonl:atom-0035",
+        "ACD-431:records/design_atoms.jsonl:atom-0037",
+        "ACD-431:records/design_atoms.jsonl:atom-0043",
+        "ACD-431:records/design_atoms.jsonl:atom-0046",
+        "ACD-431:records/design_atoms.jsonl:atom-0047",
+        "ATS-020:records/design_atoms.jsonl:atom-0007",
+        "ATS-020:records/design_atoms.jsonl:atom-0008",
+        "ATS-020:records/design_atoms.jsonl:atom-0015",
+        "ATS-020:records/design_atoms.jsonl:atom-0016",
+        "ATS-020:records/design_atoms.jsonl:atom-0037",
+        "ATS-020:records/design_atoms.jsonl:atom-0038",
+        "ATS-020:records/design_atoms.jsonl:atom-0040",
+        "ATS-020:records/design_atoms.jsonl:atom-0041",
+        "ATS-020:records/design_atoms.jsonl:atom-0042",
+        "ATS-020:records/design_atoms.jsonl:atom-0043",
+        "ATS-020:records/design_atoms.jsonl:atom-0044",
+        "ATS-020:records/design_atoms.jsonl:atom-0045",
+        "ATS-020:records/design_atoms.jsonl:atom-0046",
+        "ATS-020:records/design_atoms.jsonl:atom-0047",
+        "CV-305:records/design_atoms.jsonl:atom-0034",
+        "CV-305:records/design_atoms.jsonl:atom-0042",
+        "CV-305:records/design_atoms.jsonl:atom-0044",
+        "CV-305:records/design_atoms.jsonl:atom-0045",
+        "CV-305:records/design_atoms.jsonl:atom-0046",
+        "CV-305:records/design_atoms.jsonl:atom-0047",
+        "F3-411:records/design_atoms.jsonl:atom-0006",
+        "F3-411:records/design_atoms.jsonl:atom-0007",
+        "F3-411:records/design_atoms.jsonl:atom-0008",
+        "F3-411:records/design_atoms.jsonl:atom-0010",
+        "F3-411:records/design_atoms.jsonl:atom-0015",
+        "F3-411:records/design_atoms.jsonl:atom-0016",
+        "F3-411:records/design_atoms.jsonl:atom-0024",
+        "F3-411:records/design_atoms.jsonl:atom-0025",
+        "F3-411:records/design_atoms.jsonl:atom-0027",
+        "F3-411:records/design_atoms.jsonl:atom-0029",
+        "F3-411:records/design_atoms.jsonl:atom-0031",
+        "F3-411:records/design_atoms.jsonl:atom-0032",
+        "F3-411:records/design_atoms.jsonl:atom-0033",
+        "F3-411:records/design_atoms.jsonl:atom-0034",
+        "F3-411:records/design_atoms.jsonl:atom-0035",
+        "F3-411:records/design_atoms.jsonl:atom-0036",
+        "F3-411:records/design_atoms.jsonl:atom-0037",
+        "F3-411:records/design_atoms.jsonl:atom-0038",
+        "F3-411:records/design_atoms.jsonl:atom-0039",
+        "F3-411:records/design_atoms.jsonl:atom-0040",
+        "F3-411:records/design_atoms.jsonl:atom-0041",
+        "F3-411:records/design_atoms.jsonl:atom-0042",
+        "F3-411:records/design_atoms.jsonl:atom-0043",
+        "F3-411:records/design_atoms.jsonl:atom-0044",
+        "F3-411:records/design_atoms.jsonl:atom-0045",
+        "F3-411:records/design_atoms.jsonl:atom-0046",
+        "F3-411:records/design_atoms.jsonl:atom-0047",
+        "MA-066:records/design_atoms.jsonl:atom-0010",
+        "MA-066:records/design_atoms.jsonl:atom-0016",
+        "MA-066:records/design_atoms.jsonl:atom-0033",
+        "MA-066:records/design_atoms.jsonl:atom-0034",
+        "MA-066:records/design_atoms.jsonl:atom-0039",
+        "MA-066:records/design_atoms.jsonl:atom-0040",
+        "MA-066:records/design_atoms.jsonl:atom-0041",
+        "MA-066:records/design_atoms.jsonl:atom-0042",
+        "MA-066:records/design_atoms.jsonl:atom-0044",
+        "MA-066:records/design_atoms.jsonl:atom-0047",
+        "MS-122:records/design_atoms.jsonl:atom-0016",
+        "MS-122:records/design_atoms.jsonl:atom-0033",
+        "MS-122:records/design_atoms.jsonl:atom-0038",
+        "MS-122:records/design_atoms.jsonl:atom-0039",
+        "MS-122:records/design_atoms.jsonl:atom-0040",
+        "MS-122:records/design_atoms.jsonl:atom-0041",
+        "MS-122:records/design_atoms.jsonl:atom-0047",
+        "PWIZ-017:records/design_atoms.jsonl:atom-0029",
+        "PWIZ-017:records/design_atoms.jsonl:atom-0036",
+        "PWIZ-017:records/design_atoms.jsonl:atom-0037",
+        "PWIZ-017:records/design_atoms.jsonl:atom-0038",
+        "PWIZ-017:records/design_atoms.jsonl:atom-0042",
+        "PWIZ-017:records/design_atoms.jsonl:atom-0045",
+        "PWIZ-017:records/design_atoms.jsonl:atom-0046",
+        "PWIZ-017:records/design_atoms.jsonl:atom-0047",
+        "UCC-106:records/design_atoms.jsonl:atom-0032",
+        "UCC-106:records/design_atoms.jsonl:atom-0035",
+        "UCC-106:records/design_atoms.jsonl:atom-0036",
+        "UCC-106:records/design_atoms.jsonl:atom-0037",
+        "UCC-106:records/design_atoms.jsonl:atom-0038",
+        "UCC-106:records/design_atoms.jsonl:atom-0040",
+        "UCC-106:records/design_atoms.jsonl:atom-0041",
+        "UCC-106:records/design_atoms.jsonl:atom-0042",
+        "UCC-106:records/design_atoms.jsonl:atom-0043",
+        "UCC-106:records/design_atoms.jsonl:atom-0045",
+        "UCC-106:records/design_atoms.jsonl:atom-0046",
+        "UCC-106:records/design_atoms.jsonl:atom-0047",
+        "WM-041:records/design_atoms.jsonl:atom-0016",
+        "WM-041:records/design_atoms.jsonl:atom-0032",
+        "WM-041:records/design_atoms.jsonl:atom-0033",
+        "WM-041:records/design_atoms.jsonl:atom-0035",
+        "WM-041:records/design_atoms.jsonl:atom-0036",
+        "WM-041:records/design_atoms.jsonl:atom-0037",
+        "WM-041:records/design_atoms.jsonl:atom-0038",
+        "WM-041:records/design_atoms.jsonl:atom-0040",
+        "WM-041:records/design_atoms.jsonl:atom-0041",
+        "WM-041:records/design_atoms.jsonl:atom-0042",
+        "WM-041:records/design_atoms.jsonl:atom-0043",
+        "WM-041:records/design_atoms.jsonl:atom-0045",
+        "WM-041:records/design_atoms.jsonl:atom-0046",
+        "WM-041:records/design_atoms.jsonl:atom-0047"
+      ],
+      "finding_family": "reciprocal_source_lineage_atom_qualification",
+      "finding_key": "sfk-d77059aad13a97f6cdde66dc",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "ATS-020",
+        "CV-305",
+        "F3-411",
+        "MA-066",
+        "MS-122",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [
+        "atom-0006",
+        "atom-0007",
+        "atom-0008",
+        "atom-0010",
+        "atom-0015",
+        "atom-0016",
+        "atom-0024",
+        "atom-0025",
+        "atom-0027",
+        "atom-0029",
+        "atom-0031",
+        "atom-0032",
+        "atom-0033",
+        "atom-0034",
+        "atom-0035",
+        "atom-0036",
+        "atom-0037",
+        "atom-0038",
+        "atom-0039",
+        "atom-0040",
+        "atom-0041",
+        "atom-0042",
+        "atom-0043",
+        "atom-0044",
+        "atom-0045",
+        "atom-0046",
+        "atom-0047"
+      ],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "compiled_output_plan_unit_ids",
+        "source_atom_ids"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-002",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "extra_planunit_source_atom:ACD-431:atom-0037",
+        "extra_planunit_source_atom:ACD-431:atom-0046",
+        "extra_planunit_source_atom:MA-066:atom-0039",
+        "missing_planunit_source_atom:UCC-106:atom-0033"
+      ],
+      "finding_family": "reciprocal_source_atom_id_disagreement",
+      "finding_key": "sfk-3c9b5dbc51d0cf9a295cb500",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/Multi-Account.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "MA-066",
+        "UCC-106"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [
+        "atom-0033",
+        "atom-0037",
+        "atom-0039",
+        "atom-0046"
+      ],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "{'current_phase', 'validation_state.last_validated_at_utc', 'phase', 'validation_state.latest_projection_updated_at_utc', 'last_event_id', 'validation_state.node_readiness_status', 'governance_status', 'validation_state.ledger_health', 'validation_state.governance_status', 'updated_at_utc'}"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-003",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "{'governance_status=not_started expected sealed', 'last_event_id=evt-0015 expected evt-0018', 'current_phase=conversation_active expected compiled_governance_sealed', 'phase=conversation_active expected compiled_governance_sealed', 'validation_state.last_validated_at_utc=2026-07-01T20:03:24Z expected 2026-07-01T20:52:02Z', 'updated_at_utc=2026-07-01T20:03:24Z expected 2026-07-01T20:52:02Z', 'validation_state.governance_status=not_started expected sealed', 'validation_state.ledger_health=pass expected pass_governance_sealed', 'validation_state.latest_projection_updated_at_utc=2026-07-01T20:03:24Z expected 2026-07-01T20:52:02Z', 'validation_state.node_readiness_status=not_started expected blocked_compiler_contract_incomplete'}"
+      ],
+      "finding_family": "ledger_operating_capsule_projection_drift",
+      "finding_key": "sfk-635ea8974cc7f9be1c0a79d0",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/compile_queue.json",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/current.json",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/operating_capsule.json"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "ATS-020",
+        "CV-305",
+        "F3-411",
+        "MA-066",
+        "MS-122",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "sealed_ledgers[].last_updated_at_utc",
+        "updated_at_utc"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-004",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "ledger_id=pldg-20260701-001-feature-intake",
+        "root.updated_at_utc=2026-07-01T20:34:05Z",
+        "sealed.last_updated_at_utc=2026-07-01T20:52:02Z"
+      ],
+      "finding_family": "ledger_registry_root_timestamp_stale",
+      "finding_key": "sfk-0be34b8e3a55f0c873b0f3f2",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/ledgers/v2/ledger_registry.json"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "ATS-020",
+        "CV-305",
+        "F3-411",
+        "MA-066",
+        "MS-122",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "compile_disposition",
+        "records/design_atoms.status",
+        "summary.not_for_plan_atoms"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-005",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "design_atoms status=not_for_plan count=20",
+        "non_applicable count=6",
+        "source_lineage_only_pre_seal_candidate count=14",
+        "summary.not_for_plan_atoms=6"
+      ],
+      "finding_family": "ledger_health_summary_count_drift",
+      "finding_key": "sfk-1e3e6b3f9de577e1bdfa0952",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/canonical_plan_compile_20260701.json",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/validation/ledger_health.json"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "source_lineage",
+        "source_refs"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-006",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "ACD-431:atom-0007:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json",
+        "ATS-020:atom-0037:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json",
+        "ATS-020:atom-0044:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json",
+        "CV-305:atom-0034:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json",
+        "CV-305:atom-0034:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json",
+        "CV-305:atom-0044:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json",
+        "MA-066:atom-0033:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json",
+        "MA-066:atom-0034:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json",
+        "MA-066:atom-0044:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json",
+        "MS-122:atom-0016:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json",
+        "PWIZ-017:atom-0029:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json",
+        "WM-041:atom-0016:Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json"
+      ],
+      "finding_family": "planunit_source_lineage_missing_source_ref",
+      "finding_key": "sfk-c6b44a39a77dd5c092e9ea69",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "ATS-020",
+        "CV-305",
+        "MA-066",
+        "MS-122",
+        "PWIZ-017",
+        "WM-041"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [
+        "atom-0007",
+        "atom-0016",
+        "atom-0029",
+        "atom-0033",
+        "atom-0034",
+        "atom-0037",
+        "atom-0044"
+      ],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "items[].target_doc",
+        "items[].target_docs"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-007",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "cq-doctor-onboarding-001:target_doc=Plans/Contracts_V0.md expected=Plans/FinalGUISpec.md",
+        "cq-doctor-onboarding-002:target_doc=Plans/Contracts_V0.md expected=Plans/Models_System.md",
+        "cq-doctor-onboarding-003:target_doc=Plans/Contracts_V0.md expected=Plans/Multi-Account.md",
+        "cq-doctor-onboarding-005:target_doc=Plans/Contracts_V0.md expected=Plans/assistant-chat-design.md",
+        "cq-doctor-onboarding-006:target_doc=Plans/Contracts_V0.md expected=Plans/UI_Command_Catalog.md",
+        "cq-doctor-onboarding-007:target_doc=Plans/Contracts_V0.md expected=Plans/Planning_Wizard.md",
+        "cq-doctor-onboarding-008:target_doc=Plans/Contracts_V0.md expected=Plans/Wiring_Matrix.md",
+        "cq-doctor-onboarding-009:target_doc=Plans/Contracts_V0.md expected=Plans/Automated_Testing_System.md"
+      ],
+      "finding_family": "compile_queue_target_doc_stale",
+      "finding_key": "sfk-a31dd763cd49746248d2e9de",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/state/compile_queue.json"
+      ],
+      "plan_unit_ids": [
+        "ACD-431",
+        "ATS-020",
+        "F3-411",
+        "MA-066",
+        "MS-122",
+        "PWIZ-017",
+        "UCC-106",
+        "WM-041"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "canonical_text",
+        "preserved_exact_tokens",
+        "source_atom_ids"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-008",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "CV-305",
+        "assistant_chat_handoff_seed",
+        "atom-0045"
+      ],
+      "finding_family": "planunit_preserved_exact_token_missing",
+      "finding_key": "sfk-6c1c3f86840868d121796012",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/Contracts_V0.md"
+      ],
+      "plan_unit_ids": [
+        "CV-305"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [
+        "atom-0045"
+      ],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "acceptance_criteria",
+        "preserved_exact_tokens",
+        "source_atom_ids"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-009",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "ATS-020",
+        "Fee models",
+        "atom-0041"
+      ],
+      "finding_family": "planunit_preserved_exact_token_missing",
+      "finding_key": "sfk-14e39c5db4bde40c6ce66d53",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "plan_unit_ids": [
+        "ATS-020"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [
+        "atom-0041"
+      ],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "PWIZ-017.depends_on",
+        "UCC-106.unblocks"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-010",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "PWIZ-017 depends_on lacks UCC-106",
+        "UCC-106 unblocks PWIZ-017"
+      ],
+      "finding_family": "dependency_edge_reciprocal_drift",
+      "finding_key": "sfk-d1bd4226cde58ebf29d82cd6",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "plan_unit_ids": [
+        "PWIZ-017",
+        "UCC-106"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "pm-audit-closure.py validate",
+        "owner_evidence_hashes",
+        "closure_evidence_hashes"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-011",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "stale closure registry hashes",
+        "Plans/.audits/_semantic_closure_registry.jsonl"
+      ],
+      "finding_family": "validator_closure_registry_currentness_failure",
+      "finding_key": "sfk-4295336d87f4f0b9df21a400",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "scripts/pm-audit-closure.py"
+      ],
+      "plan_unit_ids": [
+        "PDS-014",
+        "PLS-012"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "previously_closed",
+      "detail_keys": [
+        "pm-audit-closure.py validate --audit-dir",
+        "closure_registry_currentness"
+      ],
+      "evidence": {
+        "closed_by_audit_id": "audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity",
+        "closure_id": "closure-audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity-repair-012",
+        "closure_status": "repaired"
+      },
+      "exact_tokens": [
+        "audit-dir closure validation failed because global registry validation failed",
+        "Plans/.audits/_semantic_closure_registry.jsonl"
+      ],
+      "finding_family": "validator_target_audit_closure_failure",
+      "finding_key": "sfk-49196add0ba77692bc015ce1",
+      "finding_level": "info",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/.audits/_semantic_closure_registry.jsonl",
+        "scripts/pm-audit-closure.py"
+      ],
+      "plan_unit_ids": [
+        "PDS-014",
+        "PLS-012"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Previously repair-required same-ledger finding remains closed at current HEAD."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "warning",
+      "detail_keys": [
+        "historical_audit_report",
+        "terminal_repair_certification"
+      ],
+      "evidence": {},
+      "exact_tokens": [
+        "audit_report.json",
+        "BLOCKED",
+        "post_repair_audit_report.json",
+        "repair_required_count=0",
+        "REPAIR_CERTIFICATION.md",
+        "PASS_CERTIFIED"
+      ],
+      "finding_family": "historical_audit_report_lineage_warning",
+      "finding_key": "sfk-d0ae996d1610c42f5a6d1ce4",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/audit_report.json",
+        "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/post_repair_audit_report.json",
+        "Plans/.audits/audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity/REPAIR_CERTIFICATION.md"
+      ],
+      "plan_unit_ids": [],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Historical audit_report.json remains a pre-repair BLOCKED record; the effective terminal same-ledger state is repair_validated/PASS_CERTIFIED."
+    },
+    {
+      "audit_id": "audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity",
+      "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+      "classification": "warning",
+      "detail_keys": [
+        "node_readiness_report",
+        "compiler_contract_status"
+      ],
+      "evidence": {},
+      "exact_tokens": [
+        "blocked_compiler_contract_incomplete",
+        "runtime_disabled",
+        "no WorkNodes",
+        "no NodeSeeds"
+      ],
+      "finding_family": "node_readiness_compiler_contract_warning",
+      "finding_key": "sfk-dae4b0f101b10fbb8465c201",
+      "finding_level": "warning",
+      "ledger_id": "pldg-20260701-001-feature-intake",
+      "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "owner_docs": [
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/ledgers/v2/pldg-20260701-001-feature-intake/validation/ledger_health.json"
+      ],
+      "plan_unit_ids": [
+        "F3-411",
+        "MS-122",
+        "MA-066",
+        "CV-305",
+        "ACD-431",
+        "UCC-106",
+        "PWIZ-017",
+        "WM-041",
+        "ATS-020"
+      ],
+      "repair_required": false,
+      "schema_id": "pm.semantic_risk.v1",
+      "source_atom_ids": [],
+      "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+      "summary": "Node readiness remains blocked by the still-incomplete compiler contract by design; no executable build artifacts are authorized or present."
+    }
+  ],
+  "generated_at_utc": "2026-07-02T05:31:05Z",
+  "ledger_cycle_inference": {
+    "audit_only_commit": "64c17aa73",
+    "baseline_ref": "f5c3d888e870414f77a3e793158b41d2d027c47c",
+    "earliest_substantive_commit": "291d567e0b8c706df37a055391fa5be1a81e521f",
+    "ledger_id": "pldg-20260701-001-feature-intake",
+    "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+    "repair_certification_commit": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+    "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34"
+  },
+  "ledger_id": "pldg-20260701-001-feature-intake",
+  "next_action": "No repair. Commit and push this audit-only bundle.",
+  "observation_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+  "owner_docs": [
+    "Plans/FinalGUISpec.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Contracts_V0.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/Automated_Testing_System.md"
+  ],
+  "repair_required": false,
+  "repair_required_count": 0,
+  "schema_id": "pm.semantic_audit.report.v1",
+  "scope_row_count": 2003,
+  "semantic_checks": {
+    "changed_doc_fidelity": "PASS",
+    "closure_reuse": "PASS",
+    "dependency_edges": "PASS",
+    "forbidden_artifacts": "PASS",
+    "index_governance_state": "PASS",
+    "ledger_projection_agreement": "PASS",
+    "owner_routing": "PASS",
+    "reciprocal_lineage": "PASS",
+    "schema_identity": "PASS",
+    "validators": "PASS"
+  },
+  "status": "PASS_WITH_WARNINGS",
+  "subject_ref": "1c6ffcb983557a9a19235b84241a12e70f32cd34",
+  "validator_summary": {
+    "command_count": 17,
+    "failed": [],
+    "passed": [
+      "git-status-before",
+      "closure-validate",
+      "closure-refresh-hashes-dry-run",
+      "target-ledger",
+      "plan-index",
+      "plan-migration",
+      "audit-governance",
+      "run-gates",
+      "shard-check",
+      "auto-decisions",
+      "spec-lock",
+      "evidence",
+      "plan-graph",
+      "project-artifacts",
+      "unit-tests",
+      "git-diff-check",
+      "git-status-after"
+    ],
+    "path": "Plans/.audits/audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity/validator_results.json",
+    "status": "pass"
+  },
+  "warnings": [
+    "Historical audit_report.json is intentionally retained as the pre-repair BLOCKED record; terminal same-ledger state is REPAIR_CERTIFICATION.md / post_repair_audit_report.json with repair_required_count=0.",
+    "node_readiness_report remains blocked_compiler_contract_incomplete by design; no WorkNodes, NodeSeeds, queues, manifests, implementation files, runtime/build surfaces, or build tasks are authorized or present."
+  ]
+}
