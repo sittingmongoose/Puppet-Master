@@ -13,6 +13,10 @@ PRD Builder is the finished-product planning-intake workspace that creates, norm
 
 PRD Builder owns intake-depth product intent, source ingestion, PRD projection, Approved PRD Pack creation, PRD annotations, and the explicit `Approve PRD for Planning Wizard` handoff. It consumes Assistant Chat, Planning Ledger, Plan Document System, FileSafe, Project Output Artifacts, Contracts, Final GUI, and UI Command contracts without owning implementation planning, Plan Compile, Executor provisioning, WorkNodes, or Orchestrator runtime execution.
 
+### GUI command repair note (2026-07-02)
+
+The production PRD Builder final action dispatches `cmd.prd_builder.approve_for_planning_wizard`; it is not `Approve & Continue`. The command creates the immutable Approved PRD Pack handoff snapshot, carries PRD Pack id/version/hash, source manifest hash, unresolved-warning acknowledgement, authority/currentness refs, and an idempotency key, and is disabled when blocking conflicts, stale source anchors, missing required sections, or ledger sync failure prevent a safe handoff. PMConcept `Approve & Continue` labels are source-lineage only and must be replaced by `Approve PRD for Planning Wizard` in production surfaces.
+
 
 ## 2. Canonical PlanUnits
 

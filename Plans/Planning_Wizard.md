@@ -94,6 +94,18 @@ owner_hints:
 - Plans/PRD_Builder.md
 ```
 
+## GUI approval and Plan Compile launch repair addendum (2026-07-02)
+
+This addendum closes the Approve And Build defects from the PMConcept readiness report. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+
+The production final-review control dispatches `cmd.planning_wizard.approve_and_build`. The command payload carries the exact final-review CAS/currentness values shown to the user: `project_id`, `planning_run_id`, PlanningRun revision, topic map version, `approved_plan_pack_id`, pack version/hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, final audit/closure hash, approval actor, and deterministic idempotency key.
+
+Approval fails closed when any planning state, source pack, project context, topic readiness, audit closure, testing policy, Plan index input, or displayed final-review CAS input changed after the user reviewed it. A stale failure routes to bounded revalidation or final-review refresh; it must not silently approve a different plan.
+
+Successful approval atomically writes `approval_cas_receipt`, publishes `PlanApproved`, creates or binds exactly one `PlanCompileRun`, and returns the durable `plan_compile_run_id` synchronously. Projection reconciliation may show a pending launch shell in Orchestrator Plan Compile, but run identity itself may not be left to eventual projection. Duplicate delivery with the same CAS inputs and idempotency key returns the same `PlanCompileRun`.
+
+The Planning Wizard and PMConcept concept surface must not expose `START`, `BUILD`, `Start Chain`, or `Approve & Continue` as ordinary build-launch controls. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch authority; later controls are post-approval Plan Compile or runtime controls with scoped commands, disabled reasons, receipt effects, and stale-projection behavior.
+
 
 ### PWIZ-002 - PlanningRun Aggregate, Thread Topology, Context, And Intent Axes
 

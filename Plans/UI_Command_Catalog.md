@@ -118,93 +118,6 @@ Route side-effect rules:
 All UI commands (button clicks, keyboard shortcuts, context menu items) normalize to a standard record:
 ```
 
-## Ledger Compile Addendum - pldg-20260630-001-feature-intake
-
-This addendum compiles containerized-host command and route obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
-
-### UCC-105 - Containerized Host Commands And HostCapabilityCommand Envelope
-
-```yaml
-plan_unit_id: UCC-105
-unit_type: requirement
-status: accepted
-owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: >-
-  Containerized-host GUI actions, Assistant Chat pivots, Orchestrator links, Run Graph access pivots, ATS host launches,
-  tool actions, and shell-like actions use registered PM command ids and the HostCapabilityCommand envelope rather than
-  copying a Coasts local API, terminal session model, file/service controls, or direct runtime endpoint. Command payloads
-  carry command_id, command_kind, source_surface, requested_action, host_capability_ref, host_profile_id, host_instance_id,
-  execution_unit_context_ref, approval_scope_key, permission_snapshot_id, FileSafe scope, network_access_policy,
-  secret_access_policy, destructive_command_policy, preflight_required, allowed_action_ids, and expected receipt refs when
-  relevant. HostOperationRequest remains a dispatch/request payload shape below the command envelope when needed. Docker
-  and Kubernetes command families continue to live under cmd.docker.* and cmd.docker.k8s.* ownership, with Docker/Hosts
-  as a routed destination rather than a new Activity Bar owner.
-gui_related: true
-gui_classification_reason: This PlanUnit defines user-visible command routes and affordances for GUI, chat, orchestrator, and run-graph surfaces.
-depends_on: [CV-304, EP-109, PS-126, F2-194]
-unblocks: [F3-410, ACD-430, OP-028, RGV-015]
-acceptance_criteria:
-  - Docker/Hosts commands and access pivots are registered through UI_Command_Catalog rather than ad hoc page-local payloads.
-  - HostCapabilityCommand is the PM-owned command envelope; HostOperationRequest is only a lower-level request payload shape when needed.
-  - cmd.docker.* and cmd.docker.k8s.* command families preserve Docker Manager command namespace ownership.
-  - Command dispatch carries authority, FileSafe, network, secret, destructive-command, preflight, and receipt expectations before mutation.
-  - Direct Coasts HTTP API, permissive CORS, SSE/WebSocket terminal, and file/service controls are not copied as PM command authority.
-validation_surfaces:
-  - python3 scripts/pm-plan-index.py validate
-  - future UI command catalog host-command fixture
-risk_class: host_command_bypass
-reasoning_tier: high
-context_scope: containerized_host_command_catalog
-implementation_surfaces:
-  - Plans/UI_Command_Catalog.md
-  - future command registry and routed Docker/Hosts actions
-node_compile_hint:
-  mode: host_capability_command_catalog
-  create_worknodes: false
-  create_nodeseeds: false
-source_lineage:
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0023
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0024
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0051
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0056
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0064
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0074
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#control_plane_contract
-  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-005-host-capability-command
-source_atom_ids: [atom-0023, atom-0024, atom-0041, atom-0051, atom-0056, atom-0064, atom-0073, atom-0074, atom-0075, atom-0080, atom-0081]
-preserved_exact_tokens:
-  - "HostCapabilityCommand"
-  - "HostOperationRequest"
-  - "cmd.docker.*"
-  - "cmd.docker.k8s.*"
-  - "command_id"
-  - "command_kind"
-  - "host_capability_ref"
-  - "host_profile_id"
-  - "execution_unit_context"
-  - "approval_scope_key"
-  - "permission_snapshot_id"
-  - "FileSafe scope"
-  - "network_access_policy"
-  - "secret_access_policy"
-  - "destructive_command_policy"
-  - "required receipt refs"
-negative_constraints:
-  - Do not copy Coasts HTTP `/api/v1`, permissive CORS, SSE/WebSocket terminal sessions, or file/service controls.
-  - Do not let container exec bypass Executor, Permissions, FileSafe, Tools, UI_Command_Catalog, or receipts.
-  - Do not make Docker/Hosts a new Activity Bar owner or command namespace.
-owner_hints:
-  - Plans/UI_Command_Catalog.md
-  - Plans/FinalGUISpec.md
-  - Plans/Executor_Protocol.md
-  - Plans/Permissions_System.md
-  - Plans/FileSafe.md
-```
 {
   command_id: string,
   command_type: 'action' | 'navigation' | 'state_change' | 'modal',
@@ -7796,3 +7709,156 @@ owner_hints:
   - Plans/FinalGUISpec.md
   - Plans/Planning_Wizard.md
 ```
+
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles containerized-host command and route obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+
+### UCC-105 - Containerized Host Commands And HostCapabilityCommand Envelope
+
+```yaml
+plan_unit_id: UCC-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Containerized-host GUI actions, Assistant Chat pivots, Orchestrator links, Run Graph access pivots, ATS host launches,
+  tool actions, and shell-like actions use registered PM command ids and the HostCapabilityCommand envelope rather than
+  copying a Coasts local API, terminal session model, file/service controls, or direct runtime endpoint. Command payloads
+  carry command_id, command_kind, source_surface, requested_action, host_capability_ref, host_profile_id, host_instance_id,
+  execution_unit_context_ref, approval_scope_key, permission_snapshot_id, FileSafe scope, network_access_policy,
+  secret_access_policy, destructive_command_policy, preflight_required, allowed_action_ids, and expected receipt refs when
+  relevant. HostOperationRequest remains a dispatch/request payload shape below the command envelope when needed. Docker
+  and Kubernetes command families continue to live under cmd.docker.* and cmd.docker.k8s.* ownership, with Docker/Hosts
+  as a routed destination rather than a new Activity Bar owner.
+gui_related: true
+gui_classification_reason: This PlanUnit defines user-visible command routes and affordances for GUI, chat, orchestrator, and run-graph surfaces.
+depends_on: [CV-304, EP-109, PS-126, F2-194]
+unblocks: [F3-410, ACD-430, OP-028, RGV-015]
+acceptance_criteria:
+  - Docker/Hosts commands and access pivots are registered through UI_Command_Catalog rather than ad hoc page-local payloads.
+  - HostCapabilityCommand is the PM-owned command envelope; HostOperationRequest is only a lower-level request payload shape when needed.
+  - cmd.docker.* and cmd.docker.k8s.* command families preserve Docker Manager command namespace ownership.
+  - Command dispatch carries authority, FileSafe, network, secret, destructive-command, preflight, and receipt expectations before mutation.
+  - Direct Coasts HTTP API, permissive CORS, SSE/WebSocket terminal, and file/service controls are not copied as PM command authority.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future UI command catalog host-command fixture
+risk_class: host_command_bypass
+reasoning_tier: high
+context_scope: containerized_host_command_catalog
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - future command registry and routed Docker/Hosts actions
+node_compile_hint:
+  mode: host_capability_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0023
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0024
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0051
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0056
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0064
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0074
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#control_plane_contract
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-005-host-capability-command
+source_atom_ids: [atom-0023, atom-0024, atom-0041, atom-0051, atom-0056, atom-0064, atom-0073, atom-0074, atom-0075, atom-0080, atom-0081]
+preserved_exact_tokens:
+  - "HostCapabilityCommand"
+  - "HostOperationRequest"
+  - "cmd.docker.*"
+  - "cmd.docker.k8s.*"
+  - "command_id"
+  - "command_kind"
+  - "host_capability_ref"
+  - "host_profile_id"
+  - "execution_unit_context"
+  - "approval_scope_key"
+  - "permission_snapshot_id"
+  - "FileSafe scope"
+  - "network_access_policy"
+  - "secret_access_policy"
+  - "destructive_command_policy"
+  - "required receipt refs"
+negative_constraints:
+  - Do not copy Coasts HTTP `/api/v1`, permissive CORS, SSE/WebSocket terminal sessions, or file/service controls.
+  - Do not let container exec bypass Executor, Permissions, FileSafe, Tools, UI_Command_Catalog, or receipts.
+  - Do not make Docker/Hosts a new Activity Bar owner or command namespace.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+  - Plans/Executor_Protocol.md
+  - Plans/Permissions_System.md
+  - Plans/FileSafe.md
+```
+
+## GUI / PMConcept implementation-readiness repair addendum (2026-07-02)
+
+This addendum closes the GUI command-catalog defects from the PMConcept readiness report. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+
+### Concrete PRD Builder, Planning Wizard, and Plan Compile command rows
+
+The command family required by UCC-098 is concrete. Production GUI controls may not use the old fixed wizard rail, `Approve & Continue`, `START`, `BUILD`, or tab-switch handlers as substitutes for these command IDs.
+
+| Command ID | Label / action | Required payload and guard summary | Receipt / event effect |
+|---|---|---|---|
+| `cmd.prd_builder.source.import` | Import PRD source | `project_id`, `source_ref`, import mode, authority snapshot, idempotency key; disabled when source is denied, too large, stale, or unsupported | PRD source import receipt and PRD projection refresh |
+| `cmd.prd_builder.answer.upsert` | Save PRD answer | `prd_run_id`, question/section id, answer version, source refs, idempotency key; disabled when ledger sync is blocked | PRD answer receipt and projection update |
+| `cmd.prd_builder.annotation.upsert` | Add/update annotation | document version, text anchor, action kind, selected text hash, source refs; disabled when anchor is stale and cannot remap | Annotation upsert receipt |
+| `cmd.prd_builder.annotation.resolve` | Resolve annotation | annotation id, document version, resolution kind; disabled when annotation is already terminal or stale without remap | Annotation resolution receipt |
+| `cmd.prd_builder.conflict.resolve` | Resolve PRD conflict | conflict id, chosen resolution, rationale, source refs; disabled when selected sources are stale or unavailable | Conflict-resolution receipt |
+| `cmd.prd_builder.approve_for_planning_wizard` | Approve PRD for Planning Wizard | PRD Pack id/version/hash, source manifest hash, unresolved-warning acknowledgement, idempotency key; disabled when blocking conflicts or ledger sync failure exist | Approved PRD Pack snapshot and handoff receipt |
+| `cmd.prd_builder.pack.reopen` | Reopen PRD Pack | approved pack id/version, reason, currentness proof; disabled when reopening would bypass immutable history | Reopen receipt and new draft identity |
+| `cmd.planning_wizard.start` | Start Planning Wizard | approved PRD Pack ref or normalized requirements input, project context snapshot, testing policy snapshot | PlanningRun created/opened |
+| `cmd.planning_wizard.topic.open` | Open topic | PlanningRun id, topic id, expected topic map version | Topic projection selected |
+| `cmd.planning_wizard.topic.add` | Add topic | PlanningRun id, parent/dependency refs, label, source reason, topic map version | Topic added and topic map version advanced |
+| `cmd.planning_wizard.topic.split` | Split topic | source topic id, split descriptors, affected refs, topic map version | Topic split receipt and impact propagation |
+| `cmd.planning_wizard.topic.merge` | Merge topics | topic ids, target label, source reason, topic map version | Topic merge receipt and impact propagation |
+| `cmd.planning_wizard.topic.rename` | Rename topic | topic id, new label, topic map version | Topic rename receipt |
+| `cmd.planning_wizard.topic.reorder` | Reorder topic | topic id, before/after target, topic map version | Topic order receipt |
+| `cmd.planning_wizard.topic.mark_impacted` | Mark topic impacted | topic id, impact reason, source refs, dependency refs | Topic impact receipt and stale projection |
+| `cmd.planning_wizard.topic.defer` | Defer topic | topic id, deferral reason, dependency/currentness refs | Topic deferred receipt |
+| `cmd.planning_wizard.topic.reopen` | Reopen topic | topic id, reason, currentness refs | Topic reopened receipt |
+| `cmd.planning_wizard.amendment.accept` | Accept amendment | amendment id, source refs, affected topic refs, expected topic map version | Amendment accepted and impacted topics marked |
+| `cmd.planning_wizard.approve_and_build` | Approve And Build | final-review CAS inputs for `project_id`, `planning_run_id`, PlanningRun revision, topic map version, `approved_plan_pack_id`, pack version/hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, final audit/closure hash, approval actor, and deterministic idempotency key | Atomically writes `approval_cas_receipt`, `PlanApproved`, and `PlanCompileRun_created_or_bound`; returns durable `plan_compile_run_id` synchronously |
+| `cmd.plan_compile.pause` | Pause Plan Compile | PlanCompileRun id, current stage token, reason | Plan Compile pause receipt |
+| `cmd.plan_compile.resume` | Resume Plan Compile | PlanCompileRun id, currentness token, recovery route | Plan Compile resume receipt |
+| `cmd.plan_compile.cancel` | Cancel Plan Compile | PlanCompileRun id, cancellation reason, confirmation token | Plan Compile cancellation receipt |
+| `cmd.plan_compile.retry` | Retry Plan Compile stage | PlanCompileRun id, failed stage id, currentness token | Stage retry receipt |
+| `cmd.plan_compile.inspect_blocker` | Inspect blocker | PlanCompileRun id, blocker id, route target | Opens blocker inspector |
+| `cmd.plan_compile.inspect_evidence` | Inspect evidence | PlanCompileRun id, evidence ref, redaction profile | Opens redacted evidence inspector |
+| `cmd.plan_compile.inspect_assignment` | Inspect assignment | PlanCompileRun id, assignment id | Opens assignment inspector |
+| `cmd.plan_compile.request_bounded_recompile` | Request bounded recompile | PlanCompileRun id, affected PlanUnit refs, reason, currentness token | Bounded recompile request receipt |
+| `cmd.plan_compile.open_build` | Open Build | PlanCompileRun id, build/run identity, target artifact or route; disabled until `BuildStarted` or resulting build identity exists | Opens resulting build or build artifact route |
+
+### Testing capability and visible-session command rows
+
+Testing policy UI is a first-class command surface, not settings prose alone.
+
+| Command ID | Label / action | Required payload and guard summary | Receipt / event effect |
+|---|---|---|---|
+| `cmd.testing.capability_policy.set` | Set testing capability policy | scope `global` or `project`, capability family, value `Auto` / `On` / `Off`, inheritance marker, authority snapshot; disabled when policy owner is unavailable or authority is missing | Effective testing policy receipt |
+| `cmd.testing.visibility_policy.set` | Set testing visibility policy | scope, value including `show_when_possible`, redaction profile ref, background allowance | Visibility policy receipt |
+| `cmd.testing.session.open` | Open visible test session | test session id, target surface, route, redaction profile | Visible session opened receipt |
+| `cmd.testing.session.watch` | Watch visible test session | test session id, stream/session identity, fallback route | Watch receipt and live projection binding |
+| `cmd.testing.session.background` | Continue testing in background | test session id, background reason, continuation policy | Background continuation receipt |
+| `cmd.testing.session.redaction.inspect` | Inspect redaction/evidence | test session id, artifact/evidence refs, redaction profile | Redaction inspection route opened |
+
+### PMConcept command aliases and retirements
+
+| PMConcept token | Disposition |
+|---|---|
+| `cmd.chat.effort`, `cmd.chat.settings`, `cmd.chat.model`, `cmd.chat.mode`, `cmd.chat.open_debug_target_picker`, `cmd.chat.export_investigation_bundle`, `cmd.chat.revoke_investigation_item` | Cataloged command IDs for chat setting/debug routes; payloads carry thread/project/context scope and cannot mutate model/provider state without the owning settings contract. |
+| `cmd.file.copy_full_path`, `cmd.file.copy_relative_path` | Cataloged compatibility wrappers over `cmd.file.copy_path` with `format = "absolute"` or `format = "relative"`; production UI may use either explicit wrapper if the wiring row declares the normalized copy-path payload. |
+| `cmd.git.open_diff` | Compatibility alias for `cmd.git.diff_open`; production wiring records the alias and the canonical target. |
+| `cmd.git.show_commit` | Compatibility alias for `cmd.source_control.history_open_commit`; production wiring records the alias and the canonical target. |
+| `cmd.remote.reconnect`, `cmd.search.set_scope`, `cmd.search.previous_result`, `cmd.search.next_result`, `cmd.terminal.focus_session` | Cataloged command IDs required by existing PMConcept/wiring surfaces; terminal focus may normalize internally to any future shorter terminal-focus target only through explicit alias metadata. |
+| `cmd.indexOf` | Parser false-positive from JavaScript and not a UICommand. |
+
+`START`, `BUILD`, and `Approve & Continue` are retired as ordinary planning/build launch labels. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch command. Post-approval runtime controls must use scoped commands such as `cmd.plan_compile.open_build`, `cmd.plan_compile.resume`, `cmd.runtime.approve`, or route/open commands with disabled reasons and receipt effects.

@@ -9652,7 +9652,7 @@
                   <div class="browser-toolbar-sep"></div>
                   <button class="browser-action-btn" title="Pick Element for Chat" onclick="addBrowserChipToChat('element-pick','&lt;button.submit&gt;')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="M13 13l6 6"/></svg></button>
                   <button class="browser-action-btn" title="Add Selection to Chat" onclick="addBrowserChipToChat('browser-selection','Login form styles')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"/><path d="M20 7V4h-3"/><path d="M4 17v3h3"/><path d="M20 17v3h-3"/></svg></button>
-                  <button class="browser-action-btn" title="Screenshot to Chat" onclick="addBrowserChipToChat('screenshot-chip','screenshot-page.png')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
+                  <button id="Screenshot-to-Chat" class="browser-action-btn" title="Screenshot to Chat" aria-label="Screenshot to Chat" onclick="addBrowserChipToChat('screenshot-chip','screenshot-page.png')"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
                   <div class="browser-toolbar-sep"></div>
                   <button class="browser-action-btn" title="Toggle DevTools" onclick="toggleBottomBrowserTab()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
                   <button class="browser-action-btn" title="Detach to Window"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
@@ -9837,7 +9837,7 @@
                       <div class="cdp-kv-row"><span class="cdp-kv-label">Output Tokens</span><span class="cdp-kv-value">8,420</span></div>
                       <div class="cdp-kv-row"><span class="cdp-kv-label">Thinking</span><span class="cdp-kv-value">12s</span></div>
                       <div class="cdp-kv-row"><span class="cdp-kv-label">Context at Send</span><span class="cdp-kv-value">9,440 / 128,000</span></div>
-                      <div class="cdp-kv-row" style="border-top:1px dashed var(--border-light); padding-top:var(--xs); margin-top:var(--xs);"><span class="cdp-kv-label">Requested Model</span><span class="cdp-kv-value">Opus 4</span></div>
+                      <div id="requested-effective-model" class="cdp-kv-row" style="border-top:1px dashed var(--border-light); padding-top:var(--xs); margin-top:var(--xs);"><span class="cdp-kv-label">Requested Model</span><span class="cdp-kv-value">Opus 4</span></div>
                       <div class="cdp-kv-row"><span class="cdp-kv-label">Effective Model</span><span class="cdp-kv-value" style="color:var(--accent-orange);">Sonnet 4.6 <span style="font-size:9px; font-weight:400;">(fallback: rate_limit_5h)</span></span></div>
                       <div class="cdp-kv-row"><span class="cdp-kv-label">Reasoning Tokens</span><span class="cdp-kv-value">1,840</span></div>
                       <div style="margin-top:var(--sm); padding-top:var(--xs); border-top:1px dashed var(--border-light); font-size:9px; color:var(--text-muted);">Tools: run_shell_command (0.4s), web_search (1.2s)</div>
@@ -9918,13 +9918,13 @@
                   </div>
                   <span class="status-badge" style="margin-bottom:var(--md);">Running</span>
                   <div class="orchestrator-buttons">
-                    <button>START</button>
+                    <button data-command="cmd.orchestrator.switch_tab" data-tab-target="plan_compile">Open Plan Compile</button>
                     <button class="primary">PAUSE</button>
                     <button>RESUME</button>
                     <button>STOP</button>
                     <button>RESET</button>
                     <button>PREVIEW</button>
-                    <button>BUILD</button>
+                    <button data-command="cmd.plan_compile.open_build" title="Available only after BuildStarted creates a resulting build identity">Open Build</button>
                     <button class="kill-btn">Kill</button>
                   </div>
                   <div class="preview-build-strip">
@@ -10483,7 +10483,7 @@
               <div class="wizard-nav-connector"></div>
               <div class="wizard-nav-step" data-step-target="7" data-nav-step="7">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                Compile Settings
+                Plan Compile Configuration
               </div>
               <div class="wizard-nav-connector"></div>
               <div class="wizard-nav-step" data-step-target="8" data-nav-step="8">
@@ -10754,7 +10754,7 @@
                       <div class="wizard-btn-group">
                         <button class="wizard-btn" data-step-target="5">Back</button>
                         <button class="wizard-btn btn-icon" id="resubmitBtn6" style="display:none;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 1 0 2.63-6.37L21 8"></path></svg> Resubmit with Annotations</button>
-                        <button class="wizard-btn primary btn-icon" id="approveBtn6" data-step-target="7">Approve & Continue <span class="gated-text" style="font-weight:normal; opacity:0.8; margin-left:4px;"></span> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                        <button class="wizard-btn primary btn-icon" id="approveBtn6" data-command="cmd.prd_builder.approve_for_planning_wizard" data-step-target="7">Approve PRD for Planning Wizard <span class="gated-text" style="font-weight:normal; opacity:0.8; margin-left:4px;"></span> <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
                       </div>
                     </div>
                     <div style="font-size:11px; color:var(--text-secondary); margin: 0 var(--md) var(--sm);">
@@ -10872,7 +10872,7 @@
                     <div id="pill-manifest" class="wizard-doc-pill exec-pill" onclick="showExecMock('manifest')"><span>Handoff Manifest</span><span class="wizard-doc-status">[READY]</span></div>
                   </div>
                   <div class="wizard-binder-content">
-                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="7">Back</button><button class="wizard-btn primary btn-icon" onclick="if(window.openOrchestratorPlanCompile) window.openOrchestratorPlanCompile();"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Approve And Build</button></div></div>
+                    <div class="wizard-binder-toolbar"><div class="wizard-btn-group"></div><div class="wizard-btn-group"><button class="wizard-btn" data-step-target="7">Back</button><button class="wizard-btn primary btn-icon" data-command="cmd.planning_wizard.approve_and_build" data-state-selector="planning_wizard.final_review.approval_state" data-disabled-reason-selector="planning_wizard.final_review.approve_and_build_disabled_reason" data-receipt-effect="approval_cas_receipt,PlanApproved,PlanCompileRun_created_or_bound" title="Approve And Build requires current final-review CAS inputs and returns a durable PlanCompileRun identity"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Approve And Build</button></div></div>
                     <div id="exec-mock-content" class="wizard-binder-view mock-md">
                       <h1>Plan Compile State</h1>
                       <h2>Stage: PRD Intake</h2>
@@ -10912,7 +10912,7 @@
             </div>
             <div class="orch-tabs">
               <span class="orch-tab active" id="orch-tab-progress" role="tab" tabindex="0" aria-selected="true" aria-controls="orch-panel-progress" data-tab="progress">Progress<span class="orch-tab-badge" id="orchTabBadgeProgress" aria-hidden="true">(0)</span></span>
-              <span class="orch-tab" id="orch-tab-tiers" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-tiers" data-tab="tiers">Plan Compile</span>
+              <span class="orch-tab" id="orch-tab-plan_compile" role="tab" tabindex="-1" aria-selected="false" aria-controls="orch-panel-plan_compile" data-tab="plan_compile">Plan Compile</span>
               <span class="orch-tab" id="orch-tab-node_graph" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-node_graph" data-tab="node_graph">Node Graph<span class="orch-tab-badge orch-tab-badge-dot" id="orchTabBadgeNodeGraph" aria-hidden="true" title="HITL pending" style="display: none;"></span></span>
               <span class="orch-tab" id="orch-tab-evidence" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-evidence" data-tab="evidence">Evidence<span class="orch-tab-badge" id="orchTabBadgeEvidence" aria-hidden="true">0</span></span>
               <span class="orch-tab" id="orch-tab-history" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-history" data-tab="history">History</span>
@@ -10928,12 +10928,12 @@
                       <span style="font-size:12px; color:var(--text-muted);">Elapsed: 12m 34s</span>
                     </div>
                     <div class="orchestrator-buttons" style="display:flex; gap:var(--sm); flex-wrap:wrap;">
-                      <button class="wizard-btn">START</button>
+                      <button class="wizard-btn" data-command="cmd.orchestrator.switch_tab" data-tab-target="plan_compile">Open Plan Compile</button>
                       <button class="wizard-btn primary">PAUSE</button>
                       <button class="wizard-btn">RESUME</button>
                       <button class="wizard-btn" style="color:var(--accent-magenta);">STOP</button>
                       <button class="wizard-btn">PREVIEW</button>
-                      <button class="wizard-btn">BUILD</button>
+                      <button class="wizard-btn" data-command="cmd.plan_compile.open_build" data-disabled-reason-selector="plan_compile.open_build_disabled_reason" title="Available only after BuildStarted creates a resulting build identity">Open Build</button>
                     </div>
                     <div class="preview-build-strip" style="margin-top:var(--md); padding-top:var(--sm); border-top:1px solid var(--border-light); font-size:11px; display:flex; justify-content:space-between;">
                       <span>Preview: <span style="color:var(--accent-lime);">running</span></span>
@@ -10974,7 +10974,7 @@
                     <div class="orch-prose-block" style="border:1px solid var(--border-light); border-left:3px solid var(--accent-orange); border-radius:4px; margin-bottom:var(--xs); background:var(--surface-elevated);">
                       <div style="padding:var(--sm) var(--md); font-size:12px; font-weight:bold;">Phase 1 complete - approval required</div>
                       <div style="padding:var(--xs) var(--md) var(--sm); display:flex; gap:var(--sm);">
-                        <button class="wizard-btn primary" style="font-size:10px; padding:2px 8px;">Approve & Continue</button>
+                        <button class="wizard-btn primary" style="font-size:10px; padding:2px 8px;" data-command="cmd.runtime.approve" title="Scoped HITL approval only; does not launch a second ordinary build">Approve Step</button>
                         <button class="wizard-btn" style="font-size:10px; padding:2px 8px;">Reject</button>
                       </div>
                     </div>
@@ -10993,7 +10993,7 @@
                   </div>
                 </div>
               </div>
-              <div class="orch-tab-content" id="orch-panel-tiers" data-tab="tiers">
+              <div class="orch-tab-content" id="orch-panel-plan_compile" data-tab="plan_compile">
                 <div class="orch-tiers-layout">
                   <div class="orch-tiers-toolbar orch-toolbar">
                     <select class="orch-filter" aria-label="Expand depth"><option>Expand: 1 level</option><option>Expand: 2 levels</option><option>Expand: 3 levels</option><option>Expand: All</option></select>
@@ -14629,6 +14629,8 @@ error[E0433]: unresolved import `slint`
           </div>
         </div>
       </div>
+<span id="chat-panel" hidden></span>
+<span id="switchToChatThread" hidden></span>
 <div class="resizer-col hidden" id="chatResizer"></div>
           <aside class="chat-panel hidden" id="chatPanel">
             
@@ -14717,7 +14719,7 @@ error[E0433]: unresolved import `slint`
             </div>
 
             <div class="chat-body">
-              <div class="chat-thread-sidebar">
+              <div class="chat-thread-sidebar" id="chat-thread-sidebar">
                 <div class="sidebar-title" style="padding: var(--md); font-weight: 600; font-size: 12px; border-bottom: 1px solid var(--border-light); display:flex; justify-content:space-between; align-items:center;">
                   HISTORY
                   <button class="collapse-btn" title="Collapse" style="background:none; border:none; color:var(--text-muted); cursor:pointer; padding:2px;" onclick="this.closest('.chat-thread-sidebar').classList.toggle('collapsed');">
@@ -15025,7 +15027,7 @@ error[E0433]: unresolved import `slint`
 </div>
 
                     <div class="composer-chips-container" style="display:flex; flex-wrap:wrap; padding:0 var(--sm);">
-                      <div class="composer-chip file-ref"><span>src/app.rs</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
+                      <div id="composer-chip" class="composer-chip file-ref"><span>src/app.rs</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
                       <div class="composer-chip file-ref"><span>src/config.rs:14-28</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>
                     </div>
                     <textarea placeholder="Type your message or @ mention files, symbols, and headings..." style="border:none; background:transparent; resize:none; min-height:48px; padding:var(--sm); font-family:var(--body-font); font-size:13px; color:var(--text-primary); width: 100%;"></textarea>
@@ -15544,7 +15546,7 @@ error[E0433]: unresolved import `slint`
   <div class="runtime-snapshot">v1.2.5 (Current) • product-manager</div>
   I'll start by mapping the codebase and then create a plan to implement these changes.
   
-  <div class="activity-card bash">
+  <div id="activity-card" class="activity-card bash">
     <div class="activity-card-header">
       <span style="color:var(--accent-magenta);">[Bash] run_shell_command</span>
       <span style="font-size:9px; color:var(--text-muted);">0.4s</span>
@@ -18750,7 +18752,7 @@ policies for tenant isolation, and add migration script.</textarea>
       const orchPage = document.querySelector(".page-tab[data-page='orchestrator']");
       if (orchPage) orchPage.click();
       setTimeout(() => {
-        const compileTab = document.querySelector("#orch-tab-tiers, .orch-tab[data-tab='tiers']");
+        const compileTab = document.querySelector("#orch-tab-plan_compile, .orch-tab[data-tab='plan_compile']");
         if (compileTab) compileTab.click();
       }, 50);
     };
