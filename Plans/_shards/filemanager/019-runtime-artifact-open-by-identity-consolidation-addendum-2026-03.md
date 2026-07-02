@@ -2,15 +2,16 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L569-L574
+Source lines: L570-L576
 
-Source SHA256: `b8d70c0cf158febde60c6aa84a50f9eb865d3f45474e6710a5c569c70e3d0b4d`
+Source SHA256: `ba0cc77c58e87cbe7a2158c0805bbb4381ca4ade1907b50de26dbb0b83fbf690`
 
 ---
 
 ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
 
 
+<a id="fm-runtime-artifact-open-identity-acceptance"></a>
 #### Acceptance carry-through
 - Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage
 - Resolve artifact open flows by artifact_id and then by linked envelope refs

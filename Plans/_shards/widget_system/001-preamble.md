@@ -4,7 +4,7 @@ Source: `Plans/Widget_System.md`
 
 Source lines: L1-L1
 
-Source SHA256: `51531bc129e256bbd7a05e9d4129a86fe32d393fee134336a53226b490342461`
+Source SHA256: `7c20cb1ee539092df99bc16c4aa6285d0f959816ddd732556bdd9dfae2d5e525`
 
 ---
 

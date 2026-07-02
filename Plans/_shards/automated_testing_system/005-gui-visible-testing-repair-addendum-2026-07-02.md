@@ -1,0 +1,175 @@
+# Shard 005: GUI visible testing repair addendum (2026-07-02)
+
+Source: `Plans/Automated_Testing_System.md`
+
+Source lines: L83-L247
+
+Source SHA256: `4edc1e0b06918a767998ff78d3464e38d1651ace6c7a5998b98970ba77693fb0`
+
+---
+
+## GUI visible testing repair addendum (2026-07-02)
+
+This addendum closes the visible testing UX defects from the PMConcept readiness report. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+
+Testing capability policy is implementation-ready only when the GUI exposes concrete controls and receipts, not merely policy prose. The production GUI must provide global and per-project rows for each capability family with inherited/effective state, `Auto`, `On`, `Off`, unavailable, blocked-needs-authority, and prohibited-by-policy projections. `Auto` may discover/select/install within authority; `On` blocks or asks for authority when unavailable; `Off` prohibits use and installation and never counts as successful verification.
+
+The required command rows are `cmd.testing.capability_policy.set`, `cmd.testing.visibility_policy.set`, `cmd.testing.session.open`, `cmd.testing.session.watch`, `cmd.testing.session.background`, and `cmd.testing.session.redaction.inspect`. Each command must produce receipt evidence linked to the effective policy snapshot, visible-session identity, artifact/evidence refs, redaction profile, currentness/revalidation result, and fallback route when a visual surface cannot be embedded.
+
+Visible testing projections must include `show_when_possible`, visible active, collapsed, detached, backgrounded, and non-embeddable states. Web evidence must show browser navigation, clicks, form input, assertions, screenshots, console, network, and pass/fail progression where supported. Native evidence must show Swift/live preview, hot reload, simulator, emulator, physical device stream, application window, interaction trace, screenshots, and logs where available and permitted.
+
+Screenshots, videos, logs, console output, network traces, and artifact previews apply secret and sensitive-data redaction before display or persistence. Redaction failures block display/persistence until resolved or explicitly authorized by the owning policy; they do not silently downgrade evidence quality.
+
+Acceptance coverage must prove effective-policy receipts, visible-session receipts, TestRunReceipt linkage, Open/Watch fallback behavior, background continuation, disabled reason projection, and redaction-before-display/persistence. PMConcept browser/terminal/testing demos are `concept_fixture_only` until those receipts and wiring rows exist.
+
+### ATS-002 - Test Capability Discovery And Harness Probe
+
+```yaml
+plan_unit_id: ATS-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Test Capability Discovery must run before test generation or execution. It detects project_platform, framework/toolkit, local_capabilities, installed tools, app launch ability, browser automation, GUI automation, device/emulator automation, screenshot support, logs, headless/headed support, project-native test runners, and whether current official testing options need online research. Test Harness Probe records runnable verification commands, required adapters, expected artifacts, flake policy, and gaps before Executor treats a WorkNode request as test-ready.
+  TestCapabilityReport and TestHarnessProbeReport fields include online_research, automation_surface, requires_browser, requires_emulator, requires_display, requires_screenshot, verification_command, expected_artifacts, and flake_policy.
+gui_related: false
+gui_classification_reason: Discovery/probe records are backend test capability contracts, even when they discover GUI or browser tools.
+depends_on: [ATS-001]
+unblocks: [ATS-003, ATS-004]
+acceptance_criteria:
+  - Discovery records platform, framework/toolkit, local tools, app launch ability, browser/GUI/device/emulator automation, screenshots, logs, headless/headed support, project-native runners, and research needs.
+  - Harness probes prove commands and adapters before they are bound to WorkNode requests.
+  - Missing discovery evidence blocks test-ready status instead of guessing a runner.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+risk_class: false_test_capability
+reasoning_tier: high
+context_scope: automated_test_discovery
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: test_capability_discovery_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0028
+  - pldg-20260617-001-plans-to-code-handoff:dec-0012
+preserved_exact_tokens:
+  - "Test Capability Discovery"
+  - "project_platform"
+  - "framework/toolkit"
+  - "browser automation"
+  - "emulator"
+  - "official testing options"
+negative_constraints:
+  - Do not infer test capability from project language alone.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/Tools.md
+  - Plans/Project_Output_Artifacts.md
+```
+
+### ATS-003 - Test Strategy V2 And WorkNode Test Binding
+
+```yaml
+plan_unit_id: ATS-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Test Strategy v2 binds each WorkNode request to required_capability_refs, required harnesses, generated or reused tests, generated_test_ids, reused_test_ids, completion commands, browser/session requirements, emulator requirements, visual evidence requirements, expected artifacts, flake policy, and test_gap_policy. The strategy must choose project-type-specific oracles: browser DOM, console, network, screenshot, and visual checks for web; launch, window, screenshot, and accessibility checks for desktop GUI; emulator/device logs and screenshots for mobile; API, contract, and database checks for backend work; exit, output, and filesystem checks for CLI work; and unit, property, and API contracts for libraries.
+  TestStrategy records include test_level, generated_test_ids, reused_test_ids, browser_session_required, visual_evidence_required, test oracle, console/network, and contract tests where applicable.
+gui_related: true
+gui_classification_reason: WorkNode test bindings can require visible browser, GUI, device, screenshot, and visual evidence surfaces.
+depends_on: [ATS-001, ATS-002]
+unblocks: [PNC-013, EP-101]
+acceptance_criteria:
+  - WorkNode requests carry test_binding fields before execution readiness.
+  - Test strategy chooses project-type-specific oracles rather than generic completion claims.
+  - Visual/browser/device evidence requirements are explicit where user-visible behavior is under test.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: weak_test_oracle
+reasoning_tier: high
+context_scope: worknode_test_binding
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Executor_Protocol.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: worknode_test_binding_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0032
+  - pldg-20260617-001-plans-to-code-handoff:atom-0033
+  - pldg-20260617-001-plans-to-code-handoff:dec-0012
+preserved_exact_tokens:
+  - "test_binding"
+  - "required_capability_refs"
+  - "generated_test_ids"
+  - "reused_test_ids"
+  - "browser_session_required"
+  - "visual_evidence_required"
+  - "test_gap_policy"
+  - "test oracle"
+  - "browser DOM"
+  - "console/network"
+  - "visual checks"
+  - "emulator"
+  - "contract tests"
+negative_constraints:
+  - Do not certify WorkNode completion from worker prose when required test bindings are absent.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Executor_Protocol.md
+```
+
+### ATS-004 - Automated Evidence And Test Gap Blockers
+
+```yaml
+plan_unit_id: ATS-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  WorkNode completion cannot require human eyeballing. Tests, smoke checks, app launch, browser sessions, GUI/device sessions, screenshots, logs, and evidence capture run automatically where required. If Puppet Master cannot automatically verify a WorkNode after the compiler/runtime boundary is explicitly enabled, it must record a test capability blocker or deferred non-executable test-harness WorkNode request candidate rather than silently passing. For web projects, once the native product is built, Puppet Master built-in browser automation is the primary native web test automation path; Playwright can be optional, fallback, or project-native, not the native default.
+  Automated completion means 100% automated verification with no human intervention for required browser/GUI/device sessions; Playwright optional remains fallback/project-native, and manual_only_acceptance_not_allowed blocks manual-only completion claims. TestRunReceipt records include receipt_id, test_strategy_ref, test_case_refs, generated_test_ids, reused_test_ids, verification_command, expected_artifacts, evidence_refs, visual_evidence_refs, flake_policy, and test_gap_policy.
+gui_related: true
+gui_classification_reason: Automated screenshots, browser sessions, GUI/device sessions, and visual evidence are user-visible verification surfaces.
+depends_on: [ATS-001, ATS-002, ATS-003]
+unblocks: [GRS-030, EP-101, RAP-029, T-159]
+acceptance_criteria:
+  - Human visual inspection is never a required completion criterion.
+  - Missing automatic verification records a blocker or, after runtime enablement, a deferred non-executable test-harness WorkNode request candidate.
+  - Browser/GUI/device screenshots and logs are captured automatically where required.
+  - Native web testing prefers Puppet Master built-in browser automation once available, while Playwright remains optional, fallback, or project-native.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: manual_only_completion
+reasoning_tier: high
+context_scope: automated_verification_gaps
+implementation_surfaces: [Plans/Automated_Testing_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/Tools.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: automated_evidence_and_gap_policy, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0029
+  - pldg-20260617-001-plans-to-code-handoff:atom-0031
+  - pldg-20260617-001-plans-to-code-handoff:atom-0034
+  - pldg-20260617-001-plans-to-code-handoff:dec-0013
+  - pldg-20260617-001-plans-to-code-handoff:dec-0014
+preserved_exact_tokens:
+  - "100% automated"
+  - "no human intervention"
+  - "browser/GUI/device sessions"
+  - "screenshots"
+  - "TestRunReceipt"
+  - "test_strategy_ref"
+  - "reused_test_ids"
+  - "test capability blocker"
+  - "test-harness WorkNode"
+  - "manual_only_acceptance_not_allowed"
+  - "Puppet Master built-in browser automation"
+  - "Playwright optional"
+negative_constraints:
+  - Do not make manual visual inspection a required completion step.
+  - Do not silently allow unverifiable WorkNodes.
+  - Do not default native Puppet Master web testing to Playwright when the built-in browser can do it.
+owner_hints:
+  - Plans/Automated_Testing_System.md
+  - Plans/Executor_Protocol.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Tools.md
+```

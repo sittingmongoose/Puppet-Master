@@ -1,0 +1,1031 @@
+# Shard 005: GUI approval and Plan Compile launch repair addendum (2026-07-02)
+
+Source: `Plans/Planning_Wizard.md`
+
+Source lines: L97-L1117
+
+Source SHA256: `e90a7d8e37335ca18a331be8d6cbd0ba2851cdac39383dec44a19689b5b5b885`
+
+---
+
+## GUI approval and Plan Compile launch repair addendum (2026-07-02)
+
+This addendum closes the Approve And Build defects from the PMConcept readiness report. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+
+The production final-review control dispatches `cmd.planning_wizard.approve_and_build`. The command payload carries the exact final-review CAS/currentness values shown to the user: `project_id`, `planning_run_id`, PlanningRun revision, topic map version, `approved_plan_pack_id`, pack version/hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, final audit/closure hash, approval actor, and deterministic idempotency key.
+
+Approval fails closed when any planning state, source pack, project context, topic readiness, audit closure, testing policy, Plan index input, or displayed final-review CAS input changed after the user reviewed it. A stale failure routes to bounded revalidation or final-review refresh; it must not silently approve a different plan.
+
+Successful approval atomically writes `approval_cas_receipt`, publishes `PlanApproved`, creates or binds exactly one `PlanCompileRun`, and returns the durable `plan_compile_run_id` synchronously. Projection reconciliation may show a pending launch shell in Orchestrator Plan Compile, but run identity itself may not be left to eventual projection. Duplicate delivery with the same CAS inputs and idempotency key returns the same `PlanCompileRun`.
+
+The Planning Wizard and PMConcept concept surface must not expose `START`, `BUILD`, `Start Chain`, or `Approve & Continue` as ordinary build-launch controls. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch authority; later controls are post-approval Plan Compile or runtime controls with scoped commands, disabled reasons, receipt effects, and stale-projection behavior.
+
+
+### PWIZ-002 - PlanningRun Aggregate, Thread Topology, Context, And Intent Axes
+
+
+```yaml
+plan_unit_id: PWIZ-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Each planning topic, integration pass, and attached audit/repair activity is a bounded child thread grouped by planning_run_id and thread_group_id under one collapsible Planning Run parent. PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events. Planning Wizard classifies project context independently from work intent so overlapping cases such as an existing Git repository plus feature work plus PR delivery are represented without a misleading single mode enum. Project context supports greenfield, existing local project, existing Git repository, remote SSH project, and fork or external upstream contexts, with explicit repository and host facts. Work intent supports new product, feature or enhancement, refactor or rewrite,
+  bugfix or bounded task, and contribution PR, and may include more than one compatible delivery intent.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/FileSafe.md
+- Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0009
+- pldg-20260618-001-prd-planning-wizard:atom-0042
+- pldg-20260618-001-prd-planning-wizard:atom-0043
+- pldg-20260618-001-prd-planning-wizard:atom-0044
+- pldg-20260618-001-prd-planning-wizard:atom-0045
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+source_atom_ids:
+- atom-0009
+- atom-0042
+- atom-0043
+- atom-0044
+- atom-0045
+decision_refs:
+- dec-0003
+- dec-0010
+correction_refs:
+- corr-0005
+preserved_exact_tokens:
+- planning_run_id
+- thread_group_id
+- collapsible
+- PlanningRun
+- topic map
+- project context
+- work intent
+- greenfield
+- existing local project
+- existing Git repository
+- remote SSH
+- fork or external upstream
+- new product
+- feature or enhancement
+- refactor or rewrite
+- bugfix
+- contribution PR
+negative_constraints:
+- Do not use one unbounded transcript for the entire Planning Wizard.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/Contracts_V0.md
+- Plans/storage-plan.md
+- Plans/FileSafe.md
+- Plans/GitHub_Integration.md
+```
+
+
+### PWIZ-003 - Dynamic Topic Graph And Topic Operations
+
+
+```yaml
+plan_unit_id: PWIZ-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Planning Wizard derives an initial topic graph from the input pack, project/repository context, work intent, risk, and known defaults rather than enforcing a fixed list of sections. Possible topics include overview, product behavior, GUI or UX, backend, data, integrations, security, permissions, testing, deployment, migration, observability, and risks, but actual titles and scope are evidence-driven. The controller can add, split, merge, rename, defer, reopen, reorder, and mark topics impacted, recording the reason, source refs, dependencies, user-visible origin, and resulting invalidations. The GUI suggests a next topic and conversational sequence while the underlying topic map preserves dependencies and allows safe navigation, reopening, and parallel background work.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Plans/Contracts_V0.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0046
+- pldg-20260618-001-prd-planning-wizard:atom-0047
+- pldg-20260618-001-prd-planning-wizard:atom-0048
+- pldg-20260618-001-prd-planning-wizard:atom-0049
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+source_atom_ids:
+- atom-0046
+- atom-0047
+- atom-0048
+- atom-0049
+decision_refs:
+- dec-0010
+correction_refs: []
+preserved_exact_tokens:
+- dynamic topic map
+- topic graph
+- GUI / UX
+- Security
+- Testing
+- add_topic
+- split_topic
+- merge_topics
+- mark_topic_impacted
+- suggested order
+- dependency graph
+negative_constraints:
+- Do not hardcode one universal topic taxonomy for all projects.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Plans/Contracts_V0.md
+```
+
+
+### PWIZ-004 - Topic Agents, Context Capsules, Questions, And Safe Autonomy
+
+
+```yaml
+plan_unit_id: PWIZ-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Every substantive Planning Wizard exchange must append an event and update topic-scoped planning atoms plus any affected global decisions, constraints, dependencies, invalidations, amendments, questions, and handoff state before the turn is complete. Each topic agent receives a bounded Planning Context Capsule containing approved PRD summary, project context, global decisions and constraints, glossary, relevant prior topic-plan summaries, dependencies, assumptions, questions, and artifact references. Each topic conversation is handled by a fresh topic agent with a bounded thread, topic brief, Context Capsule, relevant sources, and topic-scoped write card. Each topic agent asks gap-driven questions relevant to its active topic and implementation-readiness risks, using known answers and defaults so it does not drift into unrelated domains. Planning Wizard proactively resolves behavior, state, data, identity, permissions,
+  failure modes, edge cases, integration constraints, acceptance evidence, currentness, idempotency, migration, operations, and implementation boundaries. The controller answers auto-resolvable gaps from evidence, applies safe defaults with recorded assumptions, and defers downstream-only details; it asks the user only for genuine product direction, risk acceptance, destructive authority, credentials, legal policy, or irreconcilable ambiguity.'
+gui_related: false
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/Planning_Ledger_System.md
+- Plans/assistant-chat-design.md
+- Plans/Goal_Runtime_System.md
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0011
+- pldg-20260618-001-prd-planning-wizard:atom-0016
+- pldg-20260618-001-prd-planning-wizard:atom-0050
+- pldg-20260618-001-prd-planning-wizard:atom-0051
+- pldg-20260618-001-prd-planning-wizard:atom-0052
+- pldg-20260618-001-prd-planning-wizard:atom-0053
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+source_atom_ids:
+- atom-0011
+- atom-0016
+- atom-0050
+- atom-0051
+- atom-0052
+- atom-0053
+decision_refs:
+- dec-0004
+- dec-0011
+correction_refs:
+- corr-0004
+- corr-0006
+preserved_exact_tokens:
+- after every substantive turn
+- topic_id
+- global planning state
+- Planning Context Capsule
+- fresh topic agent
+- bounded thread
+- topic-relevant
+- gap-driven
+- behavior
+- state
+- failure modes
+- idempotency
+- safe defaults
+- minimal HITL
+negative_constraints:
+- Do not advance a topic from chat state that has not been durably synchronized.
+- Do not inject all prior raw chat histories and complete raw ledgers into every topic agent by default.
+- Do not ask generic questions that do not materially affect the active topic.
+- Do not convert ordinary planning uncertainty into a Needs user decision blocker.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Planning_Ledger_System.md
+- Plans/assistant-chat-design.md
+- Plans/Goal_Runtime_System.md
+- Plans/human-in-the-loop.md
+```
+
+
+### PWIZ-005 - Topic Ledger, Invalidation, Amendments, And PRD Immutability
+
+
+```yaml
+plan_unit_id: PWIZ-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Topic agents write topic_id-scoped records into one Planning Run ledger plus global records for cross-topic decisions and constraints, avoiding independent ledgers that can silently disagree. A later decision that changes a prior topic''s assumptions or outputs marks affected topic drafts stale_due_to_dependency_change, stale_due_to_new_scope, or requires_recompile/requires_reaudit and propagates impact through typed topic dependencies. New information during planning becomes a planning clarification, immutable Planning Amendment, out_of_current_approved_scope item, or PRD revision request according to materiality and impact. Approved PRD Packs remain immutable; Planning Wizard records amendments or requests a successor PRD rather than editing the approved source snapshot in place.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: stale_or_forbidden_behavior
+reasoning_tier: standard
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/Planning_Ledger_System.md
+- Plans/Contracts_V0.md
+- Plans/FinalGUISpec.md
+- Plans/PRD_Builder.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0054
+- pldg-20260618-001-prd-planning-wizard:atom-0055
+- pldg-20260618-001-prd-planning-wizard:atom-0056
+- pldg-20260618-001-prd-planning-wizard:atom-0057
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+source_atom_ids:
+- atom-0054
+- atom-0055
+- atom-0056
+- atom-0057
+decision_refs:
+- dec-0011
+- dec-0013
+correction_refs: []
+preserved_exact_tokens:
+- topic_id
+- global records
+- stale_due_to_dependency_change
+- requires_recompile
+- requires_reaudit
+- Planning Amendment
+- PRD revision request
+- immutable Approved PRD Pack
+negative_constraints:
+- Do not create disconnected authoritative ledgers per topic.
+- Do not leave a topic marked Ready after a material dependency change.
+- Do not silently rewrite approved PRD input from Planning Wizard.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Planning_Ledger_System.md
+- Plans/Contracts_V0.md
+- Plans/FinalGUISpec.md
+- Plans/PRD_Builder.md
+```
+
+
+### PWIZ-006 - Topic Conversion, Audit, Ready State, And Checkpoints
+
+
+```yaml
+plan_unit_id: PWIZ-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'At topic closure, a separate Overseer conversion agent transforms accepted topic ledger records into a versioned Topic Plan Draft or PlanUnit candidates with exact source lineage, assumptions, open non-blocking items, and cross-topic impacts. Per-topic conversion provides readable, audited planning outputs for subsequent agents and user progress, while a later global integration pass remains mandatory. A new Auditor agent checks ledger-to-plan fidelity, unsupported claims, exact tokens, negative constraints, acceptance, dependencies, images, and open items; a separate repair agent fixes findings and a new Auditor rechecks until pass or a typed blocker. A topic becomes Ready after successful conversion and audit; users may review or reopen any topic, but ordinary flow does not require a user confirmation after every topic. Security, data destruction, billing, migration, legal/compliance, irreversible external effects,
+  or similarly high-risk decisions may require explicit user confirmation under HITL policy.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: stale_or_forbidden_behavior
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/Plan_Document_System.md
+- Plans/Goal_Runtime_System.md
+- Plans/FinalGUISpec.md
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0058
+- pldg-20260618-001-prd-planning-wizard:atom-0059
+- pldg-20260618-001-prd-planning-wizard:atom-0060
+- pldg-20260618-001-prd-planning-wizard:atom-0061
+- pldg-20260618-001-prd-planning-wizard:atom-0062
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+source_atom_ids:
+- atom-0058
+- atom-0059
+- atom-0060
+- atom-0061
+- atom-0062
+decision_refs:
+- dec-0012
+correction_refs: []
+preserved_exact_tokens:
+- Topic Plan Draft
+- topic closure
+- Overseer
+- per-topic conversion
+- audit
+- repair
+- re-audit
+- Ready
+- high-risk checkpoint
+negative_constraints:
+- Do not require later topic agents to interpret every prior raw ledger before continuing.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Plan_Document_System.md
+- Plans/Goal_Runtime_System.md
+- Plans/FinalGUISpec.md
+- Plans/human-in-the-loop.md
+```
+
+
+### PWIZ-007 - Final Integration, Plan Review, And Visual References
+
+
+```yaml
+plan_unit_id: PWIZ-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'After required topics are Ready, a fresh Overseer agent reconciles topic drafts into a coherent Final Plan Pack, resolves duplicates and owner boundaries, and computes cross-topic dependencies, consistency, and compile readiness. Final planning review uses the shared live document preview, selection context menu, comments, source inspection, challenge, targeted revision, and annotation status system used by PRD Builder. Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status. Images are supporting references; any requirement, decision, constraint, flow, or acceptance implication introduced by an image must also be written into the planning ledger and canonical Plan text.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/Plan_Document_System.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0063
+- pldg-20260618-001-prd-planning-wizard:atom-0064
+- pldg-20260618-001-prd-planning-wizard:atom-0065
+- pldg-20260618-001-prd-planning-wizard:atom-0066
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+source_atom_ids:
+- atom-0063
+- atom-0064
+- atom-0065
+- atom-0066
+decision_refs:
+- dec-0012
+correction_refs: []
+preserved_exact_tokens:
+- Final Plan Pack
+- cross-topic integration
+- live document preview
+- selection context menu
+- uploaded reference image
+- generated reference image
+- supporting reference
+- text remains canonical
+negative_constraints:
+- Do not leave a material requirement only inside an image.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Plan_Document_System.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/Project_Output_Artifacts.md
+```
+
+
+### PWIZ-008 - Project Context, Discovery, Setup Authority, And Currentness
+
+
+```yaml
+plan_unit_id: PWIZ-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'After the user selects or provides a project, Planning Wizard may automatically inspect local or remote paths, repository presence, current branch, remotes, status, file tree, package managers, frameworks, configuration, architecture signals, and test commands without mutation. Planning intake can attach an existing local directory, Git repository, optional GitHub repository, or remote SSH host and project root, recording host, path, repository identity, currentness, and permissions. Clone, fork, repository creation, git init, remote changes, branch checkout or creation, worktree creation, commit, push, PR creation, stash, discard, reset, and protected-branch operations require the applicable permission policy and durable receipts. Planning Wizard records repository context and may perform explicitly authorized project setup, but implementation worktree allocation, mutation preparation, and execution safe points belong to Executor
+  provisioning after Plan Compile. For greenfield work, Planning Wizard can create a directory, initialize Git, select an initial branch, create an empty or baseline initialization commit, and optionally connect or create a GitHub repository when explicitly authorized. For an SSH project, discovery, FileSafe, Git, worktrees, commands, testing, path authority, safe points, and execution occur on the remote host through the authorized adapter, with no silent local fallback. Contribution PR mode records upstream and fork identities, base and head branches, contribution policy, compatibility expectations, required checks, commit policy, and optional PR delivery without conflating those with implementation truth. The Approved Plan Pack carries a hash-addressed project-context snapshot containing repository identity, host, path, branch, remotes, dirty state, codebase scan facts, test-capability facts, and currentness conditions.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/FileSafe.md
+- Plans/WorktreeGitImprovement.md
+- Plans/GitHub_Integration.md
+- Plans/Permissions_System.md
+- Plans/Executor_Protocol.md
+- Plans/Contracts_V0.md
+- Plans/Plan_To_Node_Compilation.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0067
+- pldg-20260618-001-prd-planning-wizard:atom-0068
+- pldg-20260618-001-prd-planning-wizard:atom-0070
+- pldg-20260618-001-prd-planning-wizard:atom-0071
+- pldg-20260618-001-prd-planning-wizard:atom-0072
+- pldg-20260618-001-prd-planning-wizard:atom-0075
+- pldg-20260618-001-prd-planning-wizard:atom-0076
+- pldg-20260618-001-prd-planning-wizard:atom-0077
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+source_atom_ids:
+- atom-0067
+- atom-0068
+- atom-0070
+- atom-0071
+- atom-0072
+- atom-0075
+- atom-0076
+- atom-0077
+decision_refs:
+- dec-0014
+- dec-0015
+correction_refs: []
+preserved_exact_tokens:
+- read-only project discovery
+- git status
+- current branch
+- local path
+- Git repository
+- GitHub
+- SSH
+- authority
+- receipt
+- git init
+- push
+- PR creation
+- Executor provisioning
+- implementation worktree
+- greenfield
+- baseline initialization commit
+- remote host
+- no silent local fallback
+- upstream
+- fork
+- base branch
+- head branch
+- PR
+- project-context snapshot
+- currentness
+negative_constraints:
+- Do not create implementation worktrees or execution safe points as an implicit Planning Wizard side effect.
+- Do not run against an unrelated local copy when remote context is active.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/FileSafe.md
+- Plans/WorktreeGitImprovement.md
+- Plans/GitHub_Integration.md
+- Plans/Permissions_System.md
+- Plans/Executor_Protocol.md
+- Plans/Contracts_V0.md
+- Plans/Plan_To_Node_Compilation.md
+```
+
+
+### PWIZ-009 - Testing Topic Boundary
+
+
+```yaml
+plan_unit_id: PWIZ-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'The Planning Wizard Testing topic asks about existing commands, frameworks, required environments, credentials or services, evidence expectations, exclusions, risk areas, accessibility, performance, security, and manual validation needs, then passes them to the automated testing system.'
+gui_related: false
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0099
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+source_atom_ids:
+- atom-0099
+decision_refs: []
+correction_refs: []
+preserved_exact_tokens:
+- Testing topic
+- evidence expectations
+negative_constraints:
+- Do not let topic chat replace Test Capability Discovery or the automated test planner.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Automated_Testing_System.md
+```
+
+
+### PWIZ-010 - Approve And Build And ApprovedPlanPack Authority
+
+
+```yaml
+plan_unit_id: PWIZ-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'The Planning Wizard final approval button and command label is exactly Approve And Build. Approve And Build creates a versioned immutable ApprovedPlanPack containing canonical Plan docs, PlanUnit and acceptance-unit snapshots and hashes, source PRD Pack, project-context snapshot, amendments, policies, testing requirements, audit evidence, closure records, readiness report, and planning-ledger lineage references. The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon. In the finished-product native runtime contract, ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and proceeds without a second Start Build confirmation; optional HITL checkpoints are policy exceptions, not the default. During the current bootstrap ledger-to-Plans lane, this remains a product contract and does not launch PlanCompile. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator
+  page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Contracts_V0.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Planning_Ledger_System.md
+- Plans/Goal_Runtime_System.md
+- Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0101
+- pldg-20260618-001-prd-planning-wizard:atom-0102
+- pldg-20260618-001-prd-planning-wizard:atom-0103
+- pldg-20260618-001-prd-planning-wizard:atom-0106
+- pldg-20260618-001-prd-planning-wizard:atom-0107
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+source_atom_ids:
+- atom-0101
+- atom-0102
+- atom-0103
+- atom-0106
+- atom-0107
+decision_refs:
+- dec-0020
+- dec-0021
+correction_refs:
+- corr-0011
+- corr-0012
+preserved_exact_tokens:
+- Approve And Build
+- ApprovedPlanPack
+- immutable
+- PlanUnit index
+- acceptance-unit index
+- lineage
+- automatic_after_approval
+- PlanCompileRun
+- Orchestrator
+- Plan Compile tab
+negative_constraints:
+- Do not treat mutable planning-ledger projections as the sole Plan Compile authority.
+- Do not require a redundant ordinary Start Build confirmation after Approve And Build.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Contracts_V0.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Planning_Ledger_System.md
+- Plans/Goal_Runtime_System.md
+- Plans/Orchestrator_Page.md
+```
+
+
+### PWIZ-014 - Approve And Build CAS, Currentness, And Approval Transaction Boundary
+
+
+```yaml
+plan_unit_id: PWIZ-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Approve And Build is a compare-and-swap approval transaction over the exact PlanningRun revision, topic map version, ApprovedPlanPack identity, pack version, pack hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash that were displayed in the final review. The approval command must carry those currentness inputs and fail closed when any planning state, source pack, project context, topic readiness, audit closure, testing policy, or Plan index input changes between final review and approval. A successful transaction atomically writes approval_cas_receipt, PlanApproved, and PlanCompileRun_created_or_bound, and returns the PlanCompileRun identity synchronously; projection reconciliation may lag, but run identity may not. Duplicate delivery with the same CAS inputs and idempotency key returns the same PlanCompileRun. A stale CAS input routes to bounded revalidation or final-review refresh rather than silently approving a different plan.'
+gui_related: true
+gui_classification_reason: Approve And Build is a user-visible approval command and launch transition, while the CAS/currentness boundary is runtime contract behavior.
+depends_on: [PWIZ-010, PWIZ-012]
+unblocks: []
+acceptance_criteria:
+- The final review shows the exact pack, PlanningRun revision, topic map version, project-context hash, PlanUnit and acceptance-unit index hashes, testing policy hash, and final audit/closure hash used by approval.
+- Approve And Build fails closed when any displayed approval input changes before the approval commit.
+- Approval writes an approval CAS receipt and synchronously creates or binds exactly one PlanCompileRun identity.
+- Duplicate approval delivery with the same idempotency key and CAS inputs returns the existing PlanCompileRun.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+risk_class: stale_approval_build_race
+reasoning_tier: high
+context_scope: approve_and_build_cas_boundary
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Goal_Runtime_System.md
+- Plans/prd_planning_runtime_contracts.json
+- Plans/prd_planning_runtime_contracts.schema.json
+node_compile_hint:
+  mode: approve_and_build_cas_currentness
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- external_report:PRD_Planning_Runtime_Second_Sweep/approve_and_build_cas_gap
+preserved_exact_tokens:
+- Approve And Build
+- compare-and-swap
+- PlanningRun revision
+- topic map version
+- ApprovedPlanPack
+- pack_hash
+- project-context snapshot
+- PlanUnit index hash
+- acceptance-unit index hash
+- PlanCompileRun
+negative_constraints:
+- Do not approve mutable planning state that changed after final review.
+- Do not leave PlanCompileRun identity to eventual projection reconciliation.
+- Do not convert stale approval inputs into a successful build launch.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/UI_Command_Catalog.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Goal_Runtime_System.md
+```
+
+
+### PWIZ-011 - Product-Native Planning Audit And Repair Ownership
+
+
+```yaml
+plan_unit_id: PWIZ-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Planning Wizard uses current Goal Runtime and Auditor-based AuditCycle, AuditFinding, RepairAttempt, AuditClosure, and CertificationReceipt records rather than superseded experimental workflow machinery. Every Topic Plan Draft receives a scoped fidelity audit/repair loop, and the integrated Final Plan Pack receives a separate broad multi-specialist audit/repair loop before user review and approval. Final Plan Pack audit covers PRD and ledger fidelity, exact details, unsupported inventions, owner and consumer placement, cross-topic conflicts, implementation readiness, testing readiness, security/data/permissions consistency, repository currentness, source lineage, schemas, mechanics, and future compile readiness. The final audit controller must launch multiple bounded read-only specialist agents in parallel for distinct defect families, persist assignments and results, reduce findings, run bounded repairs, and re-audit until all
+  findings are durably closed or a true typed blocker remains. Audit findings have stable finding keys, source and artifact hashes, closure status, evidence, reason, repair attempts, and reopen conditions so unchanged closed findings become previously closed rather than recurring forever. Audit and repair subagents inspect, classify, compare, and propose; the Planning Run controller or assigned canonical artifact owner performs serialized writes, updates closures, and issues certification.'
+gui_related: false
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: implementation_readiness
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/Plan_Document_System.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0130
+- pldg-20260618-001-prd-planning-wizard:atom-0131
+- pldg-20260618-001-prd-planning-wizard:atom-0132
+- pldg-20260618-001-prd-planning-wizard:atom-0133
+- pldg-20260618-001-prd-planning-wizard:atom-0134
+- pldg-20260618-001-prd-planning-wizard:atom-0135
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+source_atom_ids:
+- atom-0130
+- atom-0131
+- atom-0132
+- atom-0133
+- atom-0134
+- atom-0135
+decision_refs:
+- dec-0026
+- dec-0012
+correction_refs:
+- corr-0009
+- corr-0008
+preserved_exact_tokens:
+- AuditCycle
+- AuditFinding
+- RepairAttempt
+- AuditClosure
+- CertificationReceipt
+- topic audit
+- final audit
+- semantic fidelity
+- implementation readiness
+- source lineage
+- multiple bounded read-only specialist agents in parallel
+- durably closed
+- finding_key
+- previously_closed
+- reopen conditions
+- sole writer
+- serialized writes
+negative_constraints:
+- Do not make superseded experimental pipeline artifacts part of the product audit architecture.
+- Do not certify a broad final audit performed by one agent when parallel specialist review is required.
+- Do not allow parallel repair subagents to race canonical Plan writes.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Goal_Runtime_System.md
+- Plans/Contracts_V0.md
+- Plans/Plan_Document_System.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/storage-plan.md
+```
+
+
+### PWIZ-012 - Compile Readiness, Traceability, Blockers, And User Decisions
+
+
+```yaml
+plan_unit_id: PWIZ-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Before Approve And Build, active first-party Plans and the ApprovedPlanPack contain zero unresolved stubs, TODOs, TBDs, FIXMEs used as deferred work, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details. A context-aware incomplete-content validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Historical quotations, compatibility notes, vendor or third-party sources, generated lockfiles, and rules that mention TODO or stub terminology are not false positives, while empty functions, panic or unimplemented paths, placeholder returns, fake tests, and implement-later prose are blockers. The only permitted incomplete item is a user_approved_incomplete_item naming the exact artifact and span, reason,
+  risk, approver, downstream disposition, expiration or reopen condition, and evidence; broad permission to leave TODOs is invalid. Planning is compile-ready only when all required topics are Ready or explicitly excluded, ledgers are synchronized, topic plans compiled and audited, invalidations resolved, final integration and final audit completed, testing requirements captured, project context current, source lineage complete, zero-incomplete gate passed, and immutable ApprovedPlanPack can be created. Implementation readiness requires behavior, actors and identity, data and state transitions, edge and failure cases, permissions, currentness and idempotency, UI commands and states where applicable, adapters and side effects, validation surfaces, acceptance evidence, dependencies, and handoff contracts. Every material plan and compile claim must trace to an Approved PRD Pack, user planning answer, accepted Planning Amendment, repository fact, reference artifact,
+  explicit system policy, or recorded assumption; unsupported invented claims are audit defects. Classify gaps as auto_resolvable, safe_default_with_assumption, defer_to_plan_compile, defer_to_worknode_system, requires_user_policy_decision, requires_user_risk_acceptance, requires_external_credential, or true infrastructure/runtime blocker. Only product policy with no safe inference, material risk acceptance, destructive or irreversible operations, credentials or permissions, legal/compliance authority, or irreconcilable user preference conflicts may block for user decision.'
+gui_related: false
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: stale_or_forbidden_behavior
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/Plan_Document_System.md
+- Plans/Progression_Gates.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/Automated_Testing_System.md
+- Plans/Contracts_V0.md
+- Plans/human-in-the-loop.md
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0136
+- pldg-20260618-001-prd-planning-wizard:atom-0137
+- pldg-20260618-001-prd-planning-wizard:atom-0138
+- pldg-20260618-001-prd-planning-wizard:atom-0139
+- pldg-20260618-001-prd-planning-wizard:atom-0140
+- pldg-20260618-001-prd-planning-wizard:atom-0141
+- pldg-20260618-001-prd-planning-wizard:atom-0142
+- pldg-20260618-001-prd-planning-wizard:atom-0143
+- pldg-20260618-001-prd-planning-wizard:atom-0144
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+source_atom_ids:
+- atom-0136
+- atom-0137
+- atom-0138
+- atom-0139
+- atom-0140
+- atom-0141
+- atom-0142
+- atom-0143
+- atom-0144
+decision_refs:
+- dec-0027
+- dec-0028
+correction_refs:
+- corr-0010
+preserved_exact_tokens:
+- zero
+- stubs
+- TODOs
+- TBDs
+- placeholders
+- Planning Wizard approval
+- Plan Compile certification
+- WorkNode completion
+- Goal completion
+- context-aware
+- user_approved_incomplete_item
+- compile-ready
+- behavior
+- state transitions
+- failure cases
+- idempotency
+- acceptance evidence
+- traceability
+- unsupported claim
+- auto_resolvable
+- safe_default_with_assumption
+- requires_user_risk_acceptance
+- exceptional user decision
+negative_constraints:
+- No stubs or TODOs at all unless the user explicitly approves the exact item.
+- Do not accept a broad 'allow TODOs' exception.
+- Do not certify invented planning details with no source or explicit assumption.
+- Do not block on ordinary details that safe defaults, evidence, or downstream stages can resolve.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/Plan_Document_System.md
+- Plans/Progression_Gates.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/Automated_Testing_System.md
+- Plans/Contracts_V0.md
+- Plans/human-in-the-loop.md
+- Plans/Goal_Runtime_System.md
+```
+
+
+### PWIZ-013 - Planning Run GUI, Topic Progress, And Attached Audits
+
+
+```yaml
+plan_unit_id: PWIZ-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Wizard.md
+canonical_text: 'Planning Wizard GUI shows a collapsible parent named for the plan or project with child topic threads, dynamically added topics, final integration, final review, and attached audit/repair activity. The user remains in one Planning Wizard workspace with topic map, active Assistant Chat panel, live plan preview, source/annotation/readiness panels, and bounded backend child threads loaded as selected. Topic cards represent not_started, active, ledger_syncing, ledger_synced, compiling, auditing, repairing, ready, impacted, reopened, deferred, and blocked, with clear dependency and origin badges. Long-running topic conversion, audit, repair, final integration, and final audit display active stage, progress counts, assignment counts, findings fixed, current pass, and user-relevant status so the interface never appears stalled. Audit and repair children are attached under their topic or final Plan Pack and summarized in activity/progress
+  views; detailed agent traces and evidence may be expanded without cluttering the default thread tree.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0147
+- pldg-20260618-001-prd-planning-wizard:atom-0148
+- pldg-20260618-001-prd-planning-wizard:atom-0149
+- pldg-20260618-001-prd-planning-wizard:atom-0150
+- pldg-20260618-001-prd-planning-wizard:atom-0151
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+source_atom_ids:
+- atom-0147
+- atom-0148
+- atom-0149
+- atom-0150
+- atom-0151
+decision_refs: []
+correction_refs:
+- corr-0005
+- corr-0006
+preserved_exact_tokens:
+- collapsible
+- Planning Run
+- child topic
+- one Planning Wizard page
+- active chat panel
+- ledger_syncing
+- compiling
+- auditing
+- repairing
+- impacted
+- progress counts
+- audit pass
+- attached audit child
+- collapsed
+negative_constraints:
+- Do not present every backend subagent or audit thread as a separate top-level app surface.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Orchestrator_Page.md
+```

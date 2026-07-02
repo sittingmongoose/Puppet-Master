@@ -4,7 +4,7 @@ Source: `Plans/rewrite-tie-in-memo.md`
 
 Source lines: L152-L484
 
-Source SHA256: `cd7f5ba8e7f5b385bfa0787b15b3ea370d3b247b86c8adcd91e518845f542514`
+Source SHA256: `3e20722aa6b5f6b1e83826eff44a4ff8b8bac331a6040f0d5fc41514798766a0`
 
 ---
 
@@ -220,7 +220,7 @@ To keep implementations aligned, the rewrite uses these canonical libraries unle
   - sanitize generated HTML before it reaches the preview runtime
   - keep JavaScript minimal and preview-runtime-specific
   - do not allow arbitrary file access or arbitrary network behavior as part of the preview contract
-- Generated visual modules have an MVP library policy: allowed libraries must be BUNDLED in the source fragment, with no CDN fetches at runtime and no unvetted network requests from within the visual module. Exact allowlist TBD as an open design item; the recommended MVP behavior is no external libraries, so the agent must inline all code. Post-MVP, a curated allowlist of bundled libraries may include examples such as D3, Chart.js, and Three.js.
+- Generated visual modules have an MVP library policy: allowed libraries must be BUNDLED in the source fragment, with no CDN fetches at runtime and no unvetted network requests from within the visual module. The MVP allowlist is empty unless a library is bundled in source, versioned, reviewed, and explicitly approved for that generated visual module; otherwise the agent must inline all code. Post-MVP, a curated allowlist of bundled libraries may include examples such as D3, Chart.js, and Three.js.
 - Full HTML/browser mode is a **separate trust tier** and must not inherit source-mutation privileges by default.
 
 ### Platform contract

@@ -204,6 +204,7 @@ DEFAULT_AUDIT_SOURCE_ARTIFACTS = [
     "validator_results.json",
 ]
 TERMINAL_STATE = "terminal_state.json"
+EFFECTIVE_STATUS = "effective_status.json"
 GOVERNANCE_FILES = {
     "Plans/Spec_Lock.json",
     "Plans/auto_decisions.jsonl",
@@ -273,6 +274,10 @@ def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
             clean = {key: value for key, value in row.items() if key != "_line_no"}
             handle.write(json.dumps(clean, sort_keys=True, ensure_ascii=False))
             handle.write("\n")
+
+
+def write_json(path: Path, data: Any) -> None:
+    path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def utc_now() -> str:
@@ -983,6 +988,172 @@ def validate_terminal_state_projection(
     }
 
 
+def optional_json_object(path: Path) -> dict[str, Any] | None:
+    if not path.exists():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return None
+    return data if isinstance(data, dict) else None
+
+
+def final_report_status(audit_dir: Path) -> dict[str, Any]:
+    path = audit_dir / "FINAL_REPORT.md"
+    if not path.exists():
+        return {}
+    text = path.read_text(encoding="utf-8", errors="replace")
+    status_match = re.search(r"(?im)^Status:\s*`?([A-Z_]+)`?", text)
+    next_action_match = re.search(r"(?ims)^## Next Action\s+(.+?)(?:\n## |\Z)", text)
+    repair_count_match = re.search(r"repair_required_count\s*=\s*(\d+)", text)
+    result: dict[str, Any] = {"path": "FINAL_REPORT.md"}
+    if status_match:
+        result["status"] = status_match.group(1)
+    if next_action_match:
+        result["next_action"] = " ".join(next_action_match.group(1).split())
+    if repair_count_match:
+        result["repair_required_count"] = int(repair_count_match.group(1))
+    return result
+
+
+def normalized_terminal_status(status: Any, *, finding_count: int = 0) -> str:
+    value = str(status or "").upper()
+    if value in {"PASS", "PASS_WITH_WARNINGS", "BLOCKED"}:
+        return value
+    return "PASS_WITH_WARNINGS" if finding_count else "PASS"
+
+
+def build_effective_status_projection(audit_dir: Path, audit_validation: dict[str, Any]) -> dict[str, Any]:
+    audit_dir = audit_dir if audit_dir.is_absolute() else ROOT / audit_dir
+    audit_report = optional_json_object(audit_dir / "audit_report.json") or {}
+    post_repair = optional_json_object(audit_dir / "post_repair_audit_report.json") or {}
+    terminal_state = optional_json_object(audit_dir / TERMINAL_STATE) or {}
+    final_status = final_report_status(audit_dir)
+
+    audit_id = str(audit_report.get("audit_id") or post_repair.get("audit_id") or terminal_state.get("audit_id") or audit_dir.name)
+    ledger_id = audit_report.get("ledger_id") or post_repair.get("ledger_id")
+    original_count = audit_validation.get("original_repair_required_count")
+    if not isinstance(original_count, int):
+        original_count = audit_report.get("repair_required_count")
+    if not isinstance(original_count, int):
+        original_count = final_status.get("repair_required_count")
+    open_count = audit_validation.get("repair_required_count")
+    if not isinstance(open_count, int):
+        open_count = post_repair.get("repair_required_count")
+    if not isinstance(open_count, int):
+        open_count = audit_report.get("repair_required_count")
+    if not isinstance(open_count, int):
+        open_count = final_status.get("repair_required_count")
+
+    finding_count = 0
+    source_artifacts = audit_validation.get("source_artifacts")
+    if isinstance(source_artifacts, dict):
+        finding_count = int(source_artifacts.get("finding_count", 0) or 0)
+
+    post_count = post_repair.get("repair_required_count")
+    post_status = post_repair.get("status")
+    terminal_repair_state = audit_validation.get("terminal_repair_state")
+    if terminal_state.get("terminal_repair_state"):
+        terminal_repair_state = terminal_state.get("terminal_repair_state")
+
+    if isinstance(post_count, int) and post_count == 0:
+        effective_terminal_report = "post_repair_audit_report.json"
+        effective_status = normalized_terminal_status(post_status, finding_count=finding_count)
+        terminal_repair_state = "repair_validated"
+        repair_required_count = 0
+    elif isinstance(open_count, int) and open_count > 0:
+        effective_terminal_report = "audit_report.json" if audit_report else final_status.get("path", "FINAL_REPORT.md")
+        effective_status = "BLOCKED"
+        terminal_repair_state = "repair_required"
+        repair_required_count = open_count
+    else:
+        effective_terminal_report = "audit_report.json" if audit_report else final_status.get("path", "FINAL_REPORT.md")
+        raw_status = audit_report.get("status") or final_status.get("status")
+        if str(raw_status or "").upper() == "BLOCKED":
+            effective_status = "PASS_WITH_WARNINGS" if finding_count else "PASS"
+        else:
+            effective_status = normalized_terminal_status(raw_status, finding_count=finding_count)
+        terminal_repair_state = "no_repair_required"
+        repair_required_count = 0 if not isinstance(open_count, int) else open_count
+
+    superseded: list[str] = []
+    audit_status = str(audit_report.get("status") or "").upper()
+    if audit_report and audit_status == "BLOCKED" and effective_status != "BLOCKED":
+        superseded.append("audit_report.json")
+    if final_status.get("status") == "BLOCKED" and effective_status != "BLOCKED":
+        superseded.append("FINAL_REPORT.md")
+    if effective_terminal_report == "post_repair_audit_report.json" and (audit_dir / TERMINAL_STATE).exists():
+        superseded.append(TERMINAL_STATE)
+
+    projection = {
+        "schema_id": "pm.audit_effective_status.v1",
+        "audit_id": audit_id,
+        "ledger_id": ledger_id,
+        "effective_status": effective_status,
+        "terminal_repair_state": terminal_repair_state,
+        "repair_required_count": repair_required_count,
+        "repair_required_count_source": "closure_validation" if isinstance(audit_validation.get("repair_required_count"), int) else "report_projection",
+        "original_repair_required_count": original_count,
+        "effective_terminal_report": effective_terminal_report,
+        "superseded_historical_reports": sorted(set(superseded)),
+        "status_sources": {
+            "audit_report_status": audit_report.get("status"),
+            "audit_report_repair_required_count": audit_report.get("repair_required_count"),
+            "final_report_status": final_status.get("status"),
+            "final_report_repair_required_count": final_status.get("repair_required_count"),
+            "post_repair_status": post_repair.get("status"),
+            "post_repair_repair_required_count": post_repair.get("repair_required_count"),
+            "terminal_state_status": terminal_state.get("terminal_status"),
+        },
+        "notes": [],
+    }
+    if superseded:
+        projection["notes"].append("Historical status artifacts are preserved but superseded by this effective status projection.")
+    if effective_status == "BLOCKED":
+        projection["notes"].append("BLOCKED is effective only while repair_required_count is greater than zero or no later no-repair terminal evidence exists.")
+    else:
+        projection["notes"].append("No open actionable repair is represented by this audit effective status.")
+    return projection
+
+
+def validate_effective_status_projection(
+    audit_dir: Path,
+    audit_validation: dict[str, Any],
+    errors: list[str],
+    *,
+    required: bool,
+) -> dict[str, Any] | None:
+    path = audit_dir / EFFECTIVE_STATUS
+    expected = build_effective_status_projection(audit_dir, audit_validation)
+    if not path.exists():
+        if required:
+            errors.append(f"missing {rel(path)}")
+        return None
+    data = load_json_object(path, errors, required=False)
+    if data is None:
+        return None
+    label = rel(path)
+    for field in (
+        "schema_id",
+        "audit_id",
+        "effective_status",
+        "terminal_repair_state",
+        "repair_required_count",
+        "effective_terminal_report",
+        "superseded_historical_reports",
+    ):
+        if data.get(field) != expected.get(field):
+            errors.append(f"{label}: {field} {data.get(field)!r} does not match computed {expected.get(field)!r}")
+    if data.get("schema_id") != "pm.audit_effective_status.v1":
+        errors.append(f"{label}: schema_id must be pm.audit_effective_status.v1")
+    return {
+        "path": label,
+        "effective_status": data.get("effective_status"),
+        "repair_required_count": data.get("repair_required_count"),
+        "effective_terminal_report": data.get("effective_terminal_report"),
+    }
+
+
 def legacy_actionable_jsonl_row(row: dict[str, Any], artifact: str) -> bool:
     """Compatibility inference for pre-repair_required audit artifacts."""
     risk_key = str(row.get("risk_key", "")).lower()
@@ -1158,6 +1329,7 @@ def validate_audit_dir(
     audit_dir: Path,
     *,
     require_matrix: bool,
+    require_effective_status: bool,
     source_artifacts: list[str] | None,
     registry_path: Path,
 ) -> dict[str, Any]:
@@ -1197,7 +1369,18 @@ def validate_audit_dir(
         else:
             if not require_matrix:
                 warnings.append(f"no repair_closure_matrix.jsonl found for {rel(audit_dir)}; completeness check skipped")
-        return {
+        effective_status_report = validate_effective_status_projection(
+            audit_dir,
+            {
+                "source_artifacts": source_report,
+                "original_repair_required_count": len(actionable_rows),
+                "repair_required_count": len(actionable_rows),
+                "terminal_repair_state": "repair_required" if actionable_rows else "no_repair_required",
+            },
+            errors,
+            required=require_effective_status,
+        )
+        report = {
             "path": rel(audit_dir),
             "errors": errors,
             "warnings": warnings,
@@ -1215,6 +1398,9 @@ def validate_audit_dir(
                 for artifact, source_row in sorted(actionable_rows)
             ][:50] if actionable_rows else [],
         }
+        if effective_status_report is not None:
+            report["effective_status_projection"] = effective_status_report
+        return report
 
     rows = read_jsonl(matrix_path, errors, required=True)
     registry_by_id = registry_lookup(registry_path, errors)
@@ -1314,6 +1500,17 @@ def validate_audit_dir(
         "matrix_status_counts": status_counts,
     }
     terminal_state_report = validate_terminal_state_projection(audit_dir, audit_refs, terminal_projection, errors)
+    effective_status_report = validate_effective_status_projection(
+        audit_dir,
+        {
+            "source_artifacts": source_report,
+            "original_repair_required_count": len(actionable_rows),
+            "repair_required_count": open_repair_required_count,
+            "terminal_repair_state": terminal_repair_state,
+        },
+        errors,
+        required=require_effective_status,
+    )
 
     report = {
         "path": rel(audit_dir),
@@ -1340,6 +1537,8 @@ def validate_audit_dir(
     }
     if terminal_state_report is not None:
         report["terminal_state_projection"] = terminal_state_report
+    if effective_status_report is not None:
+        report["effective_status_projection"] = effective_status_report
     return report
 
 
@@ -1350,6 +1549,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
         validate_audit_dir(
             repo_path(audit_dir),
             require_matrix=args.require_closure_matrix,
+            require_effective_status=args.require_effective_status,
             source_artifacts=args.source_artifact,
             registry_path=registry_path,
         )
@@ -1369,6 +1569,52 @@ def cmd_validate(args: argparse.Namespace) -> int:
         "errors": errors,
         "warnings": warnings,
     }
+    print(json.dumps(result, indent=2, sort_keys=True))
+    return 1 if errors else 0
+
+
+def cmd_effective_status(args: argparse.Namespace) -> int:
+    registry_path = repo_path(args.registry)
+    audit_dirs = [repo_path(audit_dir) for audit_dir in args.audit_dir]
+    if args.all:
+        audit_dirs.extend(sorted(path for path in (ROOT / "Plans/.audits").iterdir() if path.is_dir()))
+    seen: set[str] = set()
+    unique_audit_dirs: list[Path] = []
+    for audit_dir in audit_dirs:
+        key = str(audit_dir.resolve())
+        if key not in seen:
+            seen.add(key)
+            unique_audit_dirs.append(audit_dir)
+
+    projections: list[dict[str, Any]] = []
+    errors: list[str] = []
+    for audit_dir in unique_audit_dirs:
+        validation = validate_audit_dir(
+            audit_dir,
+            require_matrix=False,
+            require_effective_status=False,
+            source_artifacts=args.source_artifact,
+            registry_path=registry_path,
+        )
+        projection = build_effective_status_projection(audit_dir, validation)
+        projections.append(projection)
+        if args.write:
+            write_json(audit_dir / EFFECTIVE_STATUS, projection)
+        if projection["effective_status"] == "BLOCKED" and projection.get("repair_required_count") == 0:
+            errors.append(f"{rel(audit_dir / EFFECTIVE_STATUS)}: BLOCKED cannot have repair_required_count=0")
+
+    result = {
+        "schema_id": "pm.audit_effective_status.summary.v1",
+        "status": "fail" if errors else "pass",
+        "write": bool(args.write),
+        "audit_count": len(projections),
+        "status_counts": {},
+        "errors": errors,
+        "audits": projections,
+    }
+    for projection in projections:
+        status = str(projection.get("effective_status"))
+        result["status_counts"][status] = result["status_counts"].get(status, 0) + 1
     print(json.dumps(result, indent=2, sort_keys=True))
     return 1 if errors else 0
 
@@ -1445,6 +1691,7 @@ def main() -> int:
     validate.add_argument("--registry", default=str(DEFAULT_REGISTRY), help="Path to _semantic_closure_registry.jsonl.")
     validate.add_argument("--audit-dir", action="append", default=[], help="Audit directory to validate.")
     validate.add_argument("--require-closure-matrix", action="store_true", help="Fail if an audit dir lacks repair_closure_matrix.jsonl.")
+    validate.add_argument("--require-effective-status", action="store_true", help="Fail if an audit dir lacks effective_status.json.")
     validate.add_argument(
         "--source-artifact",
         action="append",
@@ -1452,6 +1699,18 @@ def main() -> int:
         help="Audit JSONL artifact that must be covered by repair_closure_matrix.jsonl. Repeatable.",
     )
     validate.set_defaults(func=cmd_validate)
+    effective = sub.add_parser("effective-status", help="List or write per-audit effective terminal status projections.")
+    effective.add_argument("--registry", default=str(DEFAULT_REGISTRY), help="Path to _semantic_closure_registry.jsonl.")
+    effective.add_argument("--audit-dir", action="append", default=[], help="Audit directory to summarize.")
+    effective.add_argument("--all", action="store_true", help="Summarize every directory under Plans/.audits.")
+    effective.add_argument("--write", action="store_true", help="Write effective_status.json in each selected audit dir.")
+    effective.add_argument(
+        "--source-artifact",
+        action="append",
+        default=None,
+        help="Audit JSONL artifact to use for closure validation. Repeatable.",
+    )
+    effective.set_defaults(func=cmd_effective_status)
     refresh = sub.add_parser("refresh-hashes", help="Refresh current owner/closure evidence file hashes in the semantic closure registry.")
     refresh.add_argument("--registry", default=str(DEFAULT_REGISTRY), help="Path to _semantic_closure_registry.jsonl.")
     refresh.add_argument("--dry-run", action="store_true", help="Report updates without writing.")

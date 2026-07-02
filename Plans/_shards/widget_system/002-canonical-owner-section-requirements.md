@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L4-L8
+Source lines: L4-L9
 
-Source SHA256: `51531bc129e256bbd7a05e9d4129a86fe32d393fee134336a53226b490342461`
+Source SHA256: `7c20cb1ee539092df99bc16c4aa6285d0f959816ddd732556bdd9dfae2d5e525`
 
 ---
 
@@ -12,4 +12,5 @@ Source SHA256: `51531bc129e256bbd7a05e9d4129a86fe32d393fee134336a53226b490342461
 
 These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-### Progress-only widget hostability
+Owner-section marker list:
+- Progress-only widget hostability

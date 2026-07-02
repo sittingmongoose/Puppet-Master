@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-02T04:39:31Z",
+  "generated_at_utc": "2026-07-02T16:50:45Z",
   "index_path": "Plans/_shards/rewrite-tie-in-memo/00-index.md",
-  "index_sha256": "1c488db93fc63241c7ec6b83aefbaada96e4ce3e007fcb91e9e123c0b2eb9ba2",
+  "index_sha256": "b0b9bfcf4575789727ff1b35020b75b37dbcae35ecb8f0e63f2613fd2d4b5774",
   "manifest_path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/rewrite-tie-in-memo/001-preamble.md",
-      "sha256": "84106db5fe5afde3c2cfb5a2a33f80d41831e3f0aeafe938eae9c7e747681aa3",
+      "sha256": "9b913923cb9eba5e2bb52ed3cd473e47d3ccedb7d89a21e5786dea3b5148b3c0",
       "shard_id": "001",
       "source_line_end": 11,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Provided memo (verbatim)",
       "path": "Plans/_shards/rewrite-tie-in-memo/002-provided-memo-verbatim.md",
-      "sha256": "1a9e55f451ca119fcfc3dc713834fcedecca918050de39ddad25a847b8cd38e1",
+      "sha256": "854e9af0260b012ea643ff9ddcc521f0c472b281e724fff8ff591adb71df9c03",
       "shard_id": "002",
       "source_line_end": 87,
       "source_line_start": 13,
@@ -26,7 +26,7 @@
     {
       "heading": "Impacts on existing Plans (deltas to keep consistency)",
       "path": "Plans/_shards/rewrite-tie-in-memo/003-impacts-on-existing-plans-deltas-to-keep-consistency.md",
-      "sha256": "ff414c0173beeba1cd91ed7f6eae074a7bf875fa871a3d7431fa68c2789b37e3",
+      "sha256": "1ef87ebaeee361c02d88ed286e864e6d52be790dc76ab1e655880f45ea393dc6",
       "shard_id": "003",
       "source_line_end": 139,
       "source_line_start": 89,
@@ -35,7 +35,7 @@
     {
       "heading": "Suggested \"single source of truth\" rule for the rewrite",
       "path": "Plans/_shards/rewrite-tie-in-memo/004-suggested-single-source-of-truth-rule-for-the-rewrite.md",
-      "sha256": "70d22b332aafde2284cfb371a299c35172691f4e083f8d5aa388b487aa59ee30",
+      "sha256": "9c8541fdf06acf3fe205957e222515d2cdb9ac519beab4be5aa2b4e739a7762b",
       "shard_id": "004",
       "source_line_end": 150,
       "source_line_start": 141,
@@ -44,7 +44,7 @@
     {
       "heading": "Unified Document/Media Rendering Contract (2026-03-07)",
       "path": "Plans/_shards/rewrite-tie-in-memo/005-unified-document-media-rendering-contract-2026-03-07.md",
-      "sha256": "a491a55aa79049f4f39c63cfe2a0199cf5f3541b3f1ab4543612917758f9039e",
+      "sha256": "3ed4b99dc5817d4f07e2e6e1a619a12b76dfe761ac75553a832090fd1349f648",
       "shard_id": "005",
       "source_line_end": 484,
       "source_line_start": 152,
@@ -53,7 +53,7 @@
     {
       "heading": "Runtime Scheduler Packet Tie-In Note (2026-03-08)",
       "path": "Plans/_shards/rewrite-tie-in-memo/006-runtime-scheduler-packet-tie-in-note-2026-03-08.md",
-      "sha256": "6b0f5fb4cb4920eb3391bd38ddab0cceffb6787cbcc005d86260ae96a1a1dc6c",
+      "sha256": "b43ca537fb2e9021aa374df7c3ac406582bc42aa367da8e1bb1fc4269a539618",
       "shard_id": "006",
       "source_line_end": 494,
       "source_line_start": 486,
@@ -62,7 +62,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/rewrite-tie-in-memo/007-owner-consumer-map.md",
-      "sha256": "48764013dc68da1ce170d8b86e56891c9c6de363f91cb434711c796e3b4fc580",
+      "sha256": "778eaddd2c3bd0432ce58f0cb9a3804cbe7454ef3a8f35c01dbd93ba4d877847",
       "shard_id": "007",
       "source_line_end": 500,
       "source_line_start": 496,
@@ -71,7 +71,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/rewrite-tie-in-memo/008-planunits.md",
-      "sha256": "756539ffbb04ddd22c17b9d3605bba16dc7e91f81e47b06486baf8ec942b7dbf",
+      "sha256": "b47c44617ede55bbe0918cd7f7ea9d60a9e4a392d8bb09a4fafcb27732d984e8",
       "shard_id": "008",
       "source_line_end": 834,
       "source_line_start": 502,
@@ -80,7 +80,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/rewrite-tie-in-memo/009-migration-coverage.md",
-      "sha256": "81baabeabfcce2f1e137c1281b30979e021335b6e2755215160f72ab6ca3db4d",
+      "sha256": "854c0496d8bac5a6e6728c1457d6ffdb17b9cef99b4ad300ebd5eada2498b21c",
       "shard_id": "009",
       "source_line_end": 846,
       "source_line_start": 836,
@@ -90,6 +90,6 @@
   "source": {
     "line_count": 846,
     "path": "Plans/rewrite-tie-in-memo.md",
-    "sha256": "cd7f5ba8e7f5b385bfa0787b15b3ea370d3b247b86c8adcd91e518845f542514"
+    "sha256": "3e20722aa6b5f6b1e83826eff44a4ff8b8bac331a6040f0d5fc41514798766a0"
   }
 }

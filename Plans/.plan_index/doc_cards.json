@@ -52,7 +52,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 4983,
+      "line_count": 5000,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 65,
       "plan_unit_ids": [
@@ -188,7 +188,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "5bb5b28fe0ce7b4eb8928c81e90e910be28a7fdf0adde6ccfc779e572b8970bd",
+      "sha256": "04008a1d57a5ecc7805569edf5eb8b5d6d362abcb643dbc8d8f929fea9636498",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 65
@@ -1473,7 +1473,7 @@
         "False": 7,
         "True": 13
       },
-      "heading_count": 37,
+      "heading_count": 38,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -1506,7 +1506,7 @@
         "future onboarding/Health/Planning Wizard acceptance tests",
         "future vision bridge tests"
       ],
-      "line_count": 1634,
+      "line_count": 1648,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 20,
       "plan_unit_ids": [
@@ -1553,7 +1553,7 @@
         "vision_bridge_validation_gap",
         "weak_test_oracle"
       ],
-      "sha256": "547acf5c5500f5043d10fc031c12cc618644eaf6a399224b30daf6be4e5f8654",
+      "sha256": "4edc1e0b06918a767998ff78d3464e38d1651ace6c7a5998b98970ba77693fb0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 20
@@ -1836,7 +1836,7 @@
         "Plans/storage-plan.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 10231,
+      "line_count": 10237,
       "path": "Plans/chain-wizard-flexibility.md",
       "plan_unit_count": 152,
       "plan_unit_ids": [
@@ -2151,7 +2151,7 @@
         "worktree_pr_collision",
         "wrong_pr_target"
       ],
-      "sha256": "0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe",
+      "sha256": "fd1623b031dd532cc48b9c2453424830fcbf423cbaa175ffadd8d37b0daeeff3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "retired": 152
@@ -4029,7 +4029,7 @@
         "document_packaging_policy_drift",
         "migration_lineage"
       ],
-      "sha256": "33ea7426d807c8576f5441b56d21f6419f7c79215dc98f23f396ae5d54835476",
+      "sha256": "7c555d8159c75c51128ca3ef90555d4bfc70961f959ff7aae895f184f14bf3bc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 29
@@ -4368,7 +4368,7 @@
         "feature_summary_drift",
         "migration_lineage"
       ],
-      "sha256": "192f85416cb86b11080c50a32f9e0e803e794eb480d9ba72068334ff40a5286a",
+      "sha256": "18eb8eaafc6d33c4ebcb130610a7187508a51a30b60bae50ffe71691bce66066",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 25
@@ -4399,7 +4399,7 @@
         "Plans/UI_Command_Catalog.md",
         "future File Manager type-ahead UI"
       ],
-      "line_count": 4479,
+      "line_count": 4481,
       "path": "Plans/FileManager.md",
       "plan_unit_count": 72,
       "plan_unit_ids": [
@@ -4490,7 +4490,7 @@
         "filemanager_mutation_bypass",
         "migration_lineage"
       ],
-      "sha256": "b8d70c0cf158febde60c6aa84a50f9eb865d3f45474e6710a5c569c70e3d0b4d",
+      "sha256": "ba0cc77c58e87cbe7a2158c0805bbb4381ca4ade1907b50de26dbb0b83fbf690",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 72
@@ -4787,7 +4787,7 @@
         "False": 35,
         "True": 376
       },
-      "heading_count": 676,
+      "heading_count": 677,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
@@ -4832,7 +4832,7 @@
         "future provider settings UI",
         "future run control UI"
       ],
-      "line_count": 26630,
+      "line_count": 26646,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 411,
       "plan_unit_ids": [
@@ -5286,7 +5286,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "c31d1756cca31208e21ecbc6c4e44ecd72447596cb5abcf2230eefdee16ecc2f",
+      "sha256": "444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 410,
@@ -6571,7 +6571,7 @@
         "temporary_instrumentation_lifecycle_drift",
         "worktree_cleanup_dependency_distinction_drift"
       ],
-      "sha256": "a73dd314c5af43c8c41a8d6ea1c08fc6bcd8dbb280e72ba72772c2ed0b733605",
+      "sha256": "a93953009970854fa81476fb0c19d280bef0edec25356137d74ec8d4d65fcb3f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 83
@@ -8722,7 +8722,7 @@
         "False": 10,
         "True": 18
       },
-      "heading_count": 111,
+      "heading_count": 83,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Commands_System.md",
@@ -8744,7 +8744,7 @@
         "future Orchestrator History tab",
         "future Orchestrator run details and routes"
       ],
-      "line_count": 2324,
+      "line_count": 2315,
       "path": "Plans/Orchestrator_Page.md",
       "plan_unit_count": 28,
       "plan_unit_ids": [
@@ -8811,7 +8811,7 @@
         "route_identity_loss",
         "source_control_boundary_drift"
       ],
-      "sha256": "30effb9810d393ab13f290ee9560950d702e886a30c021d4ceeb6b12862b3924",
+      "sha256": "1cd9f3b8bbd02e7f5efa00d917914479f3f73acba3ceea7122857d17ba3a75bb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27,
@@ -9610,7 +9610,7 @@
         "False": 5,
         "True": 12
       },
-      "heading_count": 30,
+      "heading_count": 31,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
@@ -9641,7 +9641,7 @@
         "future Planning Wizard output records",
         "future Planning Wizard source picker"
       ],
-      "line_count": 1420,
+      "line_count": 1432,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 17,
       "plan_unit_ids": [
@@ -9676,7 +9676,7 @@
         "stale_approval_build_race",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "8d2bb22f3b60fad2dce3931daddd1af4f2eb91f47f75b197130b8b1b1418cb72",
+      "sha256": "e90a7d8e37335ca18a331be8d6cbd0ba2851cdac39383dec44a19689b5b5b885",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 17
@@ -9806,7 +9806,7 @@
         "False": 3,
         "True": 7
       },
-      "heading_count": 22,
+      "heading_count": 23,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Contracts_V0.md",
@@ -9828,7 +9828,7 @@
         "future PRD Builder output records",
         "future PRD Builder source picker"
       ],
-      "line_count": 788,
+      "line_count": 792,
       "path": "Plans/PRD_Builder.md",
       "plan_unit_count": 10,
       "plan_unit_ids": [
@@ -9854,7 +9854,7 @@
         "stale_or_forbidden_behavior",
         "untrusted_source_security_bypass"
       ],
-      "sha256": "373412e5656c18ee07cee10f3eb17a025246e09d491ab88bbe97117aa28be53c",
+      "sha256": "f736432fb9ffb839ae7f61dab15dc26b1470795af20ad58685717b4761ce6806",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 10
@@ -10515,7 +10515,7 @@
         "residual_bridge_overreach",
         "rewrite_tie_in_drift"
       ],
-      "sha256": "cd7f5ba8e7f5b385bfa0787b15b3ea370d3b247b86c8adcd91e518845f542514",
+      "sha256": "3e20722aa6b5f6b1e83826eff44a4ff8b8bac331a6040f0d5fc41514798766a0",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 38,
@@ -10814,7 +10814,7 @@
         "future runtime artifact rows",
         "future runtime artifacts panel"
       ],
-      "line_count": 1810,
+      "line_count": 1813,
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "plan_unit_count": 41,
       "plan_unit_ids": [
@@ -10907,7 +10907,7 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "f6c95f150c26df05f17413455a85a11e5953ac7e79df47156f87ec646d7d6785",
+      "sha256": "df360a7c9769f8607bb51be205eabaff52f522a9225d03cb996c2470052e37f9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 40,
@@ -11895,7 +11895,7 @@
         "False": 20,
         "True": 86
       },
-      "heading_count": 166,
+      "heading_count": 172,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/FinalGUISpec.md",
@@ -11918,11 +11918,10 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 7798,
+      "line_count": 7864,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 106,
       "plan_unit_ids": [
-        "UCC-105",
         "UCC-002",
         "UCC-003",
         "UCC-004",
@@ -12027,7 +12026,8 @@
         "UCC-102",
         "UCC-103",
         "UCC-104",
-        "UCC-106"
+        "UCC-106",
+        "UCC-105"
       ],
       "reasoning_tiers": [
         "high",
@@ -12048,7 +12048,7 @@
         "ui_command_compatibility_drift",
         "vision_command_drift"
       ],
-      "sha256": "09543174d6144fc1ae1a89b04010470aa022216c0afebcea084a975592deebdf",
+      "sha256": "74dd10ebe04ed651d00c997e89f269957c527d284c25cd0798d03edc59f10ca2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 105,
@@ -12094,7 +12094,7 @@
         "Plans/Wiring_Matrix.schema.json",
         "Plans/evidence.schema.json"
       ],
-      "line_count": 523,
+      "line_count": 527,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 8,
       "plan_unit_ids": [
@@ -12121,7 +12121,7 @@
         "ui_backend_bypass",
         "unwired_gui"
       ],
-      "sha256": "5bc6f040977efde1826713ac37bef698d38612f00b9a86dbcbbf02215d743270",
+      "sha256": "c068398786ef73e0d63524713df8722d91777214a8cbea5c6ce263ec8bd468c3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -12266,7 +12266,7 @@
         "usage_source_confidence_drift",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "330ce189566ceb8360b2b4bea9adbb2cb373865cce247a503db8d347a50128ac",
+      "sha256": "7d48dc66929cf62601b483df794d051d7356247dfeb461d51a18d5a41651d3e4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 78
@@ -12296,11 +12296,11 @@
         "False": 2,
         "True": 12
       },
-      "heading_count": 26,
+      "heading_count": 25,
       "implementation_surfaces": [
         "Plans/Widget_System.md"
       ],
-      "line_count": 1025,
+      "line_count": 1027,
       "path": "Plans/Widget_System.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -12326,7 +12326,7 @@
         "residual_bridge_overreach",
         "widget_system_drift"
       ],
-      "sha256": "51531bc129e256bbd7a05e9d4129a86fe32d393fee134336a53226b490342461",
+      "sha256": "7c20cb1ee539092df99bc16c4aa6285d0f959816ddd732556bdd9dfae2d5e525",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -12349,7 +12349,7 @@
         "False": 13,
         "True": 28
       },
-      "heading_count": 91,
+      "heading_count": 97,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Commands_System.md",
@@ -12370,7 +12370,7 @@
         "future Settings command wiring",
         "future first-run onboarding route wiring"
       ],
-      "line_count": 3418,
+      "line_count": 3473,
       "path": "Plans/Wiring_Matrix.md",
       "plan_unit_count": 41,
       "plan_unit_ids": [
@@ -12432,7 +12432,7 @@
         "wiring_addenda_precedence_drift",
         "wiring_matrix_drift"
       ],
-      "sha256": "92272bddd30537bddea3eaa0e8a3c7c69a01b24826ada938495dd0da0bded28b",
+      "sha256": "14eb404da1cb1d6e601b5eb4def272d087cae91eeddff0e0ad5803b613004e2a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 41
@@ -12567,7 +12567,7 @@
         "worktree_allocation_drift",
         "worktree_git_drift"
       ],
-      "sha256": "072b3bf41dc46105969f722a12a0f56c7f9d3d2408d4df2fecb7c4921fb16b1d",
+      "sha256": "f39b33e38b644f3f0195f8707f327ef505ba574c0765d4d499b27173f011a367",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 74
@@ -12592,7 +12592,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-02T04:38:32Z",
+  "generated_at_utc": "2026-07-02T16:50:37Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -141,7 +141,7 @@ This addendum captures the rewrite's document and preview rendering model: sourc
 - Planning documents, including future Deep Plan Mode surfaces, use the same Markdown/Mermaid pipeline and canonical-source rules.
 - `xeditor-monorepo` is useful as interaction inspiration only; it is not a strong candidate for direct adoption as an MVP-native PM core feature.
 
-**Detailed spec:** `Plans/FinalGUISpec.md`, `Plans/PMConcept.html`, [Crosswalk](#crosswalk-ref)
+**Detailed spec:** `Plans/FinalGUISpec.md`, `Concepts/PMConcept.html` as source-lineage input only, [Crosswalk](#crosswalk-ref)
 
 <a id="feature-sc-gha-docker"></a>
 ## Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)

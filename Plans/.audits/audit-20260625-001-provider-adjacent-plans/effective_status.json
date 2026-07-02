@@ -1,0 +1,24 @@
+{
+  "audit_id": "audit-20260625-001-provider-adjacent-plans",
+  "effective_status": "BLOCKED",
+  "effective_terminal_report": "FINAL_REPORT.md",
+  "ledger_id": null,
+  "notes": [
+    "BLOCKED is effective only while repair_required_count is greater than zero or no later no-repair terminal evidence exists."
+  ],
+  "original_repair_required_count": 1,
+  "repair_required_count": 1,
+  "repair_required_count_source": "closure_validation",
+  "schema_id": "pm.audit_effective_status.v1",
+  "status_sources": {
+    "audit_report_repair_required_count": null,
+    "audit_report_status": null,
+    "final_report_repair_required_count": null,
+    "final_report_status": "FAIL_IMPLEMENTATION_READY",
+    "post_repair_repair_required_count": null,
+    "post_repair_status": null,
+    "terminal_state_status": null
+  },
+  "superseded_historical_reports": [],
+  "terminal_repair_state": "repair_required"
+}

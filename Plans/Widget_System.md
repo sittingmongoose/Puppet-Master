@@ -5,7 +5,8 @@
 
 These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
 
-### Progress-only widget hostability
+Owner-section marker list:
+- Progress-only widget hostability
 
 
 ## 1. Scope and non-scope
@@ -25,6 +26,7 @@ Not in scope:
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
 
+<a id="ws-progress-only-widget-hostability"></a>
 ## 2. Hostability and data contracts
 Widgets consume stable projections and canonical records. They do not define page semantics.
 

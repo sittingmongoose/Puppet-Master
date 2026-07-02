@@ -1,0 +1,158 @@
+{
+  "generated_at_utc": "2026-07-02T16:50:45Z",
+  "index_path": "Plans/_shards/decision_policy/00-index.md",
+  "index_sha256": "3bf009f7a9478232905a2b93a1f92d7c5885f2ed9a9bf30e35cc84f4b1baaf7b",
+  "manifest_path": "Plans/_shards/decision_policy/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/decision_policy/001-preamble.md",
+      "sha256": "a2156f5fd851119b9be5e686c68556dc331c786648cc2e95b8d292bcf091b058",
+      "shard_id": "001",
+      "source_line_end": 15,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/decision_policy/002-0.-scope.md",
+      "sha256": "f657763b287d6b918cc4c89c30096d4b9443830a6fd306f11f6ea276d11ef8f3",
+      "shard_id": "002",
+      "source_line_end": 22,
+      "source_line_start": 17,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Precedence (non-negotiable)",
+      "path": "Plans/_shards/decision_policy/003-1.-precedence-non-negotiable.md",
+      "sha256": "8d510d7f090104a36075b0fc28cd061b4a0d1e02472732b1f6a3ec9a977dd7ab",
+      "shard_id": "003",
+      "source_line_end": 36,
+      "source_line_start": 24,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Deterministic defaults (must be autonomous)",
+      "path": "Plans/_shards/decision_policy/004-2.-deterministic-defaults-must-be-autonomous.md",
+      "sha256": "da1383d3fc034019468f9cdff8d2d2013fe17d72236adfbb2c38c08f1139df7e",
+      "shard_id": "004",
+      "source_line_end": 158,
+      "source_line_start": 37,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. Tie-break rules (ordering)",
+      "path": "Plans/_shards/decision_policy/005-3.-tie-break-rules-ordering.md",
+      "sha256": "67c0b4990e6d1051004bf61ac2f3dda2b7e108b869adbdbd2855f82de2df3468",
+      "shard_id": "005",
+      "source_line_end": 194,
+      "source_line_start": 160,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. \"No human in the loop\" rule",
+      "path": "Plans/_shards/decision_policy/006-4.-no-human-in-the-loop-rule.md",
+      "sha256": "62dbe3baeb469b20495556e6b82c5c9eaed52b64bbfb55c9061423a82e6a8171",
+      "shard_id": "006",
+      "source_line_end": 204,
+      "source_line_start": 196,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. SpecLock Update Protocol (autonomous; no human readers)",
+      "path": "Plans/_shards/decision_policy/007-5.-speclock-update-protocol-autonomous-no-human-readers.md",
+      "sha256": "6213aada2285ffc6bdee1a36e391b9c34ca0d600537fb79cac6dfc90283b64d7",
+      "shard_id": "007",
+      "source_line_end": 257,
+      "source_line_start": 205,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Ambiguity vs. Missing User Intent",
+      "path": "Plans/_shards/decision_policy/008-6.-ambiguity-vs.-missing-user-intent.md",
+      "sha256": "02012548d18fc02c7ca63b5a99ad6d73aee64ba14bedb6d0e31217250ed24c29",
+      "shard_id": "008",
+      "source_line_end": 331,
+      "source_line_start": 258,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Decision Rules Addendum (2026-03-08)",
+      "path": "Plans/_shards/decision_policy/009-runtime-decision-rules-addendum-2026-03-08.md",
+      "sha256": "f8c502defa3c79a0e90acf91e28534b1e7eb7373dbc55124177f6811c823620e",
+      "shard_id": "009",
+      "source_line_end": 394,
+      "source_line_start": 333,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Recovery Deterministic Defaults Canonical Alignment (2026-03-09)",
+      "path": "Plans/_shards/decision_policy/010-runtime-recovery-deterministic-defaults-canonical-alignment-2026.md",
+      "sha256": "fa2e6905615d7fb967481f561a0898436d8d548d650351df720ad6cfaf3a9d1f",
+      "shard_id": "010",
+      "source_line_end": 415,
+      "source_line_start": 395,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical Runtime Recovery Matrix Completion",
+      "path": "Plans/_shards/decision_policy/011-canonical-runtime-recovery-matrix-completion.md",
+      "sha256": "2b05a89f9d08c9a81108a0e8ebf0df0b30b019754a9e56bbe47ea0a0d4ffd019",
+      "shard_id": "011",
+      "source_line_end": 438,
+      "source_line_start": 416,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Source Control, GitHub Actions, and Docker Manager Blocked-State Addendum (2026-03-12)",
+      "path": "Plans/_shards/decision_policy/012-source-control-github-actions-and-docker-manager-blocked-state-a.md",
+      "sha256": "fd49a7f3274ac2919222fbac30226a11e96d6dda5f3ccd50efefa48e58338b32",
+      "shard_id": "012",
+      "source_line_end": 456,
+      "source_line_start": 440,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/decision_policy/013-owner-consumer-map.md",
+      "sha256": "038726ccecdc7023495e96b11487897241194f12ea18b1d776616dd3066d5253",
+      "shard_id": "013",
+      "source_line_end": 462,
+      "source_line_start": 458,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/decision_policy/014-planunits.md",
+      "sha256": "e0fb41fb6b3af341fcc02757cc96b31bf2061f823cb0032ca30fe1ba605d7b3c",
+      "shard_id": "014",
+      "source_line_end": 3293,
+      "source_line_start": 464,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/decision_policy/015-migration-coverage.md",
+      "sha256": "cb7dfd61d2bced13c6ca19d24bfacb8ff55cb317f3244e9d6b4c6a10a47ac6bd",
+      "shard_id": "015",
+      "source_line_end": 3305,
+      "source_line_start": 3295,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
+      "path": "Plans/_shards/decision_policy/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "sha256": "57f3351d8a386a8b606fa2ef4de9c8f0915c6922b91af70845e991ee3d88585e",
+      "shard_id": "016",
+      "source_line_end": 3366,
+      "source_line_start": 3307,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 3366,
+    "path": "Plans/Decision_Policy.md",
+    "sha256": "9ecf3fea83953a6a763b3d4cd902f1c5bba3b041b42ed48244dcc7a480af6030"
+  }
+}

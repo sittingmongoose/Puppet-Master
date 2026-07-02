@@ -1,0 +1,113 @@
+{
+  "generated_at_utc": "2026-07-02T16:50:45Z",
+  "index_path": "Plans/_shards/ui_wiring_rules/00-index.md",
+  "index_sha256": "63d9083c1bf2ba78c5a010147e5566d6e9e62c085c319b7dddcffef81a19177b",
+  "manifest_path": "Plans/_shards/ui_wiring_rules/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/ui_wiring_rules/001-preamble.md",
+      "sha256": "f63e9b3acc30b952313017ae4e2f98a8930fd916650d33a96bf69cfea8e6b239",
+      "shard_id": "001",
+      "source_line_end": 15,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/ui_wiring_rules/002-0.-scope.md",
+      "sha256": "62e788943986c2eae3d93d59881d98eafe6daedcc8b8cdaefeb93ab39f94cc30",
+      "shard_id": "002",
+      "source_line_end": 62,
+      "source_line_start": 16,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/ui_wiring_rules/003-owner-consumer-map.md",
+      "sha256": "cf20dab340fc41eb339823ae222dc23e179680c9958475afbdfd3c947961bc68",
+      "shard_id": "003",
+      "source_line_end": 70,
+      "source_line_start": 64,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/ui_wiring_rules/004-planunits.md",
+      "sha256": "a81da7d612f47c61d7c9342b70c89aa1012b60c82395d0c1cb3e2d1ab22122a6",
+      "shard_id": "004",
+      "source_line_end": 360,
+      "source_line_start": 72,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Rule 1 \u2014 UI Command Dispatch Only",
+      "path": "Plans/_shards/ui_wiring_rules/005-1.-rule-1-ui-command-dispatch-only.md",
+      "sha256": "fd551231ec0bb83f0c639b3b718c715580506afb38e61f2eae40a9abc5557667",
+      "shard_id": "005",
+      "source_line_end": 374,
+      "source_line_start": 361,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Rule 2 \u2014 One Element, One Command",
+      "path": "Plans/_shards/ui_wiring_rules/006-2.-rule-2-one-element-one-command.md",
+      "sha256": "7c14e4ce0de235ca8f3e67101bcc98a949c132a11aa9baeba9c8f7c9670cabac",
+      "shard_id": "006",
+      "source_line_end": 389,
+      "source_line_start": 375,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. UI Command Dispatcher Boundary",
+      "path": "Plans/_shards/ui_wiring_rules/007-3.-ui-command-dispatcher-boundary.md",
+      "sha256": "91ccb1a81f7cb2ac08bcc3b9fda27895d91ba7c31b14bc66ec97f7f80197e966",
+      "shard_id": "007",
+      "source_line_end": 425,
+      "source_line_start": 390,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Wiring Matrix Concept",
+      "path": "Plans/_shards/ui_wiring_rules/008-4.-wiring-matrix-concept.md",
+      "sha256": "2dc07da2511844778661867db6655c0274db5113198a57a0fbf07423536bef3b",
+      "shard_id": "008",
+      "source_line_end": 463,
+      "source_line_start": 426,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Autonomous Verification Strategy",
+      "path": "Plans/_shards/ui_wiring_rules/009-5.-autonomous-verification-strategy.md",
+      "sha256": "5c4e8bb91e2f2dfa6f4041cb87fca87a10b2795ea8fe94c79f72d19bdab0f6c4",
+      "shard_id": "009",
+      "source_line_end": 491,
+      "source_line_start": 464,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. References",
+      "path": "Plans/_shards/ui_wiring_rules/010-6.-references.md",
+      "sha256": "b36f308297d9f7d597cc91e1d12e129f6942823b03b1fd45d4ec43beb2f935ad",
+      "shard_id": "010",
+      "source_line_end": 504,
+      "source_line_start": 492,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/ui_wiring_rules/011-migration-coverage.md",
+      "sha256": "577866be8235cbd73a44a7053aca53dda0d20607d5dbf6478f524ea0ac807481",
+      "shard_id": "011",
+      "source_line_end": 527,
+      "source_line_start": 506,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 527,
+    "path": "Plans/UI_Wiring_Rules.md",
+    "sha256": "c068398786ef73e0d63524713df8722d91777214a8cbea5c6ce263ec8bd468c3"
+  }
+}

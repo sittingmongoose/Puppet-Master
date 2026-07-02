@@ -1,0 +1,45 @@
+# Shard 024: INV-019 -- Runtime identity and blocked-policy continuity
+
+Source: `Plans/Architecture_Invariants.md`
+
+Source lines: L311-L345
+
+Source SHA256: `fab349fb07405fa12bb0ee2bf0c49308e8b0bb9581290de3ba5db02abe5c0b1e`
+
+---
+
+## INV-019 -- Runtime identity and blocked-policy continuity
+
+
+### Rule
+
+**Rule:** Canonical runtime identity and blocked-state policy MUST survive dispatch, restart recovery, approval, and usage attribution without being reminted or collapsed into provider-native aliases.
+- `execution_role`, `requested_account_id`, requested/effective operational identity, and account-switch lineage remain part of the shared runtime packet and every blocked/recovery handoff.
+- `blocked_sequence` is the canonical blocked-episode anchor; startup recovery rebinds unresolved blocked episodes to the preserved runtime identity instead of minting a new episode.
+- DAE jail posture, approval posture, usage switch-history, and execution-role follow-through remain continuous across retries, resumes, restores, and recovered attempts.
+- Cross-surface consumers reuse the frozen runtime `state-summary` instead of inventing local phrasing: `effective_health_state`, `effective_pressure_state`, and `effective_resolution_outcome` use the scheduler vocabulary and remain canonical effective-state fields even when Agent-Config, Health, Usage, or other surfaces show live current values.
+- Runtime recovery invariants include safe-point vs restore-point boundaries, `graph-lock` non-degradation, `classification-before-policy`, `checkpoint-derived` projection freshness, and `attempt-boundary` identity freeze. `Plans/FileSafe.md` remains the DAE enforcement owner for post-approval arg mutation, `context_files` write-scope widening, `fail-open` initialization paths, and `recovery_options[]` vs `allowed_action_ids[]` schema drift; `Plans/MiscPlan.md` cleanup wording must not let best-effort prepare/cleanup invalidate safe-point prerequisites or let `mtime-based` evidence pruning cut across `attempt-lineage` retention.
+- Runtime governance is a `governance-layer` invariant, not only UI/storage cleanup: `Plans/Decision_Policy.md` owns first-class concern / corroboration / promotion objects plus `/corroboration/promotion`, authority, and `/lifecycle` rules; `Plans/Permissions_System.md` consumes the stricter requested/effective identity model that `Plans/Contracts_V0.md` now makes canonical; and this document records scheduler lane ordering plus `mutation-safe-point` requirements.
+- Cross-surface command wrappers remain route consumers, not runtime owners: `Plans/UI_Command_Catalog.md` entries such as `cmd.artifacts.show_in_ledger`, `cmd.artifacts.show_in_usage`, `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`, and `cmd.panel.switch` may stay `navigation-like` wrappers only when they normalize through canonical route/runtime objects.
+- `Plans/Run_Graph_View.md` must resolve its internal identity split before consumers treat it as runtime truth: older `tier_id` / `tier_type` detail panes, worker activity, verification streams, Usage links, and event correlation cannot compete with `scheduler_pass_id`, `blocked_sequence`, `safe_point_id`, and remediation lineage.
+- Owner-level recovery invariants cover attempt immutability, `failure-vs-blocked` family separation, restore identity, projection authority, and shared `provider-pool` concurrency. `Plans/Executor_Protocol.md`, `Plans/FileSafe.md`, and `Plans/MiscPlan.md` must not keep same-doc contradictions around attempt reuse, DAE/FileSafe authority, `cleanup-vs-safe-point` validity, or blocked-recovery payload fields.
+- Cross-surface navigation and usage consumers must demote `tier_id` from route identity and realign around runtime object routing plus canonical `usage-event` identity. `tier_id` may survive only as derived display/grouping compatibility metadata.
+- `Plans/Run_Graph_View.md` and `Plans/Runtime_Artifacts_Panel.md` remain required consumers for concrete receipt/usage identity, `projection-trust` hooks, producer identity, trust/provenance, and stronger `cross-surface` linkage; runtime artifact or graph consumers must not replace those hooks with local pivots.
+- Strong stale consumers for this runtime identity cluster are `Plans/Run_Graph_View.md` and `Plans/Orchestrator_Page.md`; their mirrors must reconcile to these invariants instead of preserving stale tier-era aggregation or route-local identity.
+- Route transport invariants keep `resume_url` as serialized transport only. Attention flows, general-purpose search, and cross-surface pivots MUST resolve through canonical `route_target` / subject identity first; a URL may carry that target but must not be stronger or more exact than the owner route contract.
+- `runtime-object-first` identity starts from `node_id`, `attempt_id`, `blocked_reason_code`, scheduler lane dispatch order, and safe points; policy, `/HITL/permission`, and approval docs must not fall back to stale tier context or looser ownership terms when evaluating blocked policy, permission state, or owner authority.
+- Strong Orchestrator route consumers include `Plans/assistant-chat-design.md`, `/assistant-chat-design.md`, `Plans/Orchestrator_Page.md`, and `/Orchestrator_Page.md`; their UI surface / IA, execution model / state machine, cross-surface lineage and receipts, and recovery / rollback / blocked-state behavior must reconcile before local pages publish independent Orchestrator semantics.
+- `resume_url` remains a `deep-link` transport: keep human-meaningful deep-link URLs for `/resume` and recovery, but normalize decoded payloads into the same cross-surface route contract used by in-app search, command routing, attention/CtA `/CtA` restoration, and `route-target` / highest-value focus recovery.
+- `bridged-provider` normalized events require a versioned correlation block with actor/thread/attempt/lineage refs, including `/thread/attempt/lineage` refs, so provider events can join runtime identity without shadowing scheduler, HITL, permission, or usage ownership.
+- Classification for cross-surface content identity belongs in `Plans/Contracts_V0.md` / `Contracts_V0`: `subject_id` remains frozen to the two canonical families until a new `cross-surface` content identity proves necessary, and `orchestrator.receipt` remains the cross-surface bridge record rather than a substitute for those identity families.
+- `Plans/WorktreeGitImprovement.md` / `WorktreeGitImprovement.md` already contains the correct source-control surface boundary; the stale part is the identity anchor, not the product boundary, so worktree and Source Control surfaces must retarget to runtime route identity without reopening the product boundary.
+- Consumer docs must not mix canonical blocked/scheduler/remediation lineage or `/scheduler/remediation` lineage with legacy `tier-event` push streams; blocked, scheduler, remediation, and tier-era event projections must all resolve through preserved runtime identity before surfacing status.
+- Runtime/chat boundaries must avoid `over-unify` behavior that treats builder/interview/chat or `/interview/chat` runs as orchestration objects, and avoid `under-unify` behavior that duplicates provider/account/runtime or `/account/runtime` identity logic for conversational flows.
+- Route identity keeps `subject_id` sparse while `object_kind` carries most `cross-surface` identity work; new route consumers must prefer owner-defined object kinds over ad hoc route fields.
+- Cross-cutting owner gaps remain invariant obligations until resolved by their owner docs: `/session` scope, safe-point cleanup ordering, OpenCode server/session limits, project/session browser ownership, attention-center ownership, `runtime-recovery` command family coverage, and plugin `/skill/formatter` runtime safety must not be republished as local consumer behavior.
+- PM-managed worktree visibility is part of runtime identity: managed Unraid template repos, `live-run` artifact directories, and other PM-owned git or `/file` roots must appear through Source Control / Orchestrator worktree visibility contracts rather than hidden side roots.
+- Reconciliation order is owner-first: owner docs and `rewrite-root` routing are repaired before primary stale consumers, and mirror `/checklist` followers only update after their owners settle.
+- Usage and evidence families must move away from `tier-first` cross-surface correlation: Usage/Ledger navigation keeps usage-event identity primary, while runtime and graph inspectors keep node/attempt identity primary.
+- Runtime `/governance` verification must be visible to numbered gates and `script-enforcement` tables; mandatory checks cannot remain real only in addendum prose while invisible to gate registries.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md

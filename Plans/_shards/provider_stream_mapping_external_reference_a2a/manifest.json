@@ -1,0 +1,185 @@
+{
+  "generated_at_utc": "2026-07-02T16:50:45Z",
+  "index_path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/00-index.md",
+  "index_sha256": "3681fc3e61cd6e6585568d4a4104f14b97acbe653d891369be6c5dafafa40acb",
+  "manifest_path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/001-preamble.md",
+      "sha256": "d57374cdb1ccb4caf63a2dd80fa7c0ed7aa659fb6bcbbc2bab4080cb73acb849",
+      "shard_id": "001",
+      "source_line_end": 1,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/002-canonical-owner-section-requirements.md",
+      "sha256": "28094ecea4f81b8944a4a8ea112cf60d07688d9be8b29e2838ba15a343be9984",
+      "shard_id": "002",
+      "source_line_end": 9,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Purpose",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/003-1.-purpose.md",
+      "sha256": "1702ec49feb4464967ddf358068c7207989792d3887c7f216706f1a09ec22cae",
+      "shard_id": "003",
+      "source_line_end": 25,
+      "source_line_start": 12,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Non-goals",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/004-2.-non-goals.md",
+      "sha256": "5de50cbc37e7769bbad528087c52fe0d8c5b45aea793461532ed0597b11e4ed6",
+      "shard_id": "004",
+      "source_line_end": 34,
+      "source_line_start": 26,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "3. References (DRY)",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/005-3.-references-dry.md",
+      "sha256": "f3d2bd1fd05c3d79063b41476c1d42f7c466ada9de42fdd76db47897696b0fef",
+      "shard_id": "005",
+      "source_line_end": 49,
+      "source_line_start": 35,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. V0-safe primitives used",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/006-4.-v0-safe-primitives-used.md",
+      "sha256": "85cb5e5af2796d9d9e6b9694e29f05408ff0af3cf3061aa3aa0f02d722d7a049",
+      "shard_id": "006",
+      "source_line_end": 71,
+      "source_line_start": 51,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Canonical diagnostic instrumentation (reserved categories)",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/007-5.-canonical-diagnostic-instrumentation-reserved-categories.md",
+      "sha256": "f3435505620b323edb85fa2d610b43f7a3bfd9c6aabc6fdc3704957b8ca25d3b",
+      "shard_id": "007",
+      "source_line_end": 110,
+      "source_line_start": 73,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Mapping table 1 \u2014 Upstream native events \u2192 V0",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/008-6.-mapping-table-1-upstream-native-events-v0.md",
+      "sha256": "2237052a2e105f9654b60471f3c961dba501b9c0ea44daece98bc2520a5fda6d",
+      "shard_id": "008",
+      "source_line_end": 142,
+      "source_line_start": 112,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "7. Mapping table 2 \u2014 Upstream A2A bridge concepts \u2192 V0",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/009-7.-mapping-table-2-upstream-a2a-bridge-concepts-v0.md",
+      "sha256": "bb85d2bbcca2abbf619b26e21a668ed5ccbb95bcf1b6f3e7a45b3e0f0b2cbd99",
+      "shard_id": "009",
+      "source_line_end": 174,
+      "source_line_start": 144,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "8. Deterministic rules (normative)",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/010-8.-deterministic-rules-normative.md",
+      "sha256": "81e8686059bbc1c73885e29a7e048768e351814b81d88d5b95ab4cbca6b56cbb",
+      "shard_id": "010",
+      "source_line_end": 257,
+      "source_line_start": 176,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "9. Overseer subjective audit protocol instrumentation (normative)",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/011-9.-overseer-subjective-audit-protocol-instrumentation-normative.md",
+      "sha256": "cc8960f313f510950c9cb9fc979eb22b5c43aba3e59ed5ec94de34c58f755bf4",
+      "shard_id": "011",
+      "source_line_end": 291,
+      "source_line_start": 259,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "10. Portable patterns (A\u2013E)",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/012-10.-portable-patterns-a-e.md",
+      "sha256": "7a602fddf1809436e9e53ebbfe7cb2a545062b6ba3c5b35b3d6e3fd04513093f",
+      "shard_id": "012",
+      "source_line_end": 317,
+      "source_line_start": 293,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Retry/Remediation Event Continuity Addendum (2026-03-08)",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/013-retry-remediation-event-continuity-addendum-2026-03-08.md",
+      "sha256": "6416b50bb1c6e3640bf4c03fea940eec038eaadd57d78e5d4fe3d9e355159ae3",
+      "shard_id": "013",
+      "source_line_end": 331,
+      "source_line_start": 319,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Stream Wake and Attempt Continuity Consolidation Addendum (2026-03-09)",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/014-stream-wake-and-attempt-continuity-consolidation-addendum-2026-0.md",
+      "sha256": "afff249ed3db294d12a5371d0ddac72511fdc5ba67a9199d65e36569d6f12464",
+      "shard_id": "014",
+      "source_line_end": 347,
+      "source_line_start": 332,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Runtime Attempt Identity vs Provider Continuity (2026-03-09)",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/015-runtime-attempt-identity-vs-provider-continuity-2026-03-09.md",
+      "sha256": "4e41c46c42697ff3088d17b7a87bea169245efcd43e44c9852b0437e2410740f",
+      "shard_id": "015",
+      "source_line_end": 357,
+      "source_line_start": 349,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical data-shape reconciliation",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/016-canonical-data-shape-reconciliation.md",
+      "sha256": "8d27fc8ee3c2d3ba43a34a2175918366460e80c0cd9af5f3c4ebf17fb45f1cfb",
+      "shard_id": "016",
+      "source_line_end": 379,
+      "source_line_start": 358,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/017-owner-consumer-map.md",
+      "sha256": "2cb00da84ea7441a62753836fcabd6f28236898d668d8703cdd32675580c43c8",
+      "shard_id": "017",
+      "source_line_end": 385,
+      "source_line_start": 381,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/018-planunits.md",
+      "sha256": "f8b150eb39d919728801966477a77cbbc29ee5a5498427f615cee32d58a027f5",
+      "shard_id": "018",
+      "source_line_end": 2151,
+      "source_line_start": 387,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/019-migration-coverage.md",
+      "sha256": "e1c206853e6a100136fa243f7f210d14c4634f2d796e4e89a7ef576d3bbbf450",
+      "shard_id": "019",
+      "source_line_end": 2163,
+      "source_line_start": 2153,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 2163,
+    "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "sha256": "dd39be33bb75ade2f1a0a6c352ec2b9a02cace2077e5d5e5e09f2e189553c0b4"
+  }
+}

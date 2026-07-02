@@ -84,7 +84,7 @@ Puppet Master uses the DRY method in its own codebase (AGENTS.md). **Target proj
 - **Artifacts:** Build outputs (e.g. `target/` if not already ignored), test output dirs, installers from testing.
 - **Temp files:** Editor backups, debug logs, or platform-specific temp dirs created in the workspace.
 
-REQUIREMENTS.md specifies "Clean working directory state (git checkout to last commit)" and a runner contract with `prepare_working_directory` and `cleanup_after_execution`, but these are **not implemented** in `puppet-master-rs`. A plain `git checkout` only resets **tracked** files; **untracked** files remain. Without a cleanup policy and implementation, agent-left-behind content accumulates.
+The removed Rust/Iced-era `puppet-master-rs` runner discussion specified "Clean working directory state (git checkout to last commit)" plus `prepare_working_directory` and `cleanup_after_execution`; this is historical source-lineage for the rebuild, not current implementation truth. A plain `git checkout` only resets **tracked** files; **untracked** files remain. Without a cleanup policy and implementation, agent-left-behind content accumulates.
 
 ---
 
@@ -415,7 +415,7 @@ Cleanup UX is required: it gives users control over workspace cleanup and eviden
 - **cleanup.ignored:** When cleaning before run, include ignored files, e.g. `git clean -fdx` (default: false).
 - **cleanup.clear_agent_output:** Clear `.puppet-master/agent-output/` in prepare (default: true if Section 5 implemented).
 - **cleanup.remove_build_artifacts:** In cleanup_after_execution, remove known build dirs (e.g. `target/`) only; default false.
-- **evidence.retention_days / evidence.retain_last_runs:** See Section 6 (default: retain all if Section 6 not implemented).
+- **evidence.retention_days / evidence.retain_last_runs:** See Section 6; until a retention policy is active, default to retaining all evidence.
 
 **Config schema (concrete, DRY):** Add a single struct used at run time; do not duplicate cleanup fields in multiple shapes. Recommended: extend the config shape built from GuiConfig at run start (Option B, Worktree plan §5) with a nested `cleanup` and `evidence` block. Example (conceptual):
 
@@ -1246,7 +1246,7 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant
 - Plans/orchestrator-subagent-integration.md (subagent execution, start/end verification, parallel worktrees)
 - Plans/interview-subagent-integration.md (research engine, subagent invocation)
 - [OpenCode Agent Skills](https://opencode.ai/docs/skills/) (SKILL.md format, discovery paths, frontmatter, permissions) -- reference for §7.8 and §7.10.
-- Previous discussion: agent-left-behind docs, tests, artifacts, old builds; runner contract not implemented in Rust.
+- Previous discussion: agent-left-behind docs, tests, artifacts, old builds; historical Rust/Iced runner contract source-lineage.
 
 ---
 
@@ -1256,7 +1256,7 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant
 - **Date:** 2026-02-19  
 - **Summary:** Tray minimize-to-tray fix and start-on-boot setting (Linux/macOS/Windows).  
 - **Files changed:** app.rs, views/settings.rs, autostart.rs, lib.rs, Cargo.toml, nfpm.yaml, installer/linux/scripts/postinstall  
-- **Commands run:** cargo check, cargo test (in puppet-master-rs).
+- **Commands run:** historical source-lineage referenced cargo check and cargo test in the removed Rust/Iced app.
  persists at cleanup operations; remediation loop runs when cleanup operations fail with recoverable errors.
 
 **Cross-reference:** See orchestrator plan "Lifecycle and Quality Features" for full implementation details. See orchestrator plan "Puppet Master Crews" for how cleanup crews can coordinate workspace cleanup operations.
@@ -1270,7 +1270,7 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant
 - Plans/orchestrator-subagent-integration.md (subagent execution, start/end verification, parallel worktrees)
 - Plans/interview-subagent-integration.md (research engine, subagent invocation)
 - [OpenCode Agent Skills](https://opencode.ai/docs/skills/) (SKILL.md format, discovery paths, frontmatter, permissions) -- reference for §7.8 and §7.10.
-- Previous discussion: agent-left-behind docs, tests, artifacts, old builds; runner contract not implemented in Rust.
+- Previous discussion: agent-left-behind docs, tests, artifacts, old builds; historical Rust/Iced runner contract source-lineage.
 
 ---
 
@@ -1280,7 +1280,7 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant
 - **Date:** 2026-02-19  
 - **Summary:** Tray minimize-to-tray fix and start-on-boot setting (Linux/macOS/Windows).  
 - **Files changed:** app.rs, views/settings.rs, autostart.rs, lib.rs, Cargo.toml, nfpm.yaml, installer/linux/scripts/postinstall  
-- **Commands run:** cargo check, cargo test (in puppet-master-rs).
+- **Commands run:** historical source-lineage referenced cargo check and cargo test in the removed Rust/Iced app.
 
 ## Runner Preparation/Cleanup and Safe-Point Canonical Alignment (2026-03-08)
 

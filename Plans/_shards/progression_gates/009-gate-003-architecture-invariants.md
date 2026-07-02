@@ -1,0 +1,28 @@
+# Shard 009: GATE-003 -- Architecture invariants
+
+Source: `Plans/Progression_Gates.md`
+
+Source lines: L245-L262
+
+Source SHA256: `68b1b2cca109eacddb3d7b4246d67ecb83cd862cd9430302f03e66c5b15c8405`
+
+---
+
+## GATE-003 -- Architecture invariants
+**Pass condition:** All referenced invariants hold for the change under test.
+
+Minimum checks:
+- `INV-002` secrets rule is not violated (no secrets in logs/state/events/evidence).
+- `INV-010` naming rule is not violated in user-visible docs/strings.
+
+Required evidence:
+- Evidence bundle conforming to `Plans/evidence.schema.json`.
+- A grep/audit summary showing no token-like strings persisted (implementation-specific).
+
+**Script enforcement status:** Not currently enforced by `run-gates`; this gate is validated by dedicated invariant checks in implementation-specific verifiers.
+
+ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json
+
+---
+
+<a id="GATE-004"></a>

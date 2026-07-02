@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "classifications": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "allowed_contexts": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "canonical_route": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "live_target",
+              "generated_process_artifact",
+              "historical_source_lineage_ref",
+              "schema_to_materialize",
+              "typo",
+              "allowed_exception"
+            ],
+            "type": "string"
+          },
+          "evidence_refs": {
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "materialization_pattern": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "raw_ref": {
+            "type": "string"
+          },
+          "replacement_ref": {
+            "type": "string"
+          },
+          "validator_policy": {
+            "enum": [
+              "fail",
+              "warn",
+              "allow",
+              "allow_until_materialized"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "raw_ref",
+          "classification",
+          "canonical_route",
+          "evidence_refs",
+          "allowed_contexts",
+          "validator_policy"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "generated_at_utc": {
+      "type": "string"
+    },
+    "schema_id": {
+      "const": "pm.path_reference_registry.v1",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_id",
+    "generated_at_utc",
+    "classifications"
+  ],
+  "type": "object"
+}

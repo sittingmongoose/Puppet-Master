@@ -1,0 +1,24 @@
+{
+  "audit_id": "audit-20260617-006-semantic-closure-registry-fidelity",
+  "effective_status": "PASS_WITH_WARNINGS",
+  "effective_terminal_report": "audit_report.json",
+  "ledger_id": "pldg-20260616-002-orchestrator-goal-runtime-flow",
+  "notes": [
+    "No open actionable repair is represented by this audit effective status."
+  ],
+  "original_repair_required_count": 13,
+  "repair_required_count": 0,
+  "repair_required_count_source": "closure_validation",
+  "schema_id": "pm.audit_effective_status.v1",
+  "status_sources": {
+    "audit_report_repair_required_count": null,
+    "audit_report_status": "PASS_WITH_WARNINGS",
+    "final_report_repair_required_count": null,
+    "final_report_status": "PASS_WITH_WARNINGS",
+    "post_repair_repair_required_count": null,
+    "post_repair_status": null,
+    "terminal_state_status": null
+  },
+  "superseded_historical_reports": [],
+  "terminal_repair_state": "no_repair_required"
+}

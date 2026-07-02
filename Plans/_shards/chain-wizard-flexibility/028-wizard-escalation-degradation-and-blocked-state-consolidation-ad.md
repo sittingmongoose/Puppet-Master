@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2203-L2236
+Source lines: L2203-L2239
 
-Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe`
+Source SHA256: `fd1623b031dd532cc48b9c2453424830fcbf423cbaa175ffadd8d37b0daeeff3`
 
 ---
 
@@ -12,9 +12,11 @@ Source SHA256: `0bb989004ab59492ebece74db2d19344b5a672d52c303484828fc038cac5fcbe
 
 This section defines canonical Wizard Blocked Lifecycle.
 
+<a id="cwf-escalation-canonical-wizard-status"></a>
 ### Canonical `wizard_status`
 See canonical `wizard_status` definition in §2.1.
 
+<a id="cwf-escalation-canonical-blocked-state"></a>
 ### Canonical blocked state
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 A wizard blocked record MUST persist:
@@ -34,6 +36,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
+<a id="cwf-escalation-blocked-clear-rule"></a>
 ### Blocked clear rule
 A wizard leaves `blocked` only when:
 - materially new user input creates a new issue set

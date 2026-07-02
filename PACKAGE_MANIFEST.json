@@ -10,6 +10,18 @@
     "open_questions": 0
   },
   "created_at_utc": "2026-06-18T18:30:00Z",
+  "current_authority": {
+    "current_package_generation_required_for_distribution": true,
+    "disposition": "historical_dropin_manifest_stale_retired_after_governance_seal",
+    "excluded_future_zip_metadata": [
+      ".DS_Store",
+      "__MACOSX",
+      ".git"
+    ],
+    "note": "This manifest records the 2026-06-18 PRD Planning Wizard drop-in package only. It is not current distribution proof after the ledger compiled to Plans and governance was sealed.",
+    "zip_artifact_present": false,
+    "zip_metadata_status": "not_applicable_no_archive_in_repo"
+  },
   "files": [
     {
       "bytes": 2251,

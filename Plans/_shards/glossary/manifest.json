@@ -1,0 +1,131 @@
+{
+  "generated_at_utc": "2026-07-02T16:50:45Z",
+  "index_path": "Plans/_shards/glossary/00-index.md",
+  "index_sha256": "2ee500c340778a076224b04c9b4185c325fa5bd2467245b4e46f8a002fdab425",
+  "manifest_path": "Plans/_shards/glossary/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Preamble",
+      "path": "Plans/_shards/glossary/001-preamble.md",
+      "sha256": "83fa9c4fb9fa8da5aa9fa83401fbde104dc4a8bdb91a6bd610c66698c0123470",
+      "shard_id": "001",
+      "source_line_end": 1,
+      "source_line_start": 1,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Canonical owner-section requirements",
+      "path": "Plans/_shards/glossary/002-canonical-owner-section-requirements.md",
+      "sha256": "88fa6995921bf2237ed74cf9fc8a4b8ee6f51c67e74e7de344fa446cf509690d",
+      "shard_id": "002",
+      "source_line_end": 23,
+      "source_line_start": 4,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "0. Scope",
+      "path": "Plans/_shards/glossary/003-0.-scope.md",
+      "sha256": "b9d2a86763180290cc6b0d1e83f109c0c30bcbd9372e3847d402e59988a7cfed",
+      "shard_id": "003",
+      "source_line_end": 31,
+      "source_line_start": 25,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "1. Canonical platform name",
+      "path": "Plans/_shards/glossary/004-1.-canonical-platform-name.md",
+      "sha256": "375d180ecc07675445c7c50d4b0b9997b54fccd2fecdce673061d9643ff64a1b",
+      "shard_id": "004",
+      "source_line_end": 39,
+      "source_line_start": 33,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "2. Core terms",
+      "path": "Plans/_shards/glossary/005-2.-core-terms.md",
+      "sha256": "45f89ac3dfdb56f16e0a0332d895af43dc472e0b6ed13badbf99ff485f262f3e",
+      "shard_id": "005",
+      "source_line_end": 224,
+      "source_line_start": 41,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "4. Evidence",
+      "path": "Plans/_shards/glossary/006-4.-evidence.md",
+      "sha256": "be5eee03c1399409bbf937f771f3cec878b522c182b370efcc8c6e732a6d63dc",
+      "shard_id": "006",
+      "source_line_end": 234,
+      "source_line_start": 226,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "5. Secret handling",
+      "path": "Plans/_shards/glossary/007-5.-secret-handling.md",
+      "sha256": "d926ca0ec445fd5e1e4e2972cc8eb19a56960c375adfcbe4f920c7ec67cae8fa",
+      "shard_id": "007",
+      "source_line_end": 244,
+      "source_line_start": 236,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "6. Primitives",
+      "path": "Plans/_shards/glossary/008-6.-primitives.md",
+      "sha256": "996286463e1c405dd74991b90bfb2dbfaa0da249d52a327976bc0105080ce46b",
+      "shard_id": "008",
+      "source_line_end": 287,
+      "source_line_start": 246,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "References",
+      "path": "Plans/_shards/glossary/009-references.md",
+      "sha256": "558efb9c8b5e62e4ef9cb3aac7556e42be02d98710d0c67cf88a6e1939e916bf",
+      "shard_id": "009",
+      "source_line_end": 292,
+      "source_line_start": 289,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Owner / Consumer Map",
+      "path": "Plans/_shards/glossary/010-owner-consumer-map.md",
+      "sha256": "014bc016b17b42e0150cc57aff946368df2768c6dba543dbc56636c8c3c96fb9",
+      "shard_id": "010",
+      "source_line_end": 298,
+      "source_line_start": 294,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "PlanUnits",
+      "path": "Plans/_shards/glossary/011-planunits.md",
+      "sha256": "ea5ed5f24d018ee920e77d44864a85fa99f806945ef6c5205fbb231e21d5469e",
+      "shard_id": "011",
+      "source_line_end": 1612,
+      "source_line_start": 300,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/glossary/012-migration-coverage.md",
+      "sha256": "19d338f4e560d28ce474c00a99d1d16eb4b9b47c32c0c0be47786384910300df",
+      "shard_id": "012",
+      "source_line_end": 1624,
+      "source_line_start": 1614,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
+      "path": "Plans/_shards/glossary/013-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "sha256": "1d8502f143af83b50207dd303f0d8aea333cdc8e605698785eb9a0537f1bf221",
+      "shard_id": "013",
+      "source_line_end": 2010,
+      "source_line_start": 1627,
+      "split_rule": "heading-##"
+    }
+  ],
+  "source": {
+    "line_count": 2010,
+    "path": "Plans/Glossary.md",
+    "sha256": "3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5"
+  }
+}

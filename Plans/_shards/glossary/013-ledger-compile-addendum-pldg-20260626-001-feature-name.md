@@ -1,0 +1,394 @@
+# Shard 013: Ledger Compile Addendum - pldg-20260626-001-feature-name
+
+Source: `Plans/Glossary.md`
+
+Source lines: L1627-L2010
+
+Source SHA256: `3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5`
+
+---
+
+## Ledger Compile Addendum - pldg-20260626-001-feature-name
+
+This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+
+### G-026 - Teach Help Glossary Content Pack
+
+```yaml
+plan_unit_id: G-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Glossary.md
+canonical_text: Teach-specific Help/Glossary content includes canonical entries for Teach, Teacher, taught memory,
+  memory scope, user-locked record, Sources used / PM context, guided GUI step, safe guided action, mutation confirmation,
+  Teach model default/setting, Teacher handoff, missing PM coverage, Help icon, and summon phrases. Teach uses inline,
+  context, and canonical help depths; Teacher resolves Help/Glossary content through current surface context, canonical
+  owner entries, related-concept clusters, source confidence/currentness, and missing-coverage disclosure. Entries
+  preserve owner refs, approved microcopy examples, context-help surface coverage, and auditable coverage matrix.
+gui_related: true
+gui_classification_reason: Help and Glossary entries are user-visible help content and context-help surfaces.
+depends_on:
+- PP-056
+unblocks:
+- ATS-014
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: teach_help_content_gap
+reasoning_tier: high
+context_scope: teach_help_glossary
+implementation_surfaces:
+- Plans/Glossary.md
+- future Help surfaces
+- future context help
+node_compile_hint:
+  mode: teach_help_glossary_content
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0111
+- pldg-20260626-001-feature-name:atom-0112
+- pldg-20260626-001-feature-name:atom-0113
+- pldg-20260626-001-feature-name:atom-0114
+- pldg-20260626-001-feature-name:atom-0115
+- pldg-20260626-001-feature-name:atom-0116
+- pldg-20260626-001-feature-name:atom-0117
+- pldg-20260626-001-feature-name:atom-0118
+- pldg-20260626-001-feature-name:atom-0119
+- pldg-20260626-001-feature-name:atom-0120
+- pldg-20260626-001-feature-name:atom-0121
+- pldg-20260626-001-feature-name:atom-0122
+- pldg-20260626-001-feature-name:atom-0123
+- pldg-20260626-001-feature-name:atom-0124
+- pldg-20260626-001-feature-name:atom-0125
+- pldg-20260626-001-feature-name:atom-0126
+- pldg-20260626-001-feature-name:atom-0127
+- pldg-20260626-001-feature-name:atom-0128
+- pldg-20260626-001-feature-name:atom-0129
+- pldg-20260626-001-feature-name:atom-0130
+- pldg-20260626-001-feature-name:atom-0131
+- pldg-20260626-001-feature-name:atom-0132
+- pldg-20260626-001-feature-name:atom-0133
+- chat:teach-help-glossary-rest-request
+- Plans/Glossary.md
+- Plans/FinalGUISpec.md
+- Plans/Glossary.md#Help-entry-template-and-related-concept-clusters
+- Plans/assistant-chat-design.md#6-Teach
+- Plans/assistant-chat-design.md
+- chat:teach-gap-fill-correction
+- q-0027
+- dec-0022
+- q-0028
+- chat:teach-bundle-accepted-pmconcept-reference
+source_atom_ids:
+- atom-0111
+- atom-0112
+- atom-0113
+- atom-0114
+- atom-0115
+- atom-0116
+- atom-0117
+- atom-0118
+- atom-0119
+- atom-0120
+- atom-0121
+- atom-0122
+- atom-0123
+- atom-0124
+- atom-0125
+- atom-0126
+- atom-0127
+- atom-0128
+- atom-0129
+- atom-0130
+- atom-0131
+- atom-0132
+- atom-0133
+decision_refs:
+- dec-0022
+- dec-0023
+- dec-0024
+correction_refs:
+- corr-0003
+preserved_exact_tokens:
+- Help/Glossary
+- Inline Help
+- Context Help
+- Canonical Help Entry
+- Three-depth help contract
+- help-entry
+- Glossary.md
+- Title
+- Canonical definition
+- Related concepts
+- Teach
+- Teacher
+- taught memory
+- memory scope
+- user-locked
+- Sources used
+- guided GUI step
+- mutation confirmation
+- missing PM coverage
+- canonical_name
+- short_definition
+- when_this_appears
+- affected_surface_or_context
+- teacher_explanation
+- steps_teacher_can_show
+- safe_actions
+- mutation_requires_confirmation
+- related_concepts
+- source_owner_refs
+- inline help
+- context help
+- canonical help entry
+- tooltip
+- popover
+- card
+- full durable help page
+- current surface/control route
+- Teach-specific help entry
+- Glossary canonical definition
+- owner Plans/PlanUnits
+- command/settings/capability records
+- scoped taught memory
+- missing-help coverage callout
+- auditable
+- every Teach entrypoint
+- guided action family
+- model setting
+- source disclosure state
+- missing-coverage state
+- no-help-needed disposition
+- authored from canonical owner sources
+- not hand-copied into UI strings
+- owner docs
+- PlanUnits
+- GUI labels/tooltips
+- canonical terms
+- related-concept links
+- acceptance tests
+- Teach help entries exist
+- related-concept links resolve
+- inline/context/full help
+- Teacher cites
+- missing-help callouts
+- source-owner refs
+- does not rename canonical terms
+- I accept it
+- i dont think we finished speccing it out right?
+- You just recorded the gap.
+- We need to fill it right?
+- recorded the gap
+- fill it
+- Assistant Chat
+- /teach
+- help icon
+- not ordinary chat
+- not silent automation
+- not automatic memory persistence
+- Persona
+- low-end/fast default model
+- effective model
+- PM sources
+- current context
+- highlight
+- open
+- route UI surfaces
+- durable
+- user-approved
+- current thread
+- current project
+- feature area
+- scope selector
+- edit/delete
+- one-off Teacher instruction
+- user-locked record
+- must not silently overwrite
+- rejects an update
+- resolves a conflict
+- pins a correction
+- unlock/edit flow
+- conflict display
+- PM context
+- current surface/control
+- current thread/project
+- help/glossary entry
+- Plans/PlanUnits
+- provider/model/account state
+- runtime artifact
+- stale
+- missing
+- disabled
+- permission-required
+- focus or open
+- anchored caption
+- Back
+- Next
+- Stop
+- Let me try
+- Do it
+- do not cover the target
+- return to the chat transcript
+- safe guided action
+- opening a route
+- focusing a panel
+- scrolling
+- highlighting
+- previewing
+- explicit confirmation
+- action name
+- affected object
+- risk
+- rollback/undo
+- Cancel
+- low-end model
+- low-end/fast model
+- Auto/fast default
+- selected override
+- requested model
+- provider availability
+- fallback reason
+- Reset to Auto
+- Teacher persona details
+- Teacher handoff
+- non-teaching assistance
+- implementation work
+- high-capability reasoning
+- external search
+- another persona/tool path
+- required help entry
+- owner source
+- capability record
+- route/control record
+- permission
+- teach me
+- show me how
+- help me understand this
+- new Assistant Chat thread
+- Teacher mode
+- current surface/control context
+- Teacher badge
+- context chip
+- model chip
+- continue with Teacher
+- Assistant Chat thread header
+- Teacher activity cards
+- PM context panel
+- guided overlay captions
+- Teach memory capture prompts
+- Settings > model row
+- command palette `/teach` result
+- Help/Glossary pages
+- current-context example
+- 'Teach: learn PM with sourced, step-by-step help'
+- Teacher is using PM context from this screen
+- Saved only if you approve
+- 'Missing PM coverage: Teacher cannot verify this yet'
+- 'Safe guided action: highlight or open only'
+- Mutation requires confirmation
+- owner sources
+- Assistant Chat design
+- Personas
+- Models
+- Final GUI Spec
+- UI Command Catalog
+- Permissions
+- Prompt Pipeline
+- Tools
+- Runtime Artifacts
+- Glossary
+- coverage matrix
+- one row per Teach entry
+- canonical help page
+- Teacher citation
+- owner source refs
+- related concepts
+- GUI surface(s)
+- missing-state behavior
+- no-help-needed
+negative_constraints:
+- Do not assume the generic Help/Glossary architecture already contains Teach-specific content.
+- Do not let Teacher rely on glossary architecture without checking whether a concrete help entry exists.
+- Do not leave Teach-specific help entries implicit in Persona prose only.
+- Do not make every Teacher answer invent local definitions instead of resolving canonical help entries.
+- Do not use a two-column term table as the durable Teach help-entry format.
+- Do not store Teach help examples without source owner refs or related-concept links.
+- Do not make tooltip-only help sufficient for Teach concepts that require examples or related concepts.
+- Do not let Teacher simplify wording by renaming runtime truth or canonical terms.
+- Do not let Teacher silently skip missing help entries.
+- Do not search/read external or cross-project sources unless the user explicitly approves that route.
+- Do not use taught memory outside its scope.
+- Do not let Teach ship with untracked missing help entries.
+- Do not treat generic Glossary architecture as coverage for concrete Teach user flows.
+- Do not fork Teach help copy into disconnected UI strings.
+- Do not let short-copy variants drift from canonical terms or related concepts.
+- Do not mark Help/Glossary support complete without concrete Teach help-entry coverage tests.
+- Do not allow Teacher to cite missing or broken help-entry links as valid sources.
+- Do not treat q-0027 acceptance as complete filled Teach help content.
+- Do not call Teach Help/Glossary implementation-ready without concrete entries, surfaces, examples, and tests.
+- Do not describe Teach as a standalone automation runner.
+- Do not imply every Teacher interaction becomes durable taught memory.
+- Do not hide the distinction between learning/help and mutating PM state.
+- Do not present Teacher as a separate feature detached from Teach.
+- Do not let Teacher claim authority without visible source/context disclosure.
+- Do not allow Teacher to perform unsafe mutations as teaching gestures.
+- Do not persist Teach conversation content as memory without confirmation.
+- Do not use taught memory outside its approved scope.
+- Do not bury edit/delete controls away from the memory explanation.
+- Do not let later Teach runs overwrite locked corrections without explicit user action.
+- Do not cite a locked record without showing its scope/source when relevant.
+- Do not let Teacher present PM facts as unsourced hidden prompt lore.
+- Do not collapse stale, missing, disabled, and permission-required states into generic uncertainty.
+- Do not cite unavailable PlanUnits before a future compile creates them.
+- Do not use raw cursor/click automation as the teaching UI.
+- Do not let the caption obscure the control being taught.
+- Do not make the overlay the only accessible explanation path.
+- Do not let `Do it` execute mutations without a confirmation step.
+- Do not make confirmation copy vague about the affected object.
+- Do not default a destructive confirmation to proceed.
+- Do not hide fallback from requested model to effective model.
+- Do not make Teach model configuration raw-file only.
+- Do not reuse a broad automation model setting when a scoped Teach/Teacher setting is intended.
+- Do not let Teacher guess through missing PM coverage.
+- Do not silently change persona/model/tool path without disclosure.
+- Do not treat handoff as failure when it is the correct safer route.
+- Do not silently switch an existing assistant conversation into Teacher mode.
+- Do not launch Teacher without preserving current surface/control context when available.
+- Do not require users to know slash commands before discovering Teach.
+- Do not fork labels between surfaces.
+- Do not make context help available only from the full Help page.
+- Do not include generic examples when current surface context is available.
+- Do not let microcopy examples become disconnected product truth.
+- Do not use cheerful copy to soften missing coverage, unsafe mutation, or persistence warnings.
+- Do not rename canonical terms in short-copy variants.
+- Do not author Teach help as disconnected prose without owner refs.
+- Do not cite future PlanUnits before compile creates them.
+- Do not duplicate conflicting definitions across owners.
+- Do not rely on a freeform list with no coverage matrix.
+- Do not mark MVP complete with missing required Teach help rows.
+- Do not accept no-help-needed dispositions without owner evidence.
+owner_hints:
+- Plans/Glossary.md
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Personas.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/Prompt_Pipeline.md
+- Plans/Tools.md
+- Plans/UI_Command_Catalog.md
+- Plans/Automated_Testing_System.md
+- Plans/Plan_Document_System.md
+- Plans/Models_System.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Permissions_System.md
+- Plans/Commands_System.md
+```

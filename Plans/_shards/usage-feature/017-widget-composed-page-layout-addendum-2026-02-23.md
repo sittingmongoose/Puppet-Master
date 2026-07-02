@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L759-L864
 
-Source SHA256: `330ce189566ceb8360b2b4bea9adbb2cb373865cce247a503db8d347a50128ac`
+Source SHA256: `7d48dc66929cf62601b483df794d051d7356247dfeb461d51a18d5a41651d3e4`
 
 ---
 
@@ -33,7 +33,7 @@ ContractRef: ContractName:Plans/Widget_System.md#3, ContractName:Plans/Widget_Sy
 
 The Usage page ships with this default layout. No page starts empty. Users can customize after first load.
 
-### Gap 6: Analytics not implemented
+### Analytics signal contract
 
 Usage analytics consumers interpret grep/Search acceleration through `tool.invoked.index_used`: `true` counts queries served by sparse-n-gram candidate narrowing, while `false` counts raw ripgrep fallback or another unindexed path.
 

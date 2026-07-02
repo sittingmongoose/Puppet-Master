@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L488-L549
+Source lines: L489-L566
 
-Source SHA256: `5bb5b28fe0ce7b4eb8928c81e90e910be28a7fdf0adde6ccfc779e572b8970bd`
+Source SHA256: `04008a1d57a5ecc7805569edf5eb8b5d6d362abcb643dbc8d8f929fea9636498`
 
 ---
 
@@ -59,6 +59,22 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `Provider_OpenCode.md` | [`Plans/_shards/provider_opencode/00-index.md`](Plans/_shards/provider_opencode/00-index.md) |
 | `human-in-the-loop.md` | [`Plans/_shards/human-in-the-loop/00-index.md`](Plans/_shards/human-in-the-loop/00-index.md) |
 | `00-plans-index.md` | [`Plans/_shards/00-plans-index/00-index.md`](Plans/_shards/00-plans-index/00-index.md) |
+| `Architecture_Invariants.md` | [`Plans/_shards/architecture_invariants/00-index.md`](Plans/_shards/architecture_invariants/00-index.md) |
+| `BinaryLocator_Spec.md` | [`Plans/_shards/binarylocator_spec/00-index.md`](Plans/_shards/binarylocator_spec/00-index.md) |
+| `Containers_Registry_and_Unraid.md` | [`Plans/_shards/containers_registry_and_unraid/00-index.md`](Plans/_shards/containers_registry_and_unraid/00-index.md) |
+| `DRY_Rules.md` | [`Plans/_shards/dry_rules/00-index.md`](Plans/_shards/dry_rules/00-index.md) |
+| `Decision_Log.md` | [`Plans/_shards/decision_log/00-index.md`](Plans/_shards/decision_log/00-index.md) |
+| `Decision_Policy.md` | [`Plans/_shards/decision_policy/00-index.md`](Plans/_shards/decision_policy/00-index.md) |
+| `Document_Packaging_Policy.md` | [`Plans/_shards/document_packaging_policy/00-index.md`](Plans/_shards/document_packaging_policy/00-index.md) |
+| `Formatters_System.md` | [`Plans/_shards/formatters_system/00-index.md`](Plans/_shards/formatters_system/00-index.md) |
+| `GitHub_API_Auth_and_Flows.md` | [`Plans/_shards/github_api_auth_and_flows/00-index.md`](Plans/_shards/github_api_auth_and_flows/00-index.md) |
+| `Glossary.md` | [`Plans/_shards/glossary/00-index.md`](Plans/_shards/glossary/00-index.md) |
+| `Media_Generation_and_Capabilities.md` | [`Plans/_shards/media_generation_and_capabilities/00-index.md`](Plans/_shards/media_generation_and_capabilities/00-index.md) |
+| `OpenCode_Coverage_Matrix.md` | [`Plans/_shards/opencode_coverage_matrix/00-index.md`](Plans/_shards/opencode_coverage_matrix/00-index.md) |
+| `Plugins_System.md` | [`Plans/_shards/plugins_system/00-index.md`](Plans/_shards/plugins_system/00-index.md) |
+| `Progression_Gates.md` | [`Plans/_shards/progression_gates/00-index.md`](Plans/_shards/progression_gates/00-index.md) |
+| `Provider_Stream_Mapping_External_Reference_A2A.md` | [`Plans/_shards/provider_stream_mapping_external_reference_a2a/00-index.md`](Plans/_shards/provider_stream_mapping_external_reference_a2a/00-index.md) |
+| `UI_Wiring_Rules.md` | [`Plans/_shards/ui_wiring_rules/00-index.md`](Plans/_shards/ui_wiring_rules/00-index.md) |
 | `Planning_Ledger_System.md` | [`Plans/_shards/planning_ledger_system/00-index.md`](Plans/_shards/planning_ledger_system/00-index.md) |
 | `Plan_Document_System.md` | [`Plans/_shards/plan_document_system/00-index.md`](Plans/_shards/plan_document_system/00-index.md) |
 | `Plan_To_Node_Compilation.md` | [`Plans/_shards/plan_to_node_compilation/00-index.md`](Plans/_shards/plan_to_node_compilation/00-index.md) |

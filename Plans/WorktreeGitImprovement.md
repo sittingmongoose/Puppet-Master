@@ -344,7 +344,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec
 ### 3.7 naming_pattern usage
 
 - **Gap:** `BranchingConfig` has `naming_pattern` (and it's in the GUI); orchestrator and branch logic never use it.
-- **Fix:** Either: (1) Wire `naming_pattern` into branch name generation (document format and placeholders, e.g. `{node}`, `{id}`), or (2) Remove or hide the field until implemented and document that branch names follow the strategy (ph-/tk-/st-/release/...) only.
+- **Fix:** Either: (1) Wire `naming_pattern` into branch name generation (document format and placeholders, e.g. `{node}`, `{id}`), or (2) keep the field hidden/inert until branch-generation support lands and document that branch names follow the strategy (ph-/tk-/st-/release/...) only.
 
 ### 3.8 Commit message format
 
@@ -581,7 +581,7 @@ pub enum BranchGranularity {
 ### 7.7 Granularity vs BranchStrategy
 
 - **Orchestrator today:** Creates a branch in `create_node_branch` per node (phase/task/subtask/iteration) based only on **BranchStrategy** (MainOnly / Feature / Release). It does **not** read `config.branching.granularity`.
-- **Granularity** in config (Phase / Task / Subtask / Iteration / None) could mean "at which node level do we create a new branch" (e.g. None = one branch for all; Phase = one branch per phase; Task = one per task). That behavior is not implemented. So either: (1) implement granularity so that branch creation is gated by node level (e.g. only create branch when node_type matches granularity), or (2) leave granularity as "future" and only wire BranchStrategy in the GUI (Main only / Feature / Release). The plan should state: "For Phase 4 GUI, decide whether to implement granularity-driven branch creation or only expose BranchStrategy; if only strategy, align granularity UI label with 'informational' or hide until implemented."
+- **Granularity** in config (Phase / Task / Subtask / Iteration / None) is a reserved design for "at which node level do we create a new branch" (e.g. None = one branch for all; Phase = one branch per phase; Task = one per task). It is not an active runtime contract until the plan chooses one of two dispositions: (1) implement granularity so that branch creation is gated by node level (e.g. only create branch when node_type matches granularity), or (2) leave granularity as future-facing and only wire BranchStrategy in the GUI (Main only / Feature / Release). The plan should state: "For Phase 4 GUI, decide whether to implement granularity-driven branch creation or only expose BranchStrategy; if only strategy, align granularity UI label with 'informational' or keep it hidden until the contract is active."
 
 ### 7.8 Integration test setup
 
@@ -2203,7 +2203,7 @@ plan_unit_id: W-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: The GUI-exposed naming_pattern must either be wired into branch generation with documented placeholders or hidden/removed until implemented.
+canonical_text: The GUI-exposed naming_pattern must either be wired into branch generation with documented placeholders or kept hidden/inert until branch-generation support lands.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
 split_recommended: false

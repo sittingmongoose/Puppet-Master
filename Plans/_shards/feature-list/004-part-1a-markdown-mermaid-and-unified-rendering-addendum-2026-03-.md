@@ -4,7 +4,7 @@ Source: `Plans/feature-list.md`
 
 Source lines: L125-L146
 
-Source SHA256: `192f85416cb86b11080c50a32f9e0e803e794eb480d9ba72068334ff40a5286a`
+Source SHA256: `18eb8eaafc6d33c4ebcb130610a7187508a51a30b60bae50ffe71691bce66066`
 
 ---
 
@@ -27,6 +27,6 @@ This addendum captures the rewrite's document and preview rendering model: sourc
 - Planning documents, including future Deep Plan Mode surfaces, use the same Markdown/Mermaid pipeline and canonical-source rules.
 - `xeditor-monorepo` is useful as interaction inspiration only; it is not a strong candidate for direct adoption as an MVP-native PM core feature.
 
-**Detailed spec:** `Plans/FinalGUISpec.md`, `Plans/PMConcept.html`, [Crosswalk](#crosswalk-ref)
+**Detailed spec:** `Plans/FinalGUISpec.md`, `Concepts/PMConcept.html` as source-lineage input only, [Crosswalk](#crosswalk-ref)
 
 <a id="feature-sc-gha-docker"></a>

@@ -4,7 +4,7 @@ Source: `Plans/WorktreeGitImprovement.md`
 
 Source lines: L803-L4784
 
-Source SHA256: `072b3bf41dc46105969f722a12a0f56c7f9d3d2408d4df2fecb7c4921fb16b1d`
+Source SHA256: `f39b33e38b644f3f0195f8707f327ef505ba574c0765d4d499b27173f011a367`
 
 ---
 
@@ -1411,7 +1411,7 @@ plan_unit_id: W-027
 unit_type: requirement
 status: accepted
 owner_doc: Plans/WorktreeGitImprovement.md
-canonical_text: The GUI-exposed naming_pattern must either be wired into branch generation with documented placeholders or hidden/removed until implemented.
+canonical_text: The GUI-exposed naming_pattern must either be wired into branch generation with documented placeholders or kept hidden/inert until branch-generation support lands.
 gui_related: true
 gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
 split_recommended: false

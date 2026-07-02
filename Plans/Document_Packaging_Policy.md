@@ -254,7 +254,7 @@ That file MUST become a deterministic pointer stub with the following fixed fiel
 1. A statement that canonical content is packaged as a Document Set.
 2. A pointer to the Document Set entrypoint: `<filename>.docset/00-index.md`.
 3. The `source_sha256` value from the Document Set `manifest.json`.
-4. A verification command: `puppet-master docset verify <docset_path>` (CLI name is a placeholder until implemented; the command signature is deterministic).
+4. A reserved deterministic verification command signature: `puppet-master docset verify <docset_path>`.
 
 ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014, Gate:GATE-002
 
