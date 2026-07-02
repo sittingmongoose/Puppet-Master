@@ -602,18 +602,21 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 
 ### Route-aware navigation and open-contract rows
 
+<a id="wm-route-open-acceptance"></a>
 #### Acceptance carry-through
 - Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs
 - Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs
 
 ### Verification evidence hooks
 
+<a id="wm-verification-evidence-acceptance"></a>
 #### Acceptance carry-through
 - Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough
 - Add structured gate-specific evidence details for route-aware verification
 
 ### Compatibility-only fallback marking
 
+<a id="wm-compat-fallback-acceptance"></a>
 #### Acceptance carry-through
 - Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts
 - Keep ref-family split explicit when route/open normalization is transferred

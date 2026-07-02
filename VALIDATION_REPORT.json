@@ -3,7 +3,9 @@
   "generated_indexes_modified": false,
   "governance_artifacts_modified": false,
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
+  "package_manifest_status": "historical_stale_retired_after_governance_seal",
   "report_status": "historical_dropin_validation_stale_retired_after_governance_seal",
+  "zip_metadata_status": "not_applicable_no_archive_in_repo",
   "current_authority": {
     "note": "This report records precompile/drop-in package validation only. It is not current seal proof after the ledger compiled to Plans and governance was sealed.",
     "plan_index_authority": "Plans/.plan_index/coverage_report.json",

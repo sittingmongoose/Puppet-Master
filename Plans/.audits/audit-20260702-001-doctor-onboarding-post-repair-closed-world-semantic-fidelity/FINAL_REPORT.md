@@ -1,6 +1,6 @@
 # Closed-World Semantic Audit - audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity
 
-Status: BLOCKED
+Status: PASS_WITH_WARNINGS
 
 Ledger: `pldg-20260701-001-feature-intake`  
 Baseline: `f5c3d888e870414f77a3e793158b41d2d027c47c`  

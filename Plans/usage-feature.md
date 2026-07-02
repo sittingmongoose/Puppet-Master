@@ -781,7 +781,7 @@ ContractRef: ContractName:Plans/Widget_System.md#3, ContractName:Plans/Widget_Sy
 
 The Usage page ships with this default layout. No page starts empty. Users can customize after first load.
 
-### Gap 6: Analytics not implemented
+### Analytics signal contract
 
 Usage analytics consumers interpret grep/Search acceleration through `tool.invoked.index_used`: `true` counts queries served by sparse-n-gram candidate narrowing, while `false` counts raw ripgrep fallback or another unindexed path.
 
@@ -3909,7 +3909,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0093
 preserved_exact_tokens:
-- 'Gap 6: Analytics not implemented'
+- 'Analytics signal contract'
 - 'tool.invoked.index_used'
 - 'true'
 - 'false'

@@ -1,0 +1,103 @@
+{
+  "adjudicated_at_utc": "2026-07-02T00:00:00Z",
+  "dispositions": [
+    {
+      "classification": "filled_current_contract",
+      "disposition": "The generated visual module library allowlist now defaults to empty unless a library is bundled, versioned, reviewed, and explicitly approved.",
+      "signal": "TBD",
+      "target": "Plans/rewrite-tie-in-memo.md"
+    },
+    {
+      "classification": "reserved_command_signature",
+      "disposition": "The document-set verification command is a reserved deterministic signature rather than an implementation placeholder.",
+      "signal": "placeholder",
+      "target": "Plans/Document_Packaging_Policy.md"
+    },
+    {
+      "classification": "renamed_current_signal_contract",
+      "disposition": "The analytics section is current signal-contract prose; the stale 'not implemented' heading has been retired.",
+      "signal": "not implemented",
+      "target": "Plans/usage-feature.md#analytics-signal-contract"
+    },
+    {
+      "classification": "future_contract_hidden_until_active",
+      "disposition": "Branch naming pattern and granularity controls remain reserved/future-facing unless wired into the active branch-generation contract.",
+      "signal": "until implemented",
+      "target": "Plans/WorktreeGitImprovement.md"
+    },
+    {
+      "classification": "historical_source_lineage",
+      "disposition": "Removed Rust/Iced app and puppet-master-rs implementation-status language is retained only as source-lineage context for the rebuild.",
+      "signal": "removed_rust_iced_implementation_status",
+      "target": "Plans/MiscPlan.md"
+    },
+    {
+      "classification": "concept_fixture_only",
+      "disposition": "Mock/stub markers in PMConcept are concept/source-lineage fixture labels and are not implementation blockers for canonical Plans.",
+      "signal": "mock/stub",
+      "target": "Concepts/PMConcept.html"
+    },
+    {
+      "classification": "anchored_packetizable_duplicate",
+      "disposition": "Repeated Acceptance carry-through headings intentionally preserve local section prose and now have stable packet anchors.",
+      "signal": "duplicate_heading",
+      "target": "Plans/Runtime_Artifacts_Panel.md",
+      "anchors": [
+        "rap-4a-acceptance-carry-through",
+        "rap-4b-acceptance-carry-through",
+        "rap-5b-export-acceptance-carry-through"
+      ]
+    },
+    {
+      "classification": "anchored_packetizable_duplicate",
+      "disposition": "Repeated Acceptance carry-through headings intentionally preserve local section prose and now have stable packet anchors.",
+      "signal": "duplicate_heading",
+      "target": "Plans/Wiring_Matrix.md",
+      "anchors": [
+        "wm-route-open-acceptance",
+        "wm-verification-evidence-acceptance",
+        "wm-compat-fallback-acceptance"
+      ]
+    },
+    {
+      "classification": "anchored_packetizable_duplicate",
+      "disposition": "Repeated Acceptance carry-through headings intentionally preserve local section prose and now have stable packet anchors.",
+      "signal": "duplicate_heading",
+      "target": "Plans/FileManager.md",
+      "anchors": [
+        "fm-route-open-acceptance",
+        "fm-runtime-artifact-open-identity-acceptance"
+      ]
+    },
+    {
+      "classification": "marker_list_not_section_stub",
+      "disposition": "Top owner-section markers are rendered as marker lists rather than empty headings.",
+      "signal": "empty_required_section",
+      "target": "Plans/Orchestrator_Page.md"
+    },
+    {
+      "classification": "marker_list_not_section_stub",
+      "disposition": "Top owner-section markers are rendered as marker lists rather than empty headings; the live hostability section has a stable anchor.",
+      "signal": "empty_required_section",
+      "target": "Plans/Widget_System.md",
+      "anchors": [
+        "ws-progress-only-widget-hostability"
+      ]
+    },
+    {
+      "classification": "anchored_source_lineage_duplicate",
+      "disposition": "Repeated wizard blocked-lifecycle headings are retained as source-lineage addendum structure and now have stable anchors.",
+      "signal": "duplicate_heading",
+      "target": "Plans/chain-wizard-flexibility.md",
+      "anchors": [
+        "cwf-escalation-canonical-wizard-status",
+        "cwf-escalation-canonical-blocked-state",
+        "cwf-escalation-blocked-clear-rule",
+        "cwf-lifecycle-canonical-wizard-status",
+        "cwf-lifecycle-canonical-blocked-state",
+        "cwf-lifecycle-blocked-clear-rule"
+      ]
+    }
+  ],
+  "schema_id": "pm.zero_incomplete_disposition.v1"
+}

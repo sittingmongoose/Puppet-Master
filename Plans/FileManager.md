@@ -408,6 +408,7 @@ FileManager is the canonical owner of the file-open and artifact-storage contrac
 
 ### Route/open rules
 
+<a id="fm-route-open-acceptance"></a>
 #### Acceptance carry-through
 - Let Contracts_V0 own canonical route_target and OpenSubject contracts
 - Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based
@@ -569,6 +570,7 @@ Hot reload controls appear only when the owning preview/runtime session exposes 
 ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
 
 
+<a id="fm-runtime-artifact-open-identity-acceptance"></a>
 #### Acceptance carry-through
 - Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage
 - Resolve artifact open flows by artifact_id and then by linked envelope refs

@@ -2204,9 +2204,11 @@ Persist:
 
 This section defines canonical Wizard Blocked Lifecycle.
 
+<a id="cwf-escalation-canonical-wizard-status"></a>
 ### Canonical `wizard_status`
 See canonical `wizard_status` definition in §2.1.
 
+<a id="cwf-escalation-canonical-blocked-state"></a>
 ### Canonical blocked state
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 A wizard blocked record MUST persist:
@@ -2226,6 +2228,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
+<a id="cwf-escalation-blocked-clear-rule"></a>
 ### Blocked clear rule
 A wizard leaves `blocked` only when:
 - materially new user input creates a new issue set
@@ -2237,9 +2240,11 @@ Reopening the same blocked wizard without one of those changes does not clear bl
 ## Canonical Wizard Blocked Lifecycle
 
 
+<a id="cwf-lifecycle-canonical-wizard-status"></a>
 ### Canonical `wizard_status`
 See canonical `wizard_status` definition in §2.1.
 
+<a id="cwf-lifecycle-canonical-blocked-state"></a>
 ### Canonical blocked state
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 A wizard blocked record MUST persist:
@@ -2257,6 +2262,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
+<a id="cwf-lifecycle-blocked-clear-rule"></a>
 ### Blocked clear rule
 A wizard leaves `blocked` only when:
 - materially new user input creates a new issue set

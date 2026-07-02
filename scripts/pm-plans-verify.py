@@ -8,9 +8,12 @@ import fnmatch
 import hashlib
 import json
 import re
+import signal
 import subprocess
 import sys
 import tempfile
+import time
+from contextlib import contextmanager
 from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
@@ -19,6 +22,8 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 PLANS = ROOT / "Plans"
+PATH_REFERENCE_REGISTRY = PLANS / "path_reference_registry.json"
+PATH_REFERENCE_REGISTRY_SCHEMA = PLANS / "path_reference_registry.schema.json"
 
 
 def utc_now() -> str:
@@ -100,6 +105,63 @@ def report_status(name: str, failures: list[dict[str, Any]], **extra: Any) -> di
         "failures": failures,
         **extra,
     }
+
+
+class SubcheckTimeout(RuntimeError):
+    pass
+
+
+@contextmanager
+def subcheck_alarm(seconds: int, name: str):
+    if seconds <= 0:
+        yield
+        return
+    old_handler = signal.getsignal(signal.SIGALRM)
+
+    def _handler(signum: int, frame: Any) -> None:
+        raise SubcheckTimeout(f"{name} exceeded {seconds}s")
+
+    signal.signal(signal.SIGALRM, _handler)
+    signal.setitimer(signal.ITIMER_REAL, seconds)
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, old_handler)
+
+
+def progress_enabled(args: argparse.Namespace) -> bool:
+    return not bool(getattr(args, "quiet_progress", False))
+
+
+def subcheck_timeout_seconds(args: argparse.Namespace) -> int:
+    return int(getattr(args, "subcheck_timeout_seconds", 180) or 0)
+
+
+def run_named_check(
+    name: str,
+    func: Any,
+    namespace: argparse.Namespace,
+    *,
+    progress: bool,
+    timeout_seconds: int,
+) -> tuple[str, dict[str, Any]]:
+    if progress:
+        print(f"[pm-plans-verify] start {name}", file=sys.stderr, flush=True)
+    started = time.monotonic()
+    try:
+        with subcheck_alarm(timeout_seconds, name):
+            setattr(namespace, "subcheck_timeout_seconds", timeout_seconds)
+            report = func(namespace)
+    except SubcheckTimeout as exc:
+        report = report_status(name, [{"check": name, "error": "subcheck_timeout", "timeout_seconds": timeout_seconds, "message": str(exc)}])
+    except Exception as exc:  # pragma: no cover - defensive gate wrapper
+        report = report_status(name, [{"check": name, "error": "subcheck_exception", "message": str(exc)}])
+    elapsed_ms = int((time.monotonic() - started) * 1000)
+    report.setdefault("elapsed_ms", elapsed_ms)
+    if progress:
+        print(f"[pm-plans-verify] done {name} status={report.get('status')} elapsed_ms={elapsed_ms}", file=sys.stderr, flush=True)
+    return name, report
 
 
 def json_type_matches(instance: Any, expected: str) -> bool:
@@ -692,13 +754,30 @@ def cmd_check_shards(args: argparse.Namespace) -> dict[str, Any]:
         temp_path = Path(tmp.name)
         report_path = str(temp_path)
         report_file = temp_path
-    proc = subprocess.run(
-        [sys.executable, "scripts/pm-shard-plans.py", "--check", "--report", report_path],
-        cwd=ROOT,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    try:
+        proc = subprocess.run(
+            [sys.executable, "scripts/pm-shard-plans.py", "--check", "--report", report_path],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=timeout_seconds if timeout_seconds > 0 else None,
+        )
+    except subprocess.TimeoutExpired as exc:
+        if temp_path is not None:
+            temp_path.unlink(missing_ok=True)
+        return report_status(
+            "check-shards",
+            [
+                {
+                    "error": "subprocess_timeout",
+                    "timeout_seconds": timeout_seconds,
+                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
+                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
+                }
+            ],
+        )
     report = load_json(report_file)
     if temp_path is not None:
         temp_path.unlink(missing_ok=True)
@@ -739,6 +818,70 @@ def cmd_check_project_artifact_requirements(args: argparse.Namespace) -> dict[st
         project_package_present=required_now,
         notes=notes,
     )
+
+
+def cmd_lint_path_refs(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+    if not PATH_REFERENCE_REGISTRY.exists():
+        failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "error": "missing_path_reference_registry"})
+        return report_status("lint-path-refs", failures)
+    if not PATH_REFERENCE_REGISTRY_SCHEMA.exists():
+        failures.append({"path": rel(PATH_REFERENCE_REGISTRY_SCHEMA), "error": "missing_path_reference_registry_schema"})
+        return report_status("lint-path-refs", failures)
+
+    for error in validate_against_schema(PATH_REFERENCE_REGISTRY, PATH_REFERENCE_REGISTRY_SCHEMA):
+        failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "error": error})
+    if failures:
+        return report_status("lint-path-refs", failures)
+
+    registry = load_json(PATH_REFERENCE_REGISTRY)
+    seen: set[str] = set()
+    for index, row in enumerate(registry.get("classifications", []), 1):
+        raw_ref = row.get("raw_ref")
+        classification = row.get("classification")
+        if raw_ref in seen:
+            failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "duplicate_raw_ref"})
+        seen.add(str(raw_ref))
+
+        canonical_route = row.get("canonical_route")
+        if isinstance(canonical_route, str) and canonical_route.startswith("Plans/"):
+            route_path, route_error = exact_path(canonical_route)
+            if route_error:
+                failures.append({
+                    "path": rel(PATH_REFERENCE_REGISTRY),
+                    "row": index,
+                    "canonical_route": canonical_route,
+                    **ref_failure(route_error, "canonical_route"),
+                })
+            elif route_path is not None and not route_path.exists():
+                failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "canonical_route": canonical_route, "error": "missing_canonical_route"})
+
+        for evidence_ref in row.get("evidence_refs", []):
+            if not isinstance(evidence_ref, str) or not evidence_ref.startswith(("Plans/", "AGENTS.md", "Concepts/")):
+                continue
+            evidence_path, evidence_error = exact_path(evidence_ref)
+            if evidence_error:
+                failures.append({
+                    "path": rel(PATH_REFERENCE_REGISTRY),
+                    "row": index,
+                    "evidence_ref": evidence_ref,
+                    **ref_failure(evidence_error, "evidence_ref"),
+                })
+            elif evidence_path is not None and not evidence_path.exists():
+                failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "evidence_ref": evidence_ref, "error": "missing_evidence_ref"})
+
+        if classification == "live_target":
+            target_path, target_error = exact_path(str(raw_ref))
+            if target_error:
+                failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, **ref_failure(target_error, "raw_ref")})
+            elif target_path is not None and not target_path.exists():
+                failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "missing_live_target"})
+        if classification == "typo" and not row.get("replacement_ref"):
+            failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "typo_missing_replacement_ref"})
+        if classification == "schema_to_materialize" and not row.get("materialization_pattern"):
+            failures.append({"path": rel(PATH_REFERENCE_REGISTRY), "row": index, "raw_ref": raw_ref, "error": "schema_to_materialize_missing_pattern"})
+
+    return report_status("lint-path-refs", failures, classifications_checked=len(registry.get("classifications", [])))
 
 
 def iter_schema_dicts(value: Any, path: str = "$") -> list[tuple[str, dict[str, Any]]]:
@@ -1525,14 +1668,30 @@ def compact_gate_report(report: dict[str, Any], sample_limit: int = 10) -> dict[
 
 def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-prd-planning-runtime-validate.py"
-    proc = subprocess.run(
-        [sys.executable, str(validator)],
-        cwd=ROOT,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        check=False,
-    )
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(validator)],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            timeout=timeout_seconds if timeout_seconds > 0 else None,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return report_status(
+            "validate-prd-planning-runtime-contracts",
+            [
+                {
+                    "path": rel(validator),
+                    "error": "subprocess_timeout",
+                    "timeout_seconds": timeout_seconds,
+                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
+                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
+                }
+            ],
+        )
     try:
         report = json.loads(proc.stdout)
     except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
@@ -1560,20 +1719,26 @@ def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dic
 
 
 def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
-    checks = [
-        ("json_syntax", cmd_json_syntax(argparse.Namespace())),
-        ("verify_spec_lock", cmd_verify_spec_lock(argparse.Namespace())),
-        ("validate_plan_graph", cmd_validate_plan_graph(argparse.Namespace(paths=[]))),
-        ("validate_auto_decisions", cmd_validate_auto_decisions(argparse.Namespace())),
-        ("validate_evidence", cmd_validate_evidence(argparse.Namespace(paths=[]))),
-        ("lint_contractrefs", cmd_lint_contractrefs(argparse.Namespace())),
-        ("lint_banned_phrases", cmd_lint_banned_phrases(argparse.Namespace())),
-        ("check_project_artifact_requirements", cmd_check_project_artifact_requirements(argparse.Namespace())),
-        ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema(argparse.Namespace())),
-        ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts(argparse.Namespace())),
+    progress = progress_enabled(args)
+    timeout_seconds = subcheck_timeout_seconds(args)
+    check_specs = [
+        ("json_syntax", cmd_json_syntax, argparse.Namespace()),
+        ("verify_spec_lock", cmd_verify_spec_lock, argparse.Namespace()),
+        ("validate_plan_graph", cmd_validate_plan_graph, argparse.Namespace(paths=[])),
+        ("validate_auto_decisions", cmd_validate_auto_decisions, argparse.Namespace()),
+        ("validate_evidence", cmd_validate_evidence, argparse.Namespace(paths=[])),
+        ("lint_contractrefs", cmd_lint_contractrefs, argparse.Namespace()),
+        ("lint_banned_phrases", cmd_lint_banned_phrases, argparse.Namespace()),
+        ("lint_path_refs", cmd_lint_path_refs, argparse.Namespace()),
+        ("check_project_artifact_requirements", cmd_check_project_artifact_requirements, argparse.Namespace()),
+        ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
+        ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("check_shards", cmd_check_shards, argparse.Namespace(report=None)),
     ]
-    shard_report = cmd_check_shards(argparse.Namespace(report=None))
-    checks.append(("check_shards", shard_report))
+    checks = [
+        run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
+        for name, func, namespace in check_specs
+    ]
 
     failures: list[dict[str, Any]] = []
     for name, report in checks:
@@ -1583,45 +1748,48 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         "run-gates",
         failures,
         checks={name: compact_gate_report(report) for name, report in checks},
+        subcheck_timeout_seconds=timeout_seconds,
     )
 
 
 def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
-    spec = cmd_verify_spec_lock(argparse.Namespace())
-    graph = cmd_validate_plan_graph(argparse.Namespace(paths=[]))
-    auto = cmd_validate_auto_decisions(argparse.Namespace())
-    evidence = cmd_validate_evidence(argparse.Namespace(paths=[]))
-    refs = cmd_lint_contractrefs(argparse.Namespace())
-    shards = cmd_check_shards(argparse.Namespace(report=None))
-    project_artifacts = cmd_check_project_artifact_requirements(argparse.Namespace())
-    plans_to_code_handoff_schema = cmd_validate_plans_to_code_handoff_schema(argparse.Namespace())
-    prd_planning_runtime_contracts = cmd_validate_prd_planning_runtime_contracts(argparse.Namespace())
+    progress = progress_enabled(args)
+    timeout_seconds = subcheck_timeout_seconds(args)
+    check_specs = [
+        ("spec_lock", cmd_verify_spec_lock, argparse.Namespace()),
+        ("plan_graph", cmd_validate_plan_graph, argparse.Namespace(paths=[])),
+        ("auto_decisions", cmd_validate_auto_decisions, argparse.Namespace()),
+        ("evidence", cmd_validate_evidence, argparse.Namespace(paths=[])),
+        ("support_refs", cmd_lint_contractrefs, argparse.Namespace()),
+        ("path_refs", cmd_lint_path_refs, argparse.Namespace()),
+        ("shards", cmd_check_shards, argparse.Namespace(report=None)),
+        ("project_artifacts", cmd_check_project_artifact_requirements, argparse.Namespace()),
+        ("plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
+        ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+    ]
+    checks = [
+        run_named_check(name, func, namespace, progress=progress, timeout_seconds=timeout_seconds)
+        for name, func, namespace in check_specs
+    ]
+    check_map = {name: report for name, report in checks}
     failures: list[dict[str, Any]] = []
-    for name, report in [
-        ("spec_lock", spec),
-        ("plan_graph", graph),
-        ("auto_decisions", auto),
-        ("evidence", evidence),
-        ("support_refs", refs),
-        ("shards", shards),
-        ("project_artifacts", project_artifacts),
-        ("plans_to_code_handoff_schema", plans_to_code_handoff_schema),
-        ("prd_planning_runtime_contracts", prd_planning_runtime_contracts),
-    ]:
+    for name, report in checks:
         if report.get("status") != "pass":
             failures.append({"check": name, "failures": report.get("failures", [])[:100]})
     return report_status(
         "audit-governance",
         failures,
-        spec_lock=compact_gate_report(spec),
-        plan_graph=compact_gate_report(graph),
-        auto_decisions=compact_gate_report(auto),
-        evidence=compact_gate_report(evidence),
-        support_refs=compact_gate_report(refs),
-        shards=compact_gate_report(shards),
-        project_artifacts=compact_gate_report(project_artifacts),
-        plans_to_code_handoff_schema=compact_gate_report(plans_to_code_handoff_schema),
-        prd_planning_runtime_contracts=compact_gate_report(prd_planning_runtime_contracts),
+        spec_lock=compact_gate_report(check_map["spec_lock"]),
+        plan_graph=compact_gate_report(check_map["plan_graph"]),
+        auto_decisions=compact_gate_report(check_map["auto_decisions"]),
+        evidence=compact_gate_report(check_map["evidence"]),
+        support_refs=compact_gate_report(check_map["support_refs"]),
+        path_refs=compact_gate_report(check_map["path_refs"]),
+        shards=compact_gate_report(check_map["shards"]),
+        project_artifacts=compact_gate_report(check_map["project_artifacts"]),
+        plans_to_code_handoff_schema=compact_gate_report(check_map["plans_to_code_handoff_schema"]),
+        prd_planning_runtime_contracts=compact_gate_report(check_map["prd_planning_runtime_contracts"]),
+        subcheck_timeout_seconds=timeout_seconds,
     )
 
 
@@ -1633,6 +1801,7 @@ COMMANDS = {
     "validate-plan-graph": cmd_validate_plan_graph,
     "lint-contractrefs": cmd_lint_contractrefs,
     "lint-banned-phrases": cmd_lint_banned_phrases,
+    "lint-path-refs": cmd_lint_path_refs,
     "check-shards": cmd_check_shards,
     "check-project-artifacts": cmd_check_project_artifact_requirements,
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
@@ -1650,6 +1819,14 @@ def main() -> int:
         sub.add_argument("--report")
         if name == "validate-evidence":
             sub.add_argument("paths", nargs="*")
+        if name in {"run-gates", "audit-governance"}:
+            sub.add_argument(
+                "--subcheck-timeout-seconds",
+                type=int,
+                default=180,
+                help="Maximum seconds for each aggregate subcheck before reporting the stuck check.",
+            )
+            sub.add_argument("--quiet-progress", action="store_true", help="Suppress aggregate subcheck progress on stderr.")
     args = parser.parse_args()
     if not hasattr(args, "paths"):
         args.paths = []

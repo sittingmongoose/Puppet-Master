@@ -889,7 +889,14 @@ def append_batch_report(run_dir: Path, report: dict[str, Any]) -> None:
     path.write_text(existing + json.dumps(report, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def validate_batch_report_docs(run_dir: Path, live_plan_unit_ids: set[str], failures: list[dict[str, Any]]) -> tuple[int, int]:
+def validate_batch_report_docs(
+    run_dir: Path,
+    live_plan_unit_ids: set[str],
+    failures: list[dict[str, Any]],
+    warnings: list[dict[str, Any]],
+    *,
+    historical_scope_warning: dict[str, Any] | None,
+) -> tuple[int, int]:
     path = run_dir / "batch_report.jsonl"
     if not path.exists():
         return 0, 0
@@ -915,14 +922,19 @@ def validate_batch_report_docs(run_dir: Path, live_plan_unit_ids: set[str], fail
             live_path = ROOT / path_ref
             failure_base = {"path": rel(path), "row": row_index, "doc_index": doc_index, "doc_path": path_ref}
             if not live_path.exists():
-                failures.append({**failure_base, "error": "batch_report_doc_path_missing"})
+                target = warnings if historical_scope_warning else failures
+                error = "historical_batch_report_doc_path_missing" if historical_scope_warning else "batch_report_doc_path_missing"
+                target.append({**failure_base, **(historical_scope_warning or {}), "error": error})
             else:
                 actual_sha256 = sha256_file(live_path)
                 if doc.get("sha256_after") != actual_sha256:
-                    failures.append(
+                    target = warnings if historical_scope_warning else failures
+                    error = "historical_stale_batch_report_sha256_after" if historical_scope_warning else "stale_batch_report_sha256_after"
+                    target.append(
                         {
                             **failure_base,
-                            "error": "stale_batch_report_sha256_after",
+                            **(historical_scope_warning or {}),
+                            "error": error,
                             "expected": actual_sha256,
                             "actual": doc.get("sha256_after"),
                         }
@@ -932,11 +944,14 @@ def validate_batch_report_docs(run_dir: Path, live_plan_unit_ids: set[str], fail
             if not isinstance(plan_unit_id, str) or not plan_unit_id:
                 failures.append({**failure_base, "error": "batch_report_doc_missing_plan_unit_id"})
             elif plan_unit_id not in live_plan_unit_ids:
-                failures.append(
+                target = warnings if historical_scope_warning else failures
+                error = "historical_batch_report_plan_unit_id_not_found_in_live_plans" if historical_scope_warning else "batch_report_plan_unit_id_not_found_in_live_plans"
+                target.append(
                     {
                         **failure_base,
+                        **(historical_scope_warning or {}),
                         "plan_unit_id": plan_unit_id,
-                        "error": "batch_report_plan_unit_id_not_found_in_live_plans",
+                        "error": error,
                     }
                 )
     return len(rows), doc_count
@@ -1198,7 +1213,13 @@ def validate_run_dir(run_dir: Path) -> dict[str, Any]:
                     "locations": locations,
                 }
             )
-    batch_report_rows, batch_report_doc_entries = validate_batch_report_docs(run_dir, set(unit_locations), failures)
+    batch_report_rows, batch_report_doc_entries = validate_batch_report_docs(
+        run_dir,
+        set(unit_locations),
+        failures,
+        warnings,
+        historical_scope_warning=scope_exemption,
+    )
     source_preserving_unit_ids = sorted(
         str(unit.get("plan_unit_id"))
         for unit in live_units

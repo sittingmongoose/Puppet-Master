@@ -72,6 +72,7 @@ Behavioral rules:
 ### 4A Artifacts index families and projector checkpoints
 
 
+<a id="rap-4a-acceptance-carry-through"></a>
 #### Acceptance carry-through
 - Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families
 - Make the artifact index rebuildable from canonical runtime evidence
@@ -79,6 +80,7 @@ Behavioral rules:
 
 ### 4B Runtime-artifact envelope and attribution packet
 
+<a id="rap-4b-acceptance-carry-through"></a>
 #### Acceptance carry-through
 - Share one attribution family across tool events, runtime artifacts, receipts, and usage records
 - Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields
@@ -235,6 +237,7 @@ Export and import rules:
 
 ### 5B Export taxonomy and manifests
 
+<a id="rap-5b-export-acceptance-carry-through"></a>
 #### Acceptance carry-through
 - Define record export, bundle export, and view export as distinct export classes
 - Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure

@@ -4,14 +4,967 @@
     "batch_report_doc_entries": 62,
     "batch_report_rows": 3,
     "coverage_rows": 3618,
+    "coverage_status_counts": {
+      "already_standardized_existing_planunits": 55,
+      "batch-001-unlocked-unsharded_converted_covered": 303,
+      "batch-002-sharded-unlocked_converted_covered": 2288,
+      "batch-003-spec-locked_converted_covered": 955,
+      "pilot_converted_covered": 17
+    },
     "doc_count": 67,
-    "live_plan_unit_count": 105,
+    "live_plan_unit_count": 5354,
+    "source_preserving_unit_count": 0,
+    "source_preserving_unit_ids": [],
     "span_count": 3618,
-    "unique_live_plan_unit_count": 105
+    "unique_live_plan_unit_count": 5354
   },
   "failures": [],
-  "generated_at_utc": "2026-06-11T22:06:37Z",
+  "generated_at_utc": "2026-07-02T16:54:21Z",
   "run_id": "pds-20260611-001-standardize-plans",
   "schema_id": "pm.plan_migration.validation_report.v1",
-  "status": "pass"
+  "status": "pass",
+  "warnings": [
+    {
+      "check": "doc_count_mismatch",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "check": "inventory_doc_set_mismatch",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "9e90b4a292cb73d93e93c5c757580dac9061a74d4ae8c28138323e90231d487f",
+      "doc_index": 1,
+      "doc_path": "Plans/BinaryLocator_Spec.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "f771804414d33e929397643d4e24ee222dd2dc44b23c997328efc2366376434b",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 1,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "7eaaf28c06afa24aaae0b48b830712bdaad0ea3dcbe051697f138a0a0bfba442",
+      "doc_index": 2,
+      "doc_path": "Plans/Containers_Registry_and_Unraid.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "6c19618bac5e01bd203cecfa94832862fc98fd18b0d540c9542112916d6b7cb5",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 1,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "31241a089c3c4ff809bb964b215fa0e656aa99f5d9d849500bc20f1572d1bcaa",
+      "doc_index": 5,
+      "doc_path": "Plans/OpenCode_Coverage_Matrix.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "ef41c8912e244286a61906a651b70fee14c39a342a5bda1095c1081c4fed56c3",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 1,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "6853f0c4a470eae0c81437bba8224eb38c3ca330d52f43db4ff623c24729b35d",
+      "doc_index": 7,
+      "doc_path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "dd39be33bb75ade2f1a0a6c352ec2b9a02cace2077e5d5e5e09f2e189553c0b4",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 1,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "b554fbcb19022cba01f2b7c13943850a60fa2838cf97fdd1fb65e079a47cf2a1",
+      "doc_index": 8,
+      "doc_path": "Plans/chain-wizard.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "c03dfe1840905803d55d1b7df90f5face904cb5169df64148e17abd0ee54a6aa",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 1,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "4c85ec54db656bd379cd8af6870d0fd2ac16853b2ff88199cd14e528a78635db",
+      "doc_index": 1,
+      "doc_path": "Plans/agent-rules-context.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "973cc1c959ccca05ed7bb6a3a3be1c4c8b7d537342c2897621b42cf489e5671b",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "a73a02a7491d87874acc3c66c01a189b1c2903dc21699807693025b575a851b4",
+      "doc_index": 2,
+      "doc_path": "Plans/assistant-chat-design.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "97438ff075ddc69027838768a23223b2f2f72bac71819c99049d1850f8a3c6e1",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "5d90bde49ea94fff56a2fdcbbdf3aa2a1befe10fd832b70f4189180417979c2d",
+      "doc_index": 4,
+      "doc_path": "Plans/CLI_Bridged_Providers.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "02118acdedc6f719f198254b1a01064f5a674b35390524a4141613dd28381612",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "7399da87c57e281a4cb1fdb6ae938f9d6ce22eea2296abc5b7012a139078e0ae",
+      "doc_index": 5,
+      "doc_path": "Plans/Commands_System.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "861c08c51b24d4000bec75a81ff9cfde0238c02c11c0066497111f75bd44f865",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "daf7f1cca8827312aa019c3a55455321a664f207662709d2f3a3d74ff6a399b4",
+      "doc_index": 6,
+      "doc_path": "Plans/feature-list.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "18eb8eaafc6d33c4ebcb130610a7187508a51a30b60bae50ffe71691bce66066",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "9e12573817ea0ea4146565204c731afe1909798fc897ef967610d6a493e76a97",
+      "doc_index": 7,
+      "doc_path": "Plans/FileManager.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "ba0cc77c58e87cbe7a2158c0805bbb4381ca4ade1907b50de26dbb0b83fbf690",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "ec76f77daaf39ca82a3eb75d35cf7148ae46f8b95426d237bf9c6c2368dba74a",
+      "doc_index": 8,
+      "doc_path": "Plans/FileSafe.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "9a245704a35dc4162bed38d7d309cee2719981dc81997bc3392e285c29f6f5e5",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "0e2c986176f31ee781e94b74053bc2caec23d1670cb045190bd4659aab856dec",
+      "doc_index": 9,
+      "doc_path": "Plans/FinalGUISpec.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "444662ab710a1335cda5012fd7086db79f2b58d22aaee7aa9d8588e77e487f02",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "828862ab660d6c9c5430c0426a0b518ba1f3ebeeb98c8584ba0a54bed8abea5e",
+      "doc_index": 10,
+      "doc_path": "Plans/GitHub_Integration.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "7f64028be832f86d78a04d59920b22469f0d81b0c9f2316968f960c170eb2f5b",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "4be41b52dec769c8cdc1233561c3c776834e370b2c6eba1da17786ced3168e54",
+      "doc_index": 11,
+      "doc_path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "28ffe502125883e33ded97b18f62b1a8b17abff9800c4c44fa951a19b274591a",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "a7137d8aa24f7ee49f0f74e2beed7171b16c047b814fbdf25e6ae6c4389e4766",
+      "doc_index": 12,
+      "doc_path": "Plans/human-in-the-loop.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "051c284c0318d7d70e2f0fc5fa6c4281c28cdd7bb9aec764d0489d3b511feaa3",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "20a0ff81e309c185f9c741064d9daaa379b9534633dcf46a00248fe5144b843f",
+      "doc_index": 14,
+      "doc_path": "Plans/MCP_Integration.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "6982724d6f7e04d4cfea8656c0aeb11976dfc1e7b52d7b3f6dc7df5a4ceed8e2",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "a73dd314c5af43c8c41a8d6ea1c08fc6bcd8dbb280e72ba72772c2ed0b733605",
+      "doc_index": 15,
+      "doc_path": "Plans/MiscPlan.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "a93953009970854fa81476fb0c19d280bef0edec25356137d74ec8d4d65fcb3f",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "989c1eab760345e24d0cc5e5a668df26d0b29031744fd57498b9d06a0476c03b",
+      "doc_index": 16,
+      "doc_path": "Plans/Models_System.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "406b3d1e8b4517facac8f80e9b5fe4ae8b535c095a7c337b75ff5e043877d152",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "794a169fba760e2a47cefd4669cf64e4cfba113aab1c7bc8322322565344cdca",
+      "doc_index": 17,
+      "doc_path": "Plans/Multi-Account.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "360054b06c9b040c81024416427fddb3fb9955fe7a50223096b940721df05abe",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "650c584c11b8a7d3ab51ef077daee9de9a20a8308cb5876f1a531b243a404988",
+      "doc_index": 18,
+      "doc_path": "Plans/newfeatures.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "36661bc99f5a2a3b7d4383a83fc4105e1adb190f956a6498df7ceb785689fcc9",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "f56d0da30532a888bc65621c664f432fcdfb50bdca7f91c1bfaab2195d7179c2",
+      "doc_index": 19,
+      "doc_path": "Plans/newtools.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "cad0e89af13bf8410029021e2aa1ab83861ce1896fea1e860fa11c1b5277c1b8",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "0bfa1d2574215e7f05e981b3fdcd34d2e5e7c51c04dce6f0a64e9e17cc98109c",
+      "doc_index": 21,
+      "doc_path": "Plans/Orchestrator_Page.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "1cd9f3b8bbd02e7f5efa00d917914479f3f73acba3ceea7122857d17ba3a75bb",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "e66bebdfa5826d23380dccc47339d0e7f11d6f12a312055a5a6cde06dacf4423",
+      "doc_index": 22,
+      "doc_path": "Plans/Permissions_System.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "70b83a0dd96818cc93d128017e86d70798f2521d635972448c2d1acb3f1917dd",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "7393faaa8ab9bba5dd01f924855f2dba755f7e572f50ae96c5e7fa879778fbdb",
+      "doc_index": 23,
+      "doc_path": "Plans/Personas.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "93a948241c79656528bf10eaeb01e6d82e44ce50b5cabc1981bf22c314950b1e",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "8dc6b2021fc172b31ccf2b59defc9dcc58d336d0f12de37075a9b3c38a245754",
+      "doc_index": 24,
+      "doc_path": "Plans/Prompt_Pipeline.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "6828e13fd710c9ebca37fa7126102307db8ad7abe02b5b5ce12e440f959c5d57",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "d87c86177284c5689c95d0cf397d7b45fdb59b47f7390403643bff096b6f697f",
+      "doc_index": 25,
+      "doc_path": "Plans/Provider_OpenCode.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "640061c9f53855131de4d1dbe82a9193ec07947094ed4fb4f6f71013e29b9736",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "7da13a1bdbe9379290a32112a5711a8a086cdc9a2c591a1c3741d2d63da70d05",
+      "doc_index": 26,
+      "doc_path": "Plans/rewrite-tie-in-memo.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "3e20722aa6b5f6b1e83826eff44a4ff8b8bac331a6040f0d5fc41514798766a0",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "246444caac3e065d83fc41cc14b2a90299f6e29a601eeb2e03465a916ba45009",
+      "doc_index": 27,
+      "doc_path": "Plans/Run_Graph_View.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "d14ad2869679d339b363925f389defafaa8a573433c8e80627b3c506bc14a4d8",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "482ca97d31afef9b1bfabbbf1e945ca82c136a7a650c002bcda64a1facdec58d",
+      "doc_index": 28,
+      "doc_path": "Plans/Run_Modes.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "7a998d899c3a836a14f366d6edca236e132b3d5be658977c458dc3153e22c298",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "096e03b0a1cc7d7eeeb96da5200ad8cbd9a8bb50bae0234198cc0240c7903439",
+      "doc_index": 29,
+      "doc_path": "Plans/Runtime_Artifacts_Panel.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "df360a7c9769f8607bb51be205eabaff52f522a9225d03cb996c2470052e37f9",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "9131a99c4642c084a0d0d13b4e5550d8eaa6d575aadfe0f52f8d50be485a8bec",
+      "doc_index": 30,
+      "doc_path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "97dcb243642c7aa3a3d14fe3d87cc93b622a00089c684d1281d3054585c338b7",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "b1c070e413a45d4b39ec2500393ce3eaa357c6be415c297c8cc03e01a98fcad3",
+      "doc_index": 32,
+      "doc_path": "Plans/storage-plan.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "3a676cd5f10d01235809b09ba1f6e29a872ed6035aaa403bfa8ee9e1c01b426d",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "ae89c54681d60ab1d9bf0600e1c2fdd441edab90e31124bda46b310dfec3b19e",
+      "doc_index": 33,
+      "doc_path": "Plans/Tools.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "b12a0a0c0157faf67f35ded87b52b51b44a1b411f87674af097fc4de32470cf4",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "4ef6ada2d4f56f156b5b034b425597baeb26ec8890f6cb4ca936477745be07ba",
+      "doc_index": 34,
+      "doc_path": "Plans/usage-feature.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "7d48dc66929cf62601b483df794d051d7356247dfeb461d51a18d5a41651d3e4",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "e283765c71f305daeef1982657f9929aacda6cb1da9ddbda8e667b6273d12437",
+      "doc_index": 35,
+      "doc_path": "Plans/Widget_System.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "7c20cb1ee539092df99bc16c4aa6285d0f959816ddd732556bdd9dfae2d5e525",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "c6595e09d3cb89a3e5b0d00b52a7bf02edd30ec02f997d842adc8a328be15401",
+      "doc_index": 36,
+      "doc_path": "Plans/Wiring_Matrix.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "14eb404da1cb1d6e601b5eb4def272d087cae91eeddff0e0ad5803b613004e2a",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "e8da544ef76cde2c99723125784ce324f966a8d17f1c1a542f9268190782bf76",
+      "doc_index": 37,
+      "doc_path": "Plans/WorktreeGitImprovement.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "f39b33e38b644f3f0195f8707f327ef505ba574c0765d4d499b27173f011a367",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 2,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "d15083e9294f5215ee9db682016974bcf55a847e9954a4aa6f7ca342b0f705b1",
+      "doc_index": 1,
+      "doc_path": "Plans/00-plans-index.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "04008a1d57a5ecc7805569edf5eb8b5d6d362abcb643dbc8d8f929fea9636498",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "d2a89ad471d1c62af5bc8a203c3896bdc687328effebbe417f30d0833180857a",
+      "doc_index": 3,
+      "doc_path": "Plans/chain-wizard-flexibility.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "fd1623b031dd532cc48b9c2453424830fcbf423cbaa175ffadd8d37b0daeeff3",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "a87d34cbde30d3cb3b0180eeb7519f1af71470dadd04ecba1f98882133f9792c",
+      "doc_index": 4,
+      "doc_path": "Plans/Contracts_V0.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "d9395b5d304088a5fa7320c64e4d025fd575284fab29902d39e42f74a558b791",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "87e9726d43ebe99698b62e6a35b362674b4207f4d8d2aaa904ec79b9a1f77429",
+      "doc_index": 5,
+      "doc_path": "Plans/Crosswalk.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "78a37585e81a05216af1f0ed3179f18c73a400cd1b7c006405d34e6d1643ecb0",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "5d8e78fe62b22840f988b91b7373b2d371432ffb9ee01ba408873957899dc7a6",
+      "doc_index": 6,
+      "doc_path": "Plans/Decision_Policy.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "9ecf3fea83953a6a763b3d4cd902f1c5bba3b041b42ed48244dcc7a480af6030",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "33ea7426d807c8576f5441b56d21f6419f7c79215dc98f23f396ae5d54835476",
+      "doc_index": 7,
+      "doc_path": "Plans/Document_Packaging_Policy.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "7c555d8159c75c51128ca3ef90555d4bfc70961f959ff7aae895f184f14bf3bc",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "280da36b985a61149480bb0e28fe28a9bfa9e6b0c3a32d7ff493f0d2246c62ab",
+      "doc_index": 8,
+      "doc_path": "Plans/DRY_Rules.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "9cce018f157fd089b9b816a15fb2fb1cc879416528572e90a4167e66ca42bad5",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "334885065f8e4264f866eb13a4336ff4589318b9fb5a97d87e70767163be3710",
+      "doc_index": 9,
+      "doc_path": "Plans/Executor_Protocol.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "ebea79168c58573e4bee31bc623baa0d719de169323c615032e680f03482be7e",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "3110cbc90fc1f0312aac6833ee700e2b395eb107cb0578e65f5966c102d7b59e",
+      "doc_index": 10,
+      "doc_path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "32b5e5b19be60784a5bf8d23de9b82d5af02249906cd2b65834b12450d631751",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "8fc040e311a2881753efff00e0297eaa44a817a84c90d29958f2d4990691baad",
+      "doc_index": 11,
+      "doc_path": "Plans/Glossary.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "ca137fb7d375d67abe29d52964ddf8c0c2fb03d9cb0b41629cd34185dca500fc",
+      "doc_index": 12,
+      "doc_path": "Plans/interview-subagent-integration.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "09870b344b6b002b65b4525e209ddfc4638b45ffe8f2523a543c6ee02325e9a5",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "304f1062227bacb43da163b8ecc2e765ef4050720b2645994ab987447d6bc621",
+      "doc_index": 13,
+      "doc_path": "Plans/Media_Generation_and_Capabilities.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "8da1f0bf2ad249342e2767b2c793d5b8214535ae76cdf8a898c9f013331ca616",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "7fd343f381106f176d93a32fc350eb77e14d7d22c2dd3be323810da3cbf49a95",
+      "doc_index": 14,
+      "doc_path": "Plans/orchestrator-subagent-integration.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "97280928d0c60b7ddccb8a1caff521e76dd808c19219193d6bf816bc7283ed60",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "45216e8d2e6ba9cf1fdc70560b8d0b8932fb9c98243761ffa59ab967d4e17070",
+      "doc_index": 15,
+      "doc_path": "Plans/Progression_Gates.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "68b1b2cca109eacddb3d7b4246d67ecb83cd862cd9430302f03e66c5b15c8405",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "f945edfdf5be500354ad5fa40ac527b5b2e45211741ccd16dee2afdc26a6657b",
+      "doc_index": 16,
+      "doc_path": "Plans/Project_Output_Artifacts.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "5aea224c7bb380fd6d0a7469de4e21e7ec55a458f2790f3c3fe188a2ed9c3e11",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    },
+    {
+      "actual": "9d514cc2727b93beda47b41ca02095edbfee2f07e6473d086e5af1ba74eda4e3",
+      "doc_index": 17,
+      "doc_path": "Plans/UI_Command_Catalog.md",
+      "error": "historical_stale_batch_report_sha256_after",
+      "expected": "74dd10ebe04ed651d00c997e89f269957c527d284c25cd0798d03edc59f10ca2",
+      "missing_current_docs": [
+        "Plans/Automated_Testing_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/PRD_Builder.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "path": "Plans/.plan_migration/pds-20260611-001-standardize-plans/final_validation_summary.json",
+      "row": 3,
+      "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
+      "warning": "historical_scope_superseded_by_current_complete_run"
+    }
+  ]
 }
