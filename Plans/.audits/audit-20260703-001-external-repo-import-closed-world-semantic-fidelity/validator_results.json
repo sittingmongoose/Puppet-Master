@@ -1,0 +1,235 @@
+{
+  "audit_id": "audit-20260703-001-external-repo-import-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "commands": {
+    "audit_governance": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "audit-governance"
+      ],
+      "duration_seconds": 6.511,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "[pm-plans-verify] start spec_lock\n[pm-plans-verify] done spec_lock status=pass elapsed_ms=15\n[pm-plans-verify] start plan_graph\n[pm-plans-verify] done plan_graph status=pass elapsed_ms=676\n[pm-plans-verify] start auto_decisions\n[pm-plans-verify] done auto_decisions status=pass elapsed_ms=5\n[pm-plans-verify] start evidence\n[pm-plans-verify] done evidence status=pass elapsed_ms=728\n[pm-plans-verify] start support_refs\n[pm-plans-verify] done support_refs status=pass elapsed_ms=4028\n[pm-plans-verify] start path_refs\n[pm-plans-verify] done path_refs status=pass elapsed_ms=94\n[pm-plans-verify] start shards\n[pm-plans-verify] done shards status=pass elapsed_ms=737\n[pm-plans-verify] start project_artifacts\n[pm-plans-verify] done project_artifacts status=pass elapsed_ms=0\n[pm-plans-verify] start plans_to_code_handoff_schema\n[pm-plans-verify] done plans_to_code_handoff_schema status=pass elapsed_ms=2\n[pm-plans-verify] start prd_planning_runtime_contracts\n[pm-plans-verify] done prd_planning_runtime_contracts status=pass elapsed_ms=64\n[pm-plans-verify] start runtime_artifact_schemas\n[pm-plans-verify] done runtime_artifact_schemas status=pass elapsed_ms=2\n[pm-plans-verify] start goal_runtime_event_fixtures\n[pm-plans-verify] done goal_runtime_event_fixtures status=pass elapsed_ms=0\n[pm-plans-verify] start project_output_fixtures\n[pm-plans-verify] done project_output_fixtures status=pass elapsed_ms=0\n[pm-plans-verify] start wiring_matrix\n[pm-plans-verify] done wiring_matrix status=pass elapsed_ms=46\n[pm-plans-verify] start audit_status_index\n[pm-plans-verify] done audit_status_index status=pass elapsed_ms=47\n",
+      "stdout_tail": "{\n  \"check\": \"audit-governance\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T21:21:10Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    "auto_decisions_validate": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-auto-decisions"
+      ],
+      "duration_seconds": 0.063,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T21:21:02Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    "bootstrap_ledgers_sweep": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-bootstrap-ledgers"
+      ],
+      "duration_seconds": 110.007,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-bootstrap-ledgers\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T21:20:21Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    "closure_registry_global": {
+      "cmd": [
+        "python3",
+        "scripts/pm-audit-closure.py",
+        "validate"
+      ],
+      "duration_seconds": 1.477,
+      "returncode": 1,
+      "status": "fail",
+      "stderr_tail": "",
+      "stdout_tail": "50ff962ec073852fffe1c29ca3ccf4a84d5140, current fbe1f56bbc7e62a4738fabd40db30106460abc035567c6f5ecdd3446017fbc73)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:331: closure_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 5fb4eabdc79e8367769a22b183c4e2a2c39180af5ea63f21fb6456e0870d1855, current 132e7b997611d2011cc13b93d211926173816cc093ad7bc45c42641095073f87)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:331: closure_evidence_hashes for Plans/Automated_Testing_System.md is stale (stored 208c779811898d6e012410391de67f680e4dab94fff0a105c2f3e7c25de76beb, current 8f2865c0517d02b1b852c12f700c373231d771fbcf42d14292d379e633b72159)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:331: closure_evidence_hashes for Plans/Contracts_V0.md is stale (stored f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e, current 0eaafb76ad2c020549f2b0338605377c5a1ddab901b1d3aa3167c39c88382a01)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:331: closure_evidence_hashes for Plans/Permissions_System.md is stale (stored 45b5c8f5fd34f160c7c2ccc770d61ed2be5f7ec1927f97d82b94d7071f9c3d50, current 9aaebb4076398655d3e72ea34024342ef2d315b82a167c3390e6a3d78fb4f205)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:331: closure_evidence_hashes for Plans/storage-plan.md is stale (stored a8fc7140e89880a7e51e4d554d50ff962ec073852fffe1c29ca3ccf4a84d5140, current fbe1f56bbc7e62a4738fabd40db30106460abc035567c6f5ecdd3446017fbc73)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:334: closure_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 60b7d943eb92a60a35558629c3a66ee610051891a5efbf504bdbaaa2847928b2, current 2634d67cd160a59ac95691c95088907bd517d237a2b05ef6ff0210b5615558cd)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:337: owner_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 60b7d943eb92a60a35558629c3a66ee610051891a5efbf504bdbaaa2847928b2, current 2634d67cd160a59ac95691c95088907bd517d237a2b05ef6ff0210b5615558cd)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:337: closure_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 60b7d943eb92a60a35558629c3a66ee610051891a5efbf504bdbaaa2847928b2, current 2634d67cd160a59ac95691c95088907bd517d237a2b05ef6ff0210b5615558cd)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:340: owner_evidence_hashes for Plans/.plan_index/plan_units.jsonl is stale (stored 5fb4eabdc79e8367769a22b183c4e2a2c39180af5ea63f21fb6456e0870d1855, current 132e7b997611d2011cc13b93d211926173816cc093ad7bc45c42641095073f87)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:340: owner_evidence_hashes for Plans/00-plans-index.md is stale (stored 4d4d874c5978d9117cfc3992a6422d88dd86c78f35a94819259aa172968d8e27, current 0874c6f5dec90701985009c004a2762946ca2df488ff19be8c81d84c9ea3d905)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: owner_evidence_hashes for Plans/Automated_Testing_System.md is stale (stored 208c779811898d6e012410391de67f680e4dab94fff0a105c2f3e7c25de76beb, current 8f2865c0517d02b1b852c12f700c373231d771fbcf42d14292d379e633b72159)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: owner_evidence_hashes for Plans/Contracts_V0.md is stale (stored f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e, current 0eaafb76ad2c020549f2b0338605377c5a1ddab901b1d3aa3167c39c88382a01)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: owner_evidence_hashes for Plans/FinalGUISpec.md is stale (stored f28e7193cd3bdc3e939b871f3b088f75a921a6b6a4c199c7ea2a9b42542e9131, current 9bc70c143cbbf4596814b3decd2231d7a4585f04d112d2729a6833bea987f113)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: owner_evidence_hashes for Plans/Models_System.md is stale (stored 406b3d1e8b4517facac8f80e9b5fe4ae8b535c095a7c337b75ff5e043877d152, current 4bd69c6f044c0aea4d6adde610a5db4b320043e581d7818709fc68e1d359b25e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: owner_evidence_hashes for Plans/Multi-Account.md is stale (stored 360054b06c9b040c81024416427fddb3fb9955fe7a50223096b940721df05abe, current c3f961232d6785bff5830908c674ad7e3fcb6c1d25f9d94c7e97496d1674f17e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: owner_evidence_hashes for Plans/assistant-chat-design.md is stale (stored ec38f3391976aad49726daab107e568198c82a29652e5ef6715aea85fc7e1ea4, current 3c8761c64b24d6e82739aa89979ebf1977095f52bcf621cdc7c91a6e466fc6fa)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: closure_evidence_hashes for Plans/Automated_Testing_System.md is stale (stored 208c779811898d6e012410391de67f680e4dab94fff0a105c2f3e7c25de76beb, current 8f2865c0517d02b1b852c12f700c373231d771fbcf42d14292d379e633b72159)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: closure_evidence_hashes for Plans/Contracts_V0.md is stale (stored f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e, current 0eaafb76ad2c020549f2b0338605377c5a1ddab901b1d3aa3167c39c88382a01)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: closure_evidence_hashes for Plans/FinalGUISpec.md is stale (stored f28e7193cd3bdc3e939b871f3b088f75a921a6b6a4c199c7ea2a9b42542e9131, current 9bc70c143cbbf4596814b3decd2231d7a4585f04d112d2729a6833bea987f113)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: closure_evidence_hashes for Plans/Models_System.md is stale (stored 406b3d1e8b4517facac8f80e9b5fe4ae8b535c095a7c337b75ff5e043877d152, current 4bd69c6f044c0aea4d6adde610a5db4b320043e581d7818709fc68e1d359b25e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: closure_evidence_hashes for Plans/Multi-Account.md is stale (stored 360054b06c9b040c81024416427fddb3fb9955fe7a50223096b940721df05abe, current c3f961232d6785bff5830908c674ad7e3fcb6c1d25f9d94c7e97496d1674f17e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:341: closure_evidence_hashes for Plans/assistant-chat-design.md is stale (stored ec38f3391976aad49726daab107e568198c82a29652e5ef6715aea85fc7e1ea4, current 3c8761c64b24d6e82739aa89979ebf1977095f52bcf621cdc7c91a6e466fc6fa)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:342: owner_evidence_hashes for Plans/Multi-Account.md is stale (stored 360054b06c9b040c81024416427fddb3fb9955fe7a50223096b940721df05abe, current c3f961232d6785bff5830908c674ad7e3fcb6c1d25f9d94c7e97496d1674f17e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:342: owner_evidence_hashes for Plans/assistant-chat-design.md is stale (stored ec38f3391976aad49726daab107e568198c82a29652e5ef6715aea85fc7e1ea4, current 3c8761c64b24d6e82739aa89979ebf1977095f52bcf621cdc7c91a6e466fc6fa)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:342: closure_evidence_hashes for Plans/Multi-Account.md is stale (stored 360054b06c9b040c81024416427fddb3fb9955fe7a50223096b940721df05abe, current c3f961232d6785bff5830908c674ad7e3fcb6c1d25f9d94c7e97496d1674f17e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:342: closure_evidence_hashes for Plans/assistant-chat-design.md is stale (stored ec38f3391976aad49726daab107e568198c82a29652e5ef6715aea85fc7e1ea4, current 3c8761c64b24d6e82739aa89979ebf1977095f52bcf621cdc7c91a6e466fc6fa)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:344: owner_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 60b7d943eb92a60a35558629c3a66ee610051891a5efbf504bdbaaa2847928b2, current 2634d67cd160a59ac95691c95088907bd517d237a2b05ef6ff0210b5615558cd)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:344: closure_evidence_hashes for Plans/ledgers/v2/ledger_registry.json is stale (stored 60b7d943eb92a60a35558629c3a66ee610051891a5efbf504bdbaaa2847928b2, current 2634d67cd160a59ac95691c95088907bd517d237a2b05ef6ff0210b5615558cd)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: owner_evidence_hashes for Plans/Automated_Testing_System.md is stale (stored 208c779811898d6e012410391de67f680e4dab94fff0a105c2f3e7c25de76beb, current 8f2865c0517d02b1b852c12f700c373231d771fbcf42d14292d379e633b72159)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: owner_evidence_hashes for Plans/Contracts_V0.md is stale (stored f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e, current 0eaafb76ad2c020549f2b0338605377c5a1ddab901b1d3aa3167c39c88382a01)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: owner_evidence_hashes for Plans/Models_System.md is stale (stored 406b3d1e8b4517facac8f80e9b5fe4ae8b535c095a7c337b75ff5e043877d152, current 4bd69c6f044c0aea4d6adde610a5db4b320043e581d7818709fc68e1d359b25e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: owner_evidence_hashes for Plans/Multi-Account.md is stale (stored 360054b06c9b040c81024416427fddb3fb9955fe7a50223096b940721df05abe, current c3f961232d6785bff5830908c674ad7e3fcb6c1d25f9d94c7e97496d1674f17e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: owner_evidence_hashes for Plans/assistant-chat-design.md is stale (stored ec38f3391976aad49726daab107e568198c82a29652e5ef6715aea85fc7e1ea4, current 3c8761c64b24d6e82739aa89979ebf1977095f52bcf621cdc7c91a6e466fc6fa)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: closure_evidence_hashes for Plans/Automated_Testing_System.md is stale (stored 208c779811898d6e012410391de67f680e4dab94fff0a105c2f3e7c25de76beb, current 8f2865c0517d02b1b852c12f700c373231d771fbcf42d14292d379e633b72159)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: closure_evidence_hashes for Plans/Contracts_V0.md is stale (stored f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e, current 0eaafb76ad2c020549f2b0338605377c5a1ddab901b1d3aa3167c39c88382a01)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: closure_evidence_hashes for Plans/Models_System.md is stale (stored 406b3d1e8b4517facac8f80e9b5fe4ae8b535c095a7c337b75ff5e043877d152, current 4bd69c6f044c0aea4d6adde610a5db4b320043e581d7818709fc68e1d359b25e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: closure_evidence_hashes for Plans/Multi-Account.md is stale (stored 360054b06c9b040c81024416427fddb3fb9955fe7a50223096b940721df05abe, current c3f961232d6785bff5830908c674ad7e3fcb6c1d25f9d94c7e97496d1674f17e)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:346: closure_evidence_hashes for Plans/assistant-chat-design.md is stale (stored ec38f3391976aad49726daab107e568198c82a29652e5ef6715aea85fc7e1ea4, current 3c8761c64b24d6e82739aa89979ebf1977095f52bcf621cdc7c91a6e466fc6fa)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:348: owner_evidence_hashes for Plans/Contracts_V0.md is stale (stored f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e, current 0eaafb76ad2c020549f2b0338605377c5a1ddab901b1d3aa3167c39c88382a01)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:348: closure_evidence_hashes for Plans/Contracts_V0.md is stale (stored f6a4a615611bbacf111a5cc25bd31e2fec0bae38d78d5123f2bbf5ae05cb301e, current 0eaafb76ad2c020549f2b0338605377c5a1ddab901b1d3aa3167c39c88382a01)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:349: owner_evidence_hashes for Plans/Automated_Testing_System.md is stale (stored 208c779811898d6e012410391de67f680e4dab94fff0a105c2f3e7c25de76beb, current 8f2865c0517d02b1b852c12f700c373231d771fbcf42d14292d379e633b72159)\",\n      \"Plans/.audits/_semantic_closure_registry.jsonl:349: closure_evidence_hashes for Plans/Automated_Testing_System.md is stale (stored 208c779811898d6e012410391de67f680e4dab94fff0a105c2f3e7c25de76beb, current 8f2865c0517d02b1b852c12f700c373231d771fbcf42d14292d379e633b72159)\"\n    ],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 352,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"false_positive\": 4,\n      \"not_for_plan\": 20,\n      \"repaired\": 290,\n      \"source_lineage_only\": 27,\n      \"stale_retired\": 8\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"fail\",\n  \"warnings\": []\n}\n"
+    },
+    "evidence_validate": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-evidence"
+      ],
+      "duration_seconds": 0.816,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T21:21:03Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    "git_diff_check": {
+      "cmd": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "duration_seconds": 0.018,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": ""
+    },
+    "governance_run_gates": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "run-gates"
+      ],
+      "duration_seconds": 8.683,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "[pm-plans-verify] start json_syntax\n[pm-plans-verify] done json_syntax status=pass elapsed_ms=1944\n[pm-plans-verify] start verify_spec_lock\n[pm-plans-verify] done verify_spec_lock status=pass elapsed_ms=19\n[pm-plans-verify] start validate_plan_graph\n[pm-plans-verify] done validate_plan_graph status=pass elapsed_ms=888\n[pm-plans-verify] start validate_auto_decisions\n[pm-plans-verify] done validate_auto_decisions status=pass elapsed_ms=5\n[pm-plans-verify] start validate_evidence\n[pm-plans-verify] done validate_evidence status=pass elapsed_ms=732\n[pm-plans-verify] start lint_contractrefs\n[pm-plans-verify] done lint_contractrefs status=pass elapsed_ms=4034\n[pm-plans-verify] start lint_banned_phrases\n[pm-plans-verify] done lint_banned_phrases status=pass elapsed_ms=14\n[pm-plans-verify] start lint_path_refs\n[pm-plans-verify] done lint_path_refs status=pass elapsed_ms=94\n[pm-plans-verify] start check_project_artifact_requirements\n[pm-plans-verify] done check_project_artifact_requirements status=pass elapsed_ms=0\n[pm-plans-verify] start validate_plans_to_code_handoff_schema\n[pm-plans-verify] done validate_plans_to_code_handoff_schema status=pass elapsed_ms=2\n[pm-plans-verify] start validate_prd_planning_runtime_contracts\n[pm-plans-verify] done validate_prd_planning_runtime_contracts status=pass elapsed_ms=63\n[pm-plans-verify] start validate_runtime_artifact_schemas\n[pm-plans-verify] done validate_runtime_artifact_schemas status=pass elapsed_ms=2\n[pm-plans-verify] start validate_goal_runtime_event_fixtures\n[pm-plans-verify] done validate_goal_runtime_event_fixtures status=pass elapsed_ms=0\n[pm-plans-verify] start validate_project_output_fixtures\n[pm-plans-verify] done validate_project_output_fixtures status=pass elapsed_ms=1\n[pm-plans-verify] start validate_wiring_matrix\n[pm-plans-verify] done validate_wiring_matrix status=pass elapsed_ms=46\n[pm-plans-verify] start validate_audit_status_index\n[pm-plans-verify] done validate_audit_status_index status=pass elapsed_ms=50\n[pm-plans-verify] start check_shards\n[pm-plans-verify] done check_shards status=pass elapsed_ms=714\n",
+      "stdout_tail": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T21:21:01Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    "plan_graph_validate": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-plan-graph"
+      ],
+      "duration_seconds": 0.731,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-plan-graph\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T21:21:04Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    "plan_index_validate": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "duration_seconds": 16.058,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T21:20:37Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 19633,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_runtime_certification_incomplete\",\n    \"plan_unit_count\": 5473\n  }\n}\n"
+    },
+    "plan_migration_validate": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plan-migration.py",
+        "validate",
+        "--run-dir",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+      ],
+      "duration_seconds": 15.47,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "se2b_batch_102_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_102_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_102_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_103_atomized_covered\": 11,\n      \"phase2b_batch_103_retired_bridge_disposition\": 1,\n      \"phase2b_batch_103_structural_migration_coverage_disposition\": 1,\n      \"phase2b_batch_103_structural_owner_boundary_disposition\": 1,\n      \"phase2b_batch_103_structural_planunits_container_disposition\": 1,\n      \"phase2b_batch_103_structural_section_container\": 2,\n      \"phase2b_batch_103_structural_title_anchor\": 1,\n      \"phase2b_batch_104_atomized_covered\": 28,\n      \"phase2b_batch_104_structural_section_container\": 3,\n      \"phase2b_batch_104_structural_title_anchor\": 1,\n      \"phase2b_batch_104_structural_toc_disposition\": 1,\n      \"phase2b_batch_105_atomized_covered\": 16,\n      \"phase2b_batch_105_structural_parent_covered\": 1,\n      \"phase2b_batch_105_structural_section_container\": 1,\n      \"phase2b_batch_106_atomized_covered\": 19,\n      \"phase2b_batch_106_structural_section_container\": 1,\n      \"phase2b_batch_107_atomized_covered\": 4,\n      \"phase2b_batch_107_reference_only_structural\": 1,\n      \"phase2b_batch_107_structural_addendum_heading\": 1,\n      \"phase2b_batch_107_structural_section_container\": 1,\n      \"phase2b_batch_108_atomized_covered\": 19,\n      \"phase2b_batch_108_retired_bridge_disposition\": 1,\n      \"phase2b_batch_108_structural_migration_coverage\": 1,\n      \"phase2b_batch_108_structural_planunits_heading\": 1,\n      \"phase2b_batch_108_structural_section_and_planunit\": 3,\n      \"phase2b_batch_109_atomized_covered\": 28,\n      \"phase2b_batch_109_structural_commands_heading\": 1,\n      \"phase2b_batch_109_structural_expanded_extraction_coverage_heading\": 1,\n      \"phase2b_batch_109_structural_formatters_heading\": 1,\n      \"phase2b_batch_109_structural_migration_coverage\": 1,\n      \"phase2b_batch_109_structural_owner_consumer_map\": 1,\n      \"phase2b_batch_109_structural_permissions_heading\": 1,\n      \"phase2b_batch_109_structural_planunits_heading\": 1,\n      \"phase2b_batch_109_structural_run_modes_heading\": 1,\n      \"phase2b_batch_109_structural_subagents_heading\": 1,\n      \"phase2b_batch_110_atomized_covered\": 32,\n      \"phase2b_batch_110_retired_bridge_disposition\": 1,\n      \"phase2b_batch_110_structural_delta_hooks_heading\": 1,\n      \"phase2b_batch_110_structural_models_heading\": 1,\n      \"phase2b_batch_110_structural_plugins_heading\": 1,\n      \"phase2b_batch_110_structural_skills_heading\": 1,\n      \"phase2b_batch_111_atomized_covered\": 15,\n      \"phase2b_batch_111_structural_plan_map_heading\": 1,\n      \"phase2b_batch_112_atomized_covered\": 8,\n      \"phase2b_batch_112_migration_coverage_metadata\": 1,\n      \"phase2b_batch_112_retired_bridge_disposition\": 1,\n      \"phase2b_batch_112_structural_planunits_heading\": 1,\n      \"phase2b_batch_113_atomized_covered\": 43,\n      \"phase2b_batch_113_structural_planunits_heading\": 1,\n      \"phase2b_batch_114_migration_coverage_metadata\": 1,\n      \"phase2b_batch_114_retired_bridge_disposition\": 1,\n      \"phase2b_batch_115_atomized_covered\": 35,\n      \"phase2b_batch_116_atomized_covered\": 5,\n      \"phase2b_batch_116_migration_coverage_metadata\": 1,\n      \"phase2b_batch_116_planunits_heading_structural\": 1,\n      \"phase2b_batch_116_retired_bridge_disposition\": 1,\n      \"phase2b_batch_118_atomized_covered\": 21,\n      \"phase2b_batch_119_atomized_covered\": 1,\n      \"phase2b_batch_120_atomized_covered\": 18,\n      \"phase2b_batch_121_atomized_covered\": 48,\n      \"phase2b_batch_122_atomized_covered\": 8,\n      \"phase2b_batch_123_atomized_covered\": 1,\n      \"phase2b_batch_124_atomized_covered\": 12,\n      \"phase2b_batch_126_atomized_covered\": 1,\n      \"phase2b_batch_127_atomized_covered\": 8,\n      \"phase2b_batch_128_atomized_covered\": 1,\n      \"phase2b_batch_129_duplicate_aware_atomized_covered\": 6,\n      \"phase2b_batch_130_atomized_covered\": 11,\n      \"phase2b_batch_131_atomized_covered\": 5,\n      \"phase2b_batch_132_atomized_covered\": 1,\n      \"phase2b_batch_133_atomized_covered\": 10,\n      \"phase2b_batch_134_atomized_covered\": 1,\n      \"phase2b_batch_135_atomized_covered\": 1,\n      \"phase2b_batch_136_atomized_covered\": 18,\n      \"phase2b_batch_137_atomized_covered\": 15,\n      \"phase2b_batch_138_atomized_covered\": 36,\n      \"phase2b_batch_139_structural_dispositioned\": 4,\n      \"phase2b_batch_140_structural_dispositioned\": 1,\n      \"phase2b_batch_141_structural_dispositioned\": 4,\n      \"phase2b_batch_142_atomized_covered\": 75,\n      \"phase2b_batch_142_structural_dispositioned\": 1,\n      \"phase2b_batch_143_retired_bridge_disposition\": 1,\n      \"phase2b_batch_143_structural_dispositioned\": 1,\n      \"phase2b_batch_144_atomized_covered\": 38,\n      \"phase2b_batch_145_atomized_covered\": 20,\n      \"phase2b_batch_146_retired_bridge_disposition\": 1,\n      \"phase2b_batch_146_structural_dispositioned\": 3,\n      \"phase2b_batch_147_atomized_covered\": 26,\n      \"phase2b_batch_148_atomized_covered\": 20,\n      \"phase2b_batch_148_structural_covered\": 1,\n      \"phase2b_batch_149_retired_bridge_disposition\": 1,\n      \"phase2b_batch_149_structural_dispositioned\": 3,\n      \"phase2b_batch_150_atomized_covered\": 24,\n      \"phase2b_batch_151_atomized_covered\": 22,\n      \"phase2b_batch_152_atomized_covered\": 3,\n      \"phase2b_batch_152_retired_bridge_disposition\": 1,\n      \"phase2b_batch_152_structural_dispositioned\": 3,\n      \"phase2b_batch_153_atomized_covered\": 20,\n      \"phase2b_batch_154_atomized_covered\": 22,\n      \"phase2b_batch_155_retired_bridge_disposition\": 1,\n      \"phase2b_batch_155_structural_dispositioned\": 3,\n      \"phase2b_batch_156_atomized_covered\": 27,\n      \"phase2b_batch_156_structural_dispositioned\": 4,\n      \"phase2b_batch_157_atomized_covered\": 22,\n      \"phase2b_batch_157_structural_dispositioned\": 1,\n      \"phase2b_batch_158_retired_bridge_disposition\": 1,\n      \"phase2b_batch_158_structural_dispositioned\": 3,\n      \"phase2b_batch_159_atomized_covered\": 42,\n      \"phase2b_batch_160_retired_bridge_disposition\": 1,\n      \"phase2b_batch_160_structural_dispositioned\": 3,\n      \"phase2b_batch_161_atomized_covered\": 35,\n      \"phase2b_batch_161_structural_dispositioned\": 3,\n      \"phase2b_batch_162_retired_bridge_disposition\": 1,\n      \"phase2b_batch_162_structural_dispositioned\": 3,\n      \"phase2b_batch_163_atomized\": 29,\n      \"phase2b_batch_164_atomized\": 30,\n      \"phase2b_batch_165_retired_bridge_disposition\": 1,\n      \"phase2b_batch_165_structural_dispositioned\": 3,\n      \"phase2b_batch_166_atomized\": 31,\n      \"phase2b_batch_167_retired_bridge_disposition\": 1,\n      \"phase2b_batch_167_structural_dispositioned\": 3,\n      \"phase2b_batch_168_atomized\": 20,\n      \"phase2b_batch_169_atomized\": 27,\n      \"phase2b_batch_169_structural_dispositioned\": 1,\n      \"phase2b_batch_170_atomized\": 2,\n      \"phase2b_batch_170_retired_bridge_disposition\": 1,\n      \"phase2b_batch_170_structural_dispositioned\": 3,\n      \"phase2b_batch_171_atomized\": 29,\n      \"phase2b_batch_172_atomized\": 1,\n      \"phase2b_batch_172_retired_bridge_disposition\": 1,\n      \"phase2b_batch_172_structural_dispositioned\": 3,\n      \"phase2b_batch_173_atomized\": 42,\n      \"phase2b_batch_174_atomized\": 33,\n      \"phase2b_batch_175_atomized\": 1,\n      \"phase2b_batch_176_atomized\": 1,\n      \"phase2b_batch_177_atomized\": 9,\n      \"phase2b_batch_178_atomized\": 14,\n      \"phase2b_batch_179_atomized\": 27,\n      \"phase2b_batch_180_generated_bridge_disposition\": 1,\n      \"phase2b_batch_180_structural_dispositioned\": 2,\n      \"phase2b_batch_181_atomized\": 23,\n      \"phase2b_batch_182_atomized\": 10,\n      \"phase2b_batch_183_atomized\": 21,\n      \"phase2b_batch_183_structural_dispositioned\": 1,\n      \"phase2b_batch_184_atomized\": 37,\n      \"phase2b_batch_184_structural_dispositioned\": 2,\n      \"phase2b_batch_185_atomized\": 7,\n      \"phase2b_batch_185_structural_dispositioned\": 1,\n      \"phase2b_batch_186_atomized\": 10,\n      \"phase2b_batch_186_structural_dispositioned\": 3,\n      \"phase2b_batch_187_generated_bridge_disposition\": 1,\n      \"phase2b_batch_187_structural_dispositioned\": 1,\n      \"phase2b_batch_188_atomized\": 24,\n      \"phase2b_batch_189_atomized\": 11,\n      \"phase2b_batch_189_structural_dispositioned\": 1,\n      \"phase2b_batch_190_atomized\": 12,\n      \"phase2b_batch_190_structural_dispositioned\": 1,\n      \"phase2b_batch_191_atomized\": 2,\n      \"phase2b_batch_191_atomized_split\": 1,\n      \"phase2b_batch_191_retired_bridge_disposition\": 1,\n      \"phase2b_batch_191_structural_dispositioned\": 3,\n      \"phase2b_batch_192_existing_planunit_covered\": 8,\n      \"phase2b_batch_192_structural_planunits_heading\": 1,\n      \"phase2b_batch_193_existing_planunit_covered\": 18,\n      \"phase2b_batch_193_structural_dispositioned\": 1,\n      \"phase2b_batch_194_anchor_mapped\": 8,\n      \"phase2b_batch_194_atomized\": 20,\n      \"phase2b_batch_194_atomized_split\": 4,\n      \"phase2b_batch_194_structural_dispositioned\": 5,\n      \"phase2b_batch_195_anchor_mapped\": 5,\n      \"phase2b_batch_195_atomized\": 25,\n      \"phase2b_batch_195_atomized_split\": 12,\n      \"phase2b_batch_195_existing_planunit_mapped\": 7,\n      \"phase2b_batch_195_structural_dispositioned\": 6,\n      \"phase2b_batch_196_atomized\": 6,\n      \"phase2b_batch_196_atomized_split\": 3,\n      \"phase2b_batch_196_structural_dispositioned\": 2,\n      \"phase2b_batch_197_retired_bridge_lineage\": 1,\n      \"phase2b_batch_197_structural_dispositioned\": 3,\n      \"phase2b_batch_198_atomized\": 3,\n      \"phase2b_batch_198_atomized_split\": 4,\n      \"phase2b_batch_198_retired_bridge_lineage\": 1,\n      \"phase2b_batch_198_structural_dispositioned\": 3,\n      \"phase2b_batch_198_structural_heading_mapped\": 2,\n      \"phase2b_batch_199_atomized_covered\": 26,\n      \"phase2b_batch_199_atomized_split\": 2,\n      \"phase2b_batch_199_structural_dispositioned\": 3,\n      \"phase2b_batch_200_atomized_covered\": 4,\n      \"phase2b_batch_200_atomized_split\": 3,\n      \"phase2b_batch_200_structural_dispositioned\": 5,\n      \"phase2b_batch_201_retired_bridge_lineage\": 1,\n      \"phase2b_batch_201_structural_dispositioned\": 3,\n      \"phase2b_batch_202_atomized_covered\": 42,\n      \"phase2b_batch_202_atomized_split\": 9,\n      \"phase2b_batch_202_structural_dispositioned\": 7,\n      \"phase2b_batch_203_atomized_covered\": 35,\n      \"phase2b_batch_203_atomized_split\": 5,\n      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 72,\n    \"live_plan_unit_count\": 5473,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3933,\n    \"unique_live_plan_unit_count\": 5473\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n"
+    },
+    "shard_check": {
+      "cmd": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "duration_seconds": 0.671,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"docs_checked\": 73,\n  \"failures\": [],\n  \"shards_checked\": 1392,\n  \"source_count\": 73,\n  \"status\": \"pass\"\n}\n"
+    },
+    "spec_lock_verify": {
+      "cmd": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "verify-spec-lock"
+      ],
+      "duration_seconds": 0.072,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T21:21:02Z\",\n  \"status\": \"pass\"\n}\n"
+    },
+    "target_audit_closure_validate": {
+      "audit_dir_error_count": 0,
+      "audit_dir_warning_count": 1,
+      "cmd": [
+        "python3",
+        "scripts/pm-audit-closure.py",
+        "validate",
+        "--audit-dir",
+        "Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity"
+      ],
+      "matrix_required": true,
+      "registry_error_count": 1011,
+      "repair_required_count": 6,
+      "returncode": 1,
+      "status": "fail",
+      "stderr_tail": "",
+      "stdout_path": "/tmp/pm_audit_20260703_closure_validate.json",
+      "stdout_tail": "status=fail; errors=1011; registry_errors=1011; audit_dir_errors=0"
+    },
+    "target_ledger_validate": {
+      "cmd": [
+        "python3",
+        "scripts/pm-bootstrap-ledger-validate.py",
+        "Plans/ledgers/v2/pldg-20260703-001-feature-intake"
+      ],
+      "duration_seconds": 8.519,
+      "returncode": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260703-001-feature-intake\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 122,\n    \"compile_queue_items\": 1,\n    \"corrections\": 0,\n    \"decisions\": 6,\n    \"events\": 12,\n    \"plan_units_checked\": 3067,\n    \"questions\": 1\n  },\n  \"warnings\": []\n}\n"
+    }
+  },
+  "finding_level": "info",
+  "generated_at_utc": "2026-07-03T21:33:11Z",
+  "git_status_after": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": " M .claude/settings.local.json\n?? Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/\n"
+  },
+  "git_status_before": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": " M .claude/settings.local.json\n?? Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/\n"
+  },
+  "git_status_final": {
+    "returncode": 0,
+    "stderr": "",
+    "stdout": " M .claude/settings.local.json\n?? Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/\n"
+  },
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "non_audit_side_effects": false,
+  "non_audit_status_after": [
+    " M .claude/settings.local.json"
+  ],
+  "observation_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "repair_required": false,
+  "schema_id": "pm.audit.validator_results.v1",
+  "semantic_audit_summary": {
+    "git_status_after": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": " M .claude/settings.local.json\n?? Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/\n"
+    },
+    "git_status_before": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": " M .claude/settings.local.json\n?? Plans/.audits/audit-20260703-001-external-repo-import-closed-world-semantic-fidelity/\n"
+    },
+    "repair_required_count": 6,
+    "status": "BLOCKED",
+    "target_audit_closure_validate": {
+      "audit_dir_error_count": 0,
+      "audit_dir_warning_count": 1,
+      "registry_error_count": 1011,
+      "status": "fail"
+    },
+    "validator_failure_count": 1,
+    "validator_failures": [
+      "closure_registry_global"
+    ],
+    "validator_side_effects_detected": false
+  },
+  "subject_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "validator_failure_count": 1
+}
