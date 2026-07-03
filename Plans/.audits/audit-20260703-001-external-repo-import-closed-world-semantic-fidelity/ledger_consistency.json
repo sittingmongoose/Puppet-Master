@@ -1,0 +1,109 @@
+{
+  "audit_id": "audit-20260703-001-external-repo-import-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "finding_keys": [
+    "sfk-c2d9b8c999c653207d8dd63d",
+    "sfk-2048ad95d5a295c3a4b7a47f",
+    "sfk-9eb4947b9111e0e62a6290fb",
+    "sfk-c991bae414aca3fa4f29a7ac",
+    "sfk-5efdc99245444addb8f240df",
+    "sfk-0439337e339aad8f961ef365",
+    "sfk-a722575c4a364e816074e0c8"
+  ],
+  "finding_level": "info",
+  "finding_summaries": [
+    {
+      "finding_family": "planunit_canonical_text_none_placeholder_from_source_delta",
+      "finding_key": "sfk-c2d9b8c999c653207d8dd63d",
+      "repair_required": false,
+      "summary": "Forty-two compiled PlanUnits include the literal `: None` in canonical_text where source rows used delta/gap-style fields; the semantic content is often preserved later in the sentence, but canonical Plan prose still carries an invalid placeholder."
+    },
+    {
+      "finding_family": "ledger_design_atom_validation_notes_stale_compile_state",
+      "finding_key": "sfk-2048ad95d5a295c3a4b7a47f",
+      "repair_required": false,
+      "summary": "All 113 external import atoms are status=compiled_to_plan with compiled PlanUnit targets, but their validation_notes still say they were not compiled to canonical Plans."
+    },
+    {
+      "finding_family": "ledger_projection_notes_governance_seal_stale",
+      "finding_key": "sfk-9eb4947b9111e0e62a6290fb",
+      "repair_required": false,
+      "summary": "Registry and manifest status fields say the ledger is governance-sealed, but their notes still describe governance as pending and generated governance artifacts as not updated."
+    },
+    {
+      "finding_family": "ledger_compile_summary_stale_migration_validator_result",
+      "finding_key": "sfk-c991bae414aca3fa4f29a7ac",
+      "repair_required": false,
+      "summary": "The final compile summary embeds an obsolete pm_plan_migration_validate failure object while normalized validation_state and the later governance recheck record migration validation as pass."
+    },
+    {
+      "finding_family": "closure_registry_hashes_stale_validator_failure",
+      "finding_key": "sfk-5efdc99245444addb8f240df",
+      "repair_required": false,
+      "summary": "The global semantic closure registry validator fails after the cycle because prior closure rows have stale owner/closure evidence hashes for changed governed files."
+    },
+    {
+      "finding_family": "forbidden_local_machine_state_in_subject_diff",
+      "finding_key": "sfk-0439337e339aad8f961ef365",
+      "repair_required": false,
+      "summary": "The baseline-to-subject commit includes .claude/settings.local.json, a local settings file, despite AGENTS.md forbidding local machine state."
+    }
+  ],
+  "generated_at_utc": "2026-07-03T21:33:11Z",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "observation_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "projection_checks": {
+    "compile_queue_status": "compiled_to_plans_governance_sealed",
+    "compile_summary_validation_state": {
+      "git_diff_check": "pass",
+      "no_executable_queues_created": true,
+      "no_final_node_manifests_created": true,
+      "no_implementation_files_created": true,
+      "no_nodeseed_candidates_created": true,
+      "no_production_build_tasks_created": true,
+      "no_worknodes_created": true,
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "pm_bootstrap_ledger_validate_pldg_20260610": "pass",
+      "pm_bootstrap_ledger_validate_pldg_20260703": "pass",
+      "pm_plan_index_validate": "pass",
+      "pm_plan_migration_validate": "pass",
+      "pm_plans_verify_run_gates": "pass",
+      "pm_plans_verify_validate_auto_decisions": "pass",
+      "pm_plans_verify_validate_evidence": "pass",
+      "pm_plans_verify_validate_plan_graph": "pass",
+      "pm_plans_verify_verify_spec_lock": "pass",
+      "pm_shard_plans_check": "pass"
+    },
+    "current_phase": "compiled_to_plans_governance_sealed",
+    "governance_recheck_status": "pass_governance_sealed",
+    "manifest_governance_status": "sealed",
+    "manifest_phase": "compiled_to_plans_governance_sealed",
+    "manifest_status": "sealed",
+    "registry_governance_status": "sealed",
+    "registry_phase": "compiled_to_plans_governance_sealed",
+    "registry_status": "sealed"
+  },
+  "repair_required": false,
+  "schema_id": "pm.ledger_consistency_report.v1",
+  "status": "blocked",
+  "subject_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "summary": {
+    "compiled_owner_docs": 28,
+    "compiled_plan_units": 127,
+    "design_atoms_total": 122,
+    "external_import_atoms": 113,
+    "forbidden_artifact_diff_check": "fail",
+    "ledger_registry_bucket": "sealed_ledgers",
+    "open_blockers": 0,
+    "open_questions": 0,
+    "runtime_boundary": "blocked_runtime_certification_incomplete"
+  },
+  "warning_summaries": [
+    {
+      "finding_family": "stale_root_shard_report_sibling",
+      "finding_key": "sfk-a722575c4a364e816074e0c8",
+      "repair_required": false,
+      "summary": "A stale root-level shard_report.json sibling remains beside the current reports/shard_report.json; the stale file was not changed by this subject cycle, so this is non-actionable for this audit but should not be mistaken for current sharding evidence."
+    }
+  ]
+}
