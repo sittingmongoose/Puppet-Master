@@ -1,0 +1,63 @@
+{
+  "audit_id": "audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "compiled_owner_doc_count": 28,
+  "compiled_plan_unit_count": 127,
+  "finding_level": "info",
+  "governance_status_values": {
+    "ledger_registry": "sealed",
+    "manifest": "sealed",
+    "state/compile_queue.json": "sealed",
+    "state/compile_summary_20260703.json": "sealed",
+    "state/current.json": "sealed",
+    "state/handoff.json": "sealed",
+    "state/open_items.json": "sealed",
+    "state/operating_capsule.json": "sealed"
+  },
+  "latest_audit_status_values": {
+    "ledger_registry": "pass_governance_sealed",
+    "manifest": "pass_governance_sealed",
+    "state/compile_queue.json": "pass_governance_sealed",
+    "state/compile_summary_20260703.json": "pass_governance_sealed",
+    "state/current.json": "pass_governance_sealed",
+    "state/handoff.json": "pass_governance_sealed",
+    "state/open_items.json": "pass_governance_sealed",
+    "state/operating_capsule.json": "pass_governance_sealed"
+  },
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "non_actionable_projection_notes": [
+    {
+      "finding_key": "sfk-fc4aba0503d409b7ffa48dd6",
+      "summary": "compile_summary_20260703.json retains last_event_id=evt-0011 while sealed ledger projections are evt-0012; status and validation fields are updated, so this is a non-actionable projection nuance."
+    }
+  ],
+  "observation_ref": "7bf804a6f8302c0f0c1bbf1b7cc3ae10a81e1b91",
+  "open_blocker_count": 0,
+  "open_question_count": 0,
+  "overall_repair_required": true,
+  "phase_values": {
+    "ledger_registry": "compiled_to_plans_governance_sealed",
+    "manifest": "compiled_to_plans_governance_sealed",
+    "state/compile_queue.json": "compiled_to_plans_governance_sealed",
+    "state/compile_summary_20260703.json": "compiled_to_plans_governance_sealed",
+    "state/current.json": "compiled_to_plans_governance_sealed",
+    "state/handoff.json": "compiled_to_plans_governance_sealed",
+    "state/open_items.json": "compiled_to_plans_governance_sealed",
+    "state/operating_capsule.json": "compiled_to_plans_governance_sealed"
+  },
+  "registry_bucket": "sealed_ledgers",
+  "repair_required": false,
+  "repair_required_finding_keys": [
+    "sfk-f2071824da7401e6ca59eb43",
+    "sfk-ff7c947dff249da73ad63a1a",
+    "sfk-7ac4b10c5ce4296b24691da1",
+    "sfk-13f7d62e51d043854a69f648"
+  ],
+  "runtime_boundary": {
+    "runtime_blocked_by_ref": null,
+    "runtime_enabled": null,
+    "status": "blocked_runtime_certification_incomplete"
+  },
+  "schema_id": "pm.ledger_consistency.v1",
+  "subject_ref": "7bf804a6f8302c0f0c1bbf1b7cc3ae10a81e1b91"
+}

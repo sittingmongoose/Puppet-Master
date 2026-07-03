@@ -1,0 +1,88 @@
+{
+  "actionable_finding_keys": [
+    "sfk-f2071824da7401e6ca59eb43",
+    "sfk-ff7c947dff249da73ad63a1a",
+    "sfk-7ac4b10c5ce4296b24691da1",
+    "sfk-13f7d62e51d043854a69f648"
+  ],
+  "audit_id": "audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "blocking_conditions": {
+    "forbidden_artifacts": 0,
+    "repair_required_findings": 4,
+    "validator_failures": 3,
+    "validator_side_effects_outside_audit_dir": 0
+  },
+  "finding_keys": [
+    "sfk-f2071824da7401e6ca59eb43",
+    "sfk-ff7c947dff249da73ad63a1a",
+    "sfk-7ac4b10c5ce4296b24691da1",
+    "sfk-13f7d62e51d043854a69f648",
+    "sfk-425924aa52fd680385e1578b",
+    "sfk-fc4aba0503d409b7ffa48dd6"
+  ],
+  "generated_at_utc": "2026-07-03T22:43:48Z",
+  "latest_related_audit": {
+    "audit_id": "audit-20260703-001-external-repo-import-closed-world-semantic-fidelity",
+    "post_repair_required_count": 0,
+    "post_repair_status": "PASS_WITH_WARNINGS"
+  },
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "ledger_selection": {
+    "inferred_from": "Plans/ledgers/v2/ledger_registry.json plus recent substantive commits",
+    "latest_non_background_status": "sealed",
+    "ledger_id": "pldg-20260703-001-feature-intake"
+  },
+  "next_action": "BLOCKED: repair authorization is required for the four semantic findings; afterward refresh/validate audit closure/status-index governance through the explicit governance lane.",
+  "observation_ref": "7bf804a6f8302c0f0c1bbf1b7cc3ae10a81e1b91",
+  "ref_selection": {
+    "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+    "excluded_commits": [
+      "68c41f3ce audit/closure-only commit excluded from subject selection"
+    ],
+    "observation_ref": "7bf804a6f8302c0f0c1bbf1b7cc3ae10a81e1b91",
+    "subject_ref": "7bf804a6f8302c0f0c1bbf1b7cc3ae10a81e1b91"
+  },
+  "repair_required_count": 4,
+  "schema_id": "pm.closed_world_semantic_audit_report.v1",
+  "scope": {
+    "changed_file_count_excluding_audits": 898,
+    "classified_scope_row_count": 4476,
+    "compiled_atom_count": 122,
+    "compiled_owner_doc_count": 28,
+    "compiled_plan_unit_count": 127,
+    "coverage_percent": 100.0,
+    "sampling": "none",
+    "scope_row_count": 4476
+  },
+  "status": "BLOCKED",
+  "subject_ref": "7bf804a6f8302c0f0c1bbf1b7cc3ae10a81e1b91",
+  "validator_failures": [
+    {
+      "exit_code": 1,
+      "name": "target_audit_closure_validate",
+      "status": "fail"
+    },
+    {
+      "exit_code": 1,
+      "name": "audit_governance",
+      "status": "fail"
+    },
+    {
+      "exit_code": 1,
+      "name": "run_gates",
+      "status": "fail"
+    }
+  ],
+  "validator_summary": {
+    "fail_count": 3,
+    "final_git_status": [
+      "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+    ],
+    "pass_count": 13,
+    "side_effect_count": 0,
+    "side_effect_revert_count": 0,
+    "status": "fail"
+  },
+  "warning_count": 2
+}

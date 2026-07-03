@@ -1,0 +1,472 @@
+{
+  "audit_id": "audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "generated_at_utc": "2026-07-03T22:46:25Z",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "observation_ref": "7bf804a6f8302c0f0c1bbf1b7cc3ae10a81e1b91",
+  "results": [
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:45:24Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "git_status_before",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:45:24Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-audit-closure.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:45:26Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "closure_registry_validate",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:45:24Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"audit_dirs\": [],\n  \"errors\": [],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 358,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"false_positive\": 4,\n      \"not_for_plan\": 20,\n      \"repaired\": 296,\n      \"source_lineage_only\": 27,\n      \"stale_retired\": 8\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"pass\",\n  \"warnings\": []\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-audit-closure.py",
+        "validate",
+        "--audit-dir",
+        "Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity"
+      ],
+      "exit_code": 1,
+      "finding_level": "error",
+      "finished_at_utc": "2026-07-03T22:45:27Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "target_audit_closure_validate",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:45:26Z",
+      "status": "fail",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"audit_dirs\": [\n    {\n      \"coverage_artifacts\": [\n        \"semantic_risks.jsonl\",\n        \"atom_fidelity_matrix.jsonl\",\n        \"planunit_source_claims.jsonl\",\n        \"owner_routing_findings.jsonl\",\n        \"ledger_consistency.json\",\n        \"validator_results.json\"\n      ],\n      \"errors\": [\n        \"missing required Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/repair_impact_matrix.jsonl\"\n      ],\n      \"matrix_required\": true,\n      \"matrix_rows\": 0,\n      \"missing_coverage\": [\n        {\n          \"source_artifact\": \"semantic_risks.jsonl\",\n          \"source_row\": \"1\"\n        },\n        {\n          \"source_artifact\": \"semantic_risks.jsonl\",\n          \"source_row\": \"2\"\n        },\n        {\n          \"source_artifact\": \"semantic_risks.jsonl\",\n          \"source_row\": \"3\"\n        },\n        {\n          \"source_artifact\": \"semantic_risks.jsonl\",\n          \"source_row\": \"4\"\n        }\n      ],\n      \"original_repair_required_count\": 4,\n      \"path\": \"Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity\",\n      \"repair_impact_matrix\": {\n        \"extra_coverage\": [],\n        \"missing_coverage\": [\n          {\n            \"source_artifact\": \"semantic_risks.jsonl\",\n            \"source_row\": \"1\"\n          },\n          {\n            \"source_artifact\": \"semantic_risks.jsonl\",\n            \"source_row\": \"2\"\n          },\n          {\n            \"source_artifact\": \"semantic_risks.jsonl\",\n            \"source_row\": \"3\"\n          },\n          {\n            \"source_artifact\": \"semantic_risks.jsonl\",\n            \"source_row\": \"4\"\n          }\n        ],\n        \"path\": \"Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/repair_impact_matrix.jsonl\",\n        \"row_count\": 0\n      },\n      \"repair_required_count\": 4,\n      \"scope_manifest\": {\n        \"check_family_count\": 10,\n        \"classified_rows\": 0,\n        \"missing_check_families\": [],\n        \"path\": \"Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/audit_scope_manifest.jsonl\",\n        \"row_count\": 4476\n      },\n      \"source_artifacts\": {\n        \"finding_count\": 7\n      },\n      \"terminal_repair_state\": \"repair_required\",\n      \"warnings\": [\n        \"no repair_closure_matrix.jsonl found for Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity; completeness check skipped\"\n      ]\n    }\n  ],\n  \"errors\": [\n    \"missing required Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/repair_impact_matrix.jsonl\"\n  ],\n  \"registry\": {\n    \"errors\": [],\n    \"path\": \"Plans/.audits/_semantic_closure_registry.jsonl\",\n    \"row_count\": 358,\n    \"status_counts\": {\n      \"explicitly_deferred\": 3,\n      \"false_positive\": 4,\n      \"not_for_plan\": 20,\n      \"repaired\": 296,\n      \"source_lineage_only\": 27,\n      \"stale_retired\": 8\n    },\n    \"warnings\": []\n  },\n  \"schema_id\": \"pm.audit_closure.validator_report.v1\",\n  \"status\": \"fail\",\n  \"warnings\": [\n    \"no repair_closure_matrix.jsonl found for Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity; completeness check skipped\"\n  ]\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-bootstrap-ledger-validate.py",
+        "Plans/ledgers/v2/pldg-20260703-001-feature-intake"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:45:36Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "target_ledger_validate",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:45:27Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"errors\": [],\n  \"ledger_id\": \"pldg-20260703-001-feature-intake\",\n  \"schema_id\": \"pm.bootstrap_ledger_validator_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"atoms\": 122,\n    \"compile_queue_items\": 1,\n    \"corrections\": 0,\n    \"decisions\": 6,\n    \"events\": 12,\n    \"plan_units_checked\": 3067,\n    \"questions\": 1\n  },\n  \"warnings\": []\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-index.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:45:52Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "plan_index_validate",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:45:36Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T22:45:52Z\",\n  \"schema_id\": \"pm.plan_index.validation_report.v1\",\n  \"status\": \"pass\",\n  \"summary\": {\n    \"acceptance_unit_count\": 19633,\n    \"coverage_status\": \"pass\",\n    \"node_readiness_status\": \"blocked_runtime_certification_incomplete\",\n    \"plan_unit_count\": 5473\n  }\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plan-migration.py",
+        "validate",
+        "--run-dir",
+        "Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:07Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "plan_migration_validate",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:45:52Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "_dispositioned\": 3,\n      \"phase2b_batch_187_generated_bridge_disposition\": 1,\n      \"phase2b_batch_187_structural_dispositioned\": 1,\n      \"phase2b_batch_188_atomized\": 24,\n      \"phase2b_batch_189_atomized\": 11,\n      \"phase2b_batch_189_structural_dispositioned\": 1,\n      \"phase2b_batch_190_atomized\": 12,\n      \"phase2b_batch_190_structural_dispositioned\": 1,\n      \"phase2b_batch_191_atomized\": 2,\n      \"phase2b_batch_191_atomized_split\": 1,\n      \"phase2b_batch_191_retired_bridge_disposition\": 1,\n      \"phase2b_batch_191_structural_dispositioned\": 3,\n      \"phase2b_batch_192_existing_planunit_covered\": 8,\n      \"phase2b_batch_192_structural_planunits_heading\": 1,\n      \"phase2b_batch_193_existing_planunit_covered\": 18,\n      \"phase2b_batch_193_structural_dispositioned\": 1,\n      \"phase2b_batch_194_anchor_mapped\": 8,\n      \"phase2b_batch_194_atomized\": 20,\n      \"phase2b_batch_194_atomized_split\": 4,\n      \"phase2b_batch_194_structural_dispositioned\": 5,\n      \"phase2b_batch_195_anchor_mapped\": 5,\n      \"phase2b_batch_195_atomized\": 25,\n      \"phase2b_batch_195_atomized_split\": 12,\n      \"phase2b_batch_195_existing_planunit_mapped\": 7,\n      \"phase2b_batch_195_structural_dispositioned\": 6,\n      \"phase2b_batch_196_atomized\": 6,\n      \"phase2b_batch_196_atomized_split\": 3,\n      \"phase2b_batch_196_structural_dispositioned\": 2,\n      \"phase2b_batch_197_retired_bridge_lineage\": 1,\n      \"phase2b_batch_197_structural_dispositioned\": 3,\n      \"phase2b_batch_198_atomized\": 3,\n      \"phase2b_batch_198_atomized_split\": 4,\n      \"phase2b_batch_198_retired_bridge_lineage\": 1,\n      \"phase2b_batch_198_structural_dispositioned\": 3,\n      \"phase2b_batch_198_structural_heading_mapped\": 2,\n      \"phase2b_batch_199_atomized_covered\": 26,\n      \"phase2b_batch_199_atomized_split\": 2,\n      \"phase2b_batch_199_structural_dispositioned\": 3,\n      \"phase2b_batch_200_atomized_covered\": 4,\n      \"phase2b_batch_200_atomized_split\": 3,\n      \"phase2b_batch_200_structural_dispositioned\": 5,\n      \"phase2b_batch_201_retired_bridge_lineage\": 1,\n      \"phase2b_batch_201_structural_dispositioned\": 3,\n      \"phase2b_batch_202_atomized_covered\": 42,\n      \"phase2b_batch_202_atomized_split\": 9,\n      \"phase2b_batch_202_structural_dispositioned\": 7,\n      \"phase2b_batch_203_atomized_covered\": 35,\n      \"phase2b_batch_203_atomized_split\": 5,\n      \"phase2b_batch_203_structural_dispositioned\": 1,\n      \"phase2b_batch_204_bridge_retired\": 1,\n      \"phase2b_batch_204_structural_dispositioned\": 3,\n      \"phase2b_batch_205_atomized_covered\": 24,\n      \"phase2b_batch_205_atomized_split\": 3,\n      \"phase2b_batch_206_atomized_covered\": 10,\n      \"phase2b_batch_206_atomized_split\": 7,\n      \"phase2b_batch_206_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_207_atomized_covered\": 20,\n      \"phase2b_batch_207_atomized_split\": 5,\n      \"phase2b_batch_207_structural_carried_by_planunit\": 2,\n      \"phase2b_batch_208_atomized_covered\": 2,\n      \"phase2b_batch_208_atomized_split\": 3,\n      \"phase2b_batch_208_bridge_retired\": 1,\n      \"phase2b_batch_208_structural_dispositioned\": 3,\n      \"phase2b_batch_209_atomized_covered\": 28,\n      \"phase2b_batch_209_atomized_split\": 4,\n      \"phase2b_batch_209_structural_carried_by_planunit\": 12,\n      \"phase2b_batch_210_atomized_covered\": 13,\n      \"phase2b_batch_210_atomized_split\": 5,\n      \"phase2b_batch_210_structural_carried_by_planunit\": 5,\n      \"phase2b_batch_211_bridge_retired\": 1,\n      \"phase2b_batch_211_structural_dispositioned\": 3,\n      \"pilot_atomized_covered\": 15,\n      \"source_lineage_residual\": 2,\n      \"standardized_section\": 9,\n      \"structural_disposition\": 8\n    },\n    \"doc_count\": 72,\n    \"live_plan_unit_count\": 5473,\n    \"source_preserving_unit_count\": 0,\n    \"source_preserving_unit_ids\": [],\n    \"span_count\": 3933,\n    \"unique_live_plan_unit_count\": 5473\n  },\n  \"failures\": [],\n  \"run_id\": \"pds-20260611-002-atomize-planunits\",\n  \"schema_id\": \"pm.plan_migration.validation_report.v1\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-shard-plans.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:08Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "shard_check",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:07Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"docs_checked\": 73,\n  \"failures\": [],\n  \"shards_checked\": 1392,\n  \"source_count\": 73,\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-auto-decisions"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:08Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "auto_decisions_validate",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:08Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-auto-decisions\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T22:46:08Z\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "verify-spec-lock"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:08Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "spec_lock_verify",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:08Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"verify-spec-lock\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T22:46:08Z\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-evidence"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:09Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "evidence_validate",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:08Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-evidence\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T22:46:09Z\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "validate-plan-graph"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:10Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "plan_graph_validate",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:09Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-plan-graph\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-03T22:46:10Z\",\n  \"status\": \"pass\"\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "audit-governance"
+      ],
+      "exit_code": 1,
+      "finding_level": "error",
+      "finished_at_utc": "2026-07-03T22:46:16Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "audit_governance",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:10Z",
+      "status": "fail",
+      "stderr_tail": "[pm-plans-verify] start spec_lock\n[pm-plans-verify] done spec_lock status=pass elapsed_ms=15\n[pm-plans-verify] start plan_graph\n[pm-plans-verify] done plan_graph status=pass elapsed_ms=661\n[pm-plans-verify] start auto_decisions\n[pm-plans-verify] done auto_decisions status=pass elapsed_ms=5\n[pm-plans-verify] start evidence\n[pm-plans-verify] done evidence status=pass elapsed_ms=717\n[pm-plans-verify] start support_refs\n[pm-plans-verify] done support_refs status=pass elapsed_ms=4212\n[pm-plans-verify] start path_refs\n[pm-plans-verify] done path_refs status=pass elapsed_ms=94\n[pm-plans-verify] start shards\n[pm-plans-verify] done shards status=pass elapsed_ms=663\n[pm-plans-verify] start project_artifacts\n[pm-plans-verify] done project_artifacts status=pass elapsed_ms=0\n[pm-plans-verify] start plans_to_code_handoff_schema\n[pm-plans-verify] done plans_to_code_handoff_schema status=pass elapsed_ms=2\n[pm-plans-verify] start prd_planning_runtime_contracts\n[pm-plans-verify] done prd_planning_runtime_contracts status=pass elapsed_ms=58\n[pm-plans-verify] start runtime_artifact_schemas\n[pm-plans-verify] done runtime_artifact_schemas status=pass elapsed_ms=2\n[pm-plans-verify] start goal_runtime_event_fixtures\n[pm-plans-verify] done goal_runtime_event_fixtures status=pass elapsed_ms=0\n[pm-plans-verify] start project_output_fixtures\n[pm-plans-verify] done project_output_fixtures status=pass elapsed_ms=1\n[pm-plans-verify] start wiring_matrix\n[pm-plans-verify] done wiring_matrix status=pass elapsed_ms=44\n[pm-plans-verify] start audit_status_index\n[pm-plans-verify] done audit_status_index status=fail elapsed_ms=46\n",
+      "stdout_tail": "{\n  \"check\": \"audit-governance\",\n  \"failures\": [\n    {\n      \"check\": \"audit_status_index\",\n      \"failures\": [\n        {\n          \"error\": \"stale_audit_status_index\",\n          \"path\": \"Plans/.audits/_audit_status_index.json\"\n        }\n      ]\n    }\n  ],\n  \"generated_at_utc\": \"2026-07-03T22:46:16Z\",\n  \"status\": \"fail\"\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/pm-plans-verify.py",
+        "run-gates"
+      ],
+      "exit_code": 1,
+      "finding_level": "error",
+      "finished_at_utc": "2026-07-03T22:46:25Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "run_gates",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:16Z",
+      "status": "fail",
+      "stderr_tail": "[pm-plans-verify] start json_syntax\n[pm-plans-verify] done json_syntax status=pass elapsed_ms=1800\n[pm-plans-verify] start verify_spec_lock\n[pm-plans-verify] done verify_spec_lock status=pass elapsed_ms=14\n[pm-plans-verify] start validate_plan_graph\n[pm-plans-verify] done validate_plan_graph status=pass elapsed_ms=685\n[pm-plans-verify] start validate_auto_decisions\n[pm-plans-verify] done validate_auto_decisions status=pass elapsed_ms=4\n[pm-plans-verify] start validate_evidence\n[pm-plans-verify] done validate_evidence status=pass elapsed_ms=741\n[pm-plans-verify] start lint_contractrefs\n[pm-plans-verify] done lint_contractrefs status=pass elapsed_ms=4028\n[pm-plans-verify] start lint_banned_phrases\n[pm-plans-verify] done lint_banned_phrases status=pass elapsed_ms=14\n[pm-plans-verify] start lint_path_refs\n[pm-plans-verify] done lint_path_refs status=pass elapsed_ms=93\n[pm-plans-verify] start check_project_artifact_requirements\n[pm-plans-verify] done check_project_artifact_requirements status=pass elapsed_ms=0\n[pm-plans-verify] start validate_plans_to_code_handoff_schema\n[pm-plans-verify] done validate_plans_to_code_handoff_schema status=pass elapsed_ms=2\n[pm-plans-verify] start validate_prd_planning_runtime_contracts\n[pm-plans-verify] done validate_prd_planning_runtime_contracts status=pass elapsed_ms=62\n[pm-plans-verify] start validate_runtime_artifact_schemas\n[pm-plans-verify] done validate_runtime_artifact_schemas status=pass elapsed_ms=2\n[pm-plans-verify] start validate_goal_runtime_event_fixtures\n[pm-plans-verify] done validate_goal_runtime_event_fixtures status=pass elapsed_ms=0\n[pm-plans-verify] start validate_project_output_fixtures\n[pm-plans-verify] done validate_project_output_fixtures status=pass elapsed_ms=0\n[pm-plans-verify] start validate_wiring_matrix\n[pm-plans-verify] done validate_wiring_matrix status=pass elapsed_ms=44\n[pm-plans-verify] start validate_audit_status_index\n[pm-plans-verify] done validate_audit_status_index status=fail elapsed_ms=47\n[pm-plans-verify] start check_shards\n[pm-plans-verify] done check_shards status=pass elapsed_ms=668\n",
+      "stdout_tail": "{\n  \"check\": \"run-gates\",\n  \"failures\": [\n    {\n      \"check\": \"validate_audit_status_index\",\n      \"failures\": [\n        {\n          \"error\": \"stale_audit_status_index\",\n          \"path\": \"Plans/.audits/_audit_status_index.json\"\n        }\n      ],\n      \"status\": \"fail\"\n    }\n  ],\n  \"generated_at_utc\": \"2026-07-03T22:46:25Z\",\n  \"status\": \"fail\"\n}\n",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:25Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "git_diff_check",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:25Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:25Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "git_diff_cached_check",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:25Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "timed_out": false
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "exit_code": 0,
+      "finding_level": "info",
+      "finished_at_utc": "2026-07-03T22:46:25Z",
+      "git_status_after": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_after_side_effect_revert": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "git_status_before": [
+        "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+      ],
+      "name": "git_status_after",
+      "repair_required": false,
+      "side_effect_revert_actions": [],
+      "side_effects_outside_audit_dir": [],
+      "started_at_utc": "2026-07-03T22:46:25Z",
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+    }
+  ],
+  "schema_id": "pm.audit_validator_results.v1",
+  "subject_ref": "7bf804a6f8302c0f0c1bbf1b7cc3ae10a81e1b91",
+  "summary": {
+    "fail_count": 3,
+    "final_git_status": [
+      "?? Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/"
+    ],
+    "pass_count": 13,
+    "side_effect_count": 0,
+    "side_effect_revert_count": 0,
+    "status": "fail"
+  }
+}
