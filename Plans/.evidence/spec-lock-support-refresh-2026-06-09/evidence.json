@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "d293089ffcbc60898032642a84a63715bb6ba2c4411c9bb1891700e3aeb8d908"
+      "sha256": "e242df9fe8d5e367f01ec2748f2b46f83040e673c41b2978f150cc55c97c5b31"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -18,7 +18,7 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "16faa935ec45f9a3e32941b77306f6b540d2e344ec08c23cc6a243c1a224529d"
+      "sha256": "648c21d696215c689dfe9085c46b2bfdc458679f6f4822aed6344a90a7cd01cc"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -106,7 +106,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PASS: plan_unit_count=5354; acceptance_unit_count=19198; node_readiness_status=ready_for_node_compile; coverage_status=pass."
+      "details": "PASS: node_readiness_status=blocked_runtime_certification_incomplete; runtime_enabled=false; executable_lifecycle_certification_complete=false; no WorkNodes, NodeSeed candidates, executable queues, final node manifests, or production build tasks emitted by index generation."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
@@ -262,6 +262,16 @@
       "name": "zero-incomplete-disposition",
       "result": "PASS",
       "details": "PASS: zero_incomplete_disposition.json contains governed dispositions for TODO/TBD/stub/placeholder/mock/demo/empty-section/duplicate-heading signals, including PMConcept demo/toolchain fixture text."
+    },
+    {
+      "name": "bootstrap-ledger-smoke",
+      "result": "PASS",
+      "details": "PASS: dedicated smoke validates every Plans/ledgers/v2/pldg-* ledger, including historical sealed ledgers; run-gates intentionally remains plan-governance only."
+    },
+    {
+      "name": "wiring-matrix-reverse-catalog-coverage",
+      "result": "PASS",
+      "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded."
     }
   ],
   "commands_run": [
@@ -432,6 +442,14 @@
     },
     {
       "cmd": "python3 -m pytest",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit_code": 0
     }
   ],

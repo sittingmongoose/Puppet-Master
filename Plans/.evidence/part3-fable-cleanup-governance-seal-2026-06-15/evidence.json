@@ -18,7 +18,7 @@
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384"
+      "sha256": "f28e7193cd3bdc3e939b871f3b088f75a921a6b6a4c199c7ea2a9b42542e9131"
     },
     {
       "path": "Plans/Media_Generation_and_Capabilities.md",
@@ -62,35 +62,35 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "0cbf262fff6d5edf5027ba624b85890b4e6a43db573217b150853b77e08807e9"
+      "sha256": "5fb4eabdc79e8367769a22b183c4e2a2c39180af5ea63f21fb6456e0870d1855"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "d57acc973c1a494af53ca0b63bf3cc076eafc723415102e462d5af85d5fd8c23"
+      "sha256": "74c2fb97277dd45d918bfb811cfab6af9bf9d282656064ea7a368f7b63afa12a"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "79b3393baf2444b6ed7e1ec38f8fa97eec839e1807762ef724d8d738428b873e"
+      "sha256": "e5bb98b48a0393f814b4e6493fc5932553f9df5a57f3da7b8e6793cdfd7977df"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "721b7dd5a3c4f821b4deab3c91b3c2b2f7acf0347b3ac82192ce4c77f8401b73"
+      "sha256": "5bf4fc67be3b22cc204a4c415440108eec7b29e5f5ff55cc88d54bc17ed59b48"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "20754d29286601f4f747bed1bb28889893cb2e05be79b09b5d13b4442d315b7c"
+      "sha256": "6ef66f00bdd48f8f15654e8ee71a8ee678c705878540b0f5feaaf9f8bfa49310"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "fbceb3323aa2fa4586617d20becec688533a5ce6522da9458f9ec35ce7ee5e95"
+      "sha256": "86b070adb6d6d6fc756b43e0c4a330ffdecd374e5f2dd32cb76627c122522034"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "c25732c7b446dac34305b5beca1eab28c7bc4e388824d60a24581714bc0bfc23"
+      "sha256": "c3dcaafd2a48914ac83c36ad39e4ce0d8903ef017fcae96de3447a325650ca55"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "c4e27339939261fc0e3723a3fa304c0c84670805446983e32f0566717a4367cd"
+      "sha256": "1042a052f449591c9eeaa2366030b4285d6fb8390456c40e16b42d3e2ac88f6a"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -98,7 +98,7 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "2bfcc6e1123dfaeea24c11a689356761289e6c6d9f31df4a8275d36bafab9342"
+      "sha256": "cd98c9a4e06689ab509cb1c5d557f835bee07a374d1d450b5eb4cbc5878ad579"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -106,7 +106,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "d293089ffcbc60898032642a84a63715bb6ba2c4411c9bb1891700e3aeb8d908"
+      "sha256": "e242df9fe8d5e367f01ec2748f2b46f83040e673c41b2978f150cc55c97c5b31"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -124,7 +124,7 @@
       "result": "PASS"
     },
     {
-      "details": "PlanUnit index validates after Doctor/onboarding repair; node_readiness remains blocked_compiler_contract_incomplete by design.",
+      "details": "PASS: node_readiness_status=blocked_runtime_certification_incomplete; runtime_enabled=false; executable_lifecycle_certification_complete=false; no WorkNodes, NodeSeed candidates, executable queues, final node manifests, or production build tasks emitted by index generation.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -282,6 +282,16 @@
       "name": "no-forbidden-artifacts",
       "result": "PASS",
       "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime/build surfaces, or production build tasks were created by this bounded repair."
+    },
+    {
+      "name": "bootstrap-ledger-smoke",
+      "result": "PASS",
+      "details": "PASS: dedicated smoke validates every Plans/ledgers/v2/pldg-* ledger, including historical sealed ledgers; run-gates intentionally remains plan-governance only."
+    },
+    {
+      "name": "wiring-matrix-reverse-catalog-coverage",
+      "result": "PASS",
+      "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded."
     }
   ],
   "commands_run": [
@@ -480,6 +490,14 @@
     },
     {
       "cmd": "python3 -m unittest discover -s tests",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit_code": 0
     }
   ],

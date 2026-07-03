@@ -570,6 +570,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integ
 | `cmd.github.actions.open_step_logs` | Open Step Logs | Opens logs for the selected job/step, preserving `/job/step` context | none | `actions_panel_visible && selected_job && selected_step` |
 | `cmd.github.actions.open_related_diff` | Open Related Diff | Opens Source Control review/diff context correlated from an Actions run, job, or failing step | none | `selected_run && related_diff_available` |
 | `cmd.github.actions.open_related_worktree` | Open Related Worktree | Opens the worktree correlated from an Actions run, job, or failing step | none | `selected_run && related_worktree_available` |
+| `cmd.github.actions.compare_last_success` | Compare Last Success | Compares the selected run against the last successful run for the same workflow and branch | none | `actions_panel_visible && selected_run` |
+| `cmd.github.actions.validate_dispatch_readiness` | Validate Dispatch Readiness | Revalidates workflow dispatch readiness before rerun, dispatch, or hosted-admin mutation | none | `actions_panel_visible && selected_workflow` |
 | `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | none | `actions_panel_visible && selected_job` |
 | `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | none | `actions_panel_visible && selected_run` |
 
@@ -594,6 +596,8 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 | `cmd.github.actions.open_step_logs` | Open Step Logs | Opens logs for the selected job/step, preserving `/job/step` context | — | `actions_panel_visible && selected_job && selected_step` |
 | `cmd.github.actions.open_related_diff` | Open Related Diff | Opens Source Control review/diff context correlated from an Actions run, job, or failing step | — | `selected_run && related_diff_available` |
 | `cmd.github.actions.open_related_worktree` | Open Related Worktree | Opens the worktree correlated from an Actions run, job, or failing step | — | `selected_run && related_worktree_available` |
+| `cmd.github.actions.compare_last_success` | Compare Last Success | Compares the selected run against the last successful run for the same workflow and branch | — | `actions_panel_visible && selected_run` |
+| `cmd.github.actions.validate_dispatch_readiness` | Validate Dispatch Readiness | Revalidates workflow dispatch readiness before rerun, dispatch, or hosted-admin mutation | — | `actions_panel_visible && selected_workflow` |
 | `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | — | `actions_panel_visible && selected_job` |
 | `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | — | `actions_panel_visible && selected_run` |
 
@@ -3745,7 +3749,7 @@ plan_unit_id: UCC-047
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: GitHub Actions command rows cover show/switch/rerun/cancel, workflow pin/unpin/settings, open current branch, open related diff, logs, workflow/job detail, retry, copy URL, copy logs, open in GitHub, branch-to-diff, and run-to-browser pivots.
+canonical_text: GitHub Actions command rows cover show/switch/rerun/cancel, workflow pin/unpin/settings, dispatch-readiness validation, compare-last-success, open current branch, open related diff, logs, workflow/job detail, retry, copy URL, copy logs, open in GitHub, branch-to-diff, and run-to-browser pivots.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -3781,6 +3785,8 @@ preserved_exact_tokens:
 - cmd.github.actions.unpin
 - cmd.github.actions.settings.open
 - cmd.github.actions.open_current_branch
+- cmd.github.actions.validate_dispatch_readiness
+- cmd.github.actions.compare_last_success
 - cmd.github.actions.open_related_diff
 - cmd.actions.view_logs
 - cmd.github.actions.open_step_logs
