@@ -2,11 +2,11 @@
 
 This generated index separates immutable historical report headers from current presentation status. Old `FINAL_REPORT.md` files are not rewritten; finding-level closure authority remains `Plans/.audits/_semantic_closure_registry.jsonl`.
 
-- Generated: `2026-07-02T23:33:25Z`
-- Reports indexed: 59
+- Generated: `2026-07-03T22:21:39Z`
+- Reports indexed: 60
 - Current blockers: 0
-- Historical BLOCKED/FAIL reports indexed: 21
-- Closure registry rows: 352
+- Historical BLOCKED/FAIL reports indexed: 22
+- Closure registry rows: 358
 
 | Audit | Reported status | Effective status | Current blocker | Closure rows |
 |---|---|---|---:|---:|
@@ -69,3 +69,4 @@ This generated index separates immutable historical report headers from current 
 | `audit-20260701-002-containerized-hosts-post-repair-closed-world-semantic-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 0 |
 | `audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity` | `STATUS_UNSTATED` | `historical_report_status_unstated_or_nonstandard` | false | 24 |
 | `audit-20260702-001-doctor-onboarding-post-repair-closed-world-semantic-fidelity` | `PASS_WITH_WARNINGS` | `reported_pass_or_pass_with_warnings` | false | 0 |
+| `audit-20260703-001-external-repo-import-closed-world-semantic-fidelity` | `BLOCKED` | `historical_blocked_or_fail_report_indexed` | false | 12 |

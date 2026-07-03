@@ -4,7 +4,7 @@ Source: `Plans/MCP_Integration.md`
 
 Source lines: L185-L189
 
-Source SHA256: `fb443750f0b2a9577b9ba2c0c7908a7ffc2ed21034c2d3f50f4db1417dc281c4`
+Source SHA256: `0ac70d1c057a983e27f8c879257a48dabb7d21c49ae77c93dbe0e16d4e0eed4d`
 
 ---
 

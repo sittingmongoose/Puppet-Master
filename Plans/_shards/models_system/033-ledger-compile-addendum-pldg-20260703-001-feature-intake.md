@@ -4,7 +4,7 @@ Source: `Plans/Models_System.md`
 
 Source lines: L8374-L9233
 
-Source SHA256: `4bd69c6f044c0aea4d6adde610a5db4b320043e581d7818709fc68e1d359b25e`
+Source SHA256: `66d19758732f76d6a0917667f9ec80f09fdf8d5dfb3aa73042f7f03558b2e47b`
 
 ---
 
@@ -105,7 +105,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  P0-PROVIDER-CAPABILITY-EPOCH (P0) is compiled as canonical Puppet Master intent for Provider capability epoch and model-switch sanitizer: Imported external-repo finding extrepo-20260703-0023 / P0-PROVIDER-CAPABILITY-EPOCH (P0): None The preserved PM gap/delta is: Extend ContextEpoch with ProviderCapabilityEpoch: metadata source, freshness, account/profile scope, route-imposed limits, dynamic discovery provenance, and model-switch sanitizer. The observed external-repo signal remains source-lineage evidence: Static/stale/route-specific model metadata caused wrong context windows, ghost models, maxTokens/context mismatch, and dynamic local model discovery needs.
+  P0-PROVIDER-CAPABILITY-EPOCH (P0) is compiled as canonical Puppet Master intent for Provider capability epoch and model-switch sanitizer: Imported external-repo finding extrepo-20260703-0023 / P0-PROVIDER-CAPABILITY-EPOCH (P0). The preserved PM gap/delta is: Extend ContextEpoch with ProviderCapabilityEpoch: metadata source, freshness, account/profile scope, route-imposed limits, dynamic discovery provenance, and model-switch sanitizer. The observed external-repo signal remains source-lineage evidence: Static/stale/route-specific model metadata caused wrong context windows, ghost models, maxTokens/context mismatch, and dynamic local model discovery needs.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -186,7 +186,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  P0-REASONING-REPLAY-MATRIX (P0) is compiled as canonical Puppet Master intent for Cross-provider reasoning/thinking replay/drop matrix: Imported external-repo finding extrepo-20260703-0024 / P0-REASONING-REPLAY-MATRIX (P0): None The preserved PM gap/delta is: Add explicit ProviderNativeReplayMatrix fields for reasoning_content required/forbidden, signatures, user-first role order, images, tool-result role mapping, and same-delta ordering. The observed external-repo signal remains source-lineage evidence: DeepSeek, Kimi, MiMo, HuggingFace, OpenRouter, GLM, and Claude-like routes fail when reasoning_content/details/signatures/role order are replayed or dropped incorrectly.
+  P0-REASONING-REPLAY-MATRIX (P0) is compiled as canonical Puppet Master intent for Cross-provider reasoning/thinking replay/drop matrix: Imported external-repo finding extrepo-20260703-0024 / P0-REASONING-REPLAY-MATRIX (P0). The preserved PM gap/delta is: Add explicit ProviderNativeReplayMatrix fields for reasoning_content required/forbidden, signatures, user-first role order, images, tool-result role mapping, and same-delta ordering. The observed external-repo signal remains source-lineage evidence: DeepSeek, Kimi, MiMo, HuggingFace, OpenRouter, GLM, and Claude-like routes fail when reasoning_content/details/signatures/role order are replayed or dropped incorrectly.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -598,7 +598,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
 canonical_text: >-
-  P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0) is compiled as canonical Puppet Master intent for Provider/product entitlement, quota, credit, subscription, and rate-limit state: Imported external-repo finding extrepo-20260703-0079 / P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0): None The preserved PM gap/delta is: UsageCacheEnvelope and model/provider identity covered token accounting, but PM also needs billing/entitlement/quota classification and user-visible remediation.  The observed external-repo signal remains source-lineage evidence: OpenCode recent issues include active subscription reporting as free-tier exceeded. | Cline recent issues include payment succeeding but no credits. | Warp fixed quota/credit errors being misclassified as Warp faults. | Codex issue #20301 shows token-cache/cost anomalies can be operationally severe.
+  P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0) is compiled as canonical Puppet Master intent for Provider/product entitlement, quota, credit, subscription, and rate-limit state: Imported external-repo finding extrepo-20260703-0079 / P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0). The preserved PM gap/delta is: UsageCacheEnvelope and model/provider identity covered token accounting, but PM also needs billing/entitlement/quota classification and user-visible remediation.  The observed external-repo signal remains source-lineage evidence: OpenCode recent issues include active subscription reporting as free-tier exceeded. | Cline recent issues include payment succeeding but no credits. | Warp fixed quota/credit errors being misclassified as Warp faults. | Codex issue #20301 shows token-cache/cost anomalies can be operationally severe.
 gui_related: true
 gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
 depends_on:

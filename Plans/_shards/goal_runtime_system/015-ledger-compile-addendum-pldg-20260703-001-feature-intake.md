@@ -4,7 +4,7 @@ Source: `Plans/Goal_Runtime_System.md`
 
 Source lines: L2350-L2983
 
-Source SHA256: `0648c5f9cdf8cdfc46b5afff3b9912797184c18e715ff0f793713831af43e89e`
+Source SHA256: `583517d758bc7d638bea028ae83ceea2657045df38867dd578b3c7db0a17815e`
 
 ---
 
@@ -98,7 +98,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  P1-INTERRUPT-CANCEL-SETTLEMENT (P1) is compiled as canonical Puppet Master intent for User stop/interrupt halts active agent and tools safely: Imported external-repo finding extrepo-20260703-0028 / P1-INTERRUPT-CANCEL-SETTLEMENT (P1): None The preserved PM gap/delta is: Define cancellation propagation and settlement: provider stream, subprocess, MCP call, browser/device, child run; no conversion to success/failure; history interruption boundary. The observed external-repo signal remains source-lineage evidence: Agent Zero issue requests stop/interrupt for active chat/tool calls without container restart and with history preserved; OpenCode v2 includes sessions.interrupt and Effect interruption.
+  P1-INTERRUPT-CANCEL-SETTLEMENT (P1) is compiled as canonical Puppet Master intent for User stop/interrupt halts active agent and tools safely: Imported external-repo finding extrepo-20260703-0028 / P1-INTERRUPT-CANCEL-SETTLEMENT (P1). The preserved PM gap/delta is: Define cancellation propagation and settlement: provider stream, subprocess, MCP call, browser/device, child run; no conversion to success/failure; history interruption boundary. The observed external-repo signal remains source-lineage evidence: Agent Zero issue requests stop/interrupt for active chat/tool calls without container restart and with history preserved; OpenCode v2 includes sessions.interrupt and Effect interruption.
 gui_related: true
 gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
 depends_on:
@@ -456,7 +456,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  P0-GOAL-SCOPE-SUBAGENT-ISOLATION (P0) is compiled as canonical Puppet Master intent for Goal/subagent identity leakage and rogue continuation: Imported external-repo finding extrepo-20260703-0075 / P0-GOAL-SCOPE-SUBAGENT-ISOLATION (P0): None The preserved PM gap/delta is: AgentControlEnvelope covered authority, but not enough about inheritable goal identity, child-agent leases, or proving that a child cannot resume/advance the parent goal. The observed external-repo signal remains source-lineage evidence: Codex issue #25472 reports subagents reactivating a long-running goal and behaving like the main thread. | Codex changelog has multiple goal/subagent/session persistence and terminal-subagent error propagation fixes. | PM already has subagent hard gates, but needs runtime-level goal leases rather than prompt-only role instructions.
+  P0-GOAL-SCOPE-SUBAGENT-ISOLATION (P0) is compiled as canonical Puppet Master intent for Goal/subagent identity leakage and rogue continuation: Imported external-repo finding extrepo-20260703-0075 / P0-GOAL-SCOPE-SUBAGENT-ISOLATION (P0). The preserved PM gap/delta is: AgentControlEnvelope covered authority, but not enough about inheritable goal identity, child-agent leases, or proving that a child cannot resume/advance the parent goal. The observed external-repo signal remains source-lineage evidence: Codex issue #25472 reports subagents reactivating a long-running goal and behaving like the main thread. | Codex changelog has multiple goal/subagent/session persistence and terminal-subagent error propagation fixes. | PM already has subagent hard gates, but needs runtime-level goal leases rather than prompt-only role instructions.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -531,7 +531,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Goal_Runtime_System.md
 canonical_text: >-
-  P1-EXTERNAL-AGENT-HANDOFF-IMPORT (P1) is compiled as canonical Puppet Master intent for Third-party agent import, continuation, and session provenance: Imported external-repo finding extrepo-20260703-0085 / P1-EXTERNAL-AGENT-HANDOFF-IMPORT (P1): None The preserved PM gap/delta is: MCP/import config provenance was covered, but PM should also treat external agent sessions as imported runtimes with provenance and continuation contracts. The observed external-repo signal remains source-lineage evidence: Warp supports third-party CLI agents, custom routers, local continuation when a cloud run is interrupted, and structured CLI-agent notifications. | Codex changelog records external agent import results and Claude Code import support. | Cline/OpenCode configs and MCP ecosystems encourage cross-tool state/config reuse.
+  P1-EXTERNAL-AGENT-HANDOFF-IMPORT (P1) is compiled as canonical Puppet Master intent for Third-party agent import, continuation, and session provenance: Imported external-repo finding extrepo-20260703-0085 / P1-EXTERNAL-AGENT-HANDOFF-IMPORT (P1). The preserved PM gap/delta is: MCP/import config provenance was covered, but PM should also treat external agent sessions as imported runtimes with provenance and continuation contracts. The observed external-repo signal remains source-lineage evidence: Warp supports third-party CLI agents, custom routers, local continuation when a cloud run is interrupted, and structured CLI-agent notifications. | Codex changelog records external agent import results and Claude Code import support. | Cline/OpenCode configs and MCP ecosystems encourage cross-tool state/config reuse.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

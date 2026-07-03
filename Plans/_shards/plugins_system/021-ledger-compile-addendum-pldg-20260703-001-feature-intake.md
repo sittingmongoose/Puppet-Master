@@ -4,7 +4,7 @@ Source: `Plans/Plugins_System.md`
 
 Source lines: L4038-L4117
 
-Source SHA256: `cca40fa6093aa76b4d142554a8c9114a1f1a4d3b4acc57b1462f0e9be8c835c2`
+Source SHA256: `8aaadc87937d0681b05fdb70bf2b1efea4226ad4eba51658813ecd6043a7fbb9`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
 canonical_text: >-
-  P1-PLUGIN-EXTENSION-POINT-CONTRACTS (P1) is compiled as canonical Puppet Master intent for Typed plugin/UI extension points to avoid monkey patching: Imported external-repo finding extrepo-20260703-0034 / P1-PLUGIN-EXTENSION-POINT-CONTRACTS (P1): None The preserved PM gap/delta is: Define typed UI slots and stable context object fields for MCP/tool/session/model/runtime rows; forbid monkey patching privileged surfaces; mutation hooks produce receipts and rechecks. The observed external-repo signal remains source-lineage evidence: Agent Zero added per-row extension points because plugins otherwise used MutationObserver/DOM scanning/store monkey-patching; settings hooks added for credential scanning.
+  P1-PLUGIN-EXTENSION-POINT-CONTRACTS (P1) is compiled as canonical Puppet Master intent for Typed plugin/UI extension points to avoid monkey patching: Imported external-repo finding extrepo-20260703-0034 / P1-PLUGIN-EXTENSION-POINT-CONTRACTS (P1). The preserved PM gap/delta is: Define typed UI slots and stable context object fields for MCP/tool/session/model/runtime rows; forbid monkey patching privileged surfaces; mutation hooks produce receipts and rechecks. The observed external-repo signal remains source-lineage evidence: Agent Zero added per-row extension points because plugins otherwise used MutationObserver/DOM scanning/store monkey-patching; settings hooks added for credential scanning.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

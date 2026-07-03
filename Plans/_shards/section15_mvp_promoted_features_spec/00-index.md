@@ -1,22 +1,22 @@
 # Shard Index: Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Generated: 2026-07-03T20:59:30Z
+Generated: 2026-07-03T22:11:12Z
 
-Source SHA256: `4bb72b6a655e790392c6cc31e3421eaf8695d1b5c41a7eb8fd1105894784fe06`
+Source SHA256: `0ac1ad483cf2db2dfd3680c80aa0743835bdd1e18e507edf12629ae7e5c642b6`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `ce3764d63a05a872b568ab5b190c8ff1b254ee8c2a5f84d16e1295a59f13f1df`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L19 `0cf92858647c2169a3f4b4404e7010551872c221ec2c95d042e22eaf3590d569`
-- [003 - 1. Canonical shell and surface model](003-1.-canonical-shell-and-surface-model.md) L21-L348 `a96358f540353603b8aefb93b86b6a1fa5855f8a77f62760aba0e0df2cd3fa86`
-- [004 - 2. Cross-feature runtime contracts](004-2.-cross-feature-runtime-contracts.md) L349-L429 `69826943bba1e5a7700eee5399f4d15f5f90c94e6b7abb367dcfaf43f2a6a3ce`
-- [005 - 3. Feature requirements](005-3.-feature-requirements.md) L431-L727 `e33f0a39f47d3156ee2c0893254b35b8e4e56589d891c6ff3fe636610618ddeb`
-- [006 - 4. Command families required by the promoted features](006-4.-command-families-required-by-the-promoted-features.md) L728-L747 `e042c82429b6401f3dcdddd6a62d16062a4a38db3558f0620bb65c3544acfc9b`
-- [007 - 5. Persistence and restore rules](007-5.-persistence-and-restore-rules.md) L748-L783 `d74fe5324ee74dc4e30bc668a9b52955ed897c7de135b11e21d27774a4b4f8d0`
-- [008 - 6. Non-goals and anti-drift rules](008-6.-non-goals-and-anti-drift-rules.md) L784-L800 `a0948ae40ad99c8400ac95cc59a10df4dea7cb217fb4b894ded5978675e7b8ec`
-- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L802-L806 `cfd431596a153c6b4c0055b80f4bd439864d64b8b18c86f5d5695320d61e9ce8`
-- [010 - PlanUnits](010-planunits.md) L808-L8167 `b42969620196424fec8184bee0e7a8ca311984f3ed424bce1052b4a1cf59103f`
-- [011 - Migration Coverage](011-migration-coverage.md) L8169-L8179 `a8551575c4185160a3e88c1f22e30a9f8650849bfac87bcf4d2199ba6846f821`
-- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L8181-L9212 `e1a85895d2036808978b4cdd78ad9636c384e41d46d6ece57d4385f208ceddb1`
+- [001 - Preamble](001-preamble.md) L1-L4 `e704083e338c33a888f052fb9847017d153adcd1d3f08e8bd94988ee379c2a5e`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L19 `7fa54d589f54bca1767bebec13f40ac7dbda38bd6a9028a0727f58d36189961e`
+- [003 - 1. Canonical shell and surface model](003-1.-canonical-shell-and-surface-model.md) L21-L348 `85ccf6663a49d3e2f0097644c1886dd921346dd77f375d829180e83a0a701458`
+- [004 - 2. Cross-feature runtime contracts](004-2.-cross-feature-runtime-contracts.md) L349-L429 `ea4fa3a8e867dd8baa8f123b76783d2de58aef71d5a34a513ae0ffd3bce96c52`
+- [005 - 3. Feature requirements](005-3.-feature-requirements.md) L431-L727 `3718923a2ae2422f70a9db115099a3f14c07621e2ca259c5b0f78994db529ba3`
+- [006 - 4. Command families required by the promoted features](006-4.-command-families-required-by-the-promoted-features.md) L728-L747 `ff91cf4ce7abc2c03800d33990dd2b17e9906285cef6081795078453d1e3d8d3`
+- [007 - 5. Persistence and restore rules](007-5.-persistence-and-restore-rules.md) L748-L783 `85f6f433d8402ccb3bb0efdcb252193df0e81e38860e11fe8913eaccbdba9dde`
+- [008 - 6. Non-goals and anti-drift rules](008-6.-non-goals-and-anti-drift-rules.md) L784-L800 `95b63c51c729c50dcf533dee74a108eb71fdb00a17b7cf1608986d96967e4f41`
+- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L802-L806 `25122f9ed7616327a55215117fec3fae1346e96612046507d71bf1fe56a0dcf9`
+- [010 - PlanUnits](010-planunits.md) L808-L8167 `65b7d8185aed6ec43300dfbd14a5f1fe2dd6565a2db7a7911fd32187abb3e40d`
+- [011 - Migration Coverage](011-migration-coverage.md) L8169-L8179 `99495429aa64a5b307554ffc82132bcf85b0ebf5ec9253725f88c02d1500325c`
+- [012 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L8181-L9212 `5ab77d836dcb06ce37a01c5f3a412bb0e17b12eeac6ad240572c651e9bb54a12`

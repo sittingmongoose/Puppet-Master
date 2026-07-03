@@ -1,0 +1,17 @@
+{
+  "audit_id": "audit-20260703-001-external-repo-import-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "effective_terminal_report": "post_repair_audit_report.json",
+  "historical_audit_report": "audit_report.json",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "matrix_status_counts": {
+    "repaired": 6
+  },
+  "observation_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "open_repair_required_count": 0,
+  "original_repair_required_count": 6,
+  "schema_id": "pm.audit_terminal_state.v1",
+  "subject_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "terminal_repair_state": "repair_validated",
+  "updated_at_utc": "2026-07-03T22:10:30Z"
+}

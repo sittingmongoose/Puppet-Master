@@ -4,7 +4,7 @@ Source: `Plans/Planning_Ledger_System.md`
 
 Source lines: L942-L1150
 
-Source SHA256: `473072655a181cd57461eeb01602b14bc3ed419d09877354e73943dfbc6704f4`
+Source SHA256: `cb580376db1e90d4841e57353b845f6a4f4850cff858f1cee682a15178cc9808`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
-  P2-UPSTREAM-TRIAGE-CLOSURE-REGISTRY (P2) is compiled as canonical Puppet Master intent for Tracking auto-closed/needs-repro/upstream issues without rediscovering them every pass: Imported external-repo finding extrepo-20260703-0087 / P2-UPSTREAM-TRIAGE-CLOSURE-REGISTRY (P2): None The preserved PM gap/delta is: PM has a semantic closure registry for plan audits, but external-upstream watch findings need similar durable status/disposition to avoid repeated rediscovery. The observed external-repo signal remains source-lineage evidence: Pi issue #6280 was auto-closed/untriaged despite containing a real architectural request. | OpenCode issue/PR volume is very high and uses needs-compliance/repro style triage. | PM already discovered semantic closure registry needs internally.
+  P2-UPSTREAM-TRIAGE-CLOSURE-REGISTRY (P2) is compiled as canonical Puppet Master intent for Tracking auto-closed/needs-repro/upstream issues without rediscovering them every pass: Imported external-repo finding extrepo-20260703-0087 / P2-UPSTREAM-TRIAGE-CLOSURE-REGISTRY (P2). The preserved PM gap/delta is: PM has a semantic closure registry for plan audits, but external-upstream watch findings need similar durable status/disposition to avoid repeated rediscovery. The observed external-repo signal remains source-lineage evidence: Pi issue #6280 was auto-closed/untriaged despite containing a real architectural request. | OpenCode issue/PR volume is very high and uses needs-compliance/repro style triage. | PM already discovered semantic closure registry needs internally.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -91,7 +91,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
 canonical_text: >-
-  P2-AI-TRIAGE-CLOSURE-CONFIDENCE (P2) is compiled as canonical Puppet Master intent for AI triage closure confidence and reopen policy: Imported external-repo finding extrepo-20260703-0099 / P2-AI-TRIAGE-CLOSURE-CONFIDENCE (P2): None The preserved PM gap/delta is: Semantic closure registry should extend to external issue triage with confidence, actor, evidence quality, and reopen triggers. The observed external-repo signal remains source-lineage evidence: Auto-closed/untriaged issue surfaces can bury real UI/input bugs while recurring warnings create noise.
+  P2-AI-TRIAGE-CLOSURE-CONFIDENCE (P2) is compiled as canonical Puppet Master intent for AI triage closure confidence and reopen policy: Imported external-repo finding extrepo-20260703-0099 / P2-AI-TRIAGE-CLOSURE-CONFIDENCE (P2). The preserved PM gap/delta is: Semantic closure registry should extend to external issue triage with confidence, actor, evidence quality, and reopen triggers. The observed external-repo signal remains source-lineage evidence: Auto-closed/untriaged issue surfaces can bury real UI/input bugs while recurring warnings create noise.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

@@ -4,7 +4,7 @@ Source: `Plans/Prompt_Pipeline.md`
 
 Source lines: L4016-L5018
 
-Source SHA256: `d88bd70a2ebb1288345cfca61d0286f7f7d7774be37cf23d02b26645a6281aa0`
+Source SHA256: `b52e464f0f99cb2c94873181a4752be0e69f5aa99d250eb424239aee0fed9bb0`
 
 ---
 
@@ -101,7 +101,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  P0-HISTORY-ADMISSION-SANITIZATION (P0) is compiled as canonical Puppet Master intent for Malformed provider/tool turns must not poison durable history: Imported external-repo finding extrepo-20260703-0022 / P0-HISTORY-ADMISSION-SANITIZATION (P0): None The preserved PM gap/delta is: Add a HistoryAdmissionGate before persistence/replay for assistant/tool turns with name/id/JSON/type/reasoning/role checks and quarantine outcomes. The observed external-repo signal remains source-lineage evidence: Pi reports JSON plus trailing reasoning, same-delta content/reasoning/tool calls, empty/duplicate tool calls, and stringified MCP params; Agent Zero issue list includes truncated tool calls treated as success.
+  P0-HISTORY-ADMISSION-SANITIZATION (P0) is compiled as canonical Puppet Master intent for Malformed provider/tool turns must not poison durable history: Imported external-repo finding extrepo-20260703-0022 / P0-HISTORY-ADMISSION-SANITIZATION (P0). The preserved PM gap/delta is: Add a HistoryAdmissionGate before persistence/replay for assistant/tool turns with name/id/JSON/type/reasoning/role checks and quarantine outcomes. The observed external-repo signal remains source-lineage evidence: Pi reports JSON plus trailing reasoning, same-delta content/reasoning/tool calls, empty/duplicate tool calls, and stringified MCP params; Agent Zero issue list includes truncated tool calls treated as success.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -744,7 +744,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH (P1) is compiled as canonical Puppet Master intent for AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling: Imported external-repo finding extrepo-20260703-0080 / P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH (P1): None The preserved PM gap/delta is: ContextEpoch covered instruction hashes, but the source-integrity side should explicitly track missing/invalid/duplicate/stale instruction sources, encodings, and loaded-scope precedence. The observed external-repo signal remains source-lineage evidence: Codex changelog includes reliable AGENTS loading, invalid UTF-8 warnings, plugin skill path handling, and root marketplace layout fixes. | Cline/OpenCode expose custom rules/skills/prompts/provider configs that can drift across session/resume/import paths.
+  P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH (P1) is compiled as canonical Puppet Master intent for AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling: Imported external-repo finding extrepo-20260703-0080 / P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH (P1). The preserved PM gap/delta is: ContextEpoch covered instruction hashes, but the source-integrity side should explicitly track missing/invalid/duplicate/stale instruction sources, encodings, and loaded-scope precedence. The observed external-repo signal remains source-lineage evidence: Codex changelog includes reliable AGENTS loading, invalid UTF-8 warnings, plugin skill path handling, and root marketplace layout fixes. | Cline/OpenCode expose custom rules/skills/prompts/provider configs that can drift across session/resume/import paths.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -817,7 +817,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  P0-CONTEXT-OBJECT-BUDGET (P0) is compiled as canonical Puppet Master intent for Context object/media budget and dedupe: Imported external-repo finding extrepo-20260703-0093 / P0-CONTEXT-OBJECT-BUDGET (P0): None The preserved PM gap/delta is: ContextEpoch should budget media/object artifacts separately from text tokens and dedupe repeated objects. The observed external-repo signal remains source-lineage evidence: Compaction checkpoints re-embed screenshots until multi-GB state/RSS runaway.
+  P0-CONTEXT-OBJECT-BUDGET (P0) is compiled as canonical Puppet Master intent for Context object/media budget and dedupe: Imported external-repo finding extrepo-20260703-0093 / P0-CONTEXT-OBJECT-BUDGET (P0). The preserved PM gap/delta is: ContextEpoch should budget media/object artifacts separately from text tokens and dedupe repeated objects. The observed external-repo signal remains source-lineage evidence: Compaction checkpoints re-embed screenshots until multi-GB state/RSS runaway.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -880,7 +880,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  P1-INSTRUCTION-IMPORT-GRAPH (P1) is compiled as canonical Puppet Master intent for Instruction import graph integrity: Imported external-repo finding extrepo-20260703-0095 / P1-INSTRUCTION-IMPORT-GRAPH (P1): None The preserved PM gap/delta is: Instruction imports need hashes, cycle checks, scope, trust source, staleness, and inclusion in ContextEpoch. The observed external-repo signal remains source-lineage evidence: AGENTS @path import feature request; Codex instructions/skills make imported instructions a live context source.
+  P1-INSTRUCTION-IMPORT-GRAPH (P1) is compiled as canonical Puppet Master intent for Instruction import graph integrity: Imported external-repo finding extrepo-20260703-0095 / P1-INSTRUCTION-IMPORT-GRAPH (P1). The preserved PM gap/delta is: Instruction imports need hashes, cycle checks, scope, trust source, staleness, and inclusion in ContextEpoch. The observed external-repo signal remains source-lineage evidence: AGENTS @path import feature request; Codex instructions/skills make imported instructions a live context source.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:

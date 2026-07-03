@@ -267,7 +267,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Release_Supply_Chain.md
 canonical_text: >-
-  P2-CONFIG-SCHEMA-MIGRATION-FIXTURES (P2) is compiled as canonical Puppet Master intent for Accepted/retired config schema migration tests: Imported external-repo finding extrepo-20260703-0036 / P2-CONFIG-SCHEMA-MIGRATION-FIXTURES (P2): None The preserved PM gap/delta is: Add fixtures for accepted current names, retired names with explicit help, JSON/JSONC, generated bridge config cwd/profile root, PM-managed vs attached server config, migration dry-run/rollback. The observed external-repo signal remains source-lineage evidence: OpenCode v2 reworks config discovery and issue #8868 shows json/jsonc confusion; Agent Zero/Cline releases expose upgrade/migration risks.
+  P2-CONFIG-SCHEMA-MIGRATION-FIXTURES (P2) is compiled as canonical Puppet Master intent for Accepted/retired config schema migration tests: Imported external-repo finding extrepo-20260703-0036 / P2-CONFIG-SCHEMA-MIGRATION-FIXTURES (P2). The preserved PM gap/delta is: Add fixtures for accepted current names, retired names with explicit help, JSON/JSONC, generated bridge config cwd/profile root, PM-managed vs attached server config, migration dry-run/rollback. The observed external-repo signal remains source-lineage evidence: OpenCode v2 reworks config discovery and issue #8868 shows json/jsonc confusion; Agent Zero/Cline releases expose upgrade/migration risks.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -349,7 +349,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Release_Supply_Chain.md
 canonical_text: >-
-  P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN (P0) is compiled as canonical Puppet Master intent for AI-assisted CI/release supply-chain attack surface: Imported external-repo finding extrepo-20260703-0074 / P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN (P0): None The preserved PM gap/delta is: Prior PM passes covered permissions and release provenance, but underweighted agentic CI workflows where untrusted issue/PR text becomes model instructions and tool calls inside release-adjacent automation. The observed external-repo signal remains source-lineage evidence: Clinejection: untrusted GitHub issue title reached a Claude issue-triage bot with Bash/Read/Write/Edit access, pivoted through GitHub Actions cache poisoning, and led to unauthorized npm package cline@2.3.0. | OpenCode github@latest tag drift shows release automation/currentness can silently lag active releases. | Codex changelog hardens command safety, browser-origin websocket handshakes, and repo-provided Git helper execution.
+  P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN (P0) is compiled as canonical Puppet Master intent for AI-assisted CI/release supply-chain attack surface: Imported external-repo finding extrepo-20260703-0074 / P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN (P0). The preserved PM gap/delta is: Prior PM passes covered permissions and release provenance, but underweighted agentic CI workflows where untrusted issue/PR text becomes model instructions and tool calls inside release-adjacent automation. The observed external-repo signal remains source-lineage evidence: Clinejection: untrusted GitHub issue title reached a Claude issue-triage bot with Bash/Read/Write/Edit access, pivoted through GitHub Actions cache poisoning, and led to unauthorized npm package cline@2.3.0. | OpenCode github@latest tag drift shows release automation/currentness can silently lag active releases. | Codex changelog hardens command safety, browser-origin websocket handshakes, and repo-provided Git helper execution.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -428,7 +428,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Release_Supply_Chain.md
 canonical_text: >-
-  P1-PLATFORM-BINARY-COMPATIBILITY-GATE (P1) is compiled as canonical Puppet Master intent for Code signing, static binaries, platform packaging, sandbox setup, and OS-specific runtime gates: Imported external-repo finding extrepo-20260703-0084 / P1-PLATFORM-BINARY-COMPATIBILITY-GATE (P1): None The preserved PM gap/delta is: Release provenance was covered; platform binary compatibility and OS gate diagnostics need their own receipts. The observed external-repo signal remains source-lineage evidence: Cline recent issue reports macOS AMFI code-signing kill of the CLI binary. | Warp statically compiled Linux CLI/warpctl for compatibility and fixed Windows GPU/UI lag. | Codex changelog includes Windows sandbox provisioning and platform-specific sandbox/network behavior.
+  P1-PLATFORM-BINARY-COMPATIBILITY-GATE (P1) is compiled as canonical Puppet Master intent for Code signing, static binaries, platform packaging, sandbox setup, and OS-specific runtime gates: Imported external-repo finding extrepo-20260703-0084 / P1-PLATFORM-BINARY-COMPATIBILITY-GATE (P1). The preserved PM gap/delta is: Release provenance was covered; platform binary compatibility and OS gate diagnostics need their own receipts. The observed external-repo signal remains source-lineage evidence: Cline recent issue reports macOS AMFI code-signing kill of the CLI binary. | Warp statically compiled Linux CLI/warpctl for compatibility and fixed Windows GPU/UI lag. | Codex changelog includes Windows sandbox provisioning and platform-specific sandbox/network behavior.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -501,7 +501,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Release_Supply_Chain.md
 canonical_text: >-
-  P1-INSTALL-UPDATE-PROVENANCE (P1) is compiled as canonical Puppet Master intent for Install/update/package provenance receipts: Imported external-repo finding extrepo-20260703-0098 / P1-INSTALL-UPDATE-PROVENANCE (P1): None The preserved PM gap/delta is: Installer/update flows need artifact signatures, owner/mode inventory, channel, rollback, migration, and validator receipts. The observed external-repo signal remains source-lineage evidence: Package owner/signing/self-update issues recur across GUI/CLI tools.
+  P1-INSTALL-UPDATE-PROVENANCE (P1) is compiled as canonical Puppet Master intent for Install/update/package provenance receipts: Imported external-repo finding extrepo-20260703-0098 / P1-INSTALL-UPDATE-PROVENANCE (P1). The preserved PM gap/delta is: Installer/update flows need artifact signatures, owner/mode inventory, channel, rollback, migration, and validator receipts. The observed external-repo signal remains source-lineage evidence: Package owner/signing/self-update issues recur across GUI/CLI tools.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

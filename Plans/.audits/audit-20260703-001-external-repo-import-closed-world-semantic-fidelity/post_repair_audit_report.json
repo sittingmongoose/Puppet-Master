@@ -1,0 +1,192 @@
+{
+  "audit_id": "audit-20260703-001-external-repo-import-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "closed_repair_required_count": 6,
+  "closure_matrix": {
+    "closed_findings": [
+      {
+        "closure_status": "repaired",
+        "finding_family": "planunit_canonical_text_none_placeholder_from_source_delta",
+        "finding_key": "sfk-c2d9b8c999c653207d8dd63d",
+        "registry_closure_id": "closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-001",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "1"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "ledger_design_atom_validation_notes_stale_compile_state",
+        "finding_key": "sfk-2048ad95d5a295c3a4b7a47f",
+        "registry_closure_id": "closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-002",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "2"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "ledger_projection_notes_governance_seal_stale",
+        "finding_key": "sfk-9eb4947b9111e0e62a6290fb",
+        "registry_closure_id": "closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-003",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "3"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "ledger_compile_summary_stale_migration_validator_result",
+        "finding_key": "sfk-c991bae414aca3fa4f29a7ac",
+        "registry_closure_id": "closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-004",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "4"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "closure_registry_hashes_stale_validator_failure",
+        "finding_key": "sfk-5efdc99245444addb8f240df",
+        "registry_closure_id": "closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-005",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "5"
+      },
+      {
+        "closure_status": "repaired",
+        "finding_family": "forbidden_local_machine_state_in_subject_diff",
+        "finding_key": "sfk-0439337e339aad8f961ef365",
+        "registry_closure_id": "closure-audit-20260703-001-external-repo-import-closed-world-semantic-fidelity-repair-006",
+        "source_artifact": "semantic_risks.jsonl",
+        "source_row": "6"
+      }
+    ],
+    "path": "repair_closure_matrix.jsonl",
+    "row_count": 6
+  },
+  "coverage": {
+    "coverage_percent": 100.0,
+    "original_scope_rows": 3792,
+    "repair_impact_rows": 6,
+    "sampling": "none",
+    "total_rows_reviewed": 3798
+  },
+  "finalized_at_utc": "2026-07-03T22:21:33Z",
+  "generated_at_utc": "2026-07-03T22:10:30Z",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "next_action": "TERMINAL_REPAIR_CERTIFIED; no repair-required findings remain.",
+  "non_actionable_warnings": [
+    {
+      "classification": "warning",
+      "evidence": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json is the configured current shard report; the stale root sibling remains non-actionable audit warning.",
+      "finding_family": "stale_root_shard_report_sibling",
+      "finding_key": "sfk-a722575c4a364e816074e0c8",
+      "repair_required": false
+    }
+  ],
+  "observation_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "repair_required_count": 0,
+  "schema_id": "pm.post_repair_semantic_audit_report.v1",
+  "semantic_checks": {
+    "compile_summary_pm_plan_migration_validate_status": "pass",
+    "design_atom_stale_validation_note_present": false,
+    "ignored_claude_settings_local_json": ".gitignore:19:.claude/settings.local.json\t.claude/settings.local.json",
+    "ledger_pending_tokens": [],
+    "plan_index_placeholder_count": 0,
+    "planunit_placeholder_hits": [],
+    "tracked_claude_settings_local_json": ""
+  },
+  "status": "PASS_WITH_WARNINGS",
+  "subject_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "validator_results_ref": "repair_validator_results.json",
+  "validator_summary": {
+    "commands": [
+      {
+        "exit_code": 0,
+        "name": "git_status_before",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "closure_registry_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "target_audit_closure_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "target_ledger_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "plan_index_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "plan_migration_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "shard_check",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "audit_status_index_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "auto_decisions_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "spec_lock_verify",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "evidence_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "plan_graph_validate",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "audit_governance",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "run_gates",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "pytest",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "git_diff_check",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "git_diff_cached_check",
+        "status": "pass"
+      },
+      {
+        "exit_code": 0,
+        "name": "git_status_after",
+        "status": "pass"
+      }
+    ],
+    "fail_count": 0,
+    "pass_count": 18,
+    "status": "pass"
+  },
+  "warning_count": 1
+}

@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L23290-L23355
 
-Source SHA256: `3c8761c64b24d6e82739aa89979ebf1977095f52bcf621cdc7c91a6e466fc6fa`
+Source SHA256: `c4458efe95a4002bc0dfa77ea053c0d7fca74599c49f724b7e67bfe095a2302c`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  P0-SESSION-DRAFT-ATTACHMENT-ISOLATION (P0) is compiled as canonical Puppet Master intent for Session draft and attachment isolation: Imported external-repo finding extrepo-20260703-0088 / P0-SESSION-DRAFT-ATTACHMENT-ISOLATION (P0): None The preserved PM gap/delta is: Context/session plans need a GUI draft boundary with explicit draft/session/composer identity and state transitions. The observed external-repo signal remains source-lineage evidence: OpenCode Desktop issue: previous submitted text/images reappear in another session composer.
+  P0-SESSION-DRAFT-ATTACHMENT-ISOLATION (P0) is compiled as canonical Puppet Master intent for Session draft and attachment isolation: Imported external-repo finding extrepo-20260703-0088 / P0-SESSION-DRAFT-ATTACHMENT-ISOLATION (P0). The preserved PM gap/delta is: Context/session plans need a GUI draft boundary with explicit draft/session/composer identity and state transitions. The observed external-repo signal remains source-lineage evidence: OpenCode Desktop issue: previous submitted text/images reappear in another session composer.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

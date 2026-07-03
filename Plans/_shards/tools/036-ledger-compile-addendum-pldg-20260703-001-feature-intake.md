@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L11409-L12095
 
-Source SHA256: `e0566846be0f11f426713e6b4f7765edd5d9b3a1ceedd687355c74dadb55dd15`
+Source SHA256: `cf19b68942a134ccfe3c638fe1036e089b76d66f27b32c3913abd01df85a52b9`
 
 ---
 
@@ -344,7 +344,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P0-COMMAND-INVOCATION-CONTRACT (P0) is compiled as canonical Puppet Master intent for Command intent shape: shell-string vs argv vs PowerShell wrapper vs PTY/TUI command: Imported external-repo finding extrepo-20260703-0077 / P0-COMMAND-INVOCATION-CONTRACT (P0): None The preserved PM gap/delta is: Terminal protocol/paste safety was covered, but PM still needs an explicit CommandInvocationContract separate from terminal rendering and tool settlement. The observed external-repo signal remains source-lineage evidence: Cline issue #12047 reports structured {command: 'ls -la foo'} being posix_spawned as the entire executable, causing ENOENT. | Codex recent issues include one-shot approval for inspected PowerShell wrappers and command-safety hardening prevents unsafe helpers/hooks/parser execution. | Ghostty paste security fixes show terminal input can become command execution unexpectedly.
+  P0-COMMAND-INVOCATION-CONTRACT (P0) is compiled as canonical Puppet Master intent for Command intent shape: shell-string vs argv vs PowerShell wrapper vs PTY/TUI command: Imported external-repo finding extrepo-20260703-0077 / P0-COMMAND-INVOCATION-CONTRACT (P0). The preserved PM gap/delta is: Terminal protocol/paste safety was covered, but PM still needs an explicit CommandInvocationContract separate from terminal rendering and tool settlement. The observed external-repo signal remains source-lineage evidence: Cline issue #12047 reports structured {command: 'ls -la foo'} being posix_spawned as the entire executable, causing ENOENT. | Codex recent issues include one-shot approval for inspected PowerShell wrappers and command-safety hardening prevents unsafe helpers/hooks/parser execution. | Ghostty paste security fixes show terminal input can become command execution unexpectedly.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -419,7 +419,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0) is compiled as canonical Puppet Master intent for Runtime-valid plugins/tools that are not actually injected into the session: Imported external-repo finding extrepo-20260703-0078 / P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0): None The preserved PM gap/delta is: Capability catalogs and tool registries were covered, but not the final active-session namespace proof that a tool family is both configured and injected into this run. The observed external-repo signal remains source-lineage evidence: Codex issue #31023 described a Computer Use/plugin/cache/runtime configuration that was valid, but session tools were not injected and node_repl did not start. | Warp and Codex changelogs show explicit tool/plugin/runtime capability stages and immediate tool refreshes. | Cline and Warp both expose imported third-party agent/tool configs and custom model/provider flows.
+  P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0) is compiled as canonical Puppet Master intent for Runtime-valid plugins/tools that are not actually injected into the session: Imported external-repo finding extrepo-20260703-0078 / P0-SESSION-TOOL-NAMESPACE-ACTIVATION (P0). The preserved PM gap/delta is: Capability catalogs and tool registries were covered, but not the final active-session namespace proof that a tool family is both configured and injected into this run. The observed external-repo signal remains source-lineage evidence: Codex issue #31023 described a Computer Use/plugin/cache/runtime configuration that was valid, but session tools were not injected and node_repl did not start. | Warp and Codex changelogs show explicit tool/plugin/runtime capability stages and immediate tool refreshes. | Cline and Warp both expose imported third-party agent/tool configs and custom model/provider flows.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -494,7 +494,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
 canonical_text: >-
-  P0-TOOL-RESULT-TRUTHFULNESS-GATE (P0) is compiled as canonical Puppet Master intent for Tool result truthfulness gate: Imported external-repo finding extrepo-20260703-0094 / P0-TOOL-RESULT-TRUTHFULNESS-GATE (P0): None The preserved PM gap/delta is: ToolTurnSettlement must forbid fabricated placeholders and non-lossy success when resource retention/parse fails. The observed external-repo signal remains source-lineage evidence: Empty tool output can fabricate image placeholder; malformed JSON/tool-call and raw history pollution issues recur.
+  P0-TOOL-RESULT-TRUTHFULNESS-GATE (P0) is compiled as canonical Puppet Master intent for Tool result truthfulness gate: Imported external-repo finding extrepo-20260703-0094 / P0-TOOL-RESULT-TRUTHFULNESS-GATE (P0). The preserved PM gap/delta is: ToolTurnSettlement must forbid fabricated placeholders and non-lossy success when resource retention/parse fails. The observed external-repo signal remains source-lineage evidence: Empty tool output can fabricate image placeholder; malformed JSON/tool-call and raw history pollution issues recur.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

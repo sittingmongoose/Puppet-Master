@@ -4,7 +4,7 @@ Source: `Plans/Permissions_System.md`
 
 Source lines: L8594-L8864
 
-Source SHA256: `9aaebb4076398655d3e72ea34024342ef2d315b82a167c3390e6a3d78fb4f205`
+Source SHA256: `fcdac92d570e63b7026728ca440d24f47d126eda6c2c2a6bfa0adfc168f78fc6`
 
 ---
 
@@ -101,7 +101,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
 canonical_text: >-
-  P0-PROVIDER-EGRESS-HTTP-POLICY (P0) is compiled as canonical Puppet Master intent for User-configurable provider endpoint egress, redirect, timeout, and SSRF policy: Imported external-repo finding extrepo-20260703-0076 / P0-PROVIDER-EGRESS-HTTP-POLICY (P0): None The preserved PM gap/delta is: ProviderCapabilityEpoch and provider policy covered model/account/capability identity, but did not fully specify network-layer egress rules for custom provider URLs. The observed external-repo signal remains source-lineage evidence: Pi issue #6280 requests app-enforced HTTP redirect/error/custom fetch/timeout/cancel policy for provider requests, especially user-configurable OpenAI-compatible URLs. | Codex changelog references approved OpenAI hosts, short-lived remote-control tokens, and browser-origin websocket handshake rejection. | Cline/OpenCode/Pi all expose broad OpenAI-compatible/custom provider surfaces.
+  P0-PROVIDER-EGRESS-HTTP-POLICY (P0) is compiled as canonical Puppet Master intent for User-configurable provider endpoint egress, redirect, timeout, and SSRF policy: Imported external-repo finding extrepo-20260703-0076 / P0-PROVIDER-EGRESS-HTTP-POLICY (P0). The preserved PM gap/delta is: ProviderCapabilityEpoch and provider policy covered model/account/capability identity, but did not fully specify network-layer egress rules for custom provider URLs. The observed external-repo signal remains source-lineage evidence: Pi issue #6280 requests app-enforced HTTP redirect/error/custom fetch/timeout/cancel policy for provider requests, especially user-configurable OpenAI-compatible URLs. | Codex changelog references approved OpenAI hosts, short-lived remote-control tokens, and browser-origin websocket handshake rejection. | Cline/OpenCode/Pi all expose broad OpenAI-compatible/custom provider surfaces.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -176,7 +176,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Permissions_System.md
 canonical_text: >-
-  P0-COMMAND-APPROVAL-LEASE (P0) is compiled as canonical Puppet Master intent for Command approval lease bound to normalized command identity: Imported external-repo finding extrepo-20260703-0090 / P0-COMMAND-APPROVAL-LEASE (P0): None The preserved PM gap/delta is: Approval must be a lease over invocation form, cwd/env, namespace, purpose, normalized command hash, and retry lineage. The observed external-repo signal remains source-lineage evidence: Cline posix_spawn bug for structured command string; Codex PRs around shell approval boundaries, PowerShell wrappers, command identity, approval purpose.
+  P0-COMMAND-APPROVAL-LEASE (P0) is compiled as canonical Puppet Master intent for Command approval lease bound to normalized command identity: Imported external-repo finding extrepo-20260703-0090 / P0-COMMAND-APPROVAL-LEASE (P0). The preserved PM gap/delta is: Approval must be a lease over invocation form, cwd/env, namespace, purpose, normalized command hash, and retry lineage. The observed external-repo signal remains source-lineage evidence: Cline posix_spawn bug for structured command string; Codex PRs around shell approval boundaries, PowerShell wrappers, command identity, approval purpose.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

@@ -2086,7 +2086,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH (P0) is compiled as canonical Puppet Master intent for Lazy MCP/tool catalog without lossy results: Imported external-repo finding extrepo-20260703-0021 / P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH (P0): None The preserved PM gap/delta is: Add explicit ToolCatalogSearch/MCPToolCatalogIndex and require eager/lazy/search-selected MCP invocations to share the same rich result parser and no-lossy settlement path. The observed external-repo signal remains source-lineage evidence: OpenCode and Cline users repeatedly report MCP schema/tool lists adding 17k-50k+ tokens before useful work; OpenCode PR #12520 centralizes tool search but review surfaced risk of lazy result paths dropping rich MCP outputs.
+  P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH (P0) is compiled as canonical Puppet Master intent for Lazy MCP/tool catalog without lossy results: Imported external-repo finding extrepo-20260703-0021 / P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH (P0). The preserved PM gap/delta is: Add explicit ToolCatalogSearch/MCPToolCatalogIndex and require eager/lazy/search-selected MCP invocations to share the same rich result parser and no-lossy settlement path. The observed external-repo signal remains source-lineage evidence: OpenCode and Cline users repeatedly report MCP schema/tool lists adding 17k-50k+ tokens before useful work; OpenCode PR #12520 centralizes tool search but review surfaced risk of lazy result paths dropping rich MCP outputs.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -2165,7 +2165,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  P0-MCP-TYPED-PARAM-FIDELITY (P0) is compiled as canonical Puppet Master intent for MCP tools/call native JSON type fidelity: Imported external-repo finding extrepo-20260703-0025 / P0-MCP-TYPED-PARAM-FIDELITY (P0): None The preserved PM gap/delta is: Add adapter round-trip tests proving booleans/numbers/arrays/objects/nulls preserve native JSON types through all MCP transports and bridge layers. The observed external-repo signal remains source-lineage evidence: Pi MCP client bug converted booleans/numbers to strings, breaking standards-compliant MCP servers.
+  P0-MCP-TYPED-PARAM-FIDELITY (P0) is compiled as canonical Puppet Master intent for MCP tools/call native JSON type fidelity: Imported external-repo finding extrepo-20260703-0025 / P0-MCP-TYPED-PARAM-FIDELITY (P0). The preserved PM gap/delta is: Add adapter round-trip tests proving booleans/numbers/arrays/objects/nulls preserve native JSON types through all MCP transports and bridge layers. The observed external-repo signal remains source-lineage evidence: Pi MCP client bug converted booleans/numbers to strings, breaking standards-compliant MCP servers.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:
@@ -2242,7 +2242,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  P1-MCP-HEADER-SECRET-HOOKS (P1) is compiled as canonical Puppet Master intent for Runtime-only MCP credential/header resolution hooks: Imported external-repo finding extrepo-20260703-0026 / P1-MCP-HEADER-SECRET-HOOKS (P1): None The preserved PM gap/delta is: Define MCPHeaderResolutionHook: runtime-only, redacted, receipted, data-class labeled, permission-rechecked, cannot widen scope. The observed external-repo signal remains source-lineage evidence: Agent Zero PR adds resolve_mcp_server_headers and settings hooks for credential scanning; useful to avoid monkey-patching but dangerous without secret and permission controls.
+  P1-MCP-HEADER-SECRET-HOOKS (P1) is compiled as canonical Puppet Master intent for Runtime-only MCP credential/header resolution hooks: Imported external-repo finding extrepo-20260703-0026 / P1-MCP-HEADER-SECRET-HOOKS (P1). The preserved PM gap/delta is: Define MCPHeaderResolutionHook: runtime-only, redacted, receipted, data-class labeled, permission-rechecked, cannot widen scope. The observed external-repo signal remains source-lineage evidence: Agent Zero PR adds resolve_mcp_server_headers and settings hooks for credential scanning; useful to avoid monkey-patching but dangerous without secret and permission controls.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -2388,7 +2388,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/MCP_Integration.md
 canonical_text: >-
-  P0-MCP-LIFECYCLE-RUNTIME-LIVENESS (P0) is compiled as canonical Puppet Master intent for MCP lifecycle plus runtime-call liveness: Imported external-repo finding extrepo-20260703-0089 / P0-MCP-LIFECYCLE-RUNTIME-LIVENESS (P0): None The preserved PM gap/delta is: MCP config/readiness needs runtime call timeout, heartbeat, interrupt, and synthetic settlement receipts. The observed external-repo signal remains source-lineage evidence: OpenCode V2 MCP lifecycle work plus MCP runtime deadlock; Cline hardcoded MCP initialize timeout.
+  P0-MCP-LIFECYCLE-RUNTIME-LIVENESS (P0) is compiled as canonical Puppet Master intent for MCP lifecycle plus runtime-call liveness: Imported external-repo finding extrepo-20260703-0089 / P0-MCP-LIFECYCLE-RUNTIME-LIVENESS (P0). The preserved PM gap/delta is: MCP config/readiness needs runtime call timeout, heartbeat, interrupt, and synthetic settlement receipts. The observed external-repo signal remains source-lineage evidence: OpenCode V2 MCP lifecycle work plus MCP runtime deadlock; Cline hardcoded MCP initialize timeout.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

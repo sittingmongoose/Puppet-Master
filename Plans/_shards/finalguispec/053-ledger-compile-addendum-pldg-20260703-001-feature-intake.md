@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L26670-L27040
 
-Source SHA256: `9bc70c143cbbf4596814b3decd2231d7a4585f04d112d2729a6833bea987f113`
+Source SHA256: `1d56de70262c3e9e7559f9d0e2f7229b7d5077887a3ac8b6772a2853c7030350`
 
 ---
 
@@ -176,7 +176,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  P2-RICH-TEXT-RENDERING-FIDELITY (P2) is compiled as canonical Puppet Master intent for Rendered GUI text fidelity separate from terminal fidelity: Imported external-repo finding extrepo-20260703-0035 / P2-RICH-TEXT-RENDERING-FIDELITY (P2): None The preserved PM gap/delta is: Add rich-text fixtures for ASCII ligatures, bullets, arrows, emoji, combining marks, CJK width, raw vs rendered view, and copy/source-byte fidelity. The observed external-repo signal remains source-lineage evidence: Warp rendered Markdown/rich UI misrendered glyphs while source bytes remained correct.
+  P2-RICH-TEXT-RENDERING-FIDELITY (P2) is compiled as canonical Puppet Master intent for Rendered GUI text fidelity separate from terminal fidelity: Imported external-repo finding extrepo-20260703-0035 / P2-RICH-TEXT-RENDERING-FIDELITY (P2). The preserved PM gap/delta is: Add rich-text fixtures for ASCII ligatures, bullets, arrows, emoji, combining marks, CJK width, raw vs rendered view, and copy/source-byte fidelity. The observed external-repo signal remains source-lineage evidence: Warp rendered Markdown/rich UI misrendered glyphs while source bytes remained correct.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -248,7 +248,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  P1-UI-HARD-GATE-ENFORCER (P1) is compiled as canonical Puppet Master intent for User-defined hard gates for visual QA, artifact delivery, and output modality: Imported external-repo finding extrepo-20260703-0086 / P1-UI-HARD-GATE-ENFORCER (P1): None The preserved PM gap/delta is: Permissions/gates are strong, but visual QA/artifact delivery/output modality should be hard runtime predicates, not conversational instructions. The observed external-repo signal remains source-lineage evidence: Codex recent issue list includes an agent bypassing user-defined hard gates for local artifact delivery and visual QA, and another issue about output-modality constraints. | Warp and Cline show GUI/agent surfaces where commands, artifacts, and agent outputs cross UI boundaries.
+  P1-UI-HARD-GATE-ENFORCER (P1) is compiled as canonical Puppet Master intent for User-defined hard gates for visual QA, artifact delivery, and output modality: Imported external-repo finding extrepo-20260703-0086 / P1-UI-HARD-GATE-ENFORCER (P1). The preserved PM gap/delta is: Permissions/gates are strong, but visual QA/artifact delivery/output modality should be hard runtime predicates, not conversational instructions. The observed external-repo signal remains source-lineage evidence: Codex recent issue list includes an agent bypassing user-defined hard gates for local artifact delivery and visual QA, and another issue about output-modality constraints. | Warp and Cline show GUI/agent surfaces where commands, artifacts, and agent outputs cross UI boundaries.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -321,7 +321,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  P1-UI-PROJECTION-STORE-BUDGET (P1) is compiled as canonical Puppet Master intent for Bounded UI projection stores: Imported external-repo finding extrepo-20260703-0097 / P1-UI-PROJECTION-STORE-BUDGET (P1): None The preserved PM gap/delta is: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts. The observed external-repo signal remains source-lineage evidence: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate.
+  P1-UI-PROJECTION-STORE-BUDGET (P1) is compiled as canonical Puppet Master intent for Bounded UI projection stores: Imported external-repo finding extrepo-20260703-0097 / P1-UI-PROJECTION-STORE-BUDGET (P1). The preserved PM gap/delta is: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts. The observed external-repo signal remains source-lineage evidence: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
