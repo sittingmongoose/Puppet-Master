@@ -24,7 +24,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index validates after Doctor/onboarding repair; node_readiness remains blocked_compiler_contract_incomplete by design."
+      "details": "PASS: node_readiness_status=blocked_runtime_certification_incomplete; runtime_enabled=false; executable_lifecycle_certification_complete=false; no WorkNodes, NodeSeed candidates, executable queues, final node manifests, or production build tasks emitted by index generation."
     },
     {
       "name": "node-readiness-status-preserved",
@@ -135,6 +135,16 @@
       "name": "no-forbidden-artifacts",
       "result": "PASS",
       "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime/build surfaces, or production build tasks were created by this bounded repair."
+    },
+    {
+      "name": "bootstrap-ledger-smoke",
+      "result": "PASS",
+      "details": "PASS: dedicated smoke validates every Plans/ledgers/v2/pldg-* ledger, including historical sealed ledgers; run-gates intentionally remains plan-governance only."
+    },
+    {
+      "name": "wiring-matrix-reverse-catalog-coverage",
+      "result": "PASS",
+      "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded."
     }
   ],
   "commands_run": [
@@ -269,6 +279,14 @@
     },
     {
       "cmd": "python3 -m unittest discover -s tests",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit_code": 0
     }
   ],

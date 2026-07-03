@@ -37,7 +37,7 @@ acceptance_criteria:
   - Root AGENTS.md keeps ledger source memory separate from canonical Plans prose.
 validation_surfaces:
   - Manual AGENTS.md review.
-  - Ledger workflow smoke test.
+  - 'Ledger workflow smoke test: python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers includes active, compiled, sealed, and historical pldg-* ledgers by default.'
 risk_class: agent_instruction_drift
 reasoning_tier: standard
 context_scope: repo_agents

@@ -2091,6 +2091,14 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
     for command_id in missing_commands:
         failures.append({"path": rel(matrix_path), "command_id": command_id, "error": "catalog_command_missing_production_wiring"})
 
+    uncataloged_production_commands = sorted(
+        command_id
+        for command_id in production_commands
+        if command_id not in catalog_commands and not wiring_command_excluded(command_id, excluded_tokens)
+    )
+    for command_id in uncataloged_production_commands:
+        failures.append({"path": rel(matrix_path), "command_id": command_id, "error": "production_wiring_command_missing_catalog_row"})
+
     return report_status(
         "validate-wiring-matrix",
         failures,
@@ -2101,6 +2109,77 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
         event_row_count=event_rows,
         typed_contract_row_count=typed_contract_rows,
         missing_catalog_command_count=len(missing_commands),
+        uncataloged_production_command_count=len(uncataloged_production_commands),
+    )
+
+
+def cmd_validate_bootstrap_ledgers(args: argparse.Namespace) -> dict[str, Any]:
+    ledger_root = PLANS / "ledgers/v2"
+    requested_ids = getattr(args, "ledger_id", []) or []
+    timeout_seconds = getattr(args, "timeout_seconds", 180)
+    if requested_ids:
+        ledger_dirs = [ledger_root / ledger_id for ledger_id in requested_ids]
+    else:
+        ledger_dirs = sorted(path for path in ledger_root.glob("pldg-*") if path.is_dir())
+
+    failures: list[dict[str, Any]] = []
+    ledgers: list[dict[str, Any]] = []
+    validator = ROOT / "scripts/pm-bootstrap-ledger-validate.py"
+
+    for ledger_dir in ledger_dirs:
+        ledger_id = ledger_dir.name
+        if not ledger_dir.exists():
+            failures.append({"ledger_id": ledger_id, "path": rel(ledger_dir), "error": "missing_bootstrap_ledger"})
+            ledgers.append({"ledger_id": ledger_id, "status": "fail"})
+            continue
+        try:
+            proc = subprocess.run(
+                [sys.executable, str(validator), str(ledger_dir)],
+                cwd=ROOT,
+                text=True,
+                capture_output=True,
+                timeout=timeout_seconds,
+                check=False,
+            )
+        except subprocess.TimeoutExpired:
+            failures.append({"ledger_id": ledger_id, "path": rel(ledger_dir), "error": "bootstrap_ledger_validate_timeout"})
+            ledgers.append({"ledger_id": ledger_id, "status": "fail"})
+            continue
+
+        try:
+            report = json.loads(proc.stdout)
+        except json.JSONDecodeError:
+            report = {"status": "fail", "errors": ["validator_output_not_json"], "stdout": proc.stdout[-4000:], "stderr": proc.stderr[-4000:]}
+        status = report.get("status")
+        ledgers.append(
+            {
+                "ledger_id": ledger_id,
+                "status": status,
+                "errors": len(report.get("errors", [])),
+                "warnings": len(report.get("warnings", [])),
+            }
+        )
+        if proc.returncode != 0 or status != "pass":
+            failures.append(
+                {
+                    "ledger_id": ledger_id,
+                    "path": rel(ledger_dir),
+                    "status": status,
+                    "returncode": proc.returncode,
+                    "errors": report.get("errors", [])[:50],
+                    "warnings": report.get("warnings", [])[:50],
+                }
+            )
+
+    return report_status(
+        "validate-bootstrap-ledgers",
+        failures,
+        validation_policy=(
+            "run-gates intentionally excludes the full bootstrap-ledger matrix; "
+            "this smoke validates every selected Plans/ledgers/v2/pldg-* ledger, including historical sealed ledgers."
+        ),
+        ledger_count=len(ledger_dirs),
+        ledgers=ledgers,
     )
 
 
@@ -2323,6 +2402,7 @@ COMMANDS = {
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
     "validate-wiring-matrix": cmd_validate_wiring_matrix,
+    "validate-bootstrap-ledgers": cmd_validate_bootstrap_ledgers,
     "validate-audit-status-index": cmd_validate_audit_status_index,
     "run-gates": cmd_run_gates,
     "audit-governance": cmd_audit_governance,
@@ -2337,6 +2417,9 @@ def main() -> int:
         sub.add_argument("--report")
         if name == "validate-evidence":
             sub.add_argument("paths", nargs="*")
+        if name == "validate-bootstrap-ledgers":
+            sub.add_argument("--ledger-id", action="append", default=[], help="Validate one ledger id; repeat for multiple.")
+            sub.add_argument("--timeout-seconds", type=int, default=180, help="Maximum seconds per ledger validation.")
         if name in {"run-gates", "audit-governance"}:
             sub.add_argument(
                 "--subcheck-timeout-seconds",

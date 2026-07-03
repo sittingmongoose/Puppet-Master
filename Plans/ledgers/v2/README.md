@@ -52,3 +52,7 @@ Every design atom must include `gui_related: true|false`, inferred by the agent.
 ## Completion principle
 
 Agents may request completion. Validators certify completion. False completion is blocked by open questions, unclassified candidates, unresolved contradictions, open blockers, unsealed governance queues, and missing `gui_related` classification.
+
+## Historical ledger smoke policy
+
+`python3 scripts/pm-plans-verify.py run-gates` intentionally does not run the full bootstrap-ledger matrix. The dedicated smoke check for active, compiled, sealed, and historical `pldg-*` ledgers is to run `python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>` for every `Plans/ledgers/v2/pldg-*` directory. Historical sealed ledgers are included in that smoke check rather than archived out of validation.

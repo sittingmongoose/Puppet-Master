@@ -188,7 +188,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "a5294e511f4e9df29fcc0c6df6dcdda7da884e2c6304e3ad644b771ff1801711",
+      "sha256": "4d4d874c5978d9117cfc3992a6422d88dd86c78f35a94819259aa172968d8e27",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 65
@@ -1748,7 +1748,7 @@
         "thread_restart_continuity",
         "workflow_continuity"
       ],
-      "sha256": "8a636765a5a6e900b7affbaf985dfe5c58c406dfe2016fad376f63399b0aa698",
+      "sha256": "423328f84d58cce85753f55279ca2dc986d2af7e7c176fa4901c52c010c116e8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -1764,7 +1764,7 @@
         "Explicit governance seal report.",
         "Goal prompt templates in Plans/bootstrap/Codex_Prompts.md.",
         "Heading/body span inventory.",
-        "Ledger workflow smoke test.",
+        "Ledger workflow smoke test: python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers includes active, compiled, sealed, and historical pldg-* ledgers by default.",
         "Manual AGENTS.md review.",
         "Manual plan review.",
         "Original hash inventory.",
@@ -5275,7 +5275,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "a29a55c5fbe5464523a997b0c6ab884b9750dec77d2aa76048a86c6a595c7384",
+      "sha256": "f28e7193cd3bdc3e939b871f3b088f75a921a6b6a4c199c7ea2a9b42542e9131",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 410,
@@ -9500,10 +9500,11 @@
         "future Planning Wizard",
         "scripts/pm-audit-closure.py",
         "scripts/pm-bootstrap-ledger-validate.py",
+        "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 934,
+      "line_count": 935,
       "path": "Plans/Planning_Ledger_System.md",
       "plan_unit_count": 15,
       "plan_unit_ids": [
@@ -9543,7 +9544,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "68a80bd13ec1858d66affb4b3991f15defb0eafb5fd3ddca0adb557f901ccd63",
+      "sha256": "f42e038a8f9a1c631bbb1cc8f267bb648722f9a107d4425ffd73c7790e48ec31",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 15
@@ -9577,6 +9578,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
         "python3 scripts/pm-shard-plans.py --check"
       ]
@@ -11890,7 +11892,7 @@
         "future command registry and routed Docker/Hosts actions",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 7874,
+      "line_count": 7880,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 106,
       "plan_unit_ids": [
@@ -12020,7 +12022,7 @@
         "ui_command_compatibility_drift",
         "vision_command_drift"
       ],
-      "sha256": "be9446be79e1dcfb60de9c47670401a8a8cec8102d13669ce9acbad9e16bba5c",
+      "sha256": "b5a7bf1c16ef291183fdfd2c6dab1da887e32db411cc9b61ae090594244e8eed",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 105,
@@ -12562,7 +12564,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-02T23:31:33Z",
+  "generated_at_utc": "2026-07-03T02:30:34Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

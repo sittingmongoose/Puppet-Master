@@ -70,8 +70,10 @@
     }
   ],
   "ledger_id": "pldg-20260614-001-part-2-cleanup-fable-audit",
+  "last_event_id": "evt-0033",
   "notes": "Strict queue target docs remain limited to governance-covered owner docs. Part 2 cleanup compile outputs are governance-sealed: migration hashes/counts, configured shards, Spec_Lock, evidence, auto_decisions, and Plans/.plan_index validators pass. Node readiness remains blocked_compiler_contract_incomplete; no WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or final node queues were created.",
   "schema_id": "pm.plan_compile_queue.v1",
   "status": "compiled_part_2_cleanup_governance_sealed",
+  "terminal_ledger_event_id": "evt-0033",
   "updated_at_utc": "2026-06-14T21:40:05Z"
 }

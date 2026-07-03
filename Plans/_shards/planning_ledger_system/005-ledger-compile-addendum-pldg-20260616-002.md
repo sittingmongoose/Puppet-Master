@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L406-L489
+Source lines: L407-L490
 
-Source SHA256: `68a80bd13ec1858d66affb4b3991f15defb0eafb5fd3ddca0adb557f901ccd63`
+Source SHA256: `f42e038a8f9a1c631bbb1cc8f267bb648722f9a107d4425ffd73c7790e48ec31`
 
 ---
 

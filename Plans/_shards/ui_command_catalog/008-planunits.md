@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1229-L6838
+Source lines: L1233-L6844
 
-Source SHA256: `be9446be79e1dcfb60de9c47670401a8a8cec8102d13669ce9acbad9e16bba5c`
+Source SHA256: `b5a7bf1c16ef291183fdfd2c6dab1da887e32db411cc9b61ae090594244e8eed`
 
 ---
 
@@ -2527,7 +2527,7 @@ plan_unit_id: UCC-047
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: GitHub Actions command rows cover show/switch/rerun/cancel, workflow pin/unpin/settings, open current branch, open related diff, logs, workflow/job detail, retry, copy URL, copy logs, open in GitHub, branch-to-diff, and run-to-browser pivots.
+canonical_text: GitHub Actions command rows cover show/switch/rerun/cancel, workflow pin/unpin/settings, dispatch-readiness validation, compare-last-success, open current branch, open related diff, logs, workflow/job detail, retry, copy URL, copy logs, open in GitHub, branch-to-diff, and run-to-browser pivots.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -2563,6 +2563,8 @@ preserved_exact_tokens:
 - cmd.github.actions.unpin
 - cmd.github.actions.settings.open
 - cmd.github.actions.open_current_branch
+- cmd.github.actions.validate_dispatch_readiness
+- cmd.github.actions.compare_last_success
 - cmd.github.actions.open_related_diff
 - cmd.actions.view_logs
 - cmd.github.actions.open_step_logs

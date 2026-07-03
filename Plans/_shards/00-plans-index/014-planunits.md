@@ -4,7 +4,7 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L710-L4261
 
-Source SHA256: `a5294e511f4e9df29fcc0c6df6dcdda7da884e2c6304e3ad644b771ff1801711`
+Source SHA256: `4d4d874c5978d9117cfc3992a6422d88dd86c78f35a94819259aa172968d8e27`
 
 ---
 
@@ -687,7 +687,7 @@ preserved_exact_tokens:
 - 'WorkNodes'
 - 'NodeSeed'
 negative_constraints:
-- 'It does not create WorkNodes, executable build tasks, or NodeSeed candidates before the compiler contract is complete.'
+- 'It does not create WorkNodes, executable build tasks, or NodeSeed candidates until the compiler contract is complete and the PNC-019 executable lifecycle certification harness has passed with recorded evidence.'
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
