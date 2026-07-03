@@ -169,7 +169,9 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:dec-0009
   - source_ref:chat:design-discussion
   - source_ref:chat:user-gui-classification-correction
-preserved_exact_tokens: ["PlanUnit", "plan_unit_id", "canonical_text", "gui_related", "depends_on", "unblocks", "risk_class", "reasoning_tier", "context_scope", "node_compile_hint", "GUI", "UI", "icons", "SVGs", "images", "true", "false"]
+source_atom_ids:
+  - atom-0004
+preserved_exact_tokens: ["PlanUnit", "plan_unit_id", "canonical_text", "gui_related", "depends_on", "unblocks", "risk_class", "reasoning_tier", "context_scope", "node_compile_hint", "GUI", "UI", "icons", "SVGs", "images", "true", "false", "Automatically classify every design atom as gui_related true or false.", "Mark true for GUI/UI/screens/pages/panels/forms/layout/styling/components/icons/SVGs/images/screenshots/user-visible visual presentation.", "The user does not need to label GUI work."]
 negative_constraints:
   - Do not require the user to declare whether an item is GUI-related.
   - Do not use a granular surface taxonomy for the bootstrap standard; use a simple boolean.
@@ -325,7 +327,9 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:corr-0003
   - source_ref:chat:user-gui-classification-correction
   - source_ref:chat:user-gui-routing-native-setting
-preserved_exact_tokens: ["gui_related", "use different model for GUI elements?", "GUI model", "user won't know what is gui or ui or icons", "llm should just determine", "tagging it as GUI is enough"]
+source_atom_ids:
+  - atom-0004
+preserved_exact_tokens: ["gui_related", "use different model for GUI elements?", "GUI model", "user won't know what is gui or ui or icons", "llm should just determine", "tagging it as GUI is enough", "Automatically classify every design atom as gui_related true or false.", "The user does not need to label GUI work."]
 negative_constraints:
   - Do not require the user to declare whether an item is GUI-related.
   - Do not expose a highly granular GUI/UI/icon/image routing taxonomy in the product UI.

@@ -55,7 +55,9 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0009
   - pldg-20260610-001-ledger-plan-system:dec-0001
   - source_ref:chat:design-discussion
-preserved_exact_tokens: ["assistant memory", "Plan Mode", "Plans/**", "source_evidence", "canonical_evidence", "process_evidence", "governance_evidence", "live non-pipeline Plans docs"]
+source_atom_ids:
+  - atom-0002
+preserved_exact_tokens: ["assistant memory", "Plan Mode", "Plans/**", "source_evidence", "canonical_evidence", "process_evidence", "governance_evidence", "live non-pipeline Plans docs", "This is a conversational design/spec thread, not a Goal run.", "Do not write canonical Plans yet.", "Do not write canonical Plans until Jared explicitly asks to compile the ledger."]
 negative_constraints:
   - Do not confuse the ledger with the actual chat memory system.
   - Do not treat the ledger as canonical product prose.
@@ -206,7 +208,9 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:corr-0003
   - source_ref:chat:design-discussion
   - source_ref:chat:user-gui-classification-correction
-preserved_exact_tokens: ["design_atom", "PlanUnit", "obligation", "negative constraints", "compatibility-only", "stale/retired", "owner hints", "user corrections", "gui_related", "GUI", "UI", "icons", "SVGs", "images", "true", "false"]
+source_atom_ids:
+  - atom-0004
+preserved_exact_tokens: ["design_atom", "PlanUnit", "obligation", "negative constraints", "compatibility-only", "stale/retired", "owner hints", "user corrections", "gui_related", "GUI", "UI", "icons", "SVGs", "images", "true", "false", "Automatically classify every design atom as gui_related true or false.", "The user does not need to label GUI work.", "Mark true for GUI/UI/screens/pages/panels/forms/layout/styling/components/icons/SVGs/images/screenshots/user-visible visual presentation."]
 negative_constraints:
   - Do not prematurely treat every discussion point as a transfer obligation.
   - Do not require the user to declare whether an item is GUI-related.
@@ -245,7 +249,9 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:atom-0007
   - pldg-20260610-001-ledger-plan-system:atom-0012
   - source_ref:chat:design-discussion
-preserved_exact_tokens: ["events.jsonl", "records/*.jsonl", "state/handoff.json", "pldg-YYYYMMDD-NNN-<slug>", "ledger_registry.json"]
+source_atom_ids:
+  - atom-0003
+preserved_exact_tokens: ["events.jsonl", "records/*.jsonl", "state/handoff.json", "pldg-YYYYMMDD-NNN-<slug>", "ledger_registry.json", "After each substantive turn, update:", "touched records/*.jsonl"]
 negative_constraints: []
 owner_hints: [Plans/Planning_Ledger_System.md]
 ```
@@ -363,7 +369,9 @@ source_lineage:
   - pldg-20260703-001-feature-intake:atom-0001
   - pldg-20260610-001-ledger-plan-system:atom-0035
   - source_ref:chat:implementation-readiness-review
-preserved_exact_tokens: ["manifest.json", "events.jsonl", "records/design_atoms.jsonl", "records/decisions.jsonl", "records/questions.jsonl", "records/blockers.jsonl", "records/corrections.jsonl", "state/current.json", "state/handoff.json", "state/open_items.json", "state/compile_queue.json", "state/operating_capsule.json", "validation/ledger_health.json", "ledger_registry.json"]
+source_atom_ids:
+  - atom-0001
+preserved_exact_tokens: ["manifest.json", "events.jsonl", "records/design_atoms.jsonl", "records/decisions.jsonl", "records/questions.jsonl", "records/blockers.jsonl", "records/corrections.jsonl", "state/current.json", "state/handoff.json", "state/open_items.json", "state/compile_queue.json", "state/operating_capsule.json", "validation/ledger_health.json", "ledger_registry.json", "Feature: <feature name>", "Create a new v2 ledger under Plans/ledgers/v2/ with ledger_id pldg-YYYYMMDD-NNN-<slug>.", "Once the ledger is initialized, ask me what we are working on and begin the planning conversation."]
 negative_constraints:
   - Do not treat legacy working_ledger.md files as the v2 active ledger format.
 owner_hints: [Plans/Planning_Ledger_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md]
@@ -457,6 +465,8 @@ source_lineage:
   - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0016
   - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0027
   - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0029
+source_atom_ids:
+  - atom-0002
 preserved_exact_tokens:
   - "compile_queue"
   - "compile_queue.items"
@@ -479,6 +489,9 @@ preserved_exact_tokens:
   - "NodeSeeds"
   - "executable queues"
   - "final build tasks"
+  - "Do not write canonical Plans yet."
+  - "Do not write canonical Plans until Jared explicitly asks to compile the ledger."
+  - "Do not create or update Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions."
 negative_constraints:
   - Do not mark a ledger sealed during ordinary compile.
   - Do not create executable build tasks before the WorkNode compiler contract exists.

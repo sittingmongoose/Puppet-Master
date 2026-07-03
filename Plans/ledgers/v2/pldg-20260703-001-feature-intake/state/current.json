@@ -203,14 +203,14 @@
   "current_phase": "compiled_to_plans_governance_sealed",
   "cursor": {
     "last_decision_id": "dec-0006",
-    "last_event_id": "evt-0012",
+    "last_event_id": "evt-0013",
     "last_question_id": "q-0001",
-    "next_action": "Ledger compile and governance seal are complete; runtime implementation remains disabled until future node compiler/runtime certification scope.",
+    "next_action": "Post-repair semantic audit certification is complete; runtime implementation remains disabled until future node compiler/runtime certification scope.",
     "next_atom_id": "atom-0123",
     "next_decision_id": "dec-0007",
-    "next_event_id": "evt-0013",
+    "next_event_id": "evt-0014",
     "next_question_id": "q-0002",
-    "updated_at_utc": "2026-07-03T21:04:14Z"
+    "updated_at_utc": "2026-07-03T23:11:17Z"
   },
   "deferred_questions_count": 0,
   "design_atoms_total": 122,
@@ -571,10 +571,14 @@
     "node_readiness_status": "blocked_runtime_certification_incomplete"
   },
   "last_completed_action": "Sealed governance for the compiled external repo import; validators pass and generated governance artifacts are current.",
-  "last_event_id": "evt-0012",
+  "last_event_id": "evt-0013",
   "last_known_good_state": "Ledger import, compile, PlanUnit index, migration proof, shards, evidence, Spec Lock, plan graph, auto decisions validation, and run-gates all pass.",
-  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/governance_seal_recheck_20260703T210110Z.json",
-  "latest_audit_status": "pass_governance_sealed",
+  "latest_audit_ref": "Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "latest_audit_status": "pass_post_repair_semantic_certification",
+  "latest_governance_seal_recheck_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/governance_seal_recheck_20260703T210110Z.json",
+  "latest_governance_seal_recheck_status": "superseded_by_post_repair_semantic_certification",
+  "latest_post_repair_audit_ref": "Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "latest_post_repair_audit_status": "PASS_WITH_WARNINGS",
   "ledger_id": "pldg-20260703-001-feature-intake",
   "next_action": "Review/commit sealed ledger and Plans changes. Runtime implementation remains a separate future scope blocked by PNC-019 runtime certification.",
   "next_safe_action": "Do not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks unless a future prompt explicitly completes the node compiler/runtime certification contract.",
@@ -628,7 +632,7 @@
     "Plans/usage-feature.md"
   ],
   "title": "External Repo System-Wide Improvement Import",
-  "updated_at_utc": "2026-07-03T21:05:34Z",
+  "updated_at_utc": "2026-07-03T23:11:17Z",
   "validation_state": {
     "bootstrap_ledger_validator": "pass",
     "bootstrap_ledger_validator_summary": {
@@ -641,6 +645,7 @@
       "questions": 1
     },
     "git_diff_check": "pass",
+    "governance_seal": "pass",
     "governance_status": "sealed",
     "ledger_completeness_reverification": "pass",
     "ledger_health": "pass_governance_sealed",
@@ -654,18 +659,17 @@
     "node_readiness_status": "blocked_runtime_certification_incomplete",
     "plan_index_validator": "pass",
     "plan_migration_validator": "pass",
-    "pm_plan_index_validate": "pass",
-    "pm_plan_migration_validate": "pass",
-    "reciprocal_source_lineage_audit": "pass",
-    "runtime_enablement_status": "runtime_disabled",
     "pm_bootstrap_ledger_validate_pldg_20260610": "pass",
     "pm_bootstrap_ledger_validate_pldg_20260703": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
     "pm_plans_verify_run_gates": "pass",
-    "pm_shard_plans_check": "pass",
     "pm_plans_verify_validate_auto_decisions": "pass",
-    "pm_plans_verify_verify_spec_lock": "pass",
     "pm_plans_verify_validate_evidence": "pass",
     "pm_plans_verify_validate_plan_graph": "pass",
-    "governance_seal": "pass"
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_shard_plans_check": "pass",
+    "reciprocal_source_lineage_audit": "pass",
+    "runtime_enablement_status": "runtime_disabled"
   }
 }
