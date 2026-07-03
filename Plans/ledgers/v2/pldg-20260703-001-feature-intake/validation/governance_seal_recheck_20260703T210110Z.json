@@ -1,0 +1,88 @@
+{
+  "schema_id": "pm.ledger_governance_seal_recheck.v1",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "created_at_utc": "2026-07-03T21:04:14Z",
+  "status": "pass_governance_sealed",
+  "governance_status": "sealed",
+  "phase": "compiled_to_plans_governance_sealed",
+  "notes": "Explicit governance seal completed after ledger/Plan/PlanUnit changes stabilized. Migration proof, PlanUnit index, configured shards, sharding evidence, evidence bundles, Spec Lock, and plan graph validate. auto_decisions.jsonl was validated but not changed because no current validator or governance helper required a new decision row. Runtime/node execution remains blocked by PNC-019; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+  "validator_results": {
+    "pm_plan_index_validate": {
+      "status": "pass",
+      "plan_unit_count": 5473,
+      "acceptance_unit_count": 19633,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete"
+    },
+    "pm_plan_migration_validate": {
+      "status": "pass",
+      "live_plan_unit_count": 5473,
+      "unique_live_plan_unit_count": 5473
+    },
+    "pm_bootstrap_ledger_validate": {
+      "status": "pass",
+      "summary_before_this_event": {
+        "atoms": 122,
+        "compile_queue_items": 1,
+        "corrections": 0,
+        "decisions": 5,
+        "events": 11,
+        "plan_units_checked": 3067,
+        "questions": 1
+      }
+    },
+    "pm_plans_verify_run_gates": {
+      "status": "pass"
+    },
+    "pm_shard_plans_check": {
+      "status": "pass",
+      "docs_checked": 73,
+      "shards_checked": 1392,
+      "source_count": 73
+    },
+    "pm_plans_verify_validate_auto_decisions": {
+      "status": "pass"
+    },
+    "pm_plans_verify_verify_spec_lock": {
+      "status": "pass"
+    },
+    "pm_plans_verify_validate_evidence": {
+      "status": "pass"
+    },
+    "pm_plans_verify_validate_plan_graph": {
+      "status": "pass"
+    },
+    "git_diff_check": {
+      "status": "pass"
+    },
+    "forbidden_artifact_audit": {
+      "status": "pass",
+      "no_worknodes_created": true,
+      "no_nodeseed_candidates_created": true,
+      "no_executable_queues_created": true,
+      "no_final_node_manifests_created": true,
+      "no_implementation_files_created": true,
+      "no_production_build_tasks_created": true,
+      "node_readiness_status": "blocked_runtime_certification_incomplete"
+    }
+  },
+  "governance_outputs_refreshed": [
+    "Plans/.plan_index/**",
+    "Plans/.plan_migration/pds-20260611-002-atomize-planunits/**",
+    "Plans/_shards/**",
+    "Plans/.evidence/**",
+    "Plans/Spec_Lock.json",
+    "Plans/plan_graph.json",
+    "Plans/sharding_config.json"
+  ],
+  "governance_outputs_validated": [
+    "Plans/auto_decisions.jsonl"
+  ],
+  "node_readiness_boundary": {
+    "status": "blocked_runtime_certification_incomplete",
+    "runtime_blocked_by_ref": "PNC-019",
+    "no_worknodes_created": true,
+    "no_nodeseed_candidates_created": true,
+    "no_final_node_queues_created": true
+  }
+}

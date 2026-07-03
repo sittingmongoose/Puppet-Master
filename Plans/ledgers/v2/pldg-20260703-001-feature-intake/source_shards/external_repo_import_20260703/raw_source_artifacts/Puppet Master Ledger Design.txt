@@ -1,0 +1,335 @@
+Yes — you should **not** use Goal Mode for the normal “talk through a feature and create the ledger as we go” phase unless you personally prefer it. That phase is conversational. The ledger is updated after each substantive turn.
+
+Use **Goal Mode** for the autonomous phases:
+
+```text
+ledger -> Plans
+existing Plans -> standardized Plans
+standardized Plans -> PlanUnit index / node seeds
+governance seal / Spec Lock
+```
+
+Codex will know what to build because I made a drop-in repo package with:
+
+```text
+1. AGENTS.md trigger rules
+2. a repo-scoped Codex skill
+3. exact bootstrap workflow docs
+4. exact under-4,000-character prompts
+5. a starter structured ledger from this conversation
+6. a design brief so Codex does not rediscover the architecture
+7. a simple validator script
+```
+
+Codex officially reads repo `AGENTS.md` guidance before work, and repo skills are supported under `.agents/skills`; skills can be invoked explicitly with `$` in the composer. ([developers.openai.com](https://developers.openai.com/codex/guides/agents-md)) ([developers.openai.com](https://developers.openai.com/codex/skills)) Goal Mode is invoked with `/goal`, and Codex describes it as a persistent objective for longer tasks. ([developers.openai.com](https://developers.openai.com/codex/app/commands))
+
+I also tested the package against a copy of your uploaded repo:
+
+```text
+python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system
+status: pass
+
+python3 scripts/pm-plans-verify.py run-gates
+status: pass
+
+python3 scripts/pm-shard-plans.py --check
+status: pass
+```
+
+Download it here:
+
+[Download the PM Bootstrap Ledger drop-in package](sandbox:/mnt/data/pm_bootstrap_ledger_dropin.zip)
+
+## What to copy into the repo
+
+Unzip the package and copy its contents into the Puppet Master repo root.
+
+It is laid out repo-relative:
+
+```text
+AGENTS.md
+AGENTS.append.md
+INSTALL.md
+
+.agents/
+  skills/
+    pm-bootstrap-planning-ledger/
+      SKILL.md
+
+Plans/
+  bootstrap/
+    Bootstrap_Design_Brief.md
+    Bootstrap_Planning_Workflow.md
+    Codex_Prompts.md
+
+  ledgers/
+    v2/
+      README.md
+      ledger_registry.json
+      schemas/
+        ledger_core.schema.json
+        design_atom.schema.json
+        plan_unit.schema.json
+      write_cards/
+        planning_turn.write_card.json
+      capsules/
+        bootstrap_planning.operating_capsule.json
+      pldg-20260610-001-ledger-plan-system/
+        manifest.json
+        events.jsonl
+        records/
+          design_atoms.jsonl
+          decisions.jsonl
+          questions.jsonl
+          blockers.jsonl
+          corrections.jsonl
+        state/
+          current.json
+          handoff.json
+          open_items.json
+          compile_queue.json
+          operating_capsule.json
+        validation/
+          ledger_health.json
+        indexes/
+          README.md
+        source_shards/
+          README.md
+
+scripts/
+  pm-bootstrap-ledger-validate.py
+```
+
+The package includes a full replacement `AGENTS.md` based on your current uploaded repo plus the new ledger workflow section. If your local `AGENTS.md` has changed since the repo zip, use `AGENTS.append.md` instead and append it manually.
+
+## What Codex should do first
+
+After copying the package, run this in the repo:
+
+```bash
+python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system
+python3 scripts/pm-plans-verify.py run-gates
+python3 scripts/pm-shard-plans.py --check
+```
+
+Then start a **new Codex Goal thread** and use Prompt #3 below to compile the starter ledger into the first new canonical Plan docs.
+
+Do **not** convert existing Plans yet. The correct order is:
+
+```text
+1. Copy bootstrap package.
+2. Validate package.
+3. Compile starter ledger into new Plan docs.
+4. Add/confirm plan doc standard and validators.
+5. Convert existing Plans losslessly.
+6. Generate PlanUnit index / node seed queue.
+7. Seal governance and Spec Lock.
+```
+
+## How your bootstrap workflow will feel day-to-day
+
+For a new feature spec, use a normal Codex thread:
+
+```text
+Use the PM Bootstrap Planning Ledger for this feature.
+
+Feature: SSO for Puppet Master
+```
+
+Codex should create a new ledger like:
+
+```text
+Plans/ledgers/v2/pldg-20260610-002-sso/
+```
+
+Then you talk normally. Codex updates the ledger after each substantive turn.
+
+Later, in a new thread, use Goal Mode:
+
+```text
+/goal
+Compile PM ledger pldg-20260610-002-sso to canonical Plans docs.
+...
+```
+
+That keeps each phase small and restartable.
+
+## Exact prompts
+
+These are also inside:
+
+```text
+Plans/bootstrap/Codex_Prompts.md
+```
+
+### 1. Conversational start prompt — not Goal Mode
+
+```text
+Use the PM Bootstrap Planning Ledger for this feature.
+
+Feature: <feature name>
+
+Create a new v2 ledger under Plans/ledgers/v2/ with ledger_id pldg-YYYYMMDD-NNN-<slug>. Register it in Plans/ledgers/v2/ledger_registry.json.
+
+This is a conversational design/spec thread, not a Goal run. Do not write canonical Plans yet. Use the $pm-bootstrap-planning-ledger skill if available.
+
+Read:
+- AGENTS.md
+- Plans/bootstrap/Bootstrap_Planning_Workflow.md
+- Plans/ledgers/v2/README.md
+
+After each substantive turn, update events.jsonl, touched records/*.jsonl, and state/current.json, state/handoff.json, state/open_items.json, state/compile_queue.json.
+
+Preserve exact tokens, examples, negative constraints, stale/retired terms, compatibility-only notes, owner hints, and user corrections. Keep open questions explicit.
+```
+
+### 2. Conversational continue prompt — not Goal Mode
+
+```text
+Continue PM Bootstrap Planning Ledger <ledger_id>.
+
+This is a conversational design/spec thread, not a Goal run. Do not write canonical Plans unless I explicitly say compile this ledger to Plans.
+
+Read only by default:
+- Plans/ledgers/v2/ledger_registry.json
+- Plans/ledgers/v2/<ledger_id>/state/handoff.json
+- Plans/ledgers/v2/<ledger_id>/state/current.json
+- Plans/ledgers/v2/<ledger_id>/state/open_items.json
+- Plans/ledgers/v2/<ledger_id>/state/operating_capsule.json
+
+Do not read full events.jsonl, source shards, or legacy working_ledger.md unless a state file points to a specific source_ref that must be inspected.
+
+Continue from the cursor. After each substantive turn, update the ledger and handoff state.
+```
+
+### 3. Goal prompt — compile one ledger to new Plans docs
+
+```text
+/goal
+Compile PM ledger <ledger_id> to canonical Plans docs.
+
+Read AGENTS.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Bootstrap_Design_Brief.md, and the compact state for <ledger_id>. Use the $pm-bootstrap-planning-ledger skill if available.
+
+Create/update these docs only as needed:
+- Plans/Planning_Ledger_System.md
+- Plans/Plan_Document_System.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Bootstrap_Planning_Migration.md
+- Plans/00-plans-index.md
+
+Rules:
+- Ledger is source/planning memory, not canon.
+- Convert accepted design atoms into stable PlanUnits.
+- Preserve source refs, exact tokens, negative constraints, examples, owner hints, stale/retired terms, and compatibility-only notes.
+- If owner placement is ambiguous, record candidate owners and adjudication evidence; do not ask row-by-row.
+- Do not update Spec_Lock, generated shards, evidence bundles, or plan_graph.
+- Run plan validators that are safe before seal.
+
+Stop if open blockers or true product decisions prevent safe compilation. Write exact blockers into ledger state.
+```
+
+### 4. Goal prompt — standardize existing Plans losslessly
+
+```text
+/goal
+Convert existing Plans docs to the new Plan Document System format losslessly.
+
+Read AGENTS.md, Plans/Plan_Document_System.md, Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md, and Plans/bootstrap/Bootstrap_Planning_Workflow.md.
+
+Do not start broad rewrites until you create a migration inventory. Required phases:
+1. Inventory every Plans/*.md doc.
+2. Hash originals and segment heading/body spans.
+3. Build a coverage map proving every original span maps to a standardized section, PlanUnit, preserved appendix/source block, or explicit disposition.
+4. Convert one representative pilot doc first.
+5. Run validators.
+6. Continue in controlled batches only after pilot passes.
+
+Preserve ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, and owner/consumer boundaries.
+
+Do not update Spec_Lock, generated shards, evidence bundles, or plan_graph until explicit governance seal.
+```
+
+### 5. Goal prompt — generate PlanUnit index and node seeds
+
+```text
+/goal
+Generate PlanUnit index and node-seed-ready outputs from standardized Plans.
+
+Read AGENTS.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, and live Plans docs. Do not alter canonical prose unless a small repair is required and clearly validated.
+
+Produce generated indexes under Plans/.plan_index/:
+- plan_units.jsonl
+- doc_cards.json
+- dependencies.json
+- acceptance_units.jsonl
+- node_seed_queue.json
+
+Rules:
+- PlanUnits are canon-addressable units from live Plans docs.
+- NodeSeeds are generated intermediate artifacts, not final WorkNodes.
+- Preserve depends_on, unblocks, validation surfaces, acceptance criteria, risk_class, reasoning_tier, context_scope, implementation surfaces, and source lineage.
+- Do not hardcode model names. Derive model tier later from capability/risk fields.
+- Do not update Spec_Lock or governance artifacts.
+
+Run safe validators and write exact blockers if coverage is incomplete.
+```
+
+### 6. Goal prompt — governance seal
+
+```text
+/goal
+Seal governance after ledger/Plan/PlanUnit changes are stable.
+
+Read AGENTS.md and the current Plans docs. This phase may update governance artifacts only after confirming no ordinary doc edits remain.
+
+Tasks:
+1. Run safe plan validators.
+2. Regenerate generated shards/evidence/plan graph artifacts using repo scripts.
+3. Refresh Spec_Lock only after docs and generated indexes are stable.
+4. Append/update governance decision artifacts if required by existing repo policy.
+5. Run full governance gates:
+   - python3 scripts/pm-plans-verify.py run-gates
+   - python3 scripts/pm-shard-plans.py --check
+6. Produce final certification with changed files, validators, blockers, and unresolved risks.
+
+Do not change product prose except small governance-reference fixes required by validators. If a validator cannot be repaired safely, stop and report exact blockers.
+```
+
+### 7. Goal prompt — audit a phase after restart
+
+```text
+/goal
+Audit PM bootstrap phase state and tell me the next safe action.
+
+Read AGENTS.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/ledgers/v2/ledger_registry.json, and any ledger state/handoff files relevant to <ledger_id or phase>. Do not edit Plans docs unless I explicitly ask.
+
+Report:
+- active ledger or phase
+- current cursor
+- open blockers
+- open questions
+- candidate/unclassified items
+- compile/governance readiness
+- validators last run
+- exact next safe action
+
+Do not read full event logs or legacy ledgers unless the compact state points to a specific source_ref.
+```
+
+## The most important practical rule
+
+For feature-spec conversations, do **not** invoke Goal Mode by default. Start a normal Codex thread with the ledger start prompt. Use Goal Mode only when you are asking Codex to autonomously transform artifacts:
+
+```text
+ledger -> Plans
+Plans -> standardized format
+Plans -> PlanUnit index
+PlanUnit index -> node seeds
+final docs -> governance seal
+```
+
+The starter ledger I included is specifically for this current design effort, so your next real action is Prompt #3 with:
+
+```text
+<ledger_id> = pldg-20260610-001-ledger-plan-system
+```

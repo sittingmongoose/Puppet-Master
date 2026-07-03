@@ -1,0 +1,823 @@
+{
+  "schema_id": "pm.external_repo_parallel_agent_synthesis.v1",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "created_at_utc": "2026-07-03T18:52:00Z",
+  "agents": {
+    "019f297e-fab1-7d30-9fab-f5e07a16310c": {
+      "lane": "atom coverage/import shape",
+      "status": "completed",
+      "nickname": "Dalton"
+    },
+    "019f297e-fb4a-75a0-954a-45f41b62ede9": {
+      "lane": "evidence/source fidelity",
+      "status": "completed",
+      "nickname": "James",
+      "timing_note": "reported pre-import ledger counts because import happened concurrently; source-ref and evidence-risk findings were still used"
+    },
+    "019f297e-fc1f-7e70-a9ab-ddd11d446df3": {
+      "lane": "owner-doc/domain routing",
+      "status": "completed",
+      "nickname": "Einstein"
+    },
+    "019f297e-fcd6-71f1-a6f2-e410e13a3c38": {
+      "lane": "PM-fit and CLI-drift",
+      "status": "completed",
+      "nickname": "Confucius"
+    },
+    "019f297e-fd85-7962-aecc-352b42e578e9": {
+      "lane": "governance boundary",
+      "status": "completed",
+      "nickname": "Raman",
+      "timing_note": "reported pre-import compact state because import happened concurrently; boundary/completion-gate findings were still used"
+    }
+  },
+  "coverage_audit": {
+    "jsonl_rows": 113,
+    "csv_rows": 113,
+    "checklist_atom_entries": 113,
+    "priority_counts": {
+      "P0": 50,
+      "P1": 49,
+      "P2": 14
+    },
+    "jsonl_parse_errors": 0,
+    "duplicate_atom_ids": 0,
+    "duplicate_source_row_ids": 0,
+    "sequence": "extrepo-20260703-0001 through extrepo-20260703-0113 contiguous",
+    "required_keys_missing": 0,
+    "present_but_null_or_empty_fields": {
+      "source_repos": [
+        "extrepo-20260703-0037",
+        "extrepo-20260703-0038",
+        "extrepo-20260703-0039",
+        "extrepo-20260703-0040",
+        "extrepo-20260703-0041",
+        "extrepo-20260703-0042",
+        "extrepo-20260703-0043",
+        "extrepo-20260703-0044",
+        "extrepo-20260703-0045",
+        "extrepo-20260703-0046",
+        "extrepo-20260703-0047",
+        "extrepo-20260703-0048",
+        "extrepo-20260703-0049",
+        "extrepo-20260703-0050",
+        "extrepo-20260703-0051",
+        "extrepo-20260703-0052",
+        "extrepo-20260703-0053",
+        "extrepo-20260703-0054",
+        "extrepo-20260703-0074",
+        "extrepo-20260703-0075",
+        "extrepo-20260703-0076",
+        "extrepo-20260703-0077",
+        "extrepo-20260703-0078",
+        "extrepo-20260703-0079",
+        "extrepo-20260703-0080",
+        "extrepo-20260703-0081",
+        "extrepo-20260703-0082",
+        "extrepo-20260703-0083",
+        "extrepo-20260703-0084",
+        "extrepo-20260703-0085",
+        "extrepo-20260703-0086",
+        "extrepo-20260703-0087",
+        "extrepo-20260703-0100",
+        "extrepo-20260703-0101",
+        "extrepo-20260703-0102",
+        "extrepo-20260703-0103",
+        "extrepo-20260703-0104",
+        "extrepo-20260703-0105",
+        "extrepo-20260703-0106",
+        "extrepo-20260703-0107",
+        "extrepo-20260703-0108",
+        "extrepo-20260703-0109",
+        "extrepo-20260703-0110",
+        "extrepo-20260703-0111",
+        "extrepo-20260703-0112",
+        "extrepo-20260703-0113"
+      ],
+      "observed_signal": [
+        "extrepo-20260703-0037",
+        "extrepo-20260703-0038",
+        "extrepo-20260703-0039",
+        "extrepo-20260703-0040",
+        "extrepo-20260703-0041",
+        "extrepo-20260703-0042",
+        "extrepo-20260703-0043",
+        "extrepo-20260703-0044",
+        "extrepo-20260703-0045",
+        "extrepo-20260703-0046",
+        "extrepo-20260703-0047",
+        "extrepo-20260703-0048",
+        "extrepo-20260703-0049",
+        "extrepo-20260703-0050",
+        "extrepo-20260703-0051",
+        "extrepo-20260703-0052",
+        "extrepo-20260703-0053",
+        "extrepo-20260703-0054"
+      ],
+      "pm_current_coverage": [
+        "extrepo-20260703-0037",
+        "extrepo-20260703-0038",
+        "extrepo-20260703-0039",
+        "extrepo-20260703-0040",
+        "extrepo-20260703-0041",
+        "extrepo-20260703-0042",
+        "extrepo-20260703-0043",
+        "extrepo-20260703-0044",
+        "extrepo-20260703-0045",
+        "extrepo-20260703-0046",
+        "extrepo-20260703-0047",
+        "extrepo-20260703-0048",
+        "extrepo-20260703-0049",
+        "extrepo-20260703-0050",
+        "extrepo-20260703-0051",
+        "extrepo-20260703-0052",
+        "extrepo-20260703-0053",
+        "extrepo-20260703-0054",
+        "extrepo-20260703-0074",
+        "extrepo-20260703-0075",
+        "extrepo-20260703-0076",
+        "extrepo-20260703-0077",
+        "extrepo-20260703-0078",
+        "extrepo-20260703-0079",
+        "extrepo-20260703-0080",
+        "extrepo-20260703-0081",
+        "extrepo-20260703-0082",
+        "extrepo-20260703-0083",
+        "extrepo-20260703-0084",
+        "extrepo-20260703-0085",
+        "extrepo-20260703-0086",
+        "extrepo-20260703-0087",
+        "extrepo-20260703-0088",
+        "extrepo-20260703-0089",
+        "extrepo-20260703-0090",
+        "extrepo-20260703-0091",
+        "extrepo-20260703-0092",
+        "extrepo-20260703-0093",
+        "extrepo-20260703-0094",
+        "extrepo-20260703-0095",
+        "extrepo-20260703-0096",
+        "extrepo-20260703-0097",
+        "extrepo-20260703-0098",
+        "extrepo-20260703-0099"
+      ],
+      "pm_gap_or_delta": [
+        "extrepo-20260703-0037",
+        "extrepo-20260703-0038",
+        "extrepo-20260703-0039",
+        "extrepo-20260703-0040",
+        "extrepo-20260703-0041",
+        "extrepo-20260703-0042",
+        "extrepo-20260703-0043",
+        "extrepo-20260703-0044",
+        "extrepo-20260703-0045",
+        "extrepo-20260703-0046",
+        "extrepo-20260703-0047",
+        "extrepo-20260703-0048",
+        "extrepo-20260703-0049",
+        "extrepo-20260703-0050",
+        "extrepo-20260703-0051",
+        "extrepo-20260703-0052",
+        "extrepo-20260703-0053",
+        "extrepo-20260703-0054"
+      ],
+      "proposal_or_recommendation": [
+        "extrepo-20260703-0021",
+        "extrepo-20260703-0022",
+        "extrepo-20260703-0023",
+        "extrepo-20260703-0024",
+        "extrepo-20260703-0025",
+        "extrepo-20260703-0026",
+        "extrepo-20260703-0027",
+        "extrepo-20260703-0028",
+        "extrepo-20260703-0029",
+        "extrepo-20260703-0030",
+        "extrepo-20260703-0031",
+        "extrepo-20260703-0032",
+        "extrepo-20260703-0033",
+        "extrepo-20260703-0034",
+        "extrepo-20260703-0035",
+        "extrepo-20260703-0036",
+        "extrepo-20260703-0074",
+        "extrepo-20260703-0075",
+        "extrepo-20260703-0076",
+        "extrepo-20260703-0077",
+        "extrepo-20260703-0078",
+        "extrepo-20260703-0079",
+        "extrepo-20260703-0080",
+        "extrepo-20260703-0081",
+        "extrepo-20260703-0082",
+        "extrepo-20260703-0083",
+        "extrepo-20260703-0084",
+        "extrepo-20260703-0085",
+        "extrepo-20260703-0086",
+        "extrepo-20260703-0087",
+        "extrepo-20260703-0088",
+        "extrepo-20260703-0089",
+        "extrepo-20260703-0090",
+        "extrepo-20260703-0091",
+        "extrepo-20260703-0092",
+        "extrepo-20260703-0093",
+        "extrepo-20260703-0094",
+        "extrepo-20260703-0095",
+        "extrepo-20260703-0096",
+        "extrepo-20260703-0097",
+        "extrepo-20260703-0098",
+        "extrepo-20260703-0099"
+      ],
+      "target_docs": [
+        "extrepo-20260703-0088",
+        "extrepo-20260703-0089",
+        "extrepo-20260703-0090",
+        "extrepo-20260703-0091",
+        "extrepo-20260703-0092",
+        "extrepo-20260703-0093",
+        "extrepo-20260703-0094",
+        "extrepo-20260703-0095",
+        "extrepo-20260703-0096",
+        "extrepo-20260703-0097",
+        "extrepo-20260703-0098",
+        "extrepo-20260703-0099"
+      ],
+      "relationship_to_prior_reports": [
+        "extrepo-20260703-0001",
+        "extrepo-20260703-0002",
+        "extrepo-20260703-0003",
+        "extrepo-20260703-0004",
+        "extrepo-20260703-0005",
+        "extrepo-20260703-0006",
+        "extrepo-20260703-0007",
+        "extrepo-20260703-0008",
+        "extrepo-20260703-0009",
+        "extrepo-20260703-0010",
+        "extrepo-20260703-0011",
+        "extrepo-20260703-0012",
+        "extrepo-20260703-0013",
+        "extrepo-20260703-0014",
+        "extrepo-20260703-0015",
+        "extrepo-20260703-0016",
+        "extrepo-20260703-0017",
+        "extrepo-20260703-0018",
+        "extrepo-20260703-0019",
+        "extrepo-20260703-0020",
+        "extrepo-20260703-0021",
+        "extrepo-20260703-0022",
+        "extrepo-20260703-0023",
+        "extrepo-20260703-0024",
+        "extrepo-20260703-0025",
+        "extrepo-20260703-0026",
+        "extrepo-20260703-0027",
+        "extrepo-20260703-0028",
+        "extrepo-20260703-0029",
+        "extrepo-20260703-0030",
+        "extrepo-20260703-0031",
+        "extrepo-20260703-0032",
+        "extrepo-20260703-0033",
+        "extrepo-20260703-0034",
+        "extrepo-20260703-0035",
+        "extrepo-20260703-0036",
+        "extrepo-20260703-0037",
+        "extrepo-20260703-0038",
+        "extrepo-20260703-0039",
+        "extrepo-20260703-0040",
+        "extrepo-20260703-0041",
+        "extrepo-20260703-0042",
+        "extrepo-20260703-0043",
+        "extrepo-20260703-0044",
+        "extrepo-20260703-0045",
+        "extrepo-20260703-0046",
+        "extrepo-20260703-0047",
+        "extrepo-20260703-0048",
+        "extrepo-20260703-0049",
+        "extrepo-20260703-0050",
+        "extrepo-20260703-0051",
+        "extrepo-20260703-0052",
+        "extrepo-20260703-0053",
+        "extrepo-20260703-0054",
+        "extrepo-20260703-0055",
+        "extrepo-20260703-0056",
+        "extrepo-20260703-0057",
+        "extrepo-20260703-0058",
+        "extrepo-20260703-0059",
+        "extrepo-20260703-0060",
+        "extrepo-20260703-0061",
+        "extrepo-20260703-0062",
+        "extrepo-20260703-0063",
+        "extrepo-20260703-0064",
+        "extrepo-20260703-0065",
+        "extrepo-20260703-0066",
+        "extrepo-20260703-0067",
+        "extrepo-20260703-0068",
+        "extrepo-20260703-0069",
+        "extrepo-20260703-0070",
+        "extrepo-20260703-0071",
+        "extrepo-20260703-0072",
+        "extrepo-20260703-0073",
+        "extrepo-20260703-0088",
+        "extrepo-20260703-0089",
+        "extrepo-20260703-0090",
+        "extrepo-20260703-0091",
+        "extrepo-20260703-0092",
+        "extrepo-20260703-0093",
+        "extrepo-20260703-0094",
+        "extrepo-20260703-0095",
+        "extrepo-20260703-0096",
+        "extrepo-20260703-0097",
+        "extrepo-20260703-0098",
+        "extrepo-20260703-0099",
+        "extrepo-20260703-0100",
+        "extrepo-20260703-0101",
+        "extrepo-20260703-0102",
+        "extrepo-20260703-0103",
+        "extrepo-20260703-0104",
+        "extrepo-20260703-0105",
+        "extrepo-20260703-0106",
+        "extrepo-20260703-0107",
+        "extrepo-20260703-0108",
+        "extrepo-20260703-0109",
+        "extrepo-20260703-0110",
+        "extrepo-20260703-0111",
+        "extrepo-20260703-0112",
+        "extrepo-20260703-0113"
+      ]
+    },
+    "manifest_notes": [
+      "06_SOURCE_MANIFEST.json exists but is not listed inside generated_artifacts; treated as self-manifest omission.",
+      "All 23 raw source artifacts exist and match manifest bytes/SHA in the extracted packet.",
+      "Seven raw source line-count differences are newline-counting artifacts; split-line count matches manifest."
+    ]
+  },
+  "evidence_audit": {
+    "packet_copy_status": "diff -qr clean between temp bundle and ledger source_shards copy during agent audit",
+    "top_level_files": 9,
+    "manifest_generated_artifacts_listed": 8,
+    "raw_source_artifacts": 23,
+    "row_source_counts": {
+      "pm_external_repo_action_backlog_2026-07-03.jsonl": 20,
+      "pm_second_pass_delta_backlog_2026-07-03.jsonl": 16,
+      "pm_context_cache_websocket_backlog_2026-07-03.jsonl": 18,
+      "pm_missed_domains_backlog_2026-07-03.jsonl": 19,
+      "pm_final_external_repo_closure_backlog_2026-07-03.jsonl": 14,
+      "pm_one_more_external_repo_backlog_2026-07-03.jsonl": 12,
+      "opencode_pm_plan_change_matrix.csv": 14
+    },
+    "repo_scope_represented": [
+      "OpenCode v1/dev/beta plus v2 specs",
+      "Cline",
+      "Agent Zero",
+      "Pi",
+      "OpenAI Codex",
+      "Ghostty",
+      "Warp",
+      "tmux"
+    ],
+    "source_ref_pattern": [
+      "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:<atom_id>/<source_row_id>@line=<source_line>",
+      "source_shards/external_repo_import_20260703/raw_source_artifacts/<source_file>:<source_line>",
+      "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:<source-pass-boundary>",
+      "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json:<evidence matrix filename> when applicable"
+    ],
+    "evidence_risks": [
+      "04_EVIDENCE_REGISTRY.json has fewer source evidence payloads than the 23 raw artifacts; do not rely on registry alone.",
+      "46 row-level source_repos values are empty or alias-inconsistent; raw_row/source_file/source_line preserve evidence.",
+      "18 context/cache rows have null observed_signal/current_coverage/gap fields and require refs back to pm_context_cache_websocket_repo_pass_2026-07-03.md.",
+      "12 one-more-pass rows have empty target_docs and need owner adjudication through Plans index."
+    ],
+    "full_source_packet_boundaries": {
+      "external_repo_deep_evaluation": "01_FULL_SOURCE_PACKET.md:833-1329",
+      "second_pass_delta": "01_FULL_SOURCE_PACKET.md:1332-1741",
+      "context_cache_websocket": "01_FULL_SOURCE_PACKET.md:1744-2225",
+      "missed_domains": "01_FULL_SOURCE_PACKET.md:2228-2758",
+      "final_external_repo_closure": "01_FULL_SOURCE_PACKET.md:2761-3106",
+      "one_more_external_repo": "01_FULL_SOURCE_PACKET.md:3109-3445",
+      "opencode_pm_plan_change_matrix": "01_FULL_SOURCE_PACKET.md:3448-3472"
+    }
+  },
+  "owner_routing_audit": {
+    "empty_target_docs_source_row_ids": [
+      "P0-SESSION-DRAFT-ATTACHMENT-ISOLATION",
+      "P0-MCP-LIFECYCLE-RUNTIME-LIVENESS",
+      "P0-COMMAND-APPROVAL-LEASE",
+      "P0-CREDENTIAL-ROUTE-EPOCH",
+      "P0-RUNTIME-SURFACE-READINESS-PROBE",
+      "P0-CONTEXT-OBJECT-BUDGET",
+      "P0-TOOL-RESULT-TRUTHFULNESS-GATE",
+      "P1-INSTRUCTION-IMPORT-GRAPH",
+      "P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
+      "P1-UI-PROJECTION-STORE-BUDGET",
+      "P1-INSTALL-UPDATE-PROVENANCE",
+      "P2-AI-TRIAGE-CLOSURE-CONFIDENCE"
+    ],
+    "target_doc_flags": {
+      "Automated_Testing_System.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Automated_Testing_System.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Browser_Integration.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "Plans/FinalGUISpec.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/storage-plan.md"
+        ],
+        "flags": [
+          "missing_browser_placeholder_requires_future_owner_adjudication"
+        ]
+      },
+      "Context_Management.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Prompt_Pipeline.md",
+          "Plans/agent-rules-context.md",
+          "Plans/Skills_System.md",
+          "Plans/storage-plan.md",
+          "Plans/assistant-memory-subsystem.md"
+        ],
+        "flags": [
+          "missing_context_placeholder_requires_future_owner_adjudication"
+        ]
+      },
+      "Contracts_V0.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Contracts_V0.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Decision_Policy.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Decision_Policy.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Executor_Protocol.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Executor_Protocol.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "FileSafe.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/FileSafe.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "FinalGUISpec.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/FinalGUISpec.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "GitHub_Integration.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/GitHub_Integration.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Goal_Runtime_System.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Goal_Runtime_System.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Installer/Packaging docs if present": {
+        "suggested_candidate_owner_docs": [],
+        "flags": [
+          "missing_or_conditional_owner_requires_future_compile_adjudication"
+        ]
+      },
+      "MCP_Integration.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/MCP_Integration.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Media_Generation_and_Capabilities.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Media_Generation_and_Capabilities.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Models_System.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Models_System.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Orchestrator_Page.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Orchestrator_Page.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Permissions_System.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Permissions_System.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Planning_Ledger_System.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Planning_Ledger_System.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Plans/Prompt_Packet_Update_Process_Defect_Repair equivalent": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md",
+          "Plans/Bootstrap_Planning_Migration.md"
+        ],
+        "flags": [
+          "process_or_governance_placeholder_not_canonical_owner_doc"
+        ]
+      },
+      "Plans/Release_Process.md": {
+        "suggested_candidate_owner_docs": [],
+        "flags": [
+          "missing_or_conditional_owner_requires_future_compile_adjudication"
+        ]
+      },
+      "Provider_OpenCode.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Provider_OpenCode.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Research_Mode / audit prompts": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md",
+          "Plans/Bootstrap_Planning_Migration.md"
+        ],
+        "flags": [
+          "process_or_governance_placeholder_not_canonical_owner_doc"
+        ]
+      },
+      "Runtime_Artifacts_Panel.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "Skill_System.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Skills_System.md"
+        ],
+        "flags": [
+          "stale_singular_skill_system_alias"
+        ]
+      },
+      "Spec_Lock / governance seal docs": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md",
+          "Plans/Bootstrap_Planning_Migration.md"
+        ],
+        "flags": [
+          "process_or_governance_placeholder_not_canonical_owner_doc"
+        ]
+      },
+      "Terminal_Integration.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md",
+          "Plans/FinalGUISpec.md",
+          "Plans/storage-plan.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/Contracts_V0.md",
+          "Plans/Automated_Testing_System.md"
+        ],
+        "flags": [
+          "missing_terminal_placeholder_requires_future_owner_adjudication"
+        ]
+      },
+      "Tools.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Tools.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "assistant-memory-subsystem.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/assistant-memory-subsystem.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "audit closure docs": {
+        "suggested_candidate_owner_docs": [
+          "Plans/Planning_Ledger_System.md",
+          "Plans/Plan_Document_System.md",
+          "Plans/Bootstrap_Planning_Migration.md"
+        ],
+        "flags": [
+          "process_or_governance_placeholder_not_canonical_owner_doc"
+        ]
+      },
+      "new Supply_Chain_Security.md if owner doc is missing": {
+        "suggested_candidate_owner_docs": [],
+        "flags": [
+          "missing_or_conditional_owner_requires_future_compile_adjudication"
+        ]
+      },
+      "orchestrator-subagent-integration.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/orchestrator-subagent-integration.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      },
+      "storage-plan.md": {
+        "suggested_candidate_owner_docs": [
+          "Plans/storage-plan.md"
+        ],
+        "flags": [
+          "pathless_alias_normalized_to_plans_prefix"
+        ]
+      }
+    },
+    "domain_routing": {
+      "terminal_desktop_runtime_command_invocation": [
+        "P0-TERMINAL-PROTOCOL-MATRIX",
+        "P0-TERMINAL-OUTPUT-BACKPRESSURE",
+        "P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
+        "P0-COMMAND-INVOCATION-CONTRACT",
+        "desktop_version_handshake",
+        "P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
+        "P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION",
+        "P1-TERMINAL-SESSION-PRESERVE-UPDATE",
+        "P1-TERMINAL-SEMANTIC-MARKER-PARSER",
+        "P1-TERMINAL-CHUNK-SPANNING-PARSER",
+        "P1-TERMINAL-A11Y-RANGE-MIRROR",
+        "P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
+        "P1-TERMINAL-PTY-STREAM-CONTRACT",
+        "P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
+        "P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
+        "P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS",
+        "P1-TERMINAL-INPUT-PASTEBOARD-MATRIX"
+      ],
+      "tools_mcp_namespace_result_settlement": [
+        "P0-TOOL-RESULT-SETTLEMENT",
+        "P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH",
+        "P0-MCP-TYPED-PARAM-FIDELITY",
+        "P0-TOOL-CALL-MALFORMATION-GATE",
+        "P0-TOOL-RESULT-TRUTHFULNESS-GATE",
+        "P0-MCP-LIFECYCLE-RUNTIME-LIVENESS",
+        "P0-SESSION-TOOL-NAMESPACE-ACTIVATION",
+        "tool_output_retention",
+        "tool_heartbeat",
+        "P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT",
+        "P1-MCP-HEADER-SECRET-HOOKS",
+        "P1-MCP-TOOL-CATALOG-CACHE",
+        "mcp_lazy_tool_exposure",
+        "P1-PLUGIN-EXTENSION-POINT-CONTRACTS",
+        "P1-PROGRESSIVE-DISCLOSURE-TOOLS-SKILLS",
+        "P1-CONTEXT-SKILL-BUDGETS",
+        "P1-CLI-BRIDGE-PROTOCOL-HANDSHAKE",
+        "P2-CONFIG-SCHEMA-MIGRATION-FIXTURES",
+        "P2-CACHEABLE-TOOL-OUTPUT-REFS"
+      ],
+      "providers_models_accounts_cache_multimodal_opencode": [
+        "P0-PROVIDER-METADATA-REPLAY",
+        "P0-PROVIDER-CAPABILITY-EPOCH",
+        "P0-REASONING-REPLAY-MATRIX",
+        "P0-CONTEXT-EPOCH-BASELINE",
+        "P0-PROMPT-CACHE-POLICY",
+        "P0-CACHE-USAGE-ENVELOPE",
+        "P0-EFFORT-POLICY-SETTLEMENT",
+        "P0-MULTIMODAL-INPUT-SETTLEMENT",
+        "P0-PROVIDER-CAPABILITY-EPOCH-2",
+        "P0-CREDENTIAL-ROUTE-EPOCH",
+        "P0-PROVIDER-EGRESS-HTTP-POLICY",
+        "P0-ENTITLEMENT-QUOTA-SETTLEMENT",
+        "provider_metadata_replay",
+        "provider_policy",
+        "opencode_v2_delta",
+        "P1-PROVIDER-CAPABILITY-EPOCH-CACHE",
+        "P1-MODEL-SWITCH-REPLAY-SANITIZER",
+        "P1-LOCAL-LLM-CONTEXT-CAPS",
+        "P1-COMPACTION-CACHE-EFFECT",
+        "P1-MODEL-SELECTION-ROUTER",
+        "P1-USAGE-ANOMALY-QUOTA-GUARD",
+        "P1-PROMPT-CACHE-STABILITY-LINTER",
+        "P1-MULTIMODAL-FALLBACK-TRANSCRIPTION-POLICY",
+        "provider_error_observability",
+        "P2-CACHE-OBSERVABILITY-DASHBOARD",
+        "P2-CACHE-PRIVACY-POLICY",
+        "P2-MODEL-CATALOG-CONFIDENCE-UI",
+        "P2-OTEL-EXPORT-OPTIONAL-ADAPTER",
+        "v2_sdk_stability"
+      ],
+      "prompt_context_history_instructions_memory": [
+        "P0-HISTORY-STORAGE-CAPS",
+        "P0-HISTORY-ADMISSION-SANITIZATION",
+        "P0-VOLATILE-CONTEXT-QUARANTINE",
+        "P0-STREAM-HISTORY-COALESCER",
+        "P0-SESSION-DRAFT-ATTACHMENT-ISOLATION",
+        "P0-CONTEXT-OBJECT-BUDGET",
+        "context_epoch",
+        "prompt_admission_execution",
+        "P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE",
+        "P1-MEMORY-TIERING-CONTRACT",
+        "P1-INSTRUCTION-IMPORT-GRAPH",
+        "P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH",
+        "P1-MEMORY-STORE-CRUD-VERSION-CITATIONS",
+        "P1-STREAM-HISTORY-COALESCER-REPLAY"
+      ],
+      "goal_autonomy_subagents_runtime_control": [
+        "P0-PLAN-ACT-PERMISSION-BOUNDARY",
+        "P0-AGENT-CONTROL-PLANE-ENVELOPE",
+        "P0-SUBAGENT-EXECUTION-CONTRACT",
+        "P0-LOOP-BREAKER-TAXONOMY",
+        "P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
+        "P0-RUNTIME-SURFACE-READINESS-PROBE",
+        "P0-COMMAND-APPROVAL-LEASE",
+        "P1-AGENT-FOCUS-WATCHDOG",
+        "P1-INTERRUPT-CANCEL-SETTLEMENT",
+        "P1-EXTERNAL-AGENT-HANDOFF-IMPORT"
+      ]
+    }
+  },
+  "pm_fit_drift_audit": {
+    "guardrails_added_as_atoms": [
+      "Terminal lessons are GUI-terminal only",
+      "CLI transports are adapter details only",
+      "Command approval is a GUI-visible lease",
+      "External agent sessions enter as untrusted provenance",
+      "Future compile must adjudicate missing and stale target docs"
+    ],
+    "raw_notes": [
+      "Terminal lessons apply only to Puppet Master built-in GUI terminal/runtime.",
+      "Provider/bridge CLI transports are adapter implementation details below PM envelopes.",
+      "Command approval is a GUI-visible runtime/tool lease and never reusable CLI privilege.",
+      "External agent sessions enter PM as untrusted provenance/evidence until settled by PM receipts."
+    ]
+  },
+  "governance_boundary_audit": {
+    "allowed_write_surface": [
+      "active ledger events.jsonl",
+      "active ledger records/*.jsonl",
+      "active ledger state/*.json",
+      "active ledger validation/ledger_health.json",
+      "active ledger manifest.json",
+      "active ledger source_shards/**",
+      "Plans/ledgers/v2/ledger_registry.json"
+    ],
+    "forbidden_artifacts": [
+      "canonical Plans prose",
+      "Plans/.plan_index/**",
+      "Plans/Spec_Lock.json",
+      "Plans/_shards/**",
+      "Plans/.evidence/**",
+      "Plans/plan_graph.json",
+      "Plans/auto_decisions.jsonl",
+      "WorkNodes",
+      "NodeSeeds",
+      "queues",
+      "implementation files"
+    ],
+    "completion_evidence": [
+      "113 rows counted",
+      "113 rows imported or dispositioned",
+      "all required row fields preserved",
+      "compact state refreshed",
+      "bootstrap ledger validator pass",
+      "final response reports counts/blockers/next safe action"
+    ]
+  }
+}

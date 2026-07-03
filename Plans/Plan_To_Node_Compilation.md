@@ -47,6 +47,7 @@ context_scope: plan_to_execution
 implementation_surfaces: [Plans/*.md, Plans/.plan_index/node_readiness_report.json]
 node_compile_hint: {mode: readiness_only, create_worknodes: false}
 source_lineage:
+  - pldg-20260703-001-feature-intake:atom-0002
   - pldg-20260610-001-ledger-plan-system:atom-0017
   - pldg-20260610-001-ledger-plan-system:atom-0023
   - pldg-20260610-001-ledger-plan-system:atom-0030

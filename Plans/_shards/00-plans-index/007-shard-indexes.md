@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L490-L567
+Source lines: L490-L568
 
-Source SHA256: `4d4d874c5978d9117cfc3992a6422d88dd86c78f35a94819259aa172968d8e27`
+Source SHA256: `0874c6f5dec90701985009c004a2762946ca2df488ff19be8c81d84c9ea3d905`
 
 ---
 
@@ -86,3 +86,4 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `Widget_System.md` | [`Plans/_shards/widget_system/00-index.md`](Plans/_shards/widget_system/00-index.md) |
 | `prd_planning_runtime_contracts.json` | [`Plans/_shards/prd_planning_runtime_contracts/00-index.md`](Plans/_shards/prd_planning_runtime_contracts/00-index.md) |
 | `prd_planning_runtime_contracts.schema.json` | [`Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md`](Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md) |
+| `Release_Supply_Chain.md` | [`Plans/_shards/release_supply_chain/00-index.md`](Plans/_shards/release_supply_chain/00-index.md) |

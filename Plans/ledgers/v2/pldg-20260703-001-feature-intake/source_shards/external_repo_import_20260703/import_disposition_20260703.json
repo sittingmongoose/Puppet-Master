@@ -1,0 +1,2338 @@
+{
+  "schema_id": "pm.external_repo_import_disposition.v1",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "created_at_utc": "2026-07-03T18:35:00Z",
+  "source_packet_ref": "source_shards/external_repo_import_20260703/",
+  "rows_total": 113,
+  "rows_imported": 113,
+  "rows_dispositioned_non_import": 0,
+  "priority_counts": {
+    "P0": 50,
+    "P1": 49,
+    "P2": 14
+  },
+  "domain_counts": {
+    "terminal_runtime": 26,
+    "provider_capability_and_metadata": 19,
+    "memory_history_logging": 4,
+    "security_release_supply_chain": 9,
+    "mcp_tools_and_tool_settlement": 10,
+    "context_cache": 17,
+    "cross_system_runtime_contracts": 4,
+    "agent_control_subagents": 8,
+    "transport_websocket_streaming": 6,
+    "ui_projection_and_hard_gates": 4,
+    "multimodal_and_attachments": 2,
+    "instruction_integrity": 1,
+    "external_handoff_and_triage": 2,
+    "opencode_v2_delta": 1
+  },
+  "gui_related_counts": {
+    "true": 86,
+    "false": 27
+  },
+  "required_fields_preserved": [
+    "source_row_id",
+    "priority",
+    "title",
+    "finding_family",
+    "source_repos",
+    "observed_signal",
+    "pm_current_coverage",
+    "pm_gap_or_delta",
+    "proposal_or_recommendation",
+    "target_docs",
+    "acceptance_tests_or_validation_surface",
+    "relationship_to_prior_reports",
+    "raw_row"
+  ],
+  "repo_scope": [
+    "anomalyco/opencode v1/dev/beta plus v2 specs",
+    "cline/cline",
+    "agent0ai/agent-zero",
+    "earendil-works/pi",
+    "openai/codex",
+    "ghostty-org/ghostty",
+    "warpdotdev/warp",
+    "tmux/tmux"
+  ],
+  "row_map": [
+    {
+      "external_atom_id": "extrepo-20260703-0001",
+      "source_row_id": "P0-TERMINAL-PROTOCOL-MATRIX",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0005",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0001/P0-TERMINAL-PROTOCOL-MATRIX",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:1"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0002",
+      "source_row_id": "P0-TERMINAL-OUTPUT-BACKPRESSURE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0006",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0002/P0-TERMINAL-OUTPUT-BACKPRESSURE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:2"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0003",
+      "source_row_id": "P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0007",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0003/P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:3"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0004",
+      "source_row_id": "P0-PLAN-ACT-PERMISSION-BOUNDARY",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0008",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Permissions_System.md",
+        "Plans/Tools.md",
+        "Plans/Run_Modes.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0004/P0-PLAN-ACT-PERMISSION-BOUNDARY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:4"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0005",
+      "source_row_id": "P0-TOOL-RESULT-SETTLEMENT",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0009",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0005/P0-TOOL-RESULT-SETTLEMENT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:5"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0006",
+      "source_row_id": "P0-PROVIDER-METADATA-REPLAY",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0010",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Multi-Account.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0006/P0-PROVIDER-METADATA-REPLAY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:6"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0007",
+      "source_row_id": "P0-HISTORY-STORAGE-CAPS",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0011",
+      "status": "imported",
+      "domain": "memory_history_logging",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0007/P0-HISTORY-STORAGE-CAPS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:7"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0008",
+      "source_row_id": "P0-RELEASE-MIGRATION-GATE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0012",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md",
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0008/P0-RELEASE-MIGRATION-GATE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:8"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0009",
+      "source_row_id": "P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0013",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Permissions_System.md",
+        "Plans/FileSafe.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0009/P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:9"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0010",
+      "source_row_id": "P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0014",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Permissions_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0010/P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:10"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0011",
+      "source_row_id": "P1-TERMINAL-SESSION-PRESERVE-UPDATE",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0015",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0011/P1-TERMINAL-SESSION-PRESERVE-UPDATE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:11"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0012",
+      "source_row_id": "P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0016",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0012/P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:12"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0013",
+      "source_row_id": "P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0017",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/MCP_Integration.md",
+        "Plans/Tools.md",
+        "Plans/Permissions_System.md",
+        "Plans/FileSafe.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0013/P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:13"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0014",
+      "source_row_id": "P1-CONTEXT-SKILL-BUDGETS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0018",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Skills_System.md",
+        "Plans/Tools.md",
+        "Plans/Models_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0014/P1-CONTEXT-SKILL-BUDGETS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:14"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0015",
+      "source_row_id": "P1-SECURITY-CREDENTIAL-LOGGING",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0019",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/Tools.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0015/P1-SECURITY-CREDENTIAL-LOGGING",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:15"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0016",
+      "source_row_id": "P1-CLI-BRIDGE-PROTOCOL-HANDSHAKE",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0020",
+      "status": "imported",
+      "domain": "cross_system_runtime_contracts",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Tools.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0016/P1-CLI-BRIDGE-PROTOCOL-HANDSHAKE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:16"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0017",
+      "source_row_id": "P1-AGENT-FOCUS-WATCHDOG",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0021",
+      "status": "imported",
+      "domain": "agent_control_subagents",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0017/P1-AGENT-FOCUS-WATCHDOG",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:17"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0018",
+      "source_row_id": "P2-DOCS-GENERATED-LINK-VALIDATION",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0022",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0018/P2-DOCS-GENERATED-LINK-VALIDATION",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:18"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0019",
+      "source_row_id": "P2-BINARY-PROVENANCE-ASSETS",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0023",
+      "status": "imported",
+      "domain": "transport_websocket_streaming",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0019/P2-BINARY-PROVENANCE-ASSETS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:19"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0020",
+      "source_row_id": "P2-GUI-NOT-CLI-CONTROL-PLANE",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0024",
+      "status": "imported",
+      "domain": "ui_projection_and_hard_gates",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0020/P2-GUI-NOT-CLI-CONTROL-PLANE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:20"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0021",
+      "source_row_id": "P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0025",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/MCP_Integration.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0021/P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:1"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0022",
+      "source_row_id": "P0-HISTORY-ADMISSION-SANITIZATION",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0026",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/Tools.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0022/P0-HISTORY-ADMISSION-SANITIZATION",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:2"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0023",
+      "source_row_id": "P0-PROVIDER-CAPABILITY-EPOCH",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0027",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0023/P0-PROVIDER-CAPABILITY-EPOCH",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:3"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0024",
+      "source_row_id": "P0-REASONING-REPLAY-MATRIX",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0028",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0024/P0-REASONING-REPLAY-MATRIX",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:4"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0025",
+      "source_row_id": "P0-MCP-TYPED-PARAM-FIDELITY",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0029",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/MCP_Integration.md",
+        "Plans/Tools.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0025/P0-MCP-TYPED-PARAM-FIDELITY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:5"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0026",
+      "source_row_id": "P1-MCP-HEADER-SECRET-HOOKS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0030",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/MCP_Integration.md",
+        "Plans/Permissions_System.md",
+        "Plans/Plugins_System.md",
+        "Plans/Tools.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0026/P1-MCP-HEADER-SECRET-HOOKS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:6"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0027",
+      "source_row_id": "P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0031",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Tools.md",
+        "Plans/MCP_Integration.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0027/P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:7"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0028",
+      "source_row_id": "P1-INTERRUPT-CANCEL-SETTLEMENT",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0032",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Tools.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0028/P1-INTERRUPT-CANCEL-SETTLEMENT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:8"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0029",
+      "source_row_id": "P1-TERMINAL-SEMANTIC-MARKER-PARSER",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0033",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0029/P1-TERMINAL-SEMANTIC-MARKER-PARSER",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:9"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0030",
+      "source_row_id": "P1-TERMINAL-CHUNK-SPANNING-PARSER",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0034",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0030/P1-TERMINAL-CHUNK-SPANNING-PARSER",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:10"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0031",
+      "source_row_id": "P1-TERMINAL-A11Y-RANGE-MIRROR",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0035",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0031/P1-TERMINAL-A11Y-RANGE-MIRROR",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:11"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0032",
+      "source_row_id": "P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0036",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0032/P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:12"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0033",
+      "source_row_id": "P1-TRACE-REDACTION-BEFORE-WRITE",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0037",
+      "status": "imported",
+      "domain": "memory_history_logging",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Permissions_System.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0033/P1-TRACE-REDACTION-BEFORE-WRITE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:13"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0034",
+      "source_row_id": "P1-PLUGIN-EXTENSION-POINT-CONTRACTS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0038",
+      "status": "imported",
+      "domain": "ui_projection_and_hard_gates",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Plugins_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/MCP_Integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0034/P1-PLUGIN-EXTENSION-POINT-CONTRACTS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:14"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0035",
+      "source_row_id": "P2-RICH-TEXT-RENDERING-FIDELITY",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0039",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0035/P2-RICH-TEXT-RENDERING-FIDELITY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:15"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0036",
+      "source_row_id": "P2-CONFIG-SCHEMA-MIGRATION-FIXTURES",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0040",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/MCP_Integration.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Release_Process.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0036/P2-CONFIG-SCHEMA-MIGRATION-FIXTURES",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:16"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0037",
+      "source_row_id": "P0-CONTEXT-EPOCH-BASELINE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0041",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/Models_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0037/P0-CONTEXT-EPOCH-BASELINE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:1"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0038",
+      "source_row_id": "P0-PROMPT-CACHE-POLICY",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0042",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0038/P0-PROMPT-CACHE-POLICY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:2"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0039",
+      "source_row_id": "P0-CACHE-USAGE-ENVELOPE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0043",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0039/P0-CACHE-USAGE-ENVELOPE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:3"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0040",
+      "source_row_id": "P0-VOLATILE-CONTEXT-QUARANTINE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0044",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0040/P0-VOLATILE-CONTEXT-QUARANTINE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:4"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0041",
+      "source_row_id": "P0-STREAM-HISTORY-COALESCER",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0045",
+      "status": "imported",
+      "domain": "transport_websocket_streaming",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0041/P0-STREAM-HISTORY-COALESCER",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:5"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0042",
+      "source_row_id": "P0-WEBSOCKET-TRANSPORT-POLICY",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0046",
+      "status": "imported",
+      "domain": "transport_websocket_streaming",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0042/P0-WEBSOCKET-TRANSPORT-POLICY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:6"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0043",
+      "source_row_id": "P0-WEBSOCKET-SECURITY-BOUNDARIES",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0047",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Permissions_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0043/P0-WEBSOCKET-SECURITY-BOUNDARIES",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:7"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0044",
+      "source_row_id": "P1-MCP-TOOL-CATALOG-CACHE",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0048",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/MCP_Integration.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0044/P1-MCP-TOOL-CATALOG-CACHE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:8"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0045",
+      "source_row_id": "P1-COMPACTION-CACHE-EFFECT",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0049",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0045/P1-COMPACTION-CACHE-EFFECT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:9"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0046",
+      "source_row_id": "P1-PROVIDER-CAPABILITY-EPOCH-CACHE",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0050",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0046/P1-PROVIDER-CAPABILITY-EPOCH-CACHE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:10"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0047",
+      "source_row_id": "P1-MODEL-SWITCH-REPLAY-SANITIZER",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0051",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0047/P1-MODEL-SWITCH-REPLAY-SANITIZER",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:11"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0048",
+      "source_row_id": "P1-LOCAL-LLM-CONTEXT-CAPS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0052",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0048/P1-LOCAL-LLM-CONTEXT-CAPS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:12"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0049",
+      "source_row_id": "P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0053",
+      "status": "imported",
+      "domain": "transport_websocket_streaming",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0049/P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:13"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0050",
+      "source_row_id": "P1-TERMINAL-PTY-STREAM-CONTRACT",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0054",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0050/P1-TERMINAL-PTY-STREAM-CONTRACT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:14"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0051",
+      "source_row_id": "P2-CACHE-OBSERVABILITY-DASHBOARD",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0055",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0051/P2-CACHE-OBSERVABILITY-DASHBOARD",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:15"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0052",
+      "source_row_id": "P2-CACHEABLE-TOOL-OUTPUT-REFS",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0056",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0052/P2-CACHEABLE-TOOL-OUTPUT-REFS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:16"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0053",
+      "source_row_id": "P2-TRANSPORT-SOAK-TESTS",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0057",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Automated_Testing_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0053/P2-TRANSPORT-SOAK-TESTS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:17"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0054",
+      "source_row_id": "P2-CACHE-PRIVACY-POLICY",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0058",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/usage-feature.md",
+        "Plans/Permissions_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0054/P2-CACHE-PRIVACY-POLICY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:18"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0055",
+      "source_row_id": "P0-AGENT-CONTROL-PLANE-ENVELOPE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0059",
+      "status": "imported",
+      "domain": "agent_control_subagents",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Tools.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0055/P0-AGENT-CONTROL-PLANE-ENVELOPE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:1"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0056",
+      "source_row_id": "P0-EFFORT-POLICY-SETTLEMENT",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0060",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0056/P0-EFFORT-POLICY-SETTLEMENT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:2"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0057",
+      "source_row_id": "P0-SUBAGENT-EXECUTION-CONTRACT",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0061",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Tools.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0057/P0-SUBAGENT-EXECUTION-CONTRACT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:3"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0058",
+      "source_row_id": "P0-LOOP-BREAKER-TAXONOMY",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0062",
+      "status": "imported",
+      "domain": "agent_control_subagents",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Tools.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0058/P0-LOOP-BREAKER-TAXONOMY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:4"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0059",
+      "source_row_id": "P0-MULTIMODAL-INPUT-SETTLEMENT",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0063",
+      "status": "imported",
+      "domain": "multimodal_and_attachments",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Models_System.md",
+        "Plans/Tools.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0059/P0-MULTIMODAL-INPUT-SETTLEMENT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:5"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0060",
+      "source_row_id": "P0-PROVIDER-CAPABILITY-EPOCH-2",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0064",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/MCP_Integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0060/P0-PROVIDER-CAPABILITY-EPOCH-2",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:6"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0061",
+      "source_row_id": "P0-TOOL-CALL-MALFORMATION-GATE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0065",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0061/P0-TOOL-CALL-MALFORMATION-GATE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:7"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0062",
+      "source_row_id": "P0-LOG-REDACTION-BEFORE-WRITE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0066",
+      "status": "imported",
+      "domain": "memory_history_logging",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0062/P0-LOG-REDACTION-BEFORE-WRITE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:8"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0063",
+      "source_row_id": "P0-SYSTEM-RESOURCE-GOVERNOR",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0067",
+      "status": "imported",
+      "domain": "memory_history_logging",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/MCP_Integration.md",
+        "Plans/Tools.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0063/P0-SYSTEM-RESOURCE-GOVERNOR",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:9"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0064",
+      "source_row_id": "P1-MODEL-SELECTION-ROUTER",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0068",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0064/P1-MODEL-SELECTION-ROUTER",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:10"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0065",
+      "source_row_id": "P1-USAGE-ANOMALY-QUOTA-GUARD",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0069",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/usage-feature.md",
+        "Plans/Models_System.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0065/P1-USAGE-ANOMALY-QUOTA-GUARD",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:11"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0066",
+      "source_row_id": "P1-MEMORY-TIERING-CONTRACT",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0070",
+      "status": "imported",
+      "domain": "agent_control_subagents",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/storage-plan.md",
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0066/P1-MEMORY-TIERING-CONTRACT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:12"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0067",
+      "source_row_id": "P1-PROMPT-CACHE-STABILITY-LINTER",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0071",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/usage-feature.md",
+        "Plans/Tools.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0067/P1-PROMPT-CACHE-STABILITY-LINTER",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:13"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0068",
+      "source_row_id": "P1-PROGRESSIVE-DISCLOSURE-TOOLS-SKILLS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0072",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/MCP_Integration.md",
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0068/P1-PROGRESSIVE-DISCLOSURE-TOOLS-SKILLS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:14"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0069",
+      "source_row_id": "P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0073",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0069/P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:15"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0070",
+      "source_row_id": "P1-MULTIMODAL-FALLBACK-TRANSCRIPTION-POLICY",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0074",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Models_System.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0070/P1-MULTIMODAL-FALLBACK-TRANSCRIPTION-POLICY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:16"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0071",
+      "source_row_id": "P1-STREAM-HISTORY-COALESCER-REPLAY",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0075",
+      "status": "imported",
+      "domain": "transport_websocket_streaming",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Models_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0071/P1-STREAM-HISTORY-COALESCER-REPLAY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:17"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0072",
+      "source_row_id": "P2-OTEL-EXPORT-OPTIONAL-ADAPTER",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0076",
+      "status": "imported",
+      "domain": "cross_system_runtime_contracts",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0072/P2-OTEL-EXPORT-OPTIONAL-ADAPTER",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:18"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0073",
+      "source_row_id": "P2-MODEL-CATALOG-CONFIDENCE-UI",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0077",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0073/P2-MODEL-CATALOG-CONFIDENCE-UI",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:19"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0074",
+      "source_row_id": "P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0078",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": false,
+      "target_docs": [
+        "GitHub_Integration.md",
+        "Permissions_System.md",
+        "Decision_Policy.md",
+        "Contracts_V0.md",
+        "Automated_Testing_System.md",
+        "Spec_Lock / governance seal docs",
+        "new Supply_Chain_Security.md if owner doc is missing"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0074/P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:1"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0075",
+      "source_row_id": "P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0079",
+      "status": "imported",
+      "domain": "agent_control_subagents",
+      "gui_related": true,
+      "target_docs": [
+        "Goal_Runtime_System.md",
+        "orchestrator-subagent-integration.md",
+        "Orchestrator_Page.md",
+        "Contracts_V0.md",
+        "FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0075/P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:2"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0076",
+      "source_row_id": "P0-PROVIDER-EGRESS-HTTP-POLICY",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0080",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Models_System.md",
+        "Provider_OpenCode.md",
+        "Permissions_System.md",
+        "GitHub_Integration.md",
+        "Contracts_V0.md",
+        "MCP_Integration.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0076/P0-PROVIDER-EGRESS-HTTP-POLICY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:3"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0077",
+      "source_row_id": "P0-COMMAND-INVOCATION-CONTRACT",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0081",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Tools.md",
+        "Terminal_Integration.md",
+        "Executor_Protocol.md",
+        "Permissions_System.md",
+        "Contracts_V0.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0077/P0-COMMAND-INVOCATION-CONTRACT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:4"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0078",
+      "source_row_id": "P0-SESSION-TOOL-NAMESPACE-ACTIVATION",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0082",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Tools.md",
+        "MCP_Integration.md",
+        "Browser_Integration.md",
+        "Media_Generation_and_Capabilities.md",
+        "FinalGUISpec.md",
+        "Contracts_V0.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0078/P0-SESSION-TOOL-NAMESPACE-ACTIVATION",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:5"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0079",
+      "source_row_id": "P0-ENTITLEMENT-QUOTA-SETTLEMENT",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0083",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Models_System.md",
+        "Provider_OpenCode.md",
+        "FinalGUISpec.md",
+        "Runtime_Artifacts_Panel.md",
+        "Contracts_V0.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0079/P0-ENTITLEMENT-QUOTA-SETTLEMENT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:6"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0080",
+      "source_row_id": "P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0084",
+      "status": "imported",
+      "domain": "agent_control_subagents",
+      "gui_related": true,
+      "target_docs": [
+        "Context_Management.md",
+        "Skill_System.md",
+        "Goal_Runtime_System.md",
+        "Models_System.md",
+        "Contracts_V0.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0080/P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:7"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0081",
+      "source_row_id": "P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0085",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Terminal_Integration.md",
+        "FinalGUISpec.md",
+        "Permissions_System.md",
+        "FileSafe.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0081/P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:8"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0082",
+      "source_row_id": "P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0086",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Terminal_Integration.md",
+        "Automated_Testing_System.md",
+        "Runtime_Artifacts_Panel.md",
+        "Contracts_V0.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0082/P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:9"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0083",
+      "source_row_id": "P1-MEMORY-STORE-CRUD-VERSION-CITATIONS",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0087",
+      "status": "imported",
+      "domain": "agent_control_subagents",
+      "gui_related": true,
+      "target_docs": [
+        "assistant-memory-subsystem.md",
+        "Goal_Runtime_System.md",
+        "FinalGUISpec.md",
+        "storage-plan.md",
+        "Contracts_V0.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0083/P1-MEMORY-STORE-CRUD-VERSION-CITATIONS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:10"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0084",
+      "source_row_id": "P1-PLATFORM-BINARY-COMPATIBILITY-GATE",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0088",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [
+        "Automated_Testing_System.md",
+        "FinalGUISpec.md",
+        "GitHub_Integration.md",
+        "Installer/Packaging docs if present",
+        "Contracts_V0.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0084/P1-PLATFORM-BINARY-COMPATIBILITY-GATE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:11"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0085",
+      "source_row_id": "P1-EXTERNAL-AGENT-HANDOFF-IMPORT",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0089",
+      "status": "imported",
+      "domain": "agent_control_subagents",
+      "gui_related": true,
+      "target_docs": [
+        "Goal_Runtime_System.md",
+        "Terminal_Integration.md",
+        "Provider_OpenCode.md",
+        "MCP_Integration.md",
+        "FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0085/P1-EXTERNAL-AGENT-HANDOFF-IMPORT",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:12"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0086",
+      "source_row_id": "P1-UI-HARD-GATE-ENFORCER",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0090",
+      "status": "imported",
+      "domain": "ui_projection_and_hard_gates",
+      "gui_related": true,
+      "target_docs": [
+        "FinalGUISpec.md",
+        "Runtime_Artifacts_Panel.md",
+        "Media_Generation_and_Capabilities.md",
+        "Automated_Testing_System.md",
+        "Permissions_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0086/P1-UI-HARD-GATE-ENFORCER",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:13"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0087",
+      "source_row_id": "P2-UPSTREAM-TRIAGE-CLOSURE-REGISTRY",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0091",
+      "status": "imported",
+      "domain": "transport_websocket_streaming",
+      "gui_related": false,
+      "target_docs": [
+        "Planning_Ledger_System.md",
+        "GitHub_Integration.md",
+        "Research_Mode / audit prompts",
+        "Contracts_V0.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0087/P2-UPSTREAM-TRIAGE-CLOSURE-REGISTRY",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:14"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0088",
+      "source_row_id": "P0-SESSION-DRAFT-ATTACHMENT-ISOLATION",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0092",
+      "status": "imported",
+      "domain": "multimodal_and_attachments",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0088/P0-SESSION-DRAFT-ATTACHMENT-ISOLATION",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:1"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0089",
+      "source_row_id": "P0-MCP-LIFECYCLE-RUNTIME-LIVENESS",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0093",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0089/P0-MCP-LIFECYCLE-RUNTIME-LIVENESS",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:2"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0090",
+      "source_row_id": "P0-COMMAND-APPROVAL-LEASE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0094",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0090/P0-COMMAND-APPROVAL-LEASE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:3"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0091",
+      "source_row_id": "P0-CREDENTIAL-ROUTE-EPOCH",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0095",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": false,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0091/P0-CREDENTIAL-ROUTE-EPOCH",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:4"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0092",
+      "source_row_id": "P0-RUNTIME-SURFACE-READINESS-PROBE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0096",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0092/P0-RUNTIME-SURFACE-READINESS-PROBE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:5"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0093",
+      "source_row_id": "P0-CONTEXT-OBJECT-BUDGET",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0097",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0093/P0-CONTEXT-OBJECT-BUDGET",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:6"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0094",
+      "source_row_id": "P0-TOOL-RESULT-TRUTHFULNESS-GATE",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0098",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0094/P0-TOOL-RESULT-TRUTHFULNESS-GATE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:7"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0095",
+      "source_row_id": "P1-INSTRUCTION-IMPORT-GRAPH",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0099",
+      "status": "imported",
+      "domain": "instruction_integrity",
+      "gui_related": false,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0095/P1-INSTRUCTION-IMPORT-GRAPH",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:8"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0096",
+      "source_row_id": "P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0100",
+      "status": "imported",
+      "domain": "terminal_runtime",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0096/P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:9"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0097",
+      "source_row_id": "P1-UI-PROJECTION-STORE-BUDGET",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0101",
+      "status": "imported",
+      "domain": "ui_projection_and_hard_gates",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0097/P1-UI-PROJECTION-STORE-BUDGET",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:10"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0098",
+      "source_row_id": "P1-INSTALL-UPDATE-PROVENANCE",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0102",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0098/P1-INSTALL-UPDATE-PROVENANCE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:11"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0099",
+      "source_row_id": "P2-AI-TRIAGE-CLOSURE-CONFIDENCE",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0103",
+      "status": "imported",
+      "domain": "external_handoff_and_triage",
+      "gui_related": true,
+      "target_docs": [],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0099/P2-AI-TRIAGE-CLOSURE-CONFIDENCE",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:12"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0100",
+      "source_row_id": "context_epoch",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0104",
+      "status": "imported",
+      "domain": "context_cache",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0100/context_epoch",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:2"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0101",
+      "source_row_id": "prompt_admission_execution",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0105",
+      "status": "imported",
+      "domain": "cross_system_runtime_contracts",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0101/prompt_admission_execution",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:3"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0102",
+      "source_row_id": "provider_policy",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0106",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/Permissions_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0102/provider_policy",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:4"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0103",
+      "source_row_id": "provider_metadata_replay",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0107",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Models_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0103/provider_metadata_replay",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:5"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0104",
+      "source_row_id": "tool_output_retention",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0108",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0104/tool_output_retention",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:6"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0105",
+      "source_row_id": "tool_heartbeat",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0109",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/MCP_Integration.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0105/tool_heartbeat",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:7"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0106",
+      "source_row_id": "desktop_version_handshake",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0110",
+      "status": "imported",
+      "domain": "cross_system_runtime_contracts",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/BinaryLocator_Spec.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0106/desktop_version_handshake",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:8"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0107",
+      "source_row_id": "opencode_v2_delta",
+      "priority": "P0",
+      "ledger_atom_id": "atom-0111",
+      "status": "imported",
+      "domain": "opencode_v2_delta",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/OpenCode_Coverage_Matrix.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0107/opencode_v2_delta",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:9"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0108",
+      "source_row_id": "mcp_lazy_tool_exposure",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0112",
+      "status": "imported",
+      "domain": "mcp_tools_and_tool_settlement",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/MCP_Integration.md",
+        "Plans/Tools.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0108/mcp_lazy_tool_exposure",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:10"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0109",
+      "source_row_id": "filesystem_boundary_regressions",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0113",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/Permissions_System.md",
+        "Plans/FileSafe.md",
+        "Plans/Tools.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0109/filesystem_boundary_regressions",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:11"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0110",
+      "source_row_id": "provider_error_observability",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0114",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Models_System.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0110/provider_error_observability",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:12"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0111",
+      "source_row_id": "github_update_workflow",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0115",
+      "status": "imported",
+      "domain": "security_release_supply_chain",
+      "gui_related": true,
+      "target_docs": [
+        "Plans/GitHub_Integration.md",
+        "Plans/BinaryLocator_Spec.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0111/github_update_workflow",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:13"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0112",
+      "source_row_id": "external_issue_closure",
+      "priority": "P1",
+      "ledger_atom_id": "atom-0116",
+      "status": "imported",
+      "domain": "external_handoff_and_triage",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Prompt_Packet_Update_Process_Defect_Repair equivalent",
+        "audit closure docs"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0112/external_issue_closure",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:14"
+      ]
+    },
+    {
+      "external_atom_id": "extrepo-20260703-0113",
+      "source_row_id": "v2_sdk_stability",
+      "priority": "P2",
+      "ledger_atom_id": "atom-0117",
+      "status": "imported",
+      "domain": "provider_capability_and_metadata",
+      "gui_related": false,
+      "target_docs": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "source_refs": [
+        "source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0113/v2_sdk_stability",
+        "source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md",
+        "source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json",
+        "source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:15"
+      ]
+    }
+  ]
+}

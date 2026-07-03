@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.external_repo_import_completion_reaudit.v1",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "created_at_utc": "2026-07-03T19:05:00Z",
+  "status": "pass",
+  "checks": {
+    "source_rows": 113,
+    "imported_atoms": 113,
+    "all_design_atoms": 122,
+    "guardrail_atoms": 5,
+    "checklist_entries": 113,
+    "csv_rows": 113,
+    "priority_counts": {
+      "P0": 50,
+      "P1": 49,
+      "P2": 14
+    },
+    "required_fields_checked_per_row": 13,
+    "required_fields_checked": [
+      "source_row_id",
+      "priority",
+      "title",
+      "finding_family",
+      "source_repos",
+      "observed_signal",
+      "pm_current_coverage",
+      "pm_gap_or_delta",
+      "proposal_or_recommendation",
+      "target_docs",
+      "acceptance_tests_or_validation_surface",
+      "relationship_to_prior_reports",
+      "raw_row"
+    ],
+    "manifest_source_artifacts": 23,
+    "manifest_generated_artifacts": 8,
+    "zip_copy_sha_match": true,
+    "csv_mirror_match": true,
+    "checklist_pair_match": true,
+    "one_imported_atom_per_source_row": true,
+    "required_field_exact_equality": true,
+    "bootstrap_ledger_validator": "pass"
+  },
+  "errors": [],
+  "warnings": [],
+  "conclusion": "The ledger contains every source row from 02_LEDGER_READY_ATOMS.jsonl exactly once as an imported atom, with all required source fields preserved exactly and the original packet preserved under source_shards. Remaining target-doc issues are future compile/adjudication concerns, not missing import data."
+}

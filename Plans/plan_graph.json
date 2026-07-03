@@ -76,7 +76,8 @@
         "ContractName:Plans/Contracts_V0.md",
         "ContractName:Plans/assistant-chat-design.md",
         "ContractName:Plans/UI_Command_Catalog.md",
-        "ContractName:Plans/Wiring_Matrix.md"
+        "ContractName:Plans/Wiring_Matrix.md",
+        "ContractName:Plans/Release_Supply_Chain.md"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -199,6 +200,11 @@
           "kind": "file",
           "ref": "Plans/Wiring_Matrix.md",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Release_Supply_Chain.md",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -305,6 +311,11 @@
         {
           "kind": "file",
           "ref": "Plans/Wiring_Matrix.md",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/Release_Supply_Chain.md",
           "note": "Registered canonical owner doc coverage."
         }
       ],

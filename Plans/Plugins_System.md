@@ -4034,3 +4034,84 @@ All original spans from `Plugins_System-S0001` through `Plugins_System-S0067` ar
 Phase 2B batch 209 atomized `Plugins_System-S0001` through `Plugins_System-S0044` into fine-grained PlanUnits `PLUG-002` through `PLUG-036`, including split coverage for P5 plugin boundary recovery, auto-load approval posture, arg-touching hook trust, and core-surface/host-policy extensibility boundaries. Container headings and section boundaries are carried by downstream PlanUnits rather than retained as product implementation bridges. `PLUG-001` is narrowed to residual source-preserving coverage for `Plugins_System-S0045` through `Plugins_System-S0067` only and must not override the fine-grained units. Batch 209 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
 Phase 2B batch 210 atomized `Plugins_System-S0045` through `Plugins_System-S0067` into fine-grained PlanUnits `PLUG-037` through `PLUG-062`, including split coverage for child-run plugin/MCP inheritance, Plugins tab controls, catalog plugin lifecycle, OpenCode/Puppet Master deltas, acceptance overlays, and plugin-hook blocked runtime taxonomy. Container headings `Plugins_System-S0047`, `S0049`, `S0056`, `S0062`, and `S0064` are carried by downstream PlanUnits, while exact hook tokens such as `pre_tool_invoke`, `pre_attempt_start`, `pre_node_dispatch`, `post_tool_invoke`, and `post_attempt_complete` are preserved without normalization. `PLUG-001` is narrowed to generated-tail-only source-preserving coverage for `Plugins_System-S0068` through `Plugins_System-S0071`. Batch 210 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
 Phase 2B batch 211 structurally dispositioned generated tail spans `Plugins_System-S0068` through `Plugins_System-S0071`: Owner / Consumer Map, PlanUnits heading, the former generated `PLUG-001` bridge, and Migration Coverage. `PLUG-001` is retired to migration-lineage-only compatibility disposition with `node_compile_hint.mode: source_preserving_bridge_retired`; `Plans/Plugins_System.md` no longer has active `source_preserving_planunit` product coverage. Malformed generated ContractRefs from `Plugins_System-S0070` remain preserved as lineage only and were not promoted as active ContractRefs. Batch 211 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+
+### PLUG-063 - P1-PLUGIN-EXTENSION-POINT-CONTRACTS
+
+```yaml
+plan_unit_id: PLUG-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: >-
+  P1-PLUGIN-EXTENSION-POINT-CONTRACTS (P1) is compiled as canonical Puppet Master intent for Typed plugin/UI extension points to avoid monkey patching: Imported external-repo finding extrepo-20260703-0034 / P1-PLUGIN-EXTENSION-POINT-CONTRACTS (P1): None The preserved PM gap/delta is: Define typed UI slots and stable context object fields for MCP/tool/session/model/runtime rows; forbid monkey patching privileged surfaces; mutation hooks produce receipts and rechecks. The observed external-repo signal remains source-lineage evidence: Agent Zero added per-row extension points because plugins otherwise used MutationObserver/DOM scanning/store monkey-patching; settings hooks added for credential scanning.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Plugin can add MCP row badge through typed slot only
+- Private store monkey-patch rejected on privileged surfaces
+- Hook writes trigger permission re-evaluation
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Plugin can add MCP row badge through typed slot only
+- Private store monkey-patch rejected on privileged surfaces
+- Hook writes trigger permission re-evaluation
+risk_class: p1_ui_projection_and_hard_gates_hardening
+reasoning_tier: standard
+context_scope: ui_projection_and_hard_gates
+implementation_surfaces:
+- Plans/Plugins_System.md
+- Plans/Permissions_System.md
+- Plans/MCP_Integration.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: p1_plugin_extension_point_contracts
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0038
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0038
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0034/P1-PLUGIN-EXTENSION-POINT-CONTRACTS@line=14
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0034/P1-PLUGIN-EXTENSION-POINT-CONTRACTS
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:14
+source_atom_ids:
+- atom-0038
+external_atom_id: extrepo-20260703-0034
+source_row_id: P1-PLUGIN-EXTENSION-POINT-CONTRACTS
+priority: P1
+finding_family: Typed plugin/UI extension points to avoid monkey patching
+source_repos:
+- agent0ai/agent-zero
+target_docs:
+- Plans/Plugins_System.md
+- Plans/Permissions_System.md
+- Plans/MCP_Integration.md
+- Plans/FinalGUISpec.md
+owner_hints:
+- Plans/Plugins_System.md
+- Plans/Permissions_System.md
+- Plans/MCP_Integration.md
+- Plans/FinalGUISpec.md
+preserved_exact_tokens:
+- extrepo-20260703-0034
+- P1-PLUGIN-EXTENSION-POINT-CONTRACTS
+- P1
+- Typed plugin/UI extension points to avoid monkey patching
+- agent0ai/agent-zero
+negative_constraints: []
+observed_signal: Agent Zero added per-row extension points because plugins otherwise used MutationObserver/DOM scanning/store monkey-patching; settings hooks added for credential scanning.
+pm_current_coverage: PM has Plugins_System and post-hook permission recheck concept.
+pm_gap_or_delta: Define typed UI slots and stable context object fields for MCP/tool/session/model/runtime rows; forbid monkey patching privileged surfaces; mutation hooks produce receipts and rechecks.
+compile_disposition: create_new_planunit
+```

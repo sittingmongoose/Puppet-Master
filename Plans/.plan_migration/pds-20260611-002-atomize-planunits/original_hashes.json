@@ -1,5 +1,5 @@
 {
-  "file_count": 71,
+  "file_count": 72,
   "files": [
     {
       "bytes": 119294,
@@ -8,10 +8,28 @@
       "sha256": "475b95ed4e8e89d86185b6089000b5eaecfe544af05c37b150e269696b4efebd"
     },
     {
+      "bytes": 32799,
+      "line_count": 440,
+      "path": "Plans/agent-rules-context.md",
+      "sha256": "7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de"
+    },
+    {
       "bytes": 67065,
       "line_count": 629,
       "path": "Plans/Architecture_Invariants.md",
       "sha256": "bc5fe0c3f06f26531d4c79e420f135da41f29e5c31e371784e9df7c35255a3a3"
+    },
+    {
+      "bytes": 332286,
+      "line_count": 3672,
+      "path": "Plans/assistant-chat-design.md",
+      "sha256": "70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f"
+    },
+    {
+      "bytes": 53827,
+      "line_count": 704,
+      "path": "Plans/assistant-memory-subsystem.md",
+      "sha256": "bb2bab7405a1bad86cade9ab323cb90ca003b3d096632e142ebfad0fb160ff38"
     },
     {
       "bytes": 13801,
@@ -30,6 +48,18 @@
       "line_count": 298,
       "path": "Plans/Bootstrap_Planning_Migration.md",
       "sha256": "075240cac02382fcc35f41e087b5e055becdd62946bfc023ce7e1d31ee7185e2"
+    },
+    {
+      "bytes": 202909,
+      "line_count": 2587,
+      "path": "Plans/chain-wizard-flexibility.md",
+      "sha256": "e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346"
+    },
+    {
+      "bytes": 9739,
+      "line_count": 102,
+      "path": "Plans/chain-wizard.md",
+      "sha256": "7e0a148008f20aeb3b9c8946502b107ff8c0b63ff720da6bd60b7aa0eaaebe55"
     },
     {
       "bytes": 29533,
@@ -62,12 +92,6 @@
       "sha256": "f2f8e870f84d197685516b94bf721a02b4a839ed3d513287213a5168585c0682"
     },
     {
-      "bytes": 31618,
-      "line_count": 400,
-      "path": "Plans/DRY_Rules.md",
-      "sha256": "c021921731548bf74e664f2cbb474ff9fc3aff640364b48ad6a85d68196233fe"
-    },
-    {
       "bytes": 23299,
       "line_count": 249,
       "path": "Plans/Decision_Log.md",
@@ -86,10 +110,22 @@
       "sha256": "1aab7576adc5c87b1a5532c1f39829cf9e9d184c1774c77d455c52b4aeecfd0b"
     },
     {
+      "bytes": 31618,
+      "line_count": 400,
+      "path": "Plans/DRY_Rules.md",
+      "sha256": "c021921731548bf74e664f2cbb474ff9fc3aff640364b48ad6a85d68196233fe"
+    },
+    {
       "bytes": 98183,
       "line_count": 1072,
       "path": "Plans/Executor_Protocol.md",
       "sha256": "dd8baa75efc6b7a6e6894113a8942868d8f390482f5f0ccef2f9e822a450806d"
+    },
+    {
+      "bytes": 32853,
+      "line_count": 340,
+      "path": "Plans/feature-list.md",
+      "sha256": "698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c"
     },
     {
       "bytes": 104754,
@@ -116,12 +152,6 @@
       "sha256": "841153deb0b40a91ed918a8627949361b605326365dffbe4a2a5b2eb5e09c592"
     },
     {
-      "bytes": 28067,
-      "line_count": 294,
-      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
-      "sha256": "d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a"
-    },
-    {
       "bytes": 22068,
       "line_count": 234,
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
@@ -144,6 +174,24 @@
       "line_count": 1457,
       "path": "Plans/Goal_Runtime_System.md",
       "sha256": "8c6b022aac9dbea03dd702cbbc6c279eee8995ddc56ef11fa74c049c223e46d6"
+    },
+    {
+      "bytes": 28067,
+      "line_count": 294,
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "sha256": "d24273041bd0358f8c0c529d8a434baca7fb88f5ea5ad322408feaf770edfa2a"
+    },
+    {
+      "bytes": 60186,
+      "line_count": 606,
+      "path": "Plans/human-in-the-loop.md",
+      "sha256": "844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b"
+    },
+    {
+      "bytes": 16568,
+      "line_count": 158,
+      "path": "Plans/interview-subagent-integration.md",
+      "sha256": "faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6"
     },
     {
       "bytes": 152837,
@@ -182,6 +230,18 @@
       "sha256": "c2870a9b8a7b054a162ad885aa75adee8c875452d0bdcbdc65a6211dd159dd75"
     },
     {
+      "bytes": 19764,
+      "line_count": 199,
+      "path": "Plans/newfeatures.md",
+      "sha256": "a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63"
+    },
+    {
+      "bytes": 136544,
+      "line_count": 1522,
+      "path": "Plans/newtools.md",
+      "sha256": "6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9"
+    },
+    {
       "bytes": 40617,
       "line_count": 390,
       "path": "Plans/OpenCode_Coverage_Matrix.md",
@@ -194,16 +254,16 @@
       "sha256": "a34ba16b8d9204278f712a7d59bd7dfc26ec3b7b2f489b3fd2b5ffb53616db21"
     },
     {
+      "bytes": 401868,
+      "line_count": 6827,
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "sha256": "a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241"
+    },
+    {
       "bytes": 65806,
       "line_count": 604,
       "path": "Plans/Orchestrator_Page.md",
       "sha256": "9434ef508c05118c4df03efc97b20f2bd12841ea6906af99a6f9c6283280c6f8"
-    },
-    {
-      "bytes": 25210,
-      "line_count": 529,
-      "path": "Plans/PRD_Builder.md",
-      "sha256": "6a653edac9f8ae9b2088c2f6e4f42f955964bb828db0efa2669481c2aa2fd576"
     },
     {
       "bytes": 110647,
@@ -248,6 +308,12 @@
       "sha256": "c92bac9d3c0a647e37fbb5d6b8c0e6f9450cafc71aa0ac83e5f04cf71d92dfbe"
     },
     {
+      "bytes": 25210,
+      "line_count": 529,
+      "path": "Plans/PRD_Builder.md",
+      "sha256": "6a653edac9f8ae9b2088c2f6e4f42f955964bb828db0efa2669481c2aa2fd576"
+    },
+    {
       "bytes": 67822,
       "line_count": 829,
       "path": "Plans/Progression_Gates.md",
@@ -276,6 +342,18 @@
       "line_count": 547,
       "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
       "sha256": "a5e55c0f85da0401a83bf41fe766ea72b6003166c137fa0d3a001388f8c55e9c"
+    },
+    {
+      "bytes": 36109,
+      "line_count": 587,
+      "path": "Plans/Release_Supply_Chain.md",
+      "sha256": "b2583f6e5bcddb036d5e7a9afd8f2b606927779bd8760114fdc8c5e3cc785fc1"
+    },
+    {
+      "bytes": 70876,
+      "line_count": 675,
+      "path": "Plans/rewrite-tie-in-memo.md",
+      "sha256": "86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99"
     },
     {
       "bytes": 36274,
@@ -308,6 +386,12 @@
       "sha256": "000669515ae4da149f6179882db634954d230601e52e8b94108ea35216c9d3f2"
     },
     {
+      "bytes": 259544,
+      "line_count": 2531,
+      "path": "Plans/storage-plan.md",
+      "sha256": "e511858de8d0a127d40bda1e315d00ac4987efaaa217bddbf3de189ca16e46da"
+    },
+    {
       "bytes": 254319,
       "line_count": 2538,
       "path": "Plans/Tools.md",
@@ -326,6 +410,12 @@
       "sha256": "5bc6f040977efde1826713ac37bef698d38612f00b9a86dbcbbf02215d743270"
     },
     {
+      "bytes": 116819,
+      "line_count": 1176,
+      "path": "Plans/usage-feature.md",
+      "sha256": "85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1"
+    },
+    {
       "bytes": 29969,
       "line_count": 247,
       "path": "Plans/Widget_System.md",
@@ -342,93 +432,9 @@
       "line_count": 1032,
       "path": "Plans/WorktreeGitImprovement.md",
       "sha256": "9e13eed1d3a67b07c0ec4decf8064275c8070f4530efceed756879e346046907"
-    },
-    {
-      "bytes": 32799,
-      "line_count": 440,
-      "path": "Plans/agent-rules-context.md",
-      "sha256": "7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de"
-    },
-    {
-      "bytes": 332286,
-      "line_count": 3672,
-      "path": "Plans/assistant-chat-design.md",
-      "sha256": "70b52937e6d7839db3294be5fa2332888d67afa77c02c4b95be9438582f1b35f"
-    },
-    {
-      "bytes": 53827,
-      "line_count": 704,
-      "path": "Plans/assistant-memory-subsystem.md",
-      "sha256": "bb2bab7405a1bad86cade9ab323cb90ca003b3d096632e142ebfad0fb160ff38"
-    },
-    {
-      "bytes": 202909,
-      "line_count": 2587,
-      "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "e5a47a11437fc556e9e309fed3faf756fe1cadb0b1936958b13b407dfd328346"
-    },
-    {
-      "bytes": 9739,
-      "line_count": 102,
-      "path": "Plans/chain-wizard.md",
-      "sha256": "7e0a148008f20aeb3b9c8946502b107ff8c0b63ff720da6bd60b7aa0eaaebe55"
-    },
-    {
-      "bytes": 32853,
-      "line_count": 340,
-      "path": "Plans/feature-list.md",
-      "sha256": "698760ada2b926dd1f787cb37331443deab51650d53578a672db41c1f5fea53c"
-    },
-    {
-      "bytes": 60186,
-      "line_count": 606,
-      "path": "Plans/human-in-the-loop.md",
-      "sha256": "844eca99e4c87b9669b375cbe844b13f8bc91141b1ef93860675a6585256c80b"
-    },
-    {
-      "bytes": 16568,
-      "line_count": 158,
-      "path": "Plans/interview-subagent-integration.md",
-      "sha256": "faeb6f2c9d9ee2a62871930314b90fbe5278b503f32f1d84f77a85f32e15a2c6"
-    },
-    {
-      "bytes": 19764,
-      "line_count": 199,
-      "path": "Plans/newfeatures.md",
-      "sha256": "a49cd1097dcfc0917124f500b33f95da09edc3804cb0b799c6524f512ac8fe63"
-    },
-    {
-      "bytes": 136544,
-      "line_count": 1522,
-      "path": "Plans/newtools.md",
-      "sha256": "6ad7f74869a13a075ad4cd56057aed261f7509b73c671bcf54251e32e787eed9"
-    },
-    {
-      "bytes": 401868,
-      "line_count": 6827,
-      "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "a29fb722e82fd1f89823b9be4c7a2aaa3b75418b6d3659c9b6657c0b15971241"
-    },
-    {
-      "bytes": 70876,
-      "line_count": 675,
-      "path": "Plans/rewrite-tie-in-memo.md",
-      "sha256": "86460f8f9a27a13d9b08a00fc8da3d2e1643b9c4de020784eccec267c64d7e99"
-    },
-    {
-      "bytes": 259544,
-      "line_count": 2531,
-      "path": "Plans/storage-plan.md",
-      "sha256": "e511858de8d0a127d40bda1e315d00ac4987efaaa217bddbf3de189ca16e46da"
-    },
-    {
-      "bytes": 116819,
-      "line_count": 1176,
-      "path": "Plans/usage-feature.md",
-      "sha256": "85a0a8e8e78485774a55d5d4185f3653412cc4c33707817e77b83171fca838b1"
     }
   ],
-  "generated_at_utc": "2026-06-18T19:59:25Z",
+  "generated_at_utc": "2026-07-03T20:41:53Z",
   "run_id": "pds-20260611-002-atomize-planunits",
   "schema_id": "pm.plan_migration.original_hashes.v1",
   "scope": "top-level Plans/*.md"

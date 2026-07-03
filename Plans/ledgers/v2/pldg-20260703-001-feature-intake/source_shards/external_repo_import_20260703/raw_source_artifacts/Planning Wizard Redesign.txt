@@ -1,0 +1,104 @@
+## Ledger package ready
+
+[Download the PRD Builder and Planning Wizard ledger drop-in](sandbox:/mnt/data/pm_prd_planning_wizard_ledger_dropin.zip)
+
+Ledger ID:
+
+```text
+pldg-20260618-001-prd-planning-wizard
+```
+
+It contains:
+
+- 168 fine-grained, compile-ready design atoms
+- 30 accepted decisions
+- 15 explicit user corrections
+- 17 ledger events
+- 10 bounded compile groups
+- 0 open questions
+- 0 open blockers
+- Source reconstructions for exact-detail auditing
+- Document, GUI, testing, handoff, naming-migration, and implementation-readiness matrices
+- Hardened Resume, Compile, PlanUnit Index, Governance Seal, Deep Audit, and Repair prompts
+- An idempotent registry installer
+
+The package makes no canonical Plans changes and creates no PlanUnits, NodeSeeds, WorkNodes, WorkNodeRequests, WorkGraphs, GoalRuns, queues, implementation files, or build tasks.
+
+## Newly captured requirements
+
+The ledger now explicitly specifies:
+
+- The exact final button label: **Approve And Build**
+- Automatic navigation to **Orchestrator → Plan Compile** immediately after approval
+- A pending launch view while the durable PlanCompileRun identity is reconciled
+- No second ordinary Start Build confirmation
+- Current online research for appropriate testing, live-testing, hot-reload, live-preview, browser, GUI, simulator, emulator, device, accessibility, performance, and security methods
+- Safe installation of missing testing methods, with permission, license, cost, credential, FileSafe, receipt, and rollback controls
+- Global and per-project **Auto / On / Off** settings for individual testing capabilities
+- Default testing visibility policy: `show_when_possible`
+- Visible built-in browser navigation, clicks, form entry, assertions, screenshots, console, and network evidence
+- Visible Swift/native testing through previews, hot reload, simulators, emulators, devices, application windows, interaction traces, screenshots, and logs when supported
+- Fallback streams, snapshots, videos, timelines, logs, and **Open / Watch** actions when embedding is unavailable
+- Secret and sensitive-data redaction
+- Continued automation when the visible testing panel is collapsed, detached, or left
+- Runtime-enforced parallel subagents with assignment/result receipts—not prompt-only requests
+- Zero unapproved stubs, TODOs, TBDs, placeholders, empty required sections, fake acceptance criteria, mock production behavior, or deferred implementation details
+
+## Prompt compatibility
+
+Your existing prompt sequence remains structurally compatible. The included ledger-local versions strengthen it in a few places:
+
+- Compile, Deep Audit, and Repair contain a **hard parallel gate**.
+- One broad agent cannot substitute for required parallel specialists.
+- The main/controller agent remains the only canonical writer.
+- Governance Seal validates this new ledger ID.
+- Audit and Repair retain closure-registry convergence.
+- Zero-incomplete validation is included.
+- Bootstrap ledger compilation cannot accidentally start the finished-product Plan Compile or create runtime artifacts.
+
+The Resume prompt is optional because the ledger is already ready for compilation. You can proceed directly to the included compile prompt.
+
+## Installation
+
+Extract the package into the latest repo root, then run:
+
+```bash
+python3 scripts/pm-install-prd-planning-wizard-ledger.py --dry-run
+python3 scripts/pm-install-prd-planning-wizard-ledger.py
+
+python3 scripts/pm-bootstrap-ledger-validate.py \
+  Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+
+python3 scripts/pm-plan-index.py validate
+python3 scripts/pm-shard-plans.py --check
+```
+
+Then start a new Codex Goal thread using:
+
+```text
+Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/prompts/compile_ledger_to_plans.md
+```
+
+## Validation results
+
+The package was tested against the latest supplied repository:
+
+- Ledger validator: **pass**
+- Ledger warnings: **0**
+- PlanUnit index validation: **pass**
+- Existing PlanUnits: **5,105**
+- Existing acceptance units: **18,237**
+- Existing migration validation: **pass**
+- Shard validation: **pass**
+- Source documents checked: **52**
+- Shards checked: **936**
+- Installer idempotency: **pass**
+- Package hash verification: **pass**
+
+The latest repository’s full governance gates passed before installation. Registering the new active ledger changes the governed `ledger_registry.json` hash, so full governance gates will correctly report stale evidence hashes until the later Governance Seal phase. That is an expected pending-seal condition, not a ledger failure.
+
+[Installation guide](sandbox:/mnt/data/pm_prd_planning_wizard_ledger_dropin/PM_PLANNING_WIZARD_LEDGER_INSTALL.md)
+
+[Prompt compatibility notes](sandbox:/mnt/data/pm_prd_planning_wizard_ledger_dropin/PROMPT_COMPATIBILITY.md)
+
+[Validation report](sandbox:/mnt/data/pm_prd_planning_wizard_ledger_dropin/VALIDATION_REPORT.md)

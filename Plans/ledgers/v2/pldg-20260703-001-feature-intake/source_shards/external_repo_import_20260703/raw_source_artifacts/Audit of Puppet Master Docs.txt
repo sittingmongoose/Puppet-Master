@@ -1,0 +1,1054 @@
+## Ledger Transfer and Governance Seal Protocol
+
+I would name the process we discovered:
+
+**Puppet Master Ledger Transfer and Governance Seal Protocol**
+
+Short name:
+
+**PM-LTGS Protocol**
+
+It has two big jobs:
+
+First, **move all real ledger obligations into canonical live Plans docs without loss, drift, simplification, or wrong-owner placement**.
+
+Second, **seal the supporting governance system**: contracts, spec locks, evidence bundles, plan graph, shards, decision log, gates, and build verifiers.
+
+The key discovery is that this was never a “better prompt” problem. It was a **stateful goal-orchestration problem**. The reason months of prompt-chain attempts failed is that ledger transfer is too large, too cross-referential, and too easy to falsely “pass” by token presence alone. It needs durable state, row-level evidence, serial parent writes, read-only specialist reviewers, repeated repair loops, exact validation, and final governance sealing.
+
+OpenAI’s Codex Goal docs describe Goals as persistent objectives with a completion condition, verification surface, and constraints, which is exactly the shape this needed. Goals are strongest when the work has a durable objective, an evidence-based finish line, and requires investigation across turns. ([developers.openai.com](https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex)) The Codex subagent model also matched the problem: specialized agents can work in parallel and report back to the parent, while custom agents can be defined project-locally under `.codex/agents/`. ([developers.openai.com](https://developers.openai.com/codex/subagents)) We used read-only GPT-5.5/xhigh specialist subagents because Codex config supports model reasoning effort values including `xhigh` for supported models. ([developers.openai.com](https://developers.openai.com/codex/config-reference))
+
+I do not have an active persistent memory-write tool in this chat, so I cannot silently store this for future threads myself. The final section below is written as a **memory/project-artifact block** that you can paste directly into Puppet Master project memory or project artifacts.
+
+---
+
+# What we accomplished
+
+We started with a major transfer failure: ledgers had been created, then supposedly transferred into Plans docs, but many important details were lost, compressed, mis-targeted, or left only in raw reconciliation scaffolding. The original plan docs contained old `Source target target-*` blocks, reconciliation addenda, retired-token placeholders, and evidence/process artifacts that made it look like content existed when in fact canonical product prose was often incomplete.
+
+The solution evolved through multiple phases.
+
+First, we built a row/batch transfer queue from the ledgers and plan docs. Instead of asking Codex to “read everything and transfer it,” we forced it to process bounded work units with stable IDs, source spans, target docs, evidence expectations, and terminal statuses.
+
+Then we learned that **row-level ambiguity cannot be allowed to stop the process**. The first smoke run blocked on PMT-000001 because the target owner was ambiguous. That was a design error. Owner ambiguity is normal in a large spec system. The correct behavior is not to ask Jared. The correct behavior is to run an owner-adjudication protocol: map evidence, identify owner/consumer docs, retarget or split, apply the smallest canonical edit, then verify.
+
+Then we learned that adding a new subagent mid-thread can fail because the active runtime may not expose that newly added role. So we separated **required capability** from **specific role name**. Owner adjudication is mandatory, but a specific `pm_owner_adjudicator` role is only preferred when callable. If unavailable, Codex must use callable evidence/patch/fidelity/drift/scaffold agents and continue.
+
+Then we ran the full allowed ledger transfer in bounded tranches because Codex threads hit compaction/resource limits. Each tranche processed a number of batches, committed a checkpoint, and wrote a handoff. This gave us durable progress and clean continuation points.
+
+Then we performed strict quality passes after transfer: scaffold cleanup, semantic evidence span certification, metadata restamping, final report regeneration, and readability cleanup. That mattered because the first “100% terminal” state still had stale evidence spans, old reports, and pre-existing scaffold debt.
+
+Finally, we handled the governance layer separately: Spec Lock, contracts, plan graph, shards, evidence bundles, auto-decisions, protected namespace baseline, exact-case validation, shard body byte fidelity, and support-gate compatibility. This was critical because the transfer goals intentionally avoided governance files for safety, which meant those artifacts stayed stale until explicitly resealed.
+
+The final state was not achieved by one magical prompt. It was achieved by a **protocol**:
+
+**Transfer → transfer validation → semantic evidence certification → readability cleanup → governance seal → governance audit → post-governance evidence restamp → support-gate compatibility cleanup.**
+
+---
+
+# The core lesson
+
+The key lesson is:
+
+**A ledger-to-plan transfer is not complete when every row has a terminal status. It is complete only when canonical live Plans prose, evidence metadata, batch mirrors, final reports, and build-governance locks all agree with the same final state.**
+
+There are five different “truth layers,” and all must align:
+
+1. **Source truth:** the original ledger obligation.
+2. **Canonical prose truth:** live non-pipeline `Plans/**` docs.
+3. **Evidence truth:** `transfer_state.rows`, batch results, exact spans, source lineage.
+4. **Validation truth:** gates, batch guards, scaffold scans, semantic audits.
+5. **Governance truth:** Spec Lock, contracts, plan graph, shards, evidence bundles, decision log, protected baseline.
+
+Earlier attempts failed because they treated one or two layers as sufficient. They were not.
+
+---
+
+# What made the transfer finally work
+
+## 1. The parent Goal must be the only writer
+
+Subagents can review, map, criticize, and propose. They should not mutate live Plans docs.
+
+The parent Goal thread must be the only writer because otherwise the process becomes impossible to audit. The parent serializes edits, updates `transfer_state`, writes batch results, runs validators, and commits checkpoints.
+
+Subagents should be read-only specialists:
+
+- evidence mapper
+- patch planner
+- fidelity auditor
+- drift critic
+- scaffold police
+- currentness auditor
+- special-lane auditor
+- owner adjudication, either as a dedicated role or as a protocol implemented by the available reviewers
+
+This was one of the biggest structural wins.
+
+## 2. Owner adjudication is mandatory
+
+The queue target is a hint, not authority.
+
+Many rows had queued targets that were stale, consumer-only, governance-locked, or simply wrong. If Codex blindly writes into the queued target, details become orphaned. If Codex blocks and asks Jared, the process collapses.
+
+Correct rule:
+
+**If target ownership is ambiguous, Codex must autonomously adjudicate.**
+
+It should answer:
+
+- What is the source obligation?
+- What doc was queued?
+- Is the queued doc owner, consumer, index, schema, or stale target?
+- Which live doc actually owns the contract?
+- Should the obligation be split across owner and consumer docs?
+- What exact tokens/details must survive?
+- What evidence proves the final placement?
+
+The terminal status should reflect reality:
+
+- `transferred` when new canonical prose was added
+- `merged` when integrated into existing owner prose
+- `already_canonical` when no edit was needed
+- `wrong_target` only when the queued target was wrong and no transfer into it happened
+- `false_positive`, `duplicate`, `obsolete`, `non_applicable`, or `deferred` only with evidence
+
+Never use `blocked_manual_decision` for ordinary row-level product or owner ambiguity.
+
+## 3. Terminal status is not enough
+
+We saw multiple examples where a row was marked terminal but the exact detail was missing, evidence pointed to stale line numbers, or content existed only in old scaffold.
+
+Terminal rows require:
+
+- live canonical evidence
+- current line spans
+- source lineage
+- exact-token/semantic preservation
+- batch-result mirror
+- validation status
+- no scaffold-only proof
+
+The mantra became:
+
+**Do not count token presence unless it is in canonical context.**
+
+A token in a source ledger, reconciliation addendum, source-target block, retired placeholder, or exact-acceptance boilerplate does not prove transfer.
+
+## 4. Metrics are necessary but not sufficient
+
+The tools and gates were essential, but they were not enough. We found cases where mechanical gates passed while the evidence span pointed to the wrong nearby text.
+
+The right solution was not to abandon metrics. It was to add stricter layers:
+
+- exact-token scan
+- semantic owner-window comparison
+- evidence-span correctness
+- live non-pipeline Plans-only canonical evidence
+- stale line-span detection
+- source-vs-live obligation review
+- subagent-confirmed restamps
+- final semantic classification queue
+
+This turned “passed mechanically” into “certified semantically.”
+
+## 5. Keep source evidence and canonical evidence separate
+
+A major late-stage issue was that `canonical_evidence` sometimes included source ledger or pipeline paths. That confused the truth model.
+
+Correct rule:
+
+- **Canonical evidence** points only to live non-pipeline Plans files that contain the final product/spec prose or schema/config truth.
+- **Source evidence** points to ledgers, queue rows, pipeline artifacts, source-lineage records, or prior transfer evidence.
+- **Batch evidence** proves process execution.
+- **Governance evidence** proves lock/build artifacts.
+
+Never mix these.
+
+## 6. Preserve exact details, but do not revive stale canon
+
+Some source tokens must survive exactly. Others are stale or compatibility-only. The transfer must distinguish these.
+
+Examples we learned from:
+
+- Stale widget layout tokens should be preserved as compatibility/import evidence, not revived as active layout targets.
+- Old crew caps like “20 total” and “max 3 crews per subagent type” should be explicitly retired when `executionLimits` is the SSOT.
+- A2A should remain future/external-interop reference material, not become PM’s active protocol.
+- Provider-native artifacts should be described as native artifacts unless PM adopts them into its own control plane.
+- P6 Personas and active/unpacketized ledgers must remain locked until explicitly unlocked.
+
+This is why the system needs status/disposition options, not only “transferred.”
+
+## 7. Bounded tranches beat huge runs
+
+Codex compaction repeatedly killed long threads. The fix was not to lower ambition; it was to make the work resumable.
+
+Effective pattern:
+
+- process bounded tranche
+- validate
+- write checkpoint summary
+- commit
+- stop cleanly
+- start new thread from local evidence
+- continue by manifest order
+
+For the final stages, larger tranches were okay because the system was stable. Early tranches should be smaller until the loop is proven.
+
+Native Puppet Master Goal Mode should not depend on chat context surviving. It should persist goal state, cursor, tranche state, subagent results, batch results, blockers, and next actions in project files or database state.
+
+## 8. Governance sealing is separate from transfer
+
+During transfer, we correctly protected:
+
+- `Plans/Spec_Lock.json`
+- `Plans/auto_decisions.jsonl`
+- `Plans/_shards/**`
+- `Plans/.evidence/**`
+- `Plans/.pipeline/**`
+
+That prevented accidental governance mutation.
+
+But after transfer, those artifacts were stale. We had to explicitly run a governance unlock/seal goal to regenerate and verify them.
+
+Correct sequence:
+
+**Do not update Spec Lock during row transfer. Update it after canonical docs are final.**
+
+Governance sealing must include:
+
+- refresh Spec Lock hashes
+- append auto decision
+- regenerate shards
+- regenerate evidence bundles
+- validate plan graph
+- validate exact-case paths
+- validate shard body byte fidelity
+- refresh protected namespace baseline
+- ensure gates pass both default and strict modes
+- restamp transfer evidence if governance doc edits shift lines
+
+## 9. Case sensitivity matters
+
+The system looked fine on macOS but had case-mismatched paths that would fail on Linux:
+
+- `FinalGUISpec` vs `finalguispec`
+- `LSPSupport` vs `lspsupport`
+- `Project_Output_Artifacts` vs `project_output_artifacts`
+
+The fix was exact-case validation independent of the host filesystem.
+
+Native Puppet Master should treat paths as exact byte strings, not “whatever the current filesystem resolves.”
+
+## 10. Generated shards must be source-exact
+
+The sharder initially stripped trailing spaces, breaking Markdown hard-break fidelity. This is subtle but important.
+
+If shards are used as agent-readable spec excerpts, the shard body must reproduce the exact source line bytes, including trailing spaces and newlines, after the generated header/delimiter.
+
+The verifier must reconstruct every shard body from `source_line_start` / `source_line_end` and fail on byte mismatch.
+
+## 11. Protected namespace baselines must match mode
+
+We hit a support-gate bug where the baseline included governance files but the default guard excluded them, causing false “removed file” failures.
+
+The guard must auto-match the baseline’s `include_governance_files` setting unless explicitly overridden. Gate wrappers must detect governance-aware baselines.
+
+This matters for native PM: gates must be mode-aware, and baselines must encode their mode.
+
+---
+
+# Recommended future architecture
+
+The clean future version should not be dozens of manual prompts. It should be a small number of durable Goals with internal phases.
+
+My recommendation:
+
+## Goal 1: Ledger Transfer Goal
+
+Purpose: transfer allowed ledgers into live Plans docs.
+
+It should include transfer, row validation, batch validation, and tranche commits. It should **not** update governance locks/shards.
+
+Inputs:
+
+- working ledgers
+- master transfer queue
+- batch manifest
+- live Plans docs
+- AGENTS/project rules
+- current transfer state
+
+Outputs:
+
+- updated live Plans docs
+- `transfer_state.rows`
+- `transfer_state.batches`
+- `transfer_state/batch_results/*.json`
+- checkpoint summaries
+- transfer validation reports
+- no new scaffold
+- local commits
+
+Hard rules:
+
+- parent only writer
+- subagents read-only
+- process by manifest order
+- skip terminal rows
+- no P6 unless explicitly unlocked
+- no row-level user questions
+- no owner ambiguity blocks
+- no scaffold as evidence
+- no governance mutation
+
+Stop conditions:
+
+- true missing files
+- validator corruption that cannot be repaired
+- required protected/governance mutation
+- unresolved semantic blocker
+- explicit tranche cap, if used
+
+The transfer goal should include an audit loop after each batch. It should not wait until the end to audit everything.
+
+## Goal 2: Transfer Quality Certification Goal
+
+Purpose: prove the transfer is actually good, not merely terminal.
+
+This can be integrated into Goal 1 if the native Goal system supports long-running durable phases without compaction. In Codex, it was safer as separate goals.
+
+It should verify:
+
+- all allowed rows terminal
+- all batch results pass
+- no state/batch mismatch
+- no raw scaffold
+- no source/pipeline canonical evidence
+- evidence spans current and semantically correct
+- no stale line spans
+- no blank/malformed/out-of-range exact spans
+- no rows lacking live non-pipeline Plans evidence
+- no stale final reports
+- P6 untouched
+
+It may edit:
+
+- `transfer_state/**`
+- evidence metadata
+- batch-result mirrors
+- final reports
+- live Plans docs only if canonical prose is missing or readability cleanup is safe
+
+It should produce:
+
+- final quality certification JSON/MD
+- evidence-span index
+- semantic classification progress
+- final ledger transfer report
+- final 100% quality seal
+
+## Goal 3: Build Governance Seal Goal
+
+Purpose: lock the final plan state for build.
+
+This goal must explicitly unlock governance outputs.
+
+It may edit:
+
+- `Plans/Spec_Lock.json`
+- `Plans/auto_decisions.jsonl`
+- `Plans/_shards/**`
+- `Plans/.evidence/**`
+- `Plans/plan_graph.json`
+- verifier/sharder scripts
+- protected namespace baseline
+- governance reports
+
+It should not edit product prose except support-link/governance reference fixes.
+
+It must verify:
+
+- Spec Lock hashes current
+- no missing locked files
+- schemas valid
+- auto decisions valid
+- duplicate decision policy enforced
+- evidence bundle artifact hashes current
+- plan graph canonical, not `EXAMPLE.*`
+- plan graph refs exact-case and present
+- shards generated for all registered docs
+- root index links all shard indexes
+- shard body byte reconstruction exact
+- contract refs clean
+- exact-case validation cross-platform
+- protected baseline refreshed
+- both default and strict guards pass
+- allowed ledger transfer still sealed
+- P6 untouched
+
+It should produce:
+
+- final build governance seal JSON/MD
+- evidence bundles
+- final protected baseline
+- auto decision row
+- local commit
+
+## Goal 4: Post-Governance Evidence Restamp Goal
+
+Purpose: repair any transfer evidence spans shifted by governance edits.
+
+This is the step that was easy to miss. Governance sealing changed support docs and shifted line numbers. That made some previously correct transfer evidence stale.
+
+It should:
+
+- scan all content row canonical spans
+- restamp shifted spans to current lines
+- sync batch-result mirrors
+- rebuild final reports
+- rerun all validation
+- ensure no stale evidence spans remain
+
+No new transfer rows. No P6. Usually metadata-only.
+
+## Goal 5: Support Gate Compatibility Goal
+
+Purpose: ensure future gates run cleanly.
+
+This goal fixes tool incompatibilities that appear only after sealing, such as governance-aware baseline behavior.
+
+It should verify:
+
+- default protected guard pass
+- strict governance-aware guard pass
+- `run_transfer_gates.sh` pass
+- diff guard pass
+- no false positives from sealed governance files
+
+---
+
+# Should this be all one Goal or separate Goals?
+
+For native Puppet Master Goal Mode, the ideal is **one top-level durable Goal** with four or five internal phases:
+
+1. Transfer
+2. Transfer certification
+3. Governance seal
+4. Post-governance restamp
+5. Gate compatibility/final seal
+
+The top-level Goal should preserve state across context compaction, thread restarts, and machine restarts. If your native system can do that, all phases can be one Goal.
+
+But do **not** make it one giant in-memory chat. Make it one durable Goal with persisted phase state.
+
+The top-level Goal should be able to pause and resume with:
+
+- `goal_id`
+- `phase`
+- `cursor`
+- `batch_id`
+- `transfer_id`
+- `processed_candidate_ids`
+- `current_blockers`
+- `last_valid_commit`
+- `last_gate_results`
+- `next_action`
+- `allowed_write_surface`
+- `locked_lanes`
+- `governance_unlock_state`
+
+For Codex specifically, separate threads were necessary because compaction/resource limits repeatedly killed long sessions. For Puppet Master native Goal Mode, the system should be designed so thread death is irrelevant. The goal state lives outside the model context.
+
+So the answer is:
+
+**Conceptually one goal. Operationally multiple resumable phases.**
+
+---
+
+# The perfect future flow
+
+## Phase 0: Preflight and lane classification
+
+Before touching docs, classify work:
+
+- completed allowed transfer rows
+- deferred P6 rows
+- paused Personas rows
+- active/unpacketized rows
+- special recovery ledgers
+- governance locked files
+- existing scaffold baseline
+- current plan docs
+- current Spec Lock state
+- current shard/evidence state
+
+Make explicit lane policies:
+
+- P1/P2/P3/P5 allowed
+- P6 locked
+- Personas locked unless explicitly resumed
+- active/unpacketized locked unless explicitly resumed
+- governance locked during transfer
+- governance unlocked only during seal
+
+## Phase 1: Build the transfer queue
+
+Each row needs:
+
+- `transfer_id`
+- `work_id`
+- `phase`
+- `source_path`
+- `source_line_range`
+- `source_excerpt`
+- `source_obligation_summary`
+- `tokens_to_preserve`
+- `queued_target_doc`
+- `allowed_to_apply`
+- `lane`
+- `risk_class`
+- `owner_ambiguity_possible`
+- `requires_exact_token`
+- `requires_semantic_review`
+
+No row should be processed without stable identity.
+
+## Phase 2: Batch transfer
+
+For each batch:
+
+1. Load source rows.
+2. Load queued target docs.
+3. Run evidence mapper.
+4. Run owner adjudication.
+5. Run patch planner.
+6. Run fidelity/drift/scaffold reviewers.
+7. Parent applies smallest canonical edit.
+8. Update row state.
+9. Write batch result.
+10. Run targeted gates.
+11. Repair until pass or evidence-backed terminal disposition.
+12. Commit every tranche.
+
+The parent must never mark a batch passed because it “looks good.” It passes only when required state, batch result, live evidence, and gates agree.
+
+## Phase 3: Transfer quality certification
+
+After all allowed rows are terminal:
+
+- remove/rewrite old scaffold
+- archive removed scaffold text under `transfer_state/legacy_scaffold_archive`
+- restamp evidence spans
+- separate source evidence from canonical evidence
+- classify all semantic evidence candidates
+- rebuild final reports
+- validate all rows and batches
+- produce final quality seal
+
+This phase must be strict. It should stop rather than claim 100% if candidate queues remain.
+
+## Phase 4: Build governance seal
+
+After final plan prose is stable:
+
+- regenerate Spec Lock
+- append auto decision
+- regenerate shards
+- regenerate evidence
+- validate plan graph
+- validate exact-case paths
+- validate shard body reconstruction
+- refresh protected baseline
+- validate gates
+- commit governance seal
+
+Governance files must not be touched earlier except by explicit governance unlock.
+
+## Phase 5: Post-governance restamp
+
+After governance docs change:
+
+- scan transfer evidence spans again
+- restamp shifted line numbers
+- sync batch mirrors
+- rebuild reports
+- rerun gates
+- commit restamp
+
+## Phase 6: Final support-gate compatibility
+
+Run both default and strict modes:
+
+- protected namespace guard
+- diff guard
+- run gates
+- audit governance
+- full transfer validation
+- batch guard
+- spec lock verification
+- evidence validation
+- plan graph validation
+- shard check
+- JSON syntax
+- Git diff checks
+
+Fix tools if they fail because of final sealed state.
+
+---
+
+# What native Puppet Master Goal Mode should learn from Codex
+
+## 1. Goal state must be externalized
+
+Do not rely on the conversation context as the source of truth. Every meaningful state update must be written to durable goal state.
+
+Minimum goal state:
+
+```json
+{
+  "goal_id": "...",
+  "phase": "transfer | certification | governance_seal | restamp | final",
+  "status": "running | blocked | paused | complete",
+  "cursor": {
+    "batch_id": "...",
+    "transfer_id": "...",
+    "candidate_id": "..."
+  },
+  "allowed_write_surface": [],
+  "locked_lanes": [],
+  "last_commit": "...",
+  "last_green_commit": "...",
+  "blockers": [],
+  "validation": {},
+  "next_action": "..."
+}
+```
+
+## 2. Goals need explicit write-surface modes
+
+We used different write surfaces:
+
+Transfer mode:
+
+```text
+live Plans/**
+transfer_state/**
+no Spec_Lock
+no auto_decisions
+no shards
+no evidence
+no pipeline
+```
+
+Quality mode:
+
+```text
+transfer_state/**
+batch-result metadata
+safe Plans readability fixes
+no governance unlock
+```
+
+Governance mode:
+
+```text
+Spec_Lock
+auto_decisions
+_shards
+.evidence
+plan_graph
+verifier scripts
+protected baseline
+no pipeline
+```
+
+Native PM Goal Mode should encode these modes directly.
+
+## 3. Blockers must be typed
+
+Not every stop is equal.
+
+Types:
+
+- `row_owner_ambiguity`: not a blocker; adjudicate
+- `subagent_unavailable_optional`: not a blocker; use fallback protocol
+- `metadata_export_artifact_present`: cleanup authorization or auto cleanup
+- `protected_namespace_without_unlock`: blocker
+- `validator_broken`: repair tool if allowed, otherwise blocker
+- `semantic_evidence_queue_open`: not complete; continue
+- `true_missing_source`: blocker
+- `needs_governance_unlock`: phase transition, not failure
+- `compaction_limit`: checkpoint and resume
+
+The system should not ask the user for row-level decisions. It should only ask for scope/authority decisions.
+
+## 4. Goals need tranches and automatic continuation
+
+A Goal should support:
+
+- max rows per tranche
+- max batches per tranche
+- max candidates per tranche
+- checkpoint interval
+- commit interval
+- auto-resume until phase completion
+
+The mistake was setting a cap and treating the cap as a final blocker. A cap should mean “checkpoint and continue,” unless the user explicitly wants a pause.
+
+## 5. Exactness matters more than normal writing quality
+
+This process was not about making docs read nicely at first. It was about preserving obligations.
+
+Only after fidelity was sealed should readability cleanup happen.
+
+Correct order:
+
+1. preserve
+2. verify
+3. restamp evidence
+4. remove scaffold
+5. polish headings
+6. lock governance
+
+Never polish first.
+
+## 6. Metrics need semantic backups
+
+The final system should have both mechanical and semantic gates.
+
+Mechanical:
+
+- row count
+- batch count
+- JSON syntax
+- schema validation
+- hash validation
+- exact spans parse
+- path exists
+- Git diff clean
+
+Semantic:
+
+- evidence span actually supports source obligation
+- owner doc is correct
+- exact token preserved or intentionally retired
+- consumer vs owner distinction respected
+- stale canon not revived
+- compatibility-only items labeled correctly
+- no scaffold counted as evidence
+
+## 7. Evidence spans must be maintained after any doc edit
+
+Any edit to live Plans docs can stale line spans. The system needs automatic restamping after every phase that edits docs, including governance docs.
+
+Evidence spans should be treated as derived indexes, not permanent immutable truth.
+
+## 8. Shards are not just convenience
+
+If agents will use shards for large-doc navigation, shards must be byte-faithful to source bodies. Shards cannot strip whitespace, change headings, or normalize text.
+
+Shard outputs need:
+
+- exact source path
+- exact source hash
+- exact line range
+- exact body reconstruction verification
+- shard hash
+- manifest
+- root index link
+- case-exact path
+
+## 9. Spec Lock must be refreshed last
+
+Spec Lock should not be refreshed while docs are still changing. It should be refreshed after:
+
+- transfer complete
+- quality seal complete
+- governance artifacts regenerated
+- evidence restamped
+- support tools fixed
+
+Otherwise it locks the wrong intermediate state.
+
+## 10. Final “100%” must mean “no known defects,” not “model says done”
+
+A Goal can only claim 100% if:
+
+- all queues closed
+- all known candidates classified
+- all blockers resolved
+- all gates pass
+- all reports agree
+- no stale state remains
+- no deferred scope silently processed
+- no false evidence is counted
+
+If not, it must say “not certified” and give the exact remaining queue.
+
+---
+
+# Recommended standard Goal structure
+
+Every Goal should have this shape:
+
+```text
+Objective:
+What must be true when done.
+
+Authority:
+Which files/artifacts are source of truth.
+
+Scope:
+What is allowed, deferred, locked, forbidden.
+
+Preflight:
+What must pass before edits.
+
+Work loop:
+How to process units, who writes, who reviews.
+
+Evidence:
+What must be recorded per unit.
+
+Gates:
+What validators must pass.
+
+Checkpoint:
+When to commit, how to summarize, how to resume.
+
+Stop conditions:
+True blockers only.
+
+Certification:
+Exact success criteria.
+
+Honesty clause:
+Do not claim success unless criteria are met.
+```
+
+The honesty clause matters. It was what allowed later agents to stop correctly when semantic queues remained open.
+
+---
+
+# Standard transfer Goal template
+
+Use this concept for future ledger transfers:
+
+```text
+Goal: Transfer allowed ledger rows into canonical live Plans docs with no detail loss, no drift, no scaffold evidence, and no row-level user decisions.
+
+Authority: ledgers, master queue, batch manifest, live Plans docs, transfer_state.
+
+Scope: process allowed rows only; keep deferred lanes locked; keep governance locked.
+
+Rules: parent only writer; subagents read-only; owner ambiguity is adjudicated, not blocked; source/pipeline text is not canonical evidence; exact details must survive.
+
+Loop: process by manifest batch; map evidence; adjudicate owner; apply smallest canonical edit; update row state; write batch result; run gates; repair until pass.
+
+Every batch: transfer_state row updates, batch result JSON, live evidence spans, source lineage, validation results, scaffold scan, diff guard.
+
+Completion: all allowed rows terminal, all batches pass, no scaffold, no stale evidence, no missing live canonical evidence, P6 untouched.
+```
+
+---
+
+# Standard transfer audit/certification Goal template
+
+```text
+Goal: Certify completed allowed ledger transfer against live Plans docs.
+
+Do not transfer new rows unless canonical prose is proven missing. Do not unlock deferred lanes.
+
+Build defect registry:
+- stale evidence spans
+- missing exact tokens
+- wrong owner spans
+- scaffold-only evidence
+- source/pipeline canonical evidence
+- semantic drift
+- stale reports
+- readability pollution
+
+Repair:
+- metadata-only restamp when prose exists
+- safe Plans edit only when prose missing
+- archive scaffold before removal
+- sync batch mirrors
+- rebuild reports
+
+Completion:
+0 open defects, 0 raw scaffold, 0 stale spans, 0 semantic blockers, full validation pass, batch guard pass, final quality seal written.
+```
+
+---
+
+# Standard governance seal Goal template
+
+```text
+Goal: Seal build-governance support artifacts after completed transfer.
+
+Governance unlock:
+Spec_Lock, auto_decisions, _shards, .evidence, plan_graph, verifier scripts, protected baseline.
+
+Do:
+- refresh Spec Lock hashes
+- append auto decision
+- regenerate shards
+- regenerate evidence bundles
+- validate exact-case paths
+- validate plan graph
+- validate shard body byte reconstruction
+- refresh protected namespace baseline
+- run default and strict gates
+- rerun transfer validation
+- restamp transfer evidence after governance edits
+
+Completion:
+0 stale hashes, 0 broken refs, 0 shard mismatches, 0 evidence hash mismatches, canonical graph present, guards pass, P6 locked.
+```
+
+---
+
+# Things to never do again
+
+Do not ask a huge prompt chain to transfer enormous ledgers without durable state.
+
+Do not trust a ledger transfer because text appears somewhere.
+
+Do not count source-target blocks, reconciliation addenda, retired-token placeholders, or exact-acceptance boilerplate as canonical evidence.
+
+Do not stop for owner ambiguity.
+
+Do not make a newly added subagent name a hard dependency in an already-running thread.
+
+Do not refresh Spec Lock before the docs stop changing.
+
+Do not run governance sealing without exact-case path validation.
+
+Do not assume macOS path behavior matches Linux.
+
+Do not generate shards unless the shard body is source-exact.
+
+Do not rely on stale final reports if `transfer_state` changed.
+
+Do not call “100%” while candidate queues remain.
+
+Do not unlock P6 implicitly.
+
+Do not mutate `.pipeline` during transfer or governance sealing.
+
+---
+
+# What this means for Chain Wizard
+
+The chain wizard should probably not be a fixed huge prompt chain anymore.
+
+It should become a **Goal compiler**.
+
+Instead of generating 50 prompts, it should generate:
+
+- a goal objective
+- a phase graph
+- authority files
+- allowed write surfaces
+- locked lanes
+- validators
+- artifact schemas
+- subagent roles
+- checkpoint cadence
+- unblock policy
+- final certification criteria
+
+The wizard should produce a durable goal plan, not a script of chat prompts.
+
+For Puppet Master native Goal Mode, the chain wizard can become:
+
+```text
+Intent → Goal Plan → Phase Graph → Work Queue → Agents → Gates → Certification
+```
+
+That is much closer to what actually worked.
+
+---
+
+# What native Puppet Master Goal Mode needs
+
+At minimum:
+
+```text
+durable goal state
+phase graph
+batch queue
+candidate queue
+stateful cursor
+subagent orchestration
+read-only reviewer roles
+parent-only writer
+write-surface modes
+validator registry
+evidence registry
+checkpoint commits
+blocker taxonomy
+resume protocol
+final certification contract
+```
+
+It should support:
+
+```text
+goal.pause
+goal.resume
+goal.checkpoint
+goal.spawn_reviewers
+goal.run_gate
+goal.record_evidence
+goal.classify_blocker
+goal.advance_cursor
+goal.commit
+goal.certify
+```
+
+Most importantly, it should support **goal-local memory**: not conversational memory, but structured durable state.
+
+---
+
+# Memory / project artifact block
+
+Copy this into Puppet Master project memory or artifacts:
+
+```text
+Puppet Master discovered and validated a working protocol for ledger-to-plan transfer and build-governance sealing.
+
+Name: PM-LTGS Protocol — Puppet Master Ledger Transfer and Governance Seal Protocol.
+
+Core principle: ledger transfer is not complete when rows are terminal. It is complete only when source obligations, canonical live Plans prose, transfer_state evidence, batch results, final reports, Spec Lock, shards, evidence bundles, plan graph, protected namespace baseline, and gates all agree.
+
+Successful architecture:
+1. Transfer allowed ledger rows by manifest batch.
+2. Parent Goal is the only writer.
+3. Subagents are read-only reviewers: evidence mapper, patch planner, fidelity auditor, drift critic, scaffold police, currentness/special-lane auditors, owner adjudication capability.
+4. Owner ambiguity is never a row-level user blocker. The Goal must autonomously retarget or split across owner/consumer docs with evidence.
+5. Do not count source-target blocks, reconciliation addenda, retired-token placeholders, exact-acceptance boilerplate, raw scaffold, pipeline files, or source ledgers as canonical evidence.
+6. Canonical evidence must point to live non-pipeline Plans files that actually support the source obligation.
+7. Source/pipeline/ledger evidence belongs only in source/source-lineage fields.
+8. Process in resumable tranches with commits and handoff summaries; compaction/thread death must not lose progress.
+9. After transfer, run semantic evidence certification: stale spans, wrong owner spans, token drift, scaffold-only evidence, source/pipeline canonical evidence, and stale reports must be repaired.
+10. Only after final plan prose is stable, unlock governance and seal Spec Lock, auto_decisions, _shards, .evidence, plan_graph, verifier scripts, and protected baseline.
+11. After governance edits, rerun transfer evidence restamping because line spans may shift.
+12. Final support gates must pass both default and strict governance-aware modes.
+13. P6/deferred lanes remain locked unless explicitly unlocked.
+14. “100%” means no known defects, no open candidate queues, all gates green, and all reports agree. If not, stop with exact blockers.
+
+Transfer phase should not mutate Spec_Lock, auto_decisions, _shards, .evidence, or .pipeline. Governance phase may mutate Spec_Lock, auto_decisions, _shards, .evidence, plan_graph, verifier scripts, and protected baseline, but must not mutate .pipeline.
+
+Spec Lock must be refreshed last, after docs, governance artifacts, evidence restamps, and support-gate compatibility are stable.
+
+Shard generation must preserve exact source body bytes, including Markdown hard-break spaces and trailing newlines. Shard verifier must reconstruct every shard body from source_line_start/source_line_end and fail on byte mismatch.
+
+Path validation must be exact-case and cross-platform. Do not trust macOS case-insensitive path resolution.
+
+Native Puppet Master Goal Mode should compile wizard flows into durable goals with phase graph, work queues, validators, evidence registry, subagent roles, write-surface modes, blocker taxonomy, checkpoint commits, and final certification contracts. The chain wizard should become a Goal compiler, not a huge linear prompt generator.
+```
+
+That is the distilled process we proved

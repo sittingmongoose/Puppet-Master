@@ -1,6 +1,6 @@
 # Shard Index: Plans/OpenCode_Coverage_Matrix.md
 
-Generated: 2026-07-03T02:31:30Z
+Generated: 2026-07-03T20:59:30Z
 
 Source SHA256: `ef41c8912e244286a61906a651b70fee14c39a342a5bda1095c1081c4fed56c3`
 

@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L407-L490
+Source lines: L411-L495
 
-Source SHA256: `f42e038a8f9a1c631bbb1cc8f267bb648722f9a107d4425ffd73c7790e48ec31`
+Source SHA256: `473072655a181cd57461eeb01602b14bc3ed419d09877354e73943dfbc6704f4`
 
 ---
 
@@ -48,6 +48,7 @@ node_compile_hint:
   mode: compile_queue_fidelity
   create_worknodes: false
 source_lineage:
+  - pldg-20260703-001-feature-intake:atom-0002
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0085
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0086
   - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0096

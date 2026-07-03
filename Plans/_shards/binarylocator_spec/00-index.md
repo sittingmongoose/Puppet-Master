@@ -1,28 +1,29 @@
 # Shard Index: Plans/BinaryLocator_Spec.md
 
-Generated: 2026-07-03T02:31:30Z
+Generated: 2026-07-03T20:59:30Z
 
-Source SHA256: `2e09bcc480993cdcb2784ff083b4b74c78a552979e441ad22465aaf984a4e97e`
+Source SHA256: `e9456832f2a15e65e0158775c6650904e162afa6161f7b115793467ad3ccb3b7`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `5014a71233a7c69fcbd43d50ec7739f58bb37a96e07abc66748293bf079db6d7`
-- [002 - Purpose](002-purpose.md) L7-L8 `b4a32c7f45fcec26fb2cc26e545ca074a15b37d435b5de69d043527fc1b337fd`
-- [003 - Non-goals](003-non-goals.md) L10-L20 `58bed9fc385bfc4da9ac2cb384312d996b76a865598d634274d2e172fc1a21c0`
-- [004 - Canonical references and constraints (SSOT; DRY)](004-canonical-references-and-constraints-ssot-dry.md) L22-L63 `d2ad51e0b72b0c1757e3277ff46b619682adb83f01068556c2483d22f389d457`
-- [005 - Terminology (index only)](005-terminology-index-only.md) L65-L70 `ef9ac4a6793a39dd93b7a9c2e1451cb43f43bc864a0d9ebb5b34a6945fe56875`
-- [006 - BinaryLocator boundary](006-binarylocator-boundary.md) L72-L110 `62703594ac2969c122de487485e4f006b44081878857a240613ba3f18340c1dd`
-- [007 - Deterministic discovery algorithm](007-deterministic-discovery-algorithm.md) L112-L209 `6765995b90fffda90288400f48df2336653be7712dbc536c958373c1fa4b91ec`
-- [008 - Deterministic discovery algorithm](008-deterministic-discovery-algorithm.md) L211-L236 `84624d6242d15e27e6b903ebdc42b7935918a5eba15cf76a461c62de46b47ac2`
-- [009 - Validation contract (commands, version parsing, permission checks)](009-validation-contract-commands-version-parsing-permission-checks.md) L238-L278 `675a1d68a43537fdcf86da4308039aaadcca1f068e3883c013fe8a2d372dabe8`
-- [010 - Caching and invalidation](010-caching-and-invalidation.md) L280-L298 `05eb3f980856152b71c4895da363517b72f8244f17b40d769d8b4bb503d06e8a`
-- [011 - Error taxonomy (stable codes)](011-error-taxonomy-stable-codes.md) L300-L320 `931c38414e606bf5f9cb2bbd339fe4d1d4e437ce70f5b2670f9dff9bc8df63dc`
-- [012 - Acceptance criteria (testable)](012-acceptance-criteria-testable.md) L322-L355 `bf8423ed57f39f03c0fe6c39c21c997c73a2d66cbe1ad82362beddb979ec94e8`
-- [013 - References](013-references.md) L357-L369 `ed4c40b4ec9d3d122ade74ceeffc1e89cdab974076d3d0ac562069a80280b36c`
-- [014 - Owner / Consumer Map](014-owner-consumer-map.md) L371-L375 `3015f92f6e76f65cc40ca2ca725946b2fa15a9fd6c0ab503be6b604f07601e57`
-- [015 - PlanUnits](015-planunits.md) L377-L427 `3f62f1309a74f11abc7046bb6d331b617cdd4b8ec2a3a399c8d92853b914e113`
-- [016 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L429-L1696 `2aa461a58aa0c269a9df64da02f64f641e6f089189fc26f2945d2f62c9fd68bc`
-- [017 - Migration Coverage](017-migration-coverage.md) L1698-L1713 `5eb0d2d092a66db19c7939345e39062b6ce0106e7eaf7c7d543ad74384d8e02f`
-- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L1715-L1749 `d3a29bf802c00c8f75469c400570dd63afa2cc652a15d9b41a2f664b99b32c4d`
+- [001 - Preamble](001-preamble.md) L1-L4 `55d1ba420cdcd9085ee661843a20c0a6c870e4a68c1d7e46463015f58b2a082c`
+- [002 - Purpose](002-purpose.md) L7-L8 `079edad33025c84d8eb8f51d7cd73fe2228878d78b36b37b64068206a91c3df7`
+- [003 - Non-goals](003-non-goals.md) L10-L20 `47b0c89930f9ae5e4f1d05247d1753afccc0637a93d72aa1776ea789d353cfcf`
+- [004 - Canonical references and constraints (SSOT; DRY)](004-canonical-references-and-constraints-ssot-dry.md) L22-L63 `cc708a71440f37f3f4ff856a705b44ed72f2e1bd4b2cb9319926dc32e3363bb9`
+- [005 - Terminology (index only)](005-terminology-index-only.md) L65-L70 `67b873da3c6136b855954a260758994c420b48003f613619b493cb3bb2b48f91`
+- [006 - BinaryLocator boundary](006-binarylocator-boundary.md) L72-L110 `ee07a4c9491f3f5fc472885f0e5b8e702c1a654e12d144ca20c889522ded9b79`
+- [007 - Deterministic discovery algorithm](007-deterministic-discovery-algorithm.md) L112-L209 `a3aa253a0e8210e3ce4316cb1341479c431bf8cbf0f1008287f0b8fc6558fab7`
+- [008 - Deterministic discovery algorithm](008-deterministic-discovery-algorithm.md) L211-L236 `8b1647127dff5a6f584faef1ebc643b1bf51766242758f54d38de037b9c8e5c5`
+- [009 - Validation contract (commands, version parsing, permission checks)](009-validation-contract-commands-version-parsing-permission-checks.md) L238-L278 `28808d79d62480c06d80b037213ca6013dfb0a0f0777262fe370bf178e418f36`
+- [010 - Caching and invalidation](010-caching-and-invalidation.md) L280-L298 `58f13207d9eb52b73eda9bd4904c51d7b91b10ca71c67246787c4afc0e1486e7`
+- [011 - Error taxonomy (stable codes)](011-error-taxonomy-stable-codes.md) L300-L320 `54fd0d9d93a5a743dde49dfd78177abaf7b6c31eac0f3fad3e9360d1f61180eb`
+- [012 - Acceptance criteria (testable)](012-acceptance-criteria-testable.md) L322-L355 `e29bba4ce778e0bd3ab3195edbba3547d24072306f28d70628f92230796ae908`
+- [013 - References](013-references.md) L357-L369 `1fbfd3cbf7239e5cbf21569401bde9444d3d3fe612f255ce0dac7f1660baefbc`
+- [014 - Owner / Consumer Map](014-owner-consumer-map.md) L371-L375 `338b1ac8a7bc65c4b3812f2e99adc39c3687bd5dd7364cfe0f03f5b9971d4a52`
+- [015 - PlanUnits](015-planunits.md) L377-L427 `a92531d00991024a91f1174d1f4289076729817d8596564fab56933031e8c4bb`
+- [016 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L429-L1696 `cc0dcf706dd926dffa701eb04f01e054571b3315099503661d44bd9cf4ba242e`
+- [017 - Migration Coverage](017-migration-coverage.md) L1698-L1713 `09afb778c3915c9cd41666e510946852e6dd2f6849e76cd47f14ac9977c5630c`
+- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L1715-L1749 `2d030c8170f8923e5077e4976643d51619071ae09d229304fcacf7d8b8585a38`
+- [019 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1751-L1823 `7de09eed4dad22be615a3aa77f9095c4524165dcfa0332acadfbd6b48bbe7ec5`

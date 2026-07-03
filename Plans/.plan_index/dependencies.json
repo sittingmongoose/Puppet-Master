@@ -3305,9 +3305,89 @@
     "PG-048",
     "BPM-007",
     "0PI-065",
+    "0PI-066",
+    "ACD-432",
+    "AMS-042",
+    "AMS-043",
+    "ATS-021",
+    "ATS-022",
     "BPM-003",
+    "BS-027",
+    "CBP-024",
+    "CBP-025",
+    "CV-306",
+    "CV-307",
+    "CV-308",
+    "EP-110",
+    "EP-111",
+    "EP-112",
+    "EP-113",
+    "F2-195",
+    "F2-196",
+    "F2-197",
+    "F2-198",
+    "F3-412",
+    "F3-413",
+    "F3-414",
+    "F3-415",
+    "F3-416",
+    "GI-034",
+    "GRS-033",
+    "GRS-034",
+    "GRS-035",
+    "GRS-036",
+    "GRS-037",
+    "GRS-038",
+    "GRS-039",
+    "GRS-040",
+    "MA-067",
+    "MGAC-100",
+    "MGAC-101",
+    "MI-032",
+    "MI-033",
+    "MI-034",
+    "MI-035",
+    "MI-036",
+    "MI-037",
+    "MI-038",
+    "MS-123",
+    "MS-124",
+    "MS-125",
+    "MS-126",
+    "MS-127",
+    "MS-128",
+    "MS-129",
+    "MS-130",
+    "MS-131",
+    "MS-132",
+    "MS-133",
+    "PDS-018",
     "PLS-008",
+    "PLS-016",
+    "PLS-017",
+    "PLS-018",
+    "PLUG-063",
     "PNC-002",
+    "PO-050",
+    "PO-051",
+    "PP-059",
+    "PP-060",
+    "PP-061",
+    "PP-062",
+    "PP-063",
+    "PP-064",
+    "PP-065",
+    "PP-066",
+    "PP-067",
+    "PP-068",
+    "PP-069",
+    "PP-070",
+    "PP-071",
+    "PP-072",
+    "PS-127",
+    "PS-128",
+    "PS-129",
+    "PS-130",
     "RAP-004",
     "RAP-005",
     "RAP-009",
@@ -3324,6 +3404,13 @@
     "RM-025",
     "RM-034",
     "RM-043",
+    "RSC-001",
+    "RSC-002",
+    "RSC-003",
+    "RSC-004",
+    "RSC-005",
+    "RSC-006",
+    "RSC-007",
     "RTIM-005",
     "RTIM-006",
     "RTIM-013",
@@ -3344,6 +3431,20 @@
     "SMPFS-109",
     "SMPFS-110",
     "SMPFS-123",
+    "SMPFS-124",
+    "SMPFS-125",
+    "SMPFS-126",
+    "SMPFS-127",
+    "SMPFS-128",
+    "SMPFS-129",
+    "SMPFS-130",
+    "SMPFS-131",
+    "SMPFS-132",
+    "SMPFS-133",
+    "SMPFS-134",
+    "SMPFS-135",
+    "SMPFS-136",
+    "SMPFS-137",
     "SP-002",
     "SP-013",
     "SP-015",
@@ -3526,9 +3627,21 @@
     "SP-210",
     "SP-211",
     "SP-212",
+    "SP-227",
+    "SP-228",
+    "SP-229",
     "SS-003",
     "SS-006",
     "SS-007",
+    "T-167",
+    "T-168",
+    "T-169",
+    "T-170",
+    "T-171",
+    "T-172",
+    "T-173",
+    "T-174",
+    "T-175",
     "UCC-002",
     "UCC-003",
     "UCC-004",
@@ -3683,6 +3796,12 @@
     "UF-071",
     "UF-072",
     "UF-073",
+    "UF-079",
+    "UF-080",
+    "UF-081",
+    "UF-082",
+    "UF-083",
+    "UF-084",
     "W-002",
     "WM-002",
     "WS-002",
@@ -5798,6 +5917,16 @@
     {
       "edge_type": "depends_on",
       "from": "0PI-065",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "0PI-066",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "0PI-066",
       "to": "PNC-001"
     },
     {
@@ -8472,6 +8601,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ACD-432",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-432",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "AI-001",
       "to": "AI-002"
     },
@@ -9142,6 +9281,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "AMS-042",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-042",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-043",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-043",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "ARC-001",
       "to": "ARC-002"
     },
@@ -9777,6 +9936,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "ATS-021",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-021",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-022",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ATS-022",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "BPM-001",
       "to": "PLS-004"
     },
@@ -10109,6 +10288,16 @@
       "edge_type": "depends_on",
       "from": "BS-026",
       "to": "CBP-022"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BS-027",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "BS-027",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -10739,6 +10928,26 @@
       "edge_type": "depends_on",
       "from": "CBP-023",
       "to": "T-166"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CBP-024",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CBP-024",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CBP-025",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CBP-025",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -16172,6 +16381,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-306",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-306",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-307",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-307",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-308",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-308",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -18337,6 +18576,46 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "EP-110",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-110",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-111",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-111",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-112",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-112",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-113",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-113",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "F-067",
       "to": "F-002"
     },
@@ -18439,6 +18718,46 @@
       "edge_type": "depends_on",
       "from": "F2-194",
       "to": "CV-304"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-195",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-195",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-196",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-196",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-197",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-197",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-198",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-198",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -18867,6 +19186,56 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "F3-412",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-412",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-413",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-413",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-414",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-414",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-415",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-415",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-416",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-416",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "G-026",
       "to": "PP-056"
     },
@@ -18924,6 +19293,16 @@
       "edge_type": "depends_on",
       "from": "GI-033",
       "to": "W-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GI-034",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GI-034",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -19264,6 +19643,86 @@
       "edge_type": "depends_on",
       "from": "GRS-032",
       "to": "T-166"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-033",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-033",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-034",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-034",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-035",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-035",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-036",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-036",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-037",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-037",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-038",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-038",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-039",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-039",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-040",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "GRS-040",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -20842,6 +21301,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "MA-067",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-067",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "MGAC-001",
       "to": "MGAC-043"
     },
@@ -21842,6 +22311,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "MGAC-100",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MGAC-100",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MGAC-101",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MGAC-101",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "MI-031",
       "to": "CV-303"
     },
@@ -21864,6 +22353,76 @@
       "edge_type": "depends_on",
       "from": "MI-031",
       "to": "T-166"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-032",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-032",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-033",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-033",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-034",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-034",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-035",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-035",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-036",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-036",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-037",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-037",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-038",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MI-038",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -22514,6 +23073,116 @@
       "edge_type": "depends_on",
       "from": "MS-122",
       "to": "MS-121"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-123",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-123",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-124",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-124",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-125",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-125",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-126",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-126",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-127",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-127",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-128",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-128",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-129",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-129",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-130",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-130",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-131",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-131",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-132",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-132",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-133",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-133",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -29167,6 +29836,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PDS-018",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-018",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PG-001",
       "to": "PG-002"
     },
@@ -29954,6 +30633,36 @@
       "edge_type": "depends_on",
       "from": "PLS-015",
       "to": "PLS-014"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-016",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-016",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-017",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-017",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-018",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-018",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -30834,6 +31543,16 @@
       "edge_type": "depends_on",
       "from": "PLUG-062",
       "to": "PLUG-061"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLUG-063",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLUG-063",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -31909,6 +32628,26 @@
       "edge_type": "depends_on",
       "from": "PO-049",
       "to": "T-165"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PO-050",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PO-050",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PO-051",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PO-051",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -33144,6 +33883,146 @@
       "edge_type": "depends_on",
       "from": "PP-057",
       "to": "CV-299"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-059",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-059",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-060",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-060",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-061",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-061",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-062",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-062",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-063",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-063",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-064",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-064",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-065",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-065",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-066",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-066",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-067",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-067",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-068",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-068",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-069",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-069",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-070",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-070",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-071",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-071",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-072",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-072",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -35029,6 +35908,46 @@
       "edge_type": "depends_on",
       "from": "PS-126",
       "to": "RM-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-127",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-127",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-128",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-128",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-129",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-129",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-130",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PS-130",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -39194,6 +40113,76 @@
       "edge_type": "depends_on",
       "from": "RM-048",
       "to": "RM-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-001",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-001",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-002",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-002",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-003",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-003",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-004",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-004",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-005",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-005",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-006",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-006",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-007",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RSC-007",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -45577,6 +46566,146 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SMPFS-124",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-124",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-125",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-125",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-126",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-126",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-127",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-127",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-128",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-128",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-129",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-129",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-130",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-130",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-131",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-131",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-132",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-132",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-133",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-133",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-134",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-134",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-135",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-135",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-136",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-136",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-137",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SMPFS-137",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SP-001",
       "to": "PDS-003"
     },
@@ -50187,6 +51316,36 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-227",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-227",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-228",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-228",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-229",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-229",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SS-001",
       "to": "SS-002"
     },
@@ -52924,6 +54083,96 @@
       "edge_type": "depends_on",
       "from": "T-166",
       "to": "RM-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-167",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-167",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-168",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-168",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-169",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-169",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-170",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-170",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-171",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-171",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-172",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-172",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-173",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-173",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-174",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-174",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-175",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "T-175",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -57324,6 +58573,66 @@
       "edge_type": "depends_on",
       "from": "UF-076",
       "to": "RAP-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-079",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-079",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-080",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-080",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-081",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-081",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-082",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-082",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-083",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-083",
+      "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-084",
+      "to": "PDS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-084",
+      "to": "PNC-001"
     },
     {
       "edge_type": "depends_on",
@@ -71856,7 +73165,7 @@
       "to": "ATS-020"
     }
   ],
-  "generated_at_utc": "2026-07-03T02:30:34Z",
+  "generated_at_utc": "2026-07-03T20:52:37Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -71868,8 +73177,8 @@
       "source_location": {
         "heading": "0PI-001 - Plans Index Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 712,
-        "line": 714,
+        "heading_line": 713,
+        "line": 715,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -71885,8 +73194,8 @@
       "source_location": {
         "heading": "0PI-002 - Index Authority And Compliance",
         "heading_level": 3,
-        "heading_line": 827,
-        "line": 829,
+        "heading_line": 828,
+        "line": 830,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -71902,8 +73211,8 @@
       "source_location": {
         "heading": "0PI-003 - Change Summary And Index Role",
         "heading_level": 3,
-        "heading_line": 875,
-        "line": 877,
+        "heading_line": 876,
+        "line": 878,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -71919,8 +73228,8 @@
       "source_location": {
         "heading": "0PI-004 - Anti Drift Reading Order",
         "heading_level": 3,
-        "heading_line": 926,
-        "line": 928,
+        "heading_line": 927,
+        "line": 929,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -71936,8 +73245,8 @@
       "source_location": {
         "heading": "0PI-005 - Owner Map Guard And Initial Seams",
         "heading_level": 3,
-        "heading_line": 981,
-        "line": 983,
+        "heading_line": 982,
+        "line": 984,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -71953,8 +73262,8 @@
       "source_location": {
         "heading": "0PI-006 - Owner Map Routing And Stale Consumer Seams",
         "heading_level": 3,
-        "heading_line": 1030,
-        "line": 1032,
+        "heading_line": 1031,
+        "line": 1033,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -71970,8 +73279,8 @@
       "source_location": {
         "heading": "0PI-007 - Owner Map Runtime File Storage Seams",
         "heading_level": 3,
-        "heading_line": 1081,
-        "line": 1083,
+        "heading_line": 1082,
+        "line": 1084,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -71987,8 +73296,8 @@
       "source_location": {
         "heading": "0PI-008 - Owner Map GUI Widget Usage Final Pass Seams",
         "heading_level": 3,
-        "heading_line": 1132,
-        "line": 1134,
+        "heading_line": 1133,
+        "line": 1135,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72004,8 +73313,8 @@
       "source_location": {
         "heading": "0PI-009 - Rewrite Agent Loop Architecture Baseline",
         "heading_level": 3,
-        "heading_line": 1185,
-        "line": 1187,
+        "heading_line": 1186,
+        "line": 1188,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72021,8 +73330,8 @@
       "source_location": {
         "heading": "0PI-010 - Rewrite UI Auth Account Carry Through",
         "heading_level": 3,
-        "heading_line": 1236,
-        "line": 1238,
+        "heading_line": 1237,
+        "line": 1239,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72038,8 +73347,8 @@
       "source_location": {
         "heading": "0PI-011 - Provider Account Owner Split",
         "heading_level": 3,
-        "heading_line": 1296,
-        "line": 1298,
+        "heading_line": 1297,
+        "line": 1299,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72055,8 +73364,8 @@
       "source_location": {
         "heading": "0PI-012 - PM Planning And Node Readiness Owner Split",
         "heading_level": 3,
-        "heading_line": 1347,
-        "line": 1349,
+        "heading_line": 1348,
+        "line": 1350,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72072,8 +73381,8 @@
       "source_location": {
         "heading": "0PI-013 - Instant Grep Live Canon Map",
         "heading_level": 3,
-        "heading_line": 1399,
-        "line": 1401,
+        "heading_line": 1400,
+        "line": 1402,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72089,8 +73398,8 @@
       "source_location": {
         "heading": "0PI-014 - Instant Grep Owner Split",
         "heading_level": 3,
-        "heading_line": 1448,
-        "line": 1450,
+        "heading_line": 1449,
+        "line": 1451,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72106,8 +73415,8 @@
       "source_location": {
         "heading": "0PI-015 - Browser Owner Split",
         "heading_level": 3,
-        "heading_line": 1497,
-        "line": 1499,
+        "heading_line": 1498,
+        "line": 1500,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72123,8 +73432,8 @@
       "source_location": {
         "heading": "0PI-016 - Browser Stale Cleanup And Consumer Map",
         "heading_level": 3,
-        "heading_line": 1550,
-        "line": 1552,
+        "heading_line": 1551,
+        "line": 1553,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72140,8 +73449,8 @@
       "source_location": {
         "heading": "0PI-017 - Slash Chat SSOT Boundary",
         "heading_level": 3,
-        "heading_line": 1602,
-        "line": 1604,
+        "heading_line": 1603,
+        "line": 1605,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72157,8 +73466,8 @@
       "source_location": {
         "heading": "0PI-018 - Slash Chat Scope And Drift Risks",
         "heading_level": 3,
-        "heading_line": 1653,
-        "line": 1655,
+        "heading_line": 1654,
+        "line": 1656,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72174,8 +73483,8 @@
       "source_location": {
         "heading": "0PI-019 - Artifact HITL Tool Owner Split",
         "heading_level": 3,
-        "heading_line": 1705,
-        "line": 1707,
+        "heading_line": 1706,
+        "line": 1708,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72191,8 +73500,8 @@
       "source_location": {
         "heading": "0PI-020 - Approval Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 1756,
-        "line": 1758,
+        "heading_line": 1757,
+        "line": 1759,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72208,8 +73517,8 @@
       "source_location": {
         "heading": "0PI-021 - Terminal Ownership Map",
         "heading_level": 3,
-        "heading_line": 1805,
-        "line": 1807,
+        "heading_line": 1806,
+        "line": 1808,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72225,8 +73534,8 @@
       "source_location": {
         "heading": "0PI-022 - File Manager Editor Owner Posture",
         "heading_level": 3,
-        "heading_line": 1858,
-        "line": 1860,
+        "heading_line": 1859,
+        "line": 1861,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72242,8 +73551,8 @@
       "source_location": {
         "heading": "0PI-023 - File Manager Editor Packetization Gates",
         "heading_level": 3,
-        "heading_line": 1908,
-        "line": 1910,
+        "heading_line": 1909,
+        "line": 1911,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72259,8 +73568,8 @@
       "source_location": {
         "heading": "0PI-024 - GUI Worktree And Source Control Handoff",
         "heading_level": 3,
-        "heading_line": 1961,
-        "line": 1963,
+        "heading_line": 1962,
+        "line": 1964,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72276,8 +73585,8 @@
       "source_location": {
         "heading": "0PI-025 - Debug Ownership And Packet Coupling",
         "heading_level": 3,
-        "heading_line": 2014,
-        "line": 2016,
+        "heading_line": 2015,
+        "line": 2017,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72293,8 +73602,8 @@
       "source_location": {
         "heading": "0PI-026 - Plan Map Table Core UX Owners",
         "heading_level": 3,
-        "heading_line": 2068,
-        "line": 2070,
+        "heading_line": 2069,
+        "line": 2071,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72310,8 +73619,8 @@
       "source_location": {
         "heading": "0PI-027 - Plan Map Table Planning Runtime Artifacts",
         "heading_level": 3,
-        "heading_line": 2120,
-        "line": 2122,
+        "heading_line": 2121,
+        "line": 2123,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72327,8 +73636,8 @@
       "source_location": {
         "heading": "0PI-028 - Plan Map Table Widgets Config Media Wiring",
         "heading_level": 3,
-        "heading_line": 2179,
-        "line": 2181,
+        "heading_line": 2180,
+        "line": 2182,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72344,8 +73653,8 @@
       "source_location": {
         "heading": "0PI-029 - Instant Grep Sparse N Gram Owner Split",
         "heading_level": 3,
-        "heading_line": 2240,
-        "line": 2242,
+        "heading_line": 2241,
+        "line": 2243,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72361,8 +73670,8 @@
       "source_location": {
         "heading": "0PI-030 - Cross-Cutting Backend Duplication Hotspots",
         "heading_level": 3,
-        "heading_line": 2292,
-        "line": 2294,
+        "heading_line": 2293,
+        "line": 2295,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72378,8 +73687,8 @@
       "source_location": {
         "heading": "0PI-031 - Context Lens UI Hotspot",
         "heading_level": 3,
-        "heading_line": 2349,
-        "line": 2351,
+        "heading_line": 2350,
+        "line": 2352,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72395,8 +73704,8 @@
       "source_location": {
         "heading": "0PI-032 - Rewrite-Era Owner Guidance",
         "heading_level": 3,
-        "heading_line": 2398,
-        "line": 2400,
+        "heading_line": 2399,
+        "line": 2401,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72412,8 +73721,8 @@
       "source_location": {
         "heading": "0PI-033 - Shard Governance Boundaries",
         "heading_level": 3,
-        "heading_line": 2449,
-        "line": 2451,
+        "heading_line": 2450,
+        "line": 2452,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72429,8 +73738,8 @@
       "source_location": {
         "heading": "0PI-034 - Shard Index Routing Table",
         "heading_level": 3,
-        "heading_line": 2506,
-        "line": 2508,
+        "heading_line": 2507,
+        "line": 2509,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72446,8 +73755,8 @@
       "source_location": {
         "heading": "0PI-035 - Containers Registry Unraid Owner Scope",
         "heading_level": 3,
-        "heading_line": 2562,
-        "line": 2564,
+        "heading_line": 2563,
+        "line": 2565,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72463,8 +73772,8 @@
       "source_location": {
         "heading": "0PI-036 - Docker Manager Auth UX Routing",
         "heading_level": 3,
-        "heading_line": 2616,
-        "line": 2618,
+        "heading_line": 2617,
+        "line": 2619,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72480,8 +73789,8 @@
       "source_location": {
         "heading": "0PI-037 - Runtime Packet Owner Routing",
         "heading_level": 3,
-        "heading_line": 2666,
-        "line": 2668,
+        "heading_line": 2667,
+        "line": 2669,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72497,8 +73806,8 @@
       "source_location": {
         "heading": "0PI-038 - Runtime Rendering And Blocked UX",
         "heading_level": 3,
-        "heading_line": 2722,
-        "line": 2724,
+        "heading_line": 2723,
+        "line": 2725,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72514,8 +73823,8 @@
       "source_location": {
         "heading": "0PI-039 - Source Control Actions Docker Owner Split",
         "heading_level": 3,
-        "heading_line": 2776,
-        "line": 2778,
+        "heading_line": 2777,
+        "line": 2779,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72531,8 +73840,8 @@
       "source_location": {
         "heading": "0PI-040 - Visible Source-Control Surface Routing",
         "heading_level": 3,
-        "heading_line": 2832,
-        "line": 2834,
+        "heading_line": 2833,
+        "line": 2835,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72548,8 +73857,8 @@
       "source_location": {
         "heading": "0PI-041 - Retired Git Alias And Stale-Canon Risk",
         "heading_level": 3,
-        "heading_line": 2896,
-        "line": 2898,
+        "heading_line": 2897,
+        "line": 2899,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72565,8 +73874,8 @@
       "source_location": {
         "heading": "0PI-042 - Web Firecrawl Owner Set",
         "heading_level": 3,
-        "heading_line": 2951,
-        "line": 2953,
+        "heading_line": 2952,
+        "line": 2954,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72582,8 +73891,8 @@
       "source_location": {
         "heading": "0PI-043 - Firecrawl Consumer Deference And Anchors",
         "heading_level": 3,
-        "heading_line": 3022,
-        "line": 3024,
+        "heading_line": 3023,
+        "line": 3025,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72599,8 +73908,8 @@
       "source_location": {
         "heading": "0PI-044 - Firecrawl Obligation Routing",
         "heading_level": 3,
-        "heading_line": 3094,
-        "line": 3096,
+        "heading_line": 3095,
+        "line": 3097,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72616,8 +73925,8 @@
       "source_location": {
         "heading": "0PI-045 - Slash And Provider Drift Guards",
         "heading_level": 3,
-        "heading_line": 3166,
-        "line": 3168,
+        "heading_line": 3167,
+        "line": 3169,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72633,8 +73942,8 @@
       "source_location": {
         "heading": "0PI-046 - Firecrawl Packet-Conflict Reset Scope",
         "heading_level": 3,
-        "heading_line": 3232,
-        "line": 3234,
+        "heading_line": 3233,
+        "line": 3235,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72650,8 +73959,8 @@
       "source_location": {
         "heading": "0PI-047 - Reset Operation Constraints",
         "heading_level": 3,
-        "heading_line": 3296,
-        "line": 3298,
+        "heading_line": 3297,
+        "line": 3299,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72667,8 +73976,8 @@
       "source_location": {
         "heading": "0PI-048 - Legacy Fidelity Traceability",
         "heading_level": 3,
-        "heading_line": 3368,
-        "line": 3370,
+        "heading_line": 3369,
+        "line": 3371,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72684,8 +73993,8 @@
       "source_location": {
         "heading": "0PI-049 - Additional Fidelity And Webmap Guard",
         "heading_level": 3,
-        "heading_line": 3441,
-        "line": 3443,
+        "heading_line": 3442,
+        "line": 3444,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72701,8 +74010,8 @@
       "source_location": {
         "heading": "0PI-050 - A2A OpenCode Packet Boundary",
         "heading_level": 3,
-        "heading_line": 3513,
-        "line": 3515,
+        "heading_line": 3514,
+        "line": 3516,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72718,8 +74027,8 @@
       "source_location": {
         "heading": "0PI-051 - A2A Impacted-Doc Taxonomy",
         "heading_level": 3,
-        "heading_line": 3574,
-        "line": 3576,
+        "heading_line": 3575,
+        "line": 3577,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72735,8 +74044,8 @@
       "source_location": {
         "heading": "0PI-052 - A2A Cleanup And Final Narrowing",
         "heading_level": 3,
-        "heading_line": 3649,
-        "line": 3651,
+        "heading_line": 3650,
+        "line": 3652,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72752,8 +74061,8 @@
       "source_location": {
         "heading": "0PI-053 - A2A Evidence And Anchor Exactness",
         "heading_level": 3,
-        "heading_line": 3717,
-        "line": 3719,
+        "heading_line": 3718,
+        "line": 3720,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72769,8 +74078,8 @@
       "source_location": {
         "heading": "0PI-054 - Standardization Owner Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 3795,
-        "line": 3797,
+        "heading_line": 3796,
+        "line": 3798,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72786,8 +74095,8 @@
       "source_location": {
         "heading": "0PI-055 - Goal Runtime System Owner Map",
         "heading_level": 3,
-        "heading_line": 3847,
-        "line": 3849,
+        "heading_line": 3848,
+        "line": 3850,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72803,8 +74112,8 @@
       "source_location": {
         "heading": "0PI-056 - Orchestrator Goal Runtime Flow Owner Map",
         "heading_level": 3,
-        "heading_line": 3936,
-        "line": 3938,
+        "heading_line": 3937,
+        "line": 3939,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72820,8 +74129,8 @@
       "source_location": {
         "heading": "0PI-057 - Semantic Audit Closure Owner Map",
         "heading_level": 3,
-        "heading_line": 4071,
-        "line": 4073,
+        "heading_line": 4072,
+        "line": 4074,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72837,8 +74146,8 @@
       "source_location": {
         "heading": "0PI-058 - Plans-To-Code Handoff Owner Map",
         "heading_level": 3,
-        "heading_line": 4160,
-        "line": 4162,
+        "heading_line": 4161,
+        "line": 4163,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72854,8 +74163,8 @@
       "source_location": {
         "heading": "0PI-059 - PRD Builder And Planning Wizard Owner Map",
         "heading_level": 3,
-        "heading_line": 4281,
-        "line": 4283,
+        "heading_line": 4282,
+        "line": 4284,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72871,8 +74180,8 @@
       "source_location": {
         "heading": "Native Discovery Owner Map (2026-06-22)",
         "heading_level": 3,
-        "heading_line": 4382,
-        "line": 4393,
+        "heading_line": 4383,
+        "line": 4394,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72888,8 +74197,8 @@
       "source_location": {
         "heading": "0PI-061 - Provider Updates Owner Map And Retired Gemini CLI Anchor",
         "heading_level": 3,
-        "heading_line": 4475,
-        "line": 4477,
+        "heading_line": 4476,
+        "line": 4478,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72905,8 +74214,8 @@
       "source_location": {
         "heading": "0PI-062 - Miscellaneous History Vision Bridge Teach Owner Map",
         "heading_level": 3,
-        "heading_line": 4555,
-        "line": 4557,
+        "heading_line": 4556,
+        "line": 4558,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72922,8 +74231,8 @@
       "source_location": {
         "heading": "0PI-063 - Miscellaneous Feature Intake Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 4764,
-        "line": 4766,
+        "heading_line": 4765,
+        "line": 4767,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72939,8 +74248,8 @@
       "source_location": {
         "heading": "0PI-064 - Free Models Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 4848,
-        "line": 4850,
+        "heading_line": 4849,
+        "line": 4851,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
@@ -72956,12 +74265,29 @@
       "source_location": {
         "heading": "0PI-065 - Containerized Hosts Compile Owner Map",
         "heading_level": 3,
-        "heading_line": 4911,
-        "line": 4913,
+        "heading_line": 4912,
+        "line": 4914,
         "path": "Plans/00-plans-index.md"
       },
       "status": "accepted",
       "unit_type": "owner_map"
+    },
+    {
+      "context_scope": "external_repo_system_wide_compile_owner_map",
+      "gui_related": false,
+      "owner_doc": "Plans/00-plans-index.md",
+      "plan_unit_id": "0PI-066",
+      "reasoning_tier": "high",
+      "risk_class": "owner_map_drift",
+      "source_location": {
+        "heading": "0PI-066 - 0PI-066",
+        "heading_level": 3,
+        "heading_line": 5009,
+        "line": 5011,
+        "path": "Plans/00-plans-index.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "plan_standardization",
@@ -80291,6 +81617,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "multimodal_and_attachments",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-432",
+      "reasoning_tier": "high",
+      "risk_class": "p0_multimodal_and_attachments_hardening",
+      "source_location": {
+        "heading": "ACD-432 - P0-SESSION-DRAFT-ATTACHMENT-ISOLATION",
+        "heading_level": 3,
+        "heading_line": 23294,
+        "line": 23296,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Architecture_Invariants.md",
@@ -82127,6 +83470,40 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "agent_control_subagents",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-042",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_agent_control_subagents_hardening",
+      "source_location": {
+        "heading": "AMS-042 - P1-MEMORY-TIERING-CONTRACT",
+        "heading_level": 3,
+        "heading_line": 2350,
+        "line": 2352,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "agent_control_subagents",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-memory-subsystem.md",
+      "plan_unit_id": "AMS-043",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_agent_control_subagents_hardening",
+      "source_location": {
+        "heading": "AMS-043 - P1-MEMORY-STORE-CRUD-VERSION-CITATIONS",
+        "heading_level": 3,
+        "heading_line": 2436,
+        "line": 2438,
+        "path": "Plans/assistant-memory-subsystem.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/agent-rules-context.md",
@@ -83079,6 +84456,40 @@
       "unit_type": "validation_criterion"
     },
     {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-021",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_terminal_runtime_coverage",
+      "source_location": {
+        "heading": "ATS-021 - P2-TRANSPORT-SOAK-TESTS",
+        "heading_level": 3,
+        "heading_line": 1655,
+        "line": 1657,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "plan_unit_id": "ATS-022",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "ATS-022 - P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS",
+        "heading_level": 3,
+        "heading_line": 1714,
+        "line": 1716,
+        "path": "Plans/Automated_Testing_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "repo_agents",
       "gui_related": false,
       "owner_doc": "Plans/Bootstrap_Planning_Migration.md",
@@ -83651,6 +85062,23 @@
         "heading_level": 3,
         "heading_line": 433,
         "line": 435,
+        "path": "Plans/BinaryLocator_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cross_system_runtime_contracts",
+      "gui_related": true,
+      "owner_doc": "Plans/BinaryLocator_Spec.md",
+      "plan_unit_id": "BS-027",
+      "reasoning_tier": "high",
+      "risk_class": "p0_cross_system_runtime_contracts_hardening",
+      "source_location": {
+        "heading": "BS-027 - desktop_version_handshake",
+        "heading_level": 3,
+        "heading_line": 1755,
+        "line": 1757,
         "path": "Plans/BinaryLocator_Spec.md"
       },
       "status": "accepted",
@@ -84896,6 +86324,40 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cross_system_runtime_contracts",
+      "gui_related": true,
+      "owner_doc": "Plans/CLI_Bridged_Providers.md",
+      "plan_unit_id": "CBP-024",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_cross_system_runtime_contracts_hardening",
+      "source_location": {
+        "heading": "CBP-024 - P1-CLI-BRIDGE-PROTOCOL-HANDSHAKE",
+        "heading_level": 3,
+        "heading_line": 1320,
+        "line": 1322,
+        "path": "Plans/CLI_Bridged_Providers.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "import_guardrail",
+      "gui_related": false,
+      "owner_doc": "Plans/CLI_Bridged_Providers.md",
+      "plan_unit_id": "CBP-025",
+      "reasoning_tier": "standard",
+      "risk_class": "external_repo_guardrail",
+      "source_location": {
+        "heading": "CBP-025 - CBP-025",
+        "heading_level": 3,
+        "heading_line": 1400,
+        "line": 1402,
+        "path": "Plans/CLI_Bridged_Providers.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
     },
     {
       "context_scope": "plan_standardization",
@@ -92548,6 +94010,57 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-306",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "CV-306 - P0-WEBSOCKET-SECURITY-BOUNDARIES",
+        "heading_level": 3,
+        "heading_line": 19120,
+        "line": 19122,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-307",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "CV-307 - P0-RUNTIME-SURFACE-READINESS-PROBE",
+        "heading_level": 3,
+        "heading_line": 19190,
+        "line": 19192,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cross_system_runtime_contracts",
+      "gui_related": true,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-308",
+      "reasoning_tier": "high",
+      "risk_class": "p0_cross_system_runtime_contracts_hardening",
+      "source_location": {
+        "heading": "CV-308 - prompt_admission_execution",
+        "heading_level": 3,
+        "heading_line": 19255,
+        "line": 19257,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/chain-wizard.md",
@@ -99756,6 +101269,74 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "transport_websocket_streaming",
+      "gui_related": true,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-110",
+      "reasoning_tier": "high",
+      "risk_class": "p0_transport_websocket_streaming_hardening",
+      "source_location": {
+        "heading": "EP-110 - P0-STREAM-HISTORY-COALESCER",
+        "heading_level": 3,
+        "heading_line": 6605,
+        "line": 6607,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "transport_websocket_streaming",
+      "gui_related": true,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-111",
+      "reasoning_tier": "high",
+      "risk_class": "p0_transport_websocket_streaming_hardening",
+      "source_location": {
+        "heading": "EP-111 - P0-WEBSOCKET-TRANSPORT-POLICY",
+        "heading_level": 3,
+        "heading_line": 6677,
+        "line": 6679,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "transport_websocket_streaming",
+      "gui_related": true,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-112",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_transport_websocket_streaming_hardening",
+      "source_location": {
+        "heading": "EP-112 - P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS",
+        "heading_level": 3,
+        "heading_line": 6750,
+        "line": 6752,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "transport_websocket_streaming",
+      "gui_related": false,
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "plan_unit_id": "EP-113",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_transport_websocket_streaming_hardening",
+      "source_location": {
+        "heading": "EP-113 - P1-STREAM-HISTORY-COALESCER-REPLAY",
+        "heading_level": 3,
+        "heading_line": 6819,
+        "line": 6821,
+        "path": "Plans/Executor_Protocol.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/FileManager.md",
@@ -104272,6 +105853,74 @@
         "heading_level": 3,
         "heading_line": 13421,
         "line": 13423,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-195",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "F2-195 - P1-SECURITY-CREDENTIAL-LOGGING",
+        "heading_level": 3,
+        "heading_line": 13510,
+        "line": 13512,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "memory_history_logging",
+      "gui_related": false,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-196",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_memory_history_logging_hardening",
+      "source_location": {
+        "heading": "F2-196 - P1-TRACE-REDACTION-BEFORE-WRITE",
+        "heading_level": 3,
+        "heading_line": 13591,
+        "line": 13593,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "memory_history_logging",
+      "gui_related": true,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-197",
+      "reasoning_tier": "high",
+      "risk_class": "p0_memory_history_logging_hardening",
+      "source_location": {
+        "heading": "F2-197 - P0-LOG-REDACTION-BEFORE-WRITE",
+        "heading_level": 3,
+        "heading_line": 13664,
+        "line": 13666,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": true,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-198",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_security_release_supply_chain_hardening",
+      "source_location": {
+        "heading": "F2-198 - filesystem_boundary_regressions",
+        "heading_level": 3,
+        "heading_line": 13756,
+        "line": 13758,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -111265,6 +112914,91 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-412",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "F3-412 - P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION",
+        "heading_level": 3,
+        "heading_line": 26674,
+        "line": 26676,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ui_projection_and_hard_gates",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-413",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_ui_projection_and_hard_gates_coverage",
+      "source_location": {
+        "heading": "F3-413 - P2-GUI-NOT-CLI-CONTROL-PLANE",
+        "heading_level": 3,
+        "heading_line": 26752,
+        "line": 26754,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-414",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_terminal_runtime_coverage",
+      "source_location": {
+        "heading": "F3-414 - P2-RICH-TEXT-RENDERING-FIDELITY",
+        "heading_level": 3,
+        "heading_line": 26830,
+        "line": 26832,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ui_projection_and_hard_gates",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-415",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_ui_projection_and_hard_gates_hardening",
+      "source_location": {
+        "heading": "F3-415 - P1-UI-HARD-GATE-ENFORCER",
+        "heading_level": 3,
+        "heading_line": 26902,
+        "line": 26904,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "ui_projection_and_hard_gates",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-416",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_ui_projection_and_hard_gates_hardening",
+      "source_location": {
+        "heading": "F3-416 - P1-UI-PROJECTION-STORE-BUDGET",
+        "heading_level": 3,
+        "heading_line": 26975,
+        "line": 26977,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/feature-list.md",
@@ -113169,6 +114903,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": true,
+      "owner_doc": "Plans/GitHub_Integration.md",
+      "plan_unit_id": "GI-034",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_security_release_supply_chain_hardening",
+      "source_location": {
+        "heading": "GI-034 - github_update_workflow",
+        "heading_level": 3,
+        "heading_line": 1995,
+        "line": 1997,
+        "path": "Plans/GitHub_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/GUI_Rebuild_Requirements_Checklist.md",
@@ -114221,6 +115972,142 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "agent_control_subagents",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-033",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_agent_control_subagents_hardening",
+      "source_location": {
+        "heading": "GRS-033 - P1-AGENT-FOCUS-WATCHDOG",
+        "heading_level": 3,
+        "heading_line": 2354,
+        "line": 2356,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-034",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "GRS-034 - P1-INTERRUPT-CANCEL-SETTLEMENT",
+        "heading_level": 3,
+        "heading_line": 2432,
+        "line": 2434,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "agent_control_subagents",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-035",
+      "reasoning_tier": "high",
+      "risk_class": "p0_agent_control_subagents_hardening",
+      "source_location": {
+        "heading": "GRS-035 - P0-AGENT-CONTROL-PLANE-ENVELOPE",
+        "heading_level": 3,
+        "heading_line": 2511,
+        "line": 2513,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-036",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "GRS-036 - P0-SUBAGENT-EXECUTION-CONTRACT",
+        "heading_level": 3,
+        "heading_line": 2608,
+        "line": 2610,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "agent_control_subagents",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-037",
+      "reasoning_tier": "high",
+      "risk_class": "p0_agent_control_subagents_hardening",
+      "source_location": {
+        "heading": "GRS-037 - P0-LOOP-BREAKER-TAXONOMY",
+        "heading_level": 3,
+        "heading_line": 2698,
+        "line": 2700,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "agent_control_subagents",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-038",
+      "reasoning_tier": "high",
+      "risk_class": "p0_agent_control_subagents_hardening",
+      "source_location": {
+        "heading": "GRS-038 - P0-GOAL-SCOPE-SUBAGENT-ISOLATION",
+        "heading_level": 3,
+        "heading_line": 2790,
+        "line": 2792,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "agent_control_subagents",
+      "gui_related": true,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-039",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_agent_control_subagents_hardening",
+      "source_location": {
+        "heading": "GRS-039 - P1-EXTERNAL-AGENT-HANDOFF-IMPORT",
+        "heading_level": 3,
+        "heading_line": 2865,
+        "line": 2867,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "import_guardrail",
+      "gui_related": false,
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "plan_unit_id": "GRS-040",
+      "reasoning_tier": "standard",
+      "risk_class": "import_guardrail_compile",
+      "source_location": {
+        "heading": "GRS-040 - GRS-040",
+        "heading_level": 3,
+        "heading_line": 2938,
+        "line": 2940,
+        "path": "Plans/Goal_Runtime_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -119561,6 +121448,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": false,
+      "owner_doc": "Plans/Multi-Account.md",
+      "plan_unit_id": "MA-067",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MA-067 - P0-CREDENTIAL-ROUTE-EPOCH",
+        "heading_level": 3,
+        "heading_line": 4953,
+        "line": 4955,
+        "path": "Plans/Multi-Account.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
@@ -121244,6 +123148,40 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "multimodal_and_attachments",
+      "gui_related": true,
+      "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
+      "plan_unit_id": "MGAC-100",
+      "reasoning_tier": "high",
+      "risk_class": "p0_multimodal_and_attachments_hardening",
+      "source_location": {
+        "heading": "MGAC-100 - P0-MULTIMODAL-INPUT-SETTLEMENT",
+        "heading_level": 3,
+        "heading_line": 6400,
+        "line": 6402,
+        "path": "Plans/Media_Generation_and_Capabilities.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": true,
+      "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
+      "plan_unit_id": "MGAC-101",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_security_release_supply_chain_hardening",
+      "source_location": {
+        "heading": "MGAC-101 - P1-MULTIMODAL-FALLBACK-TRANSCRIPTION-POLICY",
+        "heading_level": 3,
+        "heading_line": 6489,
+        "line": 6491,
+        "path": "Plans/Media_Generation_and_Capabilities.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/MCP_Integration.md",
@@ -121765,6 +123703,125 @@
         "heading_level": 3,
         "heading_line": 248,
         "line": 250,
+        "path": "Plans/MCP_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": false,
+      "owner_doc": "Plans/MCP_Integration.md",
+      "plan_unit_id": "MI-032",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "MI-032 - P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT",
+        "heading_level": 3,
+        "heading_line": 1998,
+        "line": 2000,
+        "path": "Plans/MCP_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "owner_doc": "Plans/MCP_Integration.md",
+      "plan_unit_id": "MI-033",
+      "reasoning_tier": "high",
+      "risk_class": "p0_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "MI-033 - P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH",
+        "heading_level": 3,
+        "heading_line": 2081,
+        "line": 2083,
+        "path": "Plans/MCP_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": false,
+      "owner_doc": "Plans/MCP_Integration.md",
+      "plan_unit_id": "MI-034",
+      "reasoning_tier": "high",
+      "risk_class": "p0_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "MI-034 - P0-MCP-TYPED-PARAM-FIDELITY",
+        "heading_level": 3,
+        "heading_line": 2160,
+        "line": 2162,
+        "path": "Plans/MCP_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/MCP_Integration.md",
+      "plan_unit_id": "MI-035",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "MI-035 - P1-MCP-HEADER-SECRET-HOOKS",
+        "heading_level": 3,
+        "heading_line": 2237,
+        "line": 2239,
+        "path": "Plans/MCP_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": false,
+      "owner_doc": "Plans/MCP_Integration.md",
+      "plan_unit_id": "MI-036",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_context_cache_hardening",
+      "source_location": {
+        "heading": "MI-036 - P1-MCP-TOOL-CATALOG-CACHE",
+        "heading_level": 3,
+        "heading_line": 2314,
+        "line": 2316,
+        "path": "Plans/MCP_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/MCP_Integration.md",
+      "plan_unit_id": "MI-037",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "MI-037 - P0-MCP-LIFECYCLE-RUNTIME-LIVENESS",
+        "heading_level": 3,
+        "heading_line": 2383,
+        "line": 2385,
+        "path": "Plans/MCP_Integration.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": false,
+      "owner_doc": "Plans/MCP_Integration.md",
+      "plan_unit_id": "MI-038",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "MI-038 - mcp_lazy_tool_exposure",
+        "heading_level": 3,
+        "heading_line": 2448,
+        "line": 2450,
         "path": "Plans/MCP_Integration.md"
       },
       "status": "accepted",
@@ -123839,6 +125896,193 @@
         "heading_level": 3,
         "heading_line": 8226,
         "line": 8228,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-123",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-123 - P0-PROVIDER-METADATA-REPLAY",
+        "heading_level": 3,
+        "heading_line": 8378,
+        "line": 8380,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": false,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-124",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-124 - P0-PROVIDER-CAPABILITY-EPOCH",
+        "heading_level": 3,
+        "heading_line": 8463,
+        "line": 8465,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-125",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-125 - P0-REASONING-REPLAY-MATRIX",
+        "heading_level": 3,
+        "heading_line": 8544,
+        "line": 8546,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-126",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-126 - P0-EFFORT-POLICY-SETTLEMENT",
+        "heading_level": 3,
+        "heading_line": 8623,
+        "line": 8625,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-127",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-127 - P0-PROVIDER-CAPABILITY-EPOCH-2",
+        "heading_level": 3,
+        "heading_line": 8710,
+        "line": 8712,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-128",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-128 - P1-MODEL-SELECTION-ROUTER",
+        "heading_level": 3,
+        "heading_line": 8796,
+        "line": 8798,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-129",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_provider_capability_and_metadata_coverage",
+      "source_location": {
+        "heading": "MS-129 - P2-MODEL-CATALOG-CONFIDENCE-UI",
+        "heading_level": 3,
+        "heading_line": 8877,
+        "line": 8879,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-130",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-130 - P0-ENTITLEMENT-QUOTA-SETTLEMENT",
+        "heading_level": 3,
+        "heading_line": 8956,
+        "line": 8958,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": false,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-131",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-131 - provider_policy",
+        "heading_level": 3,
+        "heading_line": 9029,
+        "line": 9031,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-132",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-132 - provider_metadata_replay",
+        "heading_level": 3,
+        "heading_line": 9099,
+        "line": 9101,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": false,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-133",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "MS-133 - provider_error_observability",
+        "heading_level": 3,
+        "heading_line": 9167,
+        "line": 9169,
         "path": "Plans/Models_System.md"
       },
       "status": "accepted",
@@ -137063,8 +139307,8 @@
       "source_location": {
         "heading": "PDS-004 - Lossless Plan Conversion Protocol",
         "heading_level": 3,
-        "heading_line": 180,
-        "line": 182,
+        "heading_line": 181,
+        "line": 183,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137080,8 +139324,8 @@
       "source_location": {
         "heading": "PDS-005 - Owner Adjudication In PlanUnits",
         "heading_level": 3,
-        "heading_line": 217,
-        "line": 219,
+        "heading_line": 218,
+        "line": 220,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137097,8 +139341,8 @@
       "source_location": {
         "heading": "PDS-006 - Generated PlanUnit Index Boundary",
         "heading_level": 3,
-        "heading_line": 252,
-        "line": 254,
+        "heading_line": 253,
+        "line": 255,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137114,8 +139358,8 @@
       "source_location": {
         "heading": "PDS-007 - GUI Classification Field And Native Setting Surface",
         "heading_level": 3,
-        "heading_line": 296,
-        "line": 298,
+        "heading_line": 297,
+        "line": 299,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137131,8 +139375,8 @@
       "source_location": {
         "heading": "PDS-008 - PlanUnit Block Grammar And Field Semantics",
         "heading_level": 3,
-        "heading_line": 336,
-        "line": 338,
+        "heading_line": 338,
+        "line": 340,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137148,8 +139392,8 @@
       "source_location": {
         "heading": "PDS-009 - Standard Plan Document Layout Contract",
         "heading_level": 3,
-        "heading_line": 371,
-        "line": 373,
+        "heading_line": 373,
+        "line": 375,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137165,8 +139409,8 @@
       "source_location": {
         "heading": "PDS-010 - Lossless Migration Artifact Contract",
         "heading_level": 3,
-        "heading_line": 407,
-        "line": 409,
+        "heading_line": 409,
+        "line": 411,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137182,8 +139426,8 @@
       "source_location": {
         "heading": "PDS-011 - Plan Authoring Profiles",
         "heading_level": 3,
-        "heading_line": 450,
-        "line": 452,
+        "heading_line": 452,
+        "line": 454,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137199,8 +139443,8 @@
       "source_location": {
         "heading": "PDS-012 - New Plan Authoring Base Layout",
         "heading_level": 3,
-        "heading_line": 485,
-        "line": 487,
+        "heading_line": 487,
+        "line": 489,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137216,8 +139460,8 @@
       "source_location": {
         "heading": "PDS-013 - New Plan Layout Validation Boundary",
         "heading_level": 3,
-        "heading_line": 525,
-        "line": 527,
+        "heading_line": 527,
+        "line": 529,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137233,8 +139477,8 @@
       "source_location": {
         "heading": "PDS-014 - Semantic Finding Key And Closure Matrix Validator",
         "heading_level": 3,
-        "heading_line": 560,
-        "line": 562,
+        "heading_line": 562,
+        "line": 564,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137250,8 +139494,8 @@
       "source_location": {
         "heading": "PDS-015 - Owner Consumer Reference Scan Gate",
         "heading_level": 3,
-        "heading_line": 715,
-        "line": 717,
+        "heading_line": 717,
+        "line": 719,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137267,8 +139511,8 @@
       "source_location": {
         "heading": "PDS-016 - Planning Implementation Readiness And Claim Traceability",
         "heading_level": 3,
-        "heading_line": 793,
-        "line": 795,
+        "heading_line": 795,
+        "line": 797,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -137284,8 +139528,25 @@
       "source_location": {
         "heading": "PDS-017 - Retired Compatibility Retrieval Exclusion",
         "heading_level": 3,
-        "heading_line": 900,
-        "line": 902,
+        "heading_line": 902,
+        "line": 904,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "import_guardrail",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-018",
+      "reasoning_tier": "high",
+      "risk_class": "import_guardrail_compile",
+      "source_location": {
+        "heading": "PDS-018 - PDS-018",
+        "heading_level": 3,
+        "heading_line": 958,
+        "line": 960,
         "path": "Plans/Plan_Document_System.md"
       },
       "status": "accepted",
@@ -138321,8 +140582,8 @@
       "source_location": {
         "heading": "PLS-002 - Bootstrap And Native Incarnations",
         "heading_level": 3,
-        "heading_line": 67,
-        "line": 69,
+        "heading_line": 68,
+        "line": 70,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138338,8 +140599,8 @@
       "source_location": {
         "heading": "PLS-003 - Machine-First Bootstrap Record Set",
         "heading_level": 3,
-        "heading_line": 103,
-        "line": 105,
+        "heading_line": 104,
+        "line": 106,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138355,8 +140616,8 @@
       "source_location": {
         "heading": "PLS-004 - Compact Operating Surface",
         "heading_level": 3,
-        "heading_line": 142,
-        "line": 144,
+        "heading_line": 143,
+        "line": 145,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138372,8 +140633,8 @@
       "source_location": {
         "heading": "PLS-005 - Design Atom Lifecycle And Exact Preservation",
         "heading_level": 3,
-        "heading_line": 177,
-        "line": 179,
+        "heading_line": 178,
+        "line": 180,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138389,8 +140650,8 @@
       "source_location": {
         "heading": "PLS-006 - Per-Turn Update Protocol",
         "heading_level": 3,
-        "heading_line": 217,
-        "line": 219,
+        "heading_line": 219,
+        "line": 221,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138406,8 +140667,8 @@
       "source_location": {
         "heading": "PLS-007 - Owner Ambiguity And Evidence Classes",
         "heading_level": 3,
-        "heading_line": 252,
-        "line": 254,
+        "heading_line": 255,
+        "line": 257,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138423,8 +140684,8 @@
       "source_location": {
         "heading": "PLS-008 - Planning Wizard And Goal Integration",
         "heading_level": 3,
-        "heading_line": 288,
-        "line": 290,
+        "heading_line": 291,
+        "line": 293,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138440,8 +140701,8 @@
       "source_location": {
         "heading": "PLS-009 - Bootstrap Ledger Directory And Record Contract",
         "heading_level": 3,
-        "heading_line": 327,
-        "line": 329,
+        "heading_line": 330,
+        "line": 332,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138457,8 +140718,8 @@
       "source_location": {
         "heading": "PLS-010 - Bootstrap Ledger Validator And Projection Contract",
         "heading_level": 3,
-        "heading_line": 370,
-        "line": 372,
+        "heading_line": 374,
+        "line": 376,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138474,8 +140735,8 @@
       "source_location": {
         "heading": "PLS-011 - Compile Queue Fidelity And Governance-Seal Boundary",
         "heading_level": 3,
-        "heading_line": 409,
-        "line": 411,
+        "heading_line": 413,
+        "line": 415,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138491,8 +140752,8 @@
       "source_location": {
         "heading": "PLS-012 - Semantic Closure Registry And Reopen Contract",
         "heading_level": 3,
-        "heading_line": 494,
-        "line": 496,
+        "heading_line": 499,
+        "line": 501,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138508,8 +140769,8 @@
       "source_location": {
         "heading": "PLS-013 - Implementation Readiness And Doc Impact Matrix Compile Inputs",
         "heading_level": 3,
-        "heading_line": 681,
-        "line": 683,
+        "heading_line": 686,
+        "line": 688,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138525,8 +140786,8 @@
       "source_location": {
         "heading": "PLS-014 - Planning Product Ledger Synchronization And Compile Boundary",
         "heading_level": 3,
-        "heading_line": 743,
-        "line": 745,
+        "heading_line": 748,
+        "line": 750,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -138542,8 +140803,59 @@
       "source_location": {
         "heading": "PLS-015 - Native Ledger Service Runtime Contract",
         "heading_level": 3,
-        "heading_line": 879,
-        "line": 881,
+        "heading_line": 884,
+        "line": 886,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "transport_websocket_streaming",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-016",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_transport_websocket_streaming_coverage",
+      "source_location": {
+        "heading": "PLS-016 - P2-UPSTREAM-TRIAGE-CLOSURE-REGISTRY",
+        "heading_level": 3,
+        "heading_line": 946,
+        "line": 948,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_handoff_and_triage",
+      "gui_related": true,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-017",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_external_handoff_and_triage_coverage",
+      "source_location": {
+        "heading": "PLS-017 - P2-AI-TRIAGE-CLOSURE-CONFIDENCE",
+        "heading_level": 3,
+        "heading_line": 1017,
+        "line": 1019,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "external_handoff_and_triage",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-018",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_external_handoff_and_triage_hardening",
+      "source_location": {
+        "heading": "PLS-018 - external_issue_closure",
+        "heading_level": 3,
+        "heading_line": 1084,
+        "line": 1086,
         "path": "Plans/Planning_Ledger_System.md"
       },
       "status": "accepted",
@@ -139604,6 +141916,23 @@
       "unit_type": "constraint"
     },
     {
+      "context_scope": "ui_projection_and_hard_gates",
+      "gui_related": true,
+      "owner_doc": "Plans/Plugins_System.md",
+      "plan_unit_id": "PLUG-063",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_ui_projection_and_hard_gates_hardening",
+      "source_location": {
+        "heading": "PLUG-063 - P1-PLUGIN-EXTENSION-POINT-CONTRACTS",
+        "heading_level": 3,
+        "heading_line": 4042,
+        "line": 4044,
+        "path": "Plans/Plugins_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_to_execution",
       "gui_related": false,
       "owner_doc": "Plans/Plan_To_Node_Compilation.md",
@@ -139630,8 +141959,8 @@
       "source_location": {
         "heading": "PNC-002 - Compiler Input Metadata",
         "heading_level": 3,
-        "heading_line": 70,
-        "line": 72,
+        "heading_line": 71,
+        "line": 73,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139647,8 +141976,8 @@
       "source_location": {
         "heading": "PNC-003 - Ordering And Capability Hints",
         "heading_level": 3,
-        "heading_line": 107,
-        "line": 109,
+        "heading_line": 108,
+        "line": 110,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139664,8 +141993,8 @@
       "source_location": {
         "heading": "PNC-004 - Node-Readiness Report Contract",
         "heading_level": 3,
-        "heading_line": 142,
-        "line": 144,
+        "heading_line": 143,
+        "line": 145,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139681,8 +142010,8 @@
       "source_location": {
         "heading": "PNC-005 - GUI Routing Inheritance",
         "heading_level": 3,
-        "heading_line": 180,
-        "line": 182,
+        "heading_line": 181,
+        "line": 183,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139698,8 +142027,8 @@
       "source_location": {
         "heading": "PNC-006 - Native Goal Mode Compiler Handoff",
         "heading_level": 3,
-        "heading_line": 222,
-        "line": 224,
+        "heading_line": 223,
+        "line": 225,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139715,8 +142044,8 @@
       "source_location": {
         "heading": "4. Runtime Compiler Algorithm And Enablement",
         "heading_level": 2,
-        "heading_line": 296,
-        "line": 300,
+        "heading_line": 297,
+        "line": 301,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139732,8 +142061,8 @@
       "source_location": {
         "heading": "PNC-008 - Node-Readiness Report Field Contract",
         "heading_level": 3,
-        "heading_line": 260,
-        "line": 262,
+        "heading_line": 261,
+        "line": 263,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139749,8 +142078,8 @@
       "source_location": {
         "heading": "PNC-009 - Orchestrator Runtime Object And Compiler Boundary",
         "heading_level": 3,
-        "heading_line": 339,
-        "line": 341,
+        "heading_line": 340,
+        "line": 342,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139766,8 +142095,8 @@
       "source_location": {
         "heading": "PNC-010 - PlanCompileRun Design-Only State Machine",
         "heading_level": 3,
-        "heading_line": 420,
-        "line": 422,
+        "heading_line": 421,
+        "line": 423,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139783,8 +142112,8 @@
       "source_location": {
         "heading": "PNC-011 - Low-Context Stage Card Contract",
         "heading_level": 3,
-        "heading_line": 493,
-        "line": 495,
+        "heading_line": 494,
+        "line": 496,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139800,8 +142129,8 @@
       "source_location": {
         "heading": "PNC-012 - NodeSeed Candidate And Review Gate Contract",
         "heading_level": 3,
-        "heading_line": 541,
-        "line": 543,
+        "heading_line": 542,
+        "line": 544,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139817,8 +142146,8 @@
       "source_location": {
         "heading": "PNC-013 - WorkGraph Draft And WorkNode Request Contract",
         "heading_level": 3,
-        "heading_line": 599,
-        "line": 601,
+        "heading_line": 600,
+        "line": 602,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139834,8 +142163,8 @@
       "source_location": {
         "heading": "PNC-014 - Plans-To-Code Handoff Matrix And Schema Boundary",
         "heading_level": 3,
-        "heading_line": 674,
-        "line": 676,
+        "heading_line": 675,
+        "line": 677,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139851,8 +142180,8 @@
       "source_location": {
         "heading": "PNC-015 - Runtime-Capable PlanCompile v2 Boundary",
         "heading_level": 3,
-        "heading_line": 825,
-        "line": 827,
+        "heading_line": 826,
+        "line": 828,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139868,8 +142197,8 @@
       "source_location": {
         "heading": "PNC-016 - Runtime Stage Cards, Parallel Worklists, And Typed Dependencies",
         "heading_level": 3,
-        "heading_line": 918,
-        "line": 920,
+        "heading_line": 919,
+        "line": 921,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139885,8 +142214,8 @@
       "source_location": {
         "heading": "PNC-017 - Compile Readiness Fixtures And No-Runtime-Artifact Boundary",
         "heading_level": 3,
-        "heading_line": 1009,
-        "line": 1011,
+        "heading_line": 1010,
+        "line": 1012,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139902,8 +142231,8 @@
       "source_location": {
         "heading": "PNC-018 - Runtime Contract Packet And Readiness Gate",
         "heading_level": 3,
-        "heading_line": 1096,
-        "line": 1098,
+        "heading_line": 1097,
+        "line": 1099,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139919,8 +142248,8 @@
       "source_location": {
         "heading": "PNC-019 - Static Scenario Boundary And Executable Certification Requirement",
         "heading_level": 3,
-        "heading_line": 1162,
-        "line": 1164,
+        "heading_line": 1163,
+        "line": 1165,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -139936,8 +142265,8 @@
       "source_location": {
         "heading": "PNC-020 - Discovery WorkNode Intake Future Boundary",
         "heading_level": 3,
-        "heading_line": 1221,
-        "line": 1223,
+        "heading_line": 1222,
+        "line": 1224,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -140775,6 +143104,40 @@
       },
       "status": "accepted",
       "unit_type": "constraint"
+    },
+    {
+      "context_scope": "opencode_v2_delta",
+      "gui_related": false,
+      "owner_doc": "Plans/Provider_OpenCode.md",
+      "plan_unit_id": "PO-050",
+      "reasoning_tier": "high",
+      "risk_class": "p0_opencode_v2_delta_hardening",
+      "source_location": {
+        "heading": "PO-050 - opencode_v2_delta",
+        "heading_level": 3,
+        "heading_line": 3579,
+        "line": 3581,
+        "path": "Plans/Provider_OpenCode.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": false,
+      "owner_doc": "Plans/Provider_OpenCode.md",
+      "plan_unit_id": "PO-051",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_provider_capability_and_metadata_coverage",
+      "source_location": {
+        "heading": "PO-051 - v2_sdk_stability",
+        "heading_level": 3,
+        "heading_line": 3651,
+        "line": 3653,
+        "path": "Plans/Provider_OpenCode.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "project_output_artifacts_residual_bridge",
@@ -142624,6 +144987,244 @@
         "heading_level": 3,
         "heading_line": 3960,
         "line": 3962,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-059",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-059 - P1-CONTEXT-SKILL-BUDGETS",
+        "heading_level": 3,
+        "heading_line": 4020,
+        "line": 4022,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-060",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "PP-060 - P0-HISTORY-ADMISSION-SANITIZATION",
+        "heading_level": 3,
+        "heading_line": 4101,
+        "line": 4103,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": false,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-061",
+      "reasoning_tier": "high",
+      "risk_class": "p0_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-061 - P0-CONTEXT-EPOCH-BASELINE",
+        "heading_level": 3,
+        "heading_line": 4182,
+        "line": 4184,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-062",
+      "reasoning_tier": "high",
+      "risk_class": "p0_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-062 - P0-PROMPT-CACHE-POLICY",
+        "heading_level": 3,
+        "heading_line": 4254,
+        "line": 4256,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-063",
+      "reasoning_tier": "high",
+      "risk_class": "p0_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-063 - P0-VOLATILE-CONTEXT-QUARANTINE",
+        "heading_level": 3,
+        "heading_line": 4325,
+        "line": 4327,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-064",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-064 - P1-COMPACTION-CACHE-EFFECT",
+        "heading_level": 3,
+        "heading_line": 4389,
+        "line": 4391,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": false,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-065",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-065 - P1-PROVIDER-CAPABILITY-EPOCH-CACHE",
+        "heading_level": 3,
+        "heading_line": 4458,
+        "line": 4460,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": false,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-066",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-066 - P1-MODEL-SWITCH-REPLAY-SANITIZER",
+        "heading_level": 3,
+        "heading_line": 4523,
+        "line": 4525,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": false,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-067",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-067 - P1-LOCAL-LLM-CONTEXT-CAPS",
+        "heading_level": 3,
+        "heading_line": 4590,
+        "line": 4592,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-068",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-068 - P1-PROMPT-CACHE-STABILITY-LINTER",
+        "heading_level": 3,
+        "heading_line": 4658,
+        "line": 4660,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "agent_control_subagents",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-069",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_agent_control_subagents_hardening",
+      "source_location": {
+        "heading": "PP-069 - P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH",
+        "heading_level": 3,
+        "heading_line": 4744,
+        "line": 4746,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-070",
+      "reasoning_tier": "high",
+      "risk_class": "p0_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-070 - P0-CONTEXT-OBJECT-BUDGET",
+        "heading_level": 3,
+        "heading_line": 4817,
+        "line": 4819,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "instruction_integrity",
+      "gui_related": false,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-071",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_instruction_integrity_hardening",
+      "source_location": {
+        "heading": "PP-071 - P1-INSTRUCTION-IMPORT-GRAPH",
+        "heading_level": 3,
+        "heading_line": 4880,
+        "line": 4882,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-072",
+      "reasoning_tier": "high",
+      "risk_class": "p0_context_cache_hardening",
+      "source_location": {
+        "heading": "PP-072 - context_epoch",
+        "heading_level": 3,
+        "heading_line": 4945,
+        "line": 4947,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -144940,6 +147541,74 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-127",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "PS-127 - P0-PLAN-ACT-PERMISSION-BOUNDARY",
+        "heading_level": 3,
+        "heading_line": 8598,
+        "line": 8600,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-128",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "PS-128 - P0-PROVIDER-EGRESS-HTTP-POLICY",
+        "heading_level": 3,
+        "heading_line": 8679,
+        "line": 8681,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": true,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-129",
+      "reasoning_tier": "high",
+      "risk_class": "p0_security_release_supply_chain_hardening",
+      "source_location": {
+        "heading": "PS-129 - P0-COMMAND-APPROVAL-LEASE",
+        "heading_level": 3,
+        "heading_line": 8754,
+        "line": 8756,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "import_guardrail",
+      "gui_related": true,
+      "owner_doc": "Plans/Permissions_System.md",
+      "plan_unit_id": "PS-130",
+      "reasoning_tier": "standard",
+      "risk_class": "import_guardrail_compile",
+      "source_location": {
+        "heading": "PS-130 - PS-130",
+        "heading_level": 3,
+        "heading_line": 8819,
+        "line": 8821,
+        "path": "Plans/Permissions_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
     },
     {
       "context_scope": "provider_stream_mapping_retired_bridge",
@@ -147419,6 +150088,125 @@
         "heading_line": 1027,
         "line": 1029,
         "path": "Plans/Run_Modes.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": true,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-001",
+      "reasoning_tier": "high",
+      "risk_class": "p0_security_release_supply_chain_hardening",
+      "source_location": {
+        "heading": "RSC-001 - P0-RELEASE-MIGRATION-GATE",
+        "heading_level": 3,
+        "heading_line": 26,
+        "line": 28,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": true,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-002",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_security_release_supply_chain_coverage",
+      "source_location": {
+        "heading": "RSC-002 - P2-DOCS-GENERATED-LINK-VALIDATION",
+        "heading_level": 3,
+        "heading_line": 118,
+        "line": 120,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "transport_websocket_streaming",
+      "gui_related": false,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-003",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_transport_websocket_streaming_coverage",
+      "source_location": {
+        "heading": "RSC-003 - P2-BINARY-PROVENANCE-ASSETS",
+        "heading_level": 3,
+        "heading_line": 188,
+        "line": 190,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": false,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-004",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_security_release_supply_chain_coverage",
+      "source_location": {
+        "heading": "RSC-004 - P2-CONFIG-SCHEMA-MIGRATION-FIXTURES",
+        "heading_level": 3,
+        "heading_line": 262,
+        "line": 264,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": false,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-005",
+      "reasoning_tier": "high",
+      "risk_class": "p0_security_release_supply_chain_hardening",
+      "source_location": {
+        "heading": "RSC-005 - P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN",
+        "heading_level": 3,
+        "heading_line": 344,
+        "line": 346,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-006",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "RSC-006 - P1-PLATFORM-BINARY-COMPATIBILITY-GATE",
+        "heading_level": 3,
+        "heading_line": 423,
+        "line": 425,
+        "path": "Plans/Release_Supply_Chain.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "security_release_supply_chain",
+      "gui_related": true,
+      "owner_doc": "Plans/Release_Supply_Chain.md",
+      "plan_unit_id": "RSC-007",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_security_release_supply_chain_hardening",
+      "source_location": {
+        "heading": "RSC-007 - P1-INSTALL-UPDATE-PROVENANCE",
+        "heading_level": 3,
+        "heading_line": 496,
+        "line": 498,
+        "path": "Plans/Release_Supply_Chain.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
@@ -150176,6 +152964,244 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-124",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-124 - P0-TERMINAL-PROTOCOL-MATRIX",
+        "heading_level": 3,
+        "heading_line": 8185,
+        "line": 8187,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-125",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-125 - P0-TERMINAL-OUTPUT-BACKPRESSURE",
+        "heading_level": 3,
+        "heading_line": 8269,
+        "line": 8271,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-126",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-126 - P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
+        "heading_level": 3,
+        "heading_line": 8349,
+        "line": 8351,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-127",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-127 - P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
+        "heading_level": 3,
+        "heading_line": 8420,
+        "line": 8422,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-128",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-128 - P1-TERMINAL-SESSION-PRESERVE-UPDATE",
+        "heading_level": 3,
+        "heading_line": 8500,
+        "line": 8502,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-129",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-129 - P1-TERMINAL-SEMANTIC-MARKER-PARSER",
+        "heading_level": 3,
+        "heading_line": 8578,
+        "line": 8580,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-130",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-130 - P1-TERMINAL-CHUNK-SPANNING-PARSER",
+        "heading_level": 3,
+        "heading_line": 8654,
+        "line": 8656,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-131",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-131 - P1-TERMINAL-A11Y-RANGE-MIRROR",
+        "heading_level": 3,
+        "heading_line": 8726,
+        "line": 8728,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-132",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-132 - P1-TERMINAL-HOST-PROVENANCE-DOCTOR",
+        "heading_level": 3,
+        "heading_line": 8796,
+        "line": 8798,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-133",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-133 - P1-TERMINAL-PTY-STREAM-CONTRACT",
+        "heading_level": 3,
+        "heading_line": 8874,
+        "line": 8876,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-134",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-134 - P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS",
+        "heading_level": 3,
+        "heading_line": 8943,
+        "line": 8945,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-135",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-135 - P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD",
+        "heading_level": 3,
+        "heading_line": 9025,
+        "line": 9027,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-136",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "SMPFS-136 - P1-TERMINAL-INPUT-PASTEBOARD-MATRIX",
+        "heading_level": 3,
+        "heading_line": 9096,
+        "line": 9098,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "import_guardrail",
+      "gui_related": true,
+      "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "plan_unit_id": "SMPFS-137",
+      "reasoning_tier": "standard",
+      "risk_class": "external_repo_guardrail",
+      "source_location": {
+        "heading": "SMPFS-137 - SMPFS-137",
+        "heading_level": 3,
+        "heading_line": 9163,
+        "line": 9165,
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
     },
     {
       "context_scope": "storage_generated_residual_tail",
@@ -154020,6 +157046,57 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "memory_history_logging",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-227",
+      "reasoning_tier": "high",
+      "risk_class": "p0_memory_history_logging_hardening",
+      "source_location": {
+        "heading": "SP-227 - P0-HISTORY-STORAGE-CAPS",
+        "heading_level": 3,
+        "heading_line": 16019,
+        "line": 16021,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-228",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "SP-228 - P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS",
+        "heading_level": 3,
+        "heading_line": 16099,
+        "line": 16101,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "memory_history_logging",
+      "gui_related": true,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-229",
+      "reasoning_tier": "high",
+      "risk_class": "p0_memory_history_logging_hardening",
+      "source_location": {
+        "heading": "SP-229 - P0-SYSTEM-RESOURCE-GOVERNOR",
+        "heading_level": 3,
+        "heading_line": 16180,
+        "line": 16182,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "skills_generated_tail_disposition",
       "gui_related": false,
       "owner_doc": "Plans/Skills_System.md",
@@ -157420,6 +160497,159 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-167",
+      "reasoning_tier": "high",
+      "risk_class": "p0_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "T-167 - P0-TOOL-RESULT-SETTLEMENT",
+        "heading_level": 3,
+        "heading_line": 11413,
+        "line": 11415,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": false,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-168",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_context_cache_coverage",
+      "source_location": {
+        "heading": "T-168 - P2-CACHEABLE-TOOL-OUTPUT-REFS",
+        "heading_level": 3,
+        "heading_line": 11498,
+        "line": 11500,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-169",
+      "reasoning_tier": "high",
+      "risk_class": "p0_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "T-169 - P0-TOOL-CALL-MALFORMATION-GATE",
+        "heading_level": 3,
+        "heading_line": 11567,
+        "line": 11569,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-170",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "T-170 - P1-PROGRESSIVE-DISCLOSURE-TOOLS-SKILLS",
+        "heading_level": 3,
+        "heading_line": 11651,
+        "line": 11653,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-171",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "T-171 - P0-COMMAND-INVOCATION-CONTRACT",
+        "heading_level": 3,
+        "heading_line": 11737,
+        "line": 11739,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "terminal_runtime",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-172",
+      "reasoning_tier": "high",
+      "risk_class": "p0_terminal_runtime_hardening",
+      "source_location": {
+        "heading": "T-172 - P0-SESSION-TOOL-NAMESPACE-ACTIVATION",
+        "heading_level": 3,
+        "heading_line": 11812,
+        "line": 11814,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-173",
+      "reasoning_tier": "high",
+      "risk_class": "p0_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "T-173 - P0-TOOL-RESULT-TRUTHFULNESS-GATE",
+        "heading_level": 3,
+        "heading_line": 11887,
+        "line": 11889,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": false,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-174",
+      "reasoning_tier": "high",
+      "risk_class": "p0_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "T-174 - tool_output_retention",
+        "heading_level": 3,
+        "heading_line": 11956,
+        "line": 11958,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "mcp_tools_and_tool_settlement",
+      "gui_related": true,
+      "owner_doc": "Plans/Tools.md",
+      "plan_unit_id": "T-175",
+      "reasoning_tier": "high",
+      "risk_class": "p0_mcp_tools_and_tool_settlement_hardening",
+      "source_location": {
+        "heading": "T-175 - tool_heartbeat",
+        "heading_level": 3,
+        "heading_line": 12026,
+        "line": 12028,
+        "path": "Plans/Tools.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "ui_command_catalog_generated_tail_after_batch_191",
       "gui_related": true,
       "owner_doc": "Plans/UI_Command_Catalog.md",
@@ -160548,6 +163778,108 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-079",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_context_cache_hardening",
+      "source_location": {
+        "heading": "UF-079 - P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE",
+        "heading_level": 3,
+        "heading_line": 5327,
+        "line": 5329,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-080",
+      "reasoning_tier": "high",
+      "risk_class": "p0_context_cache_hardening",
+      "source_location": {
+        "heading": "UF-080 - P0-CACHE-USAGE-ENVELOPE",
+        "heading_level": 3,
+        "heading_line": 5408,
+        "line": 5410,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-081",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_context_cache_coverage",
+      "source_location": {
+        "heading": "UF-081 - P2-CACHE-OBSERVABILITY-DASHBOARD",
+        "heading_level": 3,
+        "heading_line": 5472,
+        "line": 5474,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_cache",
+      "gui_related": false,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-082",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_context_cache_coverage",
+      "source_location": {
+        "heading": "UF-082 - P2-CACHE-PRIVACY-POLICY",
+        "heading_level": 3,
+        "heading_line": 5534,
+        "line": 5536,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "provider_capability_and_metadata",
+      "gui_related": false,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-083",
+      "reasoning_tier": "standard",
+      "risk_class": "p1_provider_capability_and_metadata_hardening",
+      "source_location": {
+        "heading": "UF-083 - P1-USAGE-ANOMALY-QUOTA-GUARD",
+        "heading_level": 3,
+        "heading_line": 5601,
+        "line": 5603,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "cross_system_runtime_contracts",
+      "gui_related": false,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-084",
+      "reasoning_tier": "standard",
+      "risk_class": "p2_cross_system_runtime_contracts_coverage",
+      "source_location": {
+        "heading": "UF-084 - P2-OTEL-EXPORT-OPTIONAL-ADAPTER",
+        "heading_level": 3,
+        "heading_line": 5687,
+        "line": 5689,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "ui_wiring",
       "gui_related": true,
       "owner_doc": "Plans/UI_Wiring_Rules.md",
@@ -162883,10 +166215,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11283,
+    "depends_on_edge_count": 11521,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13299,
-    "node_count": 5354,
+    "edge_count": 13537,
+    "node_count": 5473,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2016,
     "unresolved_reference_count": 0

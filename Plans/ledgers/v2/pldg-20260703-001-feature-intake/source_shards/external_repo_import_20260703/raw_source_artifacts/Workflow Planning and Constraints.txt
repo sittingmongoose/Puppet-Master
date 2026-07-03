@@ -1,0 +1,44 @@
+Yes — that D2 block confirms the next design issue.
+
+D2 is still treating:
+
+```text id="7bu39m"
+195 D1 work groups = 195 required D2 subagent tasks
+```
+
+That is too much. The correct design is:
+
+```text id="gmchv8"
+195 D1 work groups → ~20–35 bounded D2 conversion slices
+```
+
+D1 work groups should be **source grouping units**, not the final D2 subagent execution units.
+
+I made the next packet update:
+
+[Download Puppet Master Prompt Packet v3.2.2](sandbox:/mnt/data/puppet_master_prompt_packet_v3_2_2.zip)
+
+What changed:
+
+- **D2 now re-batches D1 work groups into bounded conversion slices** before launching subagents.
+- D2 default slice target:
+  - 500–800 source lines
+  - hard max 800 source lines
+  - soft max 250 raw blocks
+  - soft max 15 D1 work groups
+- D2 writes one result per conversion slice:
+  - `obligation_conversion_slices/obligations.<slice_id>.json`
+- **D2 now supports resumable continuation mode** for huge semantic runs.
+  - If it completes some waves but cannot safely finish all slices in one prompt, it must output `STATUS: IN_PROGRESS`, not `BLOCKED`.
+  - It must request: `Paste prompt D2 — Obligation Converter v3.2.2 (continue pending conversion slices).`
+  - It must not route to `manual_decision` just because the task count is large.
+- **D3 now accepts slice result artifacts** instead of requiring one output per D1 work group.
+- **D4 repairs named slice/group/block defects only**, then routes back to D3.
+
+For your current run, use v3.2.2 and rerun:
+
+```text id="mgqd59"
+D2 — Obligation Converter v3.2.2
+```
+
+Expected behavior: it should build `obligation_converter.conversion_slices.json`, reduce the task count dramatically, run what it can, and either continue with `IN_PROGRESS` or complete and route to D3.

@@ -4,7 +4,7 @@ Source: `Plans/CLI_Bridged_Providers.md`
 
 Source lines: L69-L202
 
-Source SHA256: `02118acdedc6f719f198254b1a01064f5a674b35390524a4141613dd28381612`
+Source SHA256: `f378e678d5026f04ed7692d91e16bddcfecee234cc66a7af465f15b8ec2ad415`
 
 ---
 

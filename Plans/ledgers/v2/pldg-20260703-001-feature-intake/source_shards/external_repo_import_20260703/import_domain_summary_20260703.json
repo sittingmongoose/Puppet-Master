@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.external_repo_import_domain_summary.v1",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "created_at_utc": "2026-07-03T18:35:00Z",
+  "domain_counts": {
+    "terminal_runtime": 26,
+    "provider_capability_and_metadata": 19,
+    "memory_history_logging": 4,
+    "security_release_supply_chain": 9,
+    "mcp_tools_and_tool_settlement": 10,
+    "context_cache": 17,
+    "cross_system_runtime_contracts": 4,
+    "agent_control_subagents": 8,
+    "transport_websocket_streaming": 6,
+    "ui_projection_and_hard_gates": 4,
+    "multimodal_and_attachments": 2,
+    "instruction_integrity": 1,
+    "external_handoff_and_triage": 2,
+    "opencode_v2_delta": 1
+  },
+  "priority_domain_counts": {
+    "P0": {
+      "terminal_runtime": 10,
+      "provider_capability_and_metadata": 12,
+      "memory_history_logging": 3,
+      "security_release_supply_chain": 3,
+      "mcp_tools_and_tool_settlement": 6,
+      "context_cache": 6,
+      "transport_websocket_streaming": 2,
+      "agent_control_subagents": 3,
+      "multimodal_and_attachments": 2,
+      "cross_system_runtime_contracts": 2,
+      "opencode_v2_delta": 1
+    },
+    "P1": {
+      "terminal_runtime": 14,
+      "provider_capability_and_metadata": 5,
+      "mcp_tools_and_tool_settlement": 4,
+      "context_cache": 8,
+      "cross_system_runtime_contracts": 1,
+      "agent_control_subagents": 5,
+      "memory_history_logging": 1,
+      "ui_projection_and_hard_gates": 3,
+      "transport_websocket_streaming": 2,
+      "security_release_supply_chain": 4,
+      "instruction_integrity": 1,
+      "external_handoff_and_triage": 1
+    },
+    "P2": {
+      "security_release_supply_chain": 2,
+      "transport_websocket_streaming": 2,
+      "ui_projection_and_hard_gates": 1,
+      "terminal_runtime": 2,
+      "context_cache": 3,
+      "cross_system_runtime_contracts": 1,
+      "provider_capability_and_metadata": 2,
+      "external_handoff_and_triage": 1
+    }
+  },
+  "gui_related_counts": {
+    "true": 86,
+    "false": 27
+  },
+  "imported_atom_range": {
+    "first": "atom-0005",
+    "last": "atom-0117"
+  }
+}
