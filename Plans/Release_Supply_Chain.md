@@ -1,0 +1,587 @@
+# Release Supply Chain
+
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. This document owns release, install/update, migration/rollback, binary provenance, AI-CI taint, and supply-chain currentness contracts compiled from `pldg-20260703-001-feature-intake`.
+> **PlanProfile:** New Plan Authoring Profile
+
+## 0. Scope
+
+`Plans/Release_Supply_Chain.md` owns Puppet Master release/install/update provenance, release migration and rollback gates, binary/hash/signing/SBOM expectations, AI-assisted CI taint protections, release tag/currentness policy, and release-facing supply-chain receipts. It does not own provider behavior, credential storage, file safety, GitHub transport, or GUI presentation; those remain with their named owner docs and consume this release/supply-chain contract.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Automated_Testing_System.md
+
+## 1. Ownership And Consumers
+
+Primary owner: `Plans/Release_Supply_Chain.md`.
+
+Consumers and adjacent owners:
+- `Plans/Progression_Gates.md` consumes release gates and rollout blocking criteria.
+- `Plans/Project_Output_Artifacts.md` consumes package/provenance artifact expectations.
+- `Plans/GitHub_Integration.md` consumes release-tag/currentness and GitHub workflow constraints.
+- `Plans/Permissions_System.md` and `Plans/FileSafe.md` own user approval, secret custody, filesystem boundaries, and sensitive material handling.
+- `Plans/Automated_Testing_System.md` owns release, migration, platform, and link-validation test execution surfaces.
+- `Plans/BinaryLocator_Spec.md` consumes binary discovery and platform diagnostics without owning install/update policy.
+
+## 2. Canonical PlanUnits
+
+### RSC-001 - P0-RELEASE-MIGRATION-GATE
+
+```yaml
+plan_unit_id: RSC-001
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  P0-RELEASE-MIGRATION-GATE (P0) is compiled as canonical Puppet Master intent for Release, installer, migration, and rollback hardening: Add Release_Compatibility_and_Migration.md or PlanUnits under Progression_Gates. All major updates must run state-migration and rollback fixtures before users get them. The preserved PM gap/delta is: Need a release compatibility plan: canary/stable rings, artifact provenance, generated-link checks, state migration tests, downgrade/backup restore, extension/CLI/server protocol handshake, terminal session preservation across updates. The observed external-repo signal remains source-lineage evidence: Cline v4 issues report task corruption and release stability concerns; Agent Zero issue list includes missing upgrade tag, v2 regression, Launcher/self-update bugs; Pi has binary/provenance and packaging/link issues; Ghostty 1.3.1 quickly patched 1.3.0 regressions; Warp changelog shows frequent migration/restore fixes; Codex changelog shows frequent CLI/app releases.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Major version migration has backup/restore test.
+- Generated release links validate.
+- Protocol version mismatch blocks with actionable message.
+- App update does not orphan terminal/process sessions silently.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Major version migration has backup/restore test.
+- Generated release links validate.
+- Protocol version mismatch blocks with actionable message.
+- App update does not orphan terminal/process sessions silently.
+risk_class: p0_security_release_supply_chain_hardening
+reasoning_tier: high
+context_scope: security_release_supply_chain
+implementation_surfaces:
+- Plans/Release_Supply_Chain.md
+- Plans/Progression_Gates.md
+- Plans/Project_Output_Artifacts.md
+- Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: p0_release_migration_gate
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0012
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0012
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0008/P0-RELEASE-MIGRATION-GATE@line=8
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0008/P0-RELEASE-MIGRATION-GATE
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:8
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+source_atom_ids:
+- atom-0012
+external_atom_id: extrepo-20260703-0008
+source_row_id: P0-RELEASE-MIGRATION-GATE
+priority: P0
+finding_family: Release, installer, migration, and rollback hardening
+source_repos:
+- cline/cline
+- agent0ai/agent-zero
+- earendil-works/pi
+- ghostty-org/ghostty
+- warpdotdev/warp
+- openai/codex
+target_docs:
+- Plans/Progression_Gates.md
+- Plans/Project_Output_Artifacts.md
+- Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+owner_hints:
+- Plans/Progression_Gates.md
+- Plans/Project_Output_Artifacts.md
+- Plans/storage-plan.md
+- Plans/Goal_Runtime_System.md
+preserved_exact_tokens:
+- extrepo-20260703-0008
+- P0-RELEASE-MIGRATION-GATE
+- P0
+- Release, installer, migration, and rollback hardening
+- cline/cline
+- agent0ai/agent-zero
+- earendil-works/pi
+- ghostty-org/ghostty
+- warpdotdev/warp
+- openai/codex
+negative_constraints: []
+observed_signal: Cline v4 issues report task corruption and release stability concerns; Agent Zero issue list includes missing upgrade tag, v2 regression, Launcher/self-update bugs; Pi has binary/provenance and packaging/link issues; Ghostty 1.3.1 quickly patched 1.3.0 regressions; Warp changelog shows frequent migration/restore fixes; Codex changelog shows frequent CLI/app releases.
+pm_current_coverage: PM has governance gates and protected namespace, but release/migration strategy is not as explicit as runtime specs.
+pm_gap_or_delta: 'Need a release compatibility plan: canary/stable rings, artifact provenance, generated-link checks, state migration tests, downgrade/backup restore, extension/CLI/server protocol handshake, terminal session preservation across updates.'
+proposal_or_recommendation: Add Release_Compatibility_and_Migration.md or PlanUnits under Progression_Gates. All major updates must run state-migration and rollback fixtures before users get them.
+compile_disposition: create_new_planunit
+```
+
+### RSC-002 - P2-DOCS-GENERATED-LINK-VALIDATION
+
+```yaml
+plan_unit_id: RSC-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  P2-DOCS-GENERATED-LINK-VALIDATION (P2) is compiled as canonical Puppet Master intent for Generated docs/release notes link validation: Add GeneratedMarkdownLinkCheck to governance seal. The preserved PM gap/delta is: Need link-mode validators for generated Markdown across GitHub, local GUI, terminal/plaintext, and app viewer. The observed external-repo signal remains source-lineage evidence: Pi issue reports generated release-note relative links broken on GitHub/terminal and suggests improving prompt/tests.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Release notes/bootstrap docs validate relative links under repo, GitHub rendered, and app routes.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Release notes/bootstrap docs validate relative links under repo, GitHub rendered, and app routes.
+risk_class: p2_security_release_supply_chain_coverage
+reasoning_tier: standard
+context_scope: security_release_supply_chain
+implementation_surfaces:
+- Plans/Release_Supply_Chain.md
+- Plans/Progression_Gates.md
+- Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: p2_docs_generated_link_validation
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0022
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0022
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0018/P2-DOCS-GENERATED-LINK-VALIDATION@line=18
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0018/P2-DOCS-GENERATED-LINK-VALIDATION
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:18
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+source_atom_ids:
+- atom-0022
+external_atom_id: extrepo-20260703-0018
+source_row_id: P2-DOCS-GENERATED-LINK-VALIDATION
+priority: P2
+finding_family: Generated docs/release notes link validation
+source_repos:
+- earendil-works/pi
+target_docs:
+- Plans/Progression_Gates.md
+- Plans/Project_Output_Artifacts.md
+owner_hints:
+- Plans/Progression_Gates.md
+- Plans/Project_Output_Artifacts.md
+preserved_exact_tokens:
+- extrepo-20260703-0018
+- P2-DOCS-GENERATED-LINK-VALIDATION
+- P2
+- Generated docs/release notes link validation
+- earendil-works/pi
+negative_constraints: []
+observed_signal: Pi issue reports generated release-note relative links broken on GitHub/terminal and suggests improving prompt/tests.
+pm_current_coverage: PM has governance shards/evidence and plan validators.
+pm_gap_or_delta: Need link-mode validators for generated Markdown across GitHub, local GUI, terminal/plaintext, and app viewer.
+proposal_or_recommendation: Add GeneratedMarkdownLinkCheck to governance seal.
+compile_disposition: create_new_planunit
+```
+
+### RSC-003 - P2-BINARY-PROVENANCE-ASSETS
+
+```yaml
+plan_unit_id: RSC-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  P2-BINARY-PROVENANCE-ASSETS (P2) is compiled as canonical Puppet Master intent for Binary/provenance/codesigning: Add ReleaseArtifactProvenance PlanUnit. The preserved PM gap/delta is: Need release asset signature/hash/SBOM policy for any PM distributed binary/plugin/bridge. The observed external-repo signal remains source-lineage evidence: Pi issue requests SHA256SUMS/provenance for binaries; Cline has AMFI/codesign killed CLI and Darwin sign PRs; Codex ships npm CLI releases.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Every downloadable binary/plugin has SHA256, signing/provenance, build source ref, and install verification.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Every downloadable binary/plugin has SHA256, signing/provenance, build source ref, and install verification.
+risk_class: p2_transport_websocket_streaming_coverage
+reasoning_tier: standard
+context_scope: transport_websocket_streaming
+implementation_surfaces:
+- Plans/Release_Supply_Chain.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Progression_Gates.md
+node_compile_hint:
+  mode: p2_binary_provenance_assets
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0023
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0023
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0019/P2-BINARY-PROVENANCE-ASSETS@line=19
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0019/P2-BINARY-PROVENANCE-ASSETS
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:19
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+source_atom_ids:
+- atom-0023
+external_atom_id: extrepo-20260703-0019
+source_row_id: P2-BINARY-PROVENANCE-ASSETS
+priority: P2
+finding_family: Binary/provenance/codesigning
+source_repos:
+- earendil-works/pi
+- cline/cline
+- openai/codex
+target_docs:
+- Plans/Project_Output_Artifacts.md
+- Plans/Progression_Gates.md
+owner_hints:
+- Plans/Project_Output_Artifacts.md
+- Plans/Progression_Gates.md
+preserved_exact_tokens:
+- extrepo-20260703-0019
+- P2-BINARY-PROVENANCE-ASSETS
+- P2
+- Binary/provenance/codesigning
+- earendil-works/pi
+- cline/cline
+- openai/codex
+negative_constraints: []
+observed_signal: Pi issue requests SHA256SUMS/provenance for binaries; Cline has AMFI/codesign killed CLI and Darwin sign PRs; Codex ships npm CLI releases.
+pm_current_coverage: PM has Spec Lock/governance hashes but product release asset provenance is not detailed.
+pm_gap_or_delta: Need release asset signature/hash/SBOM policy for any PM distributed binary/plugin/bridge.
+proposal_or_recommendation: Add ReleaseArtifactProvenance PlanUnit.
+compile_disposition: create_new_planunit
+```
+
+### RSC-004 - P2-CONFIG-SCHEMA-MIGRATION-FIXTURES
+
+```yaml
+plan_unit_id: RSC-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  P2-CONFIG-SCHEMA-MIGRATION-FIXTURES (P2) is compiled as canonical Puppet Master intent for Accepted/retired config schema migration tests: Imported external-repo finding extrepo-20260703-0036 / P2-CONFIG-SCHEMA-MIGRATION-FIXTURES (P2): None The preserved PM gap/delta is: Add fixtures for accepted current names, retired names with explicit help, JSON/JSONC, generated bridge config cwd/profile root, PM-managed vs attached server config, migration dry-run/rollback. The observed external-repo signal remains source-lineage evidence: OpenCode v2 reworks config discovery and issue #8868 shows json/jsonc confusion; Agent Zero/Cline releases expose upgrade/migration risks.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Legacy config name gives deterministic migration message
+- Generated bridge config writes only to run cwd/profile root
+- Attached server profile cannot be silently mutated
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Legacy config name gives deterministic migration message
+- Generated bridge config writes only to run cwd/profile root
+- Attached server profile cannot be silently mutated
+risk_class: p2_security_release_supply_chain_coverage
+reasoning_tier: standard
+context_scope: security_release_supply_chain
+implementation_surfaces:
+- Plans/Release_Supply_Chain.md
+- Plans/MCP_Integration.md
+- Plans/Provider_OpenCode.md
+- Plans/CLI_Bridged_Providers.md
+- Plans/Release_Process.md
+node_compile_hint:
+  mode: p2_config_schema_migration_fixtures
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0040
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0040
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0036/P2-CONFIG-SCHEMA-MIGRATION-FIXTURES@line=16
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0036/P2-CONFIG-SCHEMA-MIGRATION-FIXTURES
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl:16
+source_atom_ids:
+- atom-0040
+external_atom_id: extrepo-20260703-0036
+source_row_id: P2-CONFIG-SCHEMA-MIGRATION-FIXTURES
+priority: P2
+finding_family: Accepted/retired config schema migration tests
+source_repos:
+- anomalyco/opencode
+- cline/cline
+- agent0ai/agent-zero
+target_docs:
+- Plans/MCP_Integration.md
+- Plans/Provider_OpenCode.md
+- Plans/CLI_Bridged_Providers.md
+- Plans/Release_Process.md
+owner_hints:
+- Plans/MCP_Integration.md
+- Plans/Provider_OpenCode.md
+- Plans/CLI_Bridged_Providers.md
+- Plans/Release_Process.md
+preserved_exact_tokens:
+- extrepo-20260703-0036
+- P2-CONFIG-SCHEMA-MIGRATION-FIXTURES
+- P2
+- Accepted/retired config schema migration tests
+- anomalyco/opencode
+- cline/cline
+- agent0ai/agent-zero
+negative_constraints: []
+observed_signal: 'OpenCode v2 reworks config discovery and issue #8868 shows json/jsonc confusion; Agent Zero/Cline releases expose upgrade/migration risks.'
+pm_current_coverage: Prior backlog included release/migration gates; MCP Integration has config fields and provider projection.
+pm_gap_or_delta: Add fixtures for accepted current names, retired names with explicit help, JSON/JSONC, generated bridge config cwd/profile root, PM-managed vs attached server config, migration dry-run/rollback.
+compile_disposition: create_new_planunit
+```
+
+### RSC-005 - P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN
+
+```yaml
+plan_unit_id: RSC-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN (P0) is compiled as canonical Puppet Master intent for AI-assisted CI/release supply-chain attack surface: Imported external-repo finding extrepo-20260703-0074 / P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN (P0): None The preserved PM gap/delta is: Prior PM passes covered permissions and release provenance, but underweighted agentic CI workflows where untrusted issue/PR text becomes model instructions and tool calls inside release-adjacent automation. The observed external-repo signal remains source-lineage evidence: Clinejection: untrusted GitHub issue title reached a Claude issue-triage bot with Bash/Read/Write/Edit access, pivoted through GitHub Actions cache poisoning, and led to unauthorized npm package cline@2.3.0. | OpenCode github@latest tag drift shows release automation/currentness can silently lag active releases. | Codex changelog hardens command safety, browser-origin websocket handshakes, and repo-provided Git helper execution.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- AI issue/PR triage workflows must default to read-only/no-shell/no-write permissions and require explicit escalation receipts for any tool with filesystem, shell, cache, credential, or release access.
+- All untrusted external text entering an agentic CI prompt carries a taint envelope and cannot be interpreted as tool/policy instructions.
+- Release workflows that hold publish credentials must not consume untrusted caches; cache provenance and OIDC provenance are validated before publish.
+- Package/update artifacts require signed provenance/SBOM/hash/attestation checks and latest-tag drift detection.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- AI issue/PR triage workflows must default to read-only/no-shell/no-write permissions and require explicit escalation receipts for any tool with filesystem, shell, cache, credential, or release access.
+- All untrusted external text entering an agentic CI prompt carries a taint envelope and cannot be interpreted as tool/policy instructions.
+- Release workflows that hold publish credentials must not consume untrusted caches; cache provenance and OIDC provenance are validated before publish.
+- Package/update artifacts require signed provenance/SBOM/hash/attestation checks and latest-tag drift detection.
+risk_class: p0_security_release_supply_chain_hardening
+reasoning_tier: high
+context_scope: security_release_supply_chain
+implementation_surfaces:
+- Plans/Release_Supply_Chain.md
+node_compile_hint:
+  mode: p0_ai_ci_untrusted_content_supply_chain
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0078
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0078
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0074/P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN@line=1
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0074/P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:1
+source_atom_ids:
+- atom-0078
+external_atom_id: extrepo-20260703-0074
+source_row_id: P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN
+priority: P0
+finding_family: AI-assisted CI/release supply-chain attack surface
+target_docs:
+- GitHub_Integration.md
+- Permissions_System.md
+- Decision_Policy.md
+- Contracts_V0.md
+- Automated_Testing_System.md
+- Spec_Lock / governance seal docs
+- new Supply_Chain_Security.md if owner doc is missing
+owner_hints:
+- GitHub_Integration.md
+- Permissions_System.md
+- Decision_Policy.md
+- Contracts_V0.md
+- Automated_Testing_System.md
+- Spec_Lock / governance seal docs
+- new Supply_Chain_Security.md if owner doc is missing
+preserved_exact_tokens:
+- extrepo-20260703-0074
+- P0-AI-CI-UNTRUSTED-CONTENT-SUPPLY-CHAIN
+- P0
+- AI-assisted CI/release supply-chain attack surface
+negative_constraints: []
+observed_signal: 'Clinejection: untrusted GitHub issue title reached a Claude issue-triage bot with Bash/Read/Write/Edit access, pivoted through GitHub Actions cache poisoning, and led to unauthorized npm package cline@2.3.0. | OpenCode github@latest tag drift shows release automation/currentness can silently lag active releases. | Codex changelog hardens command safety, browser-origin websocket handshakes, and repo-provided Git helper execution.'
+pm_gap_or_delta: Prior PM passes covered permissions and release provenance, but underweighted agentic CI workflows where untrusted issue/PR text becomes model instructions and tool calls inside release-adjacent automation.
+relationship_to_prior_reports: New P0. Prior binary provenance was too narrow; this adds natural-language-to-CI toxic-flow defense.
+compile_disposition: create_new_planunit
+```
+
+### RSC-006 - P1-PLATFORM-BINARY-COMPATIBILITY-GATE
+
+```yaml
+plan_unit_id: RSC-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  P1-PLATFORM-BINARY-COMPATIBILITY-GATE (P1) is compiled as canonical Puppet Master intent for Code signing, static binaries, platform packaging, sandbox setup, and OS-specific runtime gates: Imported external-repo finding extrepo-20260703-0084 / P1-PLATFORM-BINARY-COMPATIBILITY-GATE (P1): None The preserved PM gap/delta is: Release provenance was covered; platform binary compatibility and OS gate diagnostics need their own receipts. The observed external-repo signal remains source-lineage evidence: Cline recent issue reports macOS AMFI code-signing kill of the CLI binary. | Warp statically compiled Linux CLI/warpctl for compatibility and fixed Windows GPU/UI lag. | Codex changelog includes Windows sandbox provisioning and platform-specific sandbox/network behavior.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Every packaged helper/CLI/runtime declares signing/notarization/static-linking/sandbox entitlement state per OS.
+- Startup diagnostics distinguish code-signing/AMFI/quarantine/GPU/sandbox/network-deny failures from generic launch failures.
+- Platform matrix CI includes macOS quarantine/signature, Windows sandbox/network, Linux static/dynamic library checks.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Every packaged helper/CLI/runtime declares signing/notarization/static-linking/sandbox entitlement state per OS.
+- Startup diagnostics distinguish code-signing/AMFI/quarantine/GPU/sandbox/network-deny failures from generic launch failures.
+- Platform matrix CI includes macOS quarantine/signature, Windows sandbox/network, Linux static/dynamic library checks.
+risk_class: p1_terminal_runtime_hardening
+reasoning_tier: standard
+context_scope: terminal_runtime
+implementation_surfaces:
+- Plans/Release_Supply_Chain.md
+node_compile_hint:
+  mode: p1_platform_binary_compatibility_gate
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0088
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0088
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0084/P1-PLATFORM-BINARY-COMPATIBILITY-GATE@line=11
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0084/P1-PLATFORM-BINARY-COMPATIBILITY-GATE
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:11
+source_atom_ids:
+- atom-0088
+external_atom_id: extrepo-20260703-0084
+source_row_id: P1-PLATFORM-BINARY-COMPATIBILITY-GATE
+priority: P1
+finding_family: Code signing, static binaries, platform packaging, sandbox setup, and OS-specific runtime gates
+target_docs:
+- Automated_Testing_System.md
+- FinalGUISpec.md
+- GitHub_Integration.md
+- Installer/Packaging docs if present
+- Contracts_V0.md
+owner_hints:
+- Automated_Testing_System.md
+- FinalGUISpec.md
+- GitHub_Integration.md
+- Installer/Packaging docs if present
+- Contracts_V0.md
+preserved_exact_tokens:
+- extrepo-20260703-0084
+- P1-PLATFORM-BINARY-COMPATIBILITY-GATE
+- P1
+- Code signing, static binaries, platform packaging, sandbox setup, and OS-specific runtime gates
+negative_constraints: []
+observed_signal: Cline recent issue reports macOS AMFI code-signing kill of the CLI binary. | Warp statically compiled Linux CLI/warpctl for compatibility and fixed Windows GPU/UI lag. | Codex changelog includes Windows sandbox provisioning and platform-specific sandbox/network behavior.
+pm_gap_or_delta: Release provenance was covered; platform binary compatibility and OS gate diagnostics need their own receipts.
+relationship_to_prior_reports: Narrower than binary provenance; covers runtime compatibility failure classes.
+compile_disposition: create_new_planunit
+```
+
+### RSC-007 - P1-INSTALL-UPDATE-PROVENANCE
+
+```yaml
+plan_unit_id: RSC-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Release_Supply_Chain.md
+canonical_text: >-
+  P1-INSTALL-UPDATE-PROVENANCE (P1) is compiled as canonical Puppet Master intent for Install/update/package provenance receipts: Imported external-repo finding extrepo-20260703-0098 / P1-INSTALL-UPDATE-PROVENANCE (P1): None The preserved PM gap/delta is: Installer/update flows need artifact signatures, owner/mode inventory, channel, rollback, migration, and validator receipts. The observed external-repo signal remains source-lineage evidence: Package owner/signing/self-update issues recur across GUI/CLI tools.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Package ownership/mode mismatches fail install validation
+- Self-update records source/hash/channel/rollback
+- Signing/notarization/entitlement checks are surfaced before rollout
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Package ownership/mode mismatches fail install validation
+- Self-update records source/hash/channel/rollback
+- Signing/notarization/entitlement checks are surfaced before rollout
+risk_class: p1_security_release_supply_chain_hardening
+reasoning_tier: standard
+context_scope: security_release_supply_chain
+implementation_surfaces:
+- Plans/Release_Supply_Chain.md
+node_compile_hint:
+  mode: p1_install_update_provenance
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0102
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0102
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0098/P1-INSTALL-UPDATE-PROVENANCE@line=11
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0098/P1-INSTALL-UPDATE-PROVENANCE
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:11
+source_atom_ids:
+- atom-0102
+external_atom_id: extrepo-20260703-0098
+source_row_id: P1-INSTALL-UPDATE-PROVENANCE
+priority: P1
+finding_family: Install/update/package provenance receipts
+source_repos:
+- Warp
+- OpenAI Codex
+- Agent Zero
+preserved_exact_tokens:
+- extrepo-20260703-0098
+- P1-INSTALL-UPDATE-PROVENANCE
+- P1
+- Install/update/package provenance receipts
+- Warp
+- OpenAI Codex
+- Agent Zero
+negative_constraints: []
+observed_signal: Package owner/signing/self-update issues recur across GUI/CLI tools.
+pm_gap_or_delta: Installer/update flows need artifact signatures, owner/mode inventory, channel, rollback, migration, and validator receipts.
+compile_disposition: create_new_planunit
+```
+
+## 3. Contracts, Schemas, Events, Or Data Shapes
+
+Release and supply-chain receipts are contract-level requirements until product schemas are introduced by the owning implementation phase. Required receipt concepts include release source refs, package hashes, signing/notarization evidence, channel identity, rollback provenance, AI-CI taint labels, and migration-gate outcomes. Concrete schema materialization is not_applicable during this ledger-to-Plans compile.
+
+## 4. Integration Surfaces
+
+Release supply-chain contracts integrate with GitHub release flows, binary locator diagnostics, project output artifacts, progression gates, automated release/migration tests, FileSafe restore and secret handling, and permission-scoped CI/tool execution. This doc does not introduce runtime dispatch, queues, or implementation files.
+
+## 5. Validation And Acceptance
+
+Validation uses the PlanUnit acceptance criteria above plus `python3 scripts/pm-plan-index.py validate`, `python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake`, and later governance seal gates when explicitly requested. Release tests must cover generated links, binary hashes/signing/provenance, migration rollback, config schema migration, AI-CI taint/default read-only behavior, and install/update provenance receipts.
+
+## 6. Plan-To-Node Readiness
+
+PlanUnit indexing may analyze these release/supply-chain PlanUnits for future readiness. It must not create WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, production build tasks, or runtime dispatch.
+
+## 7. Deferred, Retired, Compatibility, And Non-Goals
+
+not_applicable for retired compatibility terms. Non-goals: this doc does not replace `BinaryLocator_Spec.md`, does not own GitHub authentication, does not define provider credentials, does not authorize shell execution, and does not seal governance artifacts.
+
+## 8. Source Lineage And Governance
+
+This doc is compiled from bootstrap ledger `pldg-20260703-001-feature-intake`. Governance artifacts, shards, evidence, Spec Lock, plan graph, and auto decisions remain pending an explicit governance seal phase.
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md

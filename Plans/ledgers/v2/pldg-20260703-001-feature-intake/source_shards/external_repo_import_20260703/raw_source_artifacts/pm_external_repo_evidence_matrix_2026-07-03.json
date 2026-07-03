@@ -1,0 +1,701 @@
+{
+  "evidence": {
+    "analysis_date": "2026-07-03",
+    "window": "Approximately 2026-01-03 through 2026-07-03, plus stable architectural lessons from older terminal issues where still active/relevant.",
+    "upstream_sources_reviewed": [
+      {
+        "repo": "cline/cline",
+        "surfaces": [
+          "README/repo landing",
+          "current issues page",
+          "current pull requests page",
+          "release page",
+          "targeted issue: v4 plan controls/destructive actions",
+          "targeted issue: release stability discussion"
+        ],
+        "web_refs": [
+          "turn131149view0",
+          "turn750557view0",
+          "turn175641view0",
+          "turn837017view0",
+          "turn148334view0",
+          "turn148334view1"
+        ]
+      },
+      {
+        "repo": "agent0ai/agent-zero",
+        "surfaces": [
+          "repo landing",
+          "current issues page",
+          "current PRs page",
+          "changelog/search result",
+          "targeted CLI/session corruption issue",
+          "targeted security/credentials issue"
+        ],
+        "web_refs": [
+          "turn131149view1",
+          "turn375359view0",
+          "turn121195view0",
+          "turn984550search6",
+          "turn148334view2",
+          "turn148334view3",
+          "turn148334view4"
+        ]
+      },
+      {
+        "repo": "earendil-works/pi",
+        "surfaces": [
+          "repo landing",
+          "current issues page",
+          "current PRs page",
+          "release/news results",
+          "targeted binary provenance, packaging, release-link issues"
+        ],
+        "web_refs": [
+          "turn131149view2",
+          "turn375359view1",
+          "turn121195view1",
+          "turn984550search17",
+          "turn148334view5",
+          "turn148334view6",
+          "turn148334view7"
+        ]
+      },
+      {
+        "repo": "openai/codex",
+        "surfaces": [
+          "repo landing",
+          "current issues page",
+          "current PRs page",
+          "official Codex changelog",
+          "official Skills",
+          "official Goals",
+          "official Subagents",
+          "official CLI/app docs"
+        ],
+        "web_refs": [
+          "turn131149view3",
+          "turn375359view2",
+          "turn121195view2",
+          "turn725378view0",
+          "turn725378view1",
+          "turn725378view2",
+          "turn725378view3"
+        ]
+      },
+      {
+        "repo": "ghostty-org/ghostty",
+        "surfaces": [
+          "repo landing",
+          "current issues page",
+          "current PRs page",
+          "1.3.0/1.3.1 release notes",
+          "screen reader discussion",
+          "global keyboard freeze discussion"
+        ],
+        "web_refs": [
+          "turn131149view4",
+          "turn375359view3",
+          "turn121195view3",
+          "turn500019view0",
+          "turn500019view1",
+          "turn500019view2",
+          "turn500019view3"
+        ]
+      },
+      {
+        "repo": "warpdotdev/warp",
+        "surfaces": [
+          "repo landing",
+          "current issues page",
+          "current PRs page",
+          "official 2026 changelog",
+          "targeted current issues/searches"
+        ],
+        "web_refs": [
+          "turn131149view5",
+          "turn375359view4",
+          "turn121195view4",
+          "turn261743view0",
+          "turn469132search0"
+        ]
+      },
+      {
+        "repo": "tmux/tmux",
+        "surfaces": [
+          "repo landing",
+          "current issues page",
+          "current PRs page",
+          "CHANGES",
+          "OSC 133 issue"
+        ],
+        "web_refs": [
+          "turn131149view6",
+          "turn375359view5",
+          "turn121195view5",
+          "turn526496view0",
+          "turn526496view1"
+        ]
+      }
+    ],
+    "pm_local_evidence": [
+      {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "lines": "175-238",
+        "summary": "Terminal is canonical interactive shell surface; terminal section/tab/pane/session/dev-session identity split; reveal/reuse/restart rules."
+      },
+      {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "lines": "242-279",
+        "summary": "Interaction states live_input, scrollback_review, selection_active, search_active, tui_capture; PTY passthrough, copy/paste, search, alternate screen, TUI semantics."
+      },
+      {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "lines": "281-346",
+        "summary": "Command blocks over canonical transcript; shell-integration tiers rich/basic/opaque; lifecycle states and actions."
+      },
+      {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "lines": "351-366",
+        "summary": "Requested/effective state applies to terminal renderer, shell-integration, detach, clipboard/IME, accessibility, transcript retention."
+      },
+      {
+        "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "lines": "573-627",
+        "summary": "Cross-platform terminal matrix and subsystem architecture; parser-engine gates, huge output, resize, observability."
+      },
+      {
+        "path": "Plans/Models_System.md",
+        "lines": "35-95",
+        "summary": "Provider/model/account requested/effective resolver and precedence."
+      },
+      {
+        "path": "Plans/CLI_Bridged_Providers.md",
+        "lines": "80-150",
+        "summary": "ProviderRequestEnvelope host/runtime/provider/model/account descriptors, bridge context not host authority, normalized output preservation."
+      },
+      {
+        "path": "Plans/Tools.md",
+        "lines": "101-120",
+        "summary": "Central policy engine for tools, permissions, FileSafe, terminal binding, outcome normalization."
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "lines": "1504-1519",
+        "summary": "Seglog/redb implementation checklist, analytics, tool usage, usage/event persistence."
+      },
+      {
+        "path": "Plans/Prompt_Pipeline.md",
+        "lines": "20-80",
+        "summary": "Prompt pipeline owns context, compaction, skill/tool/persona/context assembly."
+      }
+    ],
+    "pm_gap_searches": [
+      {
+        "query": "OSC 52",
+        "result": "No live Plans hits found in quick rg scan."
+      },
+      {
+        "query": "bracketed paste",
+        "result": "No live Plans hits found in quick rg scan."
+      },
+      {
+        "query": "DEC 2026",
+        "result": "No live Plans hits found in quick rg scan."
+      },
+      {
+        "query": "tmux",
+        "result": "No live Plans hits found in quick rg scan."
+      },
+      {
+        "query": "pasteboard",
+        "result": "No live Plans hits found in quick rg scan."
+      },
+      {
+        "query": "global keybind",
+        "result": "No live Plans hits found in quick rg scan."
+      },
+      {
+        "query": "grapheme / wide chars / IME",
+        "result": "Covered in Section15 and GUI/FileManager specs."
+      }
+    ]
+  },
+  "actions": [
+    {
+      "id": "P0-TERMINAL-PROTOCOL-MATRIX",
+      "priority": "P0",
+      "source_repos": [
+        "ghostty-org/ghostty",
+        "tmux/tmux",
+        "warpdotdev/warp"
+      ],
+      "theme": "Built-in GUI terminal protocol coverage",
+      "observed_signal": "Ghostty/tmux current issues and releases revolve around OSC 133 shell integration, pasteboard semantics, mouse/key handling, Unicode/ZWJ crashes, and platform-specific regressions; Warp changelog shows alt-screen CLI-agent contrast, dropped keystrokes, zero-width crash, WSL PWD restore, session reopening, MCP spawn cwd, and settings/autonomy fixes.",
+      "pm_current_coverage": "PM Section15 has strong identity/lifecycle/interaction model, shell-integration tiers, cross-platform matrix, and parser-engine gates.",
+      "gap": "No explicit terminal protocol test matrix for OSC 52, OSC 8, OSC 9;4, OSC 133, OSC 633, bracketed paste, focus events, SGR/UTF-8 mouse, DEC synchronized updates, pasteboard priority, or terminal-feature negotiation.",
+      "proposal": "Add PlanUnits under Section15 or a new Built_In_Terminal_Runtime.md that enumerate VT/xterm/OSC protocol fixtures and acceptance tests. Treat protocols as data fixtures with replayable byte streams, not prose-only requirements.",
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "acceptance_tests": [
+        "VT replay corpus includes OSC 52/8/9;4/133/633, bracketed paste, focus, mouse, alternate screen, synchronized update sequences.",
+        "Parser output is deterministic across macOS/Linux/Windows/WSL fixtures.",
+        "Weak/unknown protocol support downgrades requested-vs-effective state rather than fabricating command blocks."
+      ]
+    },
+    {
+      "id": "P0-TERMINAL-OUTPUT-BACKPRESSURE",
+      "priority": "P0",
+      "source_repos": [
+        "tmux/tmux",
+        "ghostty-org/ghostty",
+        "warpdotdev/warp"
+      ],
+      "theme": "No silent terminal output loss",
+      "observed_signal": "tmux history includes backpressure/control-mode buffering design; older issue families report output lines missing when terminal/client can't keep up; Warp/Ghostty issue streams include huge output, rendering, and persisted block edge cases.",
+      "pm_current_coverage": "PM says retention/pruning are honest and high-output sessions must not stall UI; parser-engine gates include huge output fixtures.",
+      "gap": "PM needs explicit loss accounting: when bytes are accepted by PTY reader, parsed, painted, persisted, pruned, redacted, or dropped/deferred, there must be receipts and user-visible status.",
+      "proposal": "Add TerminalIngestionReceipt and TerminalBackpressureState. Differentiate accepted-by-PTY, parsed-to-grid, appended-to-transcript, flushed-to-storage, painted, pruned, redacted, and diagnostic-exported.",
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "acceptance_tests": [
+        "A fast-output fixture records byte counts and no silent loss.",
+        "If retention cap prunes, transcript chunk references prove what remains and what was pruned.",
+        "UI thread never blocks on raw PTY ingestion."
+      ]
+    },
+    {
+      "id": "P0-TERMINAL-ACCESSIBILITY-TEXT-MIRROR",
+      "priority": "P0",
+      "source_repos": [
+        "ghostty-org/ghostty"
+      ],
+      "theme": "Accessible terminal text model separate from renderer",
+      "observed_signal": "Ghostty screen-reader discussion notes GPU rendering prevents screen readers from extracting terminal state and calls for direct screen-reader output, terminal-state exposure, cursor navigation support, and spam silencing.",
+      "pm_current_coverage": "PM has accessibility requirements and screen-reader-readable labels, plus requested-vs-effective disclosure for accessibility support.",
+      "gap": "PM still needs an explicit terminal accessibility text mirror and speech/event throttling model; labels alone are insufficient for a terminal grid.",
+      "proposal": "Add TerminalAccessibleBuffer projection from canonical grid/transcript state, with cursor navigation, line/selection reading, output announcement modes, and long-output silence/throttle controls.",
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "acceptance_tests": [
+        "Screen reader projection can read current line, selection, prompt/command boundaries, and latest output without scraping GPU pixels.",
+        "Long-running spam commands throttle announcements without hiding state."
+      ]
+    },
+    {
+      "id": "P0-PLAN-ACT-PERMISSION-BOUNDARY",
+      "priority": "P0",
+      "source_repos": [
+        "cline/cline",
+        "openai/codex",
+        "warpdotdev/warp"
+      ],
+      "theme": "Plan/Act/autonomy boundaries must be runtime enforced",
+      "observed_signal": "Cline v4 issue reports plan-mode tasks writing files and running Docker/DB schema changes; Cline issue list includes destructive shell commands running without approval when model emitted requires_approval=false; Codex and Warp both expose approvals/autonomy settings and managed permission profile evolution.",
+      "pm_current_coverage": "PM has central tool policy engine, permission model, FileSafe, and terminal pre-run approval requirements.",
+      "gap": "Need model-independent enforcement receipt that a plan/autonomy mode cannot be downgraded by model output or adapter schema.",
+      "proposal": "Add AutonomyCeilingReceipt checked after provider/tool parsing but before execution. The runtime, not the model/tool payload, decides whether mutation can proceed.",
+      "target_docs": [
+        "Plans/Permissions_System.md",
+        "Plans/Tools.md",
+        "Plans/Run_Modes.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "acceptance_tests": [
+        "A malicious/buggy tool call with requires_approval=false is still blocked under Plan/Read-only mode.",
+        "Pre-run terminal approval displays command, cwd, mutation class, and effective mode ceiling."
+      ]
+    },
+    {
+      "id": "P0-TOOL-RESULT-SETTLEMENT",
+      "priority": "P0",
+      "source_repos": [
+        "agent0ai/agent-zero",
+        "cline/cline",
+        "earendil-works/pi",
+        "openai/codex"
+      ],
+      "theme": "Partial/truncated/nullable provider tool turns cannot count as success",
+      "observed_signal": "Agent Zero issue list reports finish_reason=length treated as success and causing unbounded retry; Cline issue list reports large MCP tool_result crash; Pi issue list reports null content/reasoning during tool use; Codex issue list has redaction-hook timing for tool output.",
+      "pm_current_coverage": "PM has normalized tool outcomes and provider bridge output preservation requirements.",
+      "gap": "Need explicit `ToolTurnSettlement` state machine for provider native turns: success, partial, truncated, malformed, nullable-content, redacted, retained, retryable, fatal.",
+      "proposal": "Add no-lossy-success rule: a tool/model turn is not successful until required content/result/error/truncation metadata is retained and normalized. Length truncation is `partial_truncated`, not success.",
+      "target_docs": [
+        "Plans/Tools.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "acceptance_tests": [
+        "finish_reason=length with tool call is classified partial_truncated.",
+        "nullable reasoning/content arrays are normalized without crashing and without dropping provider-native metadata.",
+        "large MCP tool_result is stored as managed output ref or rejected with explicit retention failure."
+      ]
+    },
+    {
+      "id": "P0-PROVIDER-METADATA-REPLAY",
+      "priority": "P0",
+      "source_repos": [
+        "cline/cline",
+        "agent0ai/agent-zero",
+        "earendil-works/pi",
+        "openai/codex"
+      ],
+      "theme": "Provider-native reasoning/thinking/message metadata replay",
+      "observed_signal": "Cline PRs/issues target model catalogs, reasoning effort controls, provider IDs, image capability omission, transient empty model responses, string agent messages, tool invocation repair; Pi issues include thinking-block normalization and Bedrock/OpenAI Responses provider work; Codex PR scopes model cache by provider/account.",
+      "pm_current_coverage": "PM has requested/effective provider/model/account identity and provider facade normalization.",
+      "gap": "Need a typed provider-native artifact replay/drop/canonicalize policy for thinking blocks, signatures, reasoning IDs, nullable content, model variants, image/video content, provider account scoping.",
+      "proposal": "Add ProviderNativeMetadataPolicy table: per provider/model capability, fields to retain, redact, drop-on-cross-provider, replay-only-same-account, or canonicalize. Include cache keys and model catalog version.",
+      "target_docs": [
+        "Plans/Models_System.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Multi-Account.md"
+      ],
+      "acceptance_tests": [
+        "Switching provider/model never replays incompatible native reasoning blocks.",
+        "Model cache scoped by provider+account+capability catalog version.",
+        "Image/tool/reasoning content gates check capabilities before sending."
+      ]
+    },
+    {
+      "id": "P0-HISTORY-STORAGE-CAPS",
+      "priority": "P0",
+      "source_repos": [
+        "agent0ai/agent-zero",
+        "cline/cline",
+        "earendil-works/pi"
+      ],
+      "theme": "Bounded session/history storage",
+      "observed_signal": "Agent Zero issue list reports chat history metadata ~127MB and raw JSON pollution of utility-model context; Cline issues/PRs target large MCP result crashes and compacted provider history; Pi has a SQLite session-storage PR.",
+      "pm_current_coverage": "PM uses seglog/redb/checkpoints and says transcript retention is bounded/honest.",
+      "gap": "Need explicit per-record, per-turn, per-tool-result, and per-thread cap policy with managed-output references and context compiler backpressure.",
+      "proposal": "Add HistoryObjectBudget and ManagedOutputRef requirements. Segment large histories by reference; never inline unbounded JSON into model context.",
+      "target_docs": [
+        "Plans/storage-plan.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "acceptance_tests": [
+        "127MB metadata fixture is rejected/segmented before UI or model context load.",
+        "Context compiler emits compact summaries plus refs, not raw massive JSON.",
+        "Large tool results remain retrievable from artifacts with hashes."
+      ]
+    },
+    {
+      "id": "P0-RELEASE-MIGRATION-GATE",
+      "priority": "P0",
+      "source_repos": [
+        "cline/cline",
+        "agent0ai/agent-zero",
+        "earendil-works/pi",
+        "ghostty-org/ghostty",
+        "warpdotdev/warp",
+        "openai/codex"
+      ],
+      "theme": "Release, installer, migration, and rollback hardening",
+      "observed_signal": "Cline v4 issues report task corruption and release stability concerns; Agent Zero issue list includes missing upgrade tag, v2 regression, Launcher/self-update bugs; Pi has binary/provenance and packaging/link issues; Ghostty 1.3.1 quickly patched 1.3.0 regressions; Warp changelog shows frequent migration/restore fixes; Codex changelog shows frequent CLI/app releases.",
+      "pm_current_coverage": "PM has governance gates and protected namespace, but release/migration strategy is not as explicit as runtime specs.",
+      "gap": "Need a release compatibility plan: canary/stable rings, artifact provenance, generated-link checks, state migration tests, downgrade/backup restore, extension/CLI/server protocol handshake, terminal session preservation across updates.",
+      "proposal": "Add Release_Compatibility_and_Migration.md or PlanUnits under Progression_Gates. All major updates must run state-migration and rollback fixtures before users get them.",
+      "target_docs": [
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md",
+        "Plans/Goal_Runtime_System.md"
+      ],
+      "acceptance_tests": [
+        "Major version migration has backup/restore test.",
+        "Generated release links validate.",
+        "Protocol version mismatch blocks with actionable message.",
+        "App update does not orphan terminal/process sessions silently."
+      ]
+    },
+    {
+      "id": "P1-TERMINAL-CLIPBOARD-PASTE-SAFETY",
+      "priority": "P1",
+      "source_repos": [
+        "ghostty-org/ghostty",
+        "warpdotdev/warp",
+        "tmux/tmux"
+      ],
+      "theme": "Clipboard, pasteboard, bracketed paste, OSC 52",
+      "observed_signal": "Ghostty issue list includes paste preferring NSURL over plain text; Ghostty 1.3.0 fixed a paste/drag command-execution CVE; tmux CHANGES include OSC 52 clipboard support; Warp issues include copy/paste isolation.",
+      "pm_current_coverage": "PM has copy/paste/selection semantics and default copy-on-select disabled.",
+      "gap": "Need explicit paste-source priority and pasted-control-character handling, bracketed-paste negotiation, OSC 52 policy, and cross-context clipboard isolation.",
+      "proposal": "Add TerminalClipboardPolicy: plain text preference, URI/file types explicit, control-character confirmation, bracketed paste support state, OSC 52 allow/ask/deny, local/remote/container clipboard scope.",
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Permissions_System.md",
+        "Plans/FileSafe.md"
+      ],
+      "acceptance_tests": [
+        "Pasting mixed URL/plain text chooses plain text unless user selects URI action.",
+        "Pasted Ctrl+C/control chars cannot execute without warning/normalization.",
+        "OSC 52 read/write respects policy and remote trust."
+      ]
+    },
+    {
+      "id": "P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION",
+      "priority": "P1",
+      "source_repos": [
+        "ghostty-org/ghostty",
+        "warpdotdev/warp"
+      ],
+      "theme": "Global keyboard hook isolation",
+      "observed_signal": "Ghostty discussion reports system-wide keyboard freezes tied to global quick-terminal keybinding/event tap; Warp changelog includes global hotkey memory leak fixes.",
+      "pm_current_coverage": "PM has shortcut conflict disclosure and terminal input ownership states.",
+      "gap": "No explicit global-event-tap isolation requirements: hooks must not run on UI/compositor main thread, must auto-disable on stall, and must be observable.",
+      "proposal": "Add GlobalShortcutSafety PlanUnit for all app-level hotkeys, not only terminal. Include watchdog, timeout auto-disable, kill switch, and diagnostic banner.",
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Permissions_System.md"
+      ],
+      "acceptance_tests": [
+        "Global hotkey handler stall cannot freeze system input.",
+        "User can disable terminal/global hotkey path from safe mode.",
+        "Diagnostic bundle records hook health."
+      ]
+    },
+    {
+      "id": "P1-TERMINAL-SESSION-PRESERVE-UPDATE",
+      "priority": "P1",
+      "source_repos": [
+        "warpdotdev/warp",
+        "tmux/tmux",
+        "ghostty-org/ghostty"
+      ],
+      "theme": "Terminal session continuity across relaunch/update",
+      "observed_signal": "Warp issue requests terminal/agent sessions alive across relaunch/app updates; Warp changelog includes reopen closed sessions and restored WSL PWD; tmux's mature value is session/window/pane durability.",
+      "pm_current_coverage": "PM says live continuity after app restart is best-effort and explicit when unavailable; historical state is not fake live shell.",
+      "gap": "Need a concrete platform matrix for live session survival/reconnect and a UX flow for when only historical review can be restored.",
+      "proposal": "Add TerminalSessionRestorePolicy by platform/runtime: local PTY, WSL, SSH, container, devcontainer. Define reconnect tokens, when impossible, and exact banners/actions.",
+      "target_docs": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "acceptance_tests": [
+        "Relaunch fixtures prove PWD/profile/layout/transcript restoration.",
+        "If live PTY cannot survive, UI says review-limited and offers restart/rerun, not fake continuity."
+      ]
+    },
+    {
+      "id": "P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS",
+      "priority": "P1",
+      "source_repos": [
+        "warpdotdev/warp",
+        "agent0ai/agent-zero",
+        "cline/cline"
+      ],
+      "theme": "Resource ceilings for indexers/watchers/background agents",
+      "observed_signal": "Warp issue reports exhausting hundreds of thousands of file watchers; Agent Zero history bloat crashes; Cline large MCP/history issues.",
+      "pm_current_coverage": "PM has dirty-layer watcher design and storage rollups but not a global resource-governor narrative for all background services.",
+      "gap": "Need per-project/global file watcher, indexer, terminal transcript, MCP result, and agent-context budgets with user-visible degradation.",
+      "proposal": "Add RuntimeResourceGovernor PlanUnit with quotas, backoff, suspension, prioritization, and Explain/Resume controls.",
+      "target_docs": [
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "acceptance_tests": [
+        "Large repo cannot allocate unbounded watchers.",
+        "Quota exceeded degrades with warning and exact subsystem, not crash."
+      ]
+    },
+    {
+      "id": "P1-MCP-AND-THIRD-PARTY-CONFIG-IMPORT",
+      "priority": "P1",
+      "source_repos": [
+        "cline/cline",
+        "warpdotdev/warp",
+        "agent0ai/agent-zero",
+        "openai/codex"
+      ],
+      "theme": "MCP and external agent config import with trust boundaries",
+      "observed_signal": "Cline emphasizes MCP/plugins and `.clinerules`; Warp changelog says MCP servers detected from third-party agents become visible/spawnable and project MCP servers spawn from repo root; Codex docs expose MCP/skills/plugins surfaces.",
+      "pm_current_coverage": "PM has MCP Integration and central tool registry/permission model.",
+      "gap": "Need config-import provenance and trust policy: imported MCP config is a suggestion, not automatically executable.",
+      "proposal": "Add ImportedToolConfigSource records: source app/file, hash, cwd resolution, permission default, secret redaction, first-run review.",
+      "target_docs": [
+        "Plans/MCP_Integration.md",
+        "Plans/Tools.md",
+        "Plans/Permissions_System.md",
+        "Plans/FileSafe.md"
+      ],
+      "acceptance_tests": [
+        "Imported MCP server from `.claude`/Codex/Warp config defaults ask/disabled until reviewed.",
+        "Relative command cwd is project-root only when explicitly resolved and shown."
+      ]
+    },
+    {
+      "id": "P1-CONTEXT-SKILL-BUDGETS",
+      "priority": "P1",
+      "source_repos": [
+        "openai/codex",
+        "cline/cline",
+        "earendil-works/pi"
+      ],
+      "theme": "Skill/context catalog progressive disclosure",
+      "observed_signal": "Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.",
+      "pm_current_coverage": "PM Prompt Pipeline owns skill bundling and compaction algorithms.",
+      "gap": "Need explicit skill/tool/catalog listing budgets and omission warnings in GUI.",
+      "proposal": "Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries.",
+      "target_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Skills_System.md",
+        "Plans/Tools.md",
+        "Plans/Models_System.md"
+      ],
+      "acceptance_tests": [
+        "Skill list cannot crowd out run context; omitted skills/tools are visible in context inspector with reason.",
+        "Selected skill loads full instructions only when chosen."
+      ]
+    },
+    {
+      "id": "P1-SECURITY-CREDENTIAL-LOGGING",
+      "priority": "P1",
+      "source_repos": [
+        "agent0ai/agent-zero",
+        "cline/cline",
+        "openai/codex"
+      ],
+      "theme": "Credential and sensitive output redaction timing",
+      "observed_signal": "Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.",
+      "pm_current_coverage": "PM has FileSafe and privileged session metadata minimization.",
+      "gap": "Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only.",
+      "proposal": "Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs; keep secure raw vault only when required for replay with explicit policy.",
+      "target_docs": [
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/Tools.md",
+        "Plans/storage-plan.md"
+      ],
+      "acceptance_tests": [
+        "Secret fixture in tool output is redacted before GUI transcript render.",
+        "Privilege metadata logs actor/target/realm/transport without command secrets."
+      ]
+    },
+    {
+      "id": "P1-CLI-BRIDGE-PROTOCOL-HANDSHAKE",
+      "priority": "P1",
+      "source_repos": [
+        "agent0ai/agent-zero",
+        "cline/cline",
+        "openai/codex"
+      ],
+      "theme": "CLI/server/extension protocol compatibility",
+      "observed_signal": "Agent Zero CLI/server mismatch produced terminal corruption, false code-exec status, timeout, orphan, and cooked-mode issues; Cline CLI package/version issues and codesigning failures; Codex CLI releases patch platform/sandbox/proxy behavior.",
+      "pm_current_coverage": "PM has CLI_Bridged_Providers and ProviderRequestEnvelope.",
+      "gap": "Need version/capability handshake and terminal-mode restore around all CLI bridges.",
+      "proposal": "Add BridgeHandshakeReceipt: protocol version, binary hash, provider version, shell/terminal mode pre/post, cwd, capabilities, keepalive, timeout policy.",
+      "target_docs": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Tools.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "acceptance_tests": [
+        "Version mismatch blocks before raw protocol noise hits terminal.",
+        "Bridge restores cooked mode/echo on crash or timeout.",
+        "Orphan process cleanup receipts written."
+      ]
+    },
+    {
+      "id": "P1-AGENT-FOCUS-WATCHDOG",
+      "priority": "P1",
+      "source_repos": [
+        "warpdotdev/warp",
+        "cline/cline",
+        "openai/codex"
+      ],
+      "theme": "Agent focus/progress watchdog for GUI",
+      "observed_signal": "Warp issue list includes agent loses focus/stops work; Codex goal docs recommend compact progress reports with current checkpoint/verified/remains/blocked; Cline has repeating tasks/stuck thinking reports.",
+      "pm_current_coverage": "PM has Goal Runtime and closure registry concepts, but terminal/dev-loop progress integration can be stronger.",
+      "gap": "Need GUI-visible per-agent watchdog: last action, last terminal snapshot, expected next check, stalled state, and user steering.",
+      "proposal": "Add AgentProgressHeartbeat event and Focus/Attention state for GoalRuns and terminal-bound agents.",
+      "target_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "acceptance_tests": [
+        "Long-running shell command exposes next-check countdown and manual snapshot trigger.",
+        "Agent stalled/no-heartbeat surfaces as attention_required without losing terminal session."
+      ]
+    },
+    {
+      "id": "P2-DOCS-GENERATED-LINK-VALIDATION",
+      "priority": "P2",
+      "source_repos": [
+        "earendil-works/pi"
+      ],
+      "theme": "Generated docs/release notes link validation",
+      "observed_signal": "Pi issue reports generated release-note relative links broken on GitHub/terminal and suggests improving prompt/tests.",
+      "pm_current_coverage": "PM has governance shards/evidence and plan validators.",
+      "gap": "Need link-mode validators for generated Markdown across GitHub, local GUI, terminal/plaintext, and app viewer.",
+      "proposal": "Add GeneratedMarkdownLinkCheck to governance seal.",
+      "target_docs": [
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "acceptance_tests": [
+        "Release notes/bootstrap docs validate relative links under repo, GitHub rendered, and app routes."
+      ]
+    },
+    {
+      "id": "P2-BINARY-PROVENANCE-ASSETS",
+      "priority": "P2",
+      "source_repos": [
+        "earendil-works/pi",
+        "cline/cline",
+        "openai/codex"
+      ],
+      "theme": "Binary/provenance/codesigning",
+      "observed_signal": "Pi issue requests SHA256SUMS/provenance for binaries; Cline has AMFI/codesign killed CLI and Darwin sign PRs; Codex ships npm CLI releases.",
+      "pm_current_coverage": "PM has Spec Lock/governance hashes but product release asset provenance is not detailed.",
+      "gap": "Need release asset signature/hash/SBOM policy for any PM distributed binary/plugin/bridge.",
+      "proposal": "Add ReleaseArtifactProvenance PlanUnit.",
+      "target_docs": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "acceptance_tests": [
+        "Every downloadable binary/plugin has SHA256, signing/provenance, build source ref, and install verification."
+      ]
+    },
+    {
+      "id": "P2-GUI-NOT-CLI-CONTROL-PLANE",
+      "priority": "P2",
+      "source_repos": [
+        "warpdotdev/warp",
+        "openai/codex",
+        "cline/cline",
+        "tmux/tmux"
+      ],
+      "theme": "Translate CLI lessons into GUI adapter contracts",
+      "observed_signal": "Warp became an agentic development environment born out of terminal; Codex offers CLI/app/IDE; Cline offers IDE/terminal/CLI/SDK/Kanban; tmux is terminal-native and scriptable.",
+      "pm_current_coverage": "PM is GUI-first and Section15 says terminal is canonical interactive shell surface, not app CLI.",
+      "gap": "Need explicit non-goal: do not let a PM CLI become the main product. CLI/terminal lessons feed internal tool/adapter APIs, GUI command catalog, and embedded terminal behavior.",
+      "proposal": "Add GUI-first terminal policy note: built-in terminal is a user shell and agent surface; PM command/control remains GUI/Goal/PlanUnit driven.",
+      "target_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "acceptance_tests": [
+        "Every terminal action has GUI-visible state and command palette command; no core workflow requires opaque CLI-only state."
+      ]
+    }
+  ]
+}

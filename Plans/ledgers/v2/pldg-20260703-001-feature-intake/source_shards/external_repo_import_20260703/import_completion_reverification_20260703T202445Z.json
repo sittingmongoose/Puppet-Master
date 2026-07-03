@@ -1,0 +1,94 @@
+{
+  "checks": {
+    "all_atom_statuses": {
+      "compiled_to_plan": 122
+    },
+    "all_atoms_gui_related_false": 34,
+    "all_atoms_gui_related_missing": 0,
+    "all_atoms_gui_related_true": 88,
+    "design_atom_source_row_ids_not_in_source": [],
+    "design_atoms_total": 122,
+    "duplicate_import_atoms": [],
+    "duplicate_source_rows": [],
+    "imported_design_atoms": 113,
+    "imported_domain_counts": {
+      "agent_control_subagents": 8,
+      "context_cache": 17,
+      "cross_system_runtime_contracts": 4,
+      "external_handoff_and_triage": 2,
+      "instruction_integrity": 1,
+      "mcp_tools_and_tool_settlement": 10,
+      "memory_history_logging": 4,
+      "multimodal_and_attachments": 2,
+      "opencode_v2_delta": 1,
+      "provider_capability_and_metadata": 19,
+      "security_release_supply_chain": 9,
+      "terminal_runtime": 26,
+      "transport_websocket_streaming": 6,
+      "ui_projection_and_hard_gates": 4
+    },
+    "imported_priority_counts": {
+      "P0": 50,
+      "P1": 49,
+      "P2": 14
+    },
+    "ledger_ready_rows": 113,
+    "master_backlog_csv_rows": 113,
+    "prompt_files_preserved": {
+      "00_CODEX_LEDGER_IMPORT_PROMPT.md": true,
+      "00_START_HERE_SHORT_PROMPT.md": true
+    },
+    "raw_source_artifacts_in_ledger_shard": 23,
+    "raw_source_artifacts_in_zip": 23,
+    "required_field_mismatch_sample": [],
+    "required_field_mismatches": 0,
+    "required_fields_checked": [
+      "source_row_id",
+      "priority",
+      "title",
+      "finding_family",
+      "source_repos",
+      "observed_signal",
+      "pm_current_coverage",
+      "pm_gap_or_delta",
+      "proposal_or_recommendation",
+      "target_docs",
+      "acceptance_tests_or_validation_surface",
+      "relationship_to_prior_reports",
+      "raw_row"
+    ],
+    "source_row_ids_missing_from_design_atoms": [],
+    "zip_files_byte_matched_in_source_shards": 32,
+    "zip_hash_mismatches": [],
+    "zip_missing_from_source_shards": [],
+    "zip_payload_files": 32
+  },
+  "conclusion": "Ledger content completeness is confirmed: all attached zip payload files are preserved byte-for-byte in source_shards, both prompt files are present, all 113 ledger-ready source rows are imported exactly once as design atoms, required row fields and raw_row payloads match the source JSONL, and every design atom has gui_related classified. The remaining stale migration-proof validation is generated-governance/migration metadata drift after compile, not a missing ledger import item.",
+  "created_at_utc": "2026-07-03T20:24:45Z",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "post_compile_validator_notes": {
+    "git_diff_check": {
+      "status": "pass"
+    },
+    "pm_plan_index_validate": {
+      "acceptance_unit_count": 19633,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 5473,
+      "status": "pass"
+    },
+    "pm_plan_migration_validate": {
+      "error_families": [
+        "stale_batch_report_sha256_after",
+        "complete_final_summary_live_plan_unit_count_stale"
+      ],
+      "expected_live_plan_unit_count": 5473,
+      "scope_note": "Plans/.plan_migration was not refreshed in this ledger completeness turn; governance/migration refresh remains a separate explicit scope.",
+      "stale_summary_live_plan_unit_count": 5354,
+      "status": "fail_stale_migration_proof_pending_refresh"
+    }
+  },
+  "schema_id": "pm.external_repo_import_completeness_reverification.v1",
+  "source_zip": "/Users/jaredsmacbookair/Downloads/pm_external_repo_ledger_import_bundle_2026-07-03.zip",
+  "status": "pass"
+}

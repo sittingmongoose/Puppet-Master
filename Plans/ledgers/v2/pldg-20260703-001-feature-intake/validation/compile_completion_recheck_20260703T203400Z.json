@@ -1,0 +1,87 @@
+{
+  "atom_compile_summary": {
+    "compile_disposition_counts": {
+      "compile_to_existing_planunit": 4,
+      "create_new_planunit": 118
+    },
+    "compiled_to_plan_atoms": 122,
+    "deferred_atoms": 0,
+    "design_atoms_total": 122,
+    "gui_related_false": 34,
+    "gui_related_true": 88
+  },
+  "created_at_utc": "2026-07-03T20:34:00Z",
+  "governance_status": "pending_seal",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "notes": "Compile lane is complete for live Plans docs and allowed Plans/.plan_index outputs. Migration proof refresh and governance seal remain explicit future scopes; Spec_Lock, shards, evidence, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, and runtime dispatch were not created or updated.",
+  "planunit_evidence": {
+    "atom_planunit_edges_checked": 126,
+    "compiled_plan_unit_ids_in_queue": 127,
+    "missing_current_ledger_atom_in_planunit_lineage": [],
+    "new_owner_doc_profile": {
+      "path": "Plans/Release_Supply_Chain.md",
+      "plan_profile_marker": "> **PlanProfile:** New Plan Authoring Profile",
+      "source_preserving_planunit_present": false
+    },
+    "reciprocal_source_lineage_status": "pass"
+  },
+  "schema_id": "pm.ledger_compile_completion_recheck.v1",
+  "status": "compiled_with_governance_pending_and_migration_proof_stale",
+  "validator_results": {
+    "forbidden_artifact_diff_check": {
+      "changed_forbidden_artifacts": [],
+      "status": "pass"
+    },
+    "git_diff_check": {
+      "status": "pass"
+    },
+    "pm_bootstrap_ledger_validate": {
+      "status": "pass",
+      "summary": {
+        "atoms": 122,
+        "compile_queue_items": 1,
+        "decisions": 5,
+        "events_before_this_event": 10,
+        "plan_units_checked": 3067,
+        "questions": 1
+      }
+    },
+    "pm_plan_index_generate": {
+      "acceptance_unit_count": 19633,
+      "coverage_status": "pass",
+      "no_worknodes_created": true,
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "nodeseed_candidates_created": false,
+      "plan_unit_count": 5473,
+      "status": "pass"
+    },
+    "pm_plan_index_validate": {
+      "acceptance_unit_count": 19633,
+      "coverage_status": "pass",
+      "node_readiness_status": "blocked_runtime_certification_incomplete",
+      "plan_unit_count": 5473,
+      "status": "pass"
+    },
+    "pm_plan_migration_validate": {
+      "classification": "stale_generated_migration_proof_pending_explicit_refresh",
+      "failure_count": 102,
+      "failure_families": {
+        "complete_final_summary_live_plan_unit_count_stale": 1,
+        "doc_count_mismatch": 1,
+        "inventory_doc_set_mismatch": 1,
+        "stale_batch_report_sha256_after": 99
+      },
+      "live_plan_unit_count_failure": [
+        {
+          "actual": 5354,
+          "error": "complete_final_summary_live_plan_unit_count_stale",
+          "expected": 5473,
+          "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json"
+        }
+      ],
+      "returncode": 1,
+      "schema_id": "pm.plan_migration.validation_report.v1",
+      "status": "fail"
+    }
+  }
+}

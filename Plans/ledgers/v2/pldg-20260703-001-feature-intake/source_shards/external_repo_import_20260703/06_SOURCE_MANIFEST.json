@@ -1,0 +1,253 @@
+{
+  "schema_id": "pm.external_repo_ledger_import_manifest.v1",
+  "created_at_utc": "2026-07-03T19:18:18Z",
+  "purpose": "Codex-ready source packet for importing all external repo review findings into a new Puppet Master ledger.",
+  "source_window": "Approximately the last six months as requested in the review passes, with final closure on 2026-07-03.",
+  "repos_reviewed": [
+    "anomalyco/opencode v1/dev/beta plus v2 specs",
+    "cline/cline",
+    "agent0ai/agent-zero",
+    "earendil-works/pi",
+    "openai/codex",
+    "ghostty-org/ghostty",
+    "warpdotdev/warp",
+    "tmux/tmux"
+  ],
+  "pm_context": "Puppet Master is GUI-first; it is not building a CLI, but it has a built-in PTY-backed terminal for user-run commands and agent-adjacent workflows.",
+  "source_artifacts": [
+    {
+      "path": "raw_source_artifacts/opencode_pm_gap_analysis_2026-07-03.md",
+      "original_path": "/mnt/data/opencode_pm_gap_analysis_2026-07-03.md",
+      "bytes": 41370,
+      "sha256": "d254ecd8bb25037d085a619b4f04c61c13802f69699e53e4a56e11bf7fedce74",
+      "line_count": 638,
+      "role": "full_report"
+    },
+    {
+      "path": "raw_source_artifacts/pm_external_repo_deep_evaluation_2026-07-03.md",
+      "original_path": "/mnt/data/pm_external_repo_deep_evaluation_2026-07-03.md",
+      "bytes": 42486,
+      "sha256": "5813f1f88dd3aedc7ec78022d3a223c381b2f529c2c722a3536ba2fb2b767afb",
+      "line_count": 492,
+      "role": "full_report"
+    },
+    {
+      "path": "raw_source_artifacts/pm_second_pass_repo_gap_review_2026-07-03.md",
+      "original_path": "/mnt/data/pm_second_pass_repo_gap_review_2026-07-03.md",
+      "bytes": 33275,
+      "sha256": "8a36fc649467e82176c8c4f1b460d38983a940d44b545e332582844076e7e56c",
+      "line_count": 405,
+      "role": "full_report"
+    },
+    {
+      "path": "raw_source_artifacts/pm_context_cache_websocket_repo_pass_2026-07-03.md",
+      "original_path": "/mnt/data/pm_context_cache_websocket_repo_pass_2026-07-03.md",
+      "bytes": 34502,
+      "sha256": "d3d1d17b7d00991e55fc81330a1fb3cd13762609770c4535593e75a9e522e30b",
+      "line_count": 477,
+      "role": "full_report"
+    },
+    {
+      "path": "raw_source_artifacts/pm_missed_domains_repo_pass_2026-07-03.md",
+      "original_path": "/mnt/data/pm_missed_domains_repo_pass_2026-07-03.md",
+      "bytes": 47928,
+      "sha256": "2acbb7669fa480617979713162d2c0a220d31848c81988167c8333498d690cac",
+      "line_count": 526,
+      "role": "full_report"
+    },
+    {
+      "path": "raw_source_artifacts/pm_final_external_repo_closure_pass_2026-07-03.md",
+      "original_path": "/mnt/data/pm_final_external_repo_closure_pass_2026-07-03.md",
+      "bytes": 22676,
+      "sha256": "bc118374470d506c22c87f607f8bbc4afa5e4e4cfd9e0a17a2243b177b7f0159",
+      "line_count": 341,
+      "role": "full_report"
+    },
+    {
+      "path": "raw_source_artifacts/pm_one_more_external_repo_pass_2026-07-03.md",
+      "original_path": "/mnt/data/pm_one_more_external_repo_pass_2026-07-03.md",
+      "bytes": 21924,
+      "sha256": "cd62342e88489eec37d72254b89fcaa149d528c5ae4a58d38fdcdb5d20619b9d",
+      "line_count": 332,
+      "role": "full_report"
+    },
+    {
+      "path": "raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl",
+      "original_path": "/mnt/data/pm_external_repo_action_backlog_2026-07-03.jsonl",
+      "bytes": 24340,
+      "sha256": "9b3c193f081255ef5086b37d16b9cef20d679ab2cdb9bc6da555e306ab9ffd3e",
+      "line_count": 20,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_second_pass_delta_backlog_2026-07-03.jsonl",
+      "original_path": "/mnt/data/pm_second_pass_delta_backlog_2026-07-03.jsonl",
+      "bytes": 15387,
+      "sha256": "d3a9e83b213d9239c37fee9ede30b050c5aa010d2873622869cf78dfb448f7ed",
+      "line_count": 16,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl",
+      "original_path": "/mnt/data/pm_context_cache_websocket_backlog_2026-07-03.jsonl",
+      "bytes": 6971,
+      "sha256": "890239cff46ba5735ba2b58a78e006cda1fdc4dd2cdd3e9dc9e3cfb384d48ac9",
+      "line_count": 18,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl",
+      "original_path": "/mnt/data/pm_missed_domains_backlog_2026-07-03.jsonl",
+      "bytes": 27105,
+      "sha256": "87ddb6dced1b30d116d9ff74f19e81851a9ca67b1b1cef577e93498de2533383",
+      "line_count": 19,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl",
+      "original_path": "/mnt/data/pm_final_external_repo_closure_backlog_2026-07-03.jsonl",
+      "bytes": 18762,
+      "sha256": "076ca82cec29325e67e3bfbd3367ea56345b070ce14934a19fc5a4247d8666ca",
+      "line_count": 14,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl",
+      "original_path": "/mnt/data/pm_one_more_external_repo_backlog_2026-07-03.jsonl",
+      "bytes": 7162,
+      "sha256": "0751e4f70f8e6cfca89dded8d9faa2b29a58692f2a714b770243988bd1efaa7b",
+      "line_count": 12,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/opencode_pm_plan_change_matrix.csv",
+      "original_path": "/mnt/data/opencode_pm_plan_change_matrix.csv",
+      "bytes": 6210,
+      "sha256": "22f0a52ad5efe409627e77f2b8cce8b1ae37feeb12316a84586b8f599ac6631e",
+      "line_count": 15,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.csv",
+      "original_path": "/mnt/data/pm_external_repo_action_backlog_2026-07-03.csv",
+      "bytes": 20847,
+      "sha256": "36c8bedfe38b30ec799d5657618d24177c1fc7745569e043aa308b5395411d63",
+      "line_count": 21,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.csv",
+      "original_path": "/mnt/data/pm_missed_domains_backlog_2026-07-03.csv",
+      "bytes": 24134,
+      "sha256": "5b96dd32ebbbc2b02ed94e0ea72ed1744127305e324ae555c0c5bf7222863573",
+      "line_count": 20,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_external_repo_evidence_matrix_2026-07-03.json",
+      "original_path": "/mnt/data/pm_external_repo_evidence_matrix_2026-07-03.json",
+      "bytes": 34638,
+      "sha256": "f9d3e3d82119d8c7e6921a5d0689c9dbb67f7d4714c550135f7954396e46b635",
+      "line_count": 701,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/pm_missed_domains_evidence_matrix_2026-07-03.json",
+      "original_path": "/mnt/data/pm_missed_domains_evidence_matrix_2026-07-03.json",
+      "bytes": 2995,
+      "sha256": "fb581d30bb3ac737ac57770ee5dcd2155f06748ae074bd2f3329a10d3c97736e",
+      "line_count": 122,
+      "role": "backlog_or_matrix"
+    },
+    {
+      "path": "raw_source_artifacts/Handoff Review and Pipeline Update.txt",
+      "original_path": "/mnt/data/Handoff Review and Pipeline Update.txt",
+      "bytes": 93214,
+      "sha256": "8303a27ae64a90855507f9bbca4a707c9bec4b4024c2a94b0fe23321f3758ff4",
+      "line_count": 2846,
+      "role": "pm_context_upload"
+    },
+    {
+      "path": "raw_source_artifacts/Audit of Puppet Master Docs.txt",
+      "original_path": "/mnt/data/Audit of Puppet Master Docs.txt",
+      "bytes": 35905,
+      "sha256": "be1bb41550c82e7eee4b04d90a315695e319f8322aac519c2810836518125163",
+      "line_count": 1054,
+      "role": "pm_context_upload"
+    },
+    {
+      "path": "raw_source_artifacts/Puppet Master Ledger Design.txt",
+      "original_path": "/mnt/data/Puppet Master Ledger Design.txt",
+      "bytes": 11605,
+      "sha256": "3272385847c816ab930c71fd8704f56a72c1ea480b8600bddcc2654bd4434c38",
+      "line_count": 335,
+      "role": "pm_context_upload"
+    },
+    {
+      "path": "raw_source_artifacts/Workflow Planning and Constraints.txt",
+      "original_path": "/mnt/data/Workflow Planning and Constraints.txt",
+      "bytes": 1761,
+      "sha256": "976eb11b5f58b7400981320dfb28f2af28064e4c02aba81741e0dbb975138fd1",
+      "line_count": 44,
+      "role": "pm_context_upload"
+    },
+    {
+      "path": "raw_source_artifacts/Planning Wizard Redesign.txt",
+      "original_path": "/mnt/data/Planning Wizard Redesign.txt",
+      "bytes": 4876,
+      "sha256": "137607cd371fca4611bb60bbd6ea09e6acdc5e3912050c9ba6ff53de56e1bf83",
+      "line_count": 104,
+      "role": "pm_context_upload"
+    }
+  ],
+  "generated_artifacts": [
+    {
+      "path": "00_CODEX_LEDGER_IMPORT_PROMPT.md",
+      "bytes": 5655,
+      "sha256": "3de90b5b3897fc164dbbaf9a0bcd8a97fa92a965ffc5abb090e3ba90003429fe",
+      "line_count": 109
+    },
+    {
+      "path": "00_START_HERE_SHORT_PROMPT.md",
+      "bytes": 1622,
+      "sha256": "204842d261bf08e669c87d24fbbec3a18963dbdeebfa5d9a655f974fdddcca9e",
+      "line_count": 19
+    },
+    {
+      "path": "01_FULL_SOURCE_PACKET.md",
+      "bytes": 322132,
+      "sha256": "a413b005746ac4f90bb16c9cdd9ee1d1430802cb038c8a443b50bbec46043237",
+      "line_count": 3537
+    },
+    {
+      "path": "02_LEDGER_READY_ATOMS.jsonl",
+      "bytes": 300916,
+      "sha256": "024bc163c616808c130b9a37a6ff13815018f66afb130e8be2fa44935818e4b9",
+      "line_count": 113
+    },
+    {
+      "path": "03_MASTER_BACKLOG_TABLE.csv",
+      "bytes": 116883,
+      "sha256": "562431cee814caf7b53ac69a43f70c803f5dfcfd0277f3c0940dfc08be8c831d",
+      "line_count": 114
+    },
+    {
+      "path": "04_EVIDENCE_REGISTRY.json",
+      "bytes": 43437,
+      "sha256": "ae23d06c60f5271205f86a6a06e1318c14ca3565b2e67ba4529b716cf97f007e",
+      "line_count": 855
+    },
+    {
+      "path": "05_IMPORT_COMPLETENESS_CHECKLIST.md",
+      "bytes": 14382,
+      "sha256": "ea32a4134118ed525705b3df13c18536d30459918dc91485de038346de1665e8",
+      "line_count": 140
+    },
+    {
+      "path": "README.md",
+      "bytes": 1567,
+      "sha256": "5a3d4f46756ca1856544c3c81f44db33e7886368f6cf8c6f975307d777c99618",
+      "line_count": 40
+    }
+  ]
+}

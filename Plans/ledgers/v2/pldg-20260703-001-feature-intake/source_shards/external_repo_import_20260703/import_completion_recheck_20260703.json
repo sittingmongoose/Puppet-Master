@@ -1,0 +1,87 @@
+{
+  "checks": {
+    "all_design_atoms": 122,
+    "checklist_source_ref_count": 1,
+    "csv_rows": 113,
+    "directly_referenced_backlog_files": [
+      "opencode_pm_plan_change_matrix.csv",
+      "pm_context_cache_websocket_backlog_2026-07-03.jsonl",
+      "pm_external_repo_action_backlog_2026-07-03.jsonl",
+      "pm_final_external_repo_closure_backlog_2026-07-03.jsonl",
+      "pm_missed_domains_backlog_2026-07-03.jsonl",
+      "pm_one_more_external_repo_backlog_2026-07-03.jsonl",
+      "pm_second_pass_delta_backlog_2026-07-03.jsonl"
+    ],
+    "domain_counts_imported": {
+      "agent_control_subagents": 8,
+      "context_cache": 17,
+      "cross_system_runtime_contracts": 4,
+      "external_handoff_and_triage": 2,
+      "instruction_integrity": 1,
+      "mcp_tools_and_tool_settlement": 10,
+      "memory_history_logging": 4,
+      "multimodal_and_attachments": 2,
+      "opencode_v2_delta": 1,
+      "provider_capability_and_metadata": 19,
+      "security_release_supply_chain": 9,
+      "terminal_runtime": 26,
+      "transport_websocket_streaming": 6,
+      "ui_projection_and_hard_gates": 4
+    },
+    "extra_import_rows_not_in_source": [],
+    "extra_payload_files": [],
+    "gui_related_counts_all_atoms": {
+      "false": 34,
+      "true": 88
+    },
+    "gui_related_counts_imported": {
+      "false": 27,
+      "true": 86
+    },
+    "hash_or_size_mismatches": [],
+    "imported_atoms": 113,
+    "known_future_compile_adjudication_items": [
+      "12 imported rows preserve empty target_docs and require future owner adjudication during compile.",
+      "Present-but-null-or-empty source fields are preserved exactly as packet data, not treated as import omissions.",
+      "Canonical Plans, PlanUnits, WorkNodes, NodeSeeds, queues, Spec_Lock, shards, evidence, plan_graph, and auto_decisions were not touched during import verification."
+    ],
+    "ledger_copied_payload_file_count": 32,
+    "manifest_source_ref_count": 1,
+    "missing_payload_files": [],
+    "missing_source_rows_in_imports": [],
+    "priority_counts_imported": {
+      "P0": 50,
+      "P1": 49,
+      "P2": 14
+    },
+    "prompt_source_ref_count": 4,
+    "raw_narrative_and_evidence_artifacts_preserved_as_packet_source_lineage": true,
+    "raw_source_artifact_files_directly_referenced_by_import_atoms": 7,
+    "raw_source_artifacts_preserved": 23,
+    "required_fields_checked": [
+      "source_row_id",
+      "priority",
+      "title",
+      "finding_family",
+      "source_repos",
+      "observed_signal",
+      "pm_current_coverage",
+      "pm_gap_or_delta",
+      "proposal_or_recommendation",
+      "target_docs",
+      "acceptance_tests_or_validation_surface",
+      "relationship_to_prior_reports",
+      "raw_row"
+    ],
+    "source_row_id_dupes_in_imports": [],
+    "source_row_id_dupes_in_source": [],
+    "source_rows": 113,
+    "top_level_required_field_failures": [],
+    "zip_payload_file_count": 32
+  },
+  "conclusion": "All attached zip payload files are preserved byte-for-byte in source_shards; every one of the 113 ledger-ready rows is imported exactly once as a design atom; all required normalized fields and raw_row payloads match the source JSONL exactly. Prompt/manifest/checklist constraints are preserved through source refs and decisions. Remaining issues are future compile owner-adjudication concerns, not missing ledger import data.",
+  "created_at_utc": "2026-07-03T20:06:12Z",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "schema_id": "pm.external_repo_import_completeness_recheck.v1",
+  "status": "pass"
+}
