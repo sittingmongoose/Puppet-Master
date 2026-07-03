@@ -57,7 +57,9 @@ source_lineage:
   - pldg-20260610-001-ledger-plan-system:corr-0002
   - source_ref:chat:design-discussion
   - source_ref:chat:user-node-readiness-correction
-preserved_exact_tokens: ["Plans/Plan_To_Node_Compilation.md", "NodeSeed", "WorkNode", "PlanUnit", "PlanUnit index", "node-readiness report", "Do not create WorkNodes", "not creating the work nodes", "cannot create the work nodes yet", "all the plans are complete"]
+source_atom_ids:
+  - atom-0002
+preserved_exact_tokens: ["Plans/Plan_To_Node_Compilation.md", "NodeSeed", "WorkNode", "PlanUnit", "PlanUnit index", "node-readiness report", "Do not create WorkNodes", "not creating the work nodes", "cannot create the work nodes yet", "all the plans are complete", "Do not write canonical Plans yet.", "Do not write canonical Plans until Jared explicitly asks to compile the ledger.", "Do not create or update Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph, or auto_decisions."]
 negative_constraints:
   - Do not put final WorkNodes directly inside canonical plan docs.
   - Do not generate NodeSeeds or WorkNodes from the PlanUnit index phase.

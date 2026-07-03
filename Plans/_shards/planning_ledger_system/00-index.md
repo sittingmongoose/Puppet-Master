@@ -1,20 +1,20 @@
 # Shard Index: Plans/Planning_Ledger_System.md
 
-Generated: 2026-07-03T22:11:12Z
+Generated: 2026-07-03T23:05:25Z
 
-Source SHA256: `cb580376db1e90d4841e57353b845f6a4f4850cff858f1cee682a15178cc9808`
+Source SHA256: `f8d2ad4b1cfece50f7ebd917af95a476dbc29861bdd89e85af0e6ac82114f733`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L3 `bd998a28f7586c4792bbd69635ed461be0181a3dc9e42da5e71ad4b053021a0b`
-- [002 - 0. Scope](002-0.-scope.md) L5-L11 `f697e877cfe8352221c7f4c41e9c4c3623c24c0915e92373de896af6ac53a468`
-- [003 - 1. Architecture Summary](003-1.-architecture-summary.md) L13-L24 `8b5b34a8c4c7ac214c8b7d9c1282bd7b979d08a5a51cf47efcf57d100be5dc49`
-- [004 - 2. PlanUnits](004-2.-planunits.md) L26-L409 `69546ed5d66465d124f0c9ef8634de75bf92c72e4509a63d598bdc4b8cfed67c`
-- [005 - Ledger Compile Addendum - pldg-20260616-002](005-ledger-compile-addendum-pldg-20260616-002.md) L411-L495 `d3784806cff739d74cedd713d6ece44e5f9fd8c5fadbf6d8fc559d6734418cd1`
-- [006 - Semantic Audit Closure Addendum - 2026-06-17](006-semantic-audit-closure-addendum-2026-06-17.md) L497-L656 `7c9cd69622f54a8d9e8afe200d30cf423f5342f674af2c928284952aaea392fa`
-- [007 - 3. Compilation Coverage](007-3.-compilation-coverage.md) L658-L682 `bd72f96ce2803c906080aae4c789009cab3fc2309826192a5fc60bdb6c23ec5d`
-- [008 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](008-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L684-L741 `8724b2c228a45d74a751c81bf572e7810f73b5e468731013889e1e41d661210f`
-- [009 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L744-L940 `544578ff66eb7a287d4e2137b13efc5eb833652e2e0ba0d8a8cbb7698fe56223`
-- [010 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L942-L1150 `a94ce5b162a256188a92f9981879946c794a240df752b86819946b8e2e1d3ceb`
+- [001 - Preamble](001-preamble.md) L1-L3 `e8179941733da7a79309081fddfe5b063cbb8ece3a503d9b49c1d07db7487ca8`
+- [002 - 0. Scope](002-0.-scope.md) L5-L11 `969c2f45fd9a9b0eca4300b22d170b21673d2ba32e809c2e6b8e6c3ccee136a2`
+- [003 - 1. Architecture Summary](003-1.-architecture-summary.md) L13-L24 `4c90c01b2e7b9b1e55e8b9625507fde42a4124941f6de3ba1b37cb2c6cd18ccc`
+- [004 - 2. PlanUnits](004-2.-planunits.md) L26-L417 `41783f1eb4fc47bcf25bf241d3d4a554b2459bad07596ca02c79d044e7c2098b`
+- [005 - Ledger Compile Addendum - pldg-20260616-002](005-ledger-compile-addendum-pldg-20260616-002.md) L419-L508 `3457c73d5325a85bb0638e95fd6a659ed062401873865a154d1bfb2d012341b9`
+- [006 - Semantic Audit Closure Addendum - 2026-06-17](006-semantic-audit-closure-addendum-2026-06-17.md) L510-L669 `aed6917ff9a446537d39790af3fd862bda55254d18826a40d1bde0696bff969a`
+- [007 - 3. Compilation Coverage](007-3.-compilation-coverage.md) L671-L695 `820807be0cc30d71ee1f3648e4aab8edb9cabc0d8b0369b0facf834c92eee7fc`
+- [008 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](008-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L697-L754 `9635dd88bc7b9adae95021207e05bd98c66831c1fb634034b59fc266cccaab0a`
+- [009 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L757-L953 `71db25d9a083f52672b17ca59cb6863fb799cfb3c282ee84372ed29dddbe9355`
+- [010 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L955-L1163 `cea920a1205ada1fedf05e5d879086cbf6fb840ffa304454d1600672527ebafa`

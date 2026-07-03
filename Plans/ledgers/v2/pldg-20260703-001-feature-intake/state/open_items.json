@@ -2,9 +2,13 @@
   "compile_open_items": [],
   "deferred_questions": [],
   "governance_status": "sealed",
-  "last_event_id": "evt-0012",
-  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/governance_seal_recheck_20260703T210110Z.json",
-  "latest_audit_status": "pass_governance_sealed",
+  "last_event_id": "evt-0013",
+  "latest_audit_ref": "Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "latest_audit_status": "pass_post_repair_semantic_certification",
+  "latest_governance_seal_recheck_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/governance_seal_recheck_20260703T210110Z.json",
+  "latest_governance_seal_recheck_status": "superseded_by_post_repair_semantic_certification",
+  "latest_post_repair_audit_ref": "Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "latest_post_repair_audit_status": "PASS_WITH_WARNINGS",
   "ledger_id": "pldg-20260703-001-feature-intake",
   "notes": "No import, compile, migration-proof, or governance-seal blockers remain. Runtime implementation and node execution remain out of scope and blocked by PNC-019 until future certification work.",
   "open_blockers": [],
@@ -15,5 +19,5 @@
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "updated_at_utc": "2026-07-03T21:04:14Z"
+  "updated_at_utc": "2026-07-03T23:11:17Z"
 }

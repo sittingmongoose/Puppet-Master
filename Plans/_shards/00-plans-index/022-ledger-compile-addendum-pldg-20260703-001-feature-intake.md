@@ -4,13 +4,13 @@ Source: `Plans/00-plans-index.md`
 
 Source lines: L5005-L5254
 
-Source SHA256: `0874c6f5dec90701985009c004a2762946ca2df488ff19be8c81d84c9ea3d905`
+Source SHA256: `034fdea597bc7d8921857e14f7d779065a5af0442db53a5dd892ef438963fbe3`
 
 ---
 
 ## Ledger Compile Addendum - pldg-20260703-001-feature-intake
 
-This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. The ordinary compile did not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal; the later explicit seal phase refreshed generated governance/provenance artifacts without creating runtime or build artifacts.
 
 ### 0PI-066 - 0PI-066
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/00-plans-index.md
 canonical_text: >-
-  The external repo system-wide improvement import from pldg-20260703-001-feature-intake is routed to existing Puppet Master subsystem owners plus the new Release_Supply_Chain owner for release/install/provenance gaps. The compile preserves GUI-first/no-PM-CLI constraints, treats terminal/CLI lessons as GUI-native runtime/provider/tool/context/agent-control contracts, keeps imported rows source-lineage-backed rather than ledger-canonical, and creates no WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or governance seal artifacts.
+  The external repo system-wide improvement import from pldg-20260703-001-feature-intake is routed to existing Puppet Master subsystem owners plus the new Release_Supply_Chain owner for release/install/provenance gaps. The compile preserves GUI-first/no-PM-CLI constraints, treats terminal/CLI lessons as GUI-native runtime/provider/tool/context/agent-control contracts, keeps imported rows source-lineage-backed rather than ledger-canonical, and creates no WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks during ordinary compile; the later explicit governance seal refreshes only generated governance/provenance artifacts.
 gui_related: false
 gui_classification_reason: Index owner-routing metadata, not direct GUI implementation.
 depends_on:
@@ -31,7 +31,7 @@ acceptance_criteria:
 - All 113 imported external repo rows and 5 import guardrails have a compiled PlanUnit or existing PlanUnit disposition.
 - The 12 rows that arrived with empty target_docs are owner-adjudicated without asking row-by-row.
 - Terminal lessons remain GUI-terminal/runtime contracts, not a Puppet Master CLI product surface.
-- Only live Plans docs and allowed Plans/.plan_index outputs are changed during compile; governance seal remains pending explicit request.
+- Only live Plans docs and allowed Plans/.plan_index outputs are changed during ordinary compile; the later explicit governance seal refreshes generated governance/provenance artifacts only.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
@@ -227,7 +227,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not translate terminal/CLI lessons into a Puppet Master CLI product shape.
 - Do not collapse the 113 imported rows into a vague summary.
-- Do not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs during this compile.
+- Do not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs during ordinary compile; refresh governance outputs only in an explicit seal phase.
 owner_hints:
 - Plans/00-plans-index.md
 - Plans/Automated_Testing_System.md

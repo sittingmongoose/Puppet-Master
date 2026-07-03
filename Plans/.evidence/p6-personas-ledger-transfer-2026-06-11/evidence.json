@@ -28,7 +28,7 @@
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "0874c6f5dec90701985009c004a2762946ca2df488ff19be8c81d84c9ea3d905"
+      "sha256": "034fdea597bc7d8921857e14f7d779065a5af0442db53a5dd892ef438963fbe3"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -63,7 +63,7 @@
     {
       "note": "Schema-valid repair decision row.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "4b65e87bf9853c2f49aba5c162254db82ec5f383d634a8cc78f592d5c5a78b48"
+      "sha256": "57c1f40b99f14f5f18de62a6d5cca919d796f0fab0ca02aa2b77bd9750d9a417"
     },
     {
       "note": "P6 node repair refs.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "1a8cca71736dcf00243399857242117267bb60d9868288c3dd3843df2dfd8718"
+      "sha256": "b5459209f393cf920def7432929bd3f2a1036ada56ced93b2f94bd6295adbe7c"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "47df4c66ed366b0d2e209a437252895f25c28f10c8175c98808f6e016edb0202"
+      "sha256": "42301d899536aaf136a227ec61b72f50b94bf842b8670f39ef1181627b8da2a3"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "547b27a7dc398577ae6eb6eccc9e708d33f321374bccc182b427d39f7a921fcb"
+      "sha256": "33c1d83c6ed11883c104cf9f1ebb32928befcbf82905f74a1ba23565dedadd82"
     }
   ],
   "checks": [

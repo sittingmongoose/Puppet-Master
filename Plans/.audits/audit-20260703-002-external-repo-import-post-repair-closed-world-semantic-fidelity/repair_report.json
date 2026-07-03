@@ -1,0 +1,73 @@
+{
+  "audit_id": "audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity",
+  "closures": [
+    {
+      "closure_status": "repaired",
+      "finding_family": "reciprocal_source_atom_ids_mismatch",
+      "finding_key": "sfk-f2071824da7401e6ca59eb43",
+      "summary": "All 122 design atoms now reciprocally list 0PI-066 in compiled_output_plan_unit_ids and plan_compile_targets while retaining detailed targets."
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "existing_planunit_exact_token_and_source_atom_ids_gap",
+      "finding_key": "sfk-ff7c947dff249da73ad63a1a",
+      "summary": "PDS-003, PDS-007, PLS-001, PLS-005, PLS-006, PLS-009, PLS-011, and PNC-001 now carry source_atom_ids and audit-named exact tokens."
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "generated_governance_auto_decision_provenance_gap",
+      "finding_key": "sfk-7ac4b10c5ce4296b24691da1",
+      "summary": "Added July 3 auto-decision provenance row for the post-repair governance seal."
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "planunit_owner_map_governance_seal_state_stale",
+      "finding_key": "sfk-13f7d62e51d043854a69f648",
+      "summary": "0PI-066 now distinguishes ordinary compile boundary from the later explicit governance seal."
+    }
+  ],
+  "forbidden_artifacts": {
+    "executable_queues_created": false,
+    "implementation_files_created": false,
+    "nodeseeds_created": false,
+    "production_build_tasks_created": false,
+    "runtime_dispatch_created": false,
+    "worknodes_created": false
+  },
+  "generated_at_utc": "2026-07-03T23:16:27Z",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "next_action": "TERMINAL_PASS_WITH_WARNINGS_NO_REPAIR_REQUIRED",
+  "original_repair_required_count": 4,
+  "remaining_non_actionable_warnings": [
+    "sfk-425924aa52fd680385e1578b",
+    "sfk-fc4aba0503d409b7ffa48dd6"
+  ],
+  "repair_required_count": 0,
+  "schema_id": "pm.audit_repair_report.v1",
+  "scope": {
+    "closure_rows": 4,
+    "coverage_percent": 100.0,
+    "impact_rows": 4,
+    "original_scope_rows": 4476,
+    "sampling": "none"
+  },
+  "status": "PASS_WITH_WARNINGS",
+  "validator_results": {
+    "git_diff_check": "pass",
+    "pm_audit_closure_validate_required_matrix": "pass",
+    "pm_audit_status_index_validate": "pass",
+    "pm_bootstrap_ledger_validate_target": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_plans_verify_audit_governance": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_bootstrap_ledgers": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "pm_plans_verify_validate_plan_graph": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_shard_plans_check": "pass",
+    "pytest": "pass_19"
+  },
+  "warning_count": 2
+}
