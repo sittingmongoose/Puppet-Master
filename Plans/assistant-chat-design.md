@@ -23299,7 +23299,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
-  P0-SESSION-DRAFT-ATTACHMENT-ISOLATION (P0) is compiled as canonical Puppet Master intent for Session draft and attachment isolation: Imported external-repo finding extrepo-20260703-0088 / P0-SESSION-DRAFT-ATTACHMENT-ISOLATION (P0): None The preserved PM gap/delta is: Context/session plans need a GUI draft boundary with explicit draft/session/composer identity and state transitions. The observed external-repo signal remains source-lineage evidence: OpenCode Desktop issue: previous submitted text/images reappear in another session composer.
+  P0-SESSION-DRAFT-ATTACHMENT-ISOLATION (P0) is compiled as canonical Puppet Master intent for Session draft and attachment isolation: Imported external-repo finding extrepo-20260703-0088 / P0-SESSION-DRAFT-ATTACHMENT-ISOLATION (P0). The preserved PM gap/delta is: Context/session plans need a GUI draft boundary with explicit draft/session/composer identity and state transitions. The observed external-repo signal remains source-lineage evidence: OpenCode Desktop issue: previous submitted text/images reappear in another session composer.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

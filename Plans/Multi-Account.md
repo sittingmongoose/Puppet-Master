@@ -4958,7 +4958,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: >-
-  P0-CREDENTIAL-ROUTE-EPOCH (P0) is compiled as canonical Puppet Master intent for Credential/account/entitlement route epoch: Imported external-repo finding extrepo-20260703-0091 / P0-CREDENTIAL-ROUTE-EPOCH (P0): None The preserved PM gap/delta is: ProviderCapabilityEpoch needs a separate CredentialRouteEpoch for auth, route, proxy, quota, entitlement, refresh, and failure class. The observed external-repo signal remains source-lineage evidence: Credentialed route/proxy/config PRs; account entitlement mismatch issues; OAuth/provider/credits failures.
+  P0-CREDENTIAL-ROUTE-EPOCH (P0) is compiled as canonical Puppet Master intent for Credential/account/entitlement route epoch: Imported external-repo finding extrepo-20260703-0091 / P0-CREDENTIAL-ROUTE-EPOCH (P0). The preserved PM gap/delta is: ProviderCapabilityEpoch needs a separate CredentialRouteEpoch for auth, route, proxy, quota, entitlement, refresh, and failure class. The observed external-repo signal remains source-lineage evidence: Credentialed route/proxy/config PRs; account entitlement mismatch issues; OAuth/provider/credits failures.
 gui_related: false
 gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
 depends_on:

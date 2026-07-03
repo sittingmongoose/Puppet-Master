@@ -19195,7 +19195,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  P0-RUNTIME-SURFACE-READINESS-PROBE (P0) is compiled as canonical Puppet Master intent for Runtime surface readiness probe: Imported external-repo finding extrepo-20260703-0092 / P0-RUNTIME-SURFACE-READINESS-PROBE (P0): None The preserved PM gap/delta is: Configured tool/browser/terminal/MCP surfaces must prove started, injected, model-visible, UI-visible, and roundtrip-ready after restart/restore. The observed external-repo signal remains source-lineage evidence: Browser port forwarding fails until restart; computer-use plugin unavailable after restart; WSL path/bridge mismatch; OpenCode V2 MCP lifecycle need.
+  P0-RUNTIME-SURFACE-READINESS-PROBE (P0) is compiled as canonical Puppet Master intent for Runtime surface readiness probe: Imported external-repo finding extrepo-20260703-0092 / P0-RUNTIME-SURFACE-READINESS-PROBE (P0). The preserved PM gap/delta is: Configured tool/browser/terminal/MCP surfaces must prove started, injected, model-visible, UI-visible, and roundtrip-ready after restart/restore. The observed external-repo signal remains source-lineage evidence: Browser port forwarding fails until restart; computer-use plugin unavailable after restart; WSL path/bridge mismatch; OpenCode V2 MCP lifecycle need.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:

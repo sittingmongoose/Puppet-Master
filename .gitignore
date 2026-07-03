@@ -16,6 +16,7 @@ Puppet-Master*.zip
 .codex/agents/*
 !.codex/agents/*.toml
 .claude/.credentials.json
+.claude/settings.local.json
 .claude/_state/
 .claude/debug/
 .cache/

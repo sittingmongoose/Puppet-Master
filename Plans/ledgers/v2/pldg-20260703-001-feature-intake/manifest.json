@@ -216,18 +216,20 @@
   "governance_status": "sealed",
   "implementation_ready_in_ledger": false,
   "last_event_id": "evt-0012",
-  "last_updated_at_utc": "2026-07-03T21:05:14Z",
+  "last_updated_at_utc": "2026-07-03T22:05:29Z",
   "last_validation_summary": "bootstrap ledger validator pass; PlanUnit index validator pass; migration proof pass; run-gates pass; shards, Spec Lock, evidence, plan graph, auto decisions, and git diff --check pass; node readiness remains blocked_runtime_certification_incomplete.",
+  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/governance_seal_recheck_20260703T210110Z.json",
+  "latest_audit_status": "pass_governance_sealed",
   "latest_compile_completion_recheck_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/compile_completion_recheck_20260703T203400Z.json",
-  "latest_compile_completion_recheck_status": "pass_with_migration_proof_refresh_pending",
+  "latest_compile_completion_recheck_status": "superseded_by_governance_seal_recheck_pass",
   "latest_completeness_reverification_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/import_completion_reverification_20260703T202445Z.json",
   "latest_completeness_reverification_status": "pass",
   "ledger_id": "pldg-20260703-001-feature-intake",
-  "notes": "Compiled to live Plans PlanUnits and allowed .plan_index outputs; governance seal pending explicit future request.",
+  "notes": "Compiled to live Plans PlanUnits and allowed .plan_index outputs; migration proof, configured shards, sharding evidence, evidence bundles, Spec Lock, sharding_config, and plan_graph were refreshed and validated during evt-0012. Runtime implementation remains disabled and blocked by PNC-019. No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, production build tasks, or runtime dispatch were created.",
   "open_blocker_ids": [],
   "open_blockers_count": 0,
   "phase": "compiled_to_plans_governance_sealed",
-  "primary_goal": "Import every external repo finding into the active PM Bootstrap Planning Ledger without compiling to canonical Plans or touching governance artifacts.",
+  "primary_goal": "Import every external repo finding into the active PM Bootstrap Planning Ledger, compile accepted atoms to canonical Plans, and seal governance without creating runtime/build artifacts.",
   "profile": "bootstrap_planning",
   "record_counts": {
     "blockers": 0,
@@ -238,11 +240,9 @@
     "questions": 1
   },
   "schema_id": "pm.bootstrap_planning_ledger_manifest.v1",
+  "sealed_at_utc": "2026-07-03T21:04:14Z",
   "source_context": "Attached external repo ledger import bundle was preserved under source_shards; all 113 JSONL rows were imported as ledger/source-memory design atoms; five parallel read-only audit lanes were synthesized.",
   "status": "sealed",
   "title": "External Repo System-Wide Improvement Import",
-  "updated_at_utc": "2026-07-03T21:05:14Z",
-  "sealed_at_utc": "2026-07-03T21:04:14Z",
-  "latest_audit_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/governance_seal_recheck_20260703T210110Z.json",
-  "latest_audit_status": "pass_governance_sealed"
+  "updated_at_utc": "2026-07-03T22:05:29Z"
 }
