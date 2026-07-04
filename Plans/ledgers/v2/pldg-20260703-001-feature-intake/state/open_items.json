@@ -2,15 +2,15 @@
   "compile_open_items": [],
   "deferred_questions": [],
   "governance_status": "sealed",
-  "last_event_id": "evt-0013",
-  "latest_audit_ref": "Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "last_event_id": "evt-0014",
+  "latest_audit_ref": "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/post_repair_audit_report.json",
   "latest_audit_status": "pass_post_repair_semantic_certification",
   "latest_governance_seal_recheck_ref": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/validation/governance_seal_recheck_20260703T210110Z.json",
   "latest_governance_seal_recheck_status": "superseded_by_post_repair_semantic_certification",
-  "latest_post_repair_audit_ref": "Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity/post_repair_audit_report.json",
-  "latest_post_repair_audit_status": "PASS_WITH_WARNINGS",
+  "latest_post_repair_audit_ref": "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/post_repair_audit_report.json",
+  "latest_post_repair_audit_status": "PASS",
   "ledger_id": "pldg-20260703-001-feature-intake",
-  "notes": "No import, compile, migration-proof, or governance-seal blockers remain. Runtime implementation and node execution remain out of scope and blocked by PNC-019 until future certification work.",
+  "notes": "No open repair-required semantic audit items remain after audit-20260703-003 post-repair certification; runtime implementation remains out of scope.",
   "open_blockers": [],
   "open_questions": [],
   "phase": "compiled_to_plans_governance_sealed",
@@ -19,5 +19,5 @@
   "unclassified_candidates": [],
   "unresolved_contradictions": [],
   "unsealed_governance": [],
-  "updated_at_utc": "2026-07-03T23:11:17Z"
+  "updated_at_utc": "2026-07-04T00:47:25Z"
 }
