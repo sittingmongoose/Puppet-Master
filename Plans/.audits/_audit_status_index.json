@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-07-03T23:11:27Z",
+  "generated_at_utc": "2026-07-04T00:47:35Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1118,6 +1118,25 @@
       "reported_status_family": "blocked_or_fail",
       "scope_key": "audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity",
       "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {
+          "repaired": 10
+        },
+        "matching_rows": 10,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "historical_blocked_or_fail_report_indexed",
+      "ledger_id": null,
+      "path": "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/FINAL_REPORT.md",
+      "reported_status": "BLOCKED",
+      "reported_status_family": "blocked_or_fail",
+      "scope_key": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+      "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
     }
   ],
   "schema_id": "pm.audit_status_index.v1",
@@ -1126,12 +1145,12 @@
     "reports_glob": "Plans/.audits/audit-*/FINAL_REPORT.md"
   },
   "summary": {
-    "closure_registry_row_count": 362,
+    "closure_registry_row_count": 367,
     "current_blocker_count": 0,
-    "historical_blocked_or_fail_report_count": 23,
-    "report_count": 61,
+    "historical_blocked_or_fail_report_count": 24,
+    "report_count": 62,
     "reported_status_family_counts": {
-      "blocked_or_fail": 23,
+      "blocked_or_fail": 24,
       "pass": 25,
       "unknown": 13
     }

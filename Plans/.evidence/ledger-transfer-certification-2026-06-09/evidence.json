@@ -24,7 +24,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PASS: node_readiness_status=blocked_runtime_certification_incomplete; runtime_enabled=false; executable_lifecycle_certification_complete=false; no WorkNodes, NodeSeed candidates, executable queues, final node manifests, or production build tasks emitted by index generation."
+      "details": "PlanUnit index regenerated after audit-20260703-003 repair; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created."
     },
     {
       "name": "node-readiness-status-preserved",
@@ -157,11 +157,11 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
       "exit_code": 0
     },
     {

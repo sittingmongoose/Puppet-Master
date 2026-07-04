@@ -62,6 +62,7 @@ negative_constraints:
   - Do not confuse the ledger with the actual chat memory system.
   - Do not treat the ledger as canonical product prose.
   - Do not point canonical evidence at ledgers, shards, pipeline/process artifacts, or governance bundles.
+  - Do not recreate the removed legacy Iced app.
 owner_hints: [Plans/Planning_Ledger_System.md]
 ```
 
@@ -227,7 +228,7 @@ plan_unit_id: PLS-006
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Ledger_System.md
-canonical_text: After every substantive ledger conversation turn, append one event, upsert affected records, update questions/blockers/corrections, and rewrite current/handoff/open-item projections. Multiple simultaneous ledgers are tracked by stable ledger_id values in ledger_registry.json.
+canonical_text: After every substantive ledger conversation turn, append one event, upsert affected records, update questions/blockers/corrections, and rewrite state/current.json, state/handoff.json, state/open_items.json, and state/compile_queue.json projections. Multiple simultaneous ledgers are tracked by stable ledger_id values in ledger_registry.json.
 gui_related: false
 gui_classification_reason: Conversation-state persistence is not GUI implementation work.
 depends_on: [PLS-002, PLS-003, PLS-004]
@@ -251,7 +252,7 @@ source_lineage:
   - source_ref:chat:design-discussion
 source_atom_ids:
   - atom-0003
-preserved_exact_tokens: ["events.jsonl", "records/*.jsonl", "state/handoff.json", "pldg-YYYYMMDD-NNN-<slug>", "ledger_registry.json", "After each substantive turn, update:", "touched records/*.jsonl"]
+preserved_exact_tokens: ["events.jsonl", "records/*.jsonl", "state/current.json", "state/handoff.json", "state/open_items.json", "state/compile_queue.json", "pldg-YYYYMMDD-NNN-<slug>", "ledger_registry.json", "After each substantive turn, update:", "touched records/*.jsonl"]
 negative_constraints: []
 owner_hints: [Plans/Planning_Ledger_System.md]
 ```
@@ -371,7 +372,7 @@ source_lineage:
   - source_ref:chat:implementation-readiness-review
 source_atom_ids:
   - atom-0001
-preserved_exact_tokens: ["manifest.json", "events.jsonl", "records/design_atoms.jsonl", "records/decisions.jsonl", "records/questions.jsonl", "records/blockers.jsonl", "records/corrections.jsonl", "state/current.json", "state/handoff.json", "state/open_items.json", "state/compile_queue.json", "state/operating_capsule.json", "validation/ledger_health.json", "ledger_registry.json", "Feature: <feature name>", "Create a new v2 ledger under Plans/ledgers/v2/ with ledger_id pldg-YYYYMMDD-NNN-<slug>.", "Once the ledger is initialized, ask me what we are working on and begin the planning conversation."]
+preserved_exact_tokens: ["manifest.json", "events.jsonl", "records/design_atoms.jsonl", "records/decisions.jsonl", "records/questions.jsonl", "records/blockers.jsonl", "records/corrections.jsonl", "state/current.json", "state/handoff.json", "state/open_items.json", "state/compile_queue.json", "state/operating_capsule.json", "validation/ledger_health.json", "ledger_registry.json", "Use the PM Bootstrap Planning Ledger for this feature.", "Feature: <feature name>", "Create a new v2 ledger under Plans/ledgers/v2/ with ledger_id pldg-YYYYMMDD-NNN-<slug>.", "Once the ledger is initialized, ask me what we are working on and begin the planning conversation."]
 negative_constraints:
   - Do not treat legacy working_ledger.md files as the v2 active ledger format.
 owner_hints: [Plans/Planning_Ledger_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md]
@@ -499,6 +500,7 @@ negative_constraints:
   - Do not create executable WorkNodes or NodeSeeds during ledger compile.
   - Do not skip the live repo backlink audit at compile time.
   - Do not treat plan-compile readiness as direct code implementation readiness.
+  - Do not recreate the removed legacy Iced app.
 owner_hints:
   - Plans/Planning_Ledger_System.md
   - Plans/Plan_Document_System.md

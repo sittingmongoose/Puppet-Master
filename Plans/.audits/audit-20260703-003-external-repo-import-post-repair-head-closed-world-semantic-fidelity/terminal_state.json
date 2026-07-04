@@ -1,0 +1,15 @@
+{
+  "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+  "effective_terminal_report": "post_repair_audit_report.json",
+  "generated_at_utc": "2026-07-04T00:45:30Z",
+  "historical_audit_report": "audit_report.json",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "matrix_status_counts": {
+    "repaired": 5
+  },
+  "open_repair_required_count": 0,
+  "original_repair_required_count": 5,
+  "schema_id": "pm.audit_terminal_state.v1",
+  "terminal_repair_state": "repair_validated",
+  "terminal_status": "PASS"
+}

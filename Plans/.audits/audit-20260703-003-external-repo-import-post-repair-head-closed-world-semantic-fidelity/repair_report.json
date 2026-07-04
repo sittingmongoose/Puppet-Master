@@ -1,0 +1,112 @@
+{
+  "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+  "closures": [
+    {
+      "closure_status": "repaired",
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-3db3a56417fc036747569df3",
+      "plan_unit_ids": [
+        "PLS-009"
+      ],
+      "summary": "The audited exact token 'Use the PM Bootstrap Planning Ledger for this feature.' is now present in the target PlanUnit owner doc and regenerated PlanUnit index."
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "compiled_atom_negative_constraint_fidelity",
+      "finding_key": "sfk-71f0d753522c3d2442585b3c",
+      "plan_unit_ids": [
+        "PLS-001",
+        "PLS-011",
+        "PNC-001"
+      ],
+      "summary": "The removed-legacy-Iced-app prohibition is now present as a negative constraint on every audited target PlanUnit and in the regenerated PlanUnit index."
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-93d36dec4b1be6eae38ad7c9",
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "summary": "The audited exact token 'state/current.json' is now present in the target PlanUnit owner doc and regenerated PlanUnit index."
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-89a0e702ea90e4c677f33a4f",
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "summary": "The audited exact token 'state/open_items.json' is now present in the target PlanUnit owner doc and regenerated PlanUnit index."
+    },
+    {
+      "closure_status": "repaired",
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-efbbba780463ca02322cbd85",
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "summary": "The audited exact token 'state/compile_queue.json' is now present in the target PlanUnit owner doc and regenerated PlanUnit index."
+    }
+  ],
+  "final_validated_at_utc": "2026-07-04T00:53:42Z",
+  "forbidden_artifacts": {
+    "executable_queues_created": false,
+    "final_node_manifests_created": false,
+    "implementation_files_created": false,
+    "nodeseeds_created": false,
+    "production_build_tasks_created": false,
+    "runtime_dispatch_created": false,
+    "worknodes_created": false
+  },
+  "generated_at_utc": "2026-07-04T00:53:42Z",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "next_action": "TERMINAL_PASS_NO_REPAIR_REQUIRED",
+  "original_repair_required_count": 5,
+  "repair_required_count": 0,
+  "schema_id": "pm.audit_repair_report.v1",
+  "scope": {
+    "closure_rows": 5,
+    "coverage_percent": 100.0,
+    "impact_rows": 5,
+    "original_scope_rows": 2563,
+    "sampling": "none"
+  },
+  "status": "PASS",
+  "validator_commands": {
+    "git_diff_check": "git diff --check",
+    "pm_audit_closure_validate_required_matrix_effective_status": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity --require-closure-matrix --require-effective-status --source-artifact semantic_risks.jsonl",
+    "pm_audit_status_index_validate": "python3 scripts/pm-audit-status-index.py validate",
+    "pm_bootstrap_ledger_validate_target": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+    "pm_plan_index_validate": "python3 scripts/pm-plan-index.py validate",
+    "pm_plan_migration_validate": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+    "pm_plans_verify_audit_governance": "python3 scripts/pm-plans-verify.py audit-governance",
+    "pm_plans_verify_run_gates": "python3 scripts/pm-plans-verify.py run-gates",
+    "pm_plans_verify_validate_auto_decisions": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+    "pm_plans_verify_validate_bootstrap_ledgers": "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
+    "pm_plans_verify_validate_evidence": "python3 scripts/pm-plans-verify.py validate-evidence",
+    "pm_plans_verify_validate_plan_graph": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+    "pm_plans_verify_verify_spec_lock": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+    "pm_shard_plans_check": "python3 scripts/pm-shard-plans.py --check",
+    "pytest": "python3 -m pytest -q -p no:cacheprovider"
+  },
+  "validator_results": {
+    "git_diff_check": "pass",
+    "pm_audit_closure_refresh_hashes": "pass",
+    "pm_audit_closure_validate_required_matrix_effective_status": "pass",
+    "pm_audit_status_index_validate": "pass",
+    "pm_bootstrap_ledger_validate_target": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_plans_verify_audit_governance": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_bootstrap_ledgers": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "pm_plans_verify_validate_plan_graph": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_shard_plans_check": "pass",
+    "pytest": "pass_19"
+  },
+  "warning_count": 0
+}

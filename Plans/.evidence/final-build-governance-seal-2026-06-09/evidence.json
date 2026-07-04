@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "b5459209f393cf920def7432929bd3f2a1036ada56ced93b2f94bd6295adbe7c"
+      "sha256": "04b6441fb81415001822e30c48330ee468210e1a5510ed20fa68c300442ada37"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "1a9972f1bbfad7b5d36bb3ccc4766270c28c115c1afe8e4b104f1329847988a4"
+      "sha256": "074ed718b1b2d9cccb1f9c976a24486505b001d3447897e58a916d80dbaf41ea"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "82d145412533d6e1b24fa81fb1f1e7a65e5929149eb87ff786f5e237fb3d1e0b"
+      "sha256": "32427f13230e19c8757bf658647487ee475e9a1b2b6a367e30d5babce6d70bf9"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "0ec7435c0e21e100ef5ac79ca0700983a872bc2ad37515dccfb6c817d2d53c6b"
+      "sha256": "5ef23f4df8664ac2e6e699c3a71344d4130ed82eed3701238ac5082a6cba85f3"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "1bec1ff7b45cd06536fc8fef8de21738d6abdf73476ddc25428a0239174ad4dc"
+      "sha256": "13668401cdd960f0244b6f614356fb473168ed55cb003589a0a1989704cd6ed3"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "e6c2d66c7ada5cd17fb75a2a2144adffa96ebd545223b9a38566445ca3926cf1"
+      "sha256": "379a103bf4e9bea5ee48e25fda429d56e52348810a013d978d156e29ff3083ee"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "38a1f5fd5e16f4149b33880583bf008f91cad3a2112aac71e1a255610bbdb78f"
+      "sha256": "b59aed750b9939e2c6606cbe0557644b7c3aa19a9751bac22a103185293eb0d5"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "3d302d0ae2aba3ed42dda2383bea76e8a7bb11b7c9eda4047f4c34380bd5ca9f"
+      "sha256": "f477f657a5935fafb3298e9ded83d223dd3ba028443ae3d170d30ca9730026e5"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "b44b52e663ae70b150f594d213c68ca7786a5ba9719092db3cc7168a060a1eb4"
+      "sha256": "353fac503c296bb2b9e3e609ff76c3a6c0f1ff1e9ce522c8bf3c22e243750d52"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "8d18fdcde585df168d3f5e954cc4244d21905e734f45ae6d6f99fec42eeb904b"
+      "sha256": "633ce2a90bce50296a43f0cc4417faa96af7bb2f8c50f480487554b23302632e"
     }
   ],
   "checks": [
@@ -80,7 +80,7 @@
       "result": "PASS"
     },
     {
-      "details": "PASS: node_readiness_status=blocked_runtime_certification_incomplete; runtime_enabled=false; executable_lifecycle_certification_complete=false; no WorkNodes, NodeSeed candidates, executable queues, final node manifests, or production build tasks emitted by index generation.",
+      "details": "PlanUnit index regenerated after audit-20260703-003 repair; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created.",
       "name": "plan-index-validate",
       "result": "PASS"
     },
@@ -277,7 +277,7 @@
       "stdout_excerpt": "status=pass; plan_unit_count=5036; acceptance_unit_count=17890; node_readiness_status=blocked_compiler_contract_incomplete"
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
       "exit_code": 0,
       "stdout_excerpt": "status=pass; plan_units_checked=92; warnings=[]"
     },
@@ -316,7 +316,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
       "exit_code": 0
     },
     {
@@ -336,7 +336,7 @@
       "exit_code": 0
     },
     {
-      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260701-001-feature-intake",
+      "cmd": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
       "exit_code": 0
     },
     {

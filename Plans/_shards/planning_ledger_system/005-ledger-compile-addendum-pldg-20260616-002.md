@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L419-L508
+Source lines: L420-L510
 
-Source SHA256: `f8d2ad4b1cfece50f7ebd917af95a476dbc29861bdd89e85af0e6ac82114f733`
+Source SHA256: `48331573193c74aa16eea2133145c033655de2d94e3734fe9520ef7b6b869ef9`
 
 ---
 
@@ -91,6 +91,7 @@ negative_constraints:
   - Do not create executable WorkNodes or NodeSeeds during ledger compile.
   - Do not skip the live repo backlink audit at compile time.
   - Do not treat plan-compile readiness as direct code implementation readiness.
+  - Do not recreate the removed legacy Iced app.
 owner_hints:
   - Plans/Planning_Ledger_System.md
   - Plans/Plan_Document_System.md

@@ -1,0 +1,264 @@
+{
+  "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "checks": [
+    {
+      "details": {
+        "classification_after_repair": "exact_present",
+        "dependency_drift": false,
+        "ledger_projection_drift": false,
+        "owner_routing_drift": false,
+        "reciprocal_lineage_drift": false,
+        "schema_identity_drift": false
+      },
+      "evidence": [
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/post_repair_audit_report.json",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_impact_matrix.jsonl:1",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_closure_matrix.jsonl:1",
+        "Plans/Planning_Ledger_System.md:340",
+        "Plans/Planning_Ledger_System.md:375",
+        "Plans/.plan_index/plan_units.jsonl:3973",
+        "Plans/.plan_index/plan_units.jsonl"
+      ],
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-3db3a56417fc036747569df3",
+      "name": "repair_required_row_1_sfk-3db3a56417fc036747569df3",
+      "plan_unit_ids": [
+        "PLS-009"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [
+        "atom-0001"
+      ],
+      "status": "pass"
+    },
+    {
+      "details": {
+        "classification_after_repair": "exact_present",
+        "dependency_drift": false,
+        "ledger_projection_drift": false,
+        "owner_routing_drift": false,
+        "reciprocal_lineage_drift": false,
+        "schema_identity_drift": false
+      },
+      "evidence": [
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/post_repair_audit_report.json",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_impact_matrix.jsonl:2",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_closure_matrix.jsonl:2",
+        "Plans/Planning_Ledger_System.md:31",
+        "Plans/Planning_Ledger_System.md:65",
+        "Plans/.plan_index/plan_units.jsonl:3965",
+        "Plans/Planning_Ledger_System.md:425",
+        "Plans/.plan_index/plan_units.jsonl:3975",
+        "Plans/Plan_To_Node_Compilation.md:28",
+        "Plans/Plan_To_Node_Compilation.md:68",
+        "Plans/.plan_index/plan_units.jsonl:4046",
+        "Plans/.plan_index/plan_units.jsonl"
+      ],
+      "finding_family": "compiled_atom_negative_constraint_fidelity",
+      "finding_key": "sfk-71f0d753522c3d2442585b3c",
+      "name": "repair_required_row_2_sfk-71f0d753522c3d2442585b3c",
+      "plan_unit_ids": [
+        "PLS-001",
+        "PLS-011",
+        "PNC-001"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [
+        "atom-0002"
+      ],
+      "status": "pass"
+    },
+    {
+      "details": {
+        "classification_after_repair": "exact_present",
+        "dependency_drift": false,
+        "ledger_projection_drift": false,
+        "owner_routing_drift": false,
+        "reciprocal_lineage_drift": false,
+        "schema_identity_drift": false
+      },
+      "evidence": [
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/post_repair_audit_report.json",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_impact_matrix.jsonl:3",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_closure_matrix.jsonl:3",
+        "Plans/Planning_Ledger_System.md:227",
+        "Plans/Planning_Ledger_System.md:231",
+        "Plans/Planning_Ledger_System.md:255",
+        "Plans/.plan_index/plan_units.jsonl:3970",
+        "Plans/.plan_index/plan_units.jsonl"
+      ],
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-93d36dec4b1be6eae38ad7c9",
+      "name": "repair_required_row_3_sfk-93d36dec4b1be6eae38ad7c9",
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [
+        "atom-0003"
+      ],
+      "status": "pass"
+    },
+    {
+      "details": {
+        "classification_after_repair": "exact_present",
+        "dependency_drift": false,
+        "ledger_projection_drift": false,
+        "owner_routing_drift": false,
+        "reciprocal_lineage_drift": false,
+        "schema_identity_drift": false
+      },
+      "evidence": [
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/post_repair_audit_report.json",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_impact_matrix.jsonl:4",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_closure_matrix.jsonl:4",
+        "Plans/Planning_Ledger_System.md:227",
+        "Plans/Planning_Ledger_System.md:231",
+        "Plans/Planning_Ledger_System.md:255",
+        "Plans/.plan_index/plan_units.jsonl:3970",
+        "Plans/.plan_index/plan_units.jsonl"
+      ],
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-89a0e702ea90e4c677f33a4f",
+      "name": "repair_required_row_4_sfk-89a0e702ea90e4c677f33a4f",
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [
+        "atom-0003"
+      ],
+      "status": "pass"
+    },
+    {
+      "details": {
+        "classification_after_repair": "exact_present",
+        "dependency_drift": false,
+        "ledger_projection_drift": false,
+        "owner_routing_drift": false,
+        "reciprocal_lineage_drift": false,
+        "schema_identity_drift": false
+      },
+      "evidence": [
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/post_repair_audit_report.json",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_impact_matrix.jsonl:5",
+        "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/repair_closure_matrix.jsonl:5",
+        "Plans/Planning_Ledger_System.md:227",
+        "Plans/Planning_Ledger_System.md:231",
+        "Plans/Planning_Ledger_System.md:255",
+        "Plans/.plan_index/plan_units.jsonl:3970",
+        "Plans/.plan_index/plan_units.jsonl"
+      ],
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-efbbba780463ca02322cbd85",
+      "name": "repair_required_row_5_sfk-efbbba780463ca02322cbd85",
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "repair_required": false,
+      "source_atom_ids": [
+        "atom-0003"
+      ],
+      "status": "pass"
+    },
+    {
+      "details": {
+        "no_executable_queues_created": true,
+        "no_implementation_files_created": true,
+        "no_nodeseed_candidates_created": true,
+        "no_runtime_dispatch_created": true,
+        "no_worknodes_created": true,
+        "node_readiness_status": "blocked_runtime_certification_incomplete"
+      },
+      "evidence": [
+        "git diff --name-only",
+        "Plans/.plan_index/node_readiness_report.json"
+      ],
+      "name": "forbidden_runtime_artifacts",
+      "repair_required": false,
+      "status": "pass"
+    }
+  ],
+  "closed_finding_keys": [
+    "sfk-3db3a56417fc036747569df3",
+    "sfk-71f0d753522c3d2442585b3c",
+    "sfk-93d36dec4b1be6eae38ad7c9",
+    "sfk-89a0e702ea90e4c677f33a4f",
+    "sfk-efbbba780463ca02322cbd85"
+  ],
+  "coverage": {
+    "original_scope_coverage_percent": 100.0,
+    "original_scope_rows": 2563,
+    "repair_impact_coverage_percent": 100.0,
+    "repair_impact_rows": 5,
+    "sampling": "none"
+  },
+  "final_validated_at_utc": "2026-07-04T00:53:42Z",
+  "final_validator_commands": {
+    "git_diff_check": "git diff --check",
+    "pm_audit_closure_validate_required_matrix_effective_status": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity --require-closure-matrix --require-effective-status --source-artifact semantic_risks.jsonl",
+    "pm_audit_status_index_validate": "python3 scripts/pm-audit-status-index.py validate",
+    "pm_bootstrap_ledger_validate_target": "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+    "pm_plan_index_validate": "python3 scripts/pm-plan-index.py validate",
+    "pm_plan_migration_validate": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+    "pm_plans_verify_audit_governance": "python3 scripts/pm-plans-verify.py audit-governance",
+    "pm_plans_verify_run_gates": "python3 scripts/pm-plans-verify.py run-gates",
+    "pm_plans_verify_validate_auto_decisions": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+    "pm_plans_verify_validate_bootstrap_ledgers": "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
+    "pm_plans_verify_validate_evidence": "python3 scripts/pm-plans-verify.py validate-evidence",
+    "pm_plans_verify_validate_plan_graph": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+    "pm_plans_verify_verify_spec_lock": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+    "pm_shard_plans_check": "python3 scripts/pm-shard-plans.py --check",
+    "pytest": "python3 -m pytest -q -p no:cacheprovider"
+  },
+  "final_validator_results": {
+    "git_diff_check": "pass",
+    "pm_audit_closure_refresh_hashes": "pass",
+    "pm_audit_closure_validate_required_matrix_effective_status": "pass",
+    "pm_audit_status_index_validate": "pass",
+    "pm_bootstrap_ledger_validate_target": "pass",
+    "pm_plan_index_validate": "pass",
+    "pm_plan_migration_validate": "pass",
+    "pm_plans_verify_audit_governance": "pass",
+    "pm_plans_verify_run_gates": "pass",
+    "pm_plans_verify_validate_auto_decisions": "pass",
+    "pm_plans_verify_validate_bootstrap_ledgers": "pass",
+    "pm_plans_verify_validate_evidence": "pass",
+    "pm_plans_verify_validate_plan_graph": "pass",
+    "pm_plans_verify_verify_spec_lock": "pass",
+    "pm_shard_plans_check": "pass",
+    "pytest": "pass_19"
+  },
+  "forbidden_artifact_scan": {
+    "executable_queues_created": false,
+    "final_node_manifests_created": false,
+    "implementation_files_created": false,
+    "nodeseeds_created": false,
+    "production_build_tasks_created": false,
+    "runtime_dispatch_created": false,
+    "worknodes_created": false
+  },
+  "generated_at_utc": "2026-07-04T00:45:30Z",
+  "internal_post_repair_semantic_audit": {
+    "dependency_drift": false,
+    "impact_rows_covered": 5,
+    "ledger_projection_drift": false,
+    "original_manifest_rows_covered": 2563,
+    "owner_routing_drift": false,
+    "reciprocal_lineage_drift": false,
+    "repair_required_count": 0,
+    "schema_identity_drift": false,
+    "status": "PASS"
+  },
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "next_action": "TERMINAL_PASS_NO_REPAIR_REQUIRED",
+  "observation_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+  "original_repair_required_count": 5,
+  "remaining_warning_finding_keys": [],
+  "repair_required_count": 0,
+  "schema_id": "pm.post_repair_semantic_audit_report.v1",
+  "status": "PASS",
+  "subject_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+  "warning_count": 0
+}

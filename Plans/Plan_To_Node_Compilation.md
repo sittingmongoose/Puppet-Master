@@ -65,6 +65,7 @@ negative_constraints:
   - Do not generate NodeSeeds or WorkNodes from the PlanUnit index phase.
   - Do not create WorkNodes or executable build tasks during PlanUnit indexing.
   - Do not dispatch NodeSeed candidates or WorkNodeRequests before Executor intake and activation certification.
+  - Do not recreate the removed legacy Iced app.
 owner_hints: [Plans/Plan_To_Node_Compilation.md, Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
 ```
 
