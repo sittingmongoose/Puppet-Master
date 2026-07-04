@@ -4,7 +4,7 @@ Source: `Plans/GitHub_Integration.md`
 
 Source lines: L1991-L2063
 
-Source SHA256: `c44f594d267869446f6df0181c183fe13f176c531d47bdb647a83d9c8ec4312f`
+Source SHA256: `1b8d515a803ad8cbf5b463ea0b7b8aa7af9d8224ea79e78436d5ae9dabd5ba96`
 
 ---
 
@@ -50,7 +50,7 @@ node_compile_hint:
 source_lineage:
 - pldg-20260703-001-feature-intake:atom-0115
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0115
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0111/github_update_workflow@line=13
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0111/github_update_workflow@line=111
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0111/github_update_workflow
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json

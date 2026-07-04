@@ -4,7 +4,7 @@ Source: `Plans/Plugins_System.md`
 
 Source lines: L4038-L4117
 
-Source SHA256: `8aaadc87937d0681b05fdb70bf2b1efea4226ad4eba51658813ecd6043a7fbb9`
+Source SHA256: `f74358e512cec51f70525720a4b1dd2d46f701a46c8438828994eb0004453a73`
 
 ---
 
@@ -53,7 +53,7 @@ node_compile_hint:
 source_lineage:
 - pldg-20260703-001-feature-intake:atom-0038
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0038
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0034/P1-PLUGIN-EXTENSION-POINT-CONTRACTS@line=14
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0034/P1-PLUGIN-EXTENSION-POINT-CONTRACTS@line=34
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0034/P1-PLUGIN-EXTENSION-POINT-CONTRACTS
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json

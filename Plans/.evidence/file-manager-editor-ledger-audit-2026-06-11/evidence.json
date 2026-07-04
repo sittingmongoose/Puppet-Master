@@ -18,7 +18,7 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "04b6441fb81415001822e30c48330ee468210e1a5510ed20fa68c300442ada37"
+      "sha256": "ae55922a4e7c93b8d8ca9122421eef004f819863f05bcd0be01db470cef6fcb8"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -84,7 +84,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index regenerated after audit-20260703-003 repair; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created."
+      "details": "PlanUnit index regenerated after audit-20260704-001 metadata-hygiene repair; corrected external repo import source-lineage line refs; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",

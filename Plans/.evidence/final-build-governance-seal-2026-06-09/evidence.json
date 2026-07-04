@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "04b6441fb81415001822e30c48330ee468210e1a5510ed20fa68c300442ada37"
+      "sha256": "ae55922a4e7c93b8d8ca9122421eef004f819863f05bcd0be01db470cef6fcb8"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "074ed718b1b2d9cccb1f9c976a24486505b001d3447897e58a916d80dbaf41ea"
+      "sha256": "660517ef3735834a583cf4c0b644d9560fb5328be44dbe4e3a78cb052ca07d8d"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "32427f13230e19c8757bf658647487ee475e9a1b2b6a367e30d5babce6d70bf9"
+      "sha256": "441819d6035edd690b834aaa2fa0d6034b1a2a3265e0d437e6642afa1f10738e"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "5ef23f4df8664ac2e6e699c3a71344d4130ed82eed3701238ac5082a6cba85f3"
+      "sha256": "62a52ba2cd7e223f913ef97c173e25007a5cda91f296aed8673750aa095fb8c8"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,15 +50,15 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "13668401cdd960f0244b6f614356fb473168ed55cb003589a0a1989704cd6ed3"
+      "sha256": "2ad917246a514f14bbb776aff591dc03316c9a0c3bd75a1ecad894423079b65f"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "379a103bf4e9bea5ee48e25fda429d56e52348810a013d978d156e29ff3083ee"
+      "sha256": "e83aa13d9902559aa7a544403be6b8535b3e07d70ec1dc8b6e3d50c204e8767f"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "b59aed750b9939e2c6606cbe0557644b7c3aa19a9751bac22a103185293eb0d5"
+      "sha256": "7fe5c469c6abcf5751dfe71b1e78bbbd370264ec3fb8c2ee031082774c21f39e"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
@@ -66,11 +66,11 @@
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "353fac503c296bb2b9e3e609ff76c3a6c0f1ff1e9ce522c8bf3c22e243750d52"
+      "sha256": "0554e2401f6faab4e153d9b924138fefff728182e8210a6c0fafec80f12490e8"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "633ce2a90bce50296a43f0cc4417faa96af7bb2f8c50f480487554b23302632e"
+      "sha256": "a1fb7f5f61d35632f3e88442ab5879e0ae32d5c93f7c28484577542fa8c48c70"
     }
   ],
   "checks": [
@@ -80,7 +80,7 @@
       "result": "PASS"
     },
     {
-      "details": "PlanUnit index regenerated after audit-20260703-003 repair; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created.",
+      "details": "PlanUnit index regenerated after audit-20260704-001 metadata-hygiene repair; corrected external repo import source-lineage line refs; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created.",
       "name": "plan-index-validate",
       "result": "PASS"
     },

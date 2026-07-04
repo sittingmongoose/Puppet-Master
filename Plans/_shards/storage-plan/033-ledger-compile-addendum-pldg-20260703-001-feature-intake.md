@@ -4,7 +4,7 @@ Source: `Plans/storage-plan.md`
 
 Source lines: L16015-L16269
 
-Source SHA256: `fbe1f56bbc7e62a4738fabd40db30106460abc035567c6f5ecdd3446017fbc73`
+Source SHA256: `146be3782a1289e0ab7027b950b1f261d6a0e0802ddc6da7732b684ec53664d5`
 
 ---
 
@@ -217,7 +217,7 @@ node_compile_hint:
 source_lineage:
 - pldg-20260703-001-feature-intake:atom-0067
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0067
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0063/P0-SYSTEM-RESOURCE-GOVERNOR@line=9
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0063/P0-SYSTEM-RESOURCE-GOVERNOR@line=63
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0063/P0-SYSTEM-RESOURCE-GOVERNOR
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
 - Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json

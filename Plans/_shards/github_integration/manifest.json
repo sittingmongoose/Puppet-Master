@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-04T00:36:47Z",
+  "generated_at_utc": "2026-07-04T14:13:38Z",
   "index_path": "Plans/_shards/github_integration/00-index.md",
-  "index_sha256": "9eb4853d39f60186f1533f5e56918f340e803863fd5f431e5d8471320cd4d515",
+  "index_sha256": "8ca07321df2289e50c6c759ad33a66cf6edfd432080ef49b9273252641bc02b2",
   "manifest_path": "Plans/_shards/github_integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/github_integration/001-preamble.md",
-      "sha256": "6aea9eaea3c59a0e48c15567591873fbc41f0ded70fb7b9e8e6ed542550f5699",
+      "sha256": "6e5d12c3c15bc80cd8fcfcfa4af01d08a5caff13c5dfa5ba432c6e768986ad94",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/github_integration/002-canonical-owner-section-requirements.md",
-      "sha256": "ebd1dfc518e707e9c60c54684fb99e8dddfdd607d2c3a60c7ab3f44f056d6b38",
+      "sha256": "abf3e1d454917884274e9db272e0cd3de6ec5011c8a716b53e6bd4db982474f8",
       "shard_id": "002",
       "source_line_end": 30,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/github_integration/003-change-summary.md",
-      "sha256": "c444143bcf6a360de2b2b2c36c8149a5680417bbf82056e89678030a7e3ba7db",
+      "sha256": "87f578c780e823338b1f068bc234e7f10260d46c1f1f26eb8471f6ecd4aefa5d",
       "shard_id": "003",
       "source_line_end": 41,
       "source_line_start": 32,
@@ -35,7 +35,7 @@
     {
       "heading": "SSOT References (DRY)",
       "path": "Plans/_shards/github_integration/004-ssot-references-dry.md",
-      "sha256": "550aa280ea56a811a01faf228ef31b50346bb0bcc86545781fab171397af47bc",
+      "sha256": "9bb5d65f4ecc1a4f2920bc096c473597ec662c21e90b837076585471b0c5adde",
       "shard_id": "004",
       "source_line_end": 78,
       "source_line_start": 43,
@@ -44,7 +44,7 @@
     {
       "heading": "Canonical owner and consumer reconciliation",
       "path": "Plans/_shards/github_integration/005-canonical-owner-and-consumer-reconciliation.md",
-      "sha256": "1176b3a8176c69d2f39e08c395ecd69148f1d0867b424bbd18e55610be2e6c32",
+      "sha256": "fec643bf9a716a434dc25660dd687528f2ac187e0de5894df608c5d1ffe3e074",
       "shard_id": "005",
       "source_line_end": 227,
       "source_line_start": 80,
@@ -53,7 +53,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/github_integration/006-owner-consumer-map.md",
-      "sha256": "8717f0f55496184e62ccedbe4b06c7348baec119d01c717371ce00a7a97bd4c4",
+      "sha256": "84a7fefe355848c1128feb570b7233fcf134399dd9ec8c5bcc8e56f0a186abee",
       "shard_id": "006",
       "source_line_end": 233,
       "source_line_start": 229,
@@ -62,7 +62,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/github_integration/007-planunits.md",
-      "sha256": "0b0e9bca810098d5f57bf1efdfc14166c4c2069ade44884edf4cf81699d6bd42",
+      "sha256": "df0beb665061c229d060d13874dcd2722f580517333c29023eb87c2375bd01b0",
       "shard_id": "007",
       "source_line_end": 1793,
       "source_line_start": 235,
@@ -71,7 +71,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/github_integration/008-migration-coverage.md",
-      "sha256": "d059cb8b3716b4ae326023e2e398eabb2636e184e8d432edceed444d6d4074cb",
+      "sha256": "b4d9bdcae89381111528714909991971759dd41257d2a2082947c3190239e295",
       "shard_id": "008",
       "source_line_end": 1805,
       "source_line_start": 1795,
@@ -80,7 +80,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/github_integration/009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "de8e024f0825464a6417367288c2cf42dd3ac88463654801447ba6f33c042f67",
+      "sha256": "f4237efb8fea8d920b9805a5e361b764e0c25c81c32a38a661711c4425a6494b",
       "shard_id": "009",
       "source_line_end": 1853,
       "source_line_start": 1807,
@@ -89,7 +89,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/github_integration/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "840cf8b9b3acf1216f67afe64c2d3c3ceca2ffcc1f0a7e1b2d67162c43308ad7",
+      "sha256": "a678fa9b74e0d50d677f1228c0b49e80d4b9c4ede062f8150d828134644e1afd",
       "shard_id": "010",
       "source_line_end": 1945,
       "source_line_start": 1856,
@@ -98,7 +98,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/github_integration/011-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "b06454e029117bd8c257feff7fa7efb04afaff024a898af8cf0c442e14b9ac88",
+      "sha256": "e6f1453cc218ffe5e93d0d9eae002e3af7458bf81d29c81ce29a4de95ce77ca3",
       "shard_id": "011",
       "source_line_end": 1989,
       "source_line_start": 1947,
@@ -107,7 +107,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/github_integration/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "d2b6beed4c7c33b53c48111bc4fb602ac9e4f74854474bea08063488a194efeb",
+      "sha256": "9de1c3f538e618af727f3466978193fe9d6d2813908a4287adcb3eec065bb949",
       "shard_id": "012",
       "source_line_end": 2063,
       "source_line_start": 1991,
@@ -117,6 +117,6 @@
   "source": {
     "line_count": 2063,
     "path": "Plans/GitHub_Integration.md",
-    "sha256": "c44f594d267869446f6df0181c183fe13f176c531d47bdb647a83d9c8ec4312f"
+    "sha256": "1b8d515a803ad8cbf5b463ea0b7b8aa7af9d8224ea79e78436d5ae9dabd5ba96"
   }
 }

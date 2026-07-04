@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Goal_Runtime_System.md",
-      "sha256": "583517d758bc7d638bea028ae83ceea2657045df38867dd578b3c7db0a17815e"
+      "sha256": "50159de77b54714b528deb77faf74dd1eb9725125f226d21e6e39e19a4357c4d"
     },
     {
       "path": "Plans/00-plans-index.md",
@@ -10,23 +10,23 @@
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "1d56de70262c3e9e7559f9d0e2f7229b7d5077887a3ac8b6772a2853c7030350"
+      "sha256": "67b3c6cb82e58c33ef67ce42dd87f942dab8bdf6d25937075799cb105ed0f0eb"
     },
     {
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "c4458efe95a4002bc0dfa77ea053c0d7fca74599c49f724b7e67bfe095a2302c"
+      "sha256": "db0b94c750c7b812ceaa0c9bafd22d6e571af57eae0b7e4ecd0a3a8b7442f385"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "13668401cdd960f0244b6f614356fb473168ed55cb003589a0a1989704cd6ed3"
+      "sha256": "2ad917246a514f14bbb776aff591dc03316c9a0c3bd75a1ecad894423079b65f"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "379a103bf4e9bea5ee48e25fda429d56e52348810a013d978d156e29ff3083ee"
+      "sha256": "e83aa13d9902559aa7a544403be6b8535b3e07d70ec1dc8b6e3d50c204e8767f"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "b59aed750b9939e2c6606cbe0557644b7c3aa19a9751bac22a103185293eb0d5"
+      "sha256": "7fe5c469c6abcf5751dfe71b1e78bbbd370264ec3fb8c2ee031082774c21f39e"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
@@ -34,11 +34,11 @@
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "353fac503c296bb2b9e3e609ff76c3a6c0f1ff1e9ce522c8bf3c22e243750d52"
+      "sha256": "0554e2401f6faab4e153d9b924138fefff728182e8210a6c0fafec80f12490e8"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "633ce2a90bce50296a43f0cc4417faa96af7bb2f8c50f480487554b23302632e"
+      "sha256": "a1fb7f5f61d35632f3e88442ab5879e0ae32d5c93f7c28484577542fa8c48c70"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/inventory.json",
@@ -62,7 +62,7 @@
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "2c1c21360df110c7f95937174ee9ae3652433ceba7953d985f1bc2dae92c26bd"
+      "sha256": "c0a786fba8c13386e41f44cdd8e101de6c648e1d72b9e8369f3c86d39e39912e"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
@@ -70,7 +70,7 @@
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
-      "sha256": "6132b2543676ba4b0d5e379a5a0a7eb4a685305a848d203fb789278495a925a5"
+      "sha256": "640dc33c397a3db5f935afc0df4f5069791f61d0ea5699fa067fb36b3d8f8ad8"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -82,7 +82,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "04b6441fb81415001822e30c48330ee468210e1a5510ed20fa68c300442ada37"
+      "sha256": "ae55922a4e7c93b8d8ca9122421eef004f819863f05bcd0be01db470cef6fcb8"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -167,7 +167,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index regenerated after audit-20260703-003 repair; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created."
+      "details": "PlanUnit index regenerated after audit-20260704-001 metadata-hygiene repair; corrected external repo import source-lineage line refs; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created."
     },
     {
       "name": "migration-validate",

@@ -1,31 +1,31 @@
 # Shard Index: Plans/Plugins_System.md
 
-Generated: 2026-07-04T00:36:47Z
+Generated: 2026-07-04T14:13:38Z
 
-Source SHA256: `8aaadc87937d0681b05fdb70bf2b1efea4226ad4eba51658813ecd6043a7fbb9`
+Source SHA256: `f74358e512cec51f70525720a4b1dd2d46f701a46c8438828994eb0004453a73`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `2455f1f3f7d1f2d1033f8ced13f317bdb7523cdc843114e224089702c98f7135`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L36 `e32ff57b18d980d22bcb64b1425ec53433fa0dfffbe0af5b27cccc3299325c3d`
-- [003 - 1. Definitions](003-1.-definitions.md) L38-L52 `f0d515ec7620da8fc8372b2404facd723ec487ad1433742d9a158d21adb2828f`
-- [004 - 2. Discovery and storage](004-2.-discovery-and-storage.md) L54-L103 `c76b47206d3e79d9377cb78b8b0992de64a21cafb60a1ca92d826a03c620906c`
-- [005 - 3. Load order and execution model](005-3.-load-order-and-execution-model.md) L105-L167 `d2fb8ce5ac4afbfdd8798a70c85f11656b9985fc983c3da2b045864b039d878f`
-- [006 - 4. Hook events](006-4.-hook-events.md) L169-L319 `77271370611d934a66ef63ddd991547541479b4898960feeaf45a85bac0e7be4`
-- [007 - 5. Hook return semantics](007-5.-hook-return-semantics.md) L321-L341 `6114eb92fcae082fa47bca0bdd176eae77a7994477b23615ea78c5687861fb39`
-- [008 - 6. Custom tool registration](008-6.-custom-tool-registration.md) L343-L386 `34dc71d7bec692f0fc1020c226fa85c1d6f85da682cbf054e12b40d1a0893d00`
-- [009 - 7. Plugin configuration](009-7.-plugin-configuration.md) L388-L440 `dcf728c959f1c787f546cd84ce4f611af7b00166b735ae1f3ea233c592489081`
-- [010 - 8. Structured plugin logging](010-8.-structured-plugin-logging.md) L442-L467 `53aa949baab70afd32ed939e56c6517aabe0ca14ce20fcc9e2514077f0191f09`
-- [011 - 9. GUI requirements](011-9.-gui-requirements.md) L469-L513 `fa1a3a74a52034213002687b70fd993f6ad7ab45e80cab00a78b682f0885ab6f`
-- [012 - 10. OpenCode baseline and Puppet Master deltas](012-10.-opencode-baseline-and-puppet-master-deltas.md) L515-L537 `3421e782318db84e630c295ce8fb4a592d928f7f50e40155a2a6cc2cf6888d1e`
-- [013 - 11. Acceptance criteria](013-11.-acceptance-criteria.md) L539-L581 `d7d7a91956908aef4405f7a57e144380e96d45fdb335bef0207ae1336582cec3`
-- [014 - Hook/Block Integration Addendum (2026-03-08)](014-hook-block-integration-addendum-2026-03-08.md) L583-L594 `79ad900d34ae212de779937327ad45b9d2bed631dbbf342d0442e91dc4e68a25`
-- [015 - Plugin Block Runtime Canonical Alignment (2026-03-09)](015-plugin-block-runtime-canonical-alignment-2026-03-09.md) L595-L602 `b2d5f8144cca4f4d2ab950099c6a53452bd0f1d8ca6128bf1093484f449efa7d`
-- [016 - Plugin Block Runtime Taxonomy Consolidation Addendum (2026-03-09)](016-plugin-block-runtime-taxonomy-consolidation-addendum-2026-03-09.md) L603-L610 `36b03e50f104a740f18198ed12954f3292740a5e92b90bd13d06015041c0e432`
-- [017 - Plugin Hook Blocked Specification Addendum](017-plugin-hook-blocked-specification-addendum.md) L612-L634 `85ff01198e45f4b2b686a71bfa2a7d6e6cb10aef45d09a249e4e8e4f8aa1bab2`
-- [018 - Owner / Consumer Map](018-owner-consumer-map.md) L636-L640 `d5581a2587b260ce57617f7369f6cc5b65d9a5be4dff33b9d5e98a8c1781a9c9`
-- [019 - PlanUnits](019-planunits.md) L642-L4021 `537caea17ff04408b070722ec676b0fa2db33828488878a9485bd73ac89b8757`
-- [020 - Migration Coverage](020-migration-coverage.md) L4023-L4036 `03009bdd86fbfedf4b4f1c7d2b1fe63e7b22567d9f81251d8deaf02e6b8876db`
-- [021 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](021-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L4038-L4117 `3a9b02e6c0447954ebd77408ae31fb646bb33a1f305647d8fb206dd699a90fee`
+- [001 - Preamble](001-preamble.md) L1-L4 `9c2625cdd171e8fd79b4df0e4878955254e13fd2dec2a2a3d13e1909718b2721`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L36 `8974936edff12494a59774ba1f50af46984cbe2ad99dc315fd758ac3a96b7dbf`
+- [003 - 1. Definitions](003-1.-definitions.md) L38-L52 `d092551a35fd8f0d629c24ea5a4294cc14d628d31cbd3ebf03e199e8a6cc3c8c`
+- [004 - 2. Discovery and storage](004-2.-discovery-and-storage.md) L54-L103 `2f13d0aa4bf6165b6fe48ef2b29daee3e2c96dc40e53b1fd4fd38c31d7437d4c`
+- [005 - 3. Load order and execution model](005-3.-load-order-and-execution-model.md) L105-L167 `6897a52a6c9e4461842f6d5241ed5b42907fef83b02818c535c4842f4fb7435e`
+- [006 - 4. Hook events](006-4.-hook-events.md) L169-L319 `43c770d56c34ceecbf302615b305414f7f451e05a57d551d2995fc956c9fbd91`
+- [007 - 5. Hook return semantics](007-5.-hook-return-semantics.md) L321-L341 `d1ccf14ef80e8cc4e429460de6ae75dcd459b0abef878591a0b6bfa625d11332`
+- [008 - 6. Custom tool registration](008-6.-custom-tool-registration.md) L343-L386 `86eef5c3eb23c99c99fd908bebb2ea43d049143ec5e4cb58d01533cc4fbb4843`
+- [009 - 7. Plugin configuration](009-7.-plugin-configuration.md) L388-L440 `db5252a616667db778a17466e3479dd19a6452b6f1c6efb3542cd3d76420b101`
+- [010 - 8. Structured plugin logging](010-8.-structured-plugin-logging.md) L442-L467 `63d9c26e4e13f006496c07af0b592902310ef683d8f1b595da589dbb034c2622`
+- [011 - 9. GUI requirements](011-9.-gui-requirements.md) L469-L513 `51cde8266e118e7d35e520028aebe54c5d850fc675da36d540bbf182c1d8980f`
+- [012 - 10. OpenCode baseline and Puppet Master deltas](012-10.-opencode-baseline-and-puppet-master-deltas.md) L515-L537 `cb7f9adad1f544845dba27fc75f2dded43712246c0903983ed0d95218bba5f78`
+- [013 - 11. Acceptance criteria](013-11.-acceptance-criteria.md) L539-L581 `501338fa863f4e8dc8d7d9c67f42fac7de8d329c1f0a795be806d95d664ff205`
+- [014 - Hook/Block Integration Addendum (2026-03-08)](014-hook-block-integration-addendum-2026-03-08.md) L583-L594 `75a562faf64a021c91003dd4bfda56caa8ac3df64f1538f19e05dd4dc6f6ee46`
+- [015 - Plugin Block Runtime Canonical Alignment (2026-03-09)](015-plugin-block-runtime-canonical-alignment-2026-03-09.md) L595-L602 `480c2c96f6b4166744c90be5191e42754125cc3eed05e3096c4d26579e5afa2c`
+- [016 - Plugin Block Runtime Taxonomy Consolidation Addendum (2026-03-09)](016-plugin-block-runtime-taxonomy-consolidation-addendum-2026-03-09.md) L603-L610 `86e1f1020853972a09cc0c6624932396571f46897bc1604412e0721aefe8059f`
+- [017 - Plugin Hook Blocked Specification Addendum](017-plugin-hook-blocked-specification-addendum.md) L612-L634 `e0e0e6d41f82bc9c9aa8debd8c5131933db6b2fc62d03a0c3ec9110235576818`
+- [018 - Owner / Consumer Map](018-owner-consumer-map.md) L636-L640 `77152272f500b042cd9820fd610e62a321074d0df0221207ee3865e5e24d08ec`
+- [019 - PlanUnits](019-planunits.md) L642-L4021 `705a296a14bbca0a63810e62713074aa9aeb8a3864163a5ab52c63623518f119`
+- [020 - Migration Coverage](020-migration-coverage.md) L4023-L4036 `9e703b3543fa802057317cb17f51467432aef30aa25c272136a06c453a798219`
+- [021 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](021-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L4038-L4117 `592234430df230019e7b0d933d80e4501eb3ff97f1363511746c5753e6bd6489`

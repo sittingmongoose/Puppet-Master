@@ -18,7 +18,7 @@
     "unit_type": 5473,
     "validation_surfaces": 5473
   },
-  "generated_at_utc": "2026-07-04T00:36:39Z",
+  "generated_at_utc": "2026-07-04T14:28:06Z",
   "issues": {
     "docs_without_plan_units": [],
     "duplicate_plan_unit_ids": [],
@@ -41,12 +41,12 @@
     ],
     "available": true,
     "checks": {
-      "anchor_alias_rows": 3916,
+      "anchor_alias_rows": 3933,
       "batch_report_doc_entries": 212,
       "batch_report_rows": 212,
-      "coverage_rows": 3916,
+      "coverage_rows": 3933,
       "coverage_status_counts": {
-        "already_standardized_existing_planunits": 37,
+        "already_standardized_existing_planunits": 54,
         "goal_runtime_new_profile_planunit_covered": 25,
         "goal_runtime_new_profile_standardized_section": 10,
         "phase2b_batch_001_atomized_covered": 25,
@@ -468,11 +468,11 @@
         "standardized_section": 9,
         "structural_disposition": 8
       },
-      "doc_count": 71,
+      "doc_count": 72,
       "live_plan_unit_count": 5473,
       "source_preserving_unit_count": 0,
       "source_preserving_unit_ids": [],
-      "span_count": 3916,
+      "span_count": 3933,
       "unique_live_plan_unit_count": 5473
     },
     "coverage_rows": 3933,
