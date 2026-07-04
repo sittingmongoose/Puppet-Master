@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-07-04T00:47:35Z",
+  "generated_at_utc": "2026-07-04T14:24:14Z",
   "reports": [
     {
       "audit_id": "audit-20260615-001-part-3-fable-cleanup",
@@ -1137,6 +1137,23 @@
       "reported_status_family": "blocked_or_fail",
       "scope_key": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
       "superseded_by": "Plans/.audits/CURRENT_AUDIT_STATUS.md"
+    },
+    {
+      "audit_id": "audit-20260704-001-external-repo-import-metadata-hygiene",
+      "closure_registry_basis": {
+        "basis_note": "finding_level_closure_authority_not_report_body_rewrite",
+        "closure_status_counts": {},
+        "matching_rows": 0,
+        "registry_path": "Plans/.audits/_semantic_closure_registry.jsonl"
+      },
+      "current_blocker": false,
+      "effective_status": "reported_pass_or_pass_with_warnings",
+      "ledger_id": "pldg-20260703-001-feature-intake",
+      "path": "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/FINAL_REPORT.md",
+      "reported_status": "PASS",
+      "reported_status_family": "pass",
+      "scope_key": "audit-20260704-001-external-repo-import-metadata-hygiene",
+      "superseded_by": null
     }
   ],
   "schema_id": "pm.audit_status_index.v1",
@@ -1148,10 +1165,10 @@
     "closure_registry_row_count": 367,
     "current_blocker_count": 0,
     "historical_blocked_or_fail_report_count": 24,
-    "report_count": 62,
+    "report_count": 63,
     "reported_status_family_counts": {
       "blocked_or_fail": 24,
-      "pass": 25,
+      "pass": 26,
       "unknown": 13
     }
   }

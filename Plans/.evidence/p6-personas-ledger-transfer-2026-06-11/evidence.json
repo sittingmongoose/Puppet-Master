@@ -13,7 +13,7 @@
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "c4458efe95a4002bc0dfa77ea053c0d7fca74599c49f724b7e67bfe095a2302c"
+      "sha256": "db0b94c750c7b812ceaa0c9bafd22d6e571af57eae0b7e4ecd0a3a8b7442f385"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
@@ -73,7 +73,7 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "04b6441fb81415001822e30c48330ee468210e1a5510ed20fa68c300442ada37"
+      "sha256": "ae55922a4e7c93b8d8ca9122421eef004f819863f05bcd0be01db470cef6fcb8"
     },
     {
       "note": "Shard regeneration report.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "90291ea5b34c9e9f21d9371a775f35381fcebf9ece35b225cdd1152a09912078"
+      "sha256": "b50ef4dea6f4e2559d40182d47b568b7b862017d57b8eb5fe037a75886ab6f04"
     }
   ],
   "checks": [
@@ -236,7 +236,7 @@
     {
       "name": "plan-index-validate",
       "result": "PASS",
-      "details": "PlanUnit index regenerated after audit-20260703-003 repair; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created."
+      "details": "PlanUnit index regenerated after audit-20260704-001 metadata-hygiene repair; corrected external repo import source-lineage line refs; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created."
     },
     {
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",

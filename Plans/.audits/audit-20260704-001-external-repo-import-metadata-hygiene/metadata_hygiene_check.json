@@ -1,0 +1,35 @@
+{
+  "after_issues": {
+    "all_atoms_without_live_plan_source_claim": [],
+    "compile_note_issues": [],
+    "external_atoms_without_live_plan_source_claim": [],
+    "external_row_cardinality_issues": {},
+    "line_ref_issues": [],
+    "protected_product_field_drift": [],
+    "raw_ref_issues": []
+  },
+  "before_counts": {
+    "compile_notes_char_array_rows": 122,
+    "stale_consolidated_line_refs_in_canonical_plan_docs": 93,
+    "stale_consolidated_line_refs_in_design_atoms": 93
+  },
+  "bundle_evidence": {
+    "bundle_consolidated_jsonl_matches_live": null,
+    "extracted_support_dir": "/tmp/pm_external_repo_bundle_20260703_support",
+    "uploaded_zip": "/Users/jaredsmacbookair/Downloads/pm_external_repo_ledger_import_bundle_2026-07-03 (1).zip"
+  },
+  "counts": {
+    "compile_notes_single_string_list": 122,
+    "design_atoms": 122,
+    "design_atoms_with_live_plan_source_claim": 122,
+    "external_atoms_with_live_plan_source_claim": 113,
+    "external_rows": 113,
+    "external_rows_with_exactly_one_design_atom": 113,
+    "plan_units": 5473,
+    "qualified_consolidated_refs_scanned": 452,
+    "raw_refs_scanned_in_design_atoms": 113
+  },
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "schema_id": "pm.external_repo_metadata_hygiene_check.v1",
+  "status": "pass"
+}

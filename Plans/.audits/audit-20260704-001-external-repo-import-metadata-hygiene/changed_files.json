@@ -1,0 +1,3968 @@
+{
+  "audit_id": "audit-20260704-001-external-repo-import-metadata-hygiene",
+  "changed_files": [
+    {
+      "path": "Plans/.audits/CURRENT_AUDIT_STATUS.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.audits/_audit_status_index.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.audits/_semantic_closure_registry.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/coverage_report.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/dependencies.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/doc_cards.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_index/plan_units.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/BinaryLocator_Spec.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/FileSafe.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Goal_Runtime_System.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/MCP_Integration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Media_Generation_and_Capabilities.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Planning_Ledger_System.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Plugins_System.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Provider_OpenCode.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Release_Supply_Chain.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/00-plans-index/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/agent-rules-context/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/agent-rules-context/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/architecture_invariants/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/architecture_invariants/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/003-change-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/004-rewrite-alignment-2026-02-21.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/005-executive-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/006-table-of-contents.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/007-1.-modes-overview.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/009-3.-permissions-yolo-vs-regular.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/012-6.-teach.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/013-7.-attachments-web-search-and-extensibility.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/015-9.-file-manager-ide-style-editor-and-mention.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/016-10.-chat-history-search.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/017-11.-threads-and-chat-management.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/018-12.-context-usage-display.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/019-13.-activity-transparency-search-bash-and-file-activity.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/020-14.-subagents-crew.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/021-15.-plan-mode-crew-mode.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/022-16.-interview-phase-ux-chat-surface.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/023-17.-context-truncation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/024-18.-brainstorm-mode.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/025-19.-documentation-audience-ai-overseer.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/026-20.-references.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/027-21.-dashboard-warnings-and-calls-to-action.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/028-22.-live-testing-tools-and-hot-reload.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/029-23.-gaps-competitive-comparison-and-enhancements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/031-25.-context-circle-enhancements-addendum-2026-02-23.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/032-26.-auditor-audit-to-repair-loop-model-provider-settings-invaria.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/033-27.-persona-control-in-assistant-chat-2026-03-06.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/036-unified-thread-blocked-state-lifecycle.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/037-worktrees-in-assistant.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/038-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/039-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/040-shared-actor-boundary-route-payload-and-blocked_notice-packet.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/041-shared-conversational-actor-runtime-identity.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/042-chat-route-permission-and-history-behaviors.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/043-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/044-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/045-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/046-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/047-ledger-compile-addendum-pldg-20260615-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/048-ledger-compile-addendum-pldg-20260616-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/049-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/050-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/051-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/052-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/053-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/054-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/055-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/002-change-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/003-0.-scope-and-boundary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/004-1.-capability-boundary-assistant-only.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/005-2.-physical-storage-layout-per-project.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/006-3.-data-model-evidence-backed-gists-gui-first.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/007-4.-retrieval-indexing-contracts.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/008-5.-verification-triggers-evidence-backed-gists.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/009-6.-prompt-injection-contract-token-protection.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/010-7.-gui-maintenance-operations.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/011-8.-integration-points.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/012-9.-deterministic-defaults.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/013-10.-acceptance-criteria-testable.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/014-11.-non-goals.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/015-12.-runtime-owner-reference-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/016-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/017-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/018-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/assistant-memory-subsystem/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/002-0.-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/003-1.-ownership-and-consumers.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/004-2.-canonical-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/005-gui-visible-testing-repair-addendum-2026-07-02.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/006-3.-contracts-schemas-events-or-data-shapes.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/007-4.-integration-surfaces.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/008-5.-validation-and-acceptance.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/009-6.-plan-to-node-readiness.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/010-7.-deferred-retired-compatibility-and-non-goals.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/011-8.-source-lineage-and-governance.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/012-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/013-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/014-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/015-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/016-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/017-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/automated_testing_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/002-purpose.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/003-non-goals.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/004-canonical-references-and-constraints-ssot-dry.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/005-terminology-index-only.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/006-binarylocator-boundary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/007-deterministic-discovery-algorithm.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/008-deterministic-discovery-algorithm.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/009-validation-contract-commands-version-parsing-permission-checks.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/010-caching-and-invalidation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/011-error-taxonomy-stable-codes.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/012-acceptance-criteria-testable.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/013-references.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/014-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/015-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/017-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/018-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/binarylocator_spec/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/bootstrap_planning_migration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/bootstrap_planning_migration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/chain-wizard-flexibility/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/chain-wizard-flexibility/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/cli_bridged_providers/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/cli_bridged_providers/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/commands_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/commands_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/containers_registry_and_unraid/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/containers_registry_and_unraid/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/003-0.-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/004-cross-surface-runtime-concern-and-route-open-contracts.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/005-1.-events-persisted.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/006-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/007-2.-provider-normalized-stream-non-persisted-contract.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/008-3.-tool-events-persisted.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/009-5.-context-management-instruction-scoping-attempt-journaling-par.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/010-6.-hitlrequest.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/011-7.-uicommand.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/012-8.-ui-scaling.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/013-usage-and-billing-contracts-addendum.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/014-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/015-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/016-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/017-canonical-runtime-event-outcome-and-action-contract-canonical-al.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/018-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/019-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/020-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/021-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/022-ledger-compile-addendum-pldg-20260614-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/023-ledger-compile-addendum-pldg-20260615-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/024-ledger-compile-addendum-pldg-20260616-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/025-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/026-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/028-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/033-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/034-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/contracts_v0/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/crosswalk/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/crosswalk/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/decision_log/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/decision_log/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/decision_policy/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/decision_policy/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/document_packaging_policy/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/document_packaging_policy/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/dry_rules/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/dry_rules/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/003-0.-purpose-and-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/004-1.-role-definitions.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/005-2.-deterministic-readiness.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/006-3.-canonical-status-lifecycle.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/007-4.-auto-marking-rule.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/008-6.-overseer-dispatch-algorithm-deterministic.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/009-runtime-scheduler-addendum-2026-03-08.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/013-counter-relationships-and-event-ordering-addendum.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/014-execution-context-worktree-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/015-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/016-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/017-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/018-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/019-ledger-compile-addendum-pldg-20260615-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/020-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/023-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/024-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/025-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/executor_protocol/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/feature-list/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/feature-list/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filemanager/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filemanager/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/002-dry-method-compliance.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/003-rewrite-alignment-2026-02-21.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/004-executive-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/005-table-of-contents.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/006-1.-architecture-overview.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/007-2.-implementation-details.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/008-3.-integration-with-platform-runner.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/009-4.-pattern-file.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/010-5.-configuration-options.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/011-6.-event-logging.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/012-7.-error-messages.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/013-8.-testing.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/014-9.-implementation-checklist.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/015-10.-relationship-to-other-plans.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/016-10a.-filesafe-and-assistant-yolo-mode.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/017-11.-additional-filesafe-features.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/018-12.-gaps-and-potential-issues.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/019-13.-enhancements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/020-14.-historical-note-on-moved-context-compilation-canon.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/021-15.-system-integration-analysis.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/022-16.-references.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/023-17.-implementation-order-and-dependencies.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/024-runtime-blocked-state-integration-addendum-2026-03-08.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/025-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/027-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/028-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/029-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/030-ledger-compile-addendum-pldg-20260614-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/033-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/035-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/036-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/filesafe/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/003-table-of-contents.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/004-1.-executive-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/006-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/007-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/009-3.-master-layout.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/010-4.-navigation-architecture.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/011-5.-panel-system.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/012-6.-theme-system.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/013-7.-views-specification.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/014-8.-widget-catalog.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/015-9.-state-management.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/016-10.-ux-patterns.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/017-11.-anti-flickering-and-scroll-preservation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/018-12.-responsive-design.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/019-13.-accessibility.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/020-14.-slint-file-organization.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/021-15.-persistence.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/022-16.-migration-mapping.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/023-17.-risks-and-mitigations.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/024-18.-promoted-features-formerly-future-considerations.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/025-appendix-a-cross-references.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/026-appendix-b-locked-decisions-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/027-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/028-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/029-rendering-surface-addendum-2026-03-07.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/030-assistant-planning-ux-addendum-2026-03-08.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/031-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/032-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/033-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/034-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/035-canonical-blocked-recovery-behavior.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/036-compatibility-source-lineage-blocked-state-visual-distinction-an.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/037-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/038-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/039-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/040-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/041-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/042-ledger-compile-addendum-pldg-20260614-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/043-ledger-compile-addendum-pldg-20260615-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/044-ledger-compile-addendum-pldg-20260616-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/045-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/046-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/047-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/048-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/049-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/050-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/051-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/052-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/053-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/finalguispec/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/formatters_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/formatters_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_api_auth_and_flows/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_api_auth_and_flows/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/003-change-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/004-ssot-references-dry.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/005-canonical-owner-and-consumer-reconciliation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/006-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/007-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/008-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/011-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/github_integration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/glossary/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/glossary/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/002-0.-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/004-2.-canonical-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/006-3.-contracts-schemas-events-or-data-shapes.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/007-4.-integration-surfaces.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/008-5.-validation-and-acceptance.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/009-6.-plan-to-node-readiness.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/010-7.-deferred-retired-compatibility-and-non-goals.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/011-8.-source-lineage-and-governance.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/012-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/013-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/015-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/goal_runtime_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/human-in-the-loop/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/human-in-the-loop/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/interview-subagent-integration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/lspsupport/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/lspsupport/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/002-1.-canonical-naming.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/003-2.-requested-versus-effective-availability.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/004-3.-credential-binding-and-invalidation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/005-4.-cross-surface-responsibilities.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/006-5.-server-config-schema.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/007-6.-supported-flows.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/008-7.-effective-tool-availability-and-gui-surfacing.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/009-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/010-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/012-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/013-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/mcp_integration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/media_generation_and_capabilities/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/media_generation_and_capabilities/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/media_generation_and_capabilities/002-0.-scope-and-ssot-status.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/media_generation_and_capabilities/003-1.-capability-system.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/media_generation_and_capabilities/004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/media_generation_and_capabilities/005-2.-media-generation-contract.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/media_generation_and_capabilities/006-3.-natural-language-slot-extraction-grammar.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/media_generation_and_capabilities/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/miscplan/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/miscplan/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/003-0.-scope-and-ssot-status.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/004-provider-model-precedence-and-settings-resolution.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/005-1.-canonical-model-identifier.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/006-2.-model-and-runtime-selection-priority.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/007-3.-model-options-configuration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/009-4.-model-availability-and-error-handling.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/010-5.-per-persona-runtime-preferences.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/011-6.-variants-system.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/012-7.-gui-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/013-8.-opencode-baseline-and-puppet-master-deltas.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/014-9.-acceptance-criteria.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/015-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/016-provider-failure-class-alignment-addendum-2026-03-08.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/017-runtime-retry-fallback-ownership-addendum-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/018-requested-effective-model-and-retry-ownership-canonical-alignmen.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/019-model-selection-versus-runtime-retry-ownership-consolidation-add.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/020-requested-effective-model-snapshot-alignment.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/021-provider-model-selection-policy-and-audit-addendum.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/022-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/023-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/024-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/025-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/026-ledger-compile-addendum-pldg-20260616-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/027-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/030-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/032-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/models_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/003-1.-purpose-and-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/004-2.-references.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/005-canonical-data-shape-reconciliation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/006-3.-assessment-what-we-have-and-gaps-filled.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/007-5.-auto-rotation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/008-6.-provider-specific-behavior.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/009-7.-runner-orchestration-contract.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/010-8.-usage-and-pick-best.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/011-9.-gui-requirements-ux-only.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/012-10.-phase-2-native-auth-when-available.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/013-11.-open-points-for-implementer.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/014-operational-identity-addendum-for-github-actions-and-docker-mana.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/015-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/016-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/018-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/021-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/multi-account/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/newfeatures/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/newtools/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/newtools/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/opencode_coverage_matrix/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/opencode_coverage_matrix/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/opencode_deep_extraction/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/opencode_deep_extraction/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/orchestrator_page/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/003-0.-scope-and-ssot-status.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/004-canonical-data-shape-reconciliation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/005-1.-definitions-and-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/006-2.-permission-actions.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/007-3.-granular-rules.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/009-4.-special-guards.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/010-5.-tool-permission-keys.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/011-6.-ask-flow-semantics.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/012-7.-deterministic-defaults.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/013-8.-resolution-algorithm.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/014-9.-persistence-and-storage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/015-10.-gui-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/016-10a.-security-model.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/017-11.-opencode-baseline-and-puppet-master-deltas.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/018-12.-acceptance-criteria.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/019-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/020-runtime-blocked-outcome-integration-addendum-2026-03-08.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/021-source-control-github-actions-and-docker-manager-permission-adde.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/022-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/023-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/024-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/025-ledger-compile-addendum-pldg-20260614-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/026-ledger-compile-addendum-pldg-20260616-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/027-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/030-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/031-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/032-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/033-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/034-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/035-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/permissions_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/personas/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/personas/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plan_document_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plan_document_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plan_to_node_compilation/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plan_to_node_compilation/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/002-0.-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/004-2.-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/006-semantic-audit-closure-addendum-2026-06-17.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/007-3.-compilation-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/008-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_ledger_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_wizard/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/planning_wizard/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/002-0.-scope-and-ssot-status.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/003-1.-definitions.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/004-2.-discovery-and-storage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/005-3.-load-order-and-execution-model.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/006-4.-hook-events.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/007-5.-hook-return-semantics.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/008-6.-custom-tool-registration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/009-7.-plugin-configuration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/010-8.-structured-plugin-logging.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/011-9.-gui-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/012-10.-opencode-baseline-and-puppet-master-deltas.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/013-11.-acceptance-criteria.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/014-hook-block-integration-addendum-2026-03-08.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/015-plugin-block-runtime-canonical-alignment-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/016-plugin-block-runtime-taxonomy-consolidation-addendum-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/017-plugin-hook-blocked-specification-addendum.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/018-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/019-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/020-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/021-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/plugins_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prd_builder/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prd_builder/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prd_planning_runtime_contracts.schema/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prd_planning_runtime_contracts/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prd_planning_runtime_contracts/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/progression_gates/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/progression_gates/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/project_output_artifacts/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/project_output_artifacts/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/003-0.-scope-and-ssot-status.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/004-1.-prompt-assembly-pipeline.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/005-2.-compaction-and-pruning.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/006-3.-rotation-follow-up-run-spawning.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/007-4.-gui-integration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/008-5.-acceptance-criteria.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/011-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/012-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/013-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/014-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/015-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/017-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/prompt_pipeline/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/002-change-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/003-1.-purpose.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/004-2.-non-goals.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/005-3.-ssot-references-dry.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/006-canonical-data-shape-reconciliation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/007-4.-architecture-overview.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/008-5.-connection-contract.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/009-6.-provider-facade-mapping.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/010-7.-model-discovery.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/011-8.-capability-flags.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/012-9.-failure-states-and-recovery.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/013-10.-gui-configuration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/014-11.-legacy-platform_specs-lineage-and-current-metadata-ownership.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/015-12.-process-isolation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/016-13.-invocation-shape-normative.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/017-14.-persistence-mapping-seglog.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/018-15.-acceptance-criteria-testable.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/019-16.-references.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/020-opencode-runtime-retry-blocked-state-packet-canonical-alignment-.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/021-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/022-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/023-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/024-ledger-compile-addendum-pldg-20260614-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/025-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_opencode/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/provider_stream_mapping_external_reference_a2a/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/002-0.-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/003-1.-ownership-and-consumers.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/004-2.-canonical-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/005-3.-contracts-schemas-events-or-data-shapes.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/006-4.-integration-surfaces.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/007-5.-validation-and-acceptance.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/008-6.-plan-to-node-readiness.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/009-7.-deferred-retired-compatibility-and-non-goals.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/010-8.-source-lineage-and-governance.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/release_supply_chain/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/rewrite-tie-in-memo/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/run_graph_view/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/run_graph_view/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/run_modes/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/run_modes/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/runtime_artifacts_panel/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/runtime_artifacts_panel/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/002-0.-scope-and-ssot-status.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/003-1.-canonical-shell-and-surface-model.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/004-2.-cross-feature-runtime-contracts.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/005-3.-feature-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/006-4.-command-families-required-by-the-promoted-features.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/007-5.-persistence-and-restore-rules.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/008-6.-non-goals-and-anti-drift-rules.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/009-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/010-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/011-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/skills_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/skills_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/003-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/004-table-of-contents.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/007-3.-implementation-checklist.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/011-7.-enhancements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/013-version-history.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/021-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/022-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/023-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/storage-plan/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/002-ssot-references-dry.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/003-1.-purpose-and-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/004-2.-permission-model.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/005-3.-built-in-tools-target-set.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/006-4.-custom-tools.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/007-5.-mcp-integration-in-scope.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/008-6.-ways-to-add-tools-implementation-angles.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/009-7.-per-platform-mcp-and-tool-config-reference.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/010-8.-implementation-details-and-technical-notes.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/011-10.-implementation-plan-permissions-spec-for-implementers.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/012-11.-relationship-to-other-plans.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/013-12.-implementation-checklist-ordered-for-implementation-plan.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/014-13.-references.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/015-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/016-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/017-tool-denial-and-runtime-action-canonical-alignment-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/018-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/019-tool-field-name-and-taxonomy-alignment.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/020-10.-firecrawl-provider-integration.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/021-11.-provider-capability-matrix.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/022-12.-web-tool-routing-algorithm.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/023-13.-batch-operations.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/024-14.-web-content-caching-layer.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/025-canonical-owner-and-consumer-reconciliation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/026-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/027-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/028-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/029-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/030-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/031-ledger-compile-addendum-pldg-20260614-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/032-ledger-compile-addendum-pldg-20260615-001.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/033-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/034-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/035-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/036-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/tools/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/ui_command_catalog/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/ui_command_catalog/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/ui_wiring_rules/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/ui_wiring_rules/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/001-preamble.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/002-canonical-owner-section-requirements.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/003-plan-document-status.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/004-rewrite-alignment-2026-02-21.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/005-storage-dependency-implementation.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/006-executive-summary.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/007-relationship-to-existing-docs.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/008-external-references-competitive-ecosystem.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/009-scope-of-the-usage-feature.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/010-data-and-backend-conceptual.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/011-gui-placement-options.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/012-gaps-current-state-vs.-desired.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/013-enhancements-beyond-minimum.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/014-out-of-scope-for-this-plan.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/015-success-criteria.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/016-version-history.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/017-widget-composed-page-layout-addendum-2026-02-23.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/019-source-control-github-actions-and-docker-manager-cost-attributio.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/020-cross-surface-usage-routing-clarifications.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/021-owner-consumer-map.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/022-planunits.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/023-migration-coverage.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/025-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/026-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/usage-feature/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/widget_system/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/widget_system/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/wiring_matrix/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/wiring_matrix/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/worktreegitimprovement/00-index.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/_shards/worktreegitimprovement/manifest.json",
+      "status": "M"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/assistant-memory-subsystem.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl",
+      "status": "M"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "status": "M"
+    },
+    {
+      "path": "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/FINAL_REPORT.md",
+      "status": "??"
+    },
+    {
+      "path": "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/changed_files.json",
+      "status": "??"
+    },
+    {
+      "path": "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/metadata_hygiene_check.json",
+      "status": "??"
+    },
+    {
+      "path": "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/repair_report.json",
+      "status": "??"
+    },
+    {
+      "path": "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/shard_report.json",
+      "status": "??"
+    },
+    {
+      "path": "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/validator_results.json",
+      "status": "??"
+    }
+  ],
+  "groups": {
+    "audit_files": [
+      "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/FINAL_REPORT.md",
+      "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/changed_files.json",
+      "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/metadata_hygiene_check.json",
+      "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/repair_report.json",
+      "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/shard_report.json",
+      "Plans/.audits/audit-20260704-001-external-repo-import-metadata-hygiene/validator_results.json"
+    ],
+    "audit_status_index": [
+      "Plans/.audits/CURRENT_AUDIT_STATUS.md",
+      "Plans/.audits/_audit_status_index.json"
+    ],
+    "canonical_plan_docs": [
+      "Plans/Automated_Testing_System.md",
+      "Plans/BinaryLocator_Spec.md",
+      "Plans/Contracts_V0.md",
+      "Plans/Executor_Protocol.md",
+      "Plans/FileSafe.md",
+      "Plans/FinalGUISpec.md",
+      "Plans/GitHub_Integration.md",
+      "Plans/Goal_Runtime_System.md",
+      "Plans/MCP_Integration.md",
+      "Plans/Media_Generation_and_Capabilities.md",
+      "Plans/Models_System.md",
+      "Plans/Multi-Account.md",
+      "Plans/Permissions_System.md",
+      "Plans/Planning_Ledger_System.md",
+      "Plans/Plugins_System.md",
+      "Plans/Prompt_Pipeline.md",
+      "Plans/Provider_OpenCode.md",
+      "Plans/Release_Supply_Chain.md",
+      "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "Plans/Tools.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/assistant-memory-subsystem.md",
+      "Plans/storage-plan.md",
+      "Plans/usage-feature.md"
+    ],
+    "closure_registry": [
+      "Plans/.audits/_semantic_closure_registry.jsonl"
+    ],
+    "evidence": [
+      "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
+      "Plans/.evidence/final-build-governance-seal-2026-06-09/evidence.json",
+      "Plans/.evidence/goal-runtime-system-governance-seal-2026-06-16/evidence.json",
+      "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
+      "Plans/.evidence/orchestrator-goal-runtime-flow-post-audit-repair-2026-06-16/evidence.json",
+      "Plans/.evidence/p6-personas-ledger-transfer-2026-06-11/evidence.json",
+      "Plans/.evidence/part3-fable-cleanup-governance-seal-2026-06-15/evidence.json",
+      "Plans/.evidence/part4-fable-cleanup-post-audit-repair-2026-06-15/evidence.json",
+      "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json"
+    ],
+    "ledger": [
+      "Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl"
+    ],
+    "migration": [
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json"
+    ],
+    "plan_index": [
+      "Plans/.plan_index/coverage_report.json",
+      "Plans/.plan_index/dependencies.json",
+      "Plans/.plan_index/doc_cards.json",
+      "Plans/.plan_index/node_readiness_report.json",
+      "Plans/.plan_index/plan_units.jsonl"
+    ],
+    "shards": [
+      "Plans/_shards/00-plans-index/00-index.md",
+      "Plans/_shards/00-plans-index/manifest.json",
+      "Plans/_shards/agent-rules-context/00-index.md",
+      "Plans/_shards/agent-rules-context/manifest.json",
+      "Plans/_shards/architecture_invariants/00-index.md",
+      "Plans/_shards/architecture_invariants/manifest.json",
+      "Plans/_shards/assistant-chat-design/00-index.md",
+      "Plans/_shards/assistant-chat-design/001-preamble.md",
+      "Plans/_shards/assistant-chat-design/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/assistant-chat-design/003-change-summary.md",
+      "Plans/_shards/assistant-chat-design/004-rewrite-alignment-2026-02-21.md",
+      "Plans/_shards/assistant-chat-design/005-executive-summary.md",
+      "Plans/_shards/assistant-chat-design/006-table-of-contents.md",
+      "Plans/_shards/assistant-chat-design/007-1.-modes-overview.md",
+      "Plans/_shards/assistant-chat-design/008-2.-eli5-mode.md",
+      "Plans/_shards/assistant-chat-design/009-3.-permissions-yolo-vs-regular.md",
+      "Plans/_shards/assistant-chat-design/010-4.-message-submission-steer-vs-queue-queued-editing-interrupt-an.md",
+      "Plans/_shards/assistant-chat-design/011-5.-commands-slash-commands-and-custom-commands.md",
+      "Plans/_shards/assistant-chat-design/012-6.-teach.md",
+      "Plans/_shards/assistant-chat-design/013-7.-attachments-web-search-and-extensibility.md",
+      "Plans/_shards/assistant-chat-design/014-8.-plan-mode-deep-plan-mode-and-plan-thoroughness-pt.md",
+      "Plans/_shards/assistant-chat-design/015-9.-file-manager-ide-style-editor-and-mention.md",
+      "Plans/_shards/assistant-chat-design/016-10.-chat-history-search.md",
+      "Plans/_shards/assistant-chat-design/017-11.-threads-and-chat-management.md",
+      "Plans/_shards/assistant-chat-design/018-12.-context-usage-display.md",
+      "Plans/_shards/assistant-chat-design/019-13.-activity-transparency-search-bash-and-file-activity.md",
+      "Plans/_shards/assistant-chat-design/020-14.-subagents-crew.md",
+      "Plans/_shards/assistant-chat-design/021-15.-plan-mode-crew-mode.md",
+      "Plans/_shards/assistant-chat-design/022-16.-interview-phase-ux-chat-surface.md",
+      "Plans/_shards/assistant-chat-design/023-17.-context-truncation.md",
+      "Plans/_shards/assistant-chat-design/024-18.-brainstorm-mode.md",
+      "Plans/_shards/assistant-chat-design/025-19.-documentation-audience-ai-overseer.md",
+      "Plans/_shards/assistant-chat-design/026-20.-references.md",
+      "Plans/_shards/assistant-chat-design/027-21.-dashboard-warnings-and-calls-to-action.md",
+      "Plans/_shards/assistant-chat-design/028-22.-live-testing-tools-and-hot-reload.md",
+      "Plans/_shards/assistant-chat-design/029-23.-gaps-competitive-comparison-and-enhancements.md",
+      "Plans/_shards/assistant-chat-design/030-24.-chat-thread-performance-virtualization-and-flicker-avoidance.md",
+      "Plans/_shards/assistant-chat-design/031-25.-context-circle-enhancements-addendum-2026-02-23.md",
+      "Plans/_shards/assistant-chat-design/032-26.-auditor-audit-to-repair-loop-model-provider-settings-invaria.md",
+      "Plans/_shards/assistant-chat-design/033-27.-persona-control-in-assistant-chat-2026-03-06.md",
+      "Plans/_shards/assistant-chat-design/034-28.-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces.md",
+      "Plans/_shards/assistant-chat-design/035-29.-natural-language-mode-invocation-and-wizard-escalation-2026-.md",
+      "Plans/_shards/assistant-chat-design/036-unified-thread-blocked-state-lifecycle.md",
+      "Plans/_shards/assistant-chat-design/037-worktrees-in-assistant.md",
+      "Plans/_shards/assistant-chat-design/038-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/assistant-chat-design/039-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/assistant-chat-design/040-shared-actor-boundary-route-payload-and-blocked_notice-packet.md",
+      "Plans/_shards/assistant-chat-design/041-shared-conversational-actor-runtime-identity.md",
+      "Plans/_shards/assistant-chat-design/042-chat-route-permission-and-history-behaviors.md",
+      "Plans/_shards/assistant-chat-design/043-owner-consumer-map.md",
+      "Plans/_shards/assistant-chat-design/044-planunits.md",
+      "Plans/_shards/assistant-chat-design/045-migration-coverage.md",
+      "Plans/_shards/assistant-chat-design/046-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/assistant-chat-design/047-ledger-compile-addendum-pldg-20260615-001.md",
+      "Plans/_shards/assistant-chat-design/048-ledger-compile-addendum-pldg-20260616-001.md",
+      "Plans/_shards/assistant-chat-design/049-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/assistant-chat-design/050-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/assistant-chat-design/051-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/assistant-chat-design/052-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/assistant-chat-design/053-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/assistant-chat-design/054-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "Plans/_shards/assistant-chat-design/055-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/assistant-chat-design/manifest.json",
+      "Plans/_shards/assistant-memory-subsystem/00-index.md",
+      "Plans/_shards/assistant-memory-subsystem/001-preamble.md",
+      "Plans/_shards/assistant-memory-subsystem/002-change-summary.md",
+      "Plans/_shards/assistant-memory-subsystem/003-0.-scope-and-boundary.md",
+      "Plans/_shards/assistant-memory-subsystem/004-1.-capability-boundary-assistant-only.md",
+      "Plans/_shards/assistant-memory-subsystem/005-2.-physical-storage-layout-per-project.md",
+      "Plans/_shards/assistant-memory-subsystem/006-3.-data-model-evidence-backed-gists-gui-first.md",
+      "Plans/_shards/assistant-memory-subsystem/007-4.-retrieval-indexing-contracts.md",
+      "Plans/_shards/assistant-memory-subsystem/008-5.-verification-triggers-evidence-backed-gists.md",
+      "Plans/_shards/assistant-memory-subsystem/009-6.-prompt-injection-contract-token-protection.md",
+      "Plans/_shards/assistant-memory-subsystem/010-7.-gui-maintenance-operations.md",
+      "Plans/_shards/assistant-memory-subsystem/011-8.-integration-points.md",
+      "Plans/_shards/assistant-memory-subsystem/012-9.-deterministic-defaults.md",
+      "Plans/_shards/assistant-memory-subsystem/013-10.-acceptance-criteria-testable.md",
+      "Plans/_shards/assistant-memory-subsystem/014-11.-non-goals.md",
+      "Plans/_shards/assistant-memory-subsystem/015-12.-runtime-owner-reference-map.md",
+      "Plans/_shards/assistant-memory-subsystem/016-owner-consumer-map.md",
+      "Plans/_shards/assistant-memory-subsystem/017-planunits.md",
+      "Plans/_shards/assistant-memory-subsystem/018-migration-coverage.md",
+      "Plans/_shards/assistant-memory-subsystem/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/assistant-memory-subsystem/manifest.json",
+      "Plans/_shards/automated_testing_system/00-index.md",
+      "Plans/_shards/automated_testing_system/001-preamble.md",
+      "Plans/_shards/automated_testing_system/002-0.-scope.md",
+      "Plans/_shards/automated_testing_system/003-1.-ownership-and-consumers.md",
+      "Plans/_shards/automated_testing_system/004-2.-canonical-planunits.md",
+      "Plans/_shards/automated_testing_system/005-gui-visible-testing-repair-addendum-2026-07-02.md",
+      "Plans/_shards/automated_testing_system/006-3.-contracts-schemas-events-or-data-shapes.md",
+      "Plans/_shards/automated_testing_system/007-4.-integration-surfaces.md",
+      "Plans/_shards/automated_testing_system/008-5.-validation-and-acceptance.md",
+      "Plans/_shards/automated_testing_system/009-6.-plan-to-node-readiness.md",
+      "Plans/_shards/automated_testing_system/010-7.-deferred-retired-compatibility-and-non-goals.md",
+      "Plans/_shards/automated_testing_system/011-8.-source-lineage-and-governance.md",
+      "Plans/_shards/automated_testing_system/012-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/automated_testing_system/013-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/automated_testing_system/014-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/automated_testing_system/015-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/automated_testing_system/016-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/automated_testing_system/017-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "Plans/_shards/automated_testing_system/018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/automated_testing_system/manifest.json",
+      "Plans/_shards/binarylocator_spec/00-index.md",
+      "Plans/_shards/binarylocator_spec/001-preamble.md",
+      "Plans/_shards/binarylocator_spec/002-purpose.md",
+      "Plans/_shards/binarylocator_spec/003-non-goals.md",
+      "Plans/_shards/binarylocator_spec/004-canonical-references-and-constraints-ssot-dry.md",
+      "Plans/_shards/binarylocator_spec/005-terminology-index-only.md",
+      "Plans/_shards/binarylocator_spec/006-binarylocator-boundary.md",
+      "Plans/_shards/binarylocator_spec/007-deterministic-discovery-algorithm.md",
+      "Plans/_shards/binarylocator_spec/008-deterministic-discovery-algorithm.md",
+      "Plans/_shards/binarylocator_spec/009-validation-contract-commands-version-parsing-permission-checks.md",
+      "Plans/_shards/binarylocator_spec/010-caching-and-invalidation.md",
+      "Plans/_shards/binarylocator_spec/011-error-taxonomy-stable-codes.md",
+      "Plans/_shards/binarylocator_spec/012-acceptance-criteria-testable.md",
+      "Plans/_shards/binarylocator_spec/013-references.md",
+      "Plans/_shards/binarylocator_spec/014-owner-consumer-map.md",
+      "Plans/_shards/binarylocator_spec/015-planunits.md",
+      "Plans/_shards/binarylocator_spec/016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/binarylocator_spec/017-migration-coverage.md",
+      "Plans/_shards/binarylocator_spec/018-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/binarylocator_spec/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/binarylocator_spec/manifest.json",
+      "Plans/_shards/bootstrap_planning_migration/00-index.md",
+      "Plans/_shards/bootstrap_planning_migration/manifest.json",
+      "Plans/_shards/chain-wizard-flexibility/00-index.md",
+      "Plans/_shards/chain-wizard-flexibility/manifest.json",
+      "Plans/_shards/cli_bridged_providers/00-index.md",
+      "Plans/_shards/cli_bridged_providers/manifest.json",
+      "Plans/_shards/commands_system/00-index.md",
+      "Plans/_shards/commands_system/manifest.json",
+      "Plans/_shards/containers_registry_and_unraid/00-index.md",
+      "Plans/_shards/containers_registry_and_unraid/manifest.json",
+      "Plans/_shards/contracts_v0/00-index.md",
+      "Plans/_shards/contracts_v0/001-preamble.md",
+      "Plans/_shards/contracts_v0/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/contracts_v0/003-0.-scope.md",
+      "Plans/_shards/contracts_v0/004-cross-surface-runtime-concern-and-route-open-contracts.md",
+      "Plans/_shards/contracts_v0/005-1.-events-persisted.md",
+      "Plans/_shards/contracts_v0/006-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/contracts_v0/007-2.-provider-normalized-stream-non-persisted-contract.md",
+      "Plans/_shards/contracts_v0/008-3.-tool-events-persisted.md",
+      "Plans/_shards/contracts_v0/009-5.-context-management-instruction-scoping-attempt-journaling-par.md",
+      "Plans/_shards/contracts_v0/010-6.-hitlrequest.md",
+      "Plans/_shards/contracts_v0/011-7.-uicommand.md",
+      "Plans/_shards/contracts_v0/012-8.-ui-scaling.md",
+      "Plans/_shards/contracts_v0/013-usage-and-billing-contracts-addendum.md",
+      "Plans/_shards/contracts_v0/014-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md",
+      "Plans/_shards/contracts_v0/015-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md",
+      "Plans/_shards/contracts_v0/016-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md",
+      "Plans/_shards/contracts_v0/017-canonical-runtime-event-outcome-and-action-contract-canonical-al.md",
+      "Plans/_shards/contracts_v0/018-owner-consumer-map.md",
+      "Plans/_shards/contracts_v0/019-planunits.md",
+      "Plans/_shards/contracts_v0/020-migration-coverage.md",
+      "Plans/_shards/contracts_v0/021-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/contracts_v0/022-ledger-compile-addendum-pldg-20260614-002.md",
+      "Plans/_shards/contracts_v0/023-ledger-compile-addendum-pldg-20260615-001.md",
+      "Plans/_shards/contracts_v0/024-ledger-compile-addendum-pldg-20260616-001.md",
+      "Plans/_shards/contracts_v0/025-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/contracts_v0/026-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/contracts_v0/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/contracts_v0/028-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/contracts_v0/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/contracts_v0/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/contracts_v0/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/contracts_v0/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/contracts_v0/033-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "Plans/_shards/contracts_v0/034-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/contracts_v0/manifest.json",
+      "Plans/_shards/crosswalk/00-index.md",
+      "Plans/_shards/crosswalk/manifest.json",
+      "Plans/_shards/decision_log/00-index.md",
+      "Plans/_shards/decision_log/manifest.json",
+      "Plans/_shards/decision_policy/00-index.md",
+      "Plans/_shards/decision_policy/manifest.json",
+      "Plans/_shards/document_packaging_policy/00-index.md",
+      "Plans/_shards/document_packaging_policy/manifest.json",
+      "Plans/_shards/dry_rules/00-index.md",
+      "Plans/_shards/dry_rules/manifest.json",
+      "Plans/_shards/executor_protocol/00-index.md",
+      "Plans/_shards/executor_protocol/001-preamble.md",
+      "Plans/_shards/executor_protocol/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/executor_protocol/003-0.-purpose-and-scope.md",
+      "Plans/_shards/executor_protocol/004-1.-role-definitions.md",
+      "Plans/_shards/executor_protocol/005-2.-deterministic-readiness.md",
+      "Plans/_shards/executor_protocol/006-3.-canonical-status-lifecycle.md",
+      "Plans/_shards/executor_protocol/007-4.-auto-marking-rule.md",
+      "Plans/_shards/executor_protocol/008-6.-overseer-dispatch-algorithm-deterministic.md",
+      "Plans/_shards/executor_protocol/009-runtime-scheduler-addendum-2026-03-08.md",
+      "Plans/_shards/executor_protocol/010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md",
+      "Plans/_shards/executor_protocol/011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md",
+      "Plans/_shards/executor_protocol/012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md",
+      "Plans/_shards/executor_protocol/013-counter-relationships-and-event-ordering-addendum.md",
+      "Plans/_shards/executor_protocol/014-execution-context-worktree-handoff.md",
+      "Plans/_shards/executor_protocol/015-owner-consumer-map.md",
+      "Plans/_shards/executor_protocol/016-planunits.md",
+      "Plans/_shards/executor_protocol/017-migration-coverage.md",
+      "Plans/_shards/executor_protocol/018-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/executor_protocol/019-ledger-compile-addendum-pldg-20260615-001.md",
+      "Plans/_shards/executor_protocol/020-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/executor_protocol/021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/executor_protocol/022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/executor_protocol/023-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/executor_protocol/024-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/executor_protocol/025-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/executor_protocol/026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/executor_protocol/manifest.json",
+      "Plans/_shards/feature-list/00-index.md",
+      "Plans/_shards/feature-list/manifest.json",
+      "Plans/_shards/filemanager/00-index.md",
+      "Plans/_shards/filemanager/manifest.json",
+      "Plans/_shards/filesafe/00-index.md",
+      "Plans/_shards/filesafe/001-preamble.md",
+      "Plans/_shards/filesafe/002-dry-method-compliance.md",
+      "Plans/_shards/filesafe/003-rewrite-alignment-2026-02-21.md",
+      "Plans/_shards/filesafe/004-executive-summary.md",
+      "Plans/_shards/filesafe/005-table-of-contents.md",
+      "Plans/_shards/filesafe/006-1.-architecture-overview.md",
+      "Plans/_shards/filesafe/007-2.-implementation-details.md",
+      "Plans/_shards/filesafe/008-3.-integration-with-platform-runner.md",
+      "Plans/_shards/filesafe/009-4.-pattern-file.md",
+      "Plans/_shards/filesafe/010-5.-configuration-options.md",
+      "Plans/_shards/filesafe/011-6.-event-logging.md",
+      "Plans/_shards/filesafe/012-7.-error-messages.md",
+      "Plans/_shards/filesafe/013-8.-testing.md",
+      "Plans/_shards/filesafe/014-9.-implementation-checklist.md",
+      "Plans/_shards/filesafe/015-10.-relationship-to-other-plans.md",
+      "Plans/_shards/filesafe/016-10a.-filesafe-and-assistant-yolo-mode.md",
+      "Plans/_shards/filesafe/017-11.-additional-filesafe-features.md",
+      "Plans/_shards/filesafe/018-12.-gaps-and-potential-issues.md",
+      "Plans/_shards/filesafe/019-13.-enhancements.md",
+      "Plans/_shards/filesafe/020-14.-historical-note-on-moved-context-compilation-canon.md",
+      "Plans/_shards/filesafe/021-15.-system-integration-analysis.md",
+      "Plans/_shards/filesafe/022-16.-references.md",
+      "Plans/_shards/filesafe/023-17.-implementation-order-and-dependencies.md",
+      "Plans/_shards/filesafe/024-runtime-blocked-state-integration-addendum-2026-03-08.md",
+      "Plans/_shards/filesafe/025-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md",
+      "Plans/_shards/filesafe/026-filesafe-runtime-blocked-and-restore-override-consolidation-adde.md",
+      "Plans/_shards/filesafe/027-owner-consumer-map.md",
+      "Plans/_shards/filesafe/028-planunits.md",
+      "Plans/_shards/filesafe/029-migration-coverage.md",
+      "Plans/_shards/filesafe/030-ledger-compile-addendum-pldg-20260614-002.md",
+      "Plans/_shards/filesafe/031-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/filesafe/032-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/filesafe/033-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/filesafe/034-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/filesafe/035-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/filesafe/036-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/filesafe/037-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/filesafe/manifest.json",
+      "Plans/_shards/finalguispec/00-index.md",
+      "Plans/_shards/finalguispec/001-preamble.md",
+      "Plans/_shards/finalguispec/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/finalguispec/003-table-of-contents.md",
+      "Plans/_shards/finalguispec/004-1.-executive-summary.md",
+      "Plans/_shards/finalguispec/005-2.-tech-stack-and-renderer.md",
+      "Plans/_shards/finalguispec/006-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md",
+      "Plans/_shards/finalguispec/007-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/finalguispec/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/finalguispec/009-3.-master-layout.md",
+      "Plans/_shards/finalguispec/010-4.-navigation-architecture.md",
+      "Plans/_shards/finalguispec/011-5.-panel-system.md",
+      "Plans/_shards/finalguispec/012-6.-theme-system.md",
+      "Plans/_shards/finalguispec/013-7.-views-specification.md",
+      "Plans/_shards/finalguispec/014-8.-widget-catalog.md",
+      "Plans/_shards/finalguispec/015-9.-state-management.md",
+      "Plans/_shards/finalguispec/016-10.-ux-patterns.md",
+      "Plans/_shards/finalguispec/017-11.-anti-flickering-and-scroll-preservation.md",
+      "Plans/_shards/finalguispec/018-12.-responsive-design.md",
+      "Plans/_shards/finalguispec/019-13.-accessibility.md",
+      "Plans/_shards/finalguispec/020-14.-slint-file-organization.md",
+      "Plans/_shards/finalguispec/021-15.-persistence.md",
+      "Plans/_shards/finalguispec/022-16.-migration-mapping.md",
+      "Plans/_shards/finalguispec/023-17.-risks-and-mitigations.md",
+      "Plans/_shards/finalguispec/024-18.-promoted-features-formerly-future-considerations.md",
+      "Plans/_shards/finalguispec/025-appendix-a-cross-references.md",
+      "Plans/_shards/finalguispec/026-appendix-b-locked-decisions-summary.md",
+      "Plans/_shards/finalguispec/027-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-.md",
+      "Plans/_shards/finalguispec/028-19.-persona-editor-compatibility-disclosure-and-surface-level-pe.md",
+      "Plans/_shards/finalguispec/029-rendering-surface-addendum-2026-03-07.md",
+      "Plans/_shards/finalguispec/030-assistant-planning-ux-addendum-2026-03-08.md",
+      "Plans/_shards/finalguispec/031-compatibility-source-lineage-scheduler-blocked-and-remediation-g.md",
+      "Plans/_shards/finalguispec/032-compatibility-source-lineage-runtime-scheduler-blocked-state-gui.md",
+      "Plans/_shards/finalguispec/033-compatibility-source-lineage-runtime-blocked-queue-and-recovery-.md",
+      "Plans/_shards/finalguispec/034-compatibility-source-lineage-runtime-scheduler-recovery-gui-cons.md",
+      "Plans/_shards/finalguispec/035-canonical-blocked-recovery-behavior.md",
+      "Plans/_shards/finalguispec/036-compatibility-source-lineage-blocked-state-visual-distinction-an.md",
+      "Plans/_shards/finalguispec/037-15.-promoted-widget-catalog-web-tools-planning-question-operatio.md",
+      "Plans/_shards/finalguispec/038-owner-consumer-map.md",
+      "Plans/_shards/finalguispec/039-planunits.md",
+      "Plans/_shards/finalguispec/040-migration-coverage.md",
+      "Plans/_shards/finalguispec/041-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/finalguispec/042-ledger-compile-addendum-pldg-20260614-002.md",
+      "Plans/_shards/finalguispec/043-ledger-compile-addendum-pldg-20260615-001.md",
+      "Plans/_shards/finalguispec/044-ledger-compile-addendum-pldg-20260616-001.md",
+      "Plans/_shards/finalguispec/045-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/finalguispec/046-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/finalguispec/047-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/finalguispec/048-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/finalguispec/049-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/finalguispec/050-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/finalguispec/051-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/finalguispec/052-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "Plans/_shards/finalguispec/053-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/finalguispec/manifest.json",
+      "Plans/_shards/formatters_system/00-index.md",
+      "Plans/_shards/formatters_system/manifest.json",
+      "Plans/_shards/github_api_auth_and_flows/00-index.md",
+      "Plans/_shards/github_api_auth_and_flows/manifest.json",
+      "Plans/_shards/github_integration/00-index.md",
+      "Plans/_shards/github_integration/001-preamble.md",
+      "Plans/_shards/github_integration/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/github_integration/003-change-summary.md",
+      "Plans/_shards/github_integration/004-ssot-references-dry.md",
+      "Plans/_shards/github_integration/005-canonical-owner-and-consumer-reconciliation.md",
+      "Plans/_shards/github_integration/006-owner-consumer-map.md",
+      "Plans/_shards/github_integration/007-planunits.md",
+      "Plans/_shards/github_integration/008-migration-coverage.md",
+      "Plans/_shards/github_integration/009-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/github_integration/010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/github_integration/011-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/github_integration/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/github_integration/manifest.json",
+      "Plans/_shards/glossary/00-index.md",
+      "Plans/_shards/glossary/manifest.json",
+      "Plans/_shards/goal_runtime_system/00-index.md",
+      "Plans/_shards/goal_runtime_system/001-preamble.md",
+      "Plans/_shards/goal_runtime_system/002-0.-scope.md",
+      "Plans/_shards/goal_runtime_system/003-1.-ownership-and-consumers.md",
+      "Plans/_shards/goal_runtime_system/004-2.-canonical-planunits.md",
+      "Plans/_shards/goal_runtime_system/005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/goal_runtime_system/006-3.-contracts-schemas-events-or-data-shapes.md",
+      "Plans/_shards/goal_runtime_system/007-4.-integration-surfaces.md",
+      "Plans/_shards/goal_runtime_system/008-5.-validation-and-acceptance.md",
+      "Plans/_shards/goal_runtime_system/009-6.-plan-to-node-readiness.md",
+      "Plans/_shards/goal_runtime_system/010-7.-deferred-retired-compatibility-and-non-goals.md",
+      "Plans/_shards/goal_runtime_system/011-8.-source-lineage-and-governance.md",
+      "Plans/_shards/goal_runtime_system/012-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/goal_runtime_system/013-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/goal_runtime_system/014-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/goal_runtime_system/015-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/goal_runtime_system/manifest.json",
+      "Plans/_shards/gui_rebuild_requirements_checklist/00-index.md",
+      "Plans/_shards/gui_rebuild_requirements_checklist/manifest.json",
+      "Plans/_shards/human-in-the-loop/00-index.md",
+      "Plans/_shards/human-in-the-loop/manifest.json",
+      "Plans/_shards/interview-subagent-integration/00-index.md",
+      "Plans/_shards/interview-subagent-integration/manifest.json",
+      "Plans/_shards/lspsupport/00-index.md",
+      "Plans/_shards/lspsupport/manifest.json",
+      "Plans/_shards/mcp_integration/00-index.md",
+      "Plans/_shards/mcp_integration/001-preamble.md",
+      "Plans/_shards/mcp_integration/002-1.-canonical-naming.md",
+      "Plans/_shards/mcp_integration/003-2.-requested-versus-effective-availability.md",
+      "Plans/_shards/mcp_integration/004-3.-credential-binding-and-invalidation.md",
+      "Plans/_shards/mcp_integration/005-4.-cross-surface-responsibilities.md",
+      "Plans/_shards/mcp_integration/006-5.-server-config-schema.md",
+      "Plans/_shards/mcp_integration/007-6.-supported-flows.md",
+      "Plans/_shards/mcp_integration/008-7.-effective-tool-availability-and-gui-surfacing.md",
+      "Plans/_shards/mcp_integration/009-owner-consumer-map.md",
+      "Plans/_shards/mcp_integration/010-planunits.md",
+      "Plans/_shards/mcp_integration/011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/mcp_integration/012-migration-coverage.md",
+      "Plans/_shards/mcp_integration/013-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/mcp_integration/manifest.json",
+      "Plans/_shards/media_generation_and_capabilities/00-index.md",
+      "Plans/_shards/media_generation_and_capabilities/001-preamble.md",
+      "Plans/_shards/media_generation_and_capabilities/002-0.-scope-and-ssot-status.md",
+      "Plans/_shards/media_generation_and_capabilities/003-1.-capability-system.md",
+      "Plans/_shards/media_generation_and_capabilities/004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/media_generation_and_capabilities/005-2.-media-generation-contract.md",
+      "Plans/_shards/media_generation_and_capabilities/006-3.-natural-language-slot-extraction-grammar.md",
+      "Plans/_shards/media_generation_and_capabilities/manifest.json",
+      "Plans/_shards/miscplan/00-index.md",
+      "Plans/_shards/miscplan/manifest.json",
+      "Plans/_shards/models_system/00-index.md",
+      "Plans/_shards/models_system/001-preamble.md",
+      "Plans/_shards/models_system/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/models_system/003-0.-scope-and-ssot-status.md",
+      "Plans/_shards/models_system/004-provider-model-precedence-and-settings-resolution.md",
+      "Plans/_shards/models_system/005-1.-canonical-model-identifier.md",
+      "Plans/_shards/models_system/006-2.-model-and-runtime-selection-priority.md",
+      "Plans/_shards/models_system/007-3.-model-options-configuration.md",
+      "Plans/_shards/models_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/models_system/009-4.-model-availability-and-error-handling.md",
+      "Plans/_shards/models_system/010-5.-per-persona-runtime-preferences.md",
+      "Plans/_shards/models_system/011-6.-variants-system.md",
+      "Plans/_shards/models_system/012-7.-gui-requirements.md",
+      "Plans/_shards/models_system/013-8.-opencode-baseline-and-puppet-master-deltas.md",
+      "Plans/_shards/models_system/014-9.-acceptance-criteria.md",
+      "Plans/_shards/models_system/015-10.-persona-runtime-controls-and-provider-capability-matrix-2026.md",
+      "Plans/_shards/models_system/016-provider-failure-class-alignment-addendum-2026-03-08.md",
+      "Plans/_shards/models_system/017-runtime-retry-fallback-ownership-addendum-2026-03-09.md",
+      "Plans/_shards/models_system/018-requested-effective-model-and-retry-ownership-canonical-alignmen.md",
+      "Plans/_shards/models_system/019-model-selection-versus-runtime-retry-ownership-consolidation-add.md",
+      "Plans/_shards/models_system/020-requested-effective-model-snapshot-alignment.md",
+      "Plans/_shards/models_system/021-provider-model-selection-policy-and-audit-addendum.md",
+      "Plans/_shards/models_system/022-owner-consumer-map.md",
+      "Plans/_shards/models_system/023-planunits.md",
+      "Plans/_shards/models_system/024-migration-coverage.md",
+      "Plans/_shards/models_system/025-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/models_system/026-ledger-compile-addendum-pldg-20260616-001.md",
+      "Plans/_shards/models_system/027-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/models_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/models_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/models_system/030-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/models_system/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/models_system/032-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "Plans/_shards/models_system/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/models_system/manifest.json",
+      "Plans/_shards/multi-account/00-index.md",
+      "Plans/_shards/multi-account/001-preamble.md",
+      "Plans/_shards/multi-account/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/multi-account/003-1.-purpose-and-scope.md",
+      "Plans/_shards/multi-account/004-2.-references.md",
+      "Plans/_shards/multi-account/005-canonical-data-shape-reconciliation.md",
+      "Plans/_shards/multi-account/006-3.-assessment-what-we-have-and-gaps-filled.md",
+      "Plans/_shards/multi-account/007-5.-auto-rotation.md",
+      "Plans/_shards/multi-account/008-6.-provider-specific-behavior.md",
+      "Plans/_shards/multi-account/009-7.-runner-orchestration-contract.md",
+      "Plans/_shards/multi-account/010-8.-usage-and-pick-best.md",
+      "Plans/_shards/multi-account/011-9.-gui-requirements-ux-only.md",
+      "Plans/_shards/multi-account/012-10.-phase-2-native-auth-when-available.md",
+      "Plans/_shards/multi-account/013-11.-open-points-for-implementer.md",
+      "Plans/_shards/multi-account/014-operational-identity-addendum-for-github-actions-and-docker-mana.md",
+      "Plans/_shards/multi-account/015-owner-consumer-map.md",
+      "Plans/_shards/multi-account/016-planunits.md",
+      "Plans/_shards/multi-account/017-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/multi-account/018-migration-coverage.md",
+      "Plans/_shards/multi-account/019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/multi-account/020-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/multi-account/021-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
+      "Plans/_shards/multi-account/022-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/multi-account/manifest.json",
+      "Plans/_shards/newfeatures/00-index.md",
+      "Plans/_shards/newfeatures/manifest.json",
+      "Plans/_shards/newtools/00-index.md",
+      "Plans/_shards/newtools/manifest.json",
+      "Plans/_shards/opencode_coverage_matrix/00-index.md",
+      "Plans/_shards/opencode_coverage_matrix/manifest.json",
+      "Plans/_shards/opencode_deep_extraction/00-index.md",
+      "Plans/_shards/opencode_deep_extraction/manifest.json",
+      "Plans/_shards/orchestrator-subagent-integration/00-index.md",
+      "Plans/_shards/orchestrator-subagent-integration/manifest.json",
+      "Plans/_shards/orchestrator_page/00-index.md",
+      "Plans/_shards/orchestrator_page/manifest.json",
+      "Plans/_shards/permissions_system/00-index.md",
+      "Plans/_shards/permissions_system/001-preamble.md",
+      "Plans/_shards/permissions_system/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/permissions_system/003-0.-scope-and-ssot-status.md",
+      "Plans/_shards/permissions_system/004-canonical-data-shape-reconciliation.md",
+      "Plans/_shards/permissions_system/005-1.-definitions-and-scope.md",
+      "Plans/_shards/permissions_system/006-2.-permission-actions.md",
+      "Plans/_shards/permissions_system/007-3.-granular-rules.md",
+      "Plans/_shards/permissions_system/008-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/permissions_system/009-4.-special-guards.md",
+      "Plans/_shards/permissions_system/010-5.-tool-permission-keys.md",
+      "Plans/_shards/permissions_system/011-6.-ask-flow-semantics.md",
+      "Plans/_shards/permissions_system/012-7.-deterministic-defaults.md",
+      "Plans/_shards/permissions_system/013-8.-resolution-algorithm.md",
+      "Plans/_shards/permissions_system/014-9.-persistence-and-storage.md",
+      "Plans/_shards/permissions_system/015-10.-gui-requirements.md",
+      "Plans/_shards/permissions_system/016-10a.-security-model.md",
+      "Plans/_shards/permissions_system/017-11.-opencode-baseline-and-puppet-master-deltas.md",
+      "Plans/_shards/permissions_system/018-12.-acceptance-criteria.md",
+      "Plans/_shards/permissions_system/019-12a.-dockerhub-unraid-remote-side-effect-guard-addendum.md",
+      "Plans/_shards/permissions_system/020-runtime-blocked-outcome-integration-addendum-2026-03-08.md",
+      "Plans/_shards/permissions_system/021-source-control-github-actions-and-docker-manager-permission-adde.md",
+      "Plans/_shards/permissions_system/022-owner-consumer-map.md",
+      "Plans/_shards/permissions_system/023-planunits.md",
+      "Plans/_shards/permissions_system/024-migration-coverage.md",
+      "Plans/_shards/permissions_system/025-ledger-compile-addendum-pldg-20260614-002.md",
+      "Plans/_shards/permissions_system/026-ledger-compile-addendum-pldg-20260616-001.md",
+      "Plans/_shards/permissions_system/027-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/permissions_system/028-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/permissions_system/029-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/permissions_system/030-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/permissions_system/031-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/permissions_system/032-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/permissions_system/033-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/permissions_system/034-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/permissions_system/035-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/permissions_system/manifest.json",
+      "Plans/_shards/personas/00-index.md",
+      "Plans/_shards/personas/manifest.json",
+      "Plans/_shards/plan_document_system/00-index.md",
+      "Plans/_shards/plan_document_system/manifest.json",
+      "Plans/_shards/plan_to_node_compilation/00-index.md",
+      "Plans/_shards/plan_to_node_compilation/manifest.json",
+      "Plans/_shards/planning_ledger_system/00-index.md",
+      "Plans/_shards/planning_ledger_system/001-preamble.md",
+      "Plans/_shards/planning_ledger_system/002-0.-scope.md",
+      "Plans/_shards/planning_ledger_system/003-1.-architecture-summary.md",
+      "Plans/_shards/planning_ledger_system/004-2.-planunits.md",
+      "Plans/_shards/planning_ledger_system/005-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/planning_ledger_system/006-semantic-audit-closure-addendum-2026-06-17.md",
+      "Plans/_shards/planning_ledger_system/007-3.-compilation-coverage.md",
+      "Plans/_shards/planning_ledger_system/008-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/planning_ledger_system/009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/planning_ledger_system/010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/planning_ledger_system/manifest.json",
+      "Plans/_shards/planning_wizard/00-index.md",
+      "Plans/_shards/planning_wizard/manifest.json",
+      "Plans/_shards/plugins_system/00-index.md",
+      "Plans/_shards/plugins_system/001-preamble.md",
+      "Plans/_shards/plugins_system/002-0.-scope-and-ssot-status.md",
+      "Plans/_shards/plugins_system/003-1.-definitions.md",
+      "Plans/_shards/plugins_system/004-2.-discovery-and-storage.md",
+      "Plans/_shards/plugins_system/005-3.-load-order-and-execution-model.md",
+      "Plans/_shards/plugins_system/006-4.-hook-events.md",
+      "Plans/_shards/plugins_system/007-5.-hook-return-semantics.md",
+      "Plans/_shards/plugins_system/008-6.-custom-tool-registration.md",
+      "Plans/_shards/plugins_system/009-7.-plugin-configuration.md",
+      "Plans/_shards/plugins_system/010-8.-structured-plugin-logging.md",
+      "Plans/_shards/plugins_system/011-9.-gui-requirements.md",
+      "Plans/_shards/plugins_system/012-10.-opencode-baseline-and-puppet-master-deltas.md",
+      "Plans/_shards/plugins_system/013-11.-acceptance-criteria.md",
+      "Plans/_shards/plugins_system/014-hook-block-integration-addendum-2026-03-08.md",
+      "Plans/_shards/plugins_system/015-plugin-block-runtime-canonical-alignment-2026-03-09.md",
+      "Plans/_shards/plugins_system/016-plugin-block-runtime-taxonomy-consolidation-addendum-2026-03-09.md",
+      "Plans/_shards/plugins_system/017-plugin-hook-blocked-specification-addendum.md",
+      "Plans/_shards/plugins_system/018-owner-consumer-map.md",
+      "Plans/_shards/plugins_system/019-planunits.md",
+      "Plans/_shards/plugins_system/020-migration-coverage.md",
+      "Plans/_shards/plugins_system/021-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/plugins_system/manifest.json",
+      "Plans/_shards/prd_builder/00-index.md",
+      "Plans/_shards/prd_builder/manifest.json",
+      "Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md",
+      "Plans/_shards/prd_planning_runtime_contracts.schema/manifest.json",
+      "Plans/_shards/prd_planning_runtime_contracts/00-index.md",
+      "Plans/_shards/prd_planning_runtime_contracts/manifest.json",
+      "Plans/_shards/progression_gates/00-index.md",
+      "Plans/_shards/progression_gates/manifest.json",
+      "Plans/_shards/project_output_artifacts/00-index.md",
+      "Plans/_shards/project_output_artifacts/manifest.json",
+      "Plans/_shards/prompt_pipeline/00-index.md",
+      "Plans/_shards/prompt_pipeline/001-preamble.md",
+      "Plans/_shards/prompt_pipeline/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/prompt_pipeline/003-0.-scope-and-ssot-status.md",
+      "Plans/_shards/prompt_pipeline/004-1.-prompt-assembly-pipeline.md",
+      "Plans/_shards/prompt_pipeline/005-2.-compaction-and-pruning.md",
+      "Plans/_shards/prompt_pipeline/006-3.-rotation-follow-up-run-spawning.md",
+      "Plans/_shards/prompt_pipeline/007-4.-gui-integration.md",
+      "Plans/_shards/prompt_pipeline/008-5.-acceptance-criteria.md",
+      "Plans/_shards/prompt_pipeline/009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md",
+      "Plans/_shards/prompt_pipeline/010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md",
+      "Plans/_shards/prompt_pipeline/011-owner-consumer-map.md",
+      "Plans/_shards/prompt_pipeline/012-planunits.md",
+      "Plans/_shards/prompt_pipeline/013-migration-coverage.md",
+      "Plans/_shards/prompt_pipeline/014-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/prompt_pipeline/015-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/prompt_pipeline/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/prompt_pipeline/017-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/prompt_pipeline/018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/prompt_pipeline/manifest.json",
+      "Plans/_shards/provider_opencode/00-index.md",
+      "Plans/_shards/provider_opencode/001-preamble.md",
+      "Plans/_shards/provider_opencode/002-change-summary.md",
+      "Plans/_shards/provider_opencode/003-1.-purpose.md",
+      "Plans/_shards/provider_opencode/004-2.-non-goals.md",
+      "Plans/_shards/provider_opencode/005-3.-ssot-references-dry.md",
+      "Plans/_shards/provider_opencode/006-canonical-data-shape-reconciliation.md",
+      "Plans/_shards/provider_opencode/007-4.-architecture-overview.md",
+      "Plans/_shards/provider_opencode/008-5.-connection-contract.md",
+      "Plans/_shards/provider_opencode/009-6.-provider-facade-mapping.md",
+      "Plans/_shards/provider_opencode/010-7.-model-discovery.md",
+      "Plans/_shards/provider_opencode/011-8.-capability-flags.md",
+      "Plans/_shards/provider_opencode/012-9.-failure-states-and-recovery.md",
+      "Plans/_shards/provider_opencode/013-10.-gui-configuration.md",
+      "Plans/_shards/provider_opencode/014-11.-legacy-platform_specs-lineage-and-current-metadata-ownership.md",
+      "Plans/_shards/provider_opencode/015-12.-process-isolation.md",
+      "Plans/_shards/provider_opencode/016-13.-invocation-shape-normative.md",
+      "Plans/_shards/provider_opencode/017-14.-persistence-mapping-seglog.md",
+      "Plans/_shards/provider_opencode/018-15.-acceptance-criteria-testable.md",
+      "Plans/_shards/provider_opencode/019-16.-references.md",
+      "Plans/_shards/provider_opencode/020-opencode-runtime-retry-blocked-state-packet-canonical-alignment-.md",
+      "Plans/_shards/provider_opencode/021-owner-consumer-map.md",
+      "Plans/_shards/provider_opencode/022-planunits.md",
+      "Plans/_shards/provider_opencode/023-migration-coverage.md",
+      "Plans/_shards/provider_opencode/024-ledger-compile-addendum-pldg-20260614-002.md",
+      "Plans/_shards/provider_opencode/025-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/provider_opencode/026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/provider_opencode/manifest.json",
+      "Plans/_shards/provider_stream_mapping_external_reference_a2a/00-index.md",
+      "Plans/_shards/provider_stream_mapping_external_reference_a2a/manifest.json",
+      "Plans/_shards/release_supply_chain/00-index.md",
+      "Plans/_shards/release_supply_chain/001-preamble.md",
+      "Plans/_shards/release_supply_chain/002-0.-scope.md",
+      "Plans/_shards/release_supply_chain/003-1.-ownership-and-consumers.md",
+      "Plans/_shards/release_supply_chain/004-2.-canonical-planunits.md",
+      "Plans/_shards/release_supply_chain/005-3.-contracts-schemas-events-or-data-shapes.md",
+      "Plans/_shards/release_supply_chain/006-4.-integration-surfaces.md",
+      "Plans/_shards/release_supply_chain/007-5.-validation-and-acceptance.md",
+      "Plans/_shards/release_supply_chain/008-6.-plan-to-node-readiness.md",
+      "Plans/_shards/release_supply_chain/009-7.-deferred-retired-compatibility-and-non-goals.md",
+      "Plans/_shards/release_supply_chain/010-8.-source-lineage-and-governance.md",
+      "Plans/_shards/release_supply_chain/manifest.json",
+      "Plans/_shards/rewrite-tie-in-memo/00-index.md",
+      "Plans/_shards/rewrite-tie-in-memo/manifest.json",
+      "Plans/_shards/run_graph_view/00-index.md",
+      "Plans/_shards/run_graph_view/manifest.json",
+      "Plans/_shards/run_modes/00-index.md",
+      "Plans/_shards/run_modes/manifest.json",
+      "Plans/_shards/runtime_artifacts_panel/00-index.md",
+      "Plans/_shards/runtime_artifacts_panel/manifest.json",
+      "Plans/_shards/section15_mvp_promoted_features_spec/00-index.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/001-preamble.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/002-0.-scope-and-ssot-status.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/003-1.-canonical-shell-and-surface-model.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/004-2.-cross-feature-runtime-contracts.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/005-3.-feature-requirements.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/006-4.-command-families-required-by-the-promoted-features.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/007-5.-persistence-and-restore-rules.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/008-6.-non-goals-and-anti-drift-rules.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/009-owner-consumer-map.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/010-planunits.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/011-migration-coverage.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/012-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/section15_mvp_promoted_features_spec/manifest.json",
+      "Plans/_shards/skills_system/00-index.md",
+      "Plans/_shards/skills_system/manifest.json",
+      "Plans/_shards/storage-plan/00-index.md",
+      "Plans/_shards/storage-plan/001-preamble.md",
+      "Plans/_shards/storage-plan/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/storage-plan/003-summary.md",
+      "Plans/_shards/storage-plan/004-table-of-contents.md",
+      "Plans/_shards/storage-plan/005-1.-definitions-and-concepts.md",
+      "Plans/_shards/storage-plan/006-2.-how-we-re-going-to-do-it.md",
+      "Plans/_shards/storage-plan/007-3.-implementation-checklist.md",
+      "Plans/_shards/storage-plan/008-4.-impact-on-chat-assistant-interview.md",
+      "Plans/_shards/storage-plan/009-5.-gaps-and-how-we-address-them.md",
+      "Plans/_shards/storage-plan/010-6.-potential-problems-and-solutions.md",
+      "Plans/_shards/storage-plan/011-7.-enhancements.md",
+      "Plans/_shards/storage-plan/012-8.-implementation-order-and-testing.md",
+      "Plans/_shards/storage-plan/013-version-history.md",
+      "Plans/_shards/storage-plan/014-scheduler-runtime-safe-point-and-remediation-storage-addendum-20.md",
+      "Plans/_shards/storage-plan/015-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-.md",
+      "Plans/_shards/storage-plan/016-runtime-attempt-safe-point-queue-analysis-canonical-alignment-20.md",
+      "Plans/_shards/storage-plan/017-runtime-recovery-persistence-and-restart-canonical-alignment-202.md",
+      "Plans/_shards/storage-plan/018-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
+      "Plans/_shards/storage-plan/019-assistant-worktree-binding-storage-addendum.md",
+      "Plans/_shards/storage-plan/020-8.-web-content-caching-persistence.md",
+      "Plans/_shards/storage-plan/021-owner-consumer-map.md",
+      "Plans/_shards/storage-plan/022-planunits.md",
+      "Plans/_shards/storage-plan/023-migration-coverage.md",
+      "Plans/_shards/storage-plan/024-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/storage-plan/025-ledger-compile-addendum-pldg-20260616-001.md",
+      "Plans/_shards/storage-plan/026-ledger-compile-addendum-pldg-20260616-002.md",
+      "Plans/_shards/storage-plan/027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
+      "Plans/_shards/storage-plan/028-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/storage-plan/029-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/storage-plan/030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
+      "Plans/_shards/storage-plan/031-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/storage-plan/032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/storage-plan/033-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/storage-plan/manifest.json",
+      "Plans/_shards/tools/00-index.md",
+      "Plans/_shards/tools/001-preamble.md",
+      "Plans/_shards/tools/002-ssot-references-dry.md",
+      "Plans/_shards/tools/003-1.-purpose-and-scope.md",
+      "Plans/_shards/tools/004-2.-permission-model.md",
+      "Plans/_shards/tools/005-3.-built-in-tools-target-set.md",
+      "Plans/_shards/tools/006-4.-custom-tools.md",
+      "Plans/_shards/tools/007-5.-mcp-integration-in-scope.md",
+      "Plans/_shards/tools/008-6.-ways-to-add-tools-implementation-angles.md",
+      "Plans/_shards/tools/009-7.-per-platform-mcp-and-tool-config-reference.md",
+      "Plans/_shards/tools/010-8.-implementation-details-and-technical-notes.md",
+      "Plans/_shards/tools/011-10.-implementation-plan-permissions-spec-for-implementers.md",
+      "Plans/_shards/tools/012-11.-relationship-to-other-plans.md",
+      "Plans/_shards/tools/013-12.-implementation-checklist-ordered-for-implementation-plan.md",
+      "Plans/_shards/tools/014-13.-references.md",
+      "Plans/_shards/tools/015-tool-policy-outcome-taxonomy-addendum-2026-03-08.md",
+      "Plans/_shards/tools/016-tool-denial-runtime-taxonomy-alignment-addendum-2026-03-09.md",
+      "Plans/_shards/tools/017-tool-denial-and-runtime-action-canonical-alignment-2026-03-09.md",
+      "Plans/_shards/tools/018-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-.md",
+      "Plans/_shards/tools/019-tool-field-name-and-taxonomy-alignment.md",
+      "Plans/_shards/tools/020-10.-firecrawl-provider-integration.md",
+      "Plans/_shards/tools/021-11.-provider-capability-matrix.md",
+      "Plans/_shards/tools/022-12.-web-tool-routing-algorithm.md",
+      "Plans/_shards/tools/023-13.-batch-operations.md",
+      "Plans/_shards/tools/024-14.-web-content-caching-layer.md",
+      "Plans/_shards/tools/025-canonical-owner-and-consumer-reconciliation.md",
+      "Plans/_shards/tools/026-owner-consumer-map.md",
+      "Plans/_shards/tools/027-planunits.md",
+      "Plans/_shards/tools/028-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
+      "Plans/_shards/tools/029-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/tools/030-migration-coverage.md",
+      "Plans/_shards/tools/031-ledger-compile-addendum-pldg-20260614-001.md",
+      "Plans/_shards/tools/032-ledger-compile-addendum-pldg-20260615-001.md",
+      "Plans/_shards/tools/033-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
+      "Plans/_shards/tools/034-ledger-compile-addendum-pldg-20260622-001-fff.md",
+      "Plans/_shards/tools/035-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/tools/036-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/tools/manifest.json",
+      "Plans/_shards/ui_command_catalog/00-index.md",
+      "Plans/_shards/ui_command_catalog/manifest.json",
+      "Plans/_shards/ui_wiring_rules/00-index.md",
+      "Plans/_shards/ui_wiring_rules/manifest.json",
+      "Plans/_shards/usage-feature/00-index.md",
+      "Plans/_shards/usage-feature/001-preamble.md",
+      "Plans/_shards/usage-feature/002-canonical-owner-section-requirements.md",
+      "Plans/_shards/usage-feature/003-plan-document-status.md",
+      "Plans/_shards/usage-feature/004-rewrite-alignment-2026-02-21.md",
+      "Plans/_shards/usage-feature/005-storage-dependency-implementation.md",
+      "Plans/_shards/usage-feature/006-executive-summary.md",
+      "Plans/_shards/usage-feature/007-relationship-to-existing-docs.md",
+      "Plans/_shards/usage-feature/008-external-references-competitive-ecosystem.md",
+      "Plans/_shards/usage-feature/009-scope-of-the-usage-feature.md",
+      "Plans/_shards/usage-feature/010-data-and-backend-conceptual.md",
+      "Plans/_shards/usage-feature/011-gui-placement-options.md",
+      "Plans/_shards/usage-feature/012-gaps-current-state-vs.-desired.md",
+      "Plans/_shards/usage-feature/013-enhancements-beyond-minimum.md",
+      "Plans/_shards/usage-feature/014-out-of-scope-for-this-plan.md",
+      "Plans/_shards/usage-feature/015-success-criteria.md",
+      "Plans/_shards/usage-feature/016-version-history.md",
+      "Plans/_shards/usage-feature/017-widget-composed-page-layout-addendum-2026-02-23.md",
+      "Plans/_shards/usage-feature/018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
+      "Plans/_shards/usage-feature/019-source-control-github-actions-and-docker-manager-cost-attributio.md",
+      "Plans/_shards/usage-feature/020-cross-surface-usage-routing-clarifications.md",
+      "Plans/_shards/usage-feature/021-owner-consumer-map.md",
+      "Plans/_shards/usage-feature/022-planunits.md",
+      "Plans/_shards/usage-feature/023-migration-coverage.md",
+      "Plans/_shards/usage-feature/024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
+      "Plans/_shards/usage-feature/025-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
+      "Plans/_shards/usage-feature/026-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
+      "Plans/_shards/usage-feature/027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
+      "Plans/_shards/usage-feature/manifest.json",
+      "Plans/_shards/widget_system/00-index.md",
+      "Plans/_shards/widget_system/manifest.json",
+      "Plans/_shards/wiring_matrix/00-index.md",
+      "Plans/_shards/wiring_matrix/manifest.json",
+      "Plans/_shards/worktreegitimprovement/00-index.md",
+      "Plans/_shards/worktreegitimprovement/manifest.json"
+    ],
+    "spec_lock": [
+      "Plans/Spec_Lock.json"
+    ]
+  },
+  "schema_id": "pm.changed_files.v1"
+}
