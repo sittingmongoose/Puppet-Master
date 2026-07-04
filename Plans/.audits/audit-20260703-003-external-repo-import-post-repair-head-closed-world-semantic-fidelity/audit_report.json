@@ -1,0 +1,298 @@
+{
+  "actionable_findings": [
+    {
+      "atom_ids": [
+        "atom-0001"
+      ],
+      "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+      "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+      "check_id": "chk-9c7dbe70db7c42b9c03d78ef",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "exact_tokens[0]"
+      ],
+      "evidence": {
+        "equivalent_terms_detected": false,
+        "exact_present": false,
+        "substantive_targets": [
+          "PLS-009"
+        ]
+      },
+      "exact_tokens": [
+        "Use the PM Bootstrap Planning Ledger for this feature."
+      ],
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-3db3a56417fc036747569df3",
+      "finding_keys": [
+        "sfk-3db3a56417fc036747569df3"
+      ],
+      "finding_level": "error",
+      "ledger_id": "pldg-20260703-001-feature-intake",
+      "observation_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+      "owner_docs": [
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "plan_unit_ids": [
+        "PLS-009"
+      ],
+      "repair_required": true,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_atom_ids": [
+        "atom-0001"
+      ],
+      "subject_ref": "8014c28ab438dac579de762620bd46dbaa36d447"
+    },
+    {
+      "atom_ids": [
+        "atom-0002"
+      ],
+      "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+      "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+      "check_id": "chk-4184abd657b9bd20e79645c3",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "negative_constraints[4]"
+      ],
+      "evidence": {
+        "equivalent_terms_detected": false,
+        "exact_in_negative_constraint_field": false,
+        "exact_present_anywhere": false,
+        "substantive_targets": [
+          "PLS-001",
+          "PLS-011",
+          "PNC-001"
+        ]
+      },
+      "exact_tokens": [
+        "Do not recreate the removed legacy Iced app."
+      ],
+      "finding_family": "compiled_atom_negative_constraint_fidelity",
+      "finding_key": "sfk-71f0d753522c3d2442585b3c",
+      "finding_keys": [
+        "sfk-71f0d753522c3d2442585b3c"
+      ],
+      "finding_level": "error",
+      "ledger_id": "pldg-20260703-001-feature-intake",
+      "observation_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "plan_unit_ids": [
+        "PLS-001",
+        "PLS-011",
+        "PNC-001"
+      ],
+      "repair_required": true,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_atom_ids": [
+        "atom-0002"
+      ],
+      "subject_ref": "8014c28ab438dac579de762620bd46dbaa36d447"
+    },
+    {
+      "atom_ids": [
+        "atom-0003"
+      ],
+      "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+      "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+      "check_id": "chk-fd4682e1a3a0b576d5d4409a",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "exact_tokens[3]"
+      ],
+      "evidence": {
+        "equivalent_terms_detected": false,
+        "exact_present": false,
+        "substantive_targets": [
+          "PLS-006"
+        ]
+      },
+      "exact_tokens": [
+        "state/current.json"
+      ],
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-93d36dec4b1be6eae38ad7c9",
+      "finding_keys": [
+        "sfk-93d36dec4b1be6eae38ad7c9"
+      ],
+      "finding_level": "error",
+      "ledger_id": "pldg-20260703-001-feature-intake",
+      "observation_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+      "owner_docs": [
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "repair_required": true,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_atom_ids": [
+        "atom-0003"
+      ],
+      "subject_ref": "8014c28ab438dac579de762620bd46dbaa36d447"
+    },
+    {
+      "atom_ids": [
+        "atom-0003"
+      ],
+      "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+      "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+      "check_id": "chk-697d31be0568b4a3e8d7acdd",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "exact_tokens[5]"
+      ],
+      "evidence": {
+        "equivalent_terms_detected": false,
+        "exact_present": false,
+        "substantive_targets": [
+          "PLS-006"
+        ]
+      },
+      "exact_tokens": [
+        "state/open_items.json"
+      ],
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-89a0e702ea90e4c677f33a4f",
+      "finding_keys": [
+        "sfk-89a0e702ea90e4c677f33a4f"
+      ],
+      "finding_level": "error",
+      "ledger_id": "pldg-20260703-001-feature-intake",
+      "observation_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+      "owner_docs": [
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "repair_required": true,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_atom_ids": [
+        "atom-0003"
+      ],
+      "subject_ref": "8014c28ab438dac579de762620bd46dbaa36d447"
+    },
+    {
+      "atom_ids": [
+        "atom-0003"
+      ],
+      "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+      "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+      "check_id": "chk-c28207a949e9c0f079ba9f5f",
+      "classification": "missing_or_drift",
+      "detail_keys": [
+        "exact_tokens[6]"
+      ],
+      "evidence": {
+        "equivalent_terms_detected": false,
+        "exact_present": false,
+        "substantive_targets": [
+          "PLS-006"
+        ]
+      },
+      "exact_tokens": [
+        "state/compile_queue.json"
+      ],
+      "finding_family": "compiled_atom_exact_token_fidelity",
+      "finding_key": "sfk-efbbba780463ca02322cbd85",
+      "finding_keys": [
+        "sfk-efbbba780463ca02322cbd85"
+      ],
+      "finding_level": "error",
+      "ledger_id": "pldg-20260703-001-feature-intake",
+      "observation_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+      "owner_docs": [
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "plan_unit_ids": [
+        "PLS-006"
+      ],
+      "repair_required": true,
+      "schema_id": "pm.semantic_audit.finding.v1",
+      "source_atom_ids": [
+        "atom-0003"
+      ],
+      "subject_ref": "8014c28ab438dac579de762620bd46dbaa36d447"
+    }
+  ],
+  "audit_id": "audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity",
+  "baseline_ref": "298894101e433e2ada6e12c06c309369fa361c1b",
+  "blocking_conditions": [
+    {
+      "count": 5,
+      "evidence": "semantic_risks.jsonl",
+      "kind": "semantic_repair_required"
+    },
+    {
+      "count": 4,
+      "evidence": "validator_results.json",
+      "failing_validators": [
+        "audit_governance",
+        "closure_current_audit",
+        "audit_status_index_validate",
+        "run_gates"
+      ],
+      "kind": "validator_failures"
+    }
+  ],
+  "counts": {
+    "changed_live_plan_docs": 28,
+    "closure_reuse_rows": 4,
+    "compiled_owner_docs": 28,
+    "compiled_plan_units": 127,
+    "design_atoms": 122,
+    "repair_required_count": 5,
+    "semantic_risk_count": 5,
+    "warning_count": 0
+  },
+  "coverage": {
+    "classification_counts": {
+      "equivalent_with_evidence": 3,
+      "exact_present": 1937,
+      "missing_or_drift": 5,
+      "observation": 1,
+      "previously_closed": 4,
+      "source_lineage_only": 613
+    },
+    "coverage_percent": 100.0,
+    "covered_rows": 2563,
+    "manifest_generated_before_review": true,
+    "sampling_used": false,
+    "scope_rows": 2563
+  },
+  "earliest_substantive_ref": "e063ae4395aacbd94ba8dde9bd411e83a42df643",
+  "finalized_at_utc": "2026-07-04T00:09:44Z",
+  "finding_count": 5,
+  "generated_at_utc": "2026-07-03T23:56:30Z",
+  "latest_related_audit": "Plans/.audits/audit-20260703-002-external-repo-import-post-repair-closed-world-semantic-fidelity",
+  "ledger_id": "pldg-20260703-001-feature-intake",
+  "next_action": "Repair the five exact-token/negative-constraint PlanUnit fidelity gaps, then run an explicit repair/governance phase to produce post-repair impact/closure evidence and refresh audit-status index artifacts. No repair was performed in this audit-only run.",
+  "observation_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+  "repair_required_count": 5,
+  "schema_id": "pm.semantic_audit.report.v1",
+  "status": "BLOCKED",
+  "status_is_pre_validator": false,
+  "subject_ref": "8014c28ab438dac579de762620bd46dbaa36d447",
+  "validator_fail_count": 4,
+  "validator_pass_count": 10,
+  "validator_removed_status_lines": [],
+  "validator_side_effects": [],
+  "validator_status": "fail",
+  "validator_timeout_count": 0,
+  "warning_count": 0,
+  "warning_findings": [],
+  "written_artifacts": [
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/FINAL_REPORT.md",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/atom_fidelity_matrix.jsonl",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/audit_report.json",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/audit_scope_manifest.jsonl",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/closure_reuse.jsonl",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/ledger_consistency.json",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/owner_routing_findings.jsonl",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/planunit_source_claims.jsonl",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/semantic_risks.jsonl",
+    "Plans/.audits/audit-20260703-003-external-repo-import-post-repair-head-closed-world-semantic-fidelity/validator_results.json"
+  ]
+}
