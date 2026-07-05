@@ -1451,10 +1451,11 @@ canonical_text: >-
   Planning Wizard final review must represent the ladder as Captured != Plan-complete != Buildable. The
   `cmd.planning_wizard.approve_and_build` control is disabled unless
   `Plans/.implementation_readiness/buildability_gate_report.json` reports `buildability_gate_passed=true`.
-  When disabled, the final-review state projection must list each open blocker family and the exact owner docs from
-  the buildability report. `PNC-019` from `Plans/.plan_index/node_readiness_report.json` is a hard disabled reason
-  until executable lifecycle certification evidence proves Approve And Build through PlanCompile, Executor intake,
-  activation, Orchestrator projection, testing evidence, cancellation/restart, and negative-case rejection.
+  When disabled, the final-review state projection must list each currently open blocker family and the exact owner
+  docs from the buildability report. `PNC-019` from `Plans/.plan_index/node_readiness_report.json` is a hard disabled
+  reason only while the report's node_readiness.hard_disabled projection is true, until executable lifecycle
+  certification evidence proves Approve And Build through PlanCompile, Executor intake, activation, Orchestrator
+  projection, testing evidence, cancellation/restart, and negative-case rejection.
 gui_related: true
 gui_classification_reason: Defines final-review button enablement and disabled reason behavior in the Planning Wizard GUI.
 depends_on: [PWIZ-010, PWIZ-012, PWIZ-014, PNC-019]
@@ -1462,8 +1463,9 @@ unblocks: [UIW-009, PG-060]
 acceptance_criteria:
   - Planning Wizard distinguishes Captured, Plan-complete, and Buildable states.
   - Approve And Build is disabled whenever buildability_gate_passed is false.
-  - The disabled reason lists blocker families and exact owner docs from Plans/.implementation_readiness/buildability_gate_report.json.
+  - The disabled reason lists currently open blocker families and exact owner docs from Plans/.implementation_readiness/buildability_gate_report.json.
   - PNC-019 appears as a hard disabled reason while node readiness remains blocked_runtime_certification_incomplete.
+  - Closed or accepted_risk readiness-blocker rows may remain as historical evidence without keeping Approve And Build disabled.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this gate.
 validation_surfaces:
   - python3 scripts/pm-implementation-readiness.py validate

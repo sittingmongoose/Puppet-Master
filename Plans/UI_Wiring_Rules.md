@@ -366,17 +366,17 @@ canonical_text: >-
   The Planning Wizard final-review control for `cmd.planning_wizard.approve_and_build` must derive its enabled state
   from `Plans/.implementation_readiness/buildability_gate_report.json`. When `buildability_gate_passed=false`, the UI
   projection keeps the control disabled and fills `state.planning_wizard.final_review.approve_and_build.disabled_reason`
-  from the report's blocker families, blocker IDs, exact owner_docs, and hard disabled reasons. The view layer must not
-  infer enablement from Wiring Matrix row existence, command catalog presence, schema validation, semantic closure,
-  source preservation, or other validators passing. Disabled controls must not dispatch PlanApproved, create or bind
-  PlanCompileRun, or start runtime/build surfaces.
+  from the report's currently open blocker families, blocker IDs, exact owner_docs, and hard disabled reasons that are
+  present. The view layer must not infer enablement from Wiring Matrix row existence, command catalog presence, schema
+  validation, semantic closure, source preservation, or other validators passing. Disabled controls must not dispatch
+  PlanApproved, create or bind PlanCompileRun, or start runtime/build surfaces.
 gui_related: true
 gui_classification_reason: Defines user-visible Approve And Build disabled state and command-dispatch blocking behavior.
 depends_on: [UIW-002, UIW-003, UIW-006, UIW-007, PWIZ-018]
 unblocks: [PG-060]
 acceptance_criteria:
   - The Approve And Build UI state consumes buildability_gate_report.json.
-  - The disabled reason projection lists blocker families, blocker IDs, exact owner_docs, and PNC-019 hard disabled reason when present.
+  - The disabled reason projection lists currently open blocker families, blocker IDs, exact owner_docs, and PNC-019 hard disabled reason only when present.
   - Disabled Approve And Build cannot dispatch PlanApproved or create/bind PlanCompileRun.
   - Wiring Matrix presence and schema validation are not enough to enable the command.
 validation_surfaces:

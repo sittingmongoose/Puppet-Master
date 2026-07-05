@@ -59,7 +59,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 5254,
+      "line_count": 5255,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 66,
       "plan_unit_ids": [
@@ -196,7 +196,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "034fdea597bc7d8921857e14f7d779065a5af0442db53a5dd892ef438963fbe3",
+      "sha256": "e14ed6e16272016a06e3f08b627dd82e1c8c95c0fef71256677452e244224d62",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 66
@@ -9560,7 +9560,7 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1091,
+      "line_count": 1097,
       "path": "Plans/Plan_Document_System.md",
       "plan_unit_count": 19,
       "plan_unit_ids": [
@@ -9606,7 +9606,7 @@
         "stale_reference_drift",
         "user_visible_settings"
       ],
-      "sha256": "8dda51d9140a2df2970dbf942bd8c161a3164ed371ec1ce622d86a5756fbcabe",
+      "sha256": "7a9fce7204e1fde993a61bbce623401f9408791d82f2be90fdf27b63791888f4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 19
@@ -9645,6 +9645,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-implementation-readiness.py self-test",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -9695,7 +9696,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 1331,
+      "line_count": 1334,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 21,
       "plan_unit_ids": [
@@ -9742,7 +9743,7 @@
         "stale_or_forbidden_behavior",
         "static_fixture_false_certification"
       ],
-      "sha256": "694877ce20500c01c3763fd28f7bb8531feb4d5a9a404ff49165e608a0d0800a",
+      "sha256": "278f1669db833cc39a6cfb7d04b13716a30e695a411912821ef783aa48af18e6",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 21
@@ -9961,7 +9962,7 @@
         "future Planning Wizard output records",
         "future Planning Wizard source picker"
       ],
-      "line_count": 1501,
+      "line_count": 1503,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -9998,7 +9999,7 @@
         "stale_approval_build_race",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "94e239c96b1fd7661c08ea643b1273323dfd82f5c062b03c9dcb05f611f9f5e9",
+      "sha256": "f0596df9d0faff61a5f9a7ea6519c838dde1ee5b2b3e3f74b2c49a761defae63",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -10226,7 +10227,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 3577,
+      "line_count": 3579,
       "path": "Plans/Progression_Gates.md",
       "plan_unit_count": 60,
       "plan_unit_ids": [
@@ -10302,7 +10303,7 @@
         "residual_bridge_overreach",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "1662dae45b80cff576a398c163bae48c6cc47ff005bfb274a64d9e6066a2dd4c",
+      "sha256": "048d6a2b70207dc30577e816669c735025358111707249ae1357a4fbbbb0aa82",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 59,
@@ -10319,6 +10320,7 @@
         "PlanUnit-aware readiness scan of live canonical_text and acceptance_criteria outside PG-058's own placeholder-ban definition for \"future scope|future-scope|reserved anchors|deliberately not designed yet\", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-implementation-readiness.py self-test",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
@@ -12742,7 +12744,7 @@
         "ui_backend_bypass",
         "unwired_gui"
       ],
-      "sha256": "59725a15403d4504a4f1e8740afba920e7b18dea9bc8582d786dcdf8e5aa4826",
+      "sha256": "1ab5e07faba95dd2056a37cc783bb2f15195d6019c7ce6be1a47fa0af56867d5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 9
@@ -13248,7 +13250,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-05T17:48:53Z",
+  "generated_at_utc": "2026-07-05T18:30:15Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

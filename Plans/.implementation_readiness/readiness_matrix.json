@@ -159,13 +159,31 @@
     "clean_room_lifecycle_evidence"
   ],
   "schema_id": "pm.implementation_readiness.readiness_matrix.v1",
+  "governance_status": {
+    "scripts/pm-implementation-readiness.py": {
+      "status": "governed_validator_script",
+      "handling": "Register in Plans/Spec_Lock.json during governance seal; do not treat validator success as buildability."
+    },
+    "Plans/.implementation_readiness/readiness_blockers.jsonl": {
+      "status": "governed_canonical_blocker_registry",
+      "handling": "Human-updated readiness input; open rows block Approve And Build, while closed and accepted_risk rows remain historical closure evidence."
+    },
+    "Plans/.implementation_readiness/readiness_matrix.json": {
+      "status": "governed_canonical_gate_contract",
+      "handling": "Human-updated schema and proof contract; register in Plans/Spec_Lock.json during governance seal."
+    },
+    "Plans/.implementation_readiness/buildability_gate_report.json": {
+      "status": "governed_generated_consumer_report",
+      "handling": "Regenerate with python3 scripts/pm-implementation-readiness.py generate; do not hand-edit; register the current generated report in Plans/Spec_Lock.json during governance seal."
+    }
+  },
   "wizard_gate_contract": {
     "approve_and_build_command_id": "cmd.planning_wizard.approve_and_build",
     "disabled_reason_projection": "state.planning_wizard.final_review.approve_and_build.disabled_reason",
     "must_disable_when_buildability_gate_passed_false": true,
     "must_list_blocker_families": true,
     "must_list_exact_owner_docs": true,
-    "pnc_019_is_hard_disabled_reason": true,
+    "pnc_019_is_hard_disabled_reason_only_when_node_readiness_hard_disabled": true,
     "source_report": "Plans/.implementation_readiness/buildability_gate_report.json"
   }
 }

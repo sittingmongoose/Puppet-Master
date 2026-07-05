@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L28
+Source lines: L7-L29
 
-Source SHA256: `034fdea597bc7d8921857e14f7d779065a5af0442db53a5dd892ef438963fbe3`
+Source SHA256: `e14ed6e16272016a06e3f08b627dd82e1c8c95c0fef71256677452e244224d62`
 
 ---
 
@@ -27,6 +27,7 @@ Source SHA256: `034fdea597bc7d8921857e14f7d779065a5af0442db53a5dd892ef438963fbe3
 - 2026-07-01: Registered containerized-hosts owner routing compiled from ledger `pldg-20260630-001-feature-intake`: `Docker/Hosts` is a native Slint routed page/lab reached from Docker Manager and cross-surface links, `docker_manager` remains the Activity Bar side-panel owner and command namespace, Coasts remains source-lineage inspiration only, runtime families are whole-MVP but capability-probed/gated, and this compile creates no WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or governance-seal artifacts.
 - 2026-07-02: Registered GUI / PMConcept implementation-readiness repair artifacts: `Plans/PMConcept_Control_Reconciliation.json` inventories PMConcept controls and dispositions, `Plans/Wiring_Matrix.production.json` is the schema-validated production wiring matrix, `Plans/Wiring_Matrix.production.exclusions.json` records parser/generic/compatibility exclusions, and PMConcept remains concept/source-lineage only rather than canonical implementation HTML/CSS/demo state.
 - 2026-07-02: Refreshed Rust/Slint currentness routing: the active GUI/toolchain target is Rust stable 1.96.1 plus Slint 1.17.0 as verified from official stable release sources on 2026-07-02; PMConcept terminal transcripts and demo version strings are fixture/source-lineage only, and runtime implementation must reverify stable releases before code/build work.
+- 2026-07-05: Registered implementation-readiness buildability gates: `Plans/.implementation_readiness/readiness_blockers.jsonl` is the governed blocker registry, `Plans/.implementation_readiness/readiness_matrix.json` is the governed gate contract, `Plans/.implementation_readiness/buildability_gate_report.json` is the generated consumer report, and `scripts/pm-implementation-readiness.py` owns generation, validation, and fixture self-tests. These artifacts prevent source preservation, schema existence, wiring JSON existence, semantic closure, node-readiness reporting, or validators passing from being treated as proof of implementation buildability; `Approve And Build` remains disabled while open blockers remain or `Plans/.plan_index/node_readiness_report.json` reports a hard-disabled PNC-019 lifecycle boundary. This registration creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, production build tasks, or product repairs.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

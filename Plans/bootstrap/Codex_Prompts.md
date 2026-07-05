@@ -127,7 +127,7 @@ Rules:
 - node_readiness_report may analyze future conversion readiness only.
 - Captured source, Plan-complete docs, node-readiness, schema existence, wiring JSON existence, semantic closure, and validators passing are not implementation buildability.
 - Approve And Build remains disabled unless Plans/.implementation_readiness/buildability_gate_report.json reports buildability_gate_passed=true.
-- Disabled reasons must list open blocker families and exact owner docs, and PNC-019 must remain a hard disabled reason while runtime lifecycle certification is incomplete.
+- Disabled reasons must list open blocker families and exact owner docs, and PNC-019 must remain a hard disabled reason only while node_readiness.hard_disabled is true.
 - Do not create WorkNodes, executable build tasks, or final node queues.
 - Do not create NodeSeed candidates unless Plans/Plan_To_Node_Compilation.md already defines that candidate contract.
 - If Plans are incomplete, set node_readiness_report.status = blocked_plans_incomplete.

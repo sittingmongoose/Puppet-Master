@@ -158,16 +158,19 @@ canonical_text: >-
   They cannot mark PlanCompile, NodeSeed, WorkGraph, WorkNodeRequest, Executor intake, activation, Orchestrator
   projection, or Goal Runtime certification buildable. `Plans/.implementation_readiness/buildability_gate_report.json`
   is the current product-facing implementation-buildability gate report for Planning Wizard and PlanCompile. The report
-  remains blocked while any registered blocker family is open or while `Plans/.plan_index/node_readiness_report.json`
-  reports `blocked_runtime_certification_incomplete` for `PNC-019`. The gate may become buildable only after concrete
-  schemas, command wiring, security boundaries, behavioral acceptance, persistence lifecycle, currentness, provider
-  stream behavior, structural integrity, owner routing, and executable clean-room lifecycle evidence are recorded.
+  remains blocked while any registered blocker row is open or while `Plans/.plan_index/node_readiness_report.json`
+  projects node_readiness.hard_disabled for `PNC-019`. The gate may become buildable only after open_blocker_count is
+  zero, hard disabled reasons are absent, executable lifecycle certification is complete, source hashes are current,
+  and concrete schemas, command wiring, security boundaries, behavioral acceptance, persistence lifecycle,
+  currentness, provider stream behavior, structural integrity, owner routing, and executable clean-room lifecycle
+  evidence are recorded.
 gui_related: false
 gui_classification_reason: Defines compiler/readiness boundary and buildability evidence requirements, not visual presentation.
 depends_on: [PNC-019, PDS-019]
 unblocks: [PWIZ-018, PG-060]
 acceptance_criteria:
   - Buildability report remains blocked while PNC-019 executable lifecycle certification is incomplete.
+  - buildability_gate_passed=true requires open_blocker_count=0, no hard disabled reasons, executable lifecycle certification complete, and current report source hashes.
   - Node-readiness output and validator success are not treated as runtime buildability proof.
   - Required evidence covers concrete schemas, command wiring, security, behavioral acceptance, persistence, currentness, provider behavior, structure, owner routing, and clean-room lifecycle proof.
   - No NodeSeeds, WorkNodes, executable queues, final node manifests, implementation files, runtime launches, or production build tasks are emitted by this report.
