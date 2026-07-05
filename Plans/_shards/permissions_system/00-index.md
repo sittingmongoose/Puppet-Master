@@ -1,6 +1,6 @@
 # Shard Index: Plans/Permissions_System.md
 
-Generated: 2026-07-05T18:30:26Z
+Generated: 2026-07-05T20:06:40Z
 
 Source SHA256: `97ed251bf22bfe1db126a705f2e1042a4463a0f5cb4e033f72bec21f30a532f6`
 

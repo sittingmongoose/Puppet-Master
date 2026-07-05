@@ -349,12 +349,16 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-07-05T19:20:41Z",
+  "generated_at_utc": "2026-07-05T20:06:37Z",
   "node_readiness": {
     "available": true,
+    "bootstrap_authority_ref": "PNC-022",
+    "bootstrap_authorized": true,
+    "certification_harness_specified": true,
     "executable_lifecycle_certification_complete": false,
     "hard_disabled": true,
     "hard_disabled_reason": "PNC-019 executable lifecycle certification is incomplete",
+    "ordinary_product_worknodes_allowed": false,
     "owner_doc": "Plans/Plan_To_Node_Compilation.md",
     "runtime_blocked_by_ref": "PNC-019",
     "runtime_enabled": false,
@@ -833,15 +837,16 @@
   "schema_id": "pm.implementation_readiness.buildability_gate_report.v1",
   "source_hashes": {
     "Plans/.implementation_readiness/readiness_blockers.jsonl": "c5a1e468a1407568c1447abdf670d2f11980b13f512b56bfba764b2cfa8e54ac",
-    "Plans/.implementation_readiness/readiness_matrix.json": "efe952495c5b8fb85c4da21f8b67e1fff6e4e1079083dfe4b72e29bb5b24ca69",
-    "Plans/.plan_index/node_readiness_report.json": "792131b8a4eacedb24cd66e42988a687da7e56e9bf2ff29a48b454d75403636a",
-    "Plans/Plan_Document_System.md": "7a9fce7204e1fde993a61bbce623401f9408791d82f2be90fdf27b63791888f4",
-    "Plans/Plan_To_Node_Compilation.md": "278f1669db833cc39a6cfb7d04b13716a30e695a411912821ef783aa48af18e6",
-    "Plans/Planning_Wizard.md": "f0596df9d0faff61a5f9a7ea6519c838dde1ee5b2b3e3f74b2c49a761defae63",
-    "Plans/Progression_Gates.md": "048d6a2b70207dc30577e816669c735025358111707249ae1357a4fbbbb0aa82",
-    "Plans/UI_Wiring_Rules.md": "1ab5e07faba95dd2056a37cc783bb2f15195d6019c7ce6be1a47fa0af56867d5",
+    "Plans/.implementation_readiness/readiness_matrix.json": "e0122b29f7abbec9d726ff87908ec0d37e2b0898e9a9537e9223f8fcfad743a9",
+    "Plans/.plan_index/node_readiness_report.json": "c42a318ca899b344c0b031228eeb056474623f797f2e7f797a39472e6651a6c0",
+    "Plans/Plan_Document_System.md": "76236e846d59d279a5900cceb4c34d981657ad19e5f2cd1552b28ef6c6ff1b46",
+    "Plans/Plan_To_Node_Compilation.md": "11b6d40a2be84f04880f8cda10c2dec8f80b03aeb6f4aad9ba7f211f039dbbd0",
+    "Plans/Planning_Wizard.md": "3a46978d5e3bb44d6cda74fc357e1a7bd98f1d44db70da59e978b3c5c2f277b4",
+    "Plans/Progression_Gates.md": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785",
+    "Plans/UI_Wiring_Rules.md": "13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb",
     "Plans/bootstrap/Codex_Prompts.md": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793",
-    "scripts/pm-implementation-readiness.py": "ba758092f9f49de6def7322c44360bd43b7326ee8ea9f34c12df2e2cb7b8c71f",
+    "scripts/pm-implementation-readiness.py": "1862fee5b6557146823a530c03e1966b5f59130c22094c5a427d59743af90bdb",
+    "scripts/pm-plan-index.py": "703fb57d6164de3da6466c99a823723c64fdd1dee6b1f45527b998d49af4917a",
     "scripts/pm-plans-verify.py": "4439f2740b2e042da96f823605d8eb0701d3cbf24a7e6bdee60b545c2342f73b"
   },
   "validation_status_semantics": "The validator passes when this report is current and truthful; buildability_gate_passed is the product gate used by Planning Wizard."

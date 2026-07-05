@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-05T18:30:26Z",
+  "generated_at_utc": "2026-07-05T20:06:40Z",
   "index_path": "Plans/_shards/progression_gates/00-index.md",
-  "index_sha256": "d27c210c470c42226b07cbc6c07ac3d7ae2edb3c297115c6f4665547301fe856",
+  "index_sha256": "3b4979dbc0562546e76f6a331b2e26a9e03c208013a2afef375e77a42503e320",
   "manifest_path": "Plans/_shards/progression_gates/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/progression_gates/001-preamble.md",
-      "sha256": "7db28d83ced08794e8179eee1d1bddd0f93950859c096e892262854e56a27c0b",
+      "sha256": "0182383c0abfef078816f11e1394b35fb1785c314b41409dbd16db89ca591500",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/progression_gates/002-canonical-owner-section-requirements.md",
-      "sha256": "c6970b0c97b77d88d33f64d4187fab239f0858e75bdcbb48d9c4f20add1139a7",
+      "sha256": "358634d90962c8fbec5a96855b6e068d106edbb94cb00e04d6d4cb3c7a9c82a3",
       "shard_id": "002",
       "source_line_end": 20,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/progression_gates/003-0.-scope.md",
-      "sha256": "9f36e3460370caa8e3aef930378d028ad76cd2bac58f00e957f2bd0a7db526dc",
+      "sha256": "e671bd37ef7e82648a0fdc28ee2aef646ef58f0764ea1ef0d30857bbbec7baa1",
       "shard_id": "003",
       "source_line_end": 82,
       "source_line_start": 22,
@@ -35,7 +35,7 @@
     {
       "heading": "Route-aware progression and packet verification gates",
       "path": "Plans/_shards/progression_gates/004-route-aware-progression-and-packet-verification-gates.md",
-      "sha256": "1b8bdbbc596629d8ce547a378f8fdf24c4b5118bb7eed8afd379c73ebb67d9e5",
+      "sha256": "4f0f23165c995464f4435ea86a9a843487fe81eb816cf2bed9ad0f1d0e4f176a",
       "shard_id": "004",
       "source_line_end": 124,
       "source_line_start": 84,
@@ -44,7 +44,7 @@
     {
       "heading": "1. Verifier role (AI-only; deterministic)",
       "path": "Plans/_shards/progression_gates/005-1.-verifier-role-ai-only-deterministic.md",
-      "sha256": "854264c4909cd8040228de817bd30fa48e8cfa8a727a50ba0a1264119dec1d7a",
+      "sha256": "85243cd01b6155758cfc4c5fdaf749bb0e3456b4d670b575302668ba2de47446",
       "shard_id": "005",
       "source_line_end": 176,
       "source_line_start": 126,
@@ -53,7 +53,7 @@
     {
       "heading": "Runtime node-model progression gate definitions",
       "path": "Plans/_shards/progression_gates/006-runtime-node-model-progression-gate-definitions.md",
-      "sha256": "616cbae26a21999530a7b52d1ded147e2bdcb0dddab5f79977ff822478b7c2b5",
+      "sha256": "631b6e66ab01c17f1cf0fc2ee0fc37ad8df94a0419dbee76ec9954ba6b34f7b8",
       "shard_id": "006",
       "source_line_end": 212,
       "source_line_start": 178,
@@ -62,7 +62,7 @@
     {
       "heading": "GATE-001 -- Schema validation (anti-drift core)",
       "path": "Plans/_shards/progression_gates/007-gate-001-schema-validation-anti-drift-core.md",
-      "sha256": "ca022b6b3dedc4a51ce5f51f3bad860175182e35f246ba05622d2a5ce6ac9be3",
+      "sha256": "8924e2580b5b1e6b08c85aa877201dc04a106f684eb98c1e1a0937ef48c582f8",
       "shard_id": "007",
       "source_line_end": 228,
       "source_line_start": 213,
@@ -71,7 +71,7 @@
     {
       "heading": "GATE-002 -- Spec Lock integrity",
       "path": "Plans/_shards/progression_gates/008-gate-002-spec-lock-integrity.md",
-      "sha256": "298de3c9b87bae5ada70ab90cac8048ad832a8238b50cd3da720fd28841c73b3",
+      "sha256": "4852a548fe309298ad3e4b139165409e365ee9d2db47a2e9d7495c257d7cf7bc",
       "shard_id": "008",
       "source_line_end": 244,
       "source_line_start": 229,
@@ -80,7 +80,7 @@
     {
       "heading": "GATE-003 -- Architecture invariants",
       "path": "Plans/_shards/progression_gates/009-gate-003-architecture-invariants.md",
-      "sha256": "bf435793f4efa8213a689fbec8e5d65d57bbc8120c1ebbfdc34ed437f05bd11f",
+      "sha256": "fd2d222bf3ed960ad6c274e98f29a7e7401b946af74903dcd8e65d92e8ca4c6c",
       "shard_id": "009",
       "source_line_end": 262,
       "source_line_start": 245,
@@ -89,7 +89,7 @@
     {
       "heading": "GATE-004 -- Forbidden deps + drift phrases",
       "path": "Plans/_shards/progression_gates/010-gate-004-forbidden-deps-drift-phrases.md",
-      "sha256": "afe8fce8fcf128f265b3a3f70e0bb8b1991edad3cbb5f30d73634f0a72f41b67",
+      "sha256": "204b8d6abfe562726f644f3eee19acfc02bc7ea358a3bec48587ec5f0ba9ba0d",
       "shard_id": "010",
       "source_line_end": 276,
       "source_line_start": 263,
@@ -98,7 +98,7 @@
     {
       "heading": "GATE-005 -- Evidence required for completion",
       "path": "Plans/_shards/progression_gates/011-gate-005-evidence-required-for-completion.md",
-      "sha256": "cfacfbe8f7f712122530860913d42c7be139c80aebf1be2c249a6dfa84a8283f",
+      "sha256": "8f291e702c5311e03754b171351ce2de0c1ded8e65a83716e7da9f7bb8059f1e",
       "shard_id": "011",
       "source_line_end": 286,
       "source_line_start": 277,
@@ -107,7 +107,7 @@
     {
       "heading": "GATE-006 -- Change budget enforcement",
       "path": "Plans/_shards/progression_gates/012-gate-006-change-budget-enforcement.md",
-      "sha256": "0d0ec6dcb74c5cc268dba1f44d4af3da432c0a7d34450af9a13528962563ee4d",
+      "sha256": "4d26ff7acf6fc6772ded1a7e51cb4c5570626d38e94be0f8d691e25b5d35e5d7",
       "shard_id": "012",
       "source_line_end": 296,
       "source_line_start": 287,
@@ -116,7 +116,7 @@
     {
       "heading": "GATE-009 -- ContractRef coverage",
       "path": "Plans/_shards/progression_gates/013-gate-009-contractref-coverage.md",
-      "sha256": "e2bc8dd4fddb1534ca4dc2fc02588f3ab263014636d6c8d0ca0ce6502a910c7b",
+      "sha256": "635d2280161328f2b556e5013911e8ed298e096f2fdb8c8e642c85c105d17b43",
       "shard_id": "013",
       "source_line_end": 310,
       "source_line_start": 297,
@@ -125,7 +125,7 @@
     {
       "heading": "GATE-010 -- Wiring matrix validation",
       "path": "Plans/_shards/progression_gates/014-gate-010-wiring-matrix-validation.md",
-      "sha256": "1c9b4d3ea94e4c1baa212bd99fd41c4e4f4fc61f437cfeebcd392233f76ca6c9",
+      "sha256": "4d17bcc13892670e387af5d598affd81233cd72e5c3e149d15d5f13b831ce5a0",
       "shard_id": "014",
       "source_line_end": 336,
       "source_line_start": 311,
@@ -134,7 +134,7 @@
     {
       "heading": "GATE-011 -- Requirements traceability coverage",
       "path": "Plans/_shards/progression_gates/015-gate-011-requirements-traceability-coverage.md",
-      "sha256": "d6a7985459ab814520792dbe4df974e8067e9eb371582ece85033248ab57a90f",
+      "sha256": "9540d8a833e459e0d4a467ba6c0770ad38a36fbada391f5dbf609e7fec3a8e71",
       "shard_id": "015",
       "source_line_end": 381,
       "source_line_start": 337,
@@ -143,7 +143,7 @@
     {
       "heading": "GATE-012 -- Requirements quality",
       "path": "Plans/_shards/progression_gates/016-gate-012-requirements-quality.md",
-      "sha256": "e57caf34a050fa46d4e971522b8bfa1da3eb2891b1c41ee942311aa4a6ca4e0f",
+      "sha256": "0ed525f59be6fd3ed82ea4ec1660bcbd2337f8234da42186002fff80366d9cb7",
       "shard_id": "016",
       "source_line_end": 436,
       "source_line_start": 382,
@@ -152,7 +152,7 @@
     {
       "heading": "GATE-013 -- Ambiguity marker resolution",
       "path": "Plans/_shards/progression_gates/017-gate-013-ambiguity-marker-resolution.md",
-      "sha256": "307f6fa443434595e3d098ae105b7c9b831512fc64f397074e9117abb0753d75",
+      "sha256": "6aec3463c3518b5eede4d19c1a45347f89c7c2b68b3671c2506547fa4c27c114",
       "shard_id": "017",
       "source_line_end": 479,
       "source_line_start": 437,
@@ -161,7 +161,7 @@
     {
       "heading": "GATE-014 -- Document Set packaging verification",
       "path": "Plans/_shards/progression_gates/018-gate-014-document-set-packaging-verification.md",
-      "sha256": "0461c46d3ad387a613af7b2a9baeaf5f0cdbce6fd1673ff19bb099a70cd4054e",
+      "sha256": "201affa8939af6c571d7b6c14770386932f40960f1586305aa6922584651df26",
       "shard_id": "018",
       "source_line_end": 503,
       "source_line_start": 480,
@@ -170,7 +170,7 @@
     {
       "heading": "References",
       "path": "Plans/_shards/progression_gates/019-references.md",
-      "sha256": "5428769d0d1500b34f0945608e5ad2b0971cd7e9427f53fce5b58af4a5cf2c9e",
+      "sha256": "8087c2427a91f7a24d93af826e28fc715e05724d37f62f7374241b405586be17",
       "shard_id": "019",
       "source_line_end": 516,
       "source_line_start": 504,
@@ -179,7 +179,7 @@
     {
       "heading": "Runtime Integrity and Recovery Gates Addendum (2026-03-08)",
       "path": "Plans/_shards/progression_gates/020-runtime-integrity-and-recovery-gates-addendum-2026-03-08.md",
-      "sha256": "09d21e67449999a97c43130de50a8e6fd2e23c32c9db82b89176ac8c396e6a49",
+      "sha256": "fd3eeae1de525b5d587cb940300f05c40e0bf9913f628c18581603cb4721324c",
       "shard_id": "020",
       "source_line_end": 560,
       "source_line_start": 518,
@@ -188,7 +188,7 @@
     {
       "heading": "Post-Edit Verification Sweep Addendum (2026-03-08)",
       "path": "Plans/_shards/progression_gates/021-post-edit-verification-sweep-addendum-2026-03-08.md",
-      "sha256": "c7fecaa674efcd424a40a5e31bc40a1ad06560283f2560b612f9c7c43334c404",
+      "sha256": "c65956c131df60df9a2c03d60439024595e5ed3f05eadbe49c4e99959d5c9d12",
       "shard_id": "021",
       "source_line_end": 578,
       "source_line_start": 562,
@@ -197,7 +197,7 @@
     {
       "heading": "Runtime Packet Verification Gate Addendum (2026-03-09)",
       "path": "Plans/_shards/progression_gates/022-runtime-packet-verification-gate-addendum-2026-03-09.md",
-      "sha256": "e366c33580aa1ce19a8c17b95b43177dd24d9185c98d9306731944deffe6de4a",
+      "sha256": "a5736b1cf56cd7c2f253de0854474ec951e6e71ba86d7e21b0f1cc6c2c6f0d1a",
       "shard_id": "022",
       "source_line_end": 593,
       "source_line_start": 579,
@@ -206,7 +206,7 @@
     {
       "heading": "Runtime Scheduler Packet Verification Canonical Alignment (2026-03-09)",
       "path": "Plans/_shards/progression_gates/023-runtime-scheduler-packet-verification-canonical-alignment-2026-0.md",
-      "sha256": "e1e8ef49b25519f00b840a6d185e41e041a82eb35563cbc2c9d95d0e70d9a339",
+      "sha256": "3dcbc43dba488feaa91219c7ae4fe681ffe44d79434d69a6a1212500f4ab18a8",
       "shard_id": "023",
       "source_line_end": 603,
       "source_line_start": 594,
@@ -215,7 +215,7 @@
     {
       "heading": "Runtime Packet Contradiction-Fail Verification Consolidation Addendum (2026-03-09)",
       "path": "Plans/_shards/progression_gates/024-runtime-packet-contradiction-fail-verification-consolidation-add.md",
-      "sha256": "8c4fafefd784b83c4699a2a15e457093ae3acb06d2f1f9eb2d515c1954203456",
+      "sha256": "b221c66279c012b3fe6a1bdc830a6c447a5433505e7c76d8b699b72cb869024c",
       "shard_id": "024",
       "source_line_end": 614,
       "source_line_start": 604,
@@ -224,7 +224,7 @@
     {
       "heading": "Field Name Verification Gate Update Addendum",
       "path": "Plans/_shards/progression_gates/025-field-name-verification-gate-update-addendum.md",
-      "sha256": "b125cf81e471244a35d70f0acf797d77208c9b0cd3bb6898104897c5df4671fd",
+      "sha256": "2ca524af9515891a6cb6293e09871158f8b22d3eba82360a5e92f50ec942b4de",
       "shard_id": "025",
       "source_line_end": 628,
       "source_line_start": 616,
@@ -233,7 +233,7 @@
     {
       "heading": "Runtime Recovery Canonicalization Gate Addendum",
       "path": "Plans/_shards/progression_gates/026-runtime-recovery-canonicalization-gate-addendum.md",
-      "sha256": "f8e353df1d5ed2d672985e4bdb99f1df7bad6af2b8c0292fd40f6d6a1cace2f2",
+      "sha256": "4015c7adb89c105519acff20fa8ec6a7e5db5771b13ccc8f5183324f28256bda",
       "shard_id": "026",
       "source_line_end": 640,
       "source_line_start": 630,
@@ -242,7 +242,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/progression_gates/027-owner-consumer-map.md",
-      "sha256": "694adfe8e2c5fd12ea579dc48e1e6d80df3428b1d6ca1e5e220a1487c7fb9674",
+      "sha256": "7d032ff2db2622c59ba99241a5209c0ce46e63a426c3606f9ffe905686de9841",
       "shard_id": "027",
       "source_line_end": 646,
       "source_line_start": 642,
@@ -251,7 +251,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/progression_gates/028-planunits.md",
-      "sha256": "df46f8961c6bff3919ce22f7ec5302f5781ddb2d907524f0fd593eba1df26862",
+      "sha256": "39148ecb6f9c7589fac31cdc13a4f19731c475bc9dc5fe164a2f374c2cd4aaf9",
       "shard_id": "028",
       "source_line_end": 3366,
       "source_line_start": 648,
@@ -260,7 +260,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/progression_gates/029-migration-coverage.md",
-      "sha256": "5ee82ab69508de4e34c1b5468af3f2102a69777aa99b2f44003d1dcaa1fcf80c",
+      "sha256": "58ffef0e3d52313e77d771b3a07ea56c2b0b81f428928fefad60146aada92214",
       "shard_id": "029",
       "source_line_end": 3378,
       "source_line_start": 3368,
@@ -269,7 +269,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-002",
       "path": "Plans/_shards/progression_gates/030-ledger-compile-addendum-pldg-20260614-002.md",
-      "sha256": "55370b96259bac471d2caebbc3e2fe35ab1b00bb2b3ced3ece5009eb2383d520",
+      "sha256": "71cdbcec47e30a81963e234bbcad0d339abf3c7e736639366aa5b1076c752f7b",
       "shard_id": "030",
       "source_line_end": 3424,
       "source_line_start": 3380,
@@ -278,7 +278,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/progression_gates/031-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "574c2434df671d0b41b4f47f33737809a30afd2bb91bcaabf7ada8bef6238f49",
+      "sha256": "0155cc62afec840e18dbc9d02c8823e630cce64dbaf2d1f261957e0f54ad3f6b",
       "shard_id": "031",
       "source_line_end": 3510,
       "source_line_start": 3427,
@@ -287,16 +287,16 @@
     {
       "heading": "Implementation Readiness Gate Addendum - 2026-07-05",
       "path": "Plans/_shards/progression_gates/032-implementation-readiness-gate-addendum-2026-07-05.md",
-      "sha256": "1ba6b6000ade58f63123683f245e017bc97d321614254175c2312cc13196efac",
+      "sha256": "52cef42eb482db487eda7e6ed578f26dabc929b5c60ef75f2925bc2e1588e388",
       "shard_id": "032",
-      "source_line_end": 3579,
+      "source_line_end": 3584,
       "source_line_start": 3512,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 3579,
+    "line_count": 3584,
     "path": "Plans/Progression_Gates.md",
-    "sha256": "048d6a2b70207dc30577e816669c735025358111707249ae1357a4fbbbb0aa82"
+    "sha256": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785"
   }
 }

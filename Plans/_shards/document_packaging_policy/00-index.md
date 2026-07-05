@@ -1,6 +1,6 @@
 # Shard Index: Plans/Document_Packaging_Policy.md
 
-Generated: 2026-07-05T18:30:26Z
+Generated: 2026-07-05T20:06:40Z
 
 Source SHA256: `7c555d8159c75c51128ca3ef90555d4bfc70961f959ff7aae895f184f14bf3bc`
 

@@ -158,6 +158,35 @@
     "owner_routing",
     "clean_room_lifecycle_evidence"
   ],
+  "pnc019_bootstrap_authority": {
+    "status": "specified_not_certified",
+    "source_plan_unit": "Plans/Plan_To_Node_Compilation.md#PNC-022",
+    "allowed_scope": [
+      "PlanCompile compiler path",
+      "PNC-019 executable lifecycle certification harness",
+      "certifier receipts and evidence path"
+    ],
+    "forbidden_scope": [
+      "ordinary product WorkNodes",
+      "NodeSeeds",
+      "executable queues",
+      "final node manifests",
+      "implementation files",
+      "runtime launches",
+      "production build tasks",
+      "Approve And Build enablement for ordinary product work"
+    ],
+    "node_readiness_fields": [
+      "bootstrap_authorized",
+      "compiler_contract_complete",
+      "certification_harness_specified",
+      "executable_lifecycle_certification_complete",
+      "runtime_enabled",
+      "ordinary_product_worknodes_allowed"
+    ],
+    "partial_evidence_policy": "Bootstrap authority records only partial/blocked evidence while IRB-005 runtime_lifecycle and IRB-011 clean_room_harness remain open.",
+    "closure_policy": "Do not close runtime_lifecycle or clean_room_harness until executable lifecycle proof and clean-room fixture receipts exist."
+  },
   "schema_id": "pm.implementation_readiness.readiness_matrix.v1",
   "governance_status": {
     "scripts/pm-implementation-readiness.py": {

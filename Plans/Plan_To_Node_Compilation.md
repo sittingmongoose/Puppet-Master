@@ -209,6 +209,88 @@ owner_hints:
   - Plans/Progression_Gates.md
 ```
 
+### PNC-022 - PNC-019 Bootstrap Authority And Lifecycle Harness Boundary
+
+```yaml
+plan_unit_id: PNC-022
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: >-
+  Tier 0A may specify controlled bootstrap authority for the PlanCompile compiler, PNC-019 lifecycle
+  certification harness, and certifier path only. This authority exists solely to make the runtime lifecycle
+  certifiable; it does not authorize ordinary product WorkNodes, NodeSeeds, executable queues, final node
+  manifests, implementation files, runtime launches, or production build tasks. The bootstrap certification
+  boundary covers ApprovedPlanPack intake, PlanCompileRun identity, WorkGraph draft generation, WorkNodeRequest
+  generation, Executor intake handoff, activation lifecycle, Orchestrator projection, restart/cancel/failure
+  paths, receipt/evidence outputs, positive fixtures, and negative fixtures. `bootstrap_authorized=true` means
+  only this harness/spec path may be reasoned about; it is not equivalent to compiler_contract_complete,
+  executable lifecycle certification, runtime_enabled, ordinary_product_worknodes_allowed, or
+  buildability_gate_passed. Ordinary PlanUnits remain `create_worknodes:false`, the node-readiness status remains
+  blocked until executable lifecycle certification evidence exists, and any future harness-scoped materialization
+  must be unambiguously marked as PNC-019 certification-harness/bootstrap-only.
+gui_related: false
+gui_classification_reason: Defines a compiler/harness certification boundary rather than visual presentation.
+depends_on: [PNC-006, PNC-010, PNC-012, PNC-013, PNC-014, PNC-018, PNC-019, PNC-021]
+unblocks: [PWIZ-018, PG-060]
+acceptance_criteria:
+  - Bootstrap authority is limited to the PlanCompile compiler, PNC-019 certification harness, and certifier path.
+  - The lifecycle boundary names ApprovedPlanPack intake, PlanCompileRun identity, WorkGraph draft, WorkNodeRequest, Executor intake, activation, Orchestrator projection, restart/cancel/failure, receipts/evidence, positive fixtures, and negative fixtures.
+  - bootstrap_authorized, compiler_contract_complete, certification_harness_specified, executable_lifecycle_certification_complete, runtime_enabled, and ordinary_product_worknodes_allowed remain distinct node-readiness fields.
+  - Ordinary product PlanUnits remain create_worknodes:false and ordinary_product_worknodes_allowed:false until executable lifecycle certification is complete.
+  - The bootstrap authority does not set buildability_gate_passed=true and does not enable Planning Wizard Approve And Build for ordinary product work.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+risk_class: bootstrap_authority_overreach
+reasoning_tier: high
+context_scope: pnc019_bootstrap_certification_boundary
+implementation_surfaces:
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/.plan_index/node_readiness_report.json
+  - Plans/.implementation_readiness/buildability_gate_report.json
+  - scripts/pm-plan-index.py
+  - scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: pnc019_bootstrap_authority
+  bootstrap_authorized: true
+  bootstrap_scope: pnc019_certification_harness_only
+  certification_harness_specified: true
+  executable_lifecycle_certification_complete: false
+  runtime_enabled: false
+  ordinary_product_worknodes_allowed: false
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - source_ref:goal:2026-07-05-tier-0a-pnc019-bootstrap-authority
+  - Plans/Plan_To_Node_Compilation.md#PNC-019
+  - Plans/.implementation_readiness/readiness_blockers.jsonl#IRB-005
+  - Plans/.implementation_readiness/readiness_blockers.jsonl#IRB-011
+preserved_exact_tokens:
+  - "ApprovedPlanPack intake"
+  - "PlanCompileRun identity"
+  - "WorkGraph draft generation"
+  - "WorkNodeRequest generation"
+  - "Executor intake handoff"
+  - "activation lifecycle"
+  - "Orchestrator projection"
+  - "restart/cancel/failure paths"
+  - "positive fixtures"
+  - "negative fixtures"
+  - "ordinary_product_worknodes_allowed"
+negative_constraints:
+  - Do not treat PNC-019 bootstrap authority as implementation buildability.
+  - Do not enable ordinary product WorkNodes, NodeSeeds, executable queues, final node manifests, runtime launches, implementation files, or production build tasks from this authority.
+  - Do not close IRB-005 runtime_lifecycle or IRB-011 clean_room_harness until executable lifecycle proof exists.
+owner_hints:
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Automated_Testing_System.md
+```
+
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
 
 ### PNC-004 - Node-Readiness Report Contract

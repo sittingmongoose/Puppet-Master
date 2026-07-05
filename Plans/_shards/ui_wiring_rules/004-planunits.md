@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L72-L418
+Source lines: L72-L421
 
-Source SHA256: `1ab5e07faba95dd2056a37cc783bb2f15195d6019c7ce6be1a47fa0af56867d5`
+Source SHA256: `13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb`
 
 ---
 
@@ -308,15 +308,18 @@ canonical_text: >-
   from the report's currently open blocker families, blocker IDs, exact owner_docs, and hard disabled reasons that are
   present. The view layer must not infer enablement from Wiring Matrix row existence, command catalog presence, schema
   validation, semantic closure, source preservation, or other validators passing. Disabled controls must not dispatch
-  PlanApproved, create or bind PlanCompileRun, or start runtime/build surfaces.
+  PlanApproved, create or bind PlanCompileRun, or start runtime/build surfaces. PNC-019 bootstrap authority for the
+  compiler/harness/certifier path remains a disabled-state reason boundary, not a UI enablement source for ordinary
+  product work.
 gui_related: true
 gui_classification_reason: Defines user-visible Approve And Build disabled state and command-dispatch blocking behavior.
-depends_on: [UIW-002, UIW-003, UIW-006, UIW-007, PWIZ-018]
+depends_on: [UIW-002, UIW-003, UIW-006, UIW-007, PWIZ-018, PNC-022]
 unblocks: [PG-060]
 acceptance_criteria:
   - The Approve And Build UI state consumes buildability_gate_report.json.
   - The disabled reason projection lists currently open blocker families, blocker IDs, exact owner_docs, and PNC-019 hard disabled reason only when present.
   - Disabled Approve And Build cannot dispatch PlanApproved or create/bind PlanCompileRun.
+  - Bootstrap authority for PNC-019 certification does not enable the control while buildability_gate_passed=false.
   - Wiring Matrix presence and schema validation are not enough to enable the command.
 validation_surfaces:
   - python3 scripts/pm-implementation-readiness.py validate

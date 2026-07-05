@@ -1,18 +1,69 @@
 {
-  "build_order_blockers": [],
+  "build_order_blockers": [
+    {
+      "blocker_type": "dependency_cycles",
+      "items": [
+        {
+          "plan_unit_id": "PDS-019",
+          "remaining_depends_on": [
+            "PNC-022"
+          ]
+        },
+        {
+          "plan_unit_id": "PNC-021",
+          "remaining_depends_on": [
+            "PDS-019"
+          ]
+        },
+        {
+          "plan_unit_id": "PNC-022",
+          "remaining_depends_on": [
+            "PNC-021"
+          ]
+        }
+      ]
+    },
+    {
+      "blocker_type": "dependency_cycle_downstream_blocked_nodes",
+      "items": [
+        {
+          "plan_unit_id": "PG-060",
+          "remaining_depends_on": [
+            "PDS-019",
+            "PNC-021",
+            "PNC-022",
+            "PWIZ-018"
+          ]
+        },
+        {
+          "plan_unit_id": "PWIZ-018",
+          "remaining_depends_on": [
+            "PNC-022"
+          ]
+        },
+        {
+          "plan_unit_id": "UIW-009",
+          "remaining_depends_on": [
+            "PNC-022",
+            "PWIZ-018"
+          ]
+        }
+      ]
+    }
+  ],
   "dependency_graph_summary": {
-    "build_order_available": true,
-    "build_order_blocked_node_count": 0,
-    "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11538,
-    "downstream_blocked_node_count": 0,
-    "edge_count": 13561,
-    "node_count": 5478,
-    "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2023,
+    "build_order_available": false,
+    "build_order_blocked_node_count": 6,
+    "cycle_blocker_count": 3,
+    "depends_on_edge_count": 11550,
+    "downstream_blocked_node_count": 3,
+    "edge_count": 13575,
+    "node_count": 5479,
+    "true_cycle_component_count": 1,
+    "unblocks_edge_count": 2025,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-05T18:30:15Z",
+  "generated_at_utc": "2026-07-05T20:06:30Z",
   "gui_related_units": {
     "count": 2382,
     "units": [
@@ -18898,8 +18949,8 @@
         "source_location": {
           "heading": "PNC-013 - WorkGraph Draft And WorkNode Request Contract",
           "heading_level": 3,
-          "heading_line": 671,
-          "line": 673,
+          "heading_line": 753,
+          "line": 755,
           "path": "Plans/Plan_To_Node_Compilation.md"
         }
       },
@@ -26226,10 +26277,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5478,
+  "plan_unit_count": 5479,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1150,
+      "high": 1151,
       "low": 5,
       "standard": 4323
     },
@@ -26471,6 +26522,7 @@
       "blocked_state_alias_drift": 1,
       "blocked_state_or_projection_drift": 1,
       "blocked_work_identity_drift": 1,
+      "bootstrap_authority_overreach": 1,
       "bootstrap_operability": 1,
       "bootstrap_trust_copy_drift": 1,
       "brainstorm": 2,
@@ -29124,7 +29176,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5300,
+      "accepted": 5301,
       "retired": 178
     },
     "unit_type_counts": {
@@ -29139,7 +29191,7 @@
       "capability_matrix": 1,
       "compatibility_disposition": 131,
       "compatibility_note": 2,
-      "constraint": 585,
+      "constraint": 586,
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,
@@ -29188,7 +29240,14 @@
   },
   "runtime_enablement_status": {
     "artifact_generation_policy": "PlanUnit indexing never emits NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts.",
+    "bootstrap_authority_ref": "PNC-022",
+    "bootstrap_authority_refs": [
+      "PNC-022"
+    ],
+    "bootstrap_authorized": true,
+    "bootstrap_scope": "pnc019_certification_harness_only",
     "certification_authority": "Goal Runtime completion receipt after Executor activation and receipt verification.",
+    "certification_harness_specified": true,
     "compiler_contract_complete": true,
     "disabled_guards": [
       {
@@ -29198,13 +29257,14 @@
         "source_location": {
           "heading": "PNC-019 - Static Scenario Boundary And Executable Certification Requirement",
           "heading_level": 3,
-          "heading_line": 1234,
-          "line": 1236,
+          "heading_line": 1316,
+          "line": 1318,
           "path": "Plans/Plan_To_Node_Compilation.md"
         }
       }
     ],
     "executable_lifecycle_certification_complete": false,
+    "ordinary_product_worknodes_allowed": false,
     "owner_doc": "Plans/Plan_To_Node_Compilation.md",
     "runtime_blocked_by_ref": "PNC-019",
     "runtime_enabled": false,

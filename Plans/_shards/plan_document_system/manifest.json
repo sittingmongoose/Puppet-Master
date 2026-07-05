@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-05T18:30:26Z",
+  "generated_at_utc": "2026-07-05T20:06:40Z",
   "index_path": "Plans/_shards/plan_document_system/00-index.md",
-  "index_sha256": "c6fc1b325c55796c0dd7facb3bbb8f9cd20958be3482ef198ea74ffdf6e5e322",
+  "index_sha256": "5dee7a8476ca1b7aad47390a6191ac920483f5af6972dfc6f98ca5bd9024612c",
   "manifest_path": "Plans/_shards/plan_document_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/plan_document_system/001-preamble.md",
-      "sha256": "e470d88e8e1afe1bba7c9e327dd0f8a20f92bbde5695f4df43ab41660852aa95",
+      "sha256": "bcf763ca77fe9152891007cbb62f065f26ba84f2f222fb9826f929bc72b51530",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/plan_document_system/002-0.-scope.md",
-      "sha256": "3df6cd74e4ab97ffc407ff0d06461179b74dfbf02347a7892ab46ad6e0a0418a",
+      "sha256": "85f8e65e8cde2a2a9c0248a514821bbff5ff6fbd2db5dedbbdcb32441d61580d",
       "shard_id": "002",
       "source_line_end": 11,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Profiles And Standard Document Shape",
       "path": "Plans/_shards/plan_document_system/003-1.-profiles-and-standard-document-shape.md",
-      "sha256": "56e34ba4000b6a85f2807b46e34c0feae900eb3be0b2b299b5544c878dc2536c",
+      "sha256": "6d393d17923fba5d6673353292a958b5e8d20d3e363f16a36f8b8716787b1dbe",
       "shard_id": "003",
       "source_line_end": 66,
       "source_line_start": 13,
@@ -35,7 +35,7 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/plan_document_system/004-2.-planunits.md",
-      "sha256": "b8f6d390ba85d41b2138b327c95371946d75332163e5a6aa29aeea8126ae1be8",
+      "sha256": "2a98d45175a05e4a3596db4190a5114aa7bca3c85ae2e68939490076e36ccb7d",
       "shard_id": "004",
       "source_line_end": 698,
       "source_line_start": 68,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Compilation Coverage",
       "path": "Plans/_shards/plan_document_system/005-3.-compilation-coverage.md",
-      "sha256": "9dd145d0c74b9af0da4d7f7a47212209cdf65f61bdc3ca05ebcb52a52a167c5f",
+      "sha256": "2542c3af2206efc96d7ae819afa66dcf582d936442d4e1b0d7c40ee89ffca5cf",
       "shard_id": "005",
       "source_line_end": 717,
       "source_line_start": 700,
@@ -53,7 +53,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff",
       "path": "Plans/_shards/plan_document_system/006-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md",
-      "sha256": "e863058e6f3de1456d0c1dafb41ddb88e51cb44c3835fe06a00d8bf3fa2264ac",
+      "sha256": "a49f30eb9ce7a2b00d7886a5845a2e71f05a2c43599358e6cb8f05babe09c96f",
       "shard_id": "006",
       "source_line_end": 792,
       "source_line_start": 719,
@@ -62,7 +62,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/plan_document_system/007-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "2b11298e1ec417b387e419305a035afc940714ae168235c0472f8213d99aa556",
+      "sha256": "274910a3afa9b80916192adf8780c04bd1222fe37024d1dbb97fc42d92993c31",
       "shard_id": "007",
       "source_line_end": 956,
       "source_line_start": 795,
@@ -71,7 +71,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/plan_document_system/008-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "01b81af8877e6ac7bd7fd4ab5a9ec800318f7e1b6b204f1fa8df44bb99bdee08",
+      "sha256": "d2ccb99c6c501e19edb0282f2ab8f81941f05af06f3a9cbc126a906a936994ec",
       "shard_id": "008",
       "source_line_end": 1010,
       "source_line_start": 958,
@@ -80,16 +80,16 @@
     {
       "heading": "Implementation Readiness Gate Addendum - 2026-07-05",
       "path": "Plans/_shards/plan_document_system/009-implementation-readiness-gate-addendum-2026-07-05.md",
-      "sha256": "2fa4c51f01bb3ac4fedfd973bd6bc988ea45ab456b8581658803122b12324b02",
+      "sha256": "f2521323fd5d847b4f55996b47d7b8356c1969ab912323aa337ff07a4ff674f2",
       "shard_id": "009",
-      "source_line_end": 1097,
+      "source_line_end": 1101,
       "source_line_start": 1012,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1097,
+    "line_count": 1101,
     "path": "Plans/Plan_Document_System.md",
-    "sha256": "7a9fce7204e1fde993a61bbce623401f9408791d82f2be90fdf27b63791888f4"
+    "sha256": "76236e846d59d279a5900cceb4c34d981657ad19e5f2cd1552b28ef6c6ff1b46"
   }
 }

@@ -1,21 +1,21 @@
 # Shard Index: Plans/UI_Wiring_Rules.md
 
-Generated: 2026-07-05T18:30:26Z
+Generated: 2026-07-05T20:06:40Z
 
-Source SHA256: `1ab5e07faba95dd2056a37cc783bb2f15195d6019c7ce6be1a47fa0af56867d5`
+Source SHA256: `13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L15 `648c264289ece7cd15e3bc7484b55d555756ac84ff6fb0a6b3a1f620cf132df1`
-- [002 - 0. Scope](002-0.-scope.md) L16-L62 `532c57e15f56e51a9c229faa2f76b606ca2c29553df1d82067dc8feff505c7fa`
-- [003 - Owner / Consumer Map](003-owner-consumer-map.md) L64-L70 `1f16651ae7a629988402e942baee0612716c54496b46294c346cdce67fb879f6`
-- [004 - PlanUnits](004-planunits.md) L72-L418 `cb7d19f6ce826456630cbdd1800ba3045c404b0122596186665f2bd0a0c7e837`
-- [005 - 1. Rule 1 — UI Command Dispatch Only](005-1.-rule-1-ui-command-dispatch-only.md) L419-L432 `4308a4ea70f30d3572e9c9b20a5405482bb59d8c3a7919b56da64b638f073540`
-- [006 - 2. Rule 2 — One Element, One Command](006-2.-rule-2-one-element-one-command.md) L433-L447 `14290a0b4655114777e076adfcd4f42ae59e6002bda61ff8b9879f4e5399bb54`
-- [007 - 3. UI Command Dispatcher Boundary](007-3.-ui-command-dispatcher-boundary.md) L448-L483 `93c28225ff359fc5f9c785bcfee4d7ad84ddb0e3147271b0181d406e80f094f7`
-- [008 - 4. Wiring Matrix Concept](008-4.-wiring-matrix-concept.md) L484-L521 `ca7073fd92ade015ca6c70583a85b47e56c23391b90fe77e217c3abfec981f87`
-- [009 - 5. Autonomous Verification Strategy](009-5.-autonomous-verification-strategy.md) L522-L549 `eabd01f7b46a45852de533ce900b9a54150e576b06ac72ca90c51d9bb345758d`
-- [010 - 6. References](010-6.-references.md) L550-L562 `02ebcc5f1ae5cefca69172993fc65a644adf9b04e94b454df21cda618a8d0afa`
-- [011 - Migration Coverage](011-migration-coverage.md) L564-L585 `b1182bae37aeac4822ac3547839f16e7cfa1ce347d8e7e4f714bfe8e4ec6e9eb`
+- [001 - Preamble](001-preamble.md) L1-L15 `da6886821fff1e34d49729c39e9b516f662afd6c7ac0e692ba75b7416c15d00d`
+- [002 - 0. Scope](002-0.-scope.md) L16-L62 `a3b5f14799cd45eb32e22adf7efa19c07a3e98d9ac6d46d6ab5f3b5d01c4d854`
+- [003 - Owner / Consumer Map](003-owner-consumer-map.md) L64-L70 `f721a9d61a2f248578413d6db21d1c8bb19f70542bf46d97f17dc04897590e07`
+- [004 - PlanUnits](004-planunits.md) L72-L421 `b40cd5ca5c189d92770c66cff01d4c795a5b8fdf362db5e209c1c62a11df9c67`
+- [005 - 1. Rule 1 — UI Command Dispatch Only](005-1.-rule-1-ui-command-dispatch-only.md) L422-L435 `f59780c9ae51fe3471098ddfd3dbe87ecf2677898821156a8bd3a8405ad5c28d`
+- [006 - 2. Rule 2 — One Element, One Command](006-2.-rule-2-one-element-one-command.md) L436-L450 `f3855131b64cec222be5ec12f480951d5107b8988d6235f4d6bcf5de19200646`
+- [007 - 3. UI Command Dispatcher Boundary](007-3.-ui-command-dispatcher-boundary.md) L451-L486 `25c32cc14f8ac50ce2fa1e70957f211ce9352042a24f4109a6a02fa35d6e2c3e`
+- [008 - 4. Wiring Matrix Concept](008-4.-wiring-matrix-concept.md) L487-L524 `0f6a5852c45879d9d5d6ba3f566a6433fbaf3f55382564732105ec40a29867ae`
+- [009 - 5. Autonomous Verification Strategy](009-5.-autonomous-verification-strategy.md) L525-L552 `539d08b120dd3c6ac805f752257ae9e22f332f9e22bec7af35daa7909eeb10e3`
+- [010 - 6. References](010-6.-references.md) L553-L565 `a9a716d0ba3d7ef23526d13762ae79cdb1ed85d97ad5bfc76931093b12471b76`
+- [011 - Migration Coverage](011-migration-coverage.md) L567-L588 `fd3730892d2ad46349027762f24544c559df7d6cc4e794d823d49733ddfcc1ce`

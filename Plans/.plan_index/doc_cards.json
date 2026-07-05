@@ -9560,7 +9560,7 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1097,
+      "line_count": 1101,
       "path": "Plans/Plan_Document_System.md",
       "plan_unit_count": 19,
       "plan_unit_ids": [
@@ -9606,7 +9606,7 @@
         "stale_reference_drift",
         "user_visible_settings"
       ],
-      "sha256": "7a9fce7204e1fde993a61bbce623401f9408791d82f2be90fdf27b63791888f4",
+      "sha256": "76236e846d59d279a5900cceb4c34d981657ad19e5f2cd1552b28ef6c6ff1b46",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 19
@@ -9657,10 +9657,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 20,
+        "False": 21,
         "True": 1
       },
-      "heading_count": 31,
+      "heading_count": 32,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.implementation_readiness/buildability_gate_report.json",
@@ -9693,17 +9693,20 @@
         "future WorkNode compiler",
         "future compiler",
         "future runtime router",
+        "scripts/pm-implementation-readiness.py",
+        "scripts/pm-plan-index.py",
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 1334,
+      "line_count": 1416,
       "path": "Plans/Plan_To_Node_Compilation.md",
-      "plan_unit_count": 21,
+      "plan_unit_count": 22,
       "plan_unit_ids": [
         "PNC-001",
         "PNC-002",
         "PNC-003",
         "PNC-021",
+        "PNC-022",
         "PNC-004",
         "PNC-005",
         "PNC-006",
@@ -9727,6 +9730,7 @@
         "standard"
       ],
       "risk_classes": [
+        "bootstrap_authority_overreach",
         "compile_correctness",
         "compiler_algorithm_contract",
         "execution_boundary",
@@ -9743,14 +9747,14 @@
         "stale_or_forbidden_behavior",
         "static_fixture_false_certification"
       ],
-      "sha256": "278f1669db833cc39a6cfb7d04b13716a30e695a411912821ef783aa48af18e6",
+      "sha256": "11b6d40a2be84f04880f8cda10c2dec8f80b03aeb6f4aad9ba7f211f039dbbd0",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 21
+        "accepted": 22
       },
       "title": "Plan To Node Compilation",
       "unit_type_counts": {
-        "constraint": 4,
+        "constraint": 5,
         "requirement": 17
       },
       "validation_surfaces": [
@@ -9962,7 +9966,7 @@
         "future Planning Wizard output records",
         "future Planning Wizard source picker"
       ],
-      "line_count": 1503,
+      "line_count": 1506,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -9999,7 +10003,7 @@
         "stale_approval_build_race",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "f0596df9d0faff61a5f9a7ea6519c838dde1ee5b2b3e3f74b2c49a761defae63",
+      "sha256": "3a46978d5e3bb44d6cda74fc357e1a7bd98f1d44db70da59e978b3c5c2f277b4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -10227,7 +10231,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 3579,
+      "line_count": 3584,
       "path": "Plans/Progression_Gates.md",
       "plan_unit_count": 60,
       "plan_unit_ids": [
@@ -10303,7 +10307,7 @@
         "residual_bridge_overreach",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "048d6a2b70207dc30577e816669c735025358111707249ae1357a4fbbbb0aa82",
+      "sha256": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 59,
@@ -12715,7 +12719,7 @@
         "Plans/Wiring_Matrix.schema.json",
         "Plans/evidence.schema.json"
       ],
-      "line_count": 585,
+      "line_count": 588,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 9,
       "plan_unit_ids": [
@@ -12744,7 +12748,7 @@
         "ui_backend_bypass",
         "unwired_gui"
       ],
-      "sha256": "1ab5e07faba95dd2056a37cc783bb2f15195d6019c7ce6be1a47fa0af56867d5",
+      "sha256": "13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 9
@@ -13250,7 +13254,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-05T18:30:15Z",
+  "generated_at_utc": "2026-07-05T20:06:30Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13258,13 +13262,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3096,
+      "False": 3097,
       "True": 2382
     },
-    "plan_unit_count": 5478,
+    "plan_unit_count": 5479,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5300,
+      "accepted": 5301,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13279,7 +13283,7 @@
       "capability_matrix": 1,
       "compatibility_disposition": 131,
       "compatibility_note": 2,
-      "constraint": 585,
+      "constraint": 586,
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,

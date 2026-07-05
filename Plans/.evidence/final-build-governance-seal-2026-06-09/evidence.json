@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "7ed81e8487b0248837a06864ca708f7269edf6a5890550ddc1678d2b61e0b8e0"
+      "sha256": "e4760b544843138e70fe16307ae201e2a54f6b8e5c3658bd284ace3aad556a06"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "ee95d2940a47d19f6254c4bc8021316209f7ad9cbecc01e2dc24814b372813d2"
+      "sha256": "a9e839c39907715d2d04c7f52942889c25da48cd70ac08f838b4f617090a35d1"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "b9424680efb88c15973f2bf8115323924dd8697742843d083ff3da97884d1a90"
+      "sha256": "abec640f623b5c69af4275ba290e22b6a13786ea5541dde59296c32886610604"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "62a52ba2cd7e223f913ef97c173e25007a5cda91f296aed8673750aa095fb8c8"
+      "sha256": "f05e456b58a1c4fb279f134126ff865524fe5db858852d27cfddd157847ecec6"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "f40d1b6b57a61d64100b874789324540eacb47fa5585f453cb350758d664462d"
+      "sha256": "be782f2b1d6856bee39ec72cf727223711630d99022e1d8af3e5ec5243ac89b0"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "3cba151fc499a71481d408921351009d7b65fb5266f360cf803d8c4d2712ec61"
+      "sha256": "448bb3f81fae9f35c57e10fdb4284dd221867bff171c9b47cf3eae3c3c04f627"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "ebf7eb16c28d344570385a52d4eb3305969177a551cfeb7f15859314a5f99d3e"
+      "sha256": "bb2dc7887c1cf8192fda052024f270eef388f622723493013416ddf446f58450"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "f7e74a732302fde6f609036e4bec7d90210d0428ff3b208d5e8bebdda7c27dfc"
+      "sha256": "968e458265a1fbb2eab6aa5ea7c09688db3840c12ced936eb5e1ea15dde3642a"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c13e0c0f2e230918186321bfa89593ee1406274fec1a4f853eabe21be661e98a"
+      "sha256": "4bd01d4269e6487756f4c949bfa460d6d46b1390d6a9d2a859df8a130286052f"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "792131b8a4eacedb24cd66e42988a687da7e56e9bf2ff29a48b454d75403636a"
+      "sha256": "c42a318ca899b344c0b031228eeb056474623f797f2e7f797a39472e6651a6c0"
     }
   ],
   "checks": [
@@ -478,6 +478,26 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-status-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-prd-planning-runtime-validate.py",
       "exit_code": 0
     }
   ],

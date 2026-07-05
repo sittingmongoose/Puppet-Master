@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "7ed81e8487b0248837a06864ca708f7269edf6a5890550ddc1678d2b61e0b8e0"
+      "sha256": "e4760b544843138e70fe16307ae201e2a54f6b8e5c3658bd284ace3aad556a06"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -450,6 +450,26 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --registry Plans/.audits/_semantic_closure_registry.jsonl",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-status-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-prd-planning-runtime-validate.py",
       "exit_code": 0
     }
   ],

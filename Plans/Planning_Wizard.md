@@ -1455,16 +1455,19 @@ canonical_text: >-
   docs from the buildability report. `PNC-019` from `Plans/.plan_index/node_readiness_report.json` is a hard disabled
   reason only while the report's node_readiness.hard_disabled projection is true, until executable lifecycle
   certification evidence proves Approve And Build through PlanCompile, Executor intake, activation, Orchestrator
-  projection, testing evidence, cancellation/restart, and negative-case rejection.
+  projection, testing evidence, cancellation/restart, and negative-case rejection. PNC-019 bootstrap authority for
+  the compiler/harness/certifier path is not ordinary Approve And Build enablement and must remain disabled for
+  product work unless the buildability gate passes.
 gui_related: true
 gui_classification_reason: Defines final-review button enablement and disabled reason behavior in the Planning Wizard GUI.
-depends_on: [PWIZ-010, PWIZ-012, PWIZ-014, PNC-019]
+depends_on: [PWIZ-010, PWIZ-012, PWIZ-014, PNC-019, PNC-022]
 unblocks: [UIW-009, PG-060]
 acceptance_criteria:
   - Planning Wizard distinguishes Captured, Plan-complete, and Buildable states.
   - Approve And Build is disabled whenever buildability_gate_passed is false.
   - The disabled reason lists currently open blocker families and exact owner docs from Plans/.implementation_readiness/buildability_gate_report.json.
   - PNC-019 appears as a hard disabled reason while node readiness remains blocked_runtime_certification_incomplete.
+  - PNC-019 bootstrap authority does not enable ordinary product Approve And Build or suppress open blocker-family disabled reasons.
   - Closed or accepted_risk readiness-blocker rows may remain as historical evidence without keeping Approve And Build disabled.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this gate.
 validation_surfaces:

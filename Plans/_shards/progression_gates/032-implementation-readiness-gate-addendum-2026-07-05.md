@@ -2,9 +2,9 @@
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L3512-L3579
+Source lines: L3512-L3584
 
-Source SHA256: `048d6a2b70207dc30577e816669c735025358111707249ae1357a4fbbbb0aa82`
+Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
 
 ---
 
@@ -29,14 +29,17 @@ canonical_text: >-
   wiring JSON existence, semantic closure, or other validators passing as implementation buildability proof. While the
   gate is blocked, Approve And Build remains disabled and the disabled reason lists currently open blocker families
   plus exact owner docs. PNC-019 appears as a hard disabled reason only while node_readiness.hard_disabled is true.
+  The validator also fails if PNC-019 bootstrap authority is missing, ambiguous, overbroad, confused with ordinary
+  product WorkNodes, or reported as runtime enablement before executable lifecycle certification exists.
 gui_related: false
 gui_classification_reason: Defines governance validation behavior rather than visual presentation.
-depends_on: [PG-059, PWIZ-018, PDS-019, PNC-021]
+depends_on: [PG-059, PWIZ-018, PDS-019, PNC-021, PNC-022]
 unblocks: []
 acceptance_criteria:
   - run-gates includes validate-implementation-readiness.
   - validate-implementation-readiness passes only when the blocker registry, matrix, and report are current and complete.
   - validate-implementation-readiness includes fixture checks for all blockers open, one blocker closed, all blockers closed with PNC-019 still blocked, and all blockers closed with PNC-019 unblocked.
+  - validate-implementation-readiness fails when PNC-019 bootstrap authority is missing, ambiguous, overbroad, or grants ordinary product WorkNodes before executable lifecycle certification.
   - Validator pass is never interpreted as buildability_gate_passed=true.
   - Approve And Build disabled reasons include only currently open blocker families, exact owner docs, and PNC-019 only while node readiness is hard-disabled.
 validation_surfaces:
@@ -60,12 +63,14 @@ source_lineage:
   - source_ref:chat:2026-07-05-implementation-readiness-buildability-gate
   - Plans/Planning_Wizard.md#PWIZ-018
   - Plans/Plan_To_Node_Compilation.md#PNC-021
+  - Plans/Plan_To_Node_Compilation.md#PNC-022
 preserved_exact_tokens:
   - "validate-implementation-readiness"
   - "validators passing"
   - "semantic closure"
   - "source-preservation"
   - "PNC-019"
+  - "ordinary product WorkNodes"
 negative_constraints:
   - Do not treat validators passing as enough.
   - Do not treat semantic closure as implementation buildability.
