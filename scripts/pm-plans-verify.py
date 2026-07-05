@@ -25,6 +25,7 @@ PLANS = ROOT / "Plans"
 PATH_REFERENCE_REGISTRY = PLANS / "path_reference_registry.json"
 PATH_REFERENCE_REGISTRY_SCHEMA = PLANS / "path_reference_registry.schema.json"
 PLAN_UNITS_INDEX = PLANS / ".plan_index/plan_units.jsonl"
+DEFAULT_PLAN_MIGRATION_RUN = PLANS / ".plan_migration/pds-20260611-002-atomize-planunits"
 
 
 def utc_now() -> str:
@@ -2295,6 +2296,63 @@ def cmd_validate_implementation_readiness(args: argparse.Namespace) -> dict[str,
     return report
 
 
+def cmd_validate_plan_migration(args: argparse.Namespace) -> dict[str, Any]:
+    validator = ROOT / "scripts" / "pm-plan-migration.py"
+    run_dir = Path(getattr(args, "run_dir", None) or DEFAULT_PLAN_MIGRATION_RUN)
+    if not run_dir.is_absolute():
+        run_dir = ROOT / run_dir
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(validator), "validate", "--run-dir", rel(run_dir)],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            timeout=timeout_seconds if timeout_seconds > 0 else None,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return report_status(
+            "validate-plan-migration",
+            [
+                {
+                    "path": rel(validator),
+                    "run_dir": rel(run_dir),
+                    "error": "subprocess_timeout",
+                    "timeout_seconds": timeout_seconds,
+                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
+                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
+                }
+            ],
+        )
+    try:
+        report = json.loads(proc.stdout)
+    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
+        return report_status(
+            "validate-plan-migration",
+            [
+                {
+                    "path": rel(validator),
+                    "run_dir": rel(run_dir),
+                    "error": "validator_output_not_json",
+                    "detail": str(exc),
+                    "stdout": proc.stdout,
+                    "stderr": proc.stderr,
+                    "returncode": proc.returncode,
+                }
+            ],
+        )
+    if proc.returncode != 0 and report.get("status") == "pass":
+        report["status"] = "fail"
+        report.setdefault("failures", []).append(
+            {"path": rel(validator), "run_dir": rel(run_dir), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
+        )
+    if proc.stderr:
+        report["stderr"] = proc.stderr
+    return report
+
+
 def cmd_validate_audit_status_index(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-audit-status-index.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
@@ -2363,6 +2421,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("validate_implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
+        ("validate_plan_migration", cmd_validate_plan_migration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("validate_runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
@@ -2402,6 +2461,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
         ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
+        ("plan_migration", cmd_validate_plan_migration, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
@@ -2454,6 +2514,7 @@ COMMANDS = {
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
     "validate-implementation-readiness": cmd_validate_implementation_readiness,
+    "validate-plan-migration": cmd_validate_plan_migration,
     "validate-runtime-artifact-schemas": cmd_validate_runtime_artifact_schemas,
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
@@ -2476,6 +2537,9 @@ def main() -> int:
         if name == "validate-bootstrap-ledgers":
             sub.add_argument("--ledger-id", action="append", default=[], help="Validate one ledger id; repeat for multiple.")
             sub.add_argument("--timeout-seconds", type=int, default=180, help="Maximum seconds per ledger validation.")
+        if name == "validate-plan-migration":
+            sub.add_argument("--run-dir", default=str(DEFAULT_PLAN_MIGRATION_RUN.relative_to(ROOT)))
+            sub.add_argument("--subcheck-timeout-seconds", type=int, default=180)
         if name in {"run-gates", "audit-governance"}:
             sub.add_argument(
                 "--subcheck-timeout-seconds",
