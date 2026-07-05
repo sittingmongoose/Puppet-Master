@@ -3,7 +3,7 @@
     "files": [
       {
         "path": "Plans/00-plans-index.md",
-        "sha256": "034fdea597bc7d8921857e14f7d779065a5af0442db53a5dd892ef438963fbe3"
+        "sha256": "e14ed6e16272016a06e3f08b627dd82e1c8c95c0fef71256677452e244224d62"
       },
       {
         "path": "Plans/acceptance_manifest.schema.json",
@@ -95,7 +95,7 @@
       },
       {
         "path": "Plans/Plan_Document_System.md",
-        "sha256": "8dda51d9140a2df2970dbf942bd8c161a3164ed371ec1ce622d86a5756fbcabe"
+        "sha256": "7a9fce7204e1fde993a61bbce623401f9408791d82f2be90fdf27b63791888f4"
       },
       {
         "path": "Plans/plan_graph.json",
@@ -107,7 +107,7 @@
       },
       {
         "path": "Plans/Plan_To_Node_Compilation.md",
-        "sha256": "694877ce20500c01c3763fd28f7bb8531feb4d5a9a404ff49165e608a0d0800a"
+        "sha256": "278f1669db833cc39a6cfb7d04b13716a30e695a411912821ef783aa48af18e6"
       },
       {
         "path": "Plans/Planning_Ledger_System.md",
@@ -119,7 +119,7 @@
       },
       {
         "path": "Plans/Progression_Gates.md",
-        "sha256": "1662dae45b80cff576a398c163bae48c6cc47ff005bfb274a64d9e6066a2dd4c"
+        "sha256": "048d6a2b70207dc30577e816669c735025358111707249ae1357a4fbbbb0aa82"
       },
       {
         "path": "Plans/Project_Output_Artifacts.md",
@@ -171,7 +171,7 @@
       },
       {
         "path": "Plans/Planning_Wizard.md",
-        "sha256": "94e239c96b1fd7661c08ea643b1273323dfd82f5c062b03c9dcb05f611f9f5e9"
+        "sha256": "f0596df9d0faff61a5f9a7ea6519c838dde1ee5b2b3e3f74b2c49a761defae63"
       },
       {
         "path": "Plans/prd_planning_runtime_contracts.json",
@@ -208,6 +208,22 @@
       {
         "path": "Plans/Release_Supply_Chain.md",
         "sha256": "b01b5350902f1bddd986d6cf8ff53501c03218a8f08b42b6d2a6182a30fac64e"
+      },
+      {
+        "path": "scripts/pm-implementation-readiness.py",
+        "sha256": "ba758092f9f49de6def7322c44360bd43b7326ee8ea9f34c12df2e2cb7b8c71f"
+      },
+      {
+        "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
+        "sha256": "c5a1e468a1407568c1447abdf670d2f11980b13f512b56bfba764b2cfa8e54ac"
+      },
+      {
+        "path": "Plans/.implementation_readiness/readiness_matrix.json",
+        "sha256": "efe952495c5b8fb85c4da21f8b67e1fff6e4e1079083dfe4b72e29bb5b24ca69"
+      },
+      {
+        "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+        "sha256": "28c91b8eb1e5093f68340f8b10b44f12f570c86001f51cf35de978a1bd0abe3a"
       }
     ],
     "hash_alg": "sha256"

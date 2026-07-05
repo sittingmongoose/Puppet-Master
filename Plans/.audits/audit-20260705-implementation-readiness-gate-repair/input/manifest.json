@@ -1,0 +1,30 @@
+{
+  "schema_id": "pm.audit.external_input_manifest.v1",
+  "audit_id": "audit-20260705-implementation-readiness-gate-repair",
+  "canonical_truth": false,
+  "status": "external_audit_evidence_only",
+  "handling": "These files were relocated from the repository root so they remain bounded input evidence. They are not canonical Plans prose, not implementation truth, and not buildability proof.",
+  "files": [
+    {
+      "original_path": "AUDIT_REPORT.md",
+      "stored_path": "Plans/.audits/audit-20260705-implementation-readiness-gate-repair/input/AUDIT_REPORT.md.txt",
+      "media_type": "text/markdown",
+      "bytes": 49736,
+      "sha256": "4d0f835f2cd8cc2523e426030fcabfb5793e8ee6e5395686f883f1dbae4b4064",
+      "classification": "external_audit_evidence"
+    },
+    {
+      "original_path": "ClaudeAudit.md",
+      "stored_path": "Plans/.audits/audit-20260705-implementation-readiness-gate-repair/input/ClaudeAudit.md.txt",
+      "media_type": "text/markdown",
+      "bytes": 46143,
+      "sha256": "57d7030eba74f9e6015e595593506dae8362eea12a2c9887ba8ed2cc07adc753",
+      "classification": "external_audit_evidence"
+    }
+  ],
+  "negative_constraints": [
+    "Do not cite these inputs as canonical product prose.",
+    "Do not treat external audit evidence as semantic closure or implementation buildability proof.",
+    "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this input manifest."
+  ]
+}

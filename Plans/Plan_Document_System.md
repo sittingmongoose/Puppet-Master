@@ -1029,10 +1029,13 @@ canonical_text: >-
   provider_stream, behavioral_acceptance, structural_integrity, owner_routing, currentness, and
   clean_room_harness. Plans/.implementation_readiness/readiness_matrix.json owns the blocker schema,
   false-proof guardrails, proof dimensions, and Wizard gate contract; buildability_gate_report.json is the
-  generated consumer report. Passing plan validators, source-preservation acceptance, existing schemas, wiring JSON
-  existence, and semantic closure are explicitly insufficient to close a blocker without concrete behavioral,
-  command-wiring, security, persistence, currentness, provider, structural, owner-routing, and clean-room lifecycle
-  evidence.
+  generated consumer report. Open blocker rows disable Approve And Build; closed or accepted_risk rows remain
+  historical closure evidence and do not require disabled reasons. readiness_blockers.jsonl and readiness_matrix.json
+  are governed readiness inputs, buildability_gate_report.json is a generated governed report, and
+  scripts/pm-implementation-readiness.py is the governed validator/generator registered through Spec Lock during
+  governance seal. Passing plan validators, source-preservation acceptance, existing schemas, wiring JSON existence,
+  and semantic closure are explicitly insufficient to close a blocker without concrete behavioral, command-wiring,
+  security, persistence, currentness, provider, structural, owner-routing, and clean-room lifecycle evidence.
 gui_related: false
 gui_classification_reason: Defines registry schema and governance artifacts rather than visual presentation.
 depends_on: [PDS-016, PNC-019]
@@ -1041,9 +1044,12 @@ acceptance_criteria:
   - The registry contains all required blocker families and exact owner_docs for each open blocker.
   - The readiness matrix records the blocker schema and false-proof guardrails.
   - The buildability gate report is generated from the registry and matrix rather than hand-authored as product truth.
+  - Closed and accepted_risk rows remain allowed historical evidence and are excluded from open disabled-reason projection.
+  - The readiness script, registry, matrix, and generated report have documented governance status and Spec Lock registration policy.
   - Preservation-only acceptance criteria and validator success cannot close implementation-readiness blockers.
 validation_surfaces:
   - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-implementation-readiness.py self-test
   - python3 scripts/pm-plans-verify.py validate-implementation-readiness
   - python3 scripts/pm-plan-index.py validate
 risk_class: false_implementation_readiness_registry

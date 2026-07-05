@@ -42,6 +42,8 @@ REQUIRED_FALSE_PROOF_GUARDS = [
     "wiring_json_existence_is_not_command_execution",
 ]
 
+CLOSED_BLOCKER_STATUSES = {"closed", "accepted_risk"}
+
 OWNER_DOCS = [
     "Plans/Planning_Wizard.md",
     "Plans/Plan_Document_System.md",
@@ -97,6 +99,14 @@ def public_row(row: dict[str, Any]) -> dict[str, Any]:
     return {key: value for key, value in row.items() if not key.startswith("_")}
 
 
+def is_open_blocker(row: dict[str, Any]) -> bool:
+    return str(row.get("status", "")).lower() not in CLOSED_BLOCKER_STATUSES
+
+
+def open_blockers_from(blockers: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [row for row in blockers if is_open_blocker(row)]
+
+
 def source_hashes() -> dict[str, str]:
     paths = [BLOCKERS_PATH, MATRIX_PATH, *[ROOT / path for path in OWNER_DOCS]]
     hashes: dict[str, str] = {}
@@ -117,10 +127,11 @@ def node_readiness_snapshot() -> dict[str, Any]:
         }
     report = read_json(NODE_READINESS_PATH)
     runtime = report.get("runtime_enablement_status", {}) if isinstance(report, dict) else {}
+    lifecycle_complete = runtime.get("executable_lifecycle_certification_complete") is True
     hard_disabled = (
         report.get("status") == "blocked_runtime_certification_incomplete"
         or runtime.get("runtime_blocked_by_ref") == "PNC-019"
-        or runtime.get("executable_lifecycle_certification_complete") is False
+        or not lifecycle_complete
     )
     return {
         "available": True,
@@ -138,10 +149,15 @@ def node_readiness_snapshot() -> dict[str, Any]:
     }
 
 
-def build_report(*, generated_at_utc: str | None = None) -> dict[str, Any]:
-    blockers = [public_row(row) for row in load_jsonl(BLOCKERS_PATH)]
-    matrix = read_json(MATRIX_PATH)
-    open_blockers = [row for row in blockers if row.get("status") not in {"closed", "accepted_risk"}]
+def build_report_from_inputs(
+    *,
+    blockers: list[dict[str, Any]],
+    matrix: dict[str, Any],
+    node_snapshot: dict[str, Any],
+    hash_map: dict[str, str],
+    generated_at_utc: str | None = None,
+) -> dict[str, Any]:
+    open_blockers = open_blockers_from(blockers)
     open_by_family: dict[str, list[dict[str, Any]]] = {family: [] for family in REQUIRED_FAMILIES}
     for row in open_blockers:
         family = str(row.get("blocker_family", ""))
@@ -174,7 +190,6 @@ def build_report(*, generated_at_utc: str | None = None) -> dict[str, Any]:
                 }
             )
 
-    node_snapshot = node_readiness_snapshot()
     hard_disabled_reasons: list[dict[str, Any]] = []
     if node_snapshot.get("hard_disabled"):
         hard_disabled_reasons.append(
@@ -187,7 +202,8 @@ def build_report(*, generated_at_utc: str | None = None) -> dict[str, Any]:
             }
         )
 
-    buildability_gate_passed = not open_blockers and not hard_disabled_reasons
+    lifecycle_complete = node_snapshot.get("executable_lifecycle_certification_complete") is True
+    buildability_gate_passed = not open_blockers and not hard_disabled_reasons and lifecycle_complete
     return {
         "schema_id": "pm.implementation_readiness.buildability_gate_report.v1",
         "generated_at_utc": generated_at_utc or utc_now(),
@@ -197,6 +213,13 @@ def build_report(*, generated_at_utc: str | None = None) -> dict[str, Any]:
         ),
         "buildability_gate_passed": buildability_gate_passed,
         "buildability_status": "pass" if buildability_gate_passed else "blocked",
+        "open_blocker_count": len(open_blockers),
+        "buildability_pass_requirements": {
+            "open_blocker_count_zero": len(open_blockers) == 0,
+            "no_hard_disabled_reasons": not hard_disabled_reasons,
+            "node_readiness_executable_lifecycle_certification_complete": lifecycle_complete,
+            "source_hashes_current": True,
+        },
         "captured_plan_complete_buildable_ladder": [
             {
                 "state": "captured",
@@ -229,7 +252,236 @@ def build_report(*, generated_at_utc: str | None = None) -> dict[str, Any]:
             "must_list_exact_owner_docs": True,
         },
         "remaining_open_blockers": open_blockers,
-        "source_hashes": source_hashes(),
+        "source_hashes": hash_map,
+    }
+
+
+def build_report(*, generated_at_utc: str | None = None) -> dict[str, Any]:
+    return build_report_from_inputs(
+        blockers=[public_row(row) for row in load_jsonl(BLOCKERS_PATH)],
+        matrix=read_json(MATRIX_PATH),
+        node_snapshot=node_readiness_snapshot(),
+        hash_map=source_hashes(),
+        generated_at_utc=generated_at_utc,
+    )
+
+
+def gate_semantic_failures(
+    *,
+    actual_report: dict[str, Any],
+    blockers: list[dict[str, Any]],
+    current_hashes: dict[str, str] | None,
+    path: str,
+) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    public_blockers = [public_row(row) for row in blockers]
+    open_blockers = open_blockers_from(public_blockers)
+    open_families = {str(row.get("blocker_family", "")) for row in open_blockers}
+    gate = actual_report.get("approve_and_build_gate", {})
+    if not isinstance(gate, dict):
+        return [{"path": path, "error": "approve_and_build_gate_missing_or_invalid"}]
+
+    disabled_reasons = gate.get("disabled_reasons", [])
+    if not isinstance(disabled_reasons, list):
+        failures.append({"path": path, "error": "disabled_reasons_missing_or_invalid"})
+        disabled_reasons = []
+    disabled_families = {
+        str(reason.get("blocker_family", ""))
+        for reason in disabled_reasons
+        if isinstance(reason, dict) and reason.get("blocker_family")
+    }
+    for family in sorted(open_families):
+        if family not in disabled_families:
+            failures.append(
+                {"path": path, "error": "approve_and_build_disabled_reason_missing_open_family", "blocker_family": family}
+            )
+    for family in sorted(disabled_families - open_families):
+        failures.append(
+            {"path": path, "error": "approve_and_build_disabled_reason_for_closed_family", "blocker_family": family}
+        )
+
+    hard_reasons = gate.get("hard_disabled_reasons", [])
+    if not isinstance(hard_reasons, list):
+        failures.append({"path": path, "error": "hard_disabled_reasons_missing_or_invalid"})
+        hard_reasons = []
+    node_readiness = actual_report.get("node_readiness", {})
+    if not isinstance(node_readiness, dict):
+        failures.append({"path": path, "error": "node_readiness_missing_or_invalid"})
+        node_readiness = {}
+    node_hard_disabled = node_readiness.get("hard_disabled") is True
+    pnc019_present = any(isinstance(reason, dict) and reason.get("plan_unit_id") == "PNC-019" for reason in hard_reasons)
+    if node_hard_disabled and not pnc019_present:
+        failures.append({"path": path, "error": "pnc019_hard_disabled_reason_missing"})
+    if not node_hard_disabled and pnc019_present:
+        failures.append({"path": path, "error": "pnc019_hard_disabled_reason_present_after_node_unblocked"})
+
+    if actual_report.get("open_blocker_count") != len(open_blockers):
+        failures.append(
+            {
+                "path": path,
+                "error": "open_blocker_count_mismatch",
+                "expected": len(open_blockers),
+                "actual": actual_report.get("open_blocker_count"),
+            }
+        )
+
+    if actual_report.get("buildability_gate_passed") is True:
+        if open_blockers:
+            failures.append({"path": path, "error": "buildability_passed_with_open_blockers"})
+        if hard_reasons:
+            failures.append({"path": path, "error": "buildability_passed_with_hard_disabled_reasons"})
+        if node_readiness.get("executable_lifecycle_certification_complete") is not True:
+            failures.append({"path": path, "error": "buildability_passed_without_executable_lifecycle_certification"})
+        if current_hashes is not None and actual_report.get("source_hashes") != current_hashes:
+            failures.append({"path": path, "error": "buildability_passed_with_stale_source_hashes"})
+
+    return failures
+
+
+def fixture_blocker(family: str, index: int, *, status: str = "open") -> dict[str, Any]:
+    return {
+        "schema_id": "pm.implementation_readiness.blocker.v1",
+        "blocker_id": f"FIXTURE-IRB-{index:03d}",
+        "blocker_family": family,
+        "status": status,
+        "severity": "hard_blocker",
+        "summary": f"Fixture blocker for {family}.",
+        "owner_docs": ["Plans/Planning_Wizard.md"],
+        "blocked_surfaces": ["Planning Wizard Approve And Build"],
+        "blocked_false_proofs": ["validator_pass"],
+        "required_evidence": ["Fixture evidence requirement."],
+        "acceptance_to_close": ["Fixture closure requirement."],
+    }
+
+
+def fixture_node_snapshot(*, hard_disabled: bool) -> dict[str, Any]:
+    if hard_disabled:
+        return {
+            "available": True,
+            "status": "blocked_runtime_certification_incomplete",
+            "status_reason": "fixture blocked",
+            "runtime_enabled": False,
+            "runtime_blocked_by_ref": "PNC-019",
+            "executable_lifecycle_certification_complete": False,
+            "hard_disabled": True,
+            "hard_disabled_reason": "PNC-019 executable lifecycle certification is incomplete",
+            "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+            "source": "fixture/node_readiness_report.json",
+        }
+    return {
+        "available": True,
+        "status": "ready_for_node_compile",
+        "status_reason": "fixture unblocked",
+        "runtime_enabled": True,
+        "runtime_blocked_by_ref": None,
+        "executable_lifecycle_certification_complete": True,
+        "hard_disabled": False,
+        "hard_disabled_reason": None,
+        "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+        "source": "fixture/node_readiness_report.json",
+    }
+
+
+def run_self_tests() -> dict[str, Any]:
+    matrix = {
+        "false_proof_guardrails": REQUIRED_FALSE_PROOF_GUARDS,
+        "required_proof_dimensions": ["fixture_dimension"],
+    }
+    fixture_hashes = {"fixture/source": "fixture-hash"}
+    scenarios = [
+        {
+            "name": "all_blockers_open",
+            "statuses": {},
+            "node_hard_disabled": True,
+            "expected_open_count": len(REQUIRED_FAMILIES),
+            "expected_disabled_count": len(REQUIRED_FAMILIES),
+            "expected_pnc019": True,
+            "expected_buildability_gate_passed": False,
+        },
+        {
+            "name": "one_blocker_closed",
+            "statuses": {REQUIRED_FAMILIES[0]: "closed"},
+            "node_hard_disabled": True,
+            "expected_open_count": len(REQUIRED_FAMILIES) - 1,
+            "expected_disabled_count": len(REQUIRED_FAMILIES) - 1,
+            "expected_pnc019": True,
+            "expected_buildability_gate_passed": False,
+        },
+        {
+            "name": "all_blockers_closed_pnc019_blocked",
+            "statuses": {family: "closed" for family in REQUIRED_FAMILIES},
+            "node_hard_disabled": True,
+            "expected_open_count": 0,
+            "expected_disabled_count": 0,
+            "expected_pnc019": True,
+            "expected_buildability_gate_passed": False,
+        },
+        {
+            "name": "all_blockers_closed_pnc019_unblocked",
+            "statuses": {family: "closed" for family in REQUIRED_FAMILIES},
+            "node_hard_disabled": False,
+            "expected_open_count": 0,
+            "expected_disabled_count": 0,
+            "expected_pnc019": False,
+            "expected_buildability_gate_passed": True,
+        },
+    ]
+    results: list[dict[str, Any]] = []
+    failures: list[dict[str, Any]] = []
+    for scenario in scenarios:
+        blockers = [
+            fixture_blocker(family, index, status=scenario["statuses"].get(family, "open"))
+            for index, family in enumerate(REQUIRED_FAMILIES, start=1)
+        ]
+        report = build_report_from_inputs(
+            blockers=blockers,
+            matrix=matrix,
+            node_snapshot=fixture_node_snapshot(hard_disabled=scenario["node_hard_disabled"]),
+            hash_map=fixture_hashes,
+            generated_at_utc="2026-07-05T00:00:00Z",
+        )
+        scenario_failures = gate_semantic_failures(
+            actual_report=report,
+            blockers=blockers,
+            current_hashes=fixture_hashes,
+            path=f"self-test:{scenario['name']}",
+        )
+        disabled_reasons = report["approve_and_build_gate"]["disabled_reasons"]
+        hard_reasons = report["approve_and_build_gate"]["hard_disabled_reasons"]
+        checks = {
+            "open_blocker_count": report["open_blocker_count"] == scenario["expected_open_count"],
+            "disabled_reason_count": len(disabled_reasons) == scenario["expected_disabled_count"],
+            "pnc019_hard_reason": any(reason.get("plan_unit_id") == "PNC-019" for reason in hard_reasons)
+            == scenario["expected_pnc019"],
+            "buildability_gate_passed": report["buildability_gate_passed"]
+            == scenario["expected_buildability_gate_passed"],
+            "semantic_failures_absent": not scenario_failures,
+        }
+        if not all(checks.values()):
+            failures.append(
+                {
+                    "scenario": scenario["name"],
+                    "checks": checks,
+                    "semantic_failures": scenario_failures,
+                }
+            )
+        results.append(
+            {
+                "scenario": scenario["name"],
+                "status": "pass" if all(checks.values()) else "fail",
+                "open_blocker_count": report["open_blocker_count"],
+                "disabled_reason_count": len(disabled_reasons),
+                "pnc019_hard_reason_present": any(reason.get("plan_unit_id") == "PNC-019" for reason in hard_reasons),
+                "buildability_gate_passed": report["buildability_gate_passed"],
+                "checks": checks,
+            }
+        )
+    return {
+        "schema_id": "pm.implementation_readiness.self_test_report.v1",
+        "generated_at_utc": utc_now(),
+        "status": "pass" if not failures else "fail",
+        "scenarios": results,
+        "failures": failures,
     }
 
 
@@ -324,16 +576,24 @@ def validate() -> dict[str, Any]:
                     "repair_command": "python3 scripts/pm-implementation-readiness.py generate",
                 }
             )
-        gate = actual_report.get("approve_and_build_gate", {})
-        disabled_reasons = gate.get("disabled_reasons", [])
-        for family in REQUIRED_FAMILIES:
-            if not any(isinstance(reason, dict) and reason.get("blocker_family") == family for reason in disabled_reasons):
-                failures.append({"path": rel(REPORT_PATH), "error": "approve_and_build_disabled_reason_missing_family", "blocker_family": family})
-        hard_reasons = gate.get("hard_disabled_reasons", [])
-        if not any(isinstance(reason, dict) and reason.get("plan_unit_id") == "PNC-019" for reason in hard_reasons):
-            failures.append({"path": rel(REPORT_PATH), "error": "pnc019_hard_disabled_reason_missing"})
-        if actual_report.get("buildability_gate_passed") is True and blockers:
-            failures.append({"path": rel(REPORT_PATH), "error": "buildability_passed_with_registered_blockers"})
+        failures.extend(
+            gate_semantic_failures(
+                actual_report=actual_report,
+                blockers=blockers,
+                current_hashes=source_hashes(),
+                path=rel(REPORT_PATH),
+            )
+        )
+
+    self_test_report = run_self_tests()
+    if self_test_report["status"] != "pass":
+        failures.append(
+            {
+                "path": rel(Path(__file__).resolve()),
+                "error": "implementation_readiness_self_tests_failed",
+                "failures": self_test_report["failures"],
+            }
+        )
 
     return validation_report(failures, actual_report)
 
@@ -372,11 +632,18 @@ def cmd_validate(args: argparse.Namespace) -> int:
     return 0 if report["status"] == "pass" else 1
 
 
+def cmd_self_test(args: argparse.Namespace) -> int:
+    report = run_self_tests()
+    print(json.dumps(report, indent=2, sort_keys=True))
+    return 0 if report["status"] == "pass" else 1
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command", required=True)
     subparsers.add_parser("generate", help="Regenerate buildability_gate_report.json from registry inputs.").set_defaults(func=cmd_generate)
     subparsers.add_parser("validate", help="Validate readiness artifacts without asserting implementation buildability.").set_defaults(func=cmd_validate)
+    subparsers.add_parser("self-test", help="Run in-memory fixture checks for blocker closure gate semantics.").set_defaults(func=cmd_self_test)
     args = parser.parse_args()
     return args.func(args)
 
