@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-04T14:13:38Z",
+  "generated_at_utc": "2026-07-05T17:51:34Z",
   "index_path": "Plans/_shards/ui_wiring_rules/00-index.md",
-  "index_sha256": "cddac71cd0f53c228dd84862967ecd7c85bff68bd8d479fb945cfaef34755d05",
+  "index_sha256": "8241fe737791a208146c253968f20f713dcde1ef28e8ef5416eff47b9b67180e",
   "manifest_path": "Plans/_shards/ui_wiring_rules/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/ui_wiring_rules/001-preamble.md",
-      "sha256": "f63e9b3acc30b952313017ae4e2f98a8930fd916650d33a96bf69cfea8e6b239",
+      "sha256": "bfd3c3b9b3e0b4fb637b1e32aaf6248e85c572e59c6dc0b618c6e2e8f8b7650d",
       "shard_id": "001",
       "source_line_end": 15,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/ui_wiring_rules/002-0.-scope.md",
-      "sha256": "62e788943986c2eae3d93d59881d98eafe6daedcc8b8cdaefeb93ab39f94cc30",
+      "sha256": "dbee981f72f47116c90e20c5c045c77d2e1f41096eb32983bbc0a2dfc44cc541",
       "shard_id": "002",
       "source_line_end": 62,
       "source_line_start": 16,
@@ -26,7 +26,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/ui_wiring_rules/003-owner-consumer-map.md",
-      "sha256": "cf20dab340fc41eb339823ae222dc23e179680c9958475afbdfd3c947961bc68",
+      "sha256": "bc214e06ac9f077242d57db5b5ffb5eea4db36f6ae6278f10f63558a0005ae6b",
       "shard_id": "003",
       "source_line_end": 70,
       "source_line_start": 64,
@@ -35,79 +35,79 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/ui_wiring_rules/004-planunits.md",
-      "sha256": "a81da7d612f47c61d7c9342b70c89aa1012b60c82395d0c1cb3e2d1ab22122a6",
+      "sha256": "95d98e912eccf3e819ddd2d4fe628d0f0cf5a3527dde629814499c416ab23499",
       "shard_id": "004",
-      "source_line_end": 360,
+      "source_line_end": 418,
       "source_line_start": 72,
       "split_rule": "heading-##"
     },
     {
       "heading": "1. Rule 1 \u2014 UI Command Dispatch Only",
       "path": "Plans/_shards/ui_wiring_rules/005-1.-rule-1-ui-command-dispatch-only.md",
-      "sha256": "fd551231ec0bb83f0c639b3b718c715580506afb38e61f2eae40a9abc5557667",
+      "sha256": "c18aa3d831ff0e465e240ae8c4f4b448e227aff2c53ecea2e8c3b48c98f55d94",
       "shard_id": "005",
-      "source_line_end": 374,
-      "source_line_start": 361,
+      "source_line_end": 432,
+      "source_line_start": 419,
       "split_rule": "heading-##"
     },
     {
       "heading": "2. Rule 2 \u2014 One Element, One Command",
       "path": "Plans/_shards/ui_wiring_rules/006-2.-rule-2-one-element-one-command.md",
-      "sha256": "7c14e4ce0de235ca8f3e67101bcc98a949c132a11aa9baeba9c8f7c9670cabac",
+      "sha256": "a755d585b23390ad2238db2eb62b442eac1e3291bf36c0e2802a45d9d46abc60",
       "shard_id": "006",
-      "source_line_end": 389,
-      "source_line_start": 375,
+      "source_line_end": 447,
+      "source_line_start": 433,
       "split_rule": "heading-##"
     },
     {
       "heading": "3. UI Command Dispatcher Boundary",
       "path": "Plans/_shards/ui_wiring_rules/007-3.-ui-command-dispatcher-boundary.md",
-      "sha256": "91ccb1a81f7cb2ac08bcc3b9fda27895d91ba7c31b14bc66ec97f7f80197e966",
+      "sha256": "bc348e5b681804b6562d593a88449d85ceab6f08d1262762dc6c8044c48624d6",
       "shard_id": "007",
-      "source_line_end": 425,
-      "source_line_start": 390,
+      "source_line_end": 483,
+      "source_line_start": 448,
       "split_rule": "heading-##"
     },
     {
       "heading": "4. Wiring Matrix Concept",
       "path": "Plans/_shards/ui_wiring_rules/008-4.-wiring-matrix-concept.md",
-      "sha256": "2dc07da2511844778661867db6655c0274db5113198a57a0fbf07423536bef3b",
+      "sha256": "e21d85d76d1b50b740830010e3aaeaf76925c8bc5745398ce7e83bc52c0be9c2",
       "shard_id": "008",
-      "source_line_end": 463,
-      "source_line_start": 426,
+      "source_line_end": 521,
+      "source_line_start": 484,
       "split_rule": "heading-##"
     },
     {
       "heading": "5. Autonomous Verification Strategy",
       "path": "Plans/_shards/ui_wiring_rules/009-5.-autonomous-verification-strategy.md",
-      "sha256": "5c4e8bb91e2f2dfa6f4041cb87fca87a10b2795ea8fe94c79f72d19bdab0f6c4",
+      "sha256": "ff27aa1bd5b7c1bb3336cce5f12695dcef47a25cd7d3ee3c65b8606605031b78",
       "shard_id": "009",
-      "source_line_end": 491,
-      "source_line_start": 464,
+      "source_line_end": 549,
+      "source_line_start": 522,
       "split_rule": "heading-##"
     },
     {
       "heading": "6. References",
       "path": "Plans/_shards/ui_wiring_rules/010-6.-references.md",
-      "sha256": "b36f308297d9f7d597cc91e1d12e129f6942823b03b1fd45d4ec43beb2f935ad",
+      "sha256": "56d091ae9b2b1462a4b5850a5f19ea08068284a12cc065aa03eed4fcdb64408c",
       "shard_id": "010",
-      "source_line_end": 504,
-      "source_line_start": 492,
+      "source_line_end": 562,
+      "source_line_start": 550,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/ui_wiring_rules/011-migration-coverage.md",
-      "sha256": "577866be8235cbd73a44a7053aca53dda0d20607d5dbf6478f524ea0ac807481",
+      "sha256": "efcee1fe600ec2e12a91038ee2d2e99d93214f7137259f8fb71b80b2bdf46a38",
       "shard_id": "011",
-      "source_line_end": 527,
-      "source_line_start": 506,
+      "source_line_end": 585,
+      "source_line_start": 564,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 527,
+    "line_count": 585,
     "path": "Plans/UI_Wiring_Rules.md",
-    "sha256": "c068398786ef73e0d63524713df8722d91777214a8cbea5c6ce263ec8bd468c3"
+    "sha256": "59725a15403d4504a4f1e8740afba920e7b18dea9bc8582d786dcdf8e5aa4826"
   }
 }

@@ -1,10 +1,10 @@
-# Shard 008: Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+# Shard 009: Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L825-L1221
+Source lines: L890-L1286
 
-Source SHA256: `a5ae36786d7a4bf76e76cf93e87ffe03959e1d368017948ed844cd397b45441d`
+Source SHA256: `694877ce20500c01c3763fd28f7bb8531feb4d5a9a404ff49165e608a0d0800a`
 
 ---
 

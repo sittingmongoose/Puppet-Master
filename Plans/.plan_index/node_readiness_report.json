@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11521,
+    "depends_on_edge_count": 11538,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13537,
-    "node_count": 5473,
+    "edge_count": 13561,
+    "node_count": 5478,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2016,
+    "unblocks_edge_count": 2023,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-04T14:28:06Z",
+  "generated_at_utc": "2026-07-05T17:48:53Z",
   "gui_related_units": {
-    "count": 2380,
+    "count": 2382,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -18898,8 +18898,8 @@
         "source_location": {
           "heading": "PNC-013 - WorkGraph Draft And WorkNode Request Contract",
           "heading_level": 3,
-          "heading_line": 603,
-          "line": 605,
+          "heading_line": 668,
+          "line": 670,
           "path": "Plans/Plan_To_Node_Compilation.md"
         }
       },
@@ -20273,8 +20273,8 @@
         "source_location": {
           "heading": "PWIZ-015 - Planning Wizard Source Picker Discovery Consumer",
           "heading_level": 3,
-          "heading_line": 1151,
-          "line": 1153,
+          "heading_line": 1153,
+          "line": 1155,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -20284,8 +20284,19 @@
         "source_location": {
           "heading": "PWIZ-017 - First-Run Onboarding Entry And Limited Setup Landing",
           "heading_level": 3,
-          "heading_line": 1353,
-          "line": 1355,
+          "heading_line": 1355,
+          "line": 1357,
+          "path": "Plans/Planning_Wizard.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-018",
+        "source_location": {
+          "heading": "PWIZ-018 - Approve And Build Buildability Gate",
+          "heading_level": 3,
+          "heading_line": 1441,
+          "line": 1443,
           "path": "Plans/Planning_Wizard.md"
         }
       },
@@ -25427,6 +25438,17 @@
         }
       },
       {
+        "owner_doc": "Plans/UI_Wiring_Rules.md",
+        "plan_unit_id": "UIW-009",
+        "source_location": {
+          "heading": "UIW-009 - Approve And Build Disabled Reason Projection",
+          "heading_level": 3,
+          "heading_line": 358,
+          "line": 360,
+          "path": "Plans/UI_Wiring_Rules.md"
+        }
+      },
+      {
         "owner_doc": "Plans/WorktreeGitImprovement.md",
         "plan_unit_id": "W-003",
         "source_location": {
@@ -26204,10 +26226,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5473,
+  "plan_unit_count": 5478,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1145,
+      "high": 1150,
       "low": 5,
       "standard": 4323
     },
@@ -26956,6 +26978,7 @@
       "direct_provider_cli_bridge_drift": 1,
       "direct_provider_no_cli_runtime_surfaces": 1,
       "dirty_repo_mutation": 1,
+      "disabled_command_false_enablement": 1,
       "disabled_variants_visibility": 1,
       "discovery_choice_goals": 1,
       "discovery_determinism": 1,
@@ -27128,9 +27151,12 @@
       "fallback_cost_routing": 1,
       "fallback_dispatch_drift": 1,
       "fallback_e2e_snippets": 1,
+      "false_buildability_enablement": 1,
       "false_completion": 7,
+      "false_implementation_readiness_registry": 1,
       "false_layout_failure": 1,
       "false_node_generation": 4,
+      "false_plancompile_buildability": 1,
       "false_repair_completion": 1,
       "false_test_capability": 1,
       "false_wiring_completion": 1,
@@ -27260,6 +27286,7 @@
       "google_family_provider_validation_config_loading": 1,
       "governance_artifact_staleness": 1,
       "governance_boundary": 2,
+      "governance_false_buildability": 1,
       "governance_gap_loss": 1,
       "governance_label_copy_drift": 1,
       "governance_role_conflation": 1,
@@ -29097,7 +29124,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5295,
+      "accepted": 5300,
       "retired": 178
     },
     "unit_type_counts": {
@@ -29112,7 +29139,7 @@
       "capability_matrix": 1,
       "compatibility_disposition": 131,
       "compatibility_note": 2,
-      "constraint": 584,
+      "constraint": 585,
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,
@@ -29137,7 +29164,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4559,
+      "requirement": 4562,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -29155,7 +29182,7 @@
       "surface_default_policy": 1,
       "validation": 3,
       "validation_criterion": 11,
-      "validation_rule": 21,
+      "validation_rule": 22,
       "variant_contract": 2
     }
   },
@@ -29171,8 +29198,8 @@
         "source_location": {
           "heading": "PNC-019 - Static Scenario Boundary And Executable Certification Requirement",
           "heading_level": 3,
-          "heading_line": 1166,
-          "line": 1168,
+          "heading_line": 1231,
+          "line": 1233,
           "path": "Plans/Plan_To_Node_Compilation.md"
         }
       }

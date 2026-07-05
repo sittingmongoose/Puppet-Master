@@ -141,6 +141,71 @@ negative_constraints:
 owner_hints: [Plans/Plan_To_Node_Compilation.md]
 ```
 
+## Implementation Readiness Gate Addendum - 2026-07-05
+
+This addendum installs a buildability gate for PlanCompile without creating WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, generated governance seal artifacts, or production build tasks.
+
+### PNC-021 - Implementation Buildability Gate Report Boundary
+
+```yaml
+plan_unit_id: PNC-021
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plan_To_Node_Compilation.md
+canonical_text: >-
+  PlanUnit indexes, node-readiness reports, strict runtime contract validators, semantic closure registries,
+  schema-file existence, wiring JSON existence, and source-lineage preservation are buildability inputs only.
+  They cannot mark PlanCompile, NodeSeed, WorkGraph, WorkNodeRequest, Executor intake, activation, Orchestrator
+  projection, or Goal Runtime certification buildable. `Plans/.implementation_readiness/buildability_gate_report.json`
+  is the current product-facing implementation-buildability gate report for Planning Wizard and PlanCompile. The report
+  remains blocked while any registered blocker family is open or while `Plans/.plan_index/node_readiness_report.json`
+  reports `blocked_runtime_certification_incomplete` for `PNC-019`. The gate may become buildable only after concrete
+  schemas, command wiring, security boundaries, behavioral acceptance, persistence lifecycle, currentness, provider
+  stream behavior, structural integrity, owner routing, and executable clean-room lifecycle evidence are recorded.
+gui_related: false
+gui_classification_reason: Defines compiler/readiness boundary and buildability evidence requirements, not visual presentation.
+depends_on: [PNC-019, PDS-019]
+unblocks: [PWIZ-018, PG-060]
+acceptance_criteria:
+  - Buildability report remains blocked while PNC-019 executable lifecycle certification is incomplete.
+  - Node-readiness output and validator success are not treated as runtime buildability proof.
+  - Required evidence covers concrete schemas, command wiring, security, behavioral acceptance, persistence, currentness, provider behavior, structure, owner routing, and clean-room lifecycle proof.
+  - No NodeSeeds, WorkNodes, executable queues, final node manifests, implementation files, runtime launches, or production build tasks are emitted by this report.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plan-index.py validate
+risk_class: false_plancompile_buildability
+reasoning_tier: high
+context_scope: plancompile_buildability_gate
+implementation_surfaces:
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/.implementation_readiness/buildability_gate_report.json
+  - Plans/.plan_index/node_readiness_report.json
+node_compile_hint:
+  mode: buildability_gate_report_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+  - source_ref:chat:2026-07-05-implementation-readiness-buildability-gate
+  - Plans/Plan_To_Node_Compilation.md#PNC-019
+  - Plans/.plan_index/node_readiness_report.json
+preserved_exact_tokens:
+  - "PNC-019"
+  - "blocked_runtime_certification_incomplete"
+  - "buildability_gate_report.json"
+  - "concrete schemas, command wiring, security boundaries, behavioral acceptance, and clean-room lifecycle evidence"
+negative_constraints:
+  - Do not treat source-preservation, schema existence, wiring JSON existence, semantic closure, or validator success as proof of PlanCompile buildability.
+  - Do not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this gate.
+owner_hints:
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Plan_Document_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/Progression_Gates.md
+```
+
 ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md
 
 ### PNC-004 - Node-Readiness Report Contract

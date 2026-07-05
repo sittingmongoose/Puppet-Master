@@ -5115,6 +5115,8 @@
     "OSI-160",
     "OSI-161",
     "OSI-163",
+    "PDS-019",
+    "PWIZ-018",
     "OSI-178",
     "OSI-179",
     "OSI-190",
@@ -5161,6 +5163,8 @@
     "OSI-156",
     "OSI-166",
     "OSI-162",
+    "PNC-021",
+    "UIW-009",
     "OSI-193",
     "OSI-191",
     "PSMERA-015",
@@ -5204,6 +5208,7 @@
     "OSI-334",
     "OSI-157",
     "OSI-187",
+    "PG-060",
     "PSMERA-018",
     "OSI-201",
     "OSI-406",
@@ -29846,6 +29851,16 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PDS-019",
+      "to": "PDS-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PDS-019",
+      "to": "PNC-019"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PG-001",
       "to": "PG-002"
     },
@@ -30493,6 +30508,26 @@
       "edge_type": "depends_on",
       "from": "PG-058",
       "to": "PG-057"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PG-060",
+      "to": "PDS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PG-060",
+      "to": "PG-059"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PG-060",
+      "to": "PNC-021"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PG-060",
+      "to": "PWIZ-018"
     },
     {
       "edge_type": "depends_on",
@@ -31813,6 +31848,16 @@
       "edge_type": "depends_on",
       "from": "PNC-020",
       "to": "T-161"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-021",
+      "to": "PDS-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-021",
+      "to": "PNC-019"
     },
     {
       "edge_type": "depends_on",
@@ -36923,6 +36968,26 @@
       "edge_type": "depends_on",
       "from": "PWIZ-017",
       "to": "UCC-106"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-018",
+      "to": "PNC-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-018",
+      "to": "PWIZ-010"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-018",
+      "to": "PWIZ-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-018",
+      "to": "PWIZ-014"
     },
     {
       "edge_type": "depends_on",
@@ -58701,6 +58766,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UIW-009",
+      "to": "PWIZ-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-009",
+      "to": "UIW-002"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-009",
+      "to": "UIW-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-009",
+      "to": "UIW-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UIW-009",
+      "to": "UIW-007"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "W-001",
       "to": "W-002"
     },
@@ -71731,6 +71821,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PDS-019",
+      "to": "PG-060"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PDS-019",
+      "to": "PWIZ-018"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "PLS-001",
       "to": "BPM-001"
     },
@@ -72111,6 +72211,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "PNC-021",
+      "to": "PG-060"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PNC-021",
+      "to": "PWIZ-018"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "PO-048",
       "to": "MS-114"
     },
@@ -72368,6 +72478,16 @@
       "edge_type": "unblocks",
       "from": "PWIZ-017",
       "to": "WM-041"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PWIZ-018",
+      "to": "PG-060"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "PWIZ-018",
+      "to": "UIW-009"
     },
     {
       "edge_type": "unblocks",
@@ -73126,6 +73246,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "UIW-009",
+      "to": "PG-060"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "W-072",
       "to": "EP-100"
     },
@@ -73165,7 +73290,7 @@
       "to": "ATS-020"
     }
   ],
-  "generated_at_utc": "2026-07-04T14:28:05Z",
+  "generated_at_utc": "2026-07-05T17:48:53Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -139553,6 +139678,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "implementation_readiness_registry",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_Document_System.md",
+      "plan_unit_id": "PDS-019",
+      "reasoning_tier": "high",
+      "risk_class": "false_implementation_readiness_registry",
+      "source_location": {
+        "heading": "PDS-019 - Implementation Readiness Blocker Registry",
+        "heading_level": 3,
+        "heading_line": 1016,
+        "line": 1018,
+        "path": "Plans/Plan_Document_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "progression_gates_residual_bridge",
       "gui_related": false,
       "owner_doc": "Plans/Progression_Gates.md",
@@ -140554,6 +140696,23 @@
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "standard_governance_gates",
+      "gui_related": false,
+      "owner_doc": "Plans/Progression_Gates.md",
+      "plan_unit_id": "PG-060",
+      "reasoning_tier": "high",
+      "risk_class": "governance_false_buildability",
+      "source_location": {
+        "heading": "PG-060 - Implementation Buildability Gate Verification",
+        "heading_level": 3,
+        "heading_line": 3516,
+        "line": 3518,
+        "path": "Plans/Progression_Gates.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_rule"
     },
     {
       "context_scope": "repo",
@@ -141993,8 +142152,8 @@
       "source_location": {
         "heading": "PNC-004 - Node-Readiness Report Contract",
         "heading_level": 3,
-        "heading_line": 146,
-        "line": 148,
+        "heading_line": 211,
+        "line": 213,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142010,8 +142169,8 @@
       "source_location": {
         "heading": "PNC-005 - GUI Routing Inheritance",
         "heading_level": 3,
-        "heading_line": 184,
-        "line": 186,
+        "heading_line": 249,
+        "line": 251,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142027,8 +142186,8 @@
       "source_location": {
         "heading": "PNC-006 - Native Goal Mode Compiler Handoff",
         "heading_level": 3,
-        "heading_line": 226,
-        "line": 228,
+        "heading_line": 291,
+        "line": 293,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142044,8 +142203,8 @@
       "source_location": {
         "heading": "4. Runtime Compiler Algorithm And Enablement",
         "heading_level": 2,
-        "heading_line": 300,
-        "line": 304,
+        "heading_line": 365,
+        "line": 369,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142061,8 +142220,8 @@
       "source_location": {
         "heading": "PNC-008 - Node-Readiness Report Field Contract",
         "heading_level": 3,
-        "heading_line": 264,
-        "line": 266,
+        "heading_line": 329,
+        "line": 331,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142078,8 +142237,8 @@
       "source_location": {
         "heading": "PNC-009 - Orchestrator Runtime Object And Compiler Boundary",
         "heading_level": 3,
-        "heading_line": 343,
-        "line": 345,
+        "heading_line": 408,
+        "line": 410,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142095,8 +142254,8 @@
       "source_location": {
         "heading": "PNC-010 - PlanCompileRun Design-Only State Machine",
         "heading_level": 3,
-        "heading_line": 424,
-        "line": 426,
+        "heading_line": 489,
+        "line": 491,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142112,8 +142271,8 @@
       "source_location": {
         "heading": "PNC-011 - Low-Context Stage Card Contract",
         "heading_level": 3,
-        "heading_line": 497,
-        "line": 499,
+        "heading_line": 562,
+        "line": 564,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142129,8 +142288,8 @@
       "source_location": {
         "heading": "PNC-012 - NodeSeed Candidate And Review Gate Contract",
         "heading_level": 3,
-        "heading_line": 545,
-        "line": 547,
+        "heading_line": 610,
+        "line": 612,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142146,8 +142305,8 @@
       "source_location": {
         "heading": "PNC-013 - WorkGraph Draft And WorkNode Request Contract",
         "heading_level": 3,
-        "heading_line": 603,
-        "line": 605,
+        "heading_line": 668,
+        "line": 670,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142163,8 +142322,8 @@
       "source_location": {
         "heading": "PNC-014 - Plans-To-Code Handoff Matrix And Schema Boundary",
         "heading_level": 3,
-        "heading_line": 678,
-        "line": 680,
+        "heading_line": 743,
+        "line": 745,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142180,8 +142339,8 @@
       "source_location": {
         "heading": "PNC-015 - Runtime-Capable PlanCompile v2 Boundary",
         "heading_level": 3,
-        "heading_line": 829,
-        "line": 831,
+        "heading_line": 894,
+        "line": 896,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142197,8 +142356,8 @@
       "source_location": {
         "heading": "PNC-016 - Runtime Stage Cards, Parallel Worklists, And Typed Dependencies",
         "heading_level": 3,
-        "heading_line": 922,
-        "line": 924,
+        "heading_line": 987,
+        "line": 989,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142214,8 +142373,8 @@
       "source_location": {
         "heading": "PNC-017 - Compile Readiness Fixtures And No-Runtime-Artifact Boundary",
         "heading_level": 3,
-        "heading_line": 1013,
-        "line": 1015,
+        "heading_line": 1078,
+        "line": 1080,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142231,8 +142390,8 @@
       "source_location": {
         "heading": "PNC-018 - Runtime Contract Packet And Readiness Gate",
         "heading_level": 3,
-        "heading_line": 1100,
-        "line": 1102,
+        "heading_line": 1165,
+        "line": 1167,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142248,8 +142407,8 @@
       "source_location": {
         "heading": "PNC-019 - Static Scenario Boundary And Executable Certification Requirement",
         "heading_level": 3,
-        "heading_line": 1166,
-        "line": 1168,
+        "heading_line": 1231,
+        "line": 1233,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -142265,8 +142424,25 @@
       "source_location": {
         "heading": "PNC-020 - Discovery WorkNode Intake Future Boundary",
         "heading_level": 3,
-        "heading_line": 1225,
-        "line": 1227,
+        "heading_line": 1290,
+        "line": 1292,
+        "path": "Plans/Plan_To_Node_Compilation.md"
+      },
+      "status": "accepted",
+      "unit_type": "constraint"
+    },
+    {
+      "context_scope": "plancompile_buildability_gate",
+      "gui_related": false,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "plan_unit_id": "PNC-021",
+      "reasoning_tier": "high",
+      "risk_class": "false_plancompile_buildability",
+      "source_location": {
+        "heading": "PNC-021 - Implementation Buildability Gate Report Boundary",
+        "heading_level": 3,
+        "heading_line": 148,
+        "line": 150,
         "path": "Plans/Plan_To_Node_Compilation.md"
       },
       "status": "accepted",
@@ -148283,8 +148459,8 @@
       "source_location": {
         "heading": "PWIZ-015 - Planning Wizard Source Picker Discovery Consumer",
         "heading_level": 3,
-        "heading_line": 1151,
-        "line": 1153,
+        "heading_line": 1153,
+        "line": 1155,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -148300,8 +148476,8 @@
       "source_location": {
         "heading": "PWIZ-016 - Planning Wizard Historical Plan Pack Records",
         "heading_level": 3,
-        "heading_line": 1201,
-        "line": 1203,
+        "heading_line": 1203,
+        "line": 1205,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -148317,8 +148493,25 @@
       "source_location": {
         "heading": "PWIZ-017 - First-Run Onboarding Entry And Limited Setup Landing",
         "heading_level": 3,
-        "heading_line": 1353,
-        "line": 1355,
+        "heading_line": 1355,
+        "line": 1357,
+        "path": "Plans/Planning_Wizard.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "planning_wizard_final_review_buildability_gate",
+      "gui_related": true,
+      "owner_doc": "Plans/Planning_Wizard.md",
+      "plan_unit_id": "PWIZ-018",
+      "reasoning_tier": "high",
+      "risk_class": "false_buildability_enablement",
+      "source_location": {
+        "heading": "PWIZ-018 - Approve And Build Buildability Gate",
+        "heading_level": 3,
+        "heading_line": 1441,
+        "line": 1443,
         "path": "Plans/Planning_Wizard.md"
       },
       "status": "accepted",
@@ -164016,6 +164209,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "approve_and_build_ui_wiring",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Wiring_Rules.md",
+      "plan_unit_id": "UIW-009",
+      "reasoning_tier": "high",
+      "risk_class": "disabled_command_false_enablement",
+      "source_location": {
+        "heading": "UIW-009 - Approve And Build Disabled Reason Projection",
+        "heading_level": 3,
+        "heading_line": 358,
+        "line": 360,
+        "path": "Plans/UI_Wiring_Rules.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "worktree_git_generated_tail_batch_204",
       "gui_related": false,
       "owner_doc": "Plans/WorktreeGitImprovement.md",
@@ -166215,12 +166425,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11521,
+    "depends_on_edge_count": 11538,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13537,
-    "node_count": 5473,
+    "edge_count": 13561,
+    "node_count": 5478,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2016,
+    "unblocks_edge_count": 2023,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

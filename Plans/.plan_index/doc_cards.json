@@ -9520,16 +9520,19 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 16,
+        "False": 17,
         "True": 2
       },
-      "heading_count": 30,
+      "heading_count": 32,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
         "Plans/.audits/audit-*/audit_scope_manifest.jsonl",
         "Plans/.audits/audit-*/repair_closure_matrix.jsonl",
         "Plans/.audits/audit-*/repair_impact_matrix.jsonl",
+        "Plans/.implementation_readiness/buildability_gate_report.json",
+        "Plans/.implementation_readiness/readiness_blockers.jsonl",
+        "Plans/.implementation_readiness/readiness_matrix.json",
         "Plans/.plan_index",
         "Plans/.plan_index/acceptance_units.jsonl",
         "Plans/.plan_index/coverage_report.json",
@@ -9552,13 +9555,14 @@
         "future Settings UI",
         "future migration inventory",
         "scripts/pm-audit-closure.py",
+        "scripts/pm-implementation-readiness.py",
         "scripts/pm-plan-index.py",
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1010,
+      "line_count": 1091,
       "path": "Plans/Plan_Document_System.md",
-      "plan_unit_count": 18,
+      "plan_unit_count": 19,
       "plan_unit_ids": [
         "PDS-001",
         "PDS-002",
@@ -9577,7 +9581,8 @@
         "PDS-015",
         "PDS-016",
         "PDS-017",
-        "PDS-018"
+        "PDS-018",
+        "PDS-019"
       ],
       "reasoning_tiers": [
         "high",
@@ -9587,6 +9592,7 @@
         "authoring_drift",
         "content_loss",
         "execution_boundary",
+        "false_implementation_readiness_registry",
         "false_layout_failure",
         "false_repair_completion",
         "governance_standard",
@@ -9600,15 +9606,15 @@
         "stale_reference_drift",
         "user_visible_settings"
       ],
-      "sha256": "07e01beeb801e4b927f48125f02de29e3766c25f6c16af8baeac52435d4e0911",
+      "sha256": "8dda51d9140a2df2970dbf942bd8c161a3164ed371ec1ce622d86a5756fbcabe",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 18
+        "accepted": 19
       },
       "title": "Plan Document System",
       "unit_type_counts": {
         "constraint": 1,
-        "requirement": 17
+        "requirement": 18
       },
       "validation_surfaces": [
         "Coverage map.",
@@ -9639,8 +9645,10 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
         "python3 scripts/pm-shard-plans.py --check"
       ]
@@ -9648,12 +9656,13 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 19,
+        "False": 20,
         "True": 1
       },
-      "heading_count": 29,
+      "heading_count": 31,
       "implementation_surfaces": [
         "Plans/*.md",
+        "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/.plan_index",
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/Automated_Testing_System.md",
@@ -9686,13 +9695,14 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 1266,
+      "line_count": 1331,
       "path": "Plans/Plan_To_Node_Compilation.md",
-      "plan_unit_count": 20,
+      "plan_unit_count": 21,
       "plan_unit_ids": [
         "PNC-001",
         "PNC-002",
         "PNC-003",
+        "PNC-021",
         "PNC-004",
         "PNC-005",
         "PNC-006",
@@ -9722,6 +9732,7 @@
         "executor_boundary_bypass",
         "false_completion",
         "false_node_generation",
+        "false_plancompile_buildability",
         "handoff_gap",
         "implementation_readiness",
         "low_context_resume_failure",
@@ -9731,14 +9742,14 @@
         "stale_or_forbidden_behavior",
         "static_fixture_false_certification"
       ],
-      "sha256": "a5ae36786d7a4bf76e76cf93e87ffe03959e1d368017948ed844cd397b45441d",
+      "sha256": "694877ce20500c01c3763fd28f7bb8531feb4d5a9a404ff49165e608a0d0800a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 20
+        "accepted": 21
       },
       "title": "Plan To Node Compilation",
       "unit_type_counts": {
-        "constraint": 3,
+        "constraint": 4,
         "requirement": 17
       },
       "validation_surfaces": [
@@ -9753,8 +9764,10 @@
         "Plans/.plan_index/node_readiness_report.json",
         "Plans/.plan_index/plan_units.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts"
       ]
@@ -9912,10 +9925,13 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 5,
-        "True": 12
+        "True": 13
       },
-      "heading_count": 31,
+      "heading_count": 33,
       "implementation_surfaces": [
+        "Plans/.implementation_readiness/buildability_gate_report.json",
+        "Plans/.implementation_readiness/readiness_blockers.jsonl",
+        "Plans/.plan_index/node_readiness_report.json",
         "Plans/00-plans-index.md",
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -9945,9 +9961,9 @@
         "future Planning Wizard output records",
         "future Planning Wizard source picker"
       ],
-      "line_count": 1433,
+      "line_count": 1501,
       "path": "Plans/Planning_Wizard.md",
-      "plan_unit_count": 17,
+      "plan_unit_count": 18,
       "plan_unit_ids": [
         "PWIZ-001",
         "PWIZ-002",
@@ -9965,13 +9981,15 @@
         "PWIZ-013",
         "PWIZ-015",
         "PWIZ-016",
-        "PWIZ-017"
+        "PWIZ-017",
+        "PWIZ-018"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "false_buildability_enablement",
         "implementation_readiness",
         "owner_drift",
         "planning_history_lineage_loss",
@@ -9980,14 +9998,14 @@
         "stale_approval_build_race",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "e5c1a59f761a3555976084325d8bb1f6f5e6e9fe44603f70f9e316110b8e4d3d",
+      "sha256": "94e239c96b1fd7661c08ea643b1273323dfd82f5c062b03c9dcb05f611f9f5e9",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 17
+        "accepted": 18
       },
       "title": "Planning Wizard",
       "unit_type_counts": {
-        "requirement": 17
+        "requirement": 18
       },
       "validation_surfaces": [
         "Future Planning Wizard source pick local/SSH tests.",
@@ -9997,7 +10015,9 @@
         "git diff --check",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts"
       ]
     },
@@ -10189,11 +10209,12 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 47,
+        "False": 48,
         "True": 12
       },
-      "heading_count": 111,
+      "heading_count": 113,
       "implementation_surfaces": [
+        "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -10201,11 +10222,13 @@
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Planning_Wizard.md",
         "Plans/Progression_Gates.md",
-        "Plans/human-in-the-loop.md"
+        "Plans/human-in-the-loop.md",
+        "scripts/pm-implementation-readiness.py",
+        "scripts/pm-plans-verify.py"
       ],
-      "line_count": 3510,
+      "line_count": 3577,
       "path": "Plans/Progression_Gates.md",
-      "plan_unit_count": 59,
+      "plan_unit_count": 60,
       "plan_unit_ids": [
         "PG-002",
         "PG-003",
@@ -10265,22 +10288,24 @@
         "PG-057",
         "PG-001",
         "PG-058",
-        "PG-059"
+        "PG-059",
+        "PG-060"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "governance_false_buildability",
         "progression_gate_drift",
         "progression_owner_definition_gap",
         "residual_bridge_overreach",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "ee317f3f4b90686b4b5f04cda15081d9510deb47832c773857b52334b4bdda34",
+      "sha256": "1662dae45b80cff576a398c163bae48c6cc47ff005bfb274a64d9e6066a2dd4c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 58,
+        "accepted": 59,
         "retired": 1
       },
       "title": "Progression Gates (Canonical)",
@@ -10288,14 +10313,17 @@
         "compatibility_disposition": 1,
         "constraint": 29,
         "requirement": 21,
-        "validation_rule": 8
+        "validation_rule": 9
       },
       "validation_surfaces": [
         "PlanUnit-aware readiness scan of live canonical_text and acceptance_criteria outside PG-058's own placeholder-ban definition for \"future scope|future-scope|reserved anchors|deliberately not designed yet\", excluding source_lineage, preserved_exact_tokens, compatibility_only_notes, negative_constraints, and stale/retired-token fields.",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness"
       ]
     },
     {
@@ -12669,22 +12697,25 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "True": 8
+        "True": 9
       },
-      "heading_count": 28,
+      "heading_count": 29,
       "implementation_surfaces": [
+        "Plans/.implementation_readiness/buildability_gate_report.json",
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
+        "Plans/Planning_Wizard.md",
         "Plans/Progression_Gates.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/UI_Wiring_Rules.md",
         "Plans/Wiring_Matrix.md",
+        "Plans/Wiring_Matrix.production.json",
         "Plans/Wiring_Matrix.schema.json",
         "Plans/evidence.schema.json"
       ],
-      "line_count": 527,
+      "line_count": 585,
       "path": "Plans/UI_Wiring_Rules.md",
-      "plan_unit_count": 8,
+      "plan_unit_count": 9,
       "plan_unit_ids": [
         "UIW-001",
         "UIW-002",
@@ -12693,13 +12724,15 @@
         "UIW-005",
         "UIW-006",
         "UIW-007",
-        "UIW-008"
+        "UIW-008",
+        "UIW-009"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "disabled_command_false_enablement",
         "dispatcher_integrity",
         "false_wiring_completion",
         "matrix_schema_drift",
@@ -12709,15 +12742,15 @@
         "ui_backend_bypass",
         "unwired_gui"
       ],
-      "sha256": "c068398786ef73e0d63524713df8722d91777214a8cbea5c6ce263ec8bd468c3",
+      "sha256": "59725a15403d4504a4f1e8740afba920e7b18dea9bc8582d786dcdf8e5aa4826",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 8
+        "accepted": 9
       },
       "title": "UI Wiring Rules (Canonical)",
       "unit_type_counts": {
         "constraint": 1,
-        "requirement": 7
+        "requirement": 8
       },
       "validation_surfaces": [
         "ContractRef lint",
@@ -12736,8 +12769,11 @@
         "Plans/evidence.schema.json",
         "UI purity check",
         "UI purity lints",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
-        "python3 scripts/pm-plans-verify.py lint-contractrefs"
+        "python3 scripts/pm-plans-verify.py lint-contractrefs",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+        "python3 scripts/pm-plans-verify.py validate-wiring-matrix"
       ]
     },
     {
@@ -13212,7 +13248,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-04T14:28:05Z",
+  "generated_at_utc": "2026-07-05T17:48:53Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13220,13 +13256,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3093,
-      "True": 2380
+      "False": 3096,
+      "True": 2382
     },
-    "plan_unit_count": 5473,
+    "plan_unit_count": 5478,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5295,
+      "accepted": 5300,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13241,7 +13277,7 @@
       "capability_matrix": 1,
       "compatibility_disposition": 131,
       "compatibility_note": 2,
-      "constraint": 584,
+      "constraint": 585,
       "consumer_alignment": 1,
       "data_contract": 6,
       "decision": 20,
@@ -13266,7 +13302,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4559,
+      "requirement": 4562,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
@@ -13284,7 +13320,7 @@
       "surface_default_policy": 1,
       "validation": 3,
       "validation_criterion": 11,
-      "validation_rule": 21,
+      "validation_rule": 22,
       "variant_contract": 2
     }
   }

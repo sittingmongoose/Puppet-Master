@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L72-L360
+Source lines: L72-L418
 
-Source SHA256: `c068398786ef73e0d63524713df8722d91777214a8cbea5c6ce263ec8bd468c3`
+Source SHA256: `59725a15403d4504a4f1e8740afba920e7b18dea9bc8582d786dcdf8e5aa4826`
 
 ---
 
@@ -292,6 +292,64 @@ negative_constraints:
   - Do not convert reference rows into competing owner prose.
 owner_hints: [Plans/UI_Wiring_Rules.md]
 consumer_docs: []
+```
+
+### UIW-009 - Approve And Build Disabled Reason Projection
+
+```yaml
+plan_unit_id: UIW-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Wiring_Rules.md
+canonical_text: >-
+  The Planning Wizard final-review control for `cmd.planning_wizard.approve_and_build` must derive its enabled state
+  from `Plans/.implementation_readiness/buildability_gate_report.json`. When `buildability_gate_passed=false`, the UI
+  projection keeps the control disabled and fills `state.planning_wizard.final_review.approve_and_build.disabled_reason`
+  from the report's blocker families, blocker IDs, exact owner_docs, and hard disabled reasons. The view layer must not
+  infer enablement from Wiring Matrix row existence, command catalog presence, schema validation, semantic closure,
+  source preservation, or other validators passing. Disabled controls must not dispatch PlanApproved, create or bind
+  PlanCompileRun, or start runtime/build surfaces.
+gui_related: true
+gui_classification_reason: Defines user-visible Approve And Build disabled state and command-dispatch blocking behavior.
+depends_on: [UIW-002, UIW-003, UIW-006, UIW-007, PWIZ-018]
+unblocks: [PG-060]
+acceptance_criteria:
+  - The Approve And Build UI state consumes buildability_gate_report.json.
+  - The disabled reason projection lists blocker families, blocker IDs, exact owner_docs, and PNC-019 hard disabled reason when present.
+  - Disabled Approve And Build cannot dispatch PlanApproved or create/bind PlanCompileRun.
+  - Wiring Matrix presence and schema validation are not enough to enable the command.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+risk_class: disabled_command_false_enablement
+reasoning_tier: high
+context_scope: approve_and_build_ui_wiring
+implementation_surfaces:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Planning_Wizard.md
+  - Plans/.implementation_readiness/buildability_gate_report.json
+  - Plans/Wiring_Matrix.production.json
+node_compile_hint:
+  mode: approve_and_build_disabled_reason_projection
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - source_ref:chat:2026-07-05-implementation-readiness-buildability-gate
+  - Plans/Planning_Wizard.md#PWIZ-018
+preserved_exact_tokens:
+  - "cmd.planning_wizard.approve_and_build"
+  - "disabled_reason"
+  - "blocker families"
+  - "exact owner_docs"
+  - "PNC-019"
+negative_constraints:
+  - Do not infer Approve And Build enablement from Wiring Matrix row existence, command catalog presence, schema validation, semantic closure, source preservation, or validators passing.
+  - Do not let a disabled Approve And Build control emit PlanApproved, create or bind PlanCompileRun, or start runtime/build surfaces.
+owner_hints:
+  - Plans/UI_Wiring_Rules.md
+  - Plans/Planning_Wizard.md
+  - Plans/Wiring_Matrix.production.json
 ```
 
 ---
