@@ -116,10 +116,18 @@ Produce generated outputs under Plans/.plan_index/:
 - coverage_report.json
 - node_readiness_report.json
 
+Also validate the implementation-readiness gate artifacts:
+- Plans/.implementation_readiness/readiness_blockers.jsonl
+- Plans/.implementation_readiness/readiness_matrix.json
+- Plans/.implementation_readiness/buildability_gate_report.json
+
 Rules:
 - PlanUnits are canon-addressable units from live Plans docs.
 - Every indexed PlanUnit must include gui_related true/false.
 - node_readiness_report may analyze future conversion readiness only.
+- Captured source, Plan-complete docs, node-readiness, schema existence, wiring JSON existence, semantic closure, and validators passing are not implementation buildability.
+- Approve And Build remains disabled unless Plans/.implementation_readiness/buildability_gate_report.json reports buildability_gate_passed=true.
+- Disabled reasons must list open blocker families and exact owner docs, and PNC-019 must remain a hard disabled reason while runtime lifecycle certification is incomplete.
 - Do not create WorkNodes, executable build tasks, or final node queues.
 - Do not create NodeSeed candidates unless Plans/Plan_To_Node_Compilation.md already defines that candidate contract.
 - If Plans are incomplete, set node_readiness_report.status = blocked_plans_incomplete.
@@ -127,7 +135,7 @@ Rules:
 - Preserve depends_on, unblocks, validation surfaces, acceptance criteria, risk_class, reasoning_tier, context_scope, implementation surfaces, source lineage, and gui_related.
 - Do not update Spec_Lock or governance artifacts.
 
-Run safe validators and write exact blockers if coverage is incomplete.
+Run safe validators, including python3 scripts/pm-implementation-readiness.py validate, and write exact blockers if coverage or implementation-readiness reporting is incomplete.
 ```
 
 ## 6. Goal prompt — governance seal
@@ -200,7 +208,7 @@ BLOCKED only when repair_required=true, a validator fails/mutates state, forbidd
 
 Do not emit semantic/currentness findings about old audit report wording, review/commit text, or missing ledger pointers to audit-only observation/hygiene runs. ledger latest_audit_* is stale only when a state-certifying audit/repair that changed or validated canonical Plans, ledger governing state, index, or governance is missing.
 
-Run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id>, pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Record status/side effects. FINAL_REPORT includes status, refs, changed files, PlanUnit deltas, scope counts, previously_closed, repair_required, validators, forbidden artifacts, and next action.
+Run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id>, pm-plan-index validate, pm-implementation-readiness validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Record status/side effects. FINAL_REPORT includes status, refs, changed files, PlanUnit deltas, scope counts, previously_closed, repair_required, validators, implementation-readiness blockers, forbidden artifacts, and next action.
 ```
 
 ## 9. Goal prompt — repair and certify closed-world audit
@@ -225,7 +233,7 @@ Write/update repair_closure_matrix.jsonl for repair_required=true rows with sour
 
 Run an internal post-repair semantic audit over the original audit_scope_manifest.jsonl plus every impact row. If new repair_required findings appear, add them to the same scope/impact set and repair/adjudicate in this Goal. Iterate until repair_required_count=0 or a true user decision blocks. Passing validators alone are insufficient.
 
-Only after internal semantic closure may you append/update the global registry, regenerate PlanUnit index, seal governance if governed files changed, and write REPAIR_CERTIFICATION.md. Then run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix, pm-plan-index validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Report changed files, repair_required count, closure/impact counts, validators, registry updates, prompt no-op if applicable, and remaining user decisions.
+Only after internal semantic closure may you append/update the global registry, regenerate PlanUnit index, refresh implementation-readiness reporting when touched, seal governance if governed files changed, and write REPAIR_CERTIFICATION.md. Then run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix, pm-plan-index validate, pm-implementation-readiness validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Report changed files, repair_required count, closure/impact counts, validators, implementation-readiness blockers, registry updates, prompt no-op if applicable, and remaining user decisions.
 ```
 
 ## 10. Ledger Compile Hardening Addendum - pldg-20260618-001-prd-planning-wizard

@@ -2243,6 +2243,58 @@ def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dic
     return report
 
 
+def cmd_validate_implementation_readiness(args: argparse.Namespace) -> dict[str, Any]:
+    validator = ROOT / "scripts" / "pm-implementation-readiness.py"
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(validator), "validate"],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            timeout=timeout_seconds if timeout_seconds > 0 else None,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return report_status(
+            "validate-implementation-readiness",
+            [
+                {
+                    "path": rel(validator),
+                    "error": "subprocess_timeout",
+                    "timeout_seconds": timeout_seconds,
+                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
+                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
+                }
+            ],
+        )
+    try:
+        report = json.loads(proc.stdout)
+    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
+        return report_status(
+            "validate-implementation-readiness",
+            [
+                {
+                    "path": rel(validator),
+                    "error": "validator_output_not_json",
+                    "detail": str(exc),
+                    "stdout": proc.stdout,
+                    "stderr": proc.stderr,
+                    "returncode": proc.returncode,
+                }
+            ],
+        )
+    if proc.returncode != 0 and report.get("status") == "pass":
+        report["status"] = "fail"
+        report.setdefault("failures", []).append(
+            {"path": rel(validator), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
+        )
+    if proc.stderr:
+        report["stderr"] = proc.stderr
+    return report
+
+
 def cmd_validate_audit_status_index(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-audit-status-index.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
@@ -2310,6 +2362,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("check_project_artifact_requirements", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("validate_plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("validate_prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("validate_implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
         ("validate_runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
@@ -2348,6 +2401,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("project_artifacts", cmd_check_project_artifact_requirements, argparse.Namespace()),
         ("plans_to_code_handoff_schema", cmd_validate_plans_to_code_handoff_schema, argparse.Namespace()),
         ("prd_planning_runtime_contracts", cmd_validate_prd_planning_runtime_contracts, argparse.Namespace()),
+        ("implementation_readiness", cmd_validate_implementation_readiness, argparse.Namespace()),
         ("runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
@@ -2376,6 +2430,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         project_artifacts=compact_gate_report(check_map["project_artifacts"]),
         plans_to_code_handoff_schema=compact_gate_report(check_map["plans_to_code_handoff_schema"]),
         prd_planning_runtime_contracts=compact_gate_report(check_map["prd_planning_runtime_contracts"]),
+        implementation_readiness=compact_gate_report(check_map["implementation_readiness"]),
         runtime_artifact_schemas=compact_gate_report(check_map["runtime_artifact_schemas"]),
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
@@ -2398,6 +2453,7 @@ COMMANDS = {
     "check-project-artifacts": cmd_check_project_artifact_requirements,
     "validate-plans-to-code-handoff-schema": cmd_validate_plans_to_code_handoff_schema,
     "validate-prd-planning-runtime-contracts": cmd_validate_prd_planning_runtime_contracts,
+    "validate-implementation-readiness": cmd_validate_implementation_readiness,
     "validate-runtime-artifact-schemas": cmd_validate_runtime_artifact_schemas,
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,

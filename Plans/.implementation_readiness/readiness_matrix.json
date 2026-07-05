@@ -1,0 +1,171 @@
+{
+  "blocker_schema": {
+    "acceptance_to_close": "non-empty list of evidence-backed closure checks; preservation-only acceptance is invalid",
+    "blocked_false_proofs": "non-empty list naming proof types that must not be accepted as buildability",
+    "blocked_surfaces": "non-empty list of product/runtime surfaces disabled by the blocker",
+    "blocker_family": "one of the required blocker families in this matrix",
+    "blocker_id": "stable IRB-* identifier",
+    "notes": "optional clarifying boundary notes",
+    "owner_docs": "non-empty exact repo paths to current owner docs; candidate owners are invalid",
+    "required_evidence": "non-empty list of concrete behavioral, runtime, security, persistence, command-wiring, or clean-room proof",
+    "schema_id": "pm.implementation_readiness.blocker.v1",
+    "severity": "hard_blocker or warning",
+    "source_refs": "supporting current PlanUnit/artifact refs",
+    "status": "open, closed, or accepted_risk",
+    "summary": "human-readable blocker statement"
+  },
+  "captured_plan_complete_buildable_ladder": [
+    {
+      "state": "captured",
+      "rule": "Captured source, exact tokens, source-lineage rows, audit findings, or ledger atoms are not plan-complete and are not buildable."
+    },
+    {
+      "state": "plan_complete",
+      "rule": "Plan-complete means canonical docs, PlanUnits, indexes, source lineage, and governance checks are coherent; it is not implementation buildability."
+    },
+    {
+      "state": "buildable",
+      "rule": "Buildability requires concrete schemas, command wiring, security boundaries, behavioral acceptance, currentness, persistence, provider behavior, and executable clean-room lifecycle evidence."
+    }
+  ],
+  "families": [
+    {
+      "blocker_family": "contract_materialization",
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/Planning_Wizard.md"
+      ],
+      "required_proof": "Every runtime contract has concrete payload, validator, receipt, retry, rollback, and executable proof routing."
+    },
+    {
+      "blocker_family": "persistence_materialization",
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/storage-plan.md"
+      ],
+      "required_proof": "Durable state, idempotency, transactional outbox, replay, restart, and receipt persistence are proven by fixtures."
+    },
+    {
+      "blocker_family": "gui_wiring",
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.production.json"
+      ],
+      "required_proof": "Approve And Build consumes the buildability report and shows blocker families plus exact owner docs while disabled."
+    },
+    {
+      "blocker_family": "security_boundary",
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Permissions_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "required_proof": "Actor identity, permission, credential, trust, source-control, destructive-action, and policy boundaries reject unsafe paths."
+    },
+    {
+      "blocker_family": "runtime_lifecycle",
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "required_proof": "PNC-019 executable lifecycle certification proves Approve And Build through PlanCompile, Executor intake, activation, projection, testing, restart/cancel, and negative cases."
+    },
+    {
+      "blocker_family": "provider_stream",
+      "owner_docs": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Multi-Account.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "required_proof": "Provider/account/model/auth stream behavior, degraded paths, cancellation, retries, quota, and evidence capture are exercised."
+    },
+    {
+      "blocker_family": "behavioral_acceptance",
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Plan_Document_System.md"
+      ],
+      "required_proof": "Acceptance names observable behavior, state transitions, events, failures, and evidence; preservation-only acceptance is excluded."
+    },
+    {
+      "blocker_family": "structural_integrity",
+      "owner_docs": [
+        "Plans/Plan_Document_System.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Progression_Gates.md",
+        "Plans/00-plans-index.md"
+      ],
+      "required_proof": "Executable-order, dependency, owner, placeholder, payload, and graph integrity are proven beyond index existence."
+    },
+    {
+      "blocker_family": "owner_routing",
+      "owner_docs": [
+        "Plans/Plan_Document_System.md",
+        "Plans/00-plans-index.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "required_proof": "Every buildability responsibility has exact current owner docs; source-lineage and compatibility docs are excluded as current authority."
+    },
+    {
+      "blocker_family": "currentness",
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/storage-plan.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "required_proof": "CAS/currentness rejects stale but valid PlanningRun, pack, index, testing, project context, provider, and source-control inputs."
+    },
+    {
+      "blocker_family": "clean_room_harness",
+      "owner_docs": [
+        "Plans/Plan_To_Node_Compilation.md",
+        "Plans/Automated_Testing_System.md",
+        "Plans/Planning_Wizard.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "required_proof": "Executable clean-room positive and adversarial lifecycle harness passes with receipts; static scenario lists remain targets only."
+    }
+  ],
+  "false_proof_guardrails": [
+    "schema_existence_is_not_buildability",
+    "validator_pass_is_not_buildability",
+    "source_preservation_is_not_behavioral_acceptance",
+    "semantic_closure_is_not_buildability",
+    "wiring_json_existence_is_not_command_execution"
+  ],
+  "required_proof_dimensions": [
+    "concrete_schemas",
+    "command_wiring",
+    "security_boundaries",
+    "behavioral_acceptance",
+    "currentness",
+    "persistence_lifecycle",
+    "provider_stream_behavior",
+    "structural_integrity",
+    "owner_routing",
+    "clean_room_lifecycle_evidence"
+  ],
+  "schema_id": "pm.implementation_readiness.readiness_matrix.v1",
+  "wizard_gate_contract": {
+    "approve_and_build_command_id": "cmd.planning_wizard.approve_and_build",
+    "disabled_reason_projection": "state.planning_wizard.final_review.approve_and_build.disabled_reason",
+    "must_disable_when_buildability_gate_passed_false": true,
+    "must_list_blocker_families": true,
+    "must_list_exact_owner_docs": true,
+    "pnc_019_is_hard_disabled_reason": true,
+    "source_report": "Plans/.implementation_readiness/buildability_gate_report.json"
+  }
+}
