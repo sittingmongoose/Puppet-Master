@@ -1,0 +1,56 @@
+{
+  "schema_id": "pm.audit.external_input_manifest.v1",
+  "audit_id": "audit-20260705-process-currentness-metadata-repair",
+  "canonical_truth": false,
+  "status": "historical_package_metadata_only",
+  "handling": "These files were relocated from the repository root as bounded input evidence. They are not canonical Plans prose, not implementation-readiness proof, not buildability authority, and not active package/install instructions.",
+  "files": [
+    {
+      "original_path": "INSTALL.md",
+      "stored_path": "Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/INSTALL.md.txt",
+      "bytes": 1084,
+      "sha256": "54ef6270bee61e00f2c392ce72f3de3cec600a9a27c4f2e97294a1e80649f4be",
+      "classification": "historical_package_metadata"
+    },
+    {
+      "original_path": "PACKAGE_MANIFEST.json",
+      "stored_path": "Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/PACKAGE_MANIFEST.json.txt",
+      "bytes": 10234,
+      "sha256": "60f39249e0c89df0cbafd92141ea8da8529612033c1f3433e86f18ce1c227746",
+      "classification": "historical_package_metadata"
+    },
+    {
+      "original_path": "PM_PLANNING_WIZARD_LEDGER_INSTALL.md",
+      "stored_path": "Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/PM_PLANNING_WIZARD_LEDGER_INSTALL.md.txt",
+      "bytes": 2251,
+      "sha256": "739210c9f24bf717d10a0c9a0782bb0040b5948fc8e041102b96d2c38cb629cc",
+      "classification": "historical_package_metadata"
+    },
+    {
+      "original_path": "PROMPT_COMPATIBILITY.md",
+      "stored_path": "Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/PROMPT_COMPATIBILITY.md.txt",
+      "bytes": 1357,
+      "sha256": "46c9f7959803d2b4c0f5dde9e74ce5624bf8ccad03a8bd71020462c462485582",
+      "classification": "historical_package_metadata"
+    },
+    {
+      "original_path": "VALIDATION_REPORT.json",
+      "stored_path": "Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/VALIDATION_REPORT.json.txt",
+      "bytes": 2453,
+      "sha256": "6c9475f7f04a30ca3b9fb60837b3048af12c9874ed08eb2d26f6a663463d2e42",
+      "classification": "historical_package_metadata"
+    },
+    {
+      "original_path": "VALIDATION_REPORT.md",
+      "stored_path": "Plans/.audits/audit-20260705-process-currentness-metadata-repair/input/root-package-reports/VALIDATION_REPORT.md.txt",
+      "bytes": 1886,
+      "sha256": "c1ee58b47f9d673597cf3de5525bdf6a1e684d3c627d95afc107be35446b7264",
+      "classification": "historical_package_metadata"
+    }
+  ],
+  "negative_constraints": [
+    "Do not cite these files as canonical product prose.",
+    "Do not treat historical package metadata as current implementation-readiness or buildability authority.",
+    "Do not create WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from these inputs."
+  ]
+}
