@@ -1035,10 +1035,12 @@ canonical_text: >-
   scripts/pm-implementation-readiness.py is the governed validator/generator registered through Spec Lock during
   governance seal. Passing plan validators, source-preservation acceptance, existing schemas, wiring JSON existence,
   and semantic closure are explicitly insufficient to close a blocker without concrete behavioral, command-wiring,
-  security, persistence, currentness, provider, structural, owner-routing, and clean-room lifecycle evidence.
+  security, persistence, currentness, provider, structural, owner-routing, and clean-room lifecycle evidence. Partial
+  PNC-019 bootstrap-authority evidence may be recorded while runtime_lifecycle and clean_room_harness blockers remain
+  open; it must not be counted as blocker closure or ordinary product buildability.
 gui_related: false
 gui_classification_reason: Defines registry schema and governance artifacts rather than visual presentation.
-depends_on: [PDS-016, PNC-019]
+depends_on: [PDS-016, PNC-019, PNC-022]
 unblocks: [PWIZ-018, PG-060]
 acceptance_criteria:
   - The registry contains all required blocker families and exact owner_docs for each open blocker.
@@ -1047,6 +1049,7 @@ acceptance_criteria:
   - Closed and accepted_risk rows remain allowed historical evidence and are excluded from open disabled-reason projection.
   - The readiness script, registry, matrix, and generated report have documented governance status and Spec Lock registration policy.
   - Preservation-only acceptance criteria and validator success cannot close implementation-readiness blockers.
+  - PNC-019 bootstrap-authority evidence can be partial/blocked evidence only; it does not close runtime_lifecycle or clean_room_harness without executable lifecycle proof.
 validation_surfaces:
   - python3 scripts/pm-implementation-readiness.py validate
   - python3 scripts/pm-implementation-readiness.py self-test
@@ -1069,6 +1072,7 @@ source_lineage:
   - source_ref:chat:2026-07-05-implementation-readiness-buildability-gate
   - Plans/Planning_Wizard.md#PWIZ-018
   - Plans/Plan_To_Node_Compilation.md#PNC-019
+  - Plans/Plan_To_Node_Compilation.md#PNC-022
 preserved_exact_tokens:
   - "readiness_blockers.jsonl"
   - "readiness_matrix.json"

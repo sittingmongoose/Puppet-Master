@@ -19,6 +19,9 @@ BLOCKERS_PATH = READINESS_DIR / "readiness_blockers.jsonl"
 MATRIX_PATH = READINESS_DIR / "readiness_matrix.json"
 REPORT_PATH = READINESS_DIR / "buildability_gate_report.json"
 NODE_READINESS_PATH = PLANS / ".plan_index/node_readiness_report.json"
+PLAN_UNITS_INDEX_PATH = PLANS / ".plan_index/plan_units.jsonl"
+PNC019_BOOTSTRAP_AUTHORITY_MODE = "pnc019_bootstrap_authority"
+PNC019_BOOTSTRAP_SCOPE = "pnc019_certification_harness_only"
 
 REQUIRED_FAMILIES = [
     "contract_materialization",
@@ -52,6 +55,7 @@ OWNER_DOCS = [
     "Plans/UI_Wiring_Rules.md",
     "Plans/bootstrap/Codex_Prompts.md",
     "Plans/.plan_index/node_readiness_report.json",
+    "scripts/pm-plan-index.py",
     "scripts/pm-implementation-readiness.py",
     "scripts/pm-plans-verify.py",
 ]
@@ -137,9 +141,13 @@ def node_readiness_snapshot() -> dict[str, Any]:
         "available": True,
         "status": report.get("status"),
         "status_reason": report.get("status_reason"),
+        "bootstrap_authorized": runtime.get("bootstrap_authorized"),
+        "bootstrap_authority_ref": runtime.get("bootstrap_authority_ref"),
+        "certification_harness_specified": runtime.get("certification_harness_specified"),
         "runtime_enabled": runtime.get("runtime_enabled"),
         "runtime_blocked_by_ref": runtime.get("runtime_blocked_by_ref"),
         "executable_lifecycle_certification_complete": runtime.get("executable_lifecycle_certification_complete"),
+        "ordinary_product_worknodes_allowed": runtime.get("ordinary_product_worknodes_allowed"),
         "hard_disabled": bool(hard_disabled),
         "hard_disabled_reason": "PNC-019 executable lifecycle certification is incomplete"
         if hard_disabled
@@ -335,6 +343,137 @@ def gate_semantic_failures(
         if current_hashes is not None and actual_report.get("source_hashes") != current_hashes:
             failures.append({"path": path, "error": "buildability_passed_with_stale_source_hashes"})
 
+    return failures
+
+
+def pnc019_bootstrap_authority_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    if not NODE_READINESS_PATH.exists():
+        failures.append({"path": rel(NODE_READINESS_PATH), "error": "node_readiness_report_missing"})
+        return failures
+    try:
+        node_report = read_json(NODE_READINESS_PATH)
+    except Exception as exc:  # noqa: BLE001
+        failures.append({"path": rel(NODE_READINESS_PATH), "error": "json_parse_failed", "detail": str(exc)})
+        return failures
+    runtime = node_report.get("runtime_enablement_status", {}) if isinstance(node_report, dict) else {}
+    if not isinstance(runtime, dict):
+        failures.append({"path": rel(NODE_READINESS_PATH), "error": "runtime_enablement_status_missing_or_invalid"})
+        runtime = {}
+
+    required_fields = [
+        "bootstrap_authorized",
+        "compiler_contract_complete",
+        "certification_harness_specified",
+        "executable_lifecycle_certification_complete",
+        "runtime_enabled",
+        "ordinary_product_worknodes_allowed",
+    ]
+    for field in required_fields:
+        if field not in runtime:
+            failures.append({"path": rel(NODE_READINESS_PATH), "error": "runtime_readiness_field_missing", "field": field})
+    if runtime.get("bootstrap_authorized") is not True:
+        failures.append({"path": rel(NODE_READINESS_PATH), "error": "pnc019_bootstrap_authority_not_projected"})
+    if runtime.get("certification_harness_specified") is not True:
+        failures.append({"path": rel(NODE_READINESS_PATH), "error": "pnc019_certification_harness_not_specified"})
+    if runtime.get("runtime_enabled") is True and runtime.get("executable_lifecycle_certification_complete") is not True:
+        failures.append({"path": rel(NODE_READINESS_PATH), "error": "runtime_enabled_without_pnc019_certification"})
+    if (
+        runtime.get("ordinary_product_worknodes_allowed") is True
+        and runtime.get("executable_lifecycle_certification_complete") is not True
+    ):
+        failures.append({"path": rel(NODE_READINESS_PATH), "error": "ordinary_product_worknodes_allowed_before_certification"})
+
+    report_node = actual_report.get("node_readiness", {}) if isinstance(actual_report, dict) else {}
+    if isinstance(report_node, dict):
+        for field in [
+            "bootstrap_authorized",
+            "certification_harness_specified",
+            "ordinary_product_worknodes_allowed",
+            "executable_lifecycle_certification_complete",
+            "runtime_enabled",
+        ]:
+            if report_node.get(field) != runtime.get(field):
+                failures.append(
+                    {
+                        "path": rel(REPORT_PATH),
+                        "error": "buildability_report_node_readiness_field_mismatch",
+                        "field": field,
+                        "expected": runtime.get(field),
+                        "actual": report_node.get(field),
+                    }
+                )
+
+    if not PLAN_UNITS_INDEX_PATH.exists():
+        failures.append({"path": rel(PLAN_UNITS_INDEX_PATH), "error": "plan_unit_index_missing"})
+        return failures
+    try:
+        plan_units = load_jsonl(PLAN_UNITS_INDEX_PATH)
+    except Exception as exc:  # noqa: BLE001
+        failures.append({"path": rel(PLAN_UNITS_INDEX_PATH), "error": "jsonl_parse_failed", "detail": str(exc)})
+        return failures
+
+    bootstrap_units = [
+        unit
+        for unit in plan_units
+        if isinstance(unit.get("node_compile_hint"), dict)
+        and unit["node_compile_hint"].get("mode") == PNC019_BOOTSTRAP_AUTHORITY_MODE
+    ]
+    if len(bootstrap_units) != 1:
+        failures.append(
+            {
+                "path": rel(PLAN_UNITS_INDEX_PATH),
+                "error": "pnc019_bootstrap_authority_missing_or_ambiguous",
+                "count": len(bootstrap_units),
+                "plan_unit_ids": [str(unit.get("plan_unit_id")) for unit in bootstrap_units],
+            }
+        )
+    else:
+        unit = bootstrap_units[0]
+        hint = unit.get("node_compile_hint", {})
+        expectations = {
+            "plan_unit_id": "PNC-022",
+            "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+            "bootstrap_authorized": True,
+            "bootstrap_scope": PNC019_BOOTSTRAP_SCOPE,
+            "certification_harness_specified": True,
+            "executable_lifecycle_certification_complete": False,
+            "runtime_enabled": False,
+            "ordinary_product_worknodes_allowed": False,
+            "create_worknodes": False,
+            "create_nodeseeds": False,
+        }
+        for field, expected in expectations.items():
+            actual = unit.get(field) if field in {"plan_unit_id", "owner_doc"} else hint.get(field)
+            if actual != expected:
+                failures.append(
+                    {
+                        "path": f"{rel(PLAN_UNITS_INDEX_PATH)}:{unit.get('_line')}",
+                        "error": "pnc019_bootstrap_authority_overbroad_or_misclassified",
+                        "field": field,
+                        "expected": expected,
+                        "actual": actual,
+                    }
+                )
+
+    for unit in plan_units:
+        hint = unit.get("node_compile_hint", {})
+        if not isinstance(hint, dict) or hint.get("create_worknodes") is not True:
+            continue
+        harness_scoped = (
+            unit.get("plan_unit_id") == "PNC-022"
+            and hint.get("mode") == PNC019_BOOTSTRAP_AUTHORITY_MODE
+            and hint.get("bootstrap_scope") == PNC019_BOOTSTRAP_SCOPE
+            and hint.get("ordinary_product_worknodes_allowed") is False
+        )
+        if not harness_scoped and runtime.get("ordinary_product_worknodes_allowed") is not True:
+            failures.append(
+                {
+                    "path": f"{rel(PLAN_UNITS_INDEX_PATH)}:{unit.get('_line')}",
+                    "plan_unit_id": unit.get("plan_unit_id"),
+                    "error": "ordinary_product_create_worknodes_before_pnc019_certification",
+                }
+            )
     return failures
 
 
@@ -584,6 +723,7 @@ def validate() -> dict[str, Any]:
                 path=rel(REPORT_PATH),
             )
         )
+        failures.extend(pnc019_bootstrap_authority_failures(actual_report))
 
     self_test_report = run_self_tests()
     if self_test_report["status"] != "pass":

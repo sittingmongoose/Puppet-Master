@@ -62,6 +62,9 @@ REQUIRED_NEW_PLAN_BASE_HEADINGS = [
     "8. Source Lineage And Governance",
 ]
 
+PNC019_BOOTSTRAP_AUTHORITY_MODE = "pnc019_bootstrap_authority"
+PNC019_BOOTSTRAP_SCOPE = "pnc019_certification_harness_only"
+
 
 @dataclass(frozen=True)
 class CachedPlanDoc:
@@ -747,6 +750,30 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
     pnc_007 = next((unit for unit in units if unit_id(unit) == "PNC-007"), None)
     pnc_008 = next((unit for unit in units if unit_id(unit) == "PNC-008"), None)
     pnc_019 = next((unit for unit in units if unit_id(unit) == "PNC-019"), None)
+    bootstrap_units = [
+        unit
+        for unit in units
+        if isinstance(unit.get("node_compile_hint"), dict)
+        and unit["node_compile_hint"].get("mode") == PNC019_BOOTSTRAP_AUTHORITY_MODE
+    ]
+    valid_bootstrap_units = [
+        unit
+        for unit in bootstrap_units
+        if unit_id(unit) == "PNC-022"
+        and unit.get("owner_doc") == "Plans/Plan_To_Node_Compilation.md"
+        and unit["node_compile_hint"].get("bootstrap_authorized") is True
+        and unit["node_compile_hint"].get("bootstrap_scope") == PNC019_BOOTSTRAP_SCOPE
+        and unit["node_compile_hint"].get("certification_harness_specified") is True
+        and unit["node_compile_hint"].get("runtime_enabled") is False
+        and unit["node_compile_hint"].get("ordinary_product_worknodes_allowed") is False
+        and unit["node_compile_hint"].get("create_worknodes") is False
+    ]
+    bootstrap_unit = valid_bootstrap_units[0] if len(valid_bootstrap_units) == 1 else None
+    bootstrap_authorized = bootstrap_unit is not None
+    certification_harness_specified = (
+        bootstrap_unit is not None
+        and bootstrap_unit["node_compile_hint"].get("certification_harness_specified") is True
+    )
     disabled_guards: list[dict[str, Any]] = []
     executable_certification_guard = {
         "plan_unit_id": "PNC-019",
@@ -765,8 +792,14 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
             "runtime_enabled": False,
             "owner_doc": "Plans/Plan_To_Node_Compilation.md",
             "status": "blocked_runtime_certification_incomplete",
+            "bootstrap_authorized": bootstrap_authorized,
+            "bootstrap_authority_ref": unit_id(bootstrap_unit) if bootstrap_unit else None,
+            "bootstrap_authority_refs": [unit_id(unit) for unit in bootstrap_units],
+            "bootstrap_scope": PNC019_BOOTSTRAP_SCOPE if bootstrap_unit else None,
             "compiler_contract_complete": True,
+            "certification_harness_specified": certification_harness_specified,
             "executable_lifecycle_certification_complete": False,
+            "ordinary_product_worknodes_allowed": False,
             "runtime_enablement_ref": "PNC-007",
             "runtime_blocked_by_ref": "PNC-019",
             "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
@@ -804,8 +837,14 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
         "runtime_enabled": False,
         "owner_doc": "Plans/Plan_To_Node_Compilation.md",
         "status": "runtime_disabled",
+        "bootstrap_authorized": bootstrap_authorized,
+        "bootstrap_authority_ref": unit_id(bootstrap_unit) if bootstrap_unit else None,
+        "bootstrap_authority_refs": [unit_id(unit) for unit in bootstrap_units],
+        "bootstrap_scope": PNC019_BOOTSTRAP_SCOPE if bootstrap_unit else None,
         "compiler_contract_complete": False,
+        "certification_harness_specified": certification_harness_specified,
         "executable_lifecycle_certification_complete": False,
+        "ordinary_product_worknodes_allowed": False,
         "disabled_guards": disabled_guards,
     }
 
@@ -1141,6 +1180,111 @@ def validate() -> dict[str, Any]:
         failures.append({"path": "Plans/.plan_index/node_readiness_report.json", "error": "nodeseed_candidates_created_not_false"})
     indexed_pnc_019 = next((unit for unit in plan_units if unit_id(unit) == "PNC-019"), None)
     readiness_runtime = readiness.get("runtime_enablement_status", {})
+    bootstrap_authority_units = [
+        unit
+        for unit in plan_units
+        if isinstance(unit.get("node_compile_hint"), dict)
+        and unit["node_compile_hint"].get("mode") == PNC019_BOOTSTRAP_AUTHORITY_MODE
+    ]
+    if len(bootstrap_authority_units) != 1:
+        failures.append(
+            {
+                "path": "Plans/.plan_index/plan_units.jsonl",
+                "error": "pnc019_bootstrap_authority_missing_or_ambiguous",
+                "count": len(bootstrap_authority_units),
+                "plan_unit_ids": [unit_id(unit) for unit in bootstrap_authority_units],
+            }
+        )
+    else:
+        bootstrap_unit = bootstrap_authority_units[0]
+        bootstrap_hint = bootstrap_unit.get("node_compile_hint", {})
+        bootstrap_expectations = {
+            "plan_unit_id": "PNC-022",
+            "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+            "bootstrap_authorized": True,
+            "bootstrap_scope": PNC019_BOOTSTRAP_SCOPE,
+            "certification_harness_specified": True,
+            "runtime_enabled": False,
+            "ordinary_product_worknodes_allowed": False,
+            "create_worknodes": False,
+            "create_nodeseeds": False,
+        }
+        for field, expected in bootstrap_expectations.items():
+            actual = unit_id(bootstrap_unit) if field == "plan_unit_id" else (
+                bootstrap_unit.get(field) if field == "owner_doc" else bootstrap_hint.get(field)
+            )
+            if actual != expected:
+                failures.append(
+                    {
+                        "path": bootstrap_unit.get("source_location", "Plans/Plan_To_Node_Compilation.md"),
+                        "plan_unit_id": unit_id(bootstrap_unit),
+                        "error": "pnc019_bootstrap_authority_overbroad_or_misclassified",
+                        "field": field,
+                        "expected": expected,
+                        "actual": actual,
+                    }
+                )
+    required_runtime_fields = [
+        "bootstrap_authorized",
+        "compiler_contract_complete",
+        "certification_harness_specified",
+        "executable_lifecycle_certification_complete",
+        "runtime_enabled",
+        "ordinary_product_worknodes_allowed",
+    ]
+    for field in required_runtime_fields:
+        if field not in readiness_runtime:
+            failures.append(
+                {
+                    "path": "Plans/.plan_index/node_readiness_report.json",
+                    "error": "node_readiness_runtime_field_missing",
+                    "field": field,
+                }
+            )
+    if readiness_runtime.get("bootstrap_authorized") is not True:
+        failures.append(
+            {
+                "path": "Plans/.plan_index/node_readiness_report.json",
+                "plan_unit_id": "PNC-022",
+                "error": "pnc019_bootstrap_authority_not_projected",
+            }
+        )
+    if readiness_runtime.get("certification_harness_specified") is not True:
+        failures.append(
+            {
+                "path": "Plans/.plan_index/node_readiness_report.json",
+                "plan_unit_id": "PNC-022",
+                "error": "pnc019_certification_harness_not_projected",
+            }
+        )
+    if (
+        readiness_runtime.get("ordinary_product_worknodes_allowed") is True
+        and readiness_runtime.get("executable_lifecycle_certification_complete") is not True
+    ):
+        failures.append(
+            {
+                "path": "Plans/.plan_index/node_readiness_report.json",
+                "error": "ordinary_product_worknodes_allowed_before_pnc019_certification",
+            }
+        )
+    for unit in plan_units:
+        hint = unit.get("node_compile_hint", {})
+        if not isinstance(hint, dict) or hint.get("create_worknodes") is not True:
+            continue
+        harness_scoped = (
+            unit_id(unit) == "PNC-022"
+            and hint.get("mode") == PNC019_BOOTSTRAP_AUTHORITY_MODE
+            and hint.get("bootstrap_scope") == PNC019_BOOTSTRAP_SCOPE
+            and hint.get("ordinary_product_worknodes_allowed") is False
+        )
+        if not harness_scoped and readiness_runtime.get("ordinary_product_worknodes_allowed") is not True:
+            failures.append(
+                {
+                    "path": unit.get("source_location", unit.get("owner_doc")),
+                    "plan_unit_id": unit_id(unit),
+                    "error": "ordinary_product_create_worknodes_before_certification",
+                }
+            )
     if isinstance(indexed_pnc_019, dict) and indexed_pnc_019.get("status") == "accepted":
         certification_complete = readiness_runtime.get("executable_lifecycle_certification_complete") is True
         if not certification_complete:
