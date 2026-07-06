@@ -5,61 +5,6 @@
     "disabled_reason_projection": "state.planning_wizard.final_review.approve_and_build.disabled_reason",
     "disabled_reasons": [
       {
-        "blocker_family": "contract_materialization",
-        "blocker_ids": [
-          "IRB-001"
-        ],
-        "code": "buildability_blocked.contract_materialization",
-        "message": "Approve And Build is disabled because implementation buildability requires contract_materialization evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/Executor_Protocol.md",
-          "Plans/Plan_Document_System.md",
-          "Plans/Plan_To_Node_Compilation.md",
-          "Plans/Planning_Wizard.md"
-        ]
-      },
-      {
-        "blocker_family": "persistence_materialization",
-        "blocker_ids": [
-          "IRB-002"
-        ],
-        "code": "buildability_blocked.persistence_materialization",
-        "message": "Approve And Build is disabled because implementation buildability requires persistence_materialization evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/Plan_To_Node_Compilation.md",
-          "Plans/Planning_Wizard.md",
-          "Plans/storage-plan.md"
-        ]
-      },
-      {
-        "blocker_family": "gui_wiring",
-        "blocker_ids": [
-          "IRB-003"
-        ],
-        "code": "buildability_blocked.gui_wiring",
-        "message": "Approve And Build is disabled because implementation buildability requires gui_wiring evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/Planning_Wizard.md",
-          "Plans/UI_Command_Catalog.md",
-          "Plans/UI_Wiring_Rules.md",
-          "Plans/Wiring_Matrix.production.json"
-        ]
-      },
-      {
-        "blocker_family": "security_boundary",
-        "blocker_ids": [
-          "IRB-004"
-        ],
-        "code": "buildability_blocked.security_boundary",
-        "message": "Approve And Build is disabled because implementation buildability requires security_boundary evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/Contracts_V0.md",
-          "Plans/Permissions_System.md",
-          "Plans/Plan_To_Node_Compilation.md",
-          "Plans/Planning_Wizard.md"
-        ]
-      },
-      {
         "blocker_family": "runtime_lifecycle",
         "blocker_ids": [
           "IRB-005"
@@ -72,76 +17,6 @@
           "Plans/Goal_Runtime_System.md",
           "Plans/Orchestrator_Page.md",
           "Plans/Plan_To_Node_Compilation.md"
-        ]
-      },
-      {
-        "blocker_family": "provider_stream",
-        "blocker_ids": [
-          "IRB-006"
-        ],
-        "code": "buildability_blocked.provider_stream",
-        "message": "Approve And Build is disabled because implementation buildability requires provider_stream evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/Multi-Account.md",
-          "Plans/Plan_To_Node_Compilation.md",
-          "Plans/Prompt_Pipeline.md",
-          "Plans/Provider_OpenCode.md"
-        ]
-      },
-      {
-        "blocker_family": "behavioral_acceptance",
-        "blocker_ids": [
-          "IRB-007"
-        ],
-        "code": "buildability_blocked.behavioral_acceptance",
-        "message": "Approve And Build is disabled because implementation buildability requires behavioral_acceptance evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/Automated_Testing_System.md",
-          "Plans/Plan_Document_System.md",
-          "Plans/Planning_Wizard.md",
-          "Plans/Progression_Gates.md"
-        ]
-      },
-      {
-        "blocker_family": "structural_integrity",
-        "blocker_ids": [
-          "IRB-008"
-        ],
-        "code": "buildability_blocked.structural_integrity",
-        "message": "Approve And Build is disabled because implementation buildability requires structural_integrity evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/00-plans-index.md",
-          "Plans/Plan_Document_System.md",
-          "Plans/Plan_To_Node_Compilation.md",
-          "Plans/Progression_Gates.md"
-        ]
-      },
-      {
-        "blocker_family": "owner_routing",
-        "blocker_ids": [
-          "IRB-009"
-        ],
-        "code": "buildability_blocked.owner_routing",
-        "message": "Approve And Build is disabled because implementation buildability requires owner_routing evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/00-plans-index.md",
-          "Plans/Plan_Document_System.md",
-          "Plans/Planning_Wizard.md",
-          "Plans/UI_Wiring_Rules.md"
-        ]
-      },
-      {
-        "blocker_family": "currentness",
-        "blocker_ids": [
-          "IRB-010"
-        ],
-        "code": "buildability_blocked.currentness",
-        "message": "Approve And Build is disabled because implementation buildability requires currentness evidence in the exact owner docs listed here.",
-        "owner_docs": [
-          "Plans/Plan_To_Node_Compilation.md",
-          "Plans/Planning_Wizard.md",
-          "Plans/Progression_Gates.md",
-          "Plans/storage-plan.md"
         ]
       },
       {
@@ -209,54 +84,27 @@
   "family_summary": [
     {
       "blocker_family": "contract_materialization",
-      "open_blocker_ids": [
-        "IRB-001"
-      ],
-      "owner_docs": [
-        "Plans/Executor_Protocol.md",
-        "Plans/Plan_Document_System.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Planning_Wizard.md"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "persistence_materialization",
-      "open_blocker_ids": [
-        "IRB-002"
-      ],
-      "owner_docs": [
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Planning_Wizard.md",
-        "Plans/storage-plan.md"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "gui_wiring",
-      "open_blocker_ids": [
-        "IRB-003"
-      ],
-      "owner_docs": [
-        "Plans/Planning_Wizard.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/Wiring_Matrix.production.json"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "security_boundary",
-      "open_blocker_ids": [
-        "IRB-004"
-      ],
-      "owner_docs": [
-        "Plans/Contracts_V0.md",
-        "Plans/Permissions_System.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Planning_Wizard.md"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "runtime_lifecycle",
@@ -274,68 +122,33 @@
     },
     {
       "blocker_family": "provider_stream",
-      "open_blocker_ids": [
-        "IRB-006"
-      ],
-      "owner_docs": [
-        "Plans/Multi-Account.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Provider_OpenCode.md"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "behavioral_acceptance",
-      "open_blocker_ids": [
-        "IRB-007"
-      ],
-      "owner_docs": [
-        "Plans/Automated_Testing_System.md",
-        "Plans/Plan_Document_System.md",
-        "Plans/Planning_Wizard.md",
-        "Plans/Progression_Gates.md"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "structural_integrity",
-      "open_blocker_ids": [
-        "IRB-008"
-      ],
-      "owner_docs": [
-        "Plans/00-plans-index.md",
-        "Plans/Plan_Document_System.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Progression_Gates.md"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "owner_routing",
-      "open_blocker_ids": [
-        "IRB-009"
-      ],
-      "owner_docs": [
-        "Plans/00-plans-index.md",
-        "Plans/Plan_Document_System.md",
-        "Plans/Planning_Wizard.md",
-        "Plans/UI_Wiring_Rules.md"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "currentness",
-      "open_blocker_ids": [
-        "IRB-010"
-      ],
-      "owner_docs": [
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Planning_Wizard.md",
-        "Plans/Progression_Gates.md",
-        "Plans/storage-plan.md"
-      ],
-      "status": "blocked"
+      "open_blocker_ids": [],
+      "owner_docs": [],
+      "status": "clear"
     },
     {
       "blocker_family": "clean_room_harness",
@@ -351,7 +164,7 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-07-06T20:20:33Z",
+  "generated_at_utc": "2026-07-06T21:12:13Z",
   "node_readiness": {
     "available": true,
     "bootstrap_authority_ref": "PNC-022",
@@ -370,263 +183,8 @@
     "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary.",
     "true_cycle_component_count": 0
   },
-  "open_blocker_count": 11,
+  "open_blocker_count": 2,
   "remaining_open_blockers": [
-    {
-      "acceptance_to_close": [
-        "scripts/pm-implementation-readiness.py validate remains pass with this blocker closed.",
-        "PNC owner docs name concrete artifact contracts and executable proof routes rather than future inference.",
-        "Runtime contract validation includes negative fixtures for missing/placeholder contract materialization."
-      ],
-      "blocked_false_proofs": [
-        "schema_existence",
-        "handoff_json_existence",
-        "plan_unit_index_presence"
-      ],
-      "blocked_surfaces": [
-        "Planning Wizard Approve And Build",
-        "PlanCompile handoff",
-        "PlanUnit-to-node readiness"
-      ],
-      "blocker_family": "contract_materialization",
-      "blocker_id": "IRB-001",
-      "notes": "Tier 0B closes only the exact execution_unit_context contract-materialization slice. Tier 0C-1 closes only the EventRecord envelope contract slice. IRB-001 remains open; closing the remaining blocker must not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.",
-      "owner_docs": [
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Plan_Document_System.md",
-        "Plans/Planning_Wizard.md",
-        "Plans/Executor_Protocol.md"
-      ],
-      "partial_closures": [
-        {
-          "evidence": [
-            "Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract",
-            "Plans/execution_unit_context.schema.json",
-            "scripts/pm-implementation-readiness.py validate"
-          ],
-          "remaining_scope": [
-            "concrete event-type payload schemas beyond EventRecord envelope",
-            "storage value schemas beyond EventRecord persistence boundary",
-            "provider stream payloads",
-            "runtime lifecycle activation",
-            "clean-room harness",
-            "GUI command execution",
-            "security boundary fixtures",
-            "PlanCompile artifact payload contracts beyond execution_unit_context and EventRecord envelope"
-          ],
-          "scope": "execution_unit_context_contract",
-          "status": "closed_for_tier_0b_only"
-        },
-        {
-          "evidence": [
-            "Plans/Contracts_V0.md#EventRecord",
-            "Plans/event_record.schema.json",
-            "scripts/pm-implementation-readiness.py validate"
-          ],
-          "remaining_scope": [
-            "concrete event-type payload schemas beyond EventRecord envelope",
-            "provider stream payloads",
-            "runtime lifecycle activation",
-            "clean-room harness",
-            "GUI command execution",
-            "security boundary fixtures",
-            "PlanCompile artifact payload contracts beyond execution_unit_context and EventRecord envelope"
-          ],
-          "scope": "event_record_envelope_contract",
-          "status": "closed_for_tier_0c_1_only"
-        }
-      ],
-      "required_evidence": [
-        "Concrete payload schemas or discriminator branches for every PlanCompile artifact kind used by the runtime path.",
-        "Fixtures proving each artifact kind rejects generic or placeholder payloads.",
-        "Trace from ApprovedPlanPack and PlanApproved to PlanCompileRun, WorkGraph draft, WorkNodeRequest, Executor intake, activation, and certification receipts."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Plan_To_Node_Compilation.md#PNC-014",
-        "Plans/Plan_To_Node_Compilation.md#PNC-018",
-        "Plans/Plan_Document_System.md#PDS-016",
-        "Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract",
-        "Plans/execution_unit_context.schema.json",
-        "Plans/Contracts_V0.md#EventRecord",
-        "Plans/event_record.schema.json",
-        "Plans/storage-plan.md#2.2.5-eventrecord-persistence-boundary"
-      ],
-      "status": "open",
-      "summary": "PlanCompile and Planning Wizard contracts are not buildable until every runtime artifact has a concrete payload contract, producer, consumer, validator, receipt, retry route, rollback route, and executable proof path; schema-file existence alone is insufficient."
-    },
-    {
-      "acceptance_to_close": [
-        "Owner docs specify persistence owners, keys, transactional boundaries, and replay behavior.",
-        "Currentness and idempotency tests prove persistence behavior instead of only schema shape.",
-        "Buildability report records closed evidence refs for persistence lifecycle proof."
-      ],
-      "blocked_false_proofs": [
-        "source_preservation",
-        "semantic_closure",
-        "json_parse_success"
-      ],
-      "blocked_surfaces": [
-        "ApprovedPlanPack persistence",
-        "PlanApproved outbox",
-        "PlanCompileRun resume/restart",
-        "Goal Runtime certification receipts"
-      ],
-      "blocker_family": "persistence_materialization",
-      "blocker_id": "IRB-002",
-      "notes": "Tier 0C-1 closes only the EventRecord seglog/redb persistence-boundary slice. Tier 0C-2 closes only launch-critical storage value-schema registry materialization and defers non-critical families with owners/reopen conditions. IRB-002 remains open for replay/restart/currentness/idempotency fixtures, activation/testing persistence, provider/runtime lifecycle evidence, and broad redb-family materialization; this docs lane does not authorize creating runtime records.",
-      "owner_docs": [
-        "Plans/Planning_Wizard.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/storage-plan.md"
-      ],
-      "partial_closures": [
-        {
-          "evidence": [
-            "Plans/storage-plan.md#2.2.5-eventrecord-persistence-boundary",
-            "Plans/Contracts_V0.md#EventRecord",
-            "Plans/event_record.schema.json",
-            "scripts/pm-implementation-readiness.py validate"
-          ],
-          "remaining_scope": [
-            "ApprovedPlanPack persistence",
-            "PlanApproved transactional outbox persistence",
-            "PlanCompileRun replay and restart fixtures",
-            "Executor intake and activation receipt persistence",
-            "Goal Runtime certification receipt persistence",
-            "redb value schemas beyond EventRecord lookup/projection boundary",
-            "idempotency fixtures for duplicate Approve And Build delivery and PlanCompile resume"
-          ],
-          "scope": "event_record_persistence_boundary",
-          "status": "closed_for_tier_0c_1_only"
-        },
-        {
-          "evidence": [
-            "Plans/storage-plan.md#2.3.1-storage-value-schema-registry-tier-0c-2",
-            "Plans/storage_value_registry.schema.json",
-            "Plans/storage_value_registry.json",
-            "scripts/pm-implementation-readiness.py validate",
-            "scripts/pm-implementation-readiness.py self-test"
-          ],
-          "remaining_scope": [
-            "runtime replay and restart fixtures proving persisted PlanCompileRun recovery",
-            "idempotency fixtures for duplicate Approve And Build delivery and PlanCompile resume",
-            "activation and testing receipt persistence",
-            "provider stream payload persistence",
-            "currentness/CAS behavioral proof",
-            "full materialization of deferred GUI/provider/analytics/terminal/browser/project-state/worktree/permission storage families",
-            "runtime lifecycle certification",
-            "clean-room harness execution"
-          ],
-          "scope": "storage_value_registry_launch_critical_contracts",
-          "status": "closed_for_tier_0c_2_only"
-        }
-      ],
-      "required_evidence": [
-        "Durable storage lifecycle contract for each buildability artifact and receipt.",
-        "Replay and restart fixtures proving the same PlanCompileRun identity is recovered from persisted state.",
-        "Idempotency evidence for duplicate Approve And Build delivery and PlanCompile resume."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Planning_Wizard.md#PWIZ-014",
-        "Plans/Plan_To_Node_Compilation.md#PNC-010",
-        "Plans/storage-plan.md",
-        "Plans/storage-plan.md#2.2.5-eventrecord-persistence-boundary",
-        "Plans/storage-plan.md#2.3.1-storage-value-schema-registry-tier-0c-2",
-        "Plans/storage_value_registry.schema.json",
-        "Plans/storage_value_registry.json",
-        "Plans/Contracts_V0.md#EventRecord",
-        "Plans/event_record.schema.json"
-      ],
-      "status": "open",
-      "summary": "Buildability requires durable state, idempotency, transactional outbox, replay/restart, and receipt persistence for ApprovedPlanPack, PlanApproved, PlanCompileRun, compiler waves, Executor intake, activation, testing, and certification; preserved source lineage does not prove persistence behavior."
-    },
-    {
-      "acceptance_to_close": [
-        "Planning Wizard and UI wiring docs bind the command to buildability_gate_report.json.",
-        "Wiring validation checks disabled reason completeness, not merely row existence.",
-        "The buildability gate report is the source for blocker-family and owner-doc disabled copy."
-      ],
-      "blocked_false_proofs": [
-        "wiring_json_existence",
-        "command_catalog_presence",
-        "handler_location_shape"
-      ],
-      "blocked_surfaces": [
-        "Planning Wizard final review button",
-        "cmd.planning_wizard.approve_and_build",
-        "disabled_reason_projection",
-        "UI wiring matrix"
-      ],
-      "blocker_family": "gui_wiring",
-      "blocker_id": "IRB-003",
-      "notes": "A passing wiring schema check remains a prerequisite only; it is not behavioral buildability proof.",
-      "owner_docs": [
-        "Plans/Planning_Wizard.md",
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Wiring_Matrix.production.json"
-      ],
-      "required_evidence": [
-        "State projection fixture showing Approve And Build disabled when buildability_gate_passed=false.",
-        "Disabled reason fixture listing every open blocker_family and exact owner_docs from buildability_gate_report.json.",
-        "Command dispatch fixture proving the disabled control cannot emit PlanApproved or create/bind PlanCompileRun."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Planning_Wizard.md#PWIZ-010",
-        "Plans/Planning_Wizard.md#PWIZ-014",
-        "Plans/UI_Wiring_Rules.md#UIW-007"
-      ],
-      "status": "open",
-      "summary": "Approve And Build is not buildable from a wiring matrix row or command name alone; the GUI must consume the buildability gate report, keep the control disabled until the gate passes, and show blocker families plus exact owner docs in the disabled reason."
-    },
-    {
-      "acceptance_to_close": [
-        "Owner docs name exact permission checks and authority owners.",
-        "Negative security fixtures are executed by the clean-room harness.",
-        "Buildability gate report records the closed evidence refs and no longer lists security_boundary as open."
-      ],
-      "blocked_false_proofs": [
-        "validator_pass",
-        "contract_text_presence",
-        "semantic_closure"
-      ],
-      "blocked_surfaces": [
-        "Approve And Build actor authority",
-        "Executor intake authority",
-        "source-control preflight",
-        "provider credentials and trust"
-      ],
-      "blocker_family": "security_boundary",
-      "blocker_id": "IRB-004",
-      "notes": "Security readiness cannot be inferred from schema validity or source-lineage coverage.",
-      "owner_docs": [
-        "Plans/Planning_Wizard.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Permissions_System.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "required_evidence": [
-        "Permission and actor identity checks for approval, PlanCompile, Executor intake, source-control actions, and provider calls.",
-        "Negative fixtures proving unauthorized approval, stale credentials, missing trust, and destructive actions are rejected.",
-        "Security boundary receipts tied to PlanCompileRun and GoalCompletionReceipt certification."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Planning_Wizard.md#PWIZ-012",
-        "Plans/Plan_To_Node_Compilation.md#PNC-014",
-        "Plans/Permissions_System.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "status": "open",
-      "summary": "Buildability requires explicit actor identity, permission, source-control authority, trust, destructive-action, credential, and policy boundaries across Planning Wizard approval, PlanCompile, Executor intake, providers, and tests; validator green does not prove those boundaries execute."
-    },
     {
       "acceptance_to_close": [
         "Plans/.plan_index/node_readiness_report.json no longer reports blocked_runtime_certification_incomplete.",
@@ -669,213 +227,6 @@
       ],
       "status": "open",
       "summary": "PNC-019 keeps native runtime buildability disabled until an executable lifecycle certification harness proves Approve And Build through PlanCompile, Executor intake, activation, queued entrypoint, Orchestrator projection, testing evidence, cancellation/restart, and negative-case rejection."
-    },
-    {
-      "acceptance_to_close": [
-        "Provider stream owner docs name the runtime proof route and evidence refs.",
-        "Clean-room harness exercises provider-stream positive and negative cases or marks them explicitly simulated with policy approval.",
-        "Buildability gate report closes provider_stream only with concrete execution evidence."
-      ],
-      "blocked_false_proofs": [
-        "provider_catalog_presence",
-        "route_doc_presence",
-        "currentness_note"
-      ],
-      "blocked_surfaces": [
-        "PlanCompile provider resolution",
-        "assistant/provider stream execution",
-        "model/account health",
-        "test and repair provider calls"
-      ],
-      "blocker_family": "provider_stream",
-      "blocker_id": "IRB-006",
-      "notes": "Current provider version notes remain currentness inputs, not implementation proof.",
-      "owner_docs": [
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Multi-Account.md",
-        "Plans/Provider_OpenCode.md",
-        "Plans/Plan_To_Node_Compilation.md"
-      ],
-      "required_evidence": [
-        "Provider stream fixture proving requested/effective account, model, auth, cancellation, retry, quota, degraded, and evidence behavior.",
-        "Negative fixtures for missing credentials, stale discovery, unavailable provider, and interrupted stream.",
-        "Receipts tying provider stream outcomes to PlanCompile stage cards and repair/test evidence."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Multi-Account.md",
-        "Plans/Provider_OpenCode.md",
-        "Plans/Plan_To_Node_Compilation.md#PNC-016"
-      ],
-      "status": "open",
-      "summary": "Buildability requires provider/model/auth stream behavior, quota/error/degraded-state handling, cancellation, retries, and evidence capture for the providers used by PlanCompile and verification; provider catalog or route documentation alone is not enough."
-    },
-    {
-      "acceptance_to_close": [
-        "PlanUnits distinguish lineage-preservation acceptance from behavioral acceptance.",
-        "Progression gates block fake or preservation-only acceptance for buildability claims.",
-        "Buildability report closes this family only after behavioral acceptance evidence is attached."
-      ],
-      "blocked_false_proofs": [
-        "source_preservation_acceptance",
-        "plan_unit_presence",
-        "semantic_closure"
-      ],
-      "blocked_surfaces": [
-        "ApprovedPlanPack behavioral acceptance",
-        "PlanCompile stage acceptance",
-        "Wizard disabled-state acceptance",
-        "testing evidence"
-      ],
-      "blocker_family": "behavioral_acceptance",
-      "blocker_id": "IRB-007",
-      "notes": "This blocker prevents ledger/source-preservation success from becoming implementation-ready by vocabulary drift.",
-      "owner_docs": [
-        "Plans/Planning_Wizard.md",
-        "Plans/Progression_Gates.md",
-        "Plans/Automated_Testing_System.md",
-        "Plans/Plan_Document_System.md"
-      ],
-      "required_evidence": [
-        "Behavioral acceptance criteria that name observable outcomes, events, state transitions, failures, and evidence artifacts.",
-        "Tests or clean-room scenarios proving preservation-only acceptance is not counted as behavioral completion.",
-        "Audit rule that blocks buildability when acceptance criteria only say source atoms were preserved."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Planning_Wizard.md#PWIZ-012",
-        "Plans/Progression_Gates.md#PG-059",
-        "Plans/Plan_Document_System.md#PDS-016"
-      ],
-      "status": "open",
-      "summary": "Preservation-only acceptance criteria prove lineage, not behavior. Buildability requires executable behavioral acceptance for user-visible and runtime outcomes, including disabled controls, PlanCompile transitions, tests, failures, and receipts."
-    },
-    {
-      "acceptance_to_close": [
-        "Structural checks prove buildability prerequisites, not merely plan-governance shape.",
-        "Known import guardrails and owner placeholders are closed or explicitly out of buildability scope.",
-        "Buildability report records closed structural evidence refs."
-      ],
-      "blocked_false_proofs": [
-        "plan_index_presence",
-        "semantic_closure",
-        "validator_pass"
-      ],
-      "blocked_surfaces": [
-        "PlanUnit build order",
-        "owner/doc completeness",
-        "handoff matrix structural integrity",
-        "PlanCompile stage dependencies"
-      ],
-      "blocker_family": "structural_integrity",
-      "blocker_id": "IRB-008",
-      "notes": "This blocker does not imply Plans are invalid; it only blocks implementation buildability.",
-      "owner_docs": [
-        "Plans/Plan_Document_System.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/Progression_Gates.md",
-        "Plans/00-plans-index.md"
-      ],
-      "required_evidence": [
-        "Current dependency and owner-routing audit proving no unresolved implementation owner/doc holes remain.",
-        "Executable-order graph proof for buildable units and stage dependencies.",
-        "Negative fixtures rejecting empty target docs, placeholder owners, duplicate/generic payloads, and cycle leakage."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Plan_Document_System.md#PDS-018",
-        "Plans/Plan_To_Node_Compilation.md#PNC-003",
-        "Plans/Progression_Gates.md#PG-058"
-      ],
-      "status": "open",
-      "summary": "Buildability requires acyclic executable order, no unresolved owner/doc placeholders, no empty target-doc rows, no generic payloads, and no hidden dependency gaps; a valid PlanUnit index or semantic closure registry alone cannot prove this."
-    },
-    {
-      "acceptance_to_close": [
-        "Every open or closed blocker row has exact owner docs and no candidate-only owner.",
-        "Plan and runtime retrieval exclude source-lineage-only documents as current implementation authority.",
-        "Buildability report closes owner_routing only after owner evidence is current."
-      ],
-      "blocked_false_proofs": [
-        "candidate_owner_presence",
-        "source_lineage_owner_hint",
-        "compatibility_doc_presence"
-      ],
-      "blocked_surfaces": [
-        "Wizard-to-PlanCompile ownership",
-        "UI disabled-reason ownership",
-        "schema and persistence ownership",
-        "retired/source-lineage exclusion"
-      ],
-      "blocker_family": "owner_routing",
-      "blocker_id": "IRB-009",
-      "notes": "Owner hints are not owner decisions.",
-      "owner_docs": [
-        "Plans/Plan_Document_System.md",
-        "Plans/00-plans-index.md",
-        "Plans/Planning_Wizard.md",
-        "Plans/UI_Wiring_Rules.md"
-      ],
-      "required_evidence": [
-        "Owner-routing matrix with exact current owner docs for each buildability responsibility.",
-        "Negative retrieval/search proof excluding retired compatibility docs from current implementation authority.",
-        "Disabled reasons list exact owner docs from blocker rows rather than generic domains."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Plan_Document_System.md#PDS-015",
-        "Plans/Plan_Document_System.md#PDS-017",
-        "Plans/00-plans-index.md"
-      ],
-      "status": "open",
-      "summary": "Buildability requires exact owner routing for every runtime, UI, schema, persistence, security, provider, acceptance, and harness responsibility. Candidate owners or compatibility/source-lineage docs cannot be treated as implementation authority."
-    },
-    {
-      "acceptance_to_close": [
-        "Currentness fields are verified in execution, not just named in docs.",
-        "Stale valid JSON and stale indexes are rejected by behavioral fixtures.",
-        "Buildability report records currentness proof refs and removes this open blocker."
-      ],
-      "blocked_false_proofs": [
-        "stale_json_valid",
-        "old_index_hash",
-        "validator_pass"
-      ],
-      "blocked_surfaces": [
-        "Approve And Build CAS",
-        "PlanCompile currentness preflight",
-        "project context snapshot",
-        "provider discovery",
-        "source-control preflight"
-      ],
-      "blocker_family": "currentness",
-      "blocker_id": "IRB-010",
-      "notes": "Currentness blocker remains open even when files parse and validators are green.",
-      "owner_docs": [
-        "Plans/Planning_Wizard.md",
-        "Plans/Plan_To_Node_Compilation.md",
-        "Plans/storage-plan.md",
-        "Plans/Progression_Gates.md"
-      ],
-      "required_evidence": [
-        "CAS/currentness fixture proving stale final-review inputs disable Approve And Build and route to refresh.",
-        "PlanCompile preflight fixture proving stale PlanUnit, acceptance, testing, project-context, provider, or source-control inputs are rejected.",
-        "Receipts recording refresh/revalidation before any PlanApproved or PlanCompileRun creation/binding."
-      ],
-      "schema_id": "pm.implementation_readiness.blocker.v1",
-      "severity": "hard_blocker",
-      "source_refs": [
-        "Plans/Planning_Wizard.md#PWIZ-014",
-        "Plans/Plan_To_Node_Compilation.md#PNC-014",
-        "Plans/Progression_Gates.md#PG-059"
-      ],
-      "status": "open",
-      "summary": "Buildability requires current PlanningRun, topic map, ApprovedPlanPack, PlanUnit index, acceptance index, testing policy, project context, source-control state, provider discovery, and final audit/closure inputs; stale-but-valid JSON cannot launch or certify a build."
     },
     {
       "acceptance_to_close": [
@@ -933,26 +284,35 @@
   ],
   "schema_id": "pm.implementation_readiness.buildability_gate_report.v1",
   "source_hashes": {
-    "Plans/.implementation_readiness/readiness_blockers.jsonl": "7e7f160d819dca5652be33a1c0bbd4690e42bf43eb65175319716e447f4be125",
-    "Plans/.implementation_readiness/readiness_matrix.json": "e0122b29f7abbec9d726ff87908ec0d37e2b0898e9a9537e9223f8fcfad743a9",
-    "Plans/.plan_index/node_readiness_report.json": "cc48b5c96deb023c723b87095cf20b5d67c5ed8deb45277cf5cf74193bcb075d",
-    "Plans/00-plans-index.md": "e45160a3bfdc59333e3ba09e8f54016d7df5fa000e8cb7280e2fb5addd786617",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.json": "75f093349681f59267347deef7ed0c9c8048ee0476406376ddc20965356a85ee",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json": "ac29cab335aaec41b9938d7aaa9d319d192c2a55b18532d0c99cc8bdd6e12047",
+    "Plans/.implementation_readiness/readiness_blockers.jsonl": "bccdb7098f9d81b8b4242d57e8f4d63af6d2a382d4eb0b3d9dd7b19f6386e655",
+    "Plans/.implementation_readiness/readiness_matrix.json": "e8353dd6c90df18f504e14c9a527c8e868f53a1428b7d8e35674ba21234b3b9d",
+    "Plans/.plan_index/node_readiness_report.json": "dc09d618be8dddb847175d5c02394d86d551bb9b334b3d1283257a097ba3d8ea",
+    "Plans/00-plans-index.md": "f099986e87f10a19b4224f856687f21a2890a61463cb226ea40cc5b6c13ca30d",
+    "Plans/CLI_Bridged_Providers.md": "f378e678d5026f04ed7692d91e16bddcfecee234cc66a7af465f15b8ec2ad415",
     "Plans/Contracts_V0.md": "64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530",
     "Plans/Executor_Protocol.md": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
-    "Plans/Plan_Document_System.md": "4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a",
+    "Plans/Multi-Account.md": "bbbb3f95b27e904ffc3172fe6d2bcaf876fe0d6c888961f8f11319923d1b762d",
+    "Plans/Permissions_System.md": "97ed251bf22bfe1db126a705f2e1042a4463a0f5cb4e033f72bec21f30a532f6",
+    "Plans/Plan_Document_System.md": "2b877c8321e049c0aab8fb6d3763d8e72471d91212a9402c449d9cf7b7dd1566",
     "Plans/Plan_To_Node_Compilation.md": "aae1bcd7b0585b1da5252a65a606d986e6d7de8a3541e527a2968eac4c9f7b7d",
     "Plans/Planning_Wizard.md": "7985705efd82ad41a95b883fee67580fde2b51fb3218dd4fa672d79bfcd2c421",
     "Plans/Progression_Gates.md": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785",
     "Plans/Prompt_Pipeline.md": "a3660ba6d7c9fa3f2e8d7cf7b481d31cc2f1bd584d2367fe58790b47d17d5d6f",
+    "Plans/Provider_OpenCode.md": "a12b718a45753bcde5cdc746dc48c75778ab92be98949edde5a9adb07c9849c9",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md": "dd39be33bb75ade2f1a0a6c352ec2b9a02cace2077e5d5e5e09f2e189553c0b4",
+    "Plans/UI_Command_Catalog.md": "b5a7bf1c16ef291183fdfd2c6dab1da887e32db411cc9b61ae090594244e8eed",
     "Plans/UI_Wiring_Rules.md": "13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb",
+    "Plans/Wiring_Matrix.production.json": "8f6f49ca265c946ece35db1588fde096c82c8d81da945d41a8fca3d72d34de78",
     "Plans/bootstrap/Codex_Prompts.md": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793",
     "Plans/event_record.schema.json": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
     "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
     "Plans/orchestrator-subagent-integration.md": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4",
     "Plans/storage-plan.md": "ad3f512795f628259dafc4e81b402f15adbfde16434e9548ea3b0101c41fb283",
     "Plans/storage_value_registry.json": "7fea3458141c04f2a7f4a03596afebda2f14a0b70b142a93c7d8907258c959b7",
-    "Plans/storage_value_registry.schema.json": "b727ce596727594fd136480c8a02072b20b2e7d1d48cb4363d4b94285a14b038",
-    "scripts/pm-implementation-readiness.py": "85499bb4980768c865f7382b0544cacfc707201711db685855d81226aff7cbc7",
+    "Plans/storage_value_registry.schema.json": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
+    "scripts/pm-implementation-readiness.py": "2126d8a59e35b5c69dbba4d15cce207e3ac21ebaec50efa5f18156c9b67e756b",
     "scripts/pm-plan-index.py": "6bcbd531c41b19d28a35d26cbda6d45ba12a3866d31261f1f9fa6049f5ab0f32",
     "scripts/pm-plans-verify.py": "fdcd4cbd48468a783cbef789ddb06ebcc050eb71d69384f6a22cf80230ebf847"
   },

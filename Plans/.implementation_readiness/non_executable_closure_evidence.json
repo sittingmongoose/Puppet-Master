@@ -1,0 +1,719 @@
+{
+  "schema_id": "pm.implementation_readiness.non_executable_closure_evidence.v1",
+  "schema_version": "1.0.0",
+  "updated_at_utc": "2026-07-06T21:10:00Z",
+  "scope": "spec_schema_validator_fixture_only_no_runtime_artifact_emission",
+  "buildability_policy": {
+    "buildability_gate_passed_must_remain_false": true,
+    "ordinary_product_worknodes_allowed": false,
+    "ordinary_product_nodeseeds_allowed": false,
+    "pnc019_executable_lifecycle_certification_required": true
+  },
+  "forbidden_artifact_counts": {
+    "worknodes": 0,
+    "nodeseeds": 0,
+    "candidates": 0,
+    "queues": 0,
+    "manifests": 0,
+    "implementation_files": 0,
+    "runtime_launches": 0,
+    "production_build_tasks": 0
+  },
+  "closed_blocker_families": [
+    "contract_materialization",
+    "persistence_materialization",
+    "provider_stream",
+    "security_boundary",
+    "gui_wiring",
+    "behavioral_acceptance",
+    "structural_integrity",
+    "owner_routing",
+    "currentness"
+  ],
+  "remaining_blocker_families": [
+    "runtime_lifecycle",
+    "clean_room_harness"
+  ],
+  "closure_records": [
+    {
+      "blocker_family": "contract_materialization",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/Contracts_V0.md#CV-309",
+        "Plans/event_record.schema.json",
+        "Plans/plans_to_code_handoff.schema.json",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/event_payload_contract_registry",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/plancompile_artifact_payload_registry"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-implementation-readiness.py validate",
+        "python3 scripts/pm-implementation-readiness.py self-test"
+      ],
+      "remaining_boundary": "Executable lifecycle payload emission remains blocked by PNC-019 and clean-room harness proof."
+    },
+    {
+      "blocker_family": "persistence_materialization",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/storage-plan.md#SP-230",
+        "Plans/storage-plan.md#SP-231",
+        "Plans/storage_value_registry.schema.json",
+        "Plans/storage_value_registry.json",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/persistence_behavior_fixtures"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-implementation-readiness.py validate",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+      ],
+      "remaining_boundary": "Runtime replay, restart, activation, and receipt execution remain PNC-019 harness targets."
+    },
+    {
+      "blocker_family": "provider_stream",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Multi-Account.md",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/provider_stream_contract"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-implementation-readiness.py validate"
+      ],
+      "remaining_boundary": "Provider stream execution receipts are still part of the executable PNC-019 clean-room certification path."
+    },
+    {
+      "blocker_family": "security_boundary",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/Permissions_System.md#PS-127",
+        "Plans/Permissions_System.md#PS-128",
+        "Plans/Permissions_System.md#PS-129",
+        "Plans/Contracts_V0.md#CV-309",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/security_boundary_fixtures"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-implementation-readiness.py validate"
+      ],
+      "remaining_boundary": "Executable rejection receipts remain PNC-019 clean-room certification evidence."
+    },
+    {
+      "blocker_family": "gui_wiring",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/UI_Wiring_Rules.md#UIW-009",
+        "Plans/UI_Command_Catalog.md#cmd.planning_wizard.approve_and_build",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/.implementation_readiness/buildability_gate_report.json",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/gui_wiring_contract"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-implementation-readiness.py validate"
+      ],
+      "remaining_boundary": "Rendered Slint control and dispatcher execution receipts remain PNC-019 harness targets."
+    },
+    {
+      "blocker_family": "behavioral_acceptance",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-012",
+        "Plans/Progression_Gates.md#PG-059",
+        "Plans/Plan_Document_System.md#PDS-019",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/behavioral_acceptance_contract"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-implementation-readiness.py validate"
+      ],
+      "remaining_boundary": "Executable behavioral evidence remains required before PNC-019 certification can pass."
+    },
+    {
+      "blocker_family": "structural_integrity",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/Plan_Document_System.md#PDS-019",
+        "Plans/Plan_To_Node_Compilation.md#PNC-021",
+        "Plans/Progression_Gates.md#PG-060",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/structural_integrity_contract"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-implementation-readiness.py validate"
+      ],
+      "remaining_boundary": "Structural closure is readiness-only and does not unlock runtime materialization."
+    },
+    {
+      "blocker_family": "owner_routing",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/00-plans-index.md",
+        "Plans/Plan_Document_System.md#PDS-015",
+        "Plans/Plan_Document_System.md#PDS-017",
+        "Plans/.implementation_readiness/readiness_matrix.json",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/owner_routing_contract"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-implementation-readiness.py validate",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness"
+      ],
+      "remaining_boundary": "Owner routing closure does not make source-lineage docs implementation authority."
+    },
+    {
+      "blocker_family": "currentness",
+      "status": "closed_non_executable_spec_schema_fixture",
+      "evidence_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-014",
+        "Plans/Plan_To_Node_Compilation.md#PNC-015",
+        "Plans/storage-plan.md#SP-231",
+        "Plans/Progression_Gates.md#PG-060",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json#/currentness_contract"
+      ],
+      "validator_refs": [
+        "python3 scripts/pm-implementation-readiness.py validate",
+        "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120"
+      ],
+      "remaining_boundary": "Live CAS and stale-input execution receipts remain PNC-019 certification targets."
+    }
+  ],
+  "event_payload_contract_registry": {
+    "event_record_owner": "Plans/Contracts_V0.md#CV-309",
+    "event_record_schema": "Plans/event_record.schema.json",
+    "consumer_rule": "Consumers store payload_schema_id plus payload or payload_ref and must not copy the EventRecord field set locally.",
+    "payload_contracts": [
+      {
+        "event_type": "planning.approval_cas_receipt.written",
+        "payload_schema_id": "pm.event_payload.planning.approval_cas_receipt_written.v1",
+        "payload_contract_ref": "Plans/Planning_Wizard.md#PWIZ-014",
+        "producer": "handlers::planning_wizard::approve_and_build",
+        "consumers": [
+          "PlanApproved outbox",
+          "PlanCompileRun recovery",
+          "audit evidence projector"
+        ],
+        "negative_fixture": "missing approval_cas_receipt or stale CAS hash rejects PlanApproved emission"
+      },
+      {
+        "event_type": "planning.plan_approved",
+        "payload_schema_id": "pm.event_payload.planning.plan_approved.v1",
+        "payload_contract_ref": "Plans/storage_value_registry.json#/families/1/value_schema",
+        "producer": "Planning Wizard approval transaction",
+        "consumers": [
+          "PlanCompileRun bootstrap reader",
+          "transactional outbox projector"
+        ],
+        "negative_fixture": "duplicate idempotency key returns existing PlanCompileRun identity"
+      },
+      {
+        "event_type": "plan_compile.run_created_or_bound",
+        "payload_schema_id": "pm.event_payload.plan_compile.run_created_or_bound.v1",
+        "payload_contract_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/plan_compile_run",
+        "producer": "PlanCompileRun bootstrap",
+        "consumers": [
+          "Orchestrator Plan Compile projection",
+          "Executor intake preflight"
+        ],
+        "negative_fixture": "runtime launch disabled unless PNC-019 executable lifecycle certification passes"
+      },
+      {
+        "event_type": "plan_compile.stage_receipt.recorded",
+        "payload_schema_id": "pm.event_payload.plan_compile.stage_receipt_recorded.v1",
+        "payload_contract_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/plan_compile_receipt",
+        "producer": "PlanCompile stage controller",
+        "consumers": [
+          "stage-card resume",
+          "audit evidence projector"
+        ],
+        "negative_fixture": "placeholder stage payload is rejected before receipt recording"
+      },
+      {
+        "event_type": "executor.intake_report.recorded",
+        "payload_schema_id": "pm.event_payload.executor.intake_report_recorded.v1",
+        "payload_contract_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/executor_intake_report",
+        "producer": "Executor intake",
+        "consumers": [
+          "activation transaction",
+          "Goal Runtime certifier"
+        ],
+        "negative_fixture": "missing authority or source-control preflight blocks activation"
+      },
+      {
+        "event_type": "provider.stream.event_recorded",
+        "payload_schema_id": "pm.event_payload.provider.stream_event_recorded.v1",
+        "payload_contract_ref": "Plans/.implementation_readiness/non_executable_closure_evidence.json#/provider_stream_contract",
+        "producer": "provider facade adapter",
+        "consumers": [
+          "PlanCompile provider stage",
+          "usage/cost projector",
+          "audit evidence projector"
+        ],
+        "negative_fixture": "raw provider chunk without account/auth/model refs is rejected"
+      },
+      {
+        "event_type": "testing.receipt.recorded",
+        "payload_schema_id": "pm.event_payload.testing.receipt_recorded.v1",
+        "payload_contract_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt",
+        "producer": "Automated Testing session",
+        "consumers": [
+          "Goal Runtime certifier",
+          "visible testing projection"
+        ],
+        "negative_fixture": "no-evidence visible test pass is rejected"
+      },
+      {
+        "event_type": "goal.receipt.recorded",
+        "payload_schema_id": "pm.event_payload.goal.receipt_recorded.v1",
+        "payload_contract_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt",
+        "producer": "Goal Runtime certifier",
+        "consumers": [
+          "Project_Output_Artifacts",
+          "Runtime Artifacts Panel",
+          "Orchestrator projection"
+        ],
+        "negative_fixture": "terminal receipt missing child receipts or source-control evidence is rejected"
+      }
+    ]
+  },
+  "plancompile_artifact_payload_registry": [
+    {
+      "artifact_kind": "approved_plan_pack",
+      "payload_schema_id": "pm.storage_value.approved_plan_pack.v1",
+      "schema_ref": "Plans/storage_value_registry.json#/families/0/value_schema",
+      "owner_doc": "Plans/Planning_Wizard.md#PWIZ-010",
+      "producer": "Planning Wizard final review",
+      "consumers": [
+        "PlanCompileRun bootstrap",
+        "implementation-readiness gate"
+      ],
+      "negative_fixture": "stale pack_hash or missing schema_version rejects approval"
+    },
+    {
+      "artifact_kind": "plan_compile_run",
+      "payload_schema_id": "pm.plans_to_code_handoff.plan_compile_run.v1",
+      "schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/plan_compile_run",
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-010",
+      "producer": "Planning Wizard approval transaction",
+      "consumers": [
+        "stage-card resume",
+        "Orchestrator Plan Compile projection"
+      ],
+      "negative_fixture": "missing status/current_stage/cursor blocks resume"
+    },
+    {
+      "artifact_kind": "compile_wave_contract",
+      "payload_schema_id": "pm.plans_to_code_handoff.compile_wave_contract.v1",
+      "schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/compile_wave_contract",
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-010",
+      "producer": "PlanCompile stage controller",
+      "consumers": [
+        "parent compiler",
+        "audit evidence projector"
+      ],
+      "negative_fixture": "child assignment without parent-only writeback is rejected"
+    },
+    {
+      "artifact_kind": "workgraph_draft",
+      "payload_schema_id": "pm.plans_to_code_handoff.workgraph_draft.v1",
+      "schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/workgraph_draft",
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-013",
+      "producer": "WorkGraph construction stage",
+      "consumers": [
+        "Executor intake preview",
+        "graph integrity audit"
+      ],
+      "negative_fixture": "cycle or empty certified graph blocks Executor intake"
+    },
+    {
+      "artifact_kind": "worknode_request",
+      "payload_schema_id": "pm.plans_to_code_handoff.worknode_request.v1",
+      "schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/worknode_request",
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-013",
+      "producer": "WorkNode request construction stage",
+      "consumers": [
+        "Executor intake",
+        "Automated Testing binding"
+      ],
+      "negative_fixture": "missing acceptance, authority, test binding, or source PlanUnit refs rejects request"
+    },
+    {
+      "artifact_kind": "executor_intake_report",
+      "payload_schema_id": "pm.plans_to_code_handoff.executor_intake_report.v1",
+      "schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/executor_intake_report",
+      "owner_doc": "Plans/Executor_Protocol.md",
+      "producer": "Executor intake",
+      "consumers": [
+        "activation transaction",
+        "Goal Runtime certification"
+      ],
+      "negative_fixture": "unsafe worktree, permission denial, or missing test capability blocks activation"
+    },
+    {
+      "artifact_kind": "test_run_receipt",
+      "payload_schema_id": "pm.plans_to_code_handoff.test_run_receipt.v1",
+      "schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt",
+      "owner_doc": "Plans/Automated_Testing_System.md",
+      "producer": "Automated Testing runner",
+      "consumers": [
+        "Goal Runtime certifier",
+        "auditor verification"
+      ],
+      "negative_fixture": "claimed pass without output/evidence refs is rejected"
+    },
+    {
+      "artifact_kind": "goal_completion_receipt",
+      "payload_schema_id": "pm.plans_to_code_handoff.goal_completion_receipt.v1",
+      "schema_ref": "Plans/plans_to_code_handoff.schema.json#/$defs/goal_completion_receipt",
+      "owner_doc": "Plans/Goal_Runtime_System.md",
+      "producer": "Goal Runtime certifier",
+      "consumers": [
+        "Project_Output_Artifacts",
+        "Orchestrator projection",
+        "buildability gate"
+      ],
+      "negative_fixture": "receipt without terminal child receipts and current source-control evidence is rejected"
+    }
+  ],
+  "provider_stream_contract": {
+    "owner_split": {
+      "facade_contract_owner": "Plans/CLI_Bridged_Providers.md",
+      "server_bridge_owner": "Plans/Provider_OpenCode.md",
+      "external_mapping_reference": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "account_and_auth_owner": "Plans/Multi-Account.md",
+      "event_envelope_owner": "Plans/Contracts_V0.md#CV-309",
+      "plancompile_consumer": "Plans/Plan_To_Node_Compilation.md#PNC-016"
+    },
+    "circular_owner_break": "Provider_Stream_Mapping_External_Reference_A2A is external-reference mapping only; canonical PM provider facade, account/auth, EventRecord, and PlanCompile ownership stays in the owner_split above.",
+    "event_kinds": [
+      "request_started",
+      "auth_state",
+      "model_resolution",
+      "text_delta",
+      "tool_use",
+      "tool_result",
+      "usage_update",
+      "diagnostic",
+      "retry_scheduled",
+      "quota_state",
+      "degraded_state",
+      "cancel_requested",
+      "cancelled",
+      "done",
+      "error"
+    ],
+    "required_refs": [
+      "actor_ref",
+      "requested_account_ref",
+      "effective_account_ref",
+      "requested_model_id",
+      "effective_model_id",
+      "provider_entry_id",
+      "credential_profile_ref",
+      "run_id",
+      "attempt_id",
+      "correlation_id",
+      "idempotency_key",
+      "redaction_profile"
+    ],
+    "chunk_contract": "text_delta chunks preserve provider ordering, sequence ids, chunk boundary, usage/cost observations when present, and payload_ref for oversized or binary evidence.",
+    "tool_call_contract": "tool_use/tool_result pairs enforce one result per tool_use_id, synthesize deterministic ids only when upstream omits them, and record orphan/truncated tool calls as diagnostic evidence.",
+    "cancellation_contract": "cancel_requested and cancelled are separate events; cancellation preserves partial output, attempt identity, and provider_attempt_ref when present.",
+    "retry_contract": "retry_scheduled records retry class, provider status/code, backoff, max retry budget, circuit-breaker state, and whether replay order differs from original provider order.",
+    "quota_error_degraded_contract": "quota_state, degraded_state, and error keep auth/account/model refs and distinguish provider-authoritative, bridge-observed, network, policy, unavailable, and redacted failure classes.",
+    "evidence_and_redaction": "Raw upstream observations are bounded, redacted, and persisted by payload_ref; raw secrets, tokens, API keys, OAuth values, and credential paths are forbidden in EventRecord payloads."
+  },
+  "persistence_behavior_fixtures": [
+    {
+      "fixture_id": "persist.replay_restart.plan_compile_run",
+      "kind": "replay_restart",
+      "given": "A materialized plan_compile_run value plus EventRecord sequence with PlanApproved and run_created_or_bound.",
+      "when": "The process restarts after stage-card resume but before Executor intake.",
+      "then": "The same PlanCompileRun identity, current_stage, cursor, last_green_hashes, and blockers are recovered without emitting a second PlanApproved.",
+      "negative_case": "Missing schema_version, mismatched pack_hash, or stale plan_unit_index_hash blocks resume.",
+      "owner_refs": [
+        "Plans/storage_value_registry.json#/families/2",
+        "Plans/Plan_To_Node_Compilation.md#PNC-010"
+      ]
+    },
+    {
+      "fixture_id": "persist.idempotent.duplicate_approve_and_build",
+      "kind": "idempotency",
+      "given": "Two Approve And Build deliveries with the same CAS inputs and deterministic idempotency key.",
+      "when": "The PlanApproved outbox already contains the first accepted delivery.",
+      "then": "The second delivery returns the existing PlanCompileRun id and records duplicate-safe evidence.",
+      "negative_case": "A changed PlanningRun revision or pack_hash produces stale CAS, not a second run.",
+      "owner_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-014",
+        "Plans/storage_value_registry.json#/families/1"
+      ]
+    },
+    {
+      "fixture_id": "persist.transactional_outbox.plan_approved",
+      "kind": "transactional_outbox",
+      "given": "Approval CAS succeeds and the outbox write, EventRecord append, and PlanCompileRun bind occur in one transaction boundary.",
+      "when": "A crash occurs after the EventRecord append but before projection update.",
+      "then": "Replay reconstructs the pending projection from seglog and does not lose or duplicate PlanApproved.",
+      "negative_case": "Projection-only success without EventRecord/outbox commit is rejected.",
+      "owner_refs": [
+        "Plans/storage-plan.md#SP-231",
+        "Plans/Contracts_V0.md#CV-309"
+      ]
+    },
+    {
+      "fixture_id": "persist.currentness.cas_rejects_stale_pack",
+      "kind": "currentness_cas",
+      "given": "Final review displayed pack hash, PlanningRun revision, topic map version, PlanUnit index hash, acceptance index hash, testing policy hash, and final closure hash.",
+      "when": "Any displayed value changes before approval.",
+      "then": "Approve And Build stays disabled or rejects with refresh/revalidation route and no PlanApproved.",
+      "negative_case": "Stale but schema-valid JSON cannot create or bind PlanCompileRun.",
+      "owner_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-014",
+        "Plans/Progression_Gates.md#PG-060"
+      ]
+    },
+    {
+      "fixture_id": "persist.activation_testing_receipts.ref_only",
+      "kind": "activation_testing_receipts",
+      "given": "Executor intake, activation, testing, source-control, and goal receipts are recorded by owner schemas.",
+      "when": "PlanCompile evidence is projected for certification.",
+      "then": "Receipts are linked by refs and hashes; secret-bearing bodies stay out of persisted values.",
+      "negative_case": "Inline credential, raw token, or no-evidence testing pass is rejected.",
+      "owner_refs": [
+        "Plans/plans_to_code_handoff.schema.json#/$defs/executor_intake_report",
+        "Plans/plans_to_code_handoff.schema.json#/$defs/test_run_receipt"
+      ]
+    }
+  ],
+  "security_boundary_fixtures": [
+    {
+      "fixture_id": "security.actor_identity.approval_scope",
+      "kind": "actor_identity",
+      "given": "Approve And Build payload has actor_ref, approval_scope_key, requested/effective account refs, and permission_snapshot_id.",
+      "when": "Actor or scope is missing, stale, or not authorized for the project/run.",
+      "then": "The approval is denied before PlanApproved emission.",
+      "negative_case": "A UI command with only a command_id and no actor/scope receipt is rejected.",
+      "owner_refs": [
+        "Plans/Permissions_System.md#PS-004",
+        "Plans/Permissions_System.md#PS-005",
+        "Plans/Planning_Wizard.md#PWIZ-014"
+      ]
+    },
+    {
+      "fixture_id": "security.credential_ref_only.provider_call",
+      "kind": "credential_ref_only",
+      "given": "Provider calls require credential_profile_ref or account_profile_ref plus redaction_profile.",
+      "when": "A payload attempts to store raw API key, OAuth token, credential path, or provider auth value.",
+      "then": "The payload is rejected by EventRecord/storage secret-key validation.",
+      "negative_case": "Secret-like keys that are not refs or hashes fail validation.",
+      "owner_refs": [
+        "Plans/Permissions_System.md#PS-119",
+        "Plans/Contracts_V0.md#CV-309",
+        "Plans/storage-plan.md#SP-231"
+      ]
+    },
+    {
+      "fixture_id": "security.provider_egress_ssrf.host_policy",
+      "kind": "provider_egress_ssrf",
+      "given": "Provider, plugin, MCP, container, browser, and worktree actions declare target host, network policy, trust state, and proxy mode.",
+      "when": "The target host is blocked, untrusted, link-local/private without policy, or mismatched to allowed egress scope.",
+      "then": "The action returns network_blocked_by_policy, host_unreachable, or host_untrusted and stores no provider request.",
+      "negative_case": "Generic network failure or adapter-private exception is invalid.",
+      "owner_refs": [
+        "Plans/Permissions_System.md#PS-017",
+        "Plans/Permissions_System.md#PS-128"
+      ]
+    },
+    {
+      "fixture_id": "security.command_approval_replay.preflight_revision",
+      "kind": "command_approval_replay",
+      "given": "A queued approval carries actor, target, approval class, preflight_revision, and expiry.",
+      "when": "Target identity, branch/head, worktree, workflow, container, or provider state changes before dispatch.",
+      "then": "The lease is invalidated and the action returns to blocked state.",
+      "negative_case": "Replaying a stale approval against a changed target is rejected.",
+      "owner_refs": [
+        "Plans/Permissions_System.md#PS-093",
+        "Plans/Permissions_System.md#PS-129"
+      ]
+    },
+    {
+      "fixture_id": "security.trust_destructive.plugin_container_worktree",
+      "kind": "trust_and_destructive_action",
+      "given": "Plugin/container/worktree execution surfaces declare executable trust, host policy, safe-point/rollback availability, and destructive-action class.",
+      "when": "Trust is degraded, safe point is missing, or destructive action lacks scoped confirmation.",
+      "then": "Dispatch is blocked before mutation and records the expected blocked reason.",
+      "negative_case": "Generic full-access mode cannot bypass domain-sensitive approval classes.",
+      "owner_refs": [
+        "Plans/Permissions_System.md#PS-017",
+        "Plans/Permissions_System.md#PS-092",
+        "Plans/Permissions_System.md#PS-127"
+      ]
+    }
+  ],
+  "gui_wiring_contract": {
+    "command_id": "cmd.planning_wizard.approve_and_build",
+    "catalog_ref": "Plans/UI_Command_Catalog.md#cmd.planning_wizard.approve_and_build",
+    "wiring_entries": [
+      "catalog.planning_wizard_approve_and_build",
+      "planning.wizard.final_review.approve_and_build"
+    ],
+    "handler_location": "handlers::planning_wizard::approve_and_build",
+    "state_selector": "state.commands.planning_wizard_approve_and_build.availability",
+    "disabled_reason_projection": "state.commands.planning_wizard_approve_and_build.disabled_reason",
+    "source_report": "Plans/.implementation_readiness/buildability_gate_report.json",
+    "required_args": [
+      "project_id",
+      "planning_run_id",
+      "planning_run_revision",
+      "topic_map_version",
+      "approved_plan_pack_id",
+      "pack_version",
+      "pack_hash",
+      "project_context_snapshot_hash",
+      "plan_unit_index_hash",
+      "acceptance_unit_index_hash",
+      "testing_policy_hash",
+      "final_audit_closure_hash",
+      "approval_actor_ref",
+      "idempotency_key"
+    ],
+    "result_contract": "approval_cas_receipt_ref plus plan_compile_run_id when enabled; disabled/error result never emits PlanApproved.",
+    "permission_scope": "permission_snapshot_id plus approval_scope_key for Planning Wizard final approval.",
+    "slint_bindings": [
+      "ApproveAndBuildButton.enabled := buildability_gate_report.buildability_gate_passed && permission_allowed && final_review_cas_current",
+      "ApproveAndBuildButton.tooltip/text := buildability_gate_report.approve_and_build_gate.disabled_reasons + hard_disabled_reasons",
+      "ApproveAndBuildButton.accessible_description := state.commands.planning_wizard_approve_and_build.disabled_reason"
+    ],
+    "failure_projections": [
+      "buildability_blocked.<family>",
+      "hard_disabled.PNC-019",
+      "approval.cas_stale",
+      "approval.permission_denied",
+      "approval.security_boundary_rejected"
+    ],
+    "disabled_dispatch_rule": "When disabled, the control cannot emit planning.plan_approved or plan_compile.run_created_or_bound."
+  },
+  "behavioral_acceptance_contract": {
+    "preservation_only_acceptance_allowed": false,
+    "required_dimensions": [
+      "observable outcome",
+      "state transition",
+      "EventRecord or receipt effect",
+      "negative rejection",
+      "evidence ref",
+      "owner contract ref"
+    ],
+    "implementation_targeted_acceptance_examples": [
+      "Approve And Build disabled state lists every open blocker family and exact owner docs from the buildability report.",
+      "Duplicate approval with identical CAS/idempotency returns the same PlanCompileRun identity.",
+      "Stale but schema-valid final review input rejects approval and routes to refresh."
+    ],
+    "lineage_only_terms": [
+      "source preserved",
+      "exact tokens retained",
+      "semantic closure passed"
+    ],
+    "lineage_only_terms_are_not_behavioral": true
+  },
+  "structural_integrity_contract": {
+    "dependency_graph_ref": "Plans/.plan_index/dependencies.json",
+    "node_readiness_ref": "Plans/.plan_index/node_readiness_report.json",
+    "required_checks": [
+      "true_cycle_component_count == 0",
+      "build_order_available == true",
+      "no candidate-owner-only closure rows",
+      "no placeholder owner docs in closed blocker evidence",
+      "no local EventRecord or execution_unit_context field redefinitions",
+      "closed payload artifacts resolve to owner schema refs",
+      "runtime_lifecycle and clean_room_harness remain open until executable evidence exists"
+    ],
+    "build_order_hazard_policy": "Cycle/build-order hazards block buildability but do not authorize WorkNode or NodeSeed creation from this repair lane."
+  },
+  "owner_routing_contract": {
+    "owner_matrix_source": "Plans/.implementation_readiness/readiness_matrix.json",
+    "closed_family_owner_docs_exact": true,
+    "candidate_owners_allowed_for_closed_rows": false,
+    "source_lineage_docs_current_authority": false,
+    "compatibility_docs_current_authority": false,
+    "responsibilities": [
+      {
+        "responsibility": "EventRecord envelope and payload dispatch",
+        "owners": [
+          "Plans/Contracts_V0.md",
+          "Plans/event_record.schema.json"
+        ]
+      },
+      {
+        "responsibility": "PlanCompile artifact payloads",
+        "owners": [
+          "Plans/Plan_To_Node_Compilation.md",
+          "Plans/plans_to_code_handoff.schema.json"
+        ]
+      },
+      {
+        "responsibility": "Persistence values and replay/currentness keys",
+        "owners": [
+          "Plans/storage-plan.md",
+          "Plans/storage_value_registry.json",
+          "Plans/storage_value_registry.schema.json"
+        ]
+      },
+      {
+        "responsibility": "Provider stream facade/account/auth",
+        "owners": [
+          "Plans/CLI_Bridged_Providers.md",
+          "Plans/Multi-Account.md",
+          "Plans/Provider_OpenCode.md"
+        ]
+      },
+      {
+        "responsibility": "Approve And Build command and disabled projection",
+        "owners": [
+          "Plans/Planning_Wizard.md",
+          "Plans/UI_Wiring_Rules.md",
+          "Plans/UI_Command_Catalog.md",
+          "Plans/Wiring_Matrix.production.json"
+        ]
+      },
+      {
+        "responsibility": "Security, permission, egress, destructive action, and trust boundaries",
+        "owners": [
+          "Plans/Permissions_System.md",
+          "Plans/Contracts_V0.md"
+        ]
+      }
+    ]
+  },
+  "currentness_contract": {
+    "cas_fields": [
+      "project_id",
+      "planning_run_id",
+      "planning_run_revision",
+      "topic_map_version",
+      "approved_plan_pack_id",
+      "pack_version",
+      "pack_hash",
+      "project_context_snapshot_hash",
+      "plan_unit_index_hash",
+      "acceptance_unit_index_hash",
+      "testing_policy_hash",
+      "final_audit_closure_hash",
+      "provider_discovery_hash",
+      "source_control_preflight_hash"
+    ],
+    "reject_stale_but_valid_json": true,
+    "refresh_routes": [
+      "final_review_refresh",
+      "bounded_revalidation",
+      "provider_discovery_refresh",
+      "source_control_preflight_refresh",
+      "testing_policy_refresh"
+    ],
+    "receipt_rule": "Any refresh/revalidation that changes a CAS field requires a successor ApprovedPlanPack or explicit stale rejection before PlanApproved can emit.",
+    "negative_cases": [
+      "old index hash",
+      "stale provider discovery",
+      "dirty or changed worktree head",
+      "changed testing policy",
+      "superseded final audit closure hash"
+    ]
+  }
+}

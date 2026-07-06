@@ -117,7 +117,7 @@
     {
       "path": "Plans/storage_value_registry.schema.json",
       "note": "Registry JSON Schema.",
-      "sha256": "b727ce596727594fd136480c8a02072b20b2e7d1d48cb4363d4b94285a14b038"
+      "sha256": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a"
     },
     {
       "path": "Plans/storage_value_registry.json",
@@ -127,17 +127,17 @@
     {
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
       "note": "Generated buildability report must remain blocked.",
-      "sha256": "c99cf73ddbdbec48a98ec8fcd85b4d9fc8bf9ac15e7c3acf305552e5195fc42d"
+      "sha256": "e72618d3fccab5dd618362276a95ee94dfe2a526a75507b29923d91067391fa1"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
       "note": "Node readiness report remains runtime-disabled.",
-      "sha256": "cc48b5c96deb023c723b87095cf20b5d67c5ed8deb45277cf5cf74193bcb075d"
+      "sha256": "dc09d618be8dddb847175d5c02394d86d551bb9b334b3d1283257a097ba3d8ea"
     },
     {
       "path": "Plans/Spec_Lock.json",
       "note": "Governance hash lock after refresh.",
-      "sha256": "0640135b41251c93f01ac21d7494b6fb3574748dfdce8faa57fbecd8ac0a9923"
+      "sha256": "8dbdf8bb3759040ed46f99dcf7eae79dcdf0631e464b439d7a0d0f1679c7cb78"
     }
   ],
   "checks": [
@@ -160,6 +160,16 @@
       "name": "no-node-artifacts-created",
       "result": "PASS",
       "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+    },
+    {
+      "name": "plan-index-validate",
+      "result": "PASS",
+      "details": "Plan index regenerated after PDS-020; validate reports plan_unit_count=5483, acceptance_unit_count=19702, node_readiness_status=blocked_runtime_certification_incomplete, no WorkNodes created, no NodeSeed candidates created."
+    },
+    {
+      "name": "implementation-readiness-non-executable-closure",
+      "result": "PASS",
+      "details": "Nine non-executable blocker families have exact closure evidence in Plans/.implementation_readiness/non_executable_closure_evidence.json; runtime_lifecycle and clean_room_harness remain open pending executable PNC-019 certification."
     }
   ]
 }

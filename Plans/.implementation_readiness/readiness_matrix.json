@@ -36,7 +36,9 @@
         "Plans/Plan_Document_System.md",
         "Plans/Planning_Wizard.md"
       ],
-      "required_proof": "Every runtime contract has concrete payload, validator, receipt, retry, rollback, and executable proof routing."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
     },
     {
       "blocker_family": "persistence_materialization",
@@ -45,7 +47,9 @@
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/storage-plan.md"
       ],
-      "required_proof": "Durable state, idempotency, transactional outbox, replay, restart, and receipt persistence are proven by fixtures."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
     },
     {
       "blocker_family": "gui_wiring",
@@ -55,7 +59,9 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/Wiring_Matrix.production.json"
       ],
-      "required_proof": "Approve And Build consumes the buildability report and shows blocker families plus exact owner docs while disabled."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
     },
     {
       "blocker_family": "security_boundary",
@@ -65,7 +71,9 @@
         "Plans/Permissions_System.md",
         "Plans/Contracts_V0.md"
       ],
-      "required_proof": "Actor identity, permission, credential, trust, source-control, destructive-action, and policy boundaries reject unsafe paths."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
     },
     {
       "blocker_family": "runtime_lifecycle",
@@ -76,17 +84,21 @@
         "Plans/Orchestrator_Page.md",
         "Plans/Automated_Testing_System.md"
       ],
-      "required_proof": "PNC-019 executable lifecycle certification proves Approve And Build through PlanCompile, Executor intake, activation, projection, testing, restart/cancel, and negative cases."
+      "required_proof": "Executable PNC-019 lifecycle and clean-room harness evidence with recorded receipts; static specs, schemas, fixtures, and validators are insufficient.",
+      "closure_level": "executable_pnc019_certification_only"
     },
     {
       "blocker_family": "provider_stream",
       "owner_docs": [
-        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
         "Plans/Multi-Account.md",
         "Plans/Provider_OpenCode.md",
         "Plans/Plan_To_Node_Compilation.md"
       ],
-      "required_proof": "Provider/account/model/auth stream behavior, degraded paths, cancellation, retries, quota, and evidence capture are exercised."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+      "provider_stream_external_reference": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
     },
     {
       "blocker_family": "behavioral_acceptance",
@@ -96,7 +108,9 @@
         "Plans/Automated_Testing_System.md",
         "Plans/Plan_Document_System.md"
       ],
-      "required_proof": "Acceptance names observable behavior, state transitions, events, failures, and evidence; preservation-only acceptance is excluded."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
     },
     {
       "blocker_family": "structural_integrity",
@@ -106,7 +120,9 @@
         "Plans/Progression_Gates.md",
         "Plans/00-plans-index.md"
       ],
-      "required_proof": "Executable-order, dependency, owner, placeholder, payload, and graph integrity are proven beyond index existence."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
     },
     {
       "blocker_family": "owner_routing",
@@ -116,7 +132,9 @@
         "Plans/Planning_Wizard.md",
         "Plans/UI_Wiring_Rules.md"
       ],
-      "required_proof": "Every buildability responsibility has exact current owner docs; source-lineage and compatibility docs are excluded as current authority."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
     },
     {
       "blocker_family": "currentness",
@@ -126,7 +144,9 @@
         "Plans/storage-plan.md",
         "Plans/Progression_Gates.md"
       ],
-      "required_proof": "CAS/currentness rejects stale but valid PlanningRun, pack, index, testing, project context, provider, and source-control inputs."
+      "required_proof": "Owner-routed specs, schema refs, validator coverage, and positive/negative fixture contracts exist for this family; runtime execution proof remains owned by runtime_lifecycle and clean_room_harness.",
+      "closure_level": "non_executable_spec_schema_validator_fixture",
+      "closure_evidence": "Plans/.implementation_readiness/non_executable_closure_evidence.json"
     },
     {
       "blocker_family": "clean_room_harness",
@@ -136,7 +156,8 @@
         "Plans/Planning_Wizard.md",
         "Plans/Progression_Gates.md"
       ],
-      "required_proof": "Executable clean-room positive and adversarial lifecycle harness passes with receipts; static scenario lists remain targets only."
+      "required_proof": "Executable PNC-019 lifecycle and clean-room harness evidence with recorded receipts; static specs, schemas, fixtures, and validators are insufficient.",
+      "closure_level": "executable_pnc019_certification_only"
     }
   ],
   "false_proof_guardrails": [
@@ -204,6 +225,14 @@
     "Plans/.implementation_readiness/buildability_gate_report.json": {
       "status": "governed_generated_consumer_report",
       "handling": "Regenerate with python3 scripts/pm-implementation-readiness.py generate; do not hand-edit; register the current generated report in Plans/Spec_Lock.json during governance seal."
+    },
+    "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json": {
+      "status": "governed_canonical_closure_evidence_schema",
+      "handling": "Human-updated readiness schema; register in Plans/Spec_Lock.json during governance seal."
+    },
+    "Plans/.implementation_readiness/non_executable_closure_evidence.json": {
+      "status": "governed_canonical_non_executable_closure_evidence",
+      "handling": "Human-updated readiness evidence; closes only non-executable spec/schema/fixture blocker rows and must not be used as PNC-019 executable proof."
     }
   },
   "wizard_gate_contract": {
@@ -214,5 +243,38 @@
     "must_list_exact_owner_docs": true,
     "pnc_019_is_hard_disabled_reason_only_when_node_readiness_hard_disabled": true,
     "source_report": "Plans/.implementation_readiness/buildability_gate_report.json"
+  },
+  "non_executable_closure_policy": {
+    "schema_id": "pm.implementation_readiness.non_executable_closure_policy.v1",
+    "evidence_artifact": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+    "schema_artifact": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+    "closed_status_scope": "closed_non_executable_spec_schema_validator_fixture_only",
+    "closed_families": [
+      "contract_materialization",
+      "persistence_materialization",
+      "provider_stream",
+      "security_boundary",
+      "gui_wiring",
+      "behavioral_acceptance",
+      "structural_integrity",
+      "owner_routing",
+      "currentness"
+    ],
+    "remaining_executable_proof_families": [
+      "runtime_lifecycle",
+      "clean_room_harness"
+    ],
+    "proof_semantics": "Closed non-executable families prove owner-routed specs, schemas, validators, and negative/positive fixture contracts only. They do not prove runtime execution, rendered GUI dispatch, provider calls, activation, testing execution, or clean-room lifecycle behavior.",
+    "buildability_rule": "buildability_gate_passed remains false while runtime_lifecycle or clean_room_harness is open, while PNC-019 hard-disabled is present, or while executable_lifecycle_certification_complete is false.",
+    "forbidden_scope": [
+      "ordinary product WorkNodes",
+      "NodeSeeds",
+      "candidates",
+      "queues",
+      "manifests",
+      "implementation files",
+      "runtime launches",
+      "production build tasks"
+    ]
   }
 }
