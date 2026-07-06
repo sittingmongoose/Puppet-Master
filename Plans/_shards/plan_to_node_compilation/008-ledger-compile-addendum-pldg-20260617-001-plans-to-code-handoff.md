@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L572-L979
+Source lines: L572-L981
 
-Source SHA256: `251de9d43cc5b0c5a19649e338bb296b6fd7c5e189171315196847f636ddbd0e`
+Source SHA256: `aae1bcd7b0585b1da5252a65a606d986e6d7de8a3541e527a2968eac4c9f7b7d`
 
 ---
 
@@ -263,6 +263,8 @@ owner_hints:
   - Plans/Executor_Protocol.md
   - Plans/Contracts_V0.md
 ```
+
+Persisted PlanCompile, handoff, and certification events consume the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord` and `Plans/event_record.schema.json`. This document may name event semantics, receipts, and PlanCompile artifacts, but it must not copy the EventRecord field set or treat EventRecord schema materialization as runtime enablement.
 
 ### PNC-014 - Plans-To-Code Handoff Matrix And Schema Boundary
 

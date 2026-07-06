@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16025-L16279
+Source lines: L16045-L16370
 
-Source SHA256: `77b03422fed794c3fcb807b815cba8455acdbccf8ab76d842f86a980735a9022`
+Source SHA256: `3e47688cac83928d9ce1e6e39ce627a4cd5e945975bea34233d3e60380d86ddb`
 
 ---
 
@@ -262,4 +262,75 @@ pm_current_coverage: FinalGUISpec and storage-plan include terminal projection t
 pm_gap_or_delta: PM needs a cross-runtime resource governor with explicit limits and cleanup for GUI renderer, PTY terminal, agents, MCP, browser/device sessions, file watchers, logs, memory stores, and helper processes.
 proposal_or_recommendation: 'Define RuntimeResourceGovernor: memory budgets, queue budgets, process pools, stale helper reaper, file-watcher caps, terminal scrollback/transcript retention, MCP transport cleanup, crash snapshot budget, low-memory degradation mode, and GUI-visible resource alerts.'
 compile_disposition: create_new_planunit
+```
+
+### SP-230 - EventRecord Persistence Boundary
+
+```yaml
+plan_unit_id: SP-230
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  storage-plan owns the EventRecord persistence boundary for the canonical
+  pm.event.v0 envelope in Plans/Contracts_V0.md#EventRecord and
+  Plans/event_record.schema.json. Seglog is the authoritative append-only
+  MessagePack EventRecord store; redb may store rebuildable checkpoints,
+  projections, idempotency indexes, and event_record_index.v1 lookup rows that
+  point back to seglog. Replay ordering uses segment generation, segment order,
+  byte offset, and sequence_id rather than timestamps. Stored values require
+  schema_version, reject unsupported schema_id/schema_version pairs, use
+  event_id and idempotency_key according to replay_policy, preserve
+  redaction/no-secret rules, and migrate legacy EventEnvelopeV1 type values into
+  EventRecord event_type with migration metadata.
+gui_related: false
+gui_classification_reason: This unit defines storage value encoding, replay, and projection boundaries, not GUI presentation.
+depends_on: [SP-001, CV-309]
+unblocks: []
+acceptance_criteria:
+  - Seglog remains the canonical EventRecord source of truth and redb remains projection/index/checkpoint storage.
+  - EventRecord values are MessagePack encoded and conform to Plans/event_record.schema.json.
+  - redb event lookup rows carry schema_id, schema_version, event_type, segment refs, offset, payload hash, idempotency, and causality refs while pointing back to seglog.
+  - Replay order is deterministic and not timestamp-derived.
+  - Legacy EventEnvelopeV1 is compatibility input only and new writers emit EventRecord.
+  - This is partial closure for EventRecord persistence only; not all redb value schemas or payload schemas are materialized.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120
+risk_class: event_record_storage_boundary_drift
+reasoning_tier: high
+context_scope: event_record_persistence_boundary
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+  - scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: event_record_persistence_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - chat:2026-07-06-tier-0c-1-eventrecord-storage-boundary
+preserved_exact_tokens:
+  - "`EventRecord`"
+  - "`pm.event.v0`"
+  - "`schema_version`"
+  - "`event_record_index.v1:{project_id}:{sequence_id}:{event_id}`"
+  - "`event_id`"
+  - "`idempotency_key`"
+  - "`sequence_id`"
+  - "`event_type`"
+  - "`EventEnvelopeV1`"
+negative_constraints:
+  - Do not treat redb projections or lookup rows as a second mutable EventRecord source of truth.
+  - Do not infer schema shape from event_type when schema_id or schema_version is missing or unsupported.
+  - Do not use timestamps as replay ordering or duplicate-delivery proof.
+  - Do not store raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets in EventRecord values.
+  - Do not claim every redb family, event payload schema, provider stream, runtime lifecycle, clean-room harness, GUI wiring, security boundary, or behavioral acceptance path is complete from this EventRecord boundary.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this storage unit.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
 ```

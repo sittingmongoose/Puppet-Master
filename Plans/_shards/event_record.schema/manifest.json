@@ -1,0 +1,23 @@
+{
+  "generated_at_utc": "2026-07-06T18:22:50Z",
+  "index_path": "Plans/_shards/event_record.schema/00-index.md",
+  "index_sha256": "65bc8cc1a51040d6e2848a6b8391d59a29af416c49f9a37b0f5b6829b28a2b86",
+  "manifest_path": "Plans/_shards/event_record.schema/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-192",
+      "path": "Plans/_shards/event_record.schema/001-lines-1-192.md",
+      "sha256": "5f9ddf4e138be3734d146c440214aac73d1fb20c83a94eed1238697fb66ba470",
+      "shard_id": "001",
+      "source_line_end": 192,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 192,
+    "path": "Plans/event_record.schema.json",
+    "sha256": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d"
+  }
+}

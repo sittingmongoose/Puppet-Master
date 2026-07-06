@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19111-L19318
+Source lines: L19145-L19432
 
-Source SHA256: `95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3`
+Source SHA256: `64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530`
 
 ---
 
@@ -215,4 +215,84 @@ pm_current_coverage: Seglog/redb/Tantivy design; exclusive writer lock; projecto
 pm_gap_or_delta: No explicit session prompt admission inbox/event family
 proposal_or_recommendation: Add SESSION-PROMPT-ADMISSION-INBOX events and idempotency semantics
 compile_disposition: create_new_planunit
+```
+
+### CV-309 - EventRecord Canonical Envelope
+
+```yaml
+plan_unit_id: CV-309
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 owns the canonical persisted EventRecord envelope for schema_id
+  pm.event.v0 and schema_version 1.0.0 through Plans/event_record.schema.json.
+  The envelope requires schema_id, schema_version, event_id, canonical
+  event_type, project/thread/run/node/attempt identity fields, actor and
+  requested/effective account refs, occurred/observed/persisted timestamps,
+  monotonic sequence fields, correlation and causation ids, idempotency_key,
+  payload_schema_id, payload and payload_ref dispatch fields, redaction_profile,
+  replay_policy, and closed migration metadata. Legacy type is a compatibility
+  alias for EventEnvelopeV1 only and must normalize to event_type before
+  EventRecord persistence.
+gui_related: false
+gui_classification_reason: This unit defines a persisted event schema envelope and storage contract boundary, not GUI presentation.
+depends_on: [CV-002, CV-087, CV-088]
+unblocks: []
+acceptance_criteria:
+  - Contracts_V0 contains canonical section 1.2 EventRecord for pm.event.v0.
+  - Plans/event_record.schema.json is Draft 2020-12, top-level closed, and requires schema_version.
+  - EventRecord uses event_type as the persisted field name; type remains compatibility-only.
+  - EventRecord forbids raw secrets and stores account-sensitive values only by reference.
+  - This unit closes only the EventRecord envelope slice and does not close provider_stream, runtime_lifecycle, clean_room_harness, GUI, security, behavioral, or broad storage blockers.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120
+risk_class: event_record_envelope_drift
+reasoning_tier: high
+context_scope: event_record_persistence_contract
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+  - Plans/storage-plan.md
+  - scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: event_record_envelope_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - chat:2026-07-06-tier-0c-1-eventrecord-envelope
+preserved_exact_tokens:
+  - "`EventRecord`"
+  - "`pm.event.v0`"
+  - "`schema_id`"
+  - "`schema_version`"
+  - "`event_id`"
+  - "`event_type`"
+  - "`type`"
+  - "`project_id`"
+  - "`thread_id`"
+  - "`run_id`"
+  - "`node_id`"
+  - "`attempt_id`"
+  - "`actor_ref`"
+  - "`requested_account_ref`"
+  - "`effective_account_ref`"
+  - "`sequence_id`"
+  - "`correlation_id`"
+  - "`causation_event_id`"
+  - "`idempotency_key`"
+  - "`payload_schema_id`"
+  - "`redaction_profile`"
+  - "`replay_policy`"
+negative_constraints:
+  - Do not persist `type` as a second top-level EventRecord field.
+  - Do not store raw secrets, tokens, passwords, credentials, API keys, OAuth values, or local machine secrets in EventRecord.
+  - Do not treat EventRecord schema materialization as proof that all event payload schemas, provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundaries, or behavioral acceptance are complete.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this contract unit.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+  - Plans/storage-plan.md
 ```

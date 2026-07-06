@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L97-L1137
+Source lines: L97-L1139
 
-Source SHA256: `1677ca9806380b86ba43c87112e9afbfef328ffbdd1a612a2b9914053bc9b27f`
+Source SHA256: `7985705efd82ad41a95b883fee67580fde2b51fb3218dd4fa672d79bfcd2c421`
 
 ---
 
@@ -19,6 +19,8 @@ Approval fails closed when any planning state, source pack, project context, top
 Successful approval atomically writes `approval_cas_receipt`, publishes `PlanApproved`, creates or binds exactly one `PlanCompileRun`, and returns the durable `plan_compile_run_id` synchronously. Projection reconciliation may show a pending launch shell in Orchestrator Plan Compile, but run identity itself may not be left to eventual projection. Duplicate delivery with the same CAS inputs and idempotency key returns the same `PlanCompileRun`.
 
 Planning Wizard and PlanApproved records consume `execution_unit_context` only through the Executor-owned contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`. They must not define a local context field list, must not persist an embedded context payload without `schema_version`, and must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets in the context payload.
+
+Persisted Planning Wizard approval, PlanApproved, and final-review events consume the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord` and `Plans/event_record.schema.json`. Planning Wizard owns approval behavior and CAS/idempotency semantics, but it must not copy the EventRecord field set or treat the EventRecord schema as permission to emit PlanCompile runtime artifacts.
 
 The Planning Wizard and PMConcept concept surface must not expose `START`, `BUILD`, `Start Chain`, or `Approve & Continue` as ordinary build-launch controls. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch authority; later controls are post-approval Plan Compile or runtime controls with scoped commands, disabled reasons, receipt effects, and stale-projection behavior.
 

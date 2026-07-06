@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L7-L30
+Source lines: L7-L31
 
-Source SHA256: `2d6142621ce666c50dbf0ed63daf63d22e9322dfcd71fc4c6654d98f739ee4d1`
+Source SHA256: `a8f9b4b77daec6226f1529dd796390d7e3d149ebf0b1834746ca9fd26392ac2f`
 
 ---
 
@@ -29,6 +29,7 @@ Source SHA256: `2d6142621ce666c50dbf0ed63daf63d22e9322dfcd71fc4c6654d98f739ee4d1
 - 2026-07-02: Refreshed Rust/Slint currentness routing: the active GUI/toolchain target is Rust stable 1.96.1 plus Slint 1.17.0 as verified from official stable release sources on 2026-07-02; PMConcept terminal transcripts and demo version strings are fixture/source-lineage only, and runtime implementation must reverify stable releases before code/build work.
 - 2026-07-05: Registered implementation-readiness buildability gates: `Plans/.implementation_readiness/readiness_blockers.jsonl` is the governed blocker registry, `Plans/.implementation_readiness/readiness_matrix.json` is the governed gate contract, `Plans/.implementation_readiness/buildability_gate_report.json` is the generated consumer report, and `scripts/pm-implementation-readiness.py` owns generation, validation, and fixture self-tests. These artifacts prevent source preservation, schema existence, wiring JSON existence, semantic closure, node-readiness reporting, or validators passing from being treated as proof of implementation buildability; `Approve And Build` remains disabled while open blockers remain or `Plans/.plan_index/node_readiness_report.json` reports a hard-disabled PNC-019 lifecycle boundary. This registration creates no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, production build tasks, or product repairs.
 - 2026-07-06: Registered Tier 0B `execution_unit_context` ownership: `Plans/Executor_Protocol.md` is the sole owner, `Plans/execution_unit_context.schema.json` carries schema_id `pm.execution_unit_context` and schema_version `1.0.0`, and Prompt Pipeline, Contracts_V0, storage-plan, orchestrator-subagent-integration, Plan_To_Node_Compilation, and Planning_Wizard consume the schema by reference. This registration does not close EventRecord, storage value schema, provider stream, runtime lifecycle, clean-room harness, GUI, or security blockers and creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, or product repairs.
+- 2026-07-06: Registered Tier 0C-1 `EventRecord` ownership: `Plans/Contracts_V0.md` §1.2 owns the canonical persisted `pm.event.v0` envelope, `Plans/event_record.schema.json` carries the Draft 2020-12 machine-readable schema with `schema_version = 1.0.0`, and `Plans/storage-plan.md` owns seglog/redb persistence, replay, retention, migration, legacy compatibility, and payload-schema registration boundaries. This is partial closure for the EventRecord envelope and storage value boundary only; it does not close provider stream, runtime lifecycle, clean-room harness, GUI, security, behavioral, or broad redb-family blockers and creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, or product repairs.
 
 This index is a navigation + canonicalization aid for the `Plans/` folder.
 It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.

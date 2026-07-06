@@ -59,7 +59,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 5256,
+      "line_count": 5258,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 66,
       "plan_unit_ids": [
@@ -196,7 +196,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "2d6142621ce666c50dbf0ed63daf63d22e9322dfcd71fc4c6654d98f739ee4d1",
+      "sha256": "a8f9b4b77daec6226f1529dd796390d7e3d149ebf0b1834746ca9fd26392ac2f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 66
@@ -2817,10 +2817,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 243,
+        "False": 244,
         "True": 65
       },
-      "heading_count": 444,
+      "heading_count": 446,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -2864,6 +2864,7 @@
         "Plans/assistant-memory-subsystem.md",
         "Plans/chain-wizard-flexibility.md",
         "Plans/chain-wizard.md",
+        "Plans/event_record.schema.json",
         "Plans/execution_unit_context.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/human-in-the-loop.md",
@@ -2884,11 +2885,12 @@
         "future inline visualizer bridge registry",
         "future notification delivery records",
         "future run receipts",
-        "future vision_bridge result records"
+        "future vision_bridge result records",
+        "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 19318,
+      "line_count": 19432,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 308,
+      "plan_unit_count": 309,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -3197,7 +3199,8 @@
         "CV-305",
         "CV-306",
         "CV-307",
-        "CV-308"
+        "CV-308",
+        "CV-309"
       ],
       "reasoning_tiers": [
         "high",
@@ -3299,6 +3302,7 @@
         "event_catalog_payload_owner_drift",
         "event_envelope_compatibility_break",
         "event_payload_schema_owner_split_drift",
+        "event_record_envelope_drift",
         "event_snapshot_drift",
         "event_table_underimplementation",
         "execution_boundary",
@@ -3512,10 +3516,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3",
+      "sha256": "64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 308
+        "accepted": 309
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -3524,6 +3528,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "requirement": 220,
+        "schema_contract": 1,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -3552,9 +3557,11 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "security receipts are visible and redacted.",
@@ -4220,7 +4227,7 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 6944,
+      "line_count": 6946,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 113,
       "plan_unit_ids": [
@@ -4361,7 +4368,7 @@
         "unsafe_runtime_activation",
         "unverified_execution_completion"
       ],
-      "sha256": "fb9aabd06d324fae90cd54c82bf189bbba1a8a8b785856b07cc0bfeb7f09608e",
+      "sha256": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 113
@@ -9704,7 +9711,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 1423,
+      "line_count": 1425,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -9753,7 +9760,7 @@
         "stale_or_forbidden_behavior",
         "static_fixture_false_certification"
       ],
-      "sha256": "251de9d43cc5b0c5a19649e338bb296b6fd7c5e189171315196847f636ddbd0e",
+      "sha256": "aae1bcd7b0585b1da5252a65a606d986e6d7de8a3541e527a2968eac4c9f7b7d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -9973,7 +9980,7 @@
         "future Planning Wizard output records",
         "future Planning Wizard source picker"
       ],
-      "line_count": 1526,
+      "line_count": 1528,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -10010,7 +10017,7 @@
         "stale_approval_build_race",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "1677ca9806380b86ba43c87112e9afbfef328ffbdd1a612a2b9914053bc9b27f",
+      "sha256": "7985705efd82ad41a95b883fee67580fde2b51fb3218dd4fa672d79bfcd2c421",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -11848,10 +11855,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 142,
+        "False": 143,
         "True": 87
       },
-      "heading_count": 368,
+      "heading_count": 370,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -11870,6 +11877,7 @@
         "Plans/Tools.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
+        "Plans/event_record.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/storage-plan.md",
         "future DiscoveryIndex",
@@ -11881,11 +11889,12 @@
         "future run receipts",
         "future sound asset records",
         "future taught memory records",
-        "future visualizer artifact records"
+        "future visualizer artifact records",
+        "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 16279,
+      "line_count": 16370,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 229,
+      "plan_unit_count": 230,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -12115,7 +12124,8 @@
         "SP-226",
         "SP-227",
         "SP-228",
-        "SP-229"
+        "SP-229",
+        "SP-230"
       ],
       "reasoning_tiers": [
         "high",
@@ -12124,6 +12134,7 @@
       "risk_classes": [
         "containerized_host_storage_drift",
         "dry_method_provenance_storage_gap",
+        "event_record_storage_boundary_drift",
         "execution_boundary",
         "goal_runtime_persistence_owner_gap",
         "goalrun_evidence_persistence_gap",
@@ -12141,16 +12152,17 @@
         "storage_plan_drift",
         "teach_memory_persistence_drift"
       ],
-      "sha256": "77b03422fed794c3fcb807b815cba8455acdbccf8ab76d842f86a980735a9022",
+      "sha256": "3e47688cac83928d9ce1e6e39ce627a4cd5e945975bea34233d3e60380d86ddb",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 228,
+        "accepted": 229,
         "retired": 1
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 228
+        "requirement": 228,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "127MB metadata fixture is rejected/segmented before UI or model context load.",
@@ -12180,8 +12192,10 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures"
       ]
     },
@@ -13261,7 +13275,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-06T17:17:53Z",
+  "generated_at_utc": "2026-07-06T18:22:43Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13269,13 +13283,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3097,
+      "False": 3099,
       "True": 2382
     },
-    "plan_unit_count": 5479,
+    "plan_unit_count": 5481,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5301,
+      "accepted": 5303,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13321,7 +13335,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 3,
+      "schema_contract": 5,
       "schema_mirror": 1,
       "selection_contract": 1,
       "selection_policy": 2,

@@ -711,6 +711,8 @@ Normative rules:
 - The high-level persona defaults remain policy defaults, not vague prompts: package overseer is biased toward package-local delivery and `/governance` readiness truth, seam overseer toward cross-package integration truth, node worker toward `/implementation` by language and `/framework/work`, verifier/`/reviewer` toward review, corroborator toward `/challenge`, recovery actor toward `/recovery`, and graph patch planner toward `/architecture`.
 - `auto` resolution must be explainable through an actor-type mapping. When `auto` selects an account/model/persona for an overseer or worker, the receipt records the resolved actor-type basis so overseer-heavy rewrite roles do not feel arbitrary.
 
+Persisted executor/runtime events consume the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord` and the machine-readable schema in `Plans/event_record.schema.json`. Executor-owned records may define event semantics and receipts, but they must not copy the EventRecord field set or store raw secrets in event payloads.
+
 ### Run-level deferred rule
 - if any node is runnable, the run remains active.
 - if no node is runnable and blocked, backoff, or prerequisite-waiting work exists, the run is deferred rather than terminal.

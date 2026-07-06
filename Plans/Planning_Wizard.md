@@ -106,6 +106,8 @@ Successful approval atomically writes `approval_cas_receipt`, publishes `PlanApp
 
 Planning Wizard and PlanApproved records consume `execution_unit_context` only through the Executor-owned contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`. They must not define a local context field list, must not persist an embedded context payload without `schema_version`, and must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets in the context payload.
 
+Persisted Planning Wizard approval, PlanApproved, and final-review events consume the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord` and `Plans/event_record.schema.json`. Planning Wizard owns approval behavior and CAS/idempotency semantics, but it must not copy the EventRecord field set or treat the EventRecord schema as permission to emit PlanCompile runtime artifacts.
+
 The Planning Wizard and PMConcept concept surface must not expose `START`, `BUILD`, `Start Chain`, or `Approve & Continue` as ordinary build-launch controls. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch authority; later controls are post-approval Plan Compile or runtime controls with scoped commands, disabled reasons, receipt effects, and stale-projection behavior.
 
 
