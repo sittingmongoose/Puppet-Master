@@ -215,23 +215,23 @@
       },
       {
         "path": "scripts/pm-implementation-readiness.py",
-        "sha256": "2126d8a59e35b5c69dbba4d15cce207e3ac21ebaec50efa5f18156c9b67e756b"
+        "sha256": "3a7676b9139e32f97bdf8ece95805f5ecb33d1b9e6f05d3b7cc58331d7c148e2"
       },
       {
         "path": "scripts/pm-plan-index.py",
-        "sha256": "6bcbd531c41b19d28a35d26cbda6d45ba12a3866d31261f1f9fa6049f5ab0f32"
+        "sha256": "f2af618bd35d1d347550d03f2f04e52f65b56e757da39e46e8ad2fe40023674c"
       },
       {
         "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
-        "sha256": "bccdb7098f9d81b8b4242d57e8f4d63af6d2a382d4eb0b3d9dd7b19f6386e655"
+        "sha256": "22e6390701305d391ae5a64b9934f1bd9b424c5c264178c334594e117bf8f63f"
       },
       {
         "path": "Plans/.implementation_readiness/readiness_matrix.json",
-        "sha256": "e8353dd6c90df18f504e14c9a527c8e868f53a1428b7d8e35674ba21234b3b9d"
+        "sha256": "9e11e8eb128c1f6e53743bffac1fcee242be2bb43ae276ff61352c4316df7897"
       },
       {
         "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-        "sha256": "e72618d3fccab5dd618362276a95ee94dfe2a526a75507b29923d91067391fa1"
+        "sha256": "bc673fac33c6ccba0db6b5efe7de8148a3ac3e3a658f2a815181a45ca9ffb51e"
       },
       {
         "path": "Plans/event_record.schema.json",
@@ -256,6 +256,18 @@
       {
         "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
         "sha256": "75f093349681f59267347deef7ed0c9c8048ee0476406376ddc20965356a85ee"
+      },
+      {
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json",
+        "sha256": "060eccb4993dd9185abdf8b567f893322fd2e0ef6dc2e1fa4c29268e6422ba62"
+      },
+      {
+        "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "sha256": "c1f075522273fe5983cb691c2a4df954ec8a67170b182ed3df2c2aaaadc3681c"
+      },
+      {
+        "path": "scripts/pm-pnc019-certification-harness.py",
+        "sha256": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896"
       }
     ],
     "hash_alg": "sha256"
@@ -344,7 +356,8 @@
     "storage_value_registry": "pm.storage_value_registry.v1",
     "test_strategy": "pm.test_strategy.schema.v1",
     "tool_contract": "pm.contracts.tools.v0",
-    "wiring_matrix": "pm.wiring_matrix.schema.v1"
+    "wiring_matrix": "pm.wiring_matrix.schema.v1",
+    "pnc019_certification_receipt": "pm.implementation_readiness.pnc019_certification_receipt.v1"
   },
   "spec_lock_update_protocol": {
     "canonical_doc": "Plans/Decision_Policy.md#spec-lock-update-protocol",

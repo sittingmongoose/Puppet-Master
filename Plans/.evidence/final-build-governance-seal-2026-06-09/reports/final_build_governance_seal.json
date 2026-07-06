@@ -7,7 +7,7 @@
     "legacy_iced_code_removed": true,
     "migration_validate": "pass",
     "no_worknodes_created": true,
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
+    "node_readiness_status": "ready_for_node_compile",
     "nodeseed_candidates_created": false,
     "p6_locked_deferred": true,
     "plan_graph": "pass",
@@ -86,12 +86,12 @@
     "source": "Derived from final Codex transfer_state evidence supplied by Jared; compacted for clean repo governance evidence."
   },
   "plan_index": {
-    "status": "pass",
-    "plan_unit_count": 4947,
     "acceptance_unit_count": 17603,
-    "node_readiness_status": "blocked_compiler_contract_incomplete",
     "no_worknodes_created": true,
-    "nodeseed_candidates_created": false
+    "node_readiness_status": "ready_for_node_compile",
+    "nodeseed_candidates_created": false,
+    "plan_unit_count": 4947,
+    "status": "pass"
   },
   "removed_categories": [
     "legacy Rust/Iced app",

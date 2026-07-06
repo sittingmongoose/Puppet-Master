@@ -21,11 +21,16 @@ MATRIX_PATH = READINESS_DIR / "readiness_matrix.json"
 REPORT_PATH = READINESS_DIR / "buildability_gate_report.json"
 CLOSURE_EVIDENCE_PATH = READINESS_DIR / "non_executable_closure_evidence.json"
 CLOSURE_EVIDENCE_SCHEMA_PATH = READINESS_DIR / "non_executable_closure_evidence.schema.json"
+PNC019_CERTIFICATION_RECEIPT_PATH = READINESS_DIR / "pnc019_certification_receipt.json"
+PNC019_CERTIFICATION_RECEIPT_SCHEMA_PATH = READINESS_DIR / "pnc019_certification_receipt.schema.json"
+PNC019_CERTIFICATION_HARNESS_PATH = ROOT / "scripts/pm-pnc019-certification-harness.py"
 NODE_READINESS_PATH = PLANS / ".plan_index/node_readiness_report.json"
 PLAN_UNITS_INDEX_PATH = PLANS / ".plan_index/plan_units.jsonl"
 DEPENDENCIES_INDEX_PATH = PLANS / ".plan_index/dependencies.json"
 PNC019_BOOTSTRAP_AUTHORITY_MODE = "pnc019_bootstrap_authority"
 PNC019_BOOTSTRAP_SCOPE = "pnc019_certification_harness_only"
+PNC019_CERTIFICATION_SCHEMA_ID = "pm.implementation_readiness.pnc019_certification_receipt.v1"
+PNC019_CERTIFICATION_SCHEMA_VERSION = "1.0.0"
 
 REQUIRED_FAMILIES = [
     "contract_materialization",
@@ -64,6 +69,83 @@ NON_EXECUTABLE_CLOSABLE_FAMILIES = [
 EXECUTABLE_PROOF_FAMILIES = ["runtime_lifecycle", "clean_room_harness"]
 CLOSURE_EVIDENCE_SCHEMA_ID = "pm.implementation_readiness.non_executable_closure_evidence.v1"
 CLOSURE_EVIDENCE_SCHEMA_VERSION = "1.0.0"
+REQUIRED_PNC019_POSITIVE_CASE_IDS = [
+    "fresh_run",
+    "duplicate_idempotency",
+    "restart_resume",
+    "cancellation",
+    "stale_cas_rejection",
+    "blocked_permission_security",
+    "provider_degraded_error",
+    "storage_replay_currentness",
+    "no_evidence_test_rejection",
+]
+REQUIRED_PNC019_NEGATIVE_CASE_IDS = [
+    "missing_schema_version",
+    "invalid_event_record",
+    "invalid_execution_unit_context",
+    "invalid_storage_value",
+    "raw_secret_credential",
+    "provider_stream_missing_refs",
+    "gui_disabled_bypass",
+    "graph_cycle",
+    "missing_behavioral_acceptance",
+    "static_only_proof",
+]
+REQUIRED_PNC019_LIFECYCLE_STEPS = [
+    "approved_plan_pack_intake",
+    "plan_approved_event_record",
+    "plan_compile_run_identity",
+    "workgraph_draft",
+    "worknode_request",
+    "executor_intake",
+    "activation_commit",
+    "queued_entrypoint",
+    "orchestrator_projection",
+    "testing_receipt",
+    "goal_receipt",
+]
+REQUIRED_PNC019_ARTIFACT_RECEIPTS = [
+    "approved_plan_pack",
+    "plan_approved_event",
+    "plan_compile_run",
+    "workgraph_draft",
+    "worknode_request",
+    "execution_unit_context",
+    "executor_intake_report",
+    "activation_receipt",
+    "queued_entrypoint_receipt",
+    "orchestrator_projection",
+    "testing_receipt",
+    "goal_receipt",
+]
+REQUIRED_PNC019_STORAGE_FAMILIES = [
+    "approved_plan_pack",
+    "plan_approved_outbox",
+    "plan_compile_run",
+    "compiler_wave_contract",
+    "workgraph_draft",
+    "worknode_request",
+    "executor_intake_report",
+    "attempt_receipt",
+    "event_record_index",
+    "blocked_projection",
+    "goal_receipt",
+]
+REQUIRED_PNC019_SOURCE_HASH_PATHS = [
+    "Plans/event_record.schema.json",
+    "Plans/execution_unit_context.schema.json",
+    "Plans/storage_value_registry.schema.json",
+    "Plans/storage_value_registry.json",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Progression_Gates.md",
+    "scripts/pm-pnc019-certification-harness.py",
+]
 REQUIRED_PLANCOMPILE_ARTIFACT_KINDS = [
     "approved_plan_pack",
     "plan_compile_run",
@@ -115,6 +197,8 @@ OWNER_DOCS = [
     "Plans/storage_value_registry.json",
     "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
     "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+    "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json",
+    "Plans/.implementation_readiness/pnc019_certification_receipt.json",
     "Plans/orchestrator-subagent-integration.md",
     "Plans/Prompt_Pipeline.md",
     "Plans/CLI_Bridged_Providers.md",
@@ -135,6 +219,7 @@ OWNER_DOCS = [
     "Plans/.plan_index/node_readiness_report.json",
     "scripts/pm-plan-index.py",
     "scripts/pm-implementation-readiness.py",
+    "scripts/pm-pnc019-certification-harness.py",
     "scripts/pm-plans-verify.py",
 ]
 
@@ -1116,7 +1201,7 @@ def event_record_consumer_local_definition_failures(path: Path, text: str) -> li
     return failures
 
 
-def event_record_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
+def event_record_contract_failures(actual_report: dict[str, Any], *, pnc019_certified: bool) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     contracts_path = PLANS / "Contracts_V0.md"
     if not contracts_path.exists():
@@ -1226,7 +1311,7 @@ def event_record_contract_failures(actual_report: dict[str, Any]) -> list[dict[s
 
     failures.extend(event_record_spec_lock_failures())
 
-    if actual_report.get("buildability_gate_passed") is True:
+    if actual_report.get("buildability_gate_passed") is True and not pnc019_certified:
         failures.append({"path": rel(REPORT_PATH), "error": "tier0c_event_record_unexpected_buildability_pass"})
 
     return failures
@@ -1725,7 +1810,7 @@ def storage_value_registry_data_failures(
     return failures
 
 
-def storage_value_registry_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
+def storage_value_registry_contract_failures(actual_report: dict[str, Any], *, pnc019_certified: bool) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     if not STORAGE_VALUE_REGISTRY_SCHEMA_PATH.exists():
         failures.append({"path": rel(STORAGE_VALUE_REGISTRY_SCHEMA_PATH), "error": "storage_value_registry_schema_missing"})
@@ -1772,7 +1857,7 @@ def storage_value_registry_contract_failures(actual_report: dict[str, Any]) -> l
     failures.extend(storage_value_registry_data_failures(registry, path_label=rel(STORAGE_VALUE_REGISTRY_PATH)))
     failures.extend(storage_value_registry_spec_lock_failures())
 
-    if actual_report.get("buildability_gate_passed") is True:
+    if actual_report.get("buildability_gate_passed") is True and not pnc019_certified:
         failures.append({"path": rel(REPORT_PATH), "error": "tier0c2_storage_value_registry_unexpected_buildability_pass"})
 
     return failures
@@ -1822,6 +1907,215 @@ def repo_ref_path_exists(ref: str) -> bool:
     return True
 
 
+def pnc019_ref_failures(refs: Any, *, path_label: str, field: str) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    if not isinstance(refs, list) or not refs:
+        return [{"path": path_label, "error": "pnc019_evidence_refs_missing_or_invalid", "field": field}]
+    for ref in refs:
+        if not isinstance(ref, str) or not ref:
+            failures.append({"path": path_label, "error": "pnc019_evidence_ref_invalid", "field": field, "ref": ref})
+            continue
+        if not repo_ref_path_exists(ref):
+            failures.append({"path": path_label, "error": "pnc019_evidence_ref_missing", "field": field, "ref": ref})
+    return failures
+
+
+def pnc019_certification_receipt_failures() -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    for path in [PNC019_CERTIFICATION_HARNESS_PATH, PNC019_CERTIFICATION_RECEIPT_SCHEMA_PATH, PNC019_CERTIFICATION_RECEIPT_PATH]:
+        if not path.exists():
+            failures.append({"path": rel(path), "error": "pnc019_certification_artifact_missing"})
+    if failures:
+        return failures
+
+    failures.extend(
+        schema_document_instance_failures(
+            schema_path=PNC019_CERTIFICATION_RECEIPT_SCHEMA_PATH,
+            instance_path=PNC019_CERTIFICATION_RECEIPT_PATH,
+            schema_label=rel(PNC019_CERTIFICATION_RECEIPT_SCHEMA_PATH),
+            instance_label=rel(PNC019_CERTIFICATION_RECEIPT_PATH),
+        )
+    )
+    try:
+        receipt = read_json(PNC019_CERTIFICATION_RECEIPT_PATH)
+    except Exception as exc:  # noqa: BLE001
+        return failures + [{"path": rel(PNC019_CERTIFICATION_RECEIPT_PATH), "error": "json_parse_failed", "detail": str(exc)}]
+
+    path_label = rel(PNC019_CERTIFICATION_RECEIPT_PATH)
+    if receipt.get("schema_id") != PNC019_CERTIFICATION_SCHEMA_ID:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "pnc019_certification_schema_id_mismatch",
+                "expected": PNC019_CERTIFICATION_SCHEMA_ID,
+                "actual": receipt.get("schema_id"),
+            }
+        )
+    if receipt.get("schema_version") != PNC019_CERTIFICATION_SCHEMA_VERSION:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "pnc019_certification_schema_version_mismatch",
+                "expected": PNC019_CERTIFICATION_SCHEMA_VERSION,
+                "actual": receipt.get("schema_version"),
+            }
+        )
+    if receipt.get("certification_id") != "PNC-019":
+        failures.append({"path": path_label, "error": "pnc019_certification_id_mismatch", "actual": receipt.get("certification_id")})
+    if receipt.get("status") != "pass":
+        failures.append({"path": path_label, "error": "pnc019_certification_status_not_pass", "actual": receipt.get("status")})
+
+    generated_by = receipt.get("generated_by", {})
+    if not isinstance(generated_by, dict) or generated_by.get("harness_path") != "scripts/pm-pnc019-certification-harness.py":
+        failures.append({"path": path_label, "error": "pnc019_harness_path_missing_or_invalid"})
+    scope_policy = receipt.get("scope_policy", {})
+    if not isinstance(scope_policy, dict):
+        failures.append({"path": path_label, "error": "pnc019_scope_policy_missing_or_invalid"})
+        scope_policy = {}
+    for field in ["harness_only_create_worknodes", "harness_only_create_nodeseeds", "ordinary_product_worknodes_allowed_by_harness"]:
+        if scope_policy.get(field) is not False:
+            failures.append(
+                {
+                    "path": path_label,
+                    "error": "pnc019_harness_policy_overbroad",
+                    "field": field,
+                    "expected": False,
+                    "actual": scope_policy.get(field),
+                }
+            )
+
+    ordinary_counts = receipt.get("ordinary_product_artifact_counts", {})
+    if not isinstance(ordinary_counts, dict):
+        failures.append({"path": path_label, "error": "pnc019_ordinary_product_counts_missing_or_invalid"})
+    else:
+        for field in ["worknodes", "nodeseeds", "queues", "manifests", "runtime_launches", "production_build_tasks"]:
+            if ordinary_counts.get(field) != 0:
+                failures.append(
+                    {
+                        "path": path_label,
+                        "error": "pnc019_ordinary_product_artifact_count_nonzero",
+                        "field": field,
+                        "actual": ordinary_counts.get(field),
+                    }
+                )
+
+    positive_cases = receipt.get("positive_cases", [])
+    negative_cases = receipt.get("negative_cases", [])
+    if not isinstance(positive_cases, list):
+        failures.append({"path": path_label, "error": "pnc019_positive_cases_missing_or_invalid"})
+        positive_cases = []
+    if not isinstance(negative_cases, list):
+        failures.append({"path": path_label, "error": "pnc019_negative_cases_missing_or_invalid"})
+        negative_cases = []
+
+    positive_by_id = {case.get("case_id"): case for case in positive_cases if isinstance(case, dict)}
+    negative_by_id = {case.get("case_id"): case for case in negative_cases if isinstance(case, dict)}
+    for case_id in REQUIRED_PNC019_POSITIVE_CASE_IDS:
+        case = positive_by_id.get(case_id)
+        if not isinstance(case, dict):
+            failures.append({"path": path_label, "error": "pnc019_positive_case_missing", "case_id": case_id})
+            continue
+        case_path = f"{path_label}#/positive_cases/{positive_cases.index(case)}"
+        if case.get("status") != "pass" or case.get("executed") is not True:
+            failures.append(
+                {
+                    "path": case_path,
+                    "error": "pnc019_positive_case_not_passed_or_not_executed",
+                    "case_id": case_id,
+                    "status": case.get("status"),
+                    "executed": case.get("executed"),
+                }
+            )
+        failures.extend(pnc019_ref_failures(case.get("evidence_refs"), path_label=case_path, field="evidence_refs"))
+
+    for case_id in REQUIRED_PNC019_NEGATIVE_CASE_IDS:
+        case = negative_by_id.get(case_id)
+        if not isinstance(case, dict):
+            failures.append({"path": path_label, "error": "pnc019_negative_case_missing", "case_id": case_id})
+            continue
+        case_path = f"{path_label}#/negative_cases/{negative_cases.index(case)}"
+        if case.get("status") != "pass" or case.get("executed") is not True or case.get("rejected") is not True:
+            failures.append(
+                {
+                    "path": case_path,
+                    "error": "pnc019_negative_case_not_rejected_or_not_executed",
+                    "case_id": case_id,
+                    "status": case.get("status"),
+                    "executed": case.get("executed"),
+                    "rejected": case.get("rejected"),
+                }
+            )
+        if not case.get("expected_error"):
+            failures.append({"path": case_path, "error": "pnc019_negative_case_expected_error_missing", "case_id": case_id})
+        forbidden_counts = case.get("emitted_forbidden_artifact_counts", {})
+        if not isinstance(forbidden_counts, dict):
+            failures.append({"path": case_path, "error": "pnc019_negative_case_forbidden_counts_missing", "case_id": case_id})
+        else:
+            for field in ["plan_approved_events", "plan_compile_runs", "worknode_requests", "activation_receipts"]:
+                if forbidden_counts.get(field) != 0:
+                    failures.append(
+                        {
+                            "path": case_path,
+                            "error": "pnc019_negative_case_forbidden_emission",
+                            "case_id": case_id,
+                            "field": field,
+                            "actual": forbidden_counts.get(field),
+                        }
+                    )
+        failures.extend(pnc019_ref_failures(case.get("evidence_refs"), path_label=case_path, field="evidence_refs"))
+
+    trace_steps = [
+        row.get("step_id")
+        for row in receipt.get("lifecycle_trace", [])
+        if isinstance(row, dict)
+    ]
+    if trace_steps != REQUIRED_PNC019_LIFECYCLE_STEPS:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "pnc019_lifecycle_trace_order_mismatch",
+                "expected": REQUIRED_PNC019_LIFECYCLE_STEPS,
+                "actual": trace_steps,
+            }
+        )
+    artifact_receipts = receipt.get("artifact_receipts", {})
+    if not isinstance(artifact_receipts, dict):
+        failures.append({"path": path_label, "error": "pnc019_artifact_receipts_missing_or_invalid"})
+        artifact_receipts = {}
+    for artifact_id in REQUIRED_PNC019_ARTIFACT_RECEIPTS:
+        if artifact_id not in artifact_receipts:
+            failures.append({"path": path_label, "error": "pnc019_required_artifact_receipt_missing", "artifact_id": artifact_id})
+
+    storage_summary = receipt.get("storage_validation_summary", {})
+    validated_family_ids = storage_summary.get("validated_family_ids", []) if isinstance(storage_summary, dict) else []
+    for family_id in REQUIRED_PNC019_STORAGE_FAMILIES:
+        if family_id not in validated_family_ids:
+            failures.append({"path": path_label, "error": "pnc019_storage_family_not_validated", "family_id": family_id})
+
+    source_hashes = receipt.get("source_hashes", {})
+    if not isinstance(source_hashes, dict):
+        failures.append({"path": path_label, "error": "pnc019_source_hashes_missing_or_invalid"})
+        source_hashes = {}
+    for path in REQUIRED_PNC019_SOURCE_HASH_PATHS:
+        target = ROOT / path
+        if not target.exists():
+            failures.append({"path": path_label, "error": "pnc019_source_hash_path_missing", "source_path": path})
+            continue
+        expected = sha256_file(target)
+        if source_hashes.get(path) != expected:
+            failures.append(
+                {
+                    "path": path_label,
+                    "error": "pnc019_source_hash_stale",
+                    "source_path": path,
+                    "expected": expected,
+                    "actual": source_hashes.get(path),
+                }
+            )
+    failures.extend(pnc019_ref_failures(receipt.get("evidence_refs"), path_label=path_label, field="evidence_refs"))
+    return failures
+
+
 def non_executable_closure_evidence_spec_lock_failures() -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     spec_lock_path = PLANS / "Spec_Lock.json"
@@ -1869,6 +2163,8 @@ def non_executable_closure_evidence_spec_lock_failures() -> list[dict[str, Any]]
 def non_executable_closure_evidence_failures(
     actual_report: dict[str, Any],
     blockers: list[dict[str, Any]],
+    *,
+    pnc019_certified: bool,
 ) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     if not CLOSURE_EVIDENCE_SCHEMA_PATH.exists():
@@ -2123,13 +2419,14 @@ def non_executable_closure_evidence_failures(
                 }
             )
         if family in EXECUTABLE_PROOF_FAMILIES and status in CLOSED_BLOCKER_STATUSES:
-            failures.append(
-                {
-                    "path": row_path,
-                    "error": "executable_proof_family_closed_without_pnc019_evidence",
-                    "blocker_family": family,
-                }
-            )
+            if not pnc019_certified:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "executable_proof_family_closed_without_pnc019_evidence",
+                        "blocker_family": family,
+                    }
+                )
         if status in CLOSED_BLOCKER_STATUSES and family in NON_EXECUTABLE_CLOSABLE_FAMILIES:
             refs = row.get("closure_evidence_refs", [])
             if not isinstance(refs, list) or rel(CLOSURE_EVIDENCE_PATH) not in [str(ref).split("#", 1)[0] for ref in refs]:
@@ -2151,14 +2448,14 @@ def non_executable_closure_evidence_failures(
                         }
                     )
 
-    if actual_report.get("buildability_gate_passed") is True:
+    if actual_report.get("buildability_gate_passed") is True and not pnc019_certified:
         failures.append({"path": rel(REPORT_PATH), "error": "non_executable_closure_unexpected_buildability_pass"})
 
     failures.extend(non_executable_closure_evidence_spec_lock_failures())
     return failures
 
 
-def execution_unit_context_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
+def execution_unit_context_contract_failures(actual_report: dict[str, Any], *, pnc019_certified: bool) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     schema_path = EXECUTION_UNIT_CONTEXT_SCHEMA_PATH
     if not schema_path.exists():
@@ -2272,9 +2569,72 @@ def execution_unit_context_contract_failures(actual_report: dict[str, Any]) -> l
 
     failures.extend(execution_unit_context_spec_lock_failures())
 
-    if actual_report.get("buildability_gate_passed") is True:
+    if actual_report.get("buildability_gate_passed") is True and not pnc019_certified:
         failures.append({"path": rel(REPORT_PATH), "error": "tier0b_execution_unit_context_unexpected_buildability_pass"})
 
+    return failures
+
+
+def executable_blocker_closure_failures(blockers: list[dict[str, Any]], *, pnc019_certified: bool) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    rows_by_id = {row.get("blocker_id"): row for row in blockers}
+    for blocker_id, family in [("IRB-005", "runtime_lifecycle"), ("IRB-011", "clean_room_harness")]:
+        row = rows_by_id.get(blocker_id)
+        if not isinstance(row, dict):
+            failures.append({"path": rel(BLOCKERS_PATH), "error": "pnc019_executable_blocker_missing", "blocker_id": blocker_id})
+            continue
+        row_path = f"{rel(BLOCKERS_PATH)}:{row.get('_line')}"
+        status = str(row.get("status", "")).lower()
+        if row.get("blocker_family") != family:
+            failures.append(
+                {
+                    "path": row_path,
+                    "error": "pnc019_executable_blocker_family_mismatch",
+                    "blocker_id": blocker_id,
+                    "expected": family,
+                    "actual": row.get("blocker_family"),
+                }
+            )
+        if pnc019_certified and status not in CLOSED_BLOCKER_STATUSES:
+            failures.append(
+                {
+                    "path": row_path,
+                    "error": "pnc019_certified_but_executable_blocker_not_closed",
+                    "blocker_id": blocker_id,
+                    "status": status,
+                }
+            )
+        if status in CLOSED_BLOCKER_STATUSES:
+            refs = row.get("closure_evidence_refs", [])
+            if not isinstance(refs, list) or not refs:
+                failures.append({"path": row_path, "error": "pnc019_closed_blocker_missing_closure_evidence_refs", "blocker_id": blocker_id})
+                refs = []
+            if rel(PNC019_CERTIFICATION_RECEIPT_PATH) not in {str(ref).split("#", 1)[0] for ref in refs}:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "pnc019_closed_blocker_missing_certification_receipt_ref",
+                        "blocker_id": blocker_id,
+                    }
+                )
+            for ref in refs:
+                if not repo_ref_path_exists(str(ref)):
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "error": "pnc019_closed_blocker_closure_evidence_ref_missing",
+                            "blocker_id": blocker_id,
+                            "ref": ref,
+                        }
+                    )
+            if not pnc019_certified:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "pnc019_executable_blocker_closed_without_valid_certification_receipt",
+                        "blocker_id": blocker_id,
+                    }
+                )
     return failures
 
 
@@ -2784,6 +3144,9 @@ def validate() -> dict[str, Any]:
                     "repair_command": "python3 scripts/pm-implementation-readiness.py generate",
                 }
             )
+        pnc019_certification_failures = pnc019_certification_receipt_failures()
+        pnc019_certified = not pnc019_certification_failures
+        failures.extend(pnc019_certification_failures)
         failures.extend(
             gate_semantic_failures(
                 actual_report=actual_report,
@@ -2793,10 +3156,11 @@ def validate() -> dict[str, Any]:
             )
         )
         failures.extend(pnc019_bootstrap_authority_failures(actual_report))
-        failures.extend(event_record_contract_failures(actual_report))
-        failures.extend(storage_value_registry_contract_failures(actual_report))
-        failures.extend(non_executable_closure_evidence_failures(actual_report, blockers))
-        failures.extend(execution_unit_context_contract_failures(actual_report))
+        failures.extend(event_record_contract_failures(actual_report, pnc019_certified=pnc019_certified))
+        failures.extend(storage_value_registry_contract_failures(actual_report, pnc019_certified=pnc019_certified))
+        failures.extend(non_executable_closure_evidence_failures(actual_report, blockers, pnc019_certified=pnc019_certified))
+        failures.extend(execution_unit_context_contract_failures(actual_report, pnc019_certified=pnc019_certified))
+        failures.extend(executable_blocker_closure_failures(blockers, pnc019_certified=pnc019_certified))
 
     self_test_report = run_self_tests()
     if self_test_report["status"] != "pass":
