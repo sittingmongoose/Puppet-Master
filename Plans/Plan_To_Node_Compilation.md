@@ -166,7 +166,7 @@ canonical_text: >-
   evidence are recorded.
 gui_related: false
 gui_classification_reason: Defines compiler/readiness boundary and buildability evidence requirements, not visual presentation.
-depends_on: [PNC-019, PDS-019]
+depends_on: [PNC-019, PDS-019, PNC-022]
 unblocks: [PWIZ-018, PG-060]
 acceptance_criteria:
   - Buildability report remains blocked while PNC-019 executable lifecycle certification is incomplete.
@@ -231,7 +231,7 @@ canonical_text: >-
   must be unambiguously marked as PNC-019 certification-harness/bootstrap-only.
 gui_related: false
 gui_classification_reason: Defines a compiler/harness certification boundary rather than visual presentation.
-depends_on: [PNC-006, PNC-010, PNC-012, PNC-013, PNC-014, PNC-018, PNC-019, PNC-021]
+depends_on: [PNC-006, PNC-010, PNC-012, PNC-013, PNC-014, PNC-018, PNC-019]
 unblocks: [PWIZ-018, PG-060]
 acceptance_criteria:
   - Bootstrap authority is limited to the PlanCompile compiler, PNC-019 certification harness, and certifier path.

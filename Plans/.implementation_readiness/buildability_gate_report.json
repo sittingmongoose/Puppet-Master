@@ -349,11 +349,12 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-07-05T20:06:37Z",
+  "generated_at_utc": "2026-07-06T15:31:34Z",
   "node_readiness": {
     "available": true,
     "bootstrap_authority_ref": "PNC-022",
     "bootstrap_authorized": true,
+    "build_order_available": true,
     "certification_harness_specified": true,
     "executable_lifecycle_certification_complete": false,
     "hard_disabled": true,
@@ -364,7 +365,8 @@
     "runtime_enabled": false,
     "source": "Plans/.plan_index/node_readiness_report.json",
     "status": "blocked_runtime_certification_incomplete",
-    "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary."
+    "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary.",
+    "true_cycle_component_count": 0
   },
   "open_blocker_count": 11,
   "remaining_open_blockers": [
@@ -838,15 +840,15 @@
   "source_hashes": {
     "Plans/.implementation_readiness/readiness_blockers.jsonl": "c5a1e468a1407568c1447abdf670d2f11980b13f512b56bfba764b2cfa8e54ac",
     "Plans/.implementation_readiness/readiness_matrix.json": "e0122b29f7abbec9d726ff87908ec0d37e2b0898e9a9537e9223f8fcfad743a9",
-    "Plans/.plan_index/node_readiness_report.json": "c42a318ca899b344c0b031228eeb056474623f797f2e7f797a39472e6651a6c0",
-    "Plans/Plan_Document_System.md": "76236e846d59d279a5900cceb4c34d981657ad19e5f2cd1552b28ef6c6ff1b46",
-    "Plans/Plan_To_Node_Compilation.md": "11b6d40a2be84f04880f8cda10c2dec8f80b03aeb6f4aad9ba7f211f039dbbd0",
+    "Plans/.plan_index/node_readiness_report.json": "e03cdaead9134f270554f9da44738d32e6dfd839c46f5c6ee244dced6a6f5af3",
+    "Plans/Plan_Document_System.md": "4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a",
+    "Plans/Plan_To_Node_Compilation.md": "729f8c4661593d570526e69074dbac11808aa2566e7eee134ad54cbfbbe1140b",
     "Plans/Planning_Wizard.md": "3a46978d5e3bb44d6cda74fc357e1a7bd98f1d44db70da59e978b3c5c2f277b4",
     "Plans/Progression_Gates.md": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785",
     "Plans/UI_Wiring_Rules.md": "13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb",
     "Plans/bootstrap/Codex_Prompts.md": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793",
-    "scripts/pm-implementation-readiness.py": "1862fee5b6557146823a530c03e1966b5f59130c22094c5a427d59743af90bdb",
-    "scripts/pm-plan-index.py": "703fb57d6164de3da6466c99a823723c64fdd1dee6b1f45527b998d49af4917a",
+    "scripts/pm-implementation-readiness.py": "8cc88ae1d56da6fb177def989ad0858fff7efc7072ce33bc055b9b6b9bd3e315",
+    "scripts/pm-plan-index.py": "6bcbd531c41b19d28a35d26cbda6d45ba12a3866d31261f1f9fa6049f5ab0f32",
     "scripts/pm-plans-verify.py": "4439f2740b2e042da96f823605d8eb0701d3cbf24a7e6bdee60b545c2342f73b"
   },
   "validation_status_semantics": "The validator passes when this report is current and truthful; buildability_gate_passed is the product gate used by Planning Wizard."

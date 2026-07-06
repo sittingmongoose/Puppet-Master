@@ -1040,7 +1040,7 @@ canonical_text: >-
   open; it must not be counted as blocker closure or ordinary product buildability.
 gui_related: false
 gui_classification_reason: Defines registry schema and governance artifacts rather than visual presentation.
-depends_on: [PDS-016, PNC-019, PNC-022]
+depends_on: [PDS-016, PNC-019]
 unblocks: [PWIZ-018, PG-060]
 acceptance_criteria:
   - The registry contains all required blocker families and exact owner_docs for each open blocker.

@@ -20,6 +20,7 @@ MATRIX_PATH = READINESS_DIR / "readiness_matrix.json"
 REPORT_PATH = READINESS_DIR / "buildability_gate_report.json"
 NODE_READINESS_PATH = PLANS / ".plan_index/node_readiness_report.json"
 PLAN_UNITS_INDEX_PATH = PLANS / ".plan_index/plan_units.jsonl"
+DEPENDENCIES_INDEX_PATH = PLANS / ".plan_index/dependencies.json"
 PNC019_BOOTSTRAP_AUTHORITY_MODE = "pnc019_bootstrap_authority"
 PNC019_BOOTSTRAP_SCOPE = "pnc019_certification_harness_only"
 
@@ -131,12 +132,25 @@ def node_readiness_snapshot() -> dict[str, Any]:
         }
     report = read_json(NODE_READINESS_PATH)
     runtime = report.get("runtime_enablement_status", {}) if isinstance(report, dict) else {}
+    dependency_summary = report.get("dependency_graph_summary", {}) if isinstance(report, dict) else {}
+    build_order_available = dependency_summary.get("build_order_available") is True
+    true_cycle_component_count = int(dependency_summary.get("true_cycle_component_count") or 0)
     lifecycle_complete = runtime.get("executable_lifecycle_certification_complete") is True
     hard_disabled = (
         report.get("status") == "blocked_runtime_certification_incomplete"
         or runtime.get("runtime_blocked_by_ref") == "PNC-019"
         or not lifecycle_complete
+        or not build_order_available
+        or true_cycle_component_count > 0
     )
+    if true_cycle_component_count > 0:
+        hard_disabled_reason = "node-readiness dependency graph has true cycles"
+    elif not build_order_available:
+        hard_disabled_reason = "node-readiness build order is unavailable"
+    elif hard_disabled:
+        hard_disabled_reason = "PNC-019 executable lifecycle certification is incomplete"
+    else:
+        hard_disabled_reason = None
     return {
         "available": True,
         "status": report.get("status"),
@@ -148,10 +162,10 @@ def node_readiness_snapshot() -> dict[str, Any]:
         "runtime_blocked_by_ref": runtime.get("runtime_blocked_by_ref"),
         "executable_lifecycle_certification_complete": runtime.get("executable_lifecycle_certification_complete"),
         "ordinary_product_worknodes_allowed": runtime.get("ordinary_product_worknodes_allowed"),
+        "build_order_available": build_order_available,
+        "true_cycle_component_count": true_cycle_component_count,
         "hard_disabled": bool(hard_disabled),
-        "hard_disabled_reason": "PNC-019 executable lifecycle certification is incomplete"
-        if hard_disabled
-        else None,
+        "hard_disabled_reason": hard_disabled_reason,
         "owner_doc": "Plans/Plan_To_Node_Compilation.md",
         "source": "Plans/.plan_index/node_readiness_report.json",
     }
@@ -199,7 +213,11 @@ def build_report_from_inputs(
             )
 
     hard_disabled_reasons: list[dict[str, Any]] = []
-    if node_snapshot.get("hard_disabled"):
+    pnc019_hard_disabled = (
+        node_snapshot.get("runtime_blocked_by_ref") == "PNC-019"
+        or node_snapshot.get("executable_lifecycle_certification_complete") is not True
+    )
+    if pnc019_hard_disabled:
         hard_disabled_reasons.append(
             {
                 "code": "hard_disabled.PNC-019",
@@ -207,6 +225,19 @@ def build_report_from_inputs(
                 "owner_docs": ["Plans/Plan_To_Node_Compilation.md"],
                 "source": "Plans/.plan_index/node_readiness_report.json",
                 "message": "PNC-019 blocks runtime buildability until executable lifecycle certification evidence exists.",
+            }
+        )
+    graph_order_blocked = node_snapshot.get("build_order_available") is not True
+    graph_cycle_count = int(node_snapshot.get("true_cycle_component_count") or 0)
+    if graph_order_blocked or graph_cycle_count > 0:
+        hard_disabled_reasons.append(
+            {
+                "code": "hard_disabled.node_readiness_build_order",
+                "owner_docs": ["Plans/Plan_To_Node_Compilation.md", "Plans/Plan_Document_System.md"],
+                "source": "Plans/.plan_index/node_readiness_report.json",
+                "message": "Node-readiness buildability requires an acyclic PlanUnit dependency graph with an available build order.",
+                "build_order_available": not graph_order_blocked,
+                "true_cycle_component_count": graph_cycle_count,
             }
         )
 
@@ -318,10 +349,29 @@ def gate_semantic_failures(
         node_readiness = {}
     node_hard_disabled = node_readiness.get("hard_disabled") is True
     pnc019_present = any(isinstance(reason, dict) and reason.get("plan_unit_id") == "PNC-019" for reason in hard_reasons)
-    if node_hard_disabled and not pnc019_present:
+    pnc019_expected = (
+        node_readiness.get("runtime_blocked_by_ref") == "PNC-019"
+        or node_readiness.get("executable_lifecycle_certification_complete") is not True
+    )
+    if pnc019_expected and not pnc019_present:
         failures.append({"path": path, "error": "pnc019_hard_disabled_reason_missing"})
-    if not node_hard_disabled and pnc019_present:
+    if not pnc019_expected and pnc019_present:
         failures.append({"path": path, "error": "pnc019_hard_disabled_reason_present_after_node_unblocked"})
+    graph_reason_present = any(
+        isinstance(reason, dict) and reason.get("code") == "hard_disabled.node_readiness_build_order"
+        for reason in hard_reasons
+    )
+    graph_reason_expected = (
+        node_hard_disabled
+        and (
+            node_readiness.get("build_order_available") is not True
+            or int(node_readiness.get("true_cycle_component_count") or 0) > 0
+        )
+    )
+    if graph_reason_expected and not graph_reason_present:
+        failures.append({"path": path, "error": "node_readiness_build_order_hard_disabled_reason_missing"})
+    if not graph_reason_expected and graph_reason_present:
+        failures.append({"path": path, "error": "node_readiness_build_order_hard_disabled_reason_unexpected"})
 
     if actual_report.get("open_blocker_count") != len(open_blockers):
         failures.append(
@@ -340,9 +390,60 @@ def gate_semantic_failures(
             failures.append({"path": path, "error": "buildability_passed_with_hard_disabled_reasons"})
         if node_readiness.get("executable_lifecycle_certification_complete") is not True:
             failures.append({"path": path, "error": "buildability_passed_without_executable_lifecycle_certification"})
+        if node_readiness.get("build_order_available") is not True:
+            failures.append({"path": path, "error": "buildability_passed_without_node_readiness_build_order"})
+        if int(node_readiness.get("true_cycle_component_count") or 0) > 0:
+            failures.append({"path": path, "error": "buildability_passed_with_node_readiness_dependency_cycles"})
         if current_hashes is not None and actual_report.get("source_hashes") != current_hashes:
             failures.append({"path": path, "error": "buildability_passed_with_stale_source_hashes"})
 
+    return failures
+
+
+def dependency_graph_failures(node_report: dict[str, Any]) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    summary = node_report.get("dependency_graph_summary", {}) if isinstance(node_report, dict) else {}
+    if not isinstance(summary, dict):
+        return [{"path": rel(NODE_READINESS_PATH), "error": "dependency_graph_summary_missing_or_invalid"}]
+
+    true_cycle_count = int(summary.get("true_cycle_component_count") or 0)
+    if true_cycle_count > 0:
+        failures.append(
+            {
+                "path": rel(NODE_READINESS_PATH),
+                "error": "node_readiness_dependency_graph_true_cycles",
+                "true_cycle_component_count": true_cycle_count,
+            }
+        )
+    if summary.get("build_order_available") is not True:
+        failures.append(
+            {
+                "path": rel(NODE_READINESS_PATH),
+                "error": "node_readiness_build_order_unavailable",
+                "build_order_blocked_node_count": summary.get("build_order_blocked_node_count"),
+            }
+        )
+
+    if DEPENDENCIES_INDEX_PATH.exists():
+        try:
+            deps = read_json(DEPENDENCIES_INDEX_PATH)
+        except Exception as exc:  # noqa: BLE001
+            failures.append({"path": rel(DEPENDENCIES_INDEX_PATH), "error": "json_parse_failed", "detail": str(exc)})
+            return failures
+        bootstrap_cycle_components = [
+            component
+            for component in deps.get("cycle_components", [])
+            if isinstance(component, dict)
+            and any(plan_unit_id in {"PNC-019", "PNC-022"} for plan_unit_id in component.get("plan_unit_ids", []))
+        ]
+        if bootstrap_cycle_components:
+            failures.append(
+                {
+                    "path": rel(DEPENDENCIES_INDEX_PATH),
+                    "error": "pnc019_bootstrap_authority_dependency_cycle",
+                    "cycle_components": bootstrap_cycle_components,
+                }
+            )
     return failures
 
 
@@ -356,6 +457,7 @@ def pnc019_bootstrap_authority_failures(actual_report: dict[str, Any]) -> list[d
     except Exception as exc:  # noqa: BLE001
         failures.append({"path": rel(NODE_READINESS_PATH), "error": "json_parse_failed", "detail": str(exc)})
         return failures
+    failures.extend(dependency_graph_failures(node_report))
     runtime = node_report.get("runtime_enablement_status", {}) if isinstance(node_report, dict) else {}
     if not isinstance(runtime, dict):
         failures.append({"path": rel(NODE_READINESS_PATH), "error": "runtime_enablement_status_missing_or_invalid"})
@@ -386,20 +488,24 @@ def pnc019_bootstrap_authority_failures(actual_report: dict[str, Any]) -> list[d
 
     report_node = actual_report.get("node_readiness", {}) if isinstance(actual_report, dict) else {}
     if isinstance(report_node, dict):
-        for field in [
-            "bootstrap_authorized",
-            "certification_harness_specified",
-            "ordinary_product_worknodes_allowed",
-            "executable_lifecycle_certification_complete",
-            "runtime_enabled",
-        ]:
-            if report_node.get(field) != runtime.get(field):
+        dependency_summary = node_report.get("dependency_graph_summary", {}) if isinstance(node_report, dict) else {}
+        expected_node_fields = {
+            "bootstrap_authorized": runtime.get("bootstrap_authorized"),
+            "certification_harness_specified": runtime.get("certification_harness_specified"),
+            "ordinary_product_worknodes_allowed": runtime.get("ordinary_product_worknodes_allowed"),
+            "executable_lifecycle_certification_complete": runtime.get("executable_lifecycle_certification_complete"),
+            "runtime_enabled": runtime.get("runtime_enabled"),
+            "build_order_available": dependency_summary.get("build_order_available") is True,
+            "true_cycle_component_count": int(dependency_summary.get("true_cycle_component_count") or 0),
+        }
+        for field, expected in expected_node_fields.items():
+            if report_node.get(field) != expected:
                 failures.append(
                     {
                         "path": rel(REPORT_PATH),
                         "error": "buildability_report_node_readiness_field_mismatch",
                         "field": field,
-                        "expected": runtime.get(field),
+                        "expected": expected,
                         "actual": report_node.get(field),
                     }
                 )
@@ -493,7 +599,13 @@ def fixture_blocker(family: str, index: int, *, status: str = "open") -> dict[st
     }
 
 
-def fixture_node_snapshot(*, hard_disabled: bool) -> dict[str, Any]:
+def fixture_node_snapshot(
+    *,
+    hard_disabled: bool,
+    build_order_available: bool = True,
+    true_cycle_component_count: int = 0,
+) -> dict[str, Any]:
+    graph_blocked = not build_order_available or true_cycle_component_count > 0
     if hard_disabled:
         return {
             "available": True,
@@ -502,6 +614,8 @@ def fixture_node_snapshot(*, hard_disabled: bool) -> dict[str, Any]:
             "runtime_enabled": False,
             "runtime_blocked_by_ref": "PNC-019",
             "executable_lifecycle_certification_complete": False,
+            "build_order_available": build_order_available,
+            "true_cycle_component_count": true_cycle_component_count,
             "hard_disabled": True,
             "hard_disabled_reason": "PNC-019 executable lifecycle certification is incomplete",
             "owner_doc": "Plans/Plan_To_Node_Compilation.md",
@@ -514,8 +628,10 @@ def fixture_node_snapshot(*, hard_disabled: bool) -> dict[str, Any]:
         "runtime_enabled": True,
         "runtime_blocked_by_ref": None,
         "executable_lifecycle_certification_complete": True,
-        "hard_disabled": False,
-        "hard_disabled_reason": None,
+        "build_order_available": build_order_available,
+        "true_cycle_component_count": true_cycle_component_count,
+        "hard_disabled": graph_blocked,
+        "hard_disabled_reason": "node-readiness build order is unavailable" if graph_blocked else None,
         "owner_doc": "Plans/Plan_To_Node_Compilation.md",
         "source": "fixture/node_readiness_report.json",
     }
@@ -562,7 +678,20 @@ def run_self_tests() -> dict[str, Any]:
             "expected_open_count": 0,
             "expected_disabled_count": 0,
             "expected_pnc019": False,
+            "expected_graph_reason": False,
             "expected_buildability_gate_passed": True,
+        },
+        {
+            "name": "all_blockers_closed_build_order_unavailable",
+            "statuses": {family: "closed" for family in REQUIRED_FAMILIES},
+            "node_hard_disabled": False,
+            "build_order_available": False,
+            "true_cycle_component_count": 1,
+            "expected_open_count": 0,
+            "expected_disabled_count": 0,
+            "expected_pnc019": False,
+            "expected_graph_reason": True,
+            "expected_buildability_gate_passed": False,
         },
     ]
     results: list[dict[str, Any]] = []
@@ -575,7 +704,11 @@ def run_self_tests() -> dict[str, Any]:
         report = build_report_from_inputs(
             blockers=blockers,
             matrix=matrix,
-            node_snapshot=fixture_node_snapshot(hard_disabled=scenario["node_hard_disabled"]),
+            node_snapshot=fixture_node_snapshot(
+                hard_disabled=scenario["node_hard_disabled"],
+                build_order_available=scenario.get("build_order_available", True),
+                true_cycle_component_count=scenario.get("true_cycle_component_count", 0),
+            ),
             hash_map=fixture_hashes,
             generated_at_utc="2026-07-05T00:00:00Z",
         )
@@ -592,6 +725,10 @@ def run_self_tests() -> dict[str, Any]:
             "disabled_reason_count": len(disabled_reasons) == scenario["expected_disabled_count"],
             "pnc019_hard_reason": any(reason.get("plan_unit_id") == "PNC-019" for reason in hard_reasons)
             == scenario["expected_pnc019"],
+            "graph_hard_reason": any(
+                reason.get("code") == "hard_disabled.node_readiness_build_order" for reason in hard_reasons
+            )
+            == scenario.get("expected_graph_reason", False),
             "buildability_gate_passed": report["buildability_gate_passed"]
             == scenario["expected_buildability_gate_passed"],
             "semantic_failures_absent": not scenario_failures,
