@@ -2,9 +2,9 @@
 
 Source: `Plans/Plugins_System.md`
 
-Source lines: L642-L4021
+Source lines: L644-L4024
 
-Source SHA256: `f74358e512cec51f70525720a4b1dd2d46f701a46c8438828994eb0004453a73`
+Source SHA256: `859e6e3a575c853176765a54ab22dc98d65be1785625fe50ecf40448273bd67f`
 
 ---
 
@@ -2053,7 +2053,7 @@ plan_unit_id: PLUG-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "All plugin activity logs to the Puppet Master event ledger as EventRecord-shaped entries with timestamp, plugin_id, event_type, structured payload, and source plugin:<plugin_id> emitted through PluginContext.log."
+canonical_text: "All plugin activity logs to the Puppet Master event ledger using the canonical EventRecord envelope owned by Contracts_V0; Plugins_System owns plugin.* event semantics and plugin-owned payload content such as plugin_id, hook names, durations, resolution details, and structured plugin payload, while legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -2083,7 +2083,6 @@ preserved_exact_tokens:
 - "Structured plugin logging"
 - "Puppet Master event ledger"
 - "Plans/Contracts_V0.md#EventRecord"
-- "timestamp"
 - "plugin_id"
 - "event_type"
 - "payload"
@@ -2092,9 +2091,11 @@ preserved_exact_tokens:
 - "source: \"plugin:<plugin_id>\""
 negative_constraints:
 - "Plugin activity must not bypass structured EventRecord logging."
+- "Plugins_System.md must not locally redefine the EventRecord envelope fields."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord"
-compatibility_only_notes: []
+compatibility_only_notes:
+- "Legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only and not normative EventRecord field canon."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"

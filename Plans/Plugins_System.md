@@ -460,7 +460,9 @@ All plugin activity is logged to the Puppet Master event ledger (`Plans/Contract
 
 ### 8.2 Log format
 
-Plugin log entries include: `timestamp`, `plugin_id`, `event_type`, `payload` (structured JSON). Plugins use `PluginContext.log(level, message)` which emits events with `source: "plugin:<plugin_id>"`.
+Plugin log entries are persisted through the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord`; this document owns only plugin event semantics and plugin-owned payload content. Plugin writers set the EventRecord `event_type` to the applicable `plugin.*` value above, while plugin-specific details such as `plugin_id`, hook names, durations, resolution details, and structured plugin payload fields live under the registered payload schema or canonical actor/source refs rather than redefining the EventRecord envelope.
+
+Legacy/source-lineage tuple notation such as `timestamp`, `plugin_id`, `event_type`, `payload`, and `source: "plugin:<plugin_id>"` is compatibility shorthand for older notes only; it is not normative EventRecord field canon.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
 
@@ -2684,7 +2686,7 @@ plan_unit_id: PLUG-041
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Plugins_System.md
-canonical_text: "All plugin activity logs to the Puppet Master event ledger as EventRecord-shaped entries with timestamp, plugin_id, event_type, structured payload, and source plugin:<plugin_id> emitted through PluginContext.log."
+canonical_text: "All plugin activity logs to the Puppet Master event ledger using the canonical EventRecord envelope owned by Contracts_V0; Plugins_System owns plugin.* event semantics and plugin-owned payload content such as plugin_id, hook names, durations, resolution details, and structured plugin payload, while legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only."
 gui_related: false
 gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
 split_recommended: false
@@ -2714,7 +2716,6 @@ preserved_exact_tokens:
 - "Structured plugin logging"
 - "Puppet Master event ledger"
 - "Plans/Contracts_V0.md#EventRecord"
-- "timestamp"
 - "plugin_id"
 - "event_type"
 - "payload"
@@ -2723,9 +2724,11 @@ preserved_exact_tokens:
 - "source: \"plugin:<plugin_id>\""
 negative_constraints:
 - "Plugin activity must not bypass structured EventRecord logging."
+- "Plugins_System.md must not locally redefine the EventRecord envelope fields."
 preserved_contractrefs:
 - "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord"
-compatibility_only_notes: []
+compatibility_only_notes:
+- "Legacy timestamp/plugin_id/event_type/payload/source tuple notation is source-lineage shorthand only and not normative EventRecord field canon."
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/Plugins_System.md"
