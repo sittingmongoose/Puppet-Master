@@ -1,69 +1,18 @@
 {
-  "build_order_blockers": [
-    {
-      "blocker_type": "dependency_cycles",
-      "items": [
-        {
-          "plan_unit_id": "PDS-019",
-          "remaining_depends_on": [
-            "PNC-022"
-          ]
-        },
-        {
-          "plan_unit_id": "PNC-021",
-          "remaining_depends_on": [
-            "PDS-019"
-          ]
-        },
-        {
-          "plan_unit_id": "PNC-022",
-          "remaining_depends_on": [
-            "PNC-021"
-          ]
-        }
-      ]
-    },
-    {
-      "blocker_type": "dependency_cycle_downstream_blocked_nodes",
-      "items": [
-        {
-          "plan_unit_id": "PG-060",
-          "remaining_depends_on": [
-            "PDS-019",
-            "PNC-021",
-            "PNC-022",
-            "PWIZ-018"
-          ]
-        },
-        {
-          "plan_unit_id": "PWIZ-018",
-          "remaining_depends_on": [
-            "PNC-022"
-          ]
-        },
-        {
-          "plan_unit_id": "UIW-009",
-          "remaining_depends_on": [
-            "PNC-022",
-            "PWIZ-018"
-          ]
-        }
-      ]
-    }
-  ],
+  "build_order_blockers": [],
   "dependency_graph_summary": {
-    "build_order_available": false,
-    "build_order_blocked_node_count": 6,
-    "cycle_blocker_count": 3,
-    "depends_on_edge_count": 11550,
-    "downstream_blocked_node_count": 3,
-    "edge_count": 13575,
+    "build_order_available": true,
+    "build_order_blocked_node_count": 0,
+    "cycle_blocker_count": 0,
+    "depends_on_edge_count": 11549,
+    "downstream_blocked_node_count": 0,
+    "edge_count": 13574,
     "node_count": 5479,
-    "true_cycle_component_count": 1,
+    "true_cycle_component_count": 0,
     "unblocks_edge_count": 2025,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-05T20:06:30Z",
+  "generated_at_utc": "2026-07-06T15:30:43Z",
   "gui_related_units": {
     "count": 2382,
     "units": [

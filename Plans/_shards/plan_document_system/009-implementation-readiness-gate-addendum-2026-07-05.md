@@ -4,7 +4,7 @@ Source: `Plans/Plan_Document_System.md`
 
 Source lines: L1012-L1101
 
-Source SHA256: `76236e846d59d279a5900cceb4c34d981657ad19e5f2cd1552b28ef6c6ff1b46`
+Source SHA256: `4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a`
 
 ---
 
@@ -39,7 +39,7 @@ canonical_text: >-
   open; it must not be counted as blocker closure or ordinary product buildability.
 gui_related: false
 gui_classification_reason: Defines registry schema and governance artifacts rather than visual presentation.
-depends_on: [PDS-016, PNC-019, PNC-022]
+depends_on: [PDS-016, PNC-019]
 unblocks: [PWIZ-018, PG-060]
 acceptance_criteria:
   - The registry contains all required blocker families and exact owner_docs for each open blocker.

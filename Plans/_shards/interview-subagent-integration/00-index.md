@@ -1,6 +1,6 @@
 # Shard Index: Plans/interview-subagent-integration.md
 
-Generated: 2026-07-05T20:06:40Z
+Generated: 2026-07-06T15:32:59Z
 
 Source SHA256: `09870b344b6b002b65b4525e209ddfc4638b45ffe8f2523a543c6ee02325e9a5`
 

@@ -64,6 +64,7 @@ REQUIRED_NEW_PLAN_BASE_HEADINGS = [
 
 PNC019_BOOTSTRAP_AUTHORITY_MODE = "pnc019_bootstrap_authority"
 PNC019_BOOTSTRAP_SCOPE = "pnc019_certification_harness_only"
+DOCUMENTED_BUILD_ORDER_EXCEPTION_IDS: set[str] = set()
 
 
 @dataclass(frozen=True)
@@ -1014,6 +1015,41 @@ def append_stable_artifact_mismatch(
     )
 
 
+def dependency_graph_health_failures(path: str, graph: dict[str, Any]) -> list[dict[str, Any]]:
+    if path.endswith("dependencies.json"):
+        summary = graph.get("summary", {})
+    else:
+        summary = graph.get("dependency_graph_summary", {})
+    if not isinstance(summary, dict):
+        return [{"path": path, "error": "dependency_graph_summary_missing_or_invalid"}]
+
+    true_cycle_count = int(summary.get("true_cycle_component_count") or 0)
+    build_order_available = summary.get("build_order_available") is True
+    exception_ids = sorted(DOCUMENTED_BUILD_ORDER_EXCEPTION_IDS)
+    failures: list[dict[str, Any]] = []
+    if true_cycle_count > 0 and not exception_ids:
+        failures.append(
+            {
+                "path": path,
+                "error": "dependency_graph_true_cycles",
+                "true_cycle_component_count": true_cycle_count,
+                "cycle_components": graph.get("cycle_components", []),
+                "documented_exception_ids": exception_ids,
+            }
+        )
+    if not build_order_available and not exception_ids:
+        failures.append(
+            {
+                "path": path,
+                "error": "dependency_graph_build_order_unavailable",
+                "build_order_blocked_node_count": summary.get("build_order_blocked_node_count"),
+                "build_order_blockers": graph.get("build_order_blockers", graph.get("build_order_blocked_nodes", [])),
+                "documented_exception_ids": exception_ids,
+            }
+        )
+    return failures
+
+
 def validate() -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     required = [
@@ -1104,6 +1140,8 @@ def validate() -> dict[str, Any]:
         failures.append({"path": "Plans/.plan_index/doc_cards.json", "error": "doc_count_mismatch"})
     if deps.get("summary", {}).get("unresolved_reference_count") != 0:
         failures.append({"path": "Plans/.plan_index/dependencies.json", "error": "unresolved_dependency_references"})
+    failures.extend(dependency_graph_health_failures("Plans/.plan_index/dependencies.json", expected_deps))
+    failures.extend(dependency_graph_health_failures("Plans/.plan_index/node_readiness_report.json", expected_readiness))
     if coverage.get("summary", {}).get("plan_unit_count") != len(plan_units):
         failures.append({"path": "Plans/.plan_index/coverage_report.json", "error": "coverage_plan_unit_count_mismatch"})
     migration = coverage.get("migration_coverage", {})

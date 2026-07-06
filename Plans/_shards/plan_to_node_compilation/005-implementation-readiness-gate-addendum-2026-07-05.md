@@ -4,7 +4,7 @@ Source: `Plans/Plan_To_Node_Compilation.md`
 
 Source lines: L144-L448
 
-Source SHA256: `11b6d40a2be84f04880f8cda10c2dec8f80b03aeb6f4aad9ba7f211f039dbbd0`
+Source SHA256: `729f8c4661593d570526e69074dbac11808aa2566e7eee134ad54cbfbbe1140b`
 
 ---
 
@@ -33,7 +33,7 @@ canonical_text: >-
   evidence are recorded.
 gui_related: false
 gui_classification_reason: Defines compiler/readiness boundary and buildability evidence requirements, not visual presentation.
-depends_on: [PNC-019, PDS-019]
+depends_on: [PNC-019, PDS-019, PNC-022]
 unblocks: [PWIZ-018, PG-060]
 acceptance_criteria:
   - Buildability report remains blocked while PNC-019 executable lifecycle certification is incomplete.
@@ -98,7 +98,7 @@ canonical_text: >-
   must be unambiguously marked as PNC-019 certification-harness/bootstrap-only.
 gui_related: false
 gui_classification_reason: Defines a compiler/harness certification boundary rather than visual presentation.
-depends_on: [PNC-006, PNC-010, PNC-012, PNC-013, PNC-014, PNC-018, PNC-019, PNC-021]
+depends_on: [PNC-006, PNC-010, PNC-012, PNC-013, PNC-014, PNC-018, PNC-019]
 unblocks: [PWIZ-018, PG-060]
 acceptance_criteria:
   - Bootstrap authority is limited to the PlanCompile compiler, PNC-019 certification harness, and certifier path.
