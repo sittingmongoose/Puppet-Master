@@ -1,0 +1,165 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "tier-0c-2-storage-value-registry-2026-07-06",
+  "created_at_utc": "2026-07-06T00:00:00Z",
+  "node": {
+    "node_id": "pm.build-governance.spec-lock-support-refresh",
+    "graph_id": "pm.clean_repo_build_governance_seal.2026-06-10",
+    "graph_scope": "self_build_governance"
+  },
+  "summary": "Tier 0C-2 storage-only value-schema registry materializes launch-critical redb/seglog value contracts, defers non-critical families with owners/reopen conditions, and keeps buildability blocked.",
+  "commands_run": [
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py self-test",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py audit-governance --subcheck-timeout-seconds 120",
+      "exit_code": 0
+    },
+    {
+      "cmd": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "apply_patch",
+      "count": 8,
+      "note": "Created storage registry/schema and updated bounded governance/readiness artifacts."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "other",
+        "ref": "chat:2026-07-06-tier-0c-2-storage-value-registry",
+        "note": "User-requested storage-only Tier 0C-2 value-schema registry objective."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/storage_value_registry.schema.json",
+      "change_type": "added",
+      "note": "Registry schema for storage value families."
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "change_type": "added",
+      "note": "Launch-critical materialized values and deferred non-critical inventory."
+    },
+    {
+      "path": "scripts/pm-implementation-readiness.py",
+      "change_type": "modified",
+      "note": "Bounded registry validator and self-tests."
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "change_type": "modified",
+      "note": "Registry owner prose and SP-231."
+    },
+    {
+      "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
+      "change_type": "modified",
+      "note": "IRB-002 partial closure only for Tier 0C-2 storage value registry progress."
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "Registers storage registry artifacts and audit-closure gate script."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "SchemaID:pm.storage_value_registry.v1",
+    "ContractName:Plans/storage-plan.md#2.3.1-storage-value-schema-registry-tier-0c-2",
+    "ContractName:Plans/storage_value_registry.schema.json",
+    "ContractName:Plans/storage_value_registry.json",
+    "PolicyRule:buildability_gate_passed=false"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "working-tree:tier-0c-2-storage-value-registry-2026-07-06",
+    "note": "Re-run the commands listed in commands_run after generated artifacts are refreshed."
+  },
+  "artifacts": [
+    {
+      "path": "Plans/storage_value_registry.schema.json",
+      "note": "Registry JSON Schema.",
+      "sha256": "b727ce596727594fd136480c8a02072b20b2e7d1d48cb4363d4b94285a14b038"
+    },
+    {
+      "path": "Plans/storage_value_registry.json",
+      "note": "Materialized/deferred storage value registry.",
+      "sha256": "7fea3458141c04f2a7f4a03596afebda2f14a0b70b142a93c7d8907258c959b7"
+    },
+    {
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json",
+      "note": "Generated buildability report must remain blocked.",
+      "sha256": "c99cf73ddbdbec48a98ec8fcd85b4d9fc8bf9ac15e7c3acf305552e5195fc42d"
+    },
+    {
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "note": "Node readiness report remains runtime-disabled.",
+      "sha256": "cc48b5c96deb023c723b87095cf20b5d67c5ed8deb45277cf5cf74193bcb075d"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "note": "Governance hash lock after refresh.",
+      "sha256": "0640135b41251c93f01ac21d7494b6fb3574748dfdce8faa57fbecd8ac0a9923"
+    }
+  ],
+  "checks": [
+    {
+      "name": "storage-registry-launch-critical-materialized",
+      "result": "PASS",
+      "details": "Launch-critical storage value families are materialized in Plans/storage_value_registry.json."
+    },
+    {
+      "name": "deferred-families-not-build-blocking",
+      "result": "PASS",
+      "details": "Non-critical storage families are status=deferred_not_build_blocking with owner, reason, and reopen condition."
+    },
+    {
+      "name": "buildability-remains-blocked",
+      "result": "PASS",
+      "details": "buildability_gate_passed remains false and runtime stays blocked by PNC-019."
+    },
+    {
+      "name": "no-node-artifacts-created",
+      "result": "PASS",
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+    }
+  ]
+}

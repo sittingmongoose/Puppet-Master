@@ -3,7 +3,7 @@
     "files": [
       {
         "path": "Plans/00-plans-index.md",
-        "sha256": "a8f9b4b77daec6226f1529dd796390d7e3d149ebf0b1834746ca9fd26392ac2f"
+        "sha256": "e45160a3bfdc59333e3ba09e8f54016d7df5fa000e8cb7280e2fb5addd786617"
       },
       {
         "path": "Plans/acceptance_manifest.schema.json",
@@ -147,7 +147,7 @@
       },
       {
         "path": "Plans/sharding_config.json",
-        "sha256": "352f9cd60eccbb19104358b0897feb5970c040923d9d4efc4cc254e97d277614"
+        "sha256": "8ff71dbfa863c3784e43fcdb97b2eb54d2a8f545634213e74fd34361ace73e98"
       },
       {
         "path": "Plans/test_strategy.schema.json",
@@ -215,7 +215,7 @@
       },
       {
         "path": "scripts/pm-implementation-readiness.py",
-        "sha256": "41c1cae202fcdecd4c2480b39b0d47bc8650f6d1b854706bb9c23db4b5a59757"
+        "sha256": "85499bb4980768c865f7382b0544cacfc707201711db685855d81226aff7cbc7"
       },
       {
         "path": "scripts/pm-plan-index.py",
@@ -223,7 +223,7 @@
       },
       {
         "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
-        "sha256": "85db71f2bae3de50266de7712066b8b984f9cf518fd903460c14136ae530cd54"
+        "sha256": "7e7f160d819dca5652be33a1c0bbd4690e42bf43eb65175319716e447f4be125"
       },
       {
         "path": "Plans/.implementation_readiness/readiness_matrix.json",
@@ -231,11 +231,23 @@
       },
       {
         "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-        "sha256": "95053dfa780952bcdd47c475ca9ded6aaf58c9b538f1849fb31a4dd6284106cd"
+        "sha256": "c99cf73ddbdbec48a98ec8fcd85b4d9fc8bf9ac15e7c3acf305552e5195fc42d"
       },
       {
         "path": "Plans/event_record.schema.json",
         "sha256": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d"
+      },
+      {
+        "path": "Plans/storage_value_registry.schema.json",
+        "sha256": "b727ce596727594fd136480c8a02072b20b2e7d1d48cb4363d4b94285a14b038"
+      },
+      {
+        "path": "Plans/storage_value_registry.json",
+        "sha256": "7fea3458141c04f2a7f4a03596afebda2f14a0b70b142a93c7d8907258c959b7"
+      },
+      {
+        "path": "scripts/pm-audit-closure.py",
+        "sha256": "e5bc1fe5261d5ddb92c40f7d997a743f0a6211775088390e047f4e88c8a8c961"
       }
     ],
     "hash_alg": "sha256"
@@ -321,6 +333,7 @@
     "requirements_coverage": "pm.requirements_coverage.schema.v1",
     "sharding_config": "pm.plan_sharding.config.v1",
     "spec_lock": "pm.spec_lock.v1",
+    "storage_value_registry": "pm.storage_value_registry.v1",
     "test_strategy": "pm.test_strategy.schema.v1",
     "tool_contract": "pm.contracts.tools.v0",
     "wiring_matrix": "pm.wiring_matrix.schema.v1"

@@ -351,7 +351,7 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-07-06T19:30:06Z",
+  "generated_at_utc": "2026-07-06T20:20:33Z",
   "node_readiness": {
     "available": true,
     "bootstrap_authority_ref": "PNC-022",
@@ -475,7 +475,7 @@
       ],
       "blocker_family": "persistence_materialization",
       "blocker_id": "IRB-002",
-      "notes": "Tier 0C-1 closes only the EventRecord seglog/redb persistence-boundary slice. IRB-002 remains open for runtime persistence evidence and does not authorize creating runtime records in this docs lane.",
+      "notes": "Tier 0C-1 closes only the EventRecord seglog/redb persistence-boundary slice. Tier 0C-2 closes only launch-critical storage value-schema registry materialization and defers non-critical families with owners/reopen conditions. IRB-002 remains open for replay/restart/currentness/idempotency fixtures, activation/testing persistence, provider/runtime lifecycle evidence, and broad redb-family materialization; this docs lane does not authorize creating runtime records.",
       "owner_docs": [
         "Plans/Planning_Wizard.md",
         "Plans/Plan_To_Node_Compilation.md",
@@ -500,6 +500,27 @@
           ],
           "scope": "event_record_persistence_boundary",
           "status": "closed_for_tier_0c_1_only"
+        },
+        {
+          "evidence": [
+            "Plans/storage-plan.md#2.3.1-storage-value-schema-registry-tier-0c-2",
+            "Plans/storage_value_registry.schema.json",
+            "Plans/storage_value_registry.json",
+            "scripts/pm-implementation-readiness.py validate",
+            "scripts/pm-implementation-readiness.py self-test"
+          ],
+          "remaining_scope": [
+            "runtime replay and restart fixtures proving persisted PlanCompileRun recovery",
+            "idempotency fixtures for duplicate Approve And Build delivery and PlanCompile resume",
+            "activation and testing receipt persistence",
+            "provider stream payload persistence",
+            "currentness/CAS behavioral proof",
+            "full materialization of deferred GUI/provider/analytics/terminal/browser/project-state/worktree/permission storage families",
+            "runtime lifecycle certification",
+            "clean-room harness execution"
+          ],
+          "scope": "storage_value_registry_launch_critical_contracts",
+          "status": "closed_for_tier_0c_2_only"
         }
       ],
       "required_evidence": [
@@ -514,6 +535,9 @@
         "Plans/Plan_To_Node_Compilation.md#PNC-010",
         "Plans/storage-plan.md",
         "Plans/storage-plan.md#2.2.5-eventrecord-persistence-boundary",
+        "Plans/storage-plan.md#2.3.1-storage-value-schema-registry-tier-0c-2",
+        "Plans/storage_value_registry.schema.json",
+        "Plans/storage_value_registry.json",
         "Plans/Contracts_V0.md#EventRecord",
         "Plans/event_record.schema.json"
       ],
@@ -909,10 +933,10 @@
   ],
   "schema_id": "pm.implementation_readiness.buildability_gate_report.v1",
   "source_hashes": {
-    "Plans/.implementation_readiness/readiness_blockers.jsonl": "85db71f2bae3de50266de7712066b8b984f9cf518fd903460c14136ae530cd54",
+    "Plans/.implementation_readiness/readiness_blockers.jsonl": "7e7f160d819dca5652be33a1c0bbd4690e42bf43eb65175319716e447f4be125",
     "Plans/.implementation_readiness/readiness_matrix.json": "e0122b29f7abbec9d726ff87908ec0d37e2b0898e9a9537e9223f8fcfad743a9",
-    "Plans/.plan_index/node_readiness_report.json": "738262581e2fac957193aaaa162c155cb3d6678be135bd5998fb7497d12cbf3b",
-    "Plans/00-plans-index.md": "a8f9b4b77daec6226f1529dd796390d7e3d149ebf0b1834746ca9fd26392ac2f",
+    "Plans/.plan_index/node_readiness_report.json": "cc48b5c96deb023c723b87095cf20b5d67c5ed8deb45277cf5cf74193bcb075d",
+    "Plans/00-plans-index.md": "e45160a3bfdc59333e3ba09e8f54016d7df5fa000e8cb7280e2fb5addd786617",
     "Plans/Contracts_V0.md": "64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530",
     "Plans/Executor_Protocol.md": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
     "Plans/Plan_Document_System.md": "4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a",
@@ -925,8 +949,10 @@
     "Plans/event_record.schema.json": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
     "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
     "Plans/orchestrator-subagent-integration.md": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4",
-    "Plans/storage-plan.md": "3e47688cac83928d9ce1e6e39ce627a4cd5e945975bea34233d3e60380d86ddb",
-    "scripts/pm-implementation-readiness.py": "41c1cae202fcdecd4c2480b39b0d47bc8650f6d1b854706bb9c23db4b5a59757",
+    "Plans/storage-plan.md": "ad3f512795f628259dafc4e81b402f15adbfde16434e9548ea3b0101c41fb283",
+    "Plans/storage_value_registry.json": "7fea3458141c04f2a7f4a03596afebda2f14a0b70b142a93c7d8907258c959b7",
+    "Plans/storage_value_registry.schema.json": "b727ce596727594fd136480c8a02072b20b2e7d1d48cb4363d4b94285a14b038",
+    "scripts/pm-implementation-readiness.py": "85499bb4980768c865f7382b0544cacfc707201711db685855d81226aff7cbc7",
     "scripts/pm-plan-index.py": "6bcbd531c41b19d28a35d26cbda6d45ba12a3866d31261f1f9fa6049f5ab0f32",
     "scripts/pm-plans-verify.py": "fdcd4cbd48468a783cbef789ddb06ebcc050eb71d69384f6a22cf80230ebf847"
   },

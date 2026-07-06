@@ -54,6 +54,8 @@ OWNER_DOCS = [
     "Plans/Executor_Protocol.md",
     "Plans/Contracts_V0.md",
     "Plans/storage-plan.md",
+    "Plans/storage_value_registry.schema.json",
+    "Plans/storage_value_registry.json",
     "Plans/orchestrator-subagent-integration.md",
     "Plans/Prompt_Pipeline.md",
     "Plans/event_record.schema.json",
@@ -222,6 +224,30 @@ EVENT_RECORD_CONSUMER_DOCS = [
 EVENT_RECORD_SPEC_LOCK_PATHS = [
     "Plans/event_record.schema.json",
     "scripts/pm-implementation-readiness.py",
+]
+
+STORAGE_VALUE_REGISTRY_SCHEMA_PATH = PLANS / "storage_value_registry.schema.json"
+STORAGE_VALUE_REGISTRY_PATH = PLANS / "storage_value_registry.json"
+STORAGE_VALUE_REGISTRY_SCHEMA_ID = "pm.storage_value_registry.v1"
+STORAGE_VALUE_REGISTRY_SCHEMA_VERSION = "1.0.0"
+STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
+    "approved_plan_pack",
+    "plan_approved_outbox",
+    "plan_compile_run",
+    "compiler_wave_contract",
+    "workgraph_draft",
+    "worknode_request",
+    "executor_intake_report",
+    "attempt_receipt",
+    "event_record_index",
+    "blocked_projection",
+    "goal_receipt",
+]
+STORAGE_VALUE_REGISTRY_SPEC_LOCK_PATHS = [
+    "Plans/storage_value_registry.schema.json",
+    "Plans/storage_value_registry.json",
+    "scripts/pm-implementation-readiness.py",
+    "scripts/pm-audit-closure.py",
 ]
 EVENT_RECORD_FORBIDDEN_CONSUMER_PATTERNS = [
     "EventRecord fields include",
@@ -1138,6 +1164,391 @@ def event_record_contract_failures(actual_report: dict[str, Any]) -> list[dict[s
     return failures
 
 
+def storage_value_secret_key_allowed(key: str) -> bool:
+    lowered = key.lower()
+    if "redaction" in lowered or "no_secret" in lowered:
+        return True
+    return lowered.endswith(("_ref", "_refs", "_ref_id", "_profile", "_policy", "_hash"))
+
+
+def storage_value_secret_key_failures(value: Any, *, path_label: str, pointer: str = "$") -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            key_str = str(key)
+            child_pointer = f"{pointer}.{key_str}"
+            if SECRET_MATERIAL_KEY_RE.search(key_str) and not storage_value_secret_key_allowed(key_str):
+                failures.append(
+                    {
+                        "path": path_label,
+                        "error": "storage_value_secret_material_key",
+                        "pointer": child_pointer,
+                        "field": key_str,
+                    }
+                )
+            failures.extend(storage_value_secret_key_failures(child, path_label=path_label, pointer=child_pointer))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            failures.extend(
+                storage_value_secret_key_failures(child, path_label=path_label, pointer=f"{pointer}[{index}]")
+            )
+    return failures
+
+
+def storage_value_field_name_failures(fields: Any, *, path_label: str, field_list_name: str) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    if not isinstance(fields, list):
+        failures.append({"path": path_label, "error": "storage_value_field_list_invalid", "field": field_list_name})
+        return failures
+    for field in fields:
+        if not isinstance(field, str) or not field:
+            failures.append({"path": path_label, "error": "storage_value_field_name_invalid", "field": field_list_name})
+            continue
+        if SECRET_MATERIAL_KEY_RE.search(field) and not storage_value_secret_key_allowed(field):
+            failures.append(
+                {
+                    "path": path_label,
+                    "error": "storage_value_secret_material_field",
+                    "field": field,
+                    "field_list": field_list_name,
+                }
+            )
+    return failures
+
+
+def storage_value_registry_spec_lock_failures() -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    spec_lock_path = PLANS / "Spec_Lock.json"
+    try:
+        spec_lock = read_json(spec_lock_path)
+    except Exception as exc:  # noqa: BLE001
+        return [{"path": rel(spec_lock_path), "error": "json_parse_failed", "detail": str(exc)}]
+    schema_versions = spec_lock.get("schema_versions", {})
+    if (
+        not isinstance(schema_versions, dict)
+        or schema_versions.get("storage_value_registry") != STORAGE_VALUE_REGISTRY_SCHEMA_ID
+    ):
+        failures.append(
+            {
+                "path": rel(spec_lock_path),
+                "error": "storage_value_registry_schema_version_registration_missing",
+                "expected": STORAGE_VALUE_REGISTRY_SCHEMA_ID,
+                "actual": schema_versions.get("storage_value_registry") if isinstance(schema_versions, dict) else None,
+            }
+        )
+    files = spec_lock.get("canonical_ssot_hashes", {}).get("files", [])
+    if not isinstance(files, list):
+        return [{"path": rel(spec_lock_path), "error": "spec_lock_canonical_ssot_files_missing"}]
+    by_path = {row.get("path"): row for row in files if isinstance(row, dict)}
+    for path in STORAGE_VALUE_REGISTRY_SPEC_LOCK_PATHS:
+        entry = by_path.get(path)
+        if not isinstance(entry, dict):
+            failures.append(
+                {
+                    "path": rel(spec_lock_path),
+                    "error": "storage_value_registry_spec_lock_registration_missing",
+                    "required_path": path,
+                }
+            )
+            continue
+        target = ROOT / path
+        if not target.exists():
+            failures.append({"path": path, "error": "storage_value_registry_spec_lock_registered_path_missing"})
+            continue
+        current_hash = sha256_file(target)
+        if entry.get("sha256") != current_hash:
+            failures.append(
+                {
+                    "path": rel(spec_lock_path),
+                    "error": "storage_value_registry_spec_lock_hash_stale",
+                    "required_path": path,
+                    "expected": current_hash,
+                    "actual": entry.get("sha256"),
+                }
+            )
+    return failures
+
+
+def storage_value_registry_data_failures(
+    registry: Any,
+    *,
+    path_label: str,
+    required_launch_families: list[str] | None = None,
+) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    required_launch_families = required_launch_families or STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES
+    if not isinstance(registry, dict):
+        return [{"path": path_label, "error": "storage_value_registry_not_object"}]
+    if registry.get("schema_id") != STORAGE_VALUE_REGISTRY_SCHEMA_ID:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "storage_value_registry_schema_id_mismatch",
+                "expected": STORAGE_VALUE_REGISTRY_SCHEMA_ID,
+                "actual": registry.get("schema_id"),
+            }
+        )
+    if registry.get("schema_version") != STORAGE_VALUE_REGISTRY_SCHEMA_VERSION:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "storage_value_registry_schema_version_mismatch",
+                "expected": STORAGE_VALUE_REGISTRY_SCHEMA_VERSION,
+                "actual": registry.get("schema_version"),
+            }
+        )
+    policy = registry.get("buildability_gate_policy")
+    if not isinstance(policy, dict):
+        failures.append({"path": path_label, "error": "storage_value_registry_buildability_policy_missing"})
+        policy = {}
+    if policy.get("buildability_gate_passed_must_remain_false") is not True:
+        failures.append({"path": path_label, "error": "storage_value_registry_buildability_false_policy_missing"})
+    if policy.get("ordinary_product_worknodes_allowed") is not False:
+        failures.append({"path": path_label, "error": "storage_value_registry_worknodes_allowed_policy_invalid"})
+    if policy.get("ordinary_product_nodeseeds_allowed") is not False:
+        failures.append({"path": path_label, "error": "storage_value_registry_nodeseeds_allowed_policy_invalid"})
+
+    critical_ids = registry.get("critical_family_ids", [])
+    if not isinstance(critical_ids, list):
+        failures.append({"path": path_label, "error": "storage_value_registry_critical_ids_invalid"})
+        critical_ids = []
+    for family_id in required_launch_families:
+        if family_id not in critical_ids:
+            failures.append(
+                {
+                    "path": path_label,
+                    "error": "storage_value_registry_critical_family_not_listed",
+                    "family_id": family_id,
+                }
+            )
+
+    families = registry.get("families", [])
+    if not isinstance(families, list) or not families:
+        return failures + [{"path": path_label, "error": "storage_value_registry_families_missing_or_invalid"}]
+
+    row_required_fields = [
+        "family_id",
+        "storage_kind",
+        "status",
+        "tier",
+        "key_shape",
+        "value_schema_id",
+        "value_schema_ref",
+        "owner_doc",
+        "producer",
+        "consumers",
+        "schema_version",
+        "encoding",
+        "required_fields",
+        "optional_fields",
+        "nullable_fields",
+        "replay_behavior",
+        "migration",
+        "retention_compaction",
+        "redaction_no_secret_rule",
+        "legacy_canonical_crosswalk_status",
+    ]
+    by_family: dict[str, dict[str, Any]] = {}
+    for index, family in enumerate(families, start=1):
+        row_path = f"{path_label}:families[{index}]"
+        if not isinstance(family, dict):
+            failures.append({"path": row_path, "error": "storage_value_registry_family_not_object"})
+            continue
+        family_id = str(family.get("family_id", ""))
+        if not family_id:
+            failures.append({"path": row_path, "error": "storage_value_registry_family_id_missing"})
+        elif family_id in by_family:
+            failures.append({"path": row_path, "error": "storage_value_registry_duplicate_family_id", "family_id": family_id})
+        else:
+            by_family[family_id] = family
+
+        for field in row_required_fields:
+            if field not in family:
+                failures.append({"path": row_path, "error": "storage_value_registry_family_field_missing", "field": field})
+
+        owner_doc = str(family.get("owner_doc", ""))
+        owner_path = ROOT / owner_doc.split("#", 1)[0]
+        if not owner_doc or not owner_path.exists():
+            failures.append({"path": row_path, "error": "storage_value_registry_family_owner_doc_missing", "owner_doc": owner_doc})
+
+        for list_field in ["producer", "consumers"]:
+            value = family.get(list_field)
+            if not isinstance(value, list) or not value:
+                failures.append({"path": row_path, "error": "storage_value_registry_family_list_empty", "field": list_field})
+
+        required_fields = family.get("required_fields", [])
+        failures.extend(
+            storage_value_field_name_failures(required_fields, path_label=row_path, field_list_name="required_fields")
+        )
+        failures.extend(
+            storage_value_field_name_failures(
+                family.get("optional_fields", []),
+                path_label=row_path,
+                field_list_name="optional_fields",
+            )
+        )
+        failures.extend(
+            storage_value_field_name_failures(
+                family.get("nullable_fields", []),
+                path_label=row_path,
+                field_list_name="nullable_fields",
+            )
+        )
+        if "schema_version" not in required_fields:
+            failures.append(
+                {
+                    "path": row_path,
+                    "error": "storage_value_registry_persisted_value_missing_schema_version_requirement",
+                    "family_id": family_id,
+                }
+            )
+
+        status = family.get("status")
+        value_schema = family.get("value_schema")
+        if status == "materialized":
+            if not isinstance(value_schema, dict):
+                failures.append({"path": row_path, "error": "storage_value_registry_materialized_schema_missing"})
+                continue
+            if value_schema.get("type") != "object":
+                failures.append({"path": row_path, "error": "storage_value_registry_value_schema_not_object"})
+            if value_schema.get("additionalProperties") is not False:
+                failures.append({"path": row_path, "error": "storage_value_registry_value_schema_not_closed"})
+            schema_required = value_schema.get("required", [])
+            if not isinstance(schema_required, list):
+                failures.append({"path": row_path, "error": "storage_value_registry_value_schema_required_invalid"})
+                schema_required = []
+            for required_field in required_fields if isinstance(required_fields, list) else []:
+                if required_field not in schema_required:
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "error": "storage_value_registry_required_field_absent_from_value_schema",
+                            "family_id": family_id,
+                            "field": required_field,
+                        }
+                    )
+            properties = value_schema.get("properties", {})
+            if not isinstance(properties, dict):
+                failures.append({"path": row_path, "error": "storage_value_registry_value_schema_properties_invalid"})
+                properties = {}
+            for required_field in schema_required:
+                if required_field not in properties:
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "error": "storage_value_registry_value_schema_required_property_missing",
+                            "family_id": family_id,
+                            "field": required_field,
+                        }
+                    )
+            schema_id_property = properties.get("schema_id", {}) if isinstance(properties.get("schema_id"), dict) else {}
+            if schema_id_property.get("const") != family.get("value_schema_id"):
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "storage_value_registry_value_schema_id_const_mismatch",
+                        "family_id": family_id,
+                        "expected": family.get("value_schema_id"),
+                        "actual": schema_id_property.get("const"),
+                    }
+                )
+            schema_version_property = (
+                properties.get("schema_version", {}) if isinstance(properties.get("schema_version"), dict) else {}
+            )
+            if schema_version_property.get("const") != family.get("schema_version"):
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "storage_value_registry_value_schema_version_const_mismatch",
+                        "family_id": family_id,
+                        "expected": family.get("schema_version"),
+                        "actual": schema_version_property.get("const"),
+                    }
+                )
+            failures.extend(storage_value_secret_key_failures(value_schema, path_label=row_path))
+        elif status == "deferred_not_build_blocking":
+            for field in ["deferred_owner", "deferred_reason", "reopen_condition"]:
+                if not family.get(field):
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "error": "storage_value_registry_deferred_metadata_missing",
+                            "family_id": family_id,
+                            "field": field,
+                        }
+                    )
+        elif status != "compatibility_alias":
+            failures.append(
+                {
+                    "path": row_path,
+                    "error": "storage_value_registry_unknown_family_status",
+                    "family_id": family_id,
+                    "status": status,
+                }
+            )
+
+    for family_id in required_launch_families:
+        family = by_family.get(family_id)
+        if not family:
+            failures.append({"path": path_label, "error": "storage_value_registry_required_family_missing", "family_id": family_id})
+            continue
+        if family.get("status") != "materialized":
+            failures.append(
+                {
+                    "path": path_label,
+                    "error": "storage_value_registry_required_family_not_materialized",
+                    "family_id": family_id,
+                    "status": family.get("status"),
+                }
+            )
+    return failures
+
+
+def storage_value_registry_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    if not STORAGE_VALUE_REGISTRY_SCHEMA_PATH.exists():
+        failures.append({"path": rel(STORAGE_VALUE_REGISTRY_SCHEMA_PATH), "error": "storage_value_registry_schema_missing"})
+    else:
+        try:
+            schema = read_json(STORAGE_VALUE_REGISTRY_SCHEMA_PATH)
+        except Exception as exc:  # noqa: BLE001
+            failures.append({"path": rel(STORAGE_VALUE_REGISTRY_SCHEMA_PATH), "error": "json_parse_failed", "detail": str(exc)})
+            schema = {}
+        if schema:
+            if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
+                failures.append({"path": rel(STORAGE_VALUE_REGISTRY_SCHEMA_PATH), "error": "storage_value_registry_schema_not_draft_2020_12"})
+            if schema.get("type") != "object":
+                failures.append({"path": rel(STORAGE_VALUE_REGISTRY_SCHEMA_PATH), "error": "storage_value_registry_schema_type_not_object"})
+            if schema.get("additionalProperties") is not False:
+                failures.append({"path": rel(STORAGE_VALUE_REGISTRY_SCHEMA_PATH), "error": "storage_value_registry_schema_not_closed"})
+            properties = schema.get("properties", {}) if isinstance(schema.get("properties"), dict) else {}
+            schema_id = properties.get("schema_id", {}) if isinstance(properties.get("schema_id"), dict) else {}
+            if schema_id.get("const") != STORAGE_VALUE_REGISTRY_SCHEMA_ID:
+                failures.append(
+                    {
+                        "path": rel(STORAGE_VALUE_REGISTRY_SCHEMA_PATH),
+                        "error": "storage_value_registry_schema_id_const_mismatch",
+                        "expected": STORAGE_VALUE_REGISTRY_SCHEMA_ID,
+                        "actual": schema_id.get("const"),
+                    }
+                )
+
+    if not STORAGE_VALUE_REGISTRY_PATH.exists():
+        return failures + [{"path": rel(STORAGE_VALUE_REGISTRY_PATH), "error": "storage_value_registry_missing"}]
+    try:
+        registry = read_json(STORAGE_VALUE_REGISTRY_PATH)
+    except Exception as exc:  # noqa: BLE001
+        return failures + [{"path": rel(STORAGE_VALUE_REGISTRY_PATH), "error": "json_parse_failed", "detail": str(exc)}]
+
+    failures.extend(storage_value_registry_data_failures(registry, path_label=rel(STORAGE_VALUE_REGISTRY_PATH)))
+    failures.extend(storage_value_registry_spec_lock_failures())
+
+    if actual_report.get("buildability_gate_passed") is True:
+        failures.append({"path": rel(REPORT_PATH), "error": "tier0c2_storage_value_registry_unexpected_buildability_pass"})
+
+    return failures
+
+
 def execution_unit_context_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     schema_path = EXECUTION_UNIT_CONTEXT_SCHEMA_PATH
@@ -1534,6 +1945,119 @@ def run_self_tests() -> dict[str, Any]:
                 "checks": event_record_checks,
             }
         )
+    def fixture_storage_family(family_id: str, *, status: str = "materialized") -> dict[str, Any]:
+        base = {
+            "family_id": family_id,
+            "storage_kind": "redb",
+            "status": status,
+            "tier": "tier_0_launch_critical" if status == "materialized" else "later_gui_or_feature_projection",
+            "key_shape": f"{family_id}.v1:{{project_id}}:{{id}}",
+            "value_schema_id": f"pm.storage_value.{family_id}.v1",
+            "value_schema_ref": f"self-test:{family_id}",
+            "owner_doc": "Plans/storage-plan.md",
+            "producer": ["self-test producer"],
+            "consumers": ["self-test consumer"],
+            "schema_version": "1.0.0",
+            "encoding": "messagepack_canonical",
+            "required_fields": ["schema_id", "schema_version", "project_id"],
+            "optional_fields": ["evidence_ref"],
+            "nullable_fields": [],
+            "replay_behavior": "self-test replay",
+            "migration": "self-test migration",
+            "retention_compaction": "self-test retention",
+            "redaction_no_secret_rule": "self-test no-secret rule",
+            "legacy_canonical_crosswalk_status": "self-test",
+        }
+        if status == "materialized":
+            base["value_schema"] = {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["schema_id", "schema_version", "project_id"],
+                "properties": {
+                    "schema_id": {"const": f"pm.storage_value.{family_id}.v1"},
+                    "schema_version": {"const": "1.0.0"},
+                    "project_id": {"type": "string"},
+                    "evidence_ref": {"type": "string"},
+                },
+            }
+        else:
+            base.update(
+                {
+                    "deferred_owner": "Plans/storage-plan.md",
+                    "deferred_reason": "self-test deferred",
+                    "reopen_condition": "self-test reopen",
+                }
+            )
+        return base
+
+    storage_registry_fixture = {
+        "schema_id": STORAGE_VALUE_REGISTRY_SCHEMA_ID,
+        "schema_version": STORAGE_VALUE_REGISTRY_SCHEMA_VERSION,
+        "generated_at_utc": "2026-07-06T00:00:00Z",
+        "owner_doc": "Plans/storage-plan.md",
+        "buildability_gate_policy": {
+            "buildability_gate_passed_must_remain_false": True,
+            "ordinary_product_worknodes_allowed": False,
+            "ordinary_product_nodeseeds_allowed": False,
+            "scope": "tier_0c_2_storage_value_contracts_only",
+        },
+        "critical_family_ids": list(STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES),
+        "families": [fixture_storage_family(family_id) for family_id in STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES]
+        + [fixture_storage_family("deferred_fixture", status="deferred_not_build_blocking")],
+    }
+    missing_schema_version_fixture = json.loads(json.dumps(storage_registry_fixture))
+    missing_schema_version_fixture["families"][0]["required_fields"].remove("schema_version")
+    missing_schema_version_fixture["families"][0]["value_schema"]["required"].remove("schema_version")
+    secret_field_fixture = json.loads(json.dumps(storage_registry_fixture))
+    secret_field_fixture["families"][0]["required_fields"].append("api_key")
+    secret_field_fixture["families"][0]["value_schema"]["required"].append("api_key")
+    secret_field_fixture["families"][0]["value_schema"]["properties"]["api_key"] = {"type": "string"}
+    storage_registry_checks = {
+        "valid_storage_value_registry": not storage_value_registry_data_failures(
+            storage_registry_fixture,
+            path_label="self-test:valid_storage_value_registry",
+        ),
+        "missing_schema_version_rejected": any(
+            failure.get("error") == "storage_value_registry_persisted_value_missing_schema_version_requirement"
+            for failure in storage_value_registry_data_failures(
+                missing_schema_version_fixture,
+                path_label="self-test:missing_schema_version_storage_value_registry",
+            )
+        ),
+        "secret_field_rejected": any(
+            failure.get("error") == "storage_value_secret_material_field"
+            for failure in storage_value_registry_data_failures(
+                secret_field_fixture,
+                path_label="self-test:secret_storage_value_registry",
+            )
+        ),
+        "required_family_deferred_rejected": any(
+            failure.get("error") == "storage_value_registry_required_family_not_materialized"
+            for failure in storage_value_registry_data_failures(
+                {
+                    **storage_registry_fixture,
+                    "families": [
+                        fixture_storage_family(
+                            STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES[0],
+                            status="deferred_not_build_blocking",
+                        )
+                    ]
+                    + [
+                        fixture_storage_family(family_id)
+                        for family_id in STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES[1:]
+                    ],
+                },
+                path_label="self-test:required_family_deferred",
+            )
+        ),
+    }
+    if not all(storage_registry_checks.values()):
+        failures.append(
+            {
+                "scenario": "storage_value_registry",
+                "checks": storage_registry_checks,
+            }
+        )
     return {
         "schema_id": "pm.implementation_readiness.self_test_report.v1",
         "generated_at_utc": utc_now(),
@@ -1541,6 +2065,7 @@ def run_self_tests() -> dict[str, Any]:
         "scenarios": results,
         "field_claim_checks": field_claim_checks,
         "event_record_checks": event_record_checks,
+        "storage_registry_checks": storage_registry_checks,
         "failures": failures,
     }
 
@@ -1646,6 +2171,7 @@ def validate() -> dict[str, Any]:
         )
         failures.extend(pnc019_bootstrap_authority_failures(actual_report))
         failures.extend(event_record_contract_failures(actual_report))
+        failures.extend(storage_value_registry_contract_failures(actual_report))
         failures.extend(execution_unit_context_contract_failures(actual_report))
 
     self_test_report = run_self_tests()
