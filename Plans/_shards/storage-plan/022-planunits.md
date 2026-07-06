@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2234-L14823
+Source lines: L2235-L14833
 
-Source SHA256: `146be3782a1289e0ab7027b950b1f261d6a0e0802ddc6da7732b684ec53664d5`
+Source SHA256: `77b03422fed794c3fcb807b815cba8455acdbccf8ab76d842f86a980735a9022`
 
 ---
 
@@ -2917,7 +2917,7 @@ plan_unit_id: SP-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage owns persistence/projection of attempt, usage, receipt, and artifact joins from execution_unit_context while TierContext and tier_id remain compatibility-only derived metadata."
+canonical_text: "Storage consumes the Executor-owned execution_unit_context schema for persisted packet refs and attempt, usage, receipt, and artifact joins while TierContext and tier_id remain compatibility-only derived metadata."
 gui_related: true
 gui_classification_reason: "This unit preserves GUI/runtime inspection identity and storage ownership for execution context."
 split_recommended: true
@@ -2931,6 +2931,7 @@ unblocks: []
 acceptance_criteria:
 - "SP-050 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "Storage references Plans/Executor_Protocol.md and Plans/execution_unit_context.schema.json instead of redefining execution_unit_context fields."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -2956,15 +2957,23 @@ preserved_exact_tokens:
 - "coordination"
 - "UI inspection"
 - "Contracts_V0"
+- "Executor_Protocol"
+- "schema_version"
+- "Plans/execution_unit_context.schema.json"
 - "cross-family attribution packet"
 - "attempt/usage/receipt/artifact joins"
 negative_constraints:
 - "Any TierContext or tier_id decomposition is compatibility-only derived metadata for legacy selection helpers and MUST NOT own runtime canon, storage keys, or join identity."
+- "storage-plan must not redefine execution_unit_context required fields, optional fields, enum values, or nullability."
+- "Persisted storage payloads must not embed execution_unit_context without schema_version."
+- "execution_unit_context payloads must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets."
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/storage-plan.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/execution_unit_context.schema.json"
 - "Plans/Contracts_V0.md"
 ```
 

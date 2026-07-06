@@ -1,44 +1,44 @@
 # Shard Index: Plans/Contracts_V0.md
 
-Generated: 2026-07-06T15:32:59Z
+Generated: 2026-07-06T16:18:46Z
 
-Source SHA256: `62ac536232f2fe0947cc864c88fcd075628826b7e5ef05a81530c5b15169a232`
+Source SHA256: `95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L223 `0b50f53a067d92b9db5ddbbf68348c26066514cc1900fab2223e40fcfea25bee`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L224-L298 `3e94a5614bd617b97e0a72219c7d6ef13a7d14f2b1cce1e7e9d295fe69992c83`
-- [003 - 0. Scope](003-0.-scope.md) L300-L310 `15d0001cf840d56fd49d0b7b78c5fb09b0e5ae1fc51aa5f1e783c1477f2b0bff`
-- [004 - Cross-surface runtime, concern, and route/open contracts](004-cross-surface-runtime-concern-and-route-open-contracts.md) L312-L814 `0beed7342f8f9f217591ea043e33ff3cecbd3dfa9d0650bf51c42a33f0839071`
-- [005 - 1. Events (persisted)](005-1.-events-persisted.md) L816-L905 `ffbe7daed6fdba2454d5a6045a75c5da225986e05da726947608779b982c6a17`
-- [006 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](006-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L907-L1049 `9f5e631c8efed1a4cf2dc6a2af71f910a38d6f80e6bc062abd1222ca1eb14c5c`
-- [007 - 2. Provider normalized stream (non-persisted contract)](007-2.-provider-normalized-stream-non-persisted-contract.md) L1051-L1100 `bfce06f01a5bce42970adf9ffbea118fbc60b2a31ecabce5d709508c8da56b6f`
-- [008 - 3. Tool events (persisted)](008-3.-tool-events-persisted.md) L1102-L1573 `2d046bca2acf002821597cf0b9cc055c6a2870478786ca1e8282670efab71e7e`
-- [009 - 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)](009-5.-context-management-instruction-scoping-attempt-journaling-par.md) L1574-L1613 `7ce5cd3d4995851afe611829c4c09750a7b987df77c46230ecf7aab1983b33d0`
-- [010 - 6. HITLRequest](010-6.-hitlrequest.md) L1614-L1659 `4ca4db9098256dbee1d7596375bda4fabf7fdaff031c2b3ba2daa6c4aa86edc5`
-- [011 - 7. UICommand](011-7.-uicommand.md) L1660-L1938 `3905602871ee8cae2b6c154d41a7245ad156cabdce5df076f10bc07f4b4985fd`
-- [012 - 8. UI Scaling](012-8.-ui-scaling.md) L1940-L1963 `5f04137cd636acfc33bd6d8334a1894829b2c4d5dc97de76a9def4c957e0b195`
-- [013 - Usage and Billing Contracts Addendum](013-usage-and-billing-contracts-addendum.md) L1965-L2076 `6f7c35953c4422306045fdc8bfbdef15e5f44ba3c4caa0ed41a2120b0979590a`
-- [014 - Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)](014-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md) L2078-L2316 `24cebd0481fa2e26f7cec1ded045b8a2a42f26683e5408b5d0ab73841966937f`
-- [015 - Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)](015-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md) L2317-L2411 `79c6d3a1d81944e3e801d2e2214d7b3a4417f5bbb2692466cb9765a4df1c654a`
-- [016 - Canonical Runtime Taxonomy and Event Precedence Canonical Alignment (2026-03-09)](016-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md) L2412-L2524 `157166eb2eeb8e7df217822b29608b0c11c52df652a203283ac12f526c997b37`
-- [017 - Canonical Runtime Event, Outcome, and Action Contract Canonical Alignment (2026-03-09)](017-canonical-runtime-event-outcome-and-action-contract-canonical-al.md) L2525-L2668 `b88931814f1c20e2a00c731878f125b6aa55d793641dbfb4edc4d231e2e2f625`
-- [018 - Owner / Consumer Map](018-owner-consumer-map.md) L2670-L2674 `a8263b34db996b02116a51e415ffb273cc35c76835064ac240de31a8b6cbea5a`
-- [019 - PlanUnits](019-planunits.md) L2676-L16892 `11f95ddb7f7f735b740c73b32736b6442005139da5fbefcd2d891b3e58cf6eab`
-- [020 - Migration Coverage](020-migration-coverage.md) L16894-L16904 `322e76207b8b1c9ee59c9694052d63023174b308776dcbd1f7c55816c004388b`
-- [021 - Ledger Compile Addendum - pldg-20260614-001](021-ledger-compile-addendum-pldg-20260614-001.md) L16906-L16984 `b9126060d1346455d390ffe4feebae0ca6546ec997969918881c655118cbcc01`
-- [022 - Ledger Compile Addendum - pldg-20260614-002](022-ledger-compile-addendum-pldg-20260614-002.md) L16986-L17148 `afea10594819de22db016b03619b4af607bd4ad3e9f9f509cfe2110a16adab17`
-- [023 - Ledger Compile Addendum - pldg-20260615-001](023-ledger-compile-addendum-pldg-20260615-001.md) L17150-L17231 `5eefb884618f1eec4d15b34c4d53dac0e537921be84422c317186e0aa6bd5aca`
-- [024 - Ledger Compile Addendum - pldg-20260616-001](024-ledger-compile-addendum-pldg-20260616-001.md) L17233-L17362 `fa588880cbe611cea562087ec70ec53058a043b386fb8e8c3044d7e8558fcd0b`
-- [025 - Ledger Compile Addendum - pldg-20260616-002](025-ledger-compile-addendum-pldg-20260616-002.md) L17364-L17476 `4603d3c3b8a41f28d32b32a50ee03499661d096fc5866081c0e56fc8d3f1fa05`
-- [026 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](026-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L17478-L17569 `e29d496a47e5fd471e4eedc670ec41c5ca809ffa7445ba43119a3657169df967`
-- [027 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L17572-L17804 `689f69b4123243da86bfff2a5bf9a6594e621c43ee0f69b5d0ca74f9df966b1f`
-- [028 - Ledger Compile Addendum - pldg-20260622-001-fff](028-ledger-compile-addendum-pldg-20260622-001-fff.md) L17806-L17957 `fbe75968e658595fb4e507f7a6b5de9bf172936feffc5700f564d5aa54ebbe40`
-- [029 - Ledger Compile Addendum - pldg-20260626-001-feature-name](029-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L17960-L18475 `f42e60644b2691851dd59d115e5f715e367bc817e337d515f61a9f601490e3f6`
-- [030 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L18477-L18727 `3b3163963a89a21ff90443713636b01326644c201ad8fa5b401ed1f1d7ce6c37`
-- [031 - Ledger Compile Addendum - pldg-20260629-001-feature-name](031-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L18729-L18843 `468a758a13392fa4ec81323fddd3648b37d159503e0a56e1ae057ef6ecaceb3e`
-- [032 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L18845-L19029 `bbaede9cff23d757e9cab0651d2eb5221793d4a7893ab66f5e867b0511466fe3`
-- [033 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](033-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L19031-L19114 `81a75ee68dcac4c9f4813a068164b6acf47e7341313d3f78a00f475dbb596dbd`
-- [034 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](034-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L19116-L19323 `fb5d54a690d8992699ac4f91a11bb68d5e0cd5c267b67cf73ca7912d4eb4074a`
+- [001 - Preamble](001-preamble.md) L1-L223 `4be01f48bc4ef0360a0c1d6fefd746f5f12804c5fec84d2c98554ee0406b8404`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L224-L298 `0e733129419ea6a25fc9ea131790f2ed806e21f83b6dfe11a6660cc9e6840c93`
+- [003 - 0. Scope](003-0.-scope.md) L300-L310 `9ecc3cef28b547ffce409c7c88813ae6e802ae9ba584f6fe4329f0e6fd5df50f`
+- [004 - Cross-surface runtime, concern, and route/open contracts](004-cross-surface-runtime-concern-and-route-open-contracts.md) L312-L814 `1d4d7c1656ffa60611ce65d80941a0a2ee7ab495b873d3d639b3c348eda9c083`
+- [005 - 1. Events (persisted)](005-1.-events-persisted.md) L816-L905 `886e7d27ebd7c040fa66dd8b5fd5291ea4bea2c777ff6bfa4e93f62811339162`
+- [006 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](006-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L907-L1049 `2c9984f2368d910e5535dc9be586b4f2bf28d72fe96474b096049f3d7c644759`
+- [007 - 2. Provider normalized stream (non-persisted contract)](007-2.-provider-normalized-stream-non-persisted-contract.md) L1051-L1100 `6b1b1b6cc9c920f8fa2a2f5579d3cc974a5c738f1230fb5218c3ff63211b279c`
+- [008 - 3. Tool events (persisted)](008-3.-tool-events-persisted.md) L1102-L1573 `c6562db8101094f8ffb9a4fa1bb629c32c71dc40a60d874b85516fef1d3f774e`
+- [009 - 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)](009-5.-context-management-instruction-scoping-attempt-journaling-par.md) L1574-L1597 `f1d125c1840a3824c9c4026ccba7fa053624b45d0be3c8dbcd3e779056cf26d7`
+- [010 - 6. HITLRequest](010-6.-hitlrequest.md) L1598-L1643 `55ce38fec0b1b682d5dff39f5675096d7fbecf80ce344629f4344e3d5806fedb`
+- [011 - 7. UICommand](011-7.-uicommand.md) L1644-L1922 `6a691180fb6ec276615924f09f309103425f7c962f938f383813cd3eff4a1f81`
+- [012 - 8. UI Scaling](012-8.-ui-scaling.md) L1924-L1947 `25bec1f5655cca65b6e4326dcfec802926b3f2ea4fa9bc62e84f412dd78edc5e`
+- [013 - Usage and Billing Contracts Addendum](013-usage-and-billing-contracts-addendum.md) L1949-L2060 `c678fb8d4cf6f88f36e3e6a3561e29aa99f3cb1360954f362446b035eed62a5e`
+- [014 - Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)](014-scheduler-safe-point-and-remediation-events-addendum-2026-03-08.md) L2062-L2300 `e11f4d90ff7f899f541d6ee7d9fed73f89c144cf49a0f40af79a97c4758ec84f`
+- [015 - Runtime Scheduler / Attempt Lineage Contract Addendum (2026-03-09)](015-runtime-scheduler-attempt-lineage-contract-addendum-2026-03-09.md) L2301-L2395 `23c7864beb5593fe9c6bfb1d9fe1869ea421638a76216236accb23e696457221`
+- [016 - Canonical Runtime Taxonomy and Event Precedence Canonical Alignment (2026-03-09)](016-canonical-runtime-taxonomy-and-event-precedence-canonical-alignm.md) L2396-L2508 `ad1979d294b6624a8a0e2971b16091522c22b95ee8be1aaa9d943f879dedd937`
+- [017 - Canonical Runtime Event, Outcome, and Action Contract Canonical Alignment (2026-03-09)](017-canonical-runtime-event-outcome-and-action-contract-canonical-al.md) L2509-L2652 `936ea9100653774d8aec2319c6d4c7f63a2e4d750d69646889a8fcc3f6dcbc42`
+- [018 - Owner / Consumer Map](018-owner-consumer-map.md) L2654-L2658 `458e21140e2f849dcb8b955e8dbf48191a40d8471752ca4c66e46b3c3f4217a2`
+- [019 - PlanUnits](019-planunits.md) L2660-L16887 `2c478406a7cb8f4b8160d0123560084e2f0a0b4b922d2881b5f00367036fc02b`
+- [020 - Migration Coverage](020-migration-coverage.md) L16889-L16899 `d516594b2d28a20346ada609054627022333fc388365b0dc8e14044d0fcc4819`
+- [021 - Ledger Compile Addendum - pldg-20260614-001](021-ledger-compile-addendum-pldg-20260614-001.md) L16901-L16979 `1f10cead46b21ef5348ccc0cfb7c3ed55a761638a875ca981314d7d41504d3cb`
+- [022 - Ledger Compile Addendum - pldg-20260614-002](022-ledger-compile-addendum-pldg-20260614-002.md) L16981-L17143 `f6a2b7a317ff9f764497afc660716295b55f2580b6ab6405d68264f3a4ac03ff`
+- [023 - Ledger Compile Addendum - pldg-20260615-001](023-ledger-compile-addendum-pldg-20260615-001.md) L17145-L17226 `d9c93c37499253d35fd7d2d3cc95f1b3725712f9b46795ac280550ad6450644a`
+- [024 - Ledger Compile Addendum - pldg-20260616-001](024-ledger-compile-addendum-pldg-20260616-001.md) L17228-L17357 `7f2477007a2ad5c758606bef18261ea2f4ad61af888f3f4c7018a8fdf753b1a2`
+- [025 - Ledger Compile Addendum - pldg-20260616-002](025-ledger-compile-addendum-pldg-20260616-002.md) L17359-L17471 `f93f130e851778566d696ddac93ac45ee8cf5d38991c3e5065bfda17c1e8e950`
+- [026 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](026-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L17473-L17564 `7bc30db4c994dd03e1c4f0e4a5033136d9341d0f3d874ef45593a9f324da4320`
+- [027 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](027-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L17567-L17799 `35cc32e321dce1ad4e032a8fdda8548db23bc189ba9b19b1eeb2385fa5725d31`
+- [028 - Ledger Compile Addendum - pldg-20260622-001-fff](028-ledger-compile-addendum-pldg-20260622-001-fff.md) L17801-L17952 `95cfbfd8f304d82f36ea386b10fb404c8d6ad3938b028de05c618fb356ee191e`
+- [029 - Ledger Compile Addendum - pldg-20260626-001-feature-name](029-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L17955-L18470 `79afb05830c93035dc29571a5922600842cb690d8d3c7170af8ea68d2744e36a`
+- [030 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](030-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L18472-L18722 `fed7ab6212afe62e08bd84930908f60d64056057211f5f08bbefaebe68e016ca`
+- [031 - Ledger Compile Addendum - pldg-20260629-001-feature-name](031-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L18724-L18838 `6f2ae170b6428172fe2bfc759c3a7d02d53fb08e449150fff5aa5003e26b9681`
+- [032 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](032-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L18840-L19024 `988f6908ee13ce2d7a13cf737b55131fd69cf638c66fd17ef2dde8799ed074d5`
+- [033 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](033-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L19026-L19109 `cae93247e867d5365656406ee4a2c730dc732cd2d55be30a3c4d2b0e764a4742`
+- [034 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](034-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L19111-L19318 `031f929267a0454e5b894a4bd3058c54e200cafeac4a153e4406529bcb8ea9b0`

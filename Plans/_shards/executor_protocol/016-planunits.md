@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L850-L5699
+Source lines: L855-L5732
 
-Source SHA256: `9ee3e4e1e60699010ef371ed69be77b29a6b7376fffa10b0fa3666055169207b`
+Source SHA256: `7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d`
 
 ---
 
@@ -569,7 +569,7 @@ plan_unit_id: EP-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: The canonical dispatch/runtime packet carries execution_unit_context with authoritative run, node, attempt, lane, package, seam, worktree, execution role, account, operational identity, blocked sequence, and allowed action fields; stale persona names are compatibility inputs only.
+canonical_text: The canonical dispatch/runtime packet carries the Executor-owned execution_unit_context contract with schema_id pm.execution_unit_context, schema_version 1.0.0, closed required and optional field sets, closed enums, persistence/replay rules, redaction requirements, and consumer-reference-only boundaries; stale persona names are compatibility inputs only.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -610,6 +610,11 @@ preserved_exact_tokens:
 - operational_identity
 - blocked_sequence
 - allowed_action_ids[]
+- schema_id
+- schema_version
+- execution_unit_type
+- execution_unit_id
+- approval_scope_key
 - requested_persona_id
 - effective_persona_id
 - _persona_id
@@ -625,7 +630,10 @@ preserved_exact_tokens:
 - corroborator
 - recovery_actor
 - 'ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership'
-negative_constraints: []
+negative_constraints:
+- No consumer may redefine the execution_unit_context required or optional field set.
+- No persisted execution_unit_context payload is valid without schema_version.
+- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 compatibility_only_notes:
 - Stale local worker identity names and persona slots are compatibility inputs only.
 stale_retired_dispositions: []
@@ -641,7 +649,7 @@ plan_unit_id: EP-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: DispatchContext is the canonical projection over execution_unit_context and carries required run, node, attempt, lane, package, seam, worktree, execution role, account, operational identity, blocked sequence, and approval_scope_key fields.
+canonical_text: DispatchContext is a projection over the Executor-owned execution_unit_context schema and reads required fields, optional fields, nullability, enum values, and persistence rules from Plans/execution_unit_context.schema.json instead of defining a second required-field list.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -673,7 +681,9 @@ preserved_exact_tokens:
 - effective_account_id
 - operational_identity
 - blocked_sequence
-negative_constraints: []
+negative_constraints:
+- DispatchContext must not define an alternate execution_unit_context required-field list.
+- DispatchContext must not omit schema_version when a persisted context payload is stored.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -4578,7 +4588,7 @@ owner_hints:
 - Plans/Executor_Protocol.md
 ```
 
-### EP-092 - Execution Unit Context Required Fields And Labels
+### EP-092 - Execution Unit Context Canonical Contract
 
 ```yaml
 plan_unit_id: EP-092
@@ -4586,10 +4596,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
-  Execution-unit context preserves required run, node, attempt, lane, package,
-  seam, role, account, operational identity, blocked sequence, and approval
-  scope fields plus the canonical labels execution unit context and blocked
-  episode.
+  Executor Protocol owns the canonical execution_unit_context contract through
+  Plans/execution_unit_context.schema.json with schema_id pm.execution_unit_context
+  and schema_version 1.0.0. The contract defines a closed required field list,
+  closed optional field set, field types, nullability, closed enums, identity
+  and linkage fields, persistence and replay rules, redaction and no-secret
+  constraints, lifecycle ownership, and producer/consumer boundaries.
 gui_related: false
 gui_classification_reason: This unit defines runtime identity schema and labels, not GUI presentation.
 split_recommended: false
@@ -4597,19 +4609,23 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
-- All required fields from the source span remain explicit.
-- Canonical terms and values duplicate the required fields so consumers use the same runtime vocabulary.
+- All required fields from the schema remain explicit and closed.
+- Optional fields, nullability, enum values, persistence/replay constraints, and redaction rules remain explicit.
+- Consumer docs reference this owner and schema instead of redefining execution_unit_context.
 - The labels execution unit context and blocked episode remain preserved.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-implementation-readiness.py validate
 risk_class: executor_protocol_drift
 reasoning_tier: standard
 context_scope: executor_protocol_standardization
 implementation_surfaces:
 - Plans/Executor_Protocol.md
+- Plans/execution_unit_context.schema.json
+- scripts/pm-implementation-readiness.py
 node_compile_hint:
-  mode: execution_unit_context_required_fields_and_labels
+  mode: execution_unit_context_canonical_contract
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
@@ -4617,23 +4633,35 @@ preserved_exact_tokens:
 - run_id
 - node_id
 - attempt_id
+- schema_id
+- schema_version
+- execution_unit_type
+- execution_unit_id
 - lane_id
 - package_id
 - seam_id
+- worktree_id
 - execution_role
+- requested_account_binding
 - requested_account_id
 - effective_account_id
 - operational_identity
 - blocked_sequence
+- allowed_action_ids[]
 - approval_scope_key
+- created_at_utc
 - execution unit context
 - blocked episode
 - 'ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor'
-negative_constraints: []
+negative_constraints:
+- No consumer may redefine the execution_unit_context required or optional field set.
+- No persisted execution_unit_context payload is valid without schema_version.
+- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Required identity fields align executor runtime scope with the canonical blocked-episode approval anchor.
+- Executor Protocol is the sole owner of the execution_unit_context contract; Prompt Pipeline, Contracts_V0, storage-plan, orchestrator-subagent-integration, Plan_To_Node_Compilation, and Planning_Wizard are consumers.
 owner_hints:
 - Plans/Executor_Protocol.md
 ```

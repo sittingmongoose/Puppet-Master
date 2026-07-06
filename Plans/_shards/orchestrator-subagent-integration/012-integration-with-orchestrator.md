@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L340-L31380
+Source lines: L340-L31394
 
-Source SHA256: `39085af57a200daf76e725266b53fd3e22dbc82751ce2ee91a6780c1f5a82b02`
+Source SHA256: `942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4`
 
 ---
 
@@ -329,9 +329,11 @@ subagentConfig:
 
 ### Canonical runtime context
 
-- Introduce execution_unit_context as canonical runtime-facing context object.
+- Consume `execution_unit_context` as the Executor-owned canonical runtime-facing context object defined in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`.
 - Demote TierContext to a derived or compatibility-only selection/decomposition helper.
 - Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context.
+- Orchestrator handoff, spawn, recovery, remediation, coordination, and inspection records MUST NOT redefine required fields, optional fields, enum values, or nullability; they read those rules from the Executor schema.
+- Persisted orchestrator payloads MUST NOT embed `execution_unit_context` without `schema_version`, and the payload must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 - Any remaining `TierContext` or `tier_id` mention in this subsection is compatibility-only and never canonical runtime state.
 
 ### Worktree allocation strategy
@@ -8470,7 +8472,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Tier execution and subagent selection consume an ExecutionUnitContext built from the same frozen tier-start config snapshot used by validation and persistence, including workspace/worktree/runtime snapshot fields, language, domain, framework, review flags, error patterns, and parent_subagents.
+  Tier execution and subagent selection consume an ExecutionUnitContext compatibility example built from the same frozen tier-start config snapshot used by validation and persistence, while normative execution_unit_context fields, nullability, enum values, and schema_version are owned by Plans/Executor_Protocol.md and Plans/execution_unit_context.schema.json.
 gui_related: false
 gui_classification_reason: This unit covers runtime context construction and source/example tokens, not GUI behavior.
 split_recommended: false
@@ -8481,6 +8483,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
+- Source examples remain compatibility/source-lineage evidence and do not define execution_unit_context fields.
 - The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
   bridge.
 - Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
@@ -8504,6 +8507,8 @@ preserved_exact_tokens:
 - 'execute_tier_with_subagents'
 - 'build_tier_context'
 - 'ExecutionUnitContext'
+- 'Plans/execution_unit_context.schema.json'
+- 'schema_version'
 - 'workspace/worktree/runtime snapshot'
 - 'frozen tier-start config snapshot'
 - 'detect_language'
@@ -8937,7 +8942,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  execution_unit_context is the canonical runtime-facing context object for worker spawn, recovery, remediation, coordination, and related runtime inspection anchors; TierContext and tier_id remain derived or compatibility-only selection/decomposition vocabulary and are never canonical runtime state.
+  Orchestrator consumes the Executor-owned execution_unit_context contract and schema for worker spawn, recovery, remediation, coordination, and related runtime inspection anchors; TierContext and tier_id remain derived or compatibility-only selection/decomposition vocabulary and are never canonical runtime state.
 gui_related: false
 gui_classification_reason: This unit covers runtime context ownership, not GUI presentation.
 split_recommended: false
@@ -8945,6 +8950,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
+- Orchestrator references Plans/Executor_Protocol.md and Plans/execution_unit_context.schema.json instead of redefining execution_unit_context fields.
 - The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
   bridge.
 - Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
@@ -8968,6 +8974,8 @@ source_lineage:
 preserved_exact_tokens:
 - 'Execution unit context and worktree allocation strategy'
 - 'execution_unit_context'
+- 'schema_version'
+- 'Plans/execution_unit_context.schema.json'
 - 'TierContext'
 - 'tier_id'
 - 'compatibility-only'
@@ -8977,12 +8985,18 @@ preserved_exact_tokens:
 - 'coordination'
 negative_constraints:
 - 'Any remaining TierContext or tier_id mention in this subsection is compatibility-only and never canonical runtime state.'
+- 'Orchestrator must not redefine execution_unit_context required fields, optional fields, enum values, or nullability.'
+- 'Persisted orchestrator payloads must not embed execution_unit_context without schema_version.'
+- 'execution_unit_context payloads must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.'
 compatibility_only_notes:
 - 'TierContext and tier_id are derived or compatibility-only selection/decomposition helper vocabulary.'
 stale_retired_dispositions: []
-owner_boundary_notes: []
+owner_boundary_notes:
+- 'Executor_Protocol owns execution_unit_context; orchestrator-subagent-integration consumes it for child orchestration.'
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
+- Plans/Executor_Protocol.md
+- Plans/execution_unit_context.schema.json
 preserved_contractrefs: []
 ```
 

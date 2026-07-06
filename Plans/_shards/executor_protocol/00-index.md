@@ -1,36 +1,36 @@
 # Shard Index: Plans/Executor_Protocol.md
 
-Generated: 2026-07-06T15:32:59Z
+Generated: 2026-07-06T16:18:46Z
 
-Source SHA256: `9ee3e4e1e60699010ef371ed69be77b29a6b7376fffa10b0fa3666055169207b`
+Source SHA256: `7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `45c1b23301a63a9ed2cd299fa9778682d2b65e46baee66326d2b8ef56296d803`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L15 `e637d95d650651d79bf669e23703fff3d8803ca0dc3327d5d97567fd4b9586a3`
-- [003 - 0. Purpose and scope](003-0.-purpose-and-scope.md) L18-L29 `f19a3d9c8750e9b51aa8db3cc5e66e57403aec7ab56f58bb94b1e4234a9fc12b`
-- [004 - 1. Role definitions](004-1.-role-definitions.md) L31-L77 `d745331d89a2431097ac11b9aa86b08ae21215a3ed6a9bacec731baed8c0953c`
-- [005 - 2. Deterministic readiness](005-2.-deterministic-readiness.md) L78-L109 `8380fc0893437d3716ccf94af3bdbf72c257f8f42ea0bce941a7fd1266399353`
-- [006 - 3. Canonical status lifecycle](006-3.-canonical-status-lifecycle.md) L111-L126 `3852ce2ed23f44a8cb3709e6bd938db7df0e56ff47e2de0fd5fd29de7001cc64`
-- [007 - 4. Auto-marking rule](007-4.-auto-marking-rule.md) L128-L234 `8341386ce2bdbe3d98bcb45b870c38074213a08b80e4bfdf8ce9765213250a82`
-- [008 - 6. Overseer dispatch algorithm (deterministic)](008-6.-overseer-dispatch-algorithm-deterministic.md) L235-L260 `17e158510f4639ba5958883b518d3c7da640a87c528b0ff84f2c527ba71ea116`
-- [009 - Runtime Scheduler Addendum (2026-03-08)](009-runtime-scheduler-addendum-2026-03-08.md) L262-L508 `2a8d7b23c6cb8935e5b445af97515d99892dea5ca1c9ee47d5cef6b73f4547ea`
-- [010 - Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)](010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md) L509-L579 `2595be81500dd60c95f66a5fb578686321b2af70ab93d1f61554fe4491a3a06c`
-- [011 - Canonical Runtime Scheduler Canonical Alignment (2026-03-09)](011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md) L581-L665 `e18845a0da96df2072a12dc96d45ea5600f4ff423b04923c0fa445c97f823540`
-- [012 - Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment (2026-03-09)](012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md) L666-L714 `ec8e932555bb0931962010f09f08cfd67025f73400047bb292696b1c405cc95f`
-- [013 - Counter Relationships and Event Ordering Addendum](013-counter-relationships-and-event-ordering-addendum.md) L715-L756 `25e93ea76ae10f24891af94895ed3129c3353e12fb26f118d4205fd0272548dd`
-- [014 - Execution Context: Worktree Handoff](014-execution-context-worktree-handoff.md) L758-L842 `8175c43415ee480273514411afb6e57076a5ac6f2956f4c2cf62171a34e13e9e`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L844-L848 `741f114670d74704fac6fa96182732907ecdb5048416cbd4b5660a0df6e0ab0e`
-- [016 - PlanUnits](016-planunits.md) L850-L5699 `0b03abe5f266fd89139fc677a3fc5b200da18b37912888d2fa4bfff5527a4116`
-- [017 - Migration Coverage](017-migration-coverage.md) L5700-L5712 `0c58987cc89d270cb65b0e0115fe9e3c7b62523f7af129a1fbc08824ddc2e966`
-- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L5714-L5752 `4da7c05be520059e7adfc223315d1129c32091daa900107c90e38448268700fe`
-- [019 - Ledger Compile Addendum - pldg-20260615-001](019-ledger-compile-addendum-pldg-20260615-001.md) L5754-L5835 `dca51050ab965b8dc7d9f0aa0edd6c917876f323ca9b455e905334b284dd2744`
-- [020 - Ledger Compile Addendum - pldg-20260616-002](020-ledger-compile-addendum-pldg-20260616-002.md) L5837-L5897 `589132cf62c67e4589c1a647774d074a7ac073f2de7383c50dfa3e38b0c8efbb`
-- [021 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L5899-L6172 `96e58226da0c6f75f79c8bcfd9c188fe5fbf7a596bce573b8e5347551e9b9f3e`
-- [022 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6175-L6245 `dbb6db3236ef07e9163beec26f807a29efbe8261de3ef9f482b7227d94c4d0b4`
-- [023 - Ledger Compile Addendum - pldg-20260622-001-fff](023-ledger-compile-addendum-pldg-20260622-001-fff.md) L6247-L6386 `20045961256cc1525603d7ee0182aa85da3f08f9eeb1b52a985be007352232b9`
-- [024 - Ledger Compile Addendum - pldg-20260629-001-feature-name](024-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L6388-L6504 `4e80ba063321d7dd87972d856d2a65032d897a4e29ba32990ddca7cda8e6df58`
-- [025 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](025-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L6506-L6599 `7f7d5ade672f60d789a30d1e957e697ea84d521307dd832e369a2624b12cc148`
-- [026 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L6601-L6902 `771a2286022574e6209529b6ffc9f82f206b4be7a2c7d0e5d90355ae2e754af2`
+- [001 - Preamble](001-preamble.md) L1-L1 `37be3296b4a6783e81d708c99e354f8259b63426f077481dd65ce1e9fb9774cc`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L15 `7b67387f53c6ff7834d48524c676ac26fdc2e3ef1e9e6521c4fc20b5c53307ae`
+- [003 - 0. Purpose and scope](003-0.-purpose-and-scope.md) L18-L29 `21f4f7af7932f84490ae7ada3f7a91335f41b080e5556ad7d0ed5913ade7fb38`
+- [004 - 1. Role definitions](004-1.-role-definitions.md) L31-L77 `6bd7ed205bb00fb46df72fe9b8af5ce1ad68ff8a80b750b10ebfe78882ece161`
+- [005 - 2. Deterministic readiness](005-2.-deterministic-readiness.md) L78-L109 `6fd5f53326395e6b571a7a8d5cdd9c2c8d38c729994c6676f38f0d5e601e22d0`
+- [006 - 3. Canonical status lifecycle](006-3.-canonical-status-lifecycle.md) L111-L126 `07193ddf8315def1e1c1ee7c5f0c6e9d5e07c96fdd7b03636e59b7c499ecba8b`
+- [007 - 4. Auto-marking rule](007-4.-auto-marking-rule.md) L128-L239 `ecf132524eb403b7d3af1e6f10edfac8561fb8df659a72ea13d4dbdd3705bbb0`
+- [008 - 6. Overseer dispatch algorithm (deterministic)](008-6.-overseer-dispatch-algorithm-deterministic.md) L240-L265 `33c69a150e488221057854c99cbfe264ec8b69df5d75a9627986a8f1673ace3a`
+- [009 - Runtime Scheduler Addendum (2026-03-08)](009-runtime-scheduler-addendum-2026-03-08.md) L267-L513 `f2b541d4b9230dfc6006cd3155d0dccc2a4119ccbcca90fa169b61f94113c2c2`
+- [010 - Runtime Scheduler / Recovery Canonical Alignment (2026-03-09)](010-runtime-scheduler-recovery-canonical-alignment-2026-03-09.md) L514-L584 `63ff22a6d2343e26b247b76b66d38f23fb8272b4499bba2e8812aa7a3bd0b195`
+- [011 - Canonical Runtime Scheduler Canonical Alignment (2026-03-09)](011-canonical-runtime-scheduler-canonical-alignment-2026-03-09.md) L586-L670 `761e7f79cf0dc5a3c18f33dceef8f63be6402f8916c0d4ebd3c35545d302b507`
+- [012 - Unified Runtime Scheduler and Attempt Lifecycle Canonical Alignment (2026-03-09)](012-unified-runtime-scheduler-and-attempt-lifecycle-canonical-alignm.md) L671-L719 `9276255d5990c90b980de4118d07e4582d1161aaf4f4727543cf3bebf89a58c3`
+- [013 - Counter Relationships and Event Ordering Addendum](013-counter-relationships-and-event-ordering-addendum.md) L720-L761 `ea1af9e4947a5c12f711bad5231cde2898b05a929e3e6afae2abde59596b9381`
+- [014 - Execution Context: Worktree Handoff](014-execution-context-worktree-handoff.md) L763-L847 `d9375a82a5f41390d905243be3fe4b572fab06e97d16a643ea68a0b2c08fc8f9`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L849-L853 `763f56848d94e5aea8f16edc1ac8349196636e569dd9aca44f3dd4b7dd1f2f5e`
+- [016 - PlanUnits](016-planunits.md) L855-L5732 `a267002bab9a7db0e1af4c0ac7fc9946ce7cbbd9388ecc59a1aa265a03901396`
+- [017 - Migration Coverage](017-migration-coverage.md) L5733-L5745 `85f4cada15a42883ea7ccb2f9074894c383b1c7273786b745d0472a45b2264c1`
+- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L5747-L5785 `9840ef59bad4cddfaf96a603ca11806590068c8a9ab926f42a8826b2045f53c0`
+- [019 - Ledger Compile Addendum - pldg-20260615-001](019-ledger-compile-addendum-pldg-20260615-001.md) L5787-L5868 `78ca9514d273350c311b83be28a2d314e568da26f56cf1d33ddc6e726c4ee77e`
+- [020 - Ledger Compile Addendum - pldg-20260616-002](020-ledger-compile-addendum-pldg-20260616-002.md) L5870-L5930 `2c446e530811fb3287e5952daf80e19cf767f9033c07548b9f539fec446e4c8c`
+- [021 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](021-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L5932-L6205 `b4bb197c5ff10ea2d0cb9c4afe95f1761aa2692a06cdcce9a1cf41c143777f32`
+- [022 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](022-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6208-L6278 `1edb97df5d9e21875b128f5df33db08e7ef564fcff5989cd429f409c4fc5b13c`
+- [023 - Ledger Compile Addendum - pldg-20260622-001-fff](023-ledger-compile-addendum-pldg-20260622-001-fff.md) L6280-L6419 `09013f9b81d8f3551e1a72dd5867a5133ab550c482b79f7d324bc090066ff0b7`
+- [024 - Ledger Compile Addendum - pldg-20260629-001-feature-name](024-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L6421-L6537 `04de780d6e1478dddb448ef6d419c9efa3d33af955fc77d53bcf6136c910b9d4`
+- [025 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](025-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L6539-L6632 `19fe4b58b9e3015f881bab38cf869dfb018fdf6b0d6bfa146e3002fb75369285`
+- [026 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](026-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L6634-L6935 `af02874fd33416f32119baf45a447c39adaade162862f5f989233937f4cdbc92`

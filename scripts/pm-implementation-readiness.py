@@ -49,6 +49,13 @@ REQUIRED_FALSE_PROOF_GUARDS = [
 CLOSED_BLOCKER_STATUSES = {"closed", "accepted_risk"}
 
 OWNER_DOCS = [
+    "Plans/00-plans-index.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Contracts_V0.md",
+    "Plans/storage-plan.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/execution_unit_context.schema.json",
     "Plans/Planning_Wizard.md",
     "Plans/Plan_Document_System.md",
     "Plans/Plan_To_Node_Compilation.md",
@@ -59,6 +66,38 @@ OWNER_DOCS = [
     "scripts/pm-plan-index.py",
     "scripts/pm-implementation-readiness.py",
     "scripts/pm-plans-verify.py",
+]
+
+EXECUTION_UNIT_CONTEXT_SCHEMA_PATH = PLANS / "execution_unit_context.schema.json"
+EXECUTION_UNIT_CONTEXT_SCHEMA_ID = "pm.execution_unit_context"
+EXECUTION_UNIT_CONTEXT_SCHEMA_VERSION = "1.0.0"
+EXECUTION_UNIT_CONTEXT_REQUIRED_FIELDS = [
+    "schema_id",
+    "schema_version",
+    "execution_unit_type",
+    "execution_unit_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "execution_role",
+    "operational_identity",
+    "requested_account_binding",
+    "approval_scope_key",
+    "created_at_utc",
+]
+EXECUTION_UNIT_CONTEXT_CONSUMER_DOCS = [
+    PLANS / "Prompt_Pipeline.md",
+    PLANS / "Contracts_V0.md",
+    PLANS / "storage-plan.md",
+    PLANS / "orchestrator-subagent-integration.md",
+    PLANS / "Plan_To_Node_Compilation.md",
+    PLANS / "Planning_Wizard.md",
+]
+EXECUTION_UNIT_CONTEXT_FORBIDDEN_CONSUMER_PATTERNS = [
+    "#### execution_unit_context canonical record",
+    "execution_unit_context {\n",
+    "`execution_unit_context` is the authoritative runtime snapshot packet",
+    "The canonical replacement execution-context object reconciles node-native keys",
 ]
 
 
@@ -583,6 +622,111 @@ def pnc019_bootstrap_authority_failures(actual_report: dict[str, Any]) -> list[d
     return failures
 
 
+def execution_unit_context_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    schema_path = EXECUTION_UNIT_CONTEXT_SCHEMA_PATH
+    if not schema_path.exists():
+        return [{"path": rel(schema_path), "error": "execution_unit_context_schema_missing"}]
+
+    try:
+        schema = read_json(schema_path)
+    except Exception as exc:  # noqa: BLE001
+        return [{"path": rel(schema_path), "error": "json_parse_failed", "detail": str(exc)}]
+
+    if schema.get("type") != "object":
+        failures.append({"path": rel(schema_path), "error": "execution_unit_context_schema_type_not_object"})
+    if schema.get("additionalProperties") is not False:
+        failures.append({"path": rel(schema_path), "error": "execution_unit_context_schema_not_closed"})
+    if schema.get("required") != EXECUTION_UNIT_CONTEXT_REQUIRED_FIELDS:
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "execution_unit_context_required_fields_mismatch",
+                "expected": EXECUTION_UNIT_CONTEXT_REQUIRED_FIELDS,
+                "actual": schema.get("required"),
+            }
+        )
+
+    properties = schema.get("properties", {})
+    if not isinstance(properties, dict):
+        failures.append({"path": rel(schema_path), "error": "execution_unit_context_properties_missing_or_invalid"})
+        properties = {}
+    for field in EXECUTION_UNIT_CONTEXT_REQUIRED_FIELDS:
+        if field not in properties:
+            failures.append({"path": rel(schema_path), "error": "execution_unit_context_required_property_missing", "field": field})
+
+    schema_id = properties.get("schema_id", {}) if isinstance(properties.get("schema_id"), dict) else {}
+    if schema_id.get("const") != EXECUTION_UNIT_CONTEXT_SCHEMA_ID:
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "execution_unit_context_schema_id_const_mismatch",
+                "expected": EXECUTION_UNIT_CONTEXT_SCHEMA_ID,
+                "actual": schema_id.get("const"),
+            }
+        )
+    schema_version = properties.get("schema_version", {}) if isinstance(properties.get("schema_version"), dict) else {}
+    if schema_version.get("const") != EXECUTION_UNIT_CONTEXT_SCHEMA_VERSION:
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "execution_unit_context_schema_version_const_mismatch",
+                "expected": EXECUTION_UNIT_CONTEXT_SCHEMA_VERSION,
+                "actual": schema_version.get("const"),
+            }
+        )
+
+    for field in ["execution_unit_type", "execution_role", "requested_account_binding"]:
+        value = properties.get(field, {})
+        enum = value.get("enum") if isinstance(value, dict) else None
+        if not isinstance(enum, list) or not enum:
+            failures.append({"path": rel(schema_path), "error": "execution_unit_context_closed_enum_missing", "field": field})
+
+    defs = schema.get("$defs", {})
+    operational_identity = defs.get("operational_identity", {}) if isinstance(defs, dict) else {}
+    if not isinstance(operational_identity, dict) or operational_identity.get("additionalProperties") is not False:
+        failures.append({"path": rel(schema_path), "error": "execution_unit_context_operational_identity_not_closed"})
+    identity_properties = operational_identity.get("properties", {}) if isinstance(operational_identity, dict) else {}
+    identity_kind = identity_properties.get("identity_kind", {}) if isinstance(identity_properties, dict) else {}
+    if not isinstance(identity_kind.get("enum"), list) or not identity_kind.get("enum"):
+        failures.append({"path": rel(schema_path), "error": "execution_unit_context_identity_kind_enum_missing"})
+
+    for consumer_path in EXECUTION_UNIT_CONTEXT_CONSUMER_DOCS:
+        if not consumer_path.exists():
+            failures.append({"path": rel(consumer_path), "error": "execution_unit_context_consumer_doc_missing"})
+            continue
+        text = consumer_path.read_text(encoding="utf-8")
+        for pattern in EXECUTION_UNIT_CONTEXT_FORBIDDEN_CONSUMER_PATTERNS:
+            if pattern in text:
+                failures.append(
+                    {
+                        "path": rel(consumer_path),
+                        "error": "execution_unit_context_consumer_local_definition",
+                        "pattern": pattern,
+                    }
+                )
+        start = 0
+        while True:
+            index = text.find("execution_unit_context", start)
+            if index == -1:
+                break
+            window = text[index : index + 800]
+            if "Required fields:" in window and "`run_id`" in window and "`node_id`" in window and "`attempt_id`" in window:
+                failures.append(
+                    {
+                        "path": rel(consumer_path),
+                        "error": "execution_unit_context_consumer_required_field_list",
+                    }
+                )
+                break
+            start = index + len("execution_unit_context")
+
+    if actual_report.get("buildability_gate_passed") is True:
+        failures.append({"path": rel(REPORT_PATH), "error": "tier0b_execution_unit_context_unexpected_buildability_pass"})
+
+    return failures
+
+
 def fixture_blocker(family: str, index: int, *, status: str = "open") -> dict[str, Any]:
     return {
         "schema_id": "pm.implementation_readiness.blocker.v1",
@@ -861,6 +1005,7 @@ def validate() -> dict[str, Any]:
             )
         )
         failures.extend(pnc019_bootstrap_authority_failures(actual_report))
+        failures.extend(execution_unit_context_contract_failures(actual_report))
 
     self_test_report = run_self_tests()
     if self_test_report["status"] != "pass":

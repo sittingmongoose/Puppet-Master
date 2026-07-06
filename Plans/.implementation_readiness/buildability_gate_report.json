@@ -12,6 +12,7 @@
         "code": "buildability_blocked.contract_materialization",
         "message": "Approve And Build is disabled because implementation buildability requires contract_materialization evidence in the exact owner docs listed here.",
         "owner_docs": [
+          "Plans/Executor_Protocol.md",
           "Plans/Plan_Document_System.md",
           "Plans/Plan_To_Node_Compilation.md",
           "Plans/Planning_Wizard.md"
@@ -212,6 +213,7 @@
         "IRB-001"
       ],
       "owner_docs": [
+        "Plans/Executor_Protocol.md",
         "Plans/Plan_Document_System.md",
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Planning_Wizard.md"
@@ -349,7 +351,7 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-07-06T15:31:34Z",
+  "generated_at_utc": "2026-07-06T16:17:40Z",
   "node_readiness": {
     "available": true,
     "bootstrap_authority_ref": "PNC-022",
@@ -388,11 +390,33 @@
       ],
       "blocker_family": "contract_materialization",
       "blocker_id": "IRB-001",
-      "notes": "Closing this blocker must not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.",
+      "notes": "Tier 0B closes only the exact execution_unit_context contract-materialization slice. IRB-001 remains open; closing the remaining blocker must not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.",
       "owner_docs": [
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Plan_Document_System.md",
-        "Plans/Planning_Wizard.md"
+        "Plans/Planning_Wizard.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "partial_closures": [
+        {
+          "evidence": [
+            "Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract",
+            "Plans/execution_unit_context.schema.json",
+            "scripts/pm-implementation-readiness.py validate"
+          ],
+          "remaining_scope": [
+            "EventRecord payload materialization",
+            "storage value schemas",
+            "provider stream payloads",
+            "runtime lifecycle activation",
+            "clean-room harness",
+            "GUI command execution",
+            "security boundary fixtures",
+            "PlanCompile artifact payload contracts beyond execution_unit_context"
+          ],
+          "scope": "execution_unit_context_contract",
+          "status": "closed_for_tier_0b_only"
+        }
       ],
       "required_evidence": [
         "Concrete payload schemas or discriminator branches for every PlanCompile artifact kind used by the runtime path.",
@@ -404,7 +428,9 @@
       "source_refs": [
         "Plans/Plan_To_Node_Compilation.md#PNC-014",
         "Plans/Plan_To_Node_Compilation.md#PNC-018",
-        "Plans/Plan_Document_System.md#PDS-016"
+        "Plans/Plan_Document_System.md#PDS-016",
+        "Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract",
+        "Plans/execution_unit_context.schema.json"
       ],
       "status": "open",
       "summary": "PlanCompile and Planning Wizard contracts are not buildable until every runtime artifact has a concrete payload contract, producer, consumer, validator, receipt, retry route, rollback route, and executable proof path; schema-file existence alone is insufficient."
@@ -838,16 +864,23 @@
   ],
   "schema_id": "pm.implementation_readiness.buildability_gate_report.v1",
   "source_hashes": {
-    "Plans/.implementation_readiness/readiness_blockers.jsonl": "c5a1e468a1407568c1447abdf670d2f11980b13f512b56bfba764b2cfa8e54ac",
+    "Plans/.implementation_readiness/readiness_blockers.jsonl": "b1ba1a051ec8059a9c21768f8e822fb649e186a32bb08945a32f3f806939afd2",
     "Plans/.implementation_readiness/readiness_matrix.json": "e0122b29f7abbec9d726ff87908ec0d37e2b0898e9a9537e9223f8fcfad743a9",
-    "Plans/.plan_index/node_readiness_report.json": "e03cdaead9134f270554f9da44738d32e6dfd839c46f5c6ee244dced6a6f5af3",
+    "Plans/.plan_index/node_readiness_report.json": "c80208d3fa9c9f094c965c7797d15d4b5aa28a8ac5685ed2d0d1d0c1feb5bfaf",
+    "Plans/00-plans-index.md": "2d6142621ce666c50dbf0ed63daf63d22e9322dfcd71fc4c6654d98f739ee4d1",
+    "Plans/Contracts_V0.md": "95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3",
+    "Plans/Executor_Protocol.md": "7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d",
     "Plans/Plan_Document_System.md": "4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a",
-    "Plans/Plan_To_Node_Compilation.md": "729f8c4661593d570526e69074dbac11808aa2566e7eee134ad54cbfbbe1140b",
-    "Plans/Planning_Wizard.md": "3a46978d5e3bb44d6cda74fc357e1a7bd98f1d44db70da59e978b3c5c2f277b4",
+    "Plans/Plan_To_Node_Compilation.md": "251de9d43cc5b0c5a19649e338bb296b6fd7c5e189171315196847f636ddbd0e",
+    "Plans/Planning_Wizard.md": "1677ca9806380b86ba43c87112e9afbfef328ffbdd1a612a2b9914053bc9b27f",
     "Plans/Progression_Gates.md": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785",
+    "Plans/Prompt_Pipeline.md": "a3660ba6d7c9fa3f2e8d7cf7b481d31cc2f1bd584d2367fe58790b47d17d5d6f",
     "Plans/UI_Wiring_Rules.md": "13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb",
     "Plans/bootstrap/Codex_Prompts.md": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793",
-    "scripts/pm-implementation-readiness.py": "8cc88ae1d56da6fb177def989ad0858fff7efc7072ce33bc055b9b6b9bd3e315",
+    "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+    "Plans/orchestrator-subagent-integration.md": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4",
+    "Plans/storage-plan.md": "77b03422fed794c3fcb807b815cba8455acdbccf8ab76d842f86a980735a9022",
+    "scripts/pm-implementation-readiness.py": "0602b2c060f2841962d837f4608680347bddfe8b46816baaac3981eb45f1a0ef",
     "scripts/pm-plan-index.py": "6bcbd531c41b19d28a35d26cbda6d45ba12a3866d31261f1f9fa6049f5ab0f32",
     "scripts/pm-plans-verify.py": "4439f2740b2e042da96f823605d8eb0701d3cbf24a7e6bdee60b545c2342f73b"
   },

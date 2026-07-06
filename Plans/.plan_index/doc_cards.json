@@ -59,7 +59,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 5255,
+      "line_count": 5256,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 66,
       "plan_unit_ids": [
@@ -196,7 +196,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "e14ed6e16272016a06e3f08b627dd82e1c8c95c0fef71256677452e244224d62",
+      "sha256": "2d6142621ce666c50dbf0ed63daf63d22e9322dfcd71fc4c6654d98f739ee4d1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 66
@@ -2864,6 +2864,7 @@
         "Plans/assistant-memory-subsystem.md",
         "Plans/chain-wizard-flexibility.md",
         "Plans/chain-wizard.md",
+        "Plans/execution_unit_context.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/human-in-the-loop.md",
         "Plans/newtools.md",
@@ -2885,7 +2886,7 @@
         "future run receipts",
         "future vision_bridge result records"
       ],
-      "line_count": 19323,
+      "line_count": 19318,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 308,
       "plan_unit_ids": [
@@ -3511,7 +3512,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "62ac536232f2fe0947cc864c88fcd075628826b7e5ef05a81530c5b15169a232",
+      "sha256": "95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 308
@@ -3520,8 +3521,9 @@
       "unit_type_counts": {
         "compatibility_disposition": 32,
         "constraint": 53,
+        "consumer_requirement": 1,
         "future_scope_decision": 1,
-        "requirement": 221,
+        "requirement": 220,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -4185,7 +4187,7 @@
         "False": 96,
         "True": 17
       },
-      "heading_count": 192,
+      "heading_count": 193,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -4210,13 +4212,15 @@
         "Plans/Wiring_Matrix.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
+        "Plans/execution_unit_context.schema.json",
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/storage-plan.md",
         "Plans/usage-feature.md",
         "future Executor Builder/Verifier routes",
-        "future Executor intake"
+        "future Executor intake",
+        "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 6902,
+      "line_count": 6935,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 113,
       "plan_unit_ids": [
@@ -4357,7 +4361,7 @@
         "unsafe_runtime_activation",
         "unverified_execution_completion"
       ],
-      "sha256": "9ee3e4e1e60699010ef371ed69be77b29a6b7376fffa10b0fa3666055169207b",
+      "sha256": "7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 113
@@ -4394,6 +4398,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
@@ -8094,7 +8099,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 31380,
+      "line_count": 31394,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 431,
       "plan_unit_ids": [
@@ -8967,7 +8972,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "39085af57a200daf76e725266b53fd3e22dbc82751ce2ee91a6780c1f5a82b02",
+      "sha256": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 430,
@@ -9683,6 +9688,7 @@
         "Plans/Run_Graph_View.md",
         "Plans/bootstrap/Bootstrap_Planning_Workflow.md",
         "Plans/bootstrap/Codex_Prompts.md",
+        "Plans/execution_unit_context.schema.json",
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/prd_planning_runtime_contracts.json",
         "Plans/prd_planning_runtime_contracts.schema.json",
@@ -9698,7 +9704,7 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 1416,
+      "line_count": 1423,
       "path": "Plans/Plan_To_Node_Compilation.md",
       "plan_unit_count": 22,
       "plan_unit_ids": [
@@ -9747,7 +9753,7 @@
         "stale_or_forbidden_behavior",
         "static_fixture_false_certification"
       ],
-      "sha256": "729f8c4661593d570526e69074dbac11808aa2566e7eee134ad54cbfbbe1140b",
+      "sha256": "251de9d43cc5b0c5a19649e338bb296b6fd7c5e189171315196847f636ddbd0e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 22
@@ -9958,6 +9964,7 @@
         "Plans/UI_Command_Catalog.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/assistant-chat-design.md",
+        "Plans/execution_unit_context.schema.json",
         "Plans/human-in-the-loop.md",
         "Plans/prd_planning_runtime_contracts.json",
         "Plans/prd_planning_runtime_contracts.schema.json",
@@ -9966,7 +9973,7 @@
         "future Planning Wizard output records",
         "future Planning Wizard source picker"
       ],
-      "line_count": 1506,
+      "line_count": 1526,
       "path": "Plans/Planning_Wizard.md",
       "plan_unit_count": 18,
       "plan_unit_ids": [
@@ -10003,7 +10010,7 @@
         "stale_approval_build_race",
         "stale_or_forbidden_behavior"
       ],
-      "sha256": "3a46978d5e3bb44d6cda74fc357e1a7bd98f1d44db70da59e978b3c5c2f277b4",
+      "sha256": "1677ca9806380b86ba43c87112e9afbfef328ffbdd1a612a2b9914053bc9b27f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 18
@@ -10522,7 +10529,7 @@
         "future bridge prompt/result serializer",
         "future prompt assembly"
       ],
-      "line_count": 5018,
+      "line_count": 5016,
       "path": "Plans/Prompt_Pipeline.md",
       "plan_unit_count": 72,
       "plan_unit_ids": [
@@ -10623,7 +10630,7 @@
         "vision_prompt_injection_or_guessing",
         "widget_owner_boundary_drift"
       ],
-      "sha256": "dc3735330fdda5a776a03fe11e7246c4d90b1fd2049101292a4d60d6ffb82f86",
+      "sha256": "a3660ba6d7c9fa3f2e8d7cf7b481d31cc2f1bd584d2367fe58790b47d17d5d6f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 71,
@@ -11876,7 +11883,7 @@
         "future taught memory records",
         "future visualizer artifact records"
       ],
-      "line_count": 16269,
+      "line_count": 16279,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 229,
       "plan_unit_ids": [
@@ -12134,7 +12141,7 @@
         "storage_plan_drift",
         "teach_memory_persistence_drift"
       ],
-      "sha256": "146be3782a1289e0ab7027b950b1f261d6a0e0802ddc6da7732b684ec53664d5",
+      "sha256": "77b03422fed794c3fcb807b815cba8455acdbccf8ab76d842f86a980735a9022",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 228,
@@ -13254,7 +13261,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-06T15:30:43Z",
+  "generated_at_utc": "2026-07-06T16:17:34Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13285,6 +13292,7 @@
       "compatibility_note": 2,
       "constraint": 586,
       "consumer_alignment": 1,
+      "consumer_requirement": 1,
       "data_contract": 6,
       "decision": 20,
       "deferred_enhancement": 9,
@@ -13308,7 +13316,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4562,
+      "requirement": 4561,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

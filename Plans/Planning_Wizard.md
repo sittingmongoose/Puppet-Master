@@ -104,6 +104,8 @@ Approval fails closed when any planning state, source pack, project context, top
 
 Successful approval atomically writes `approval_cas_receipt`, publishes `PlanApproved`, creates or binds exactly one `PlanCompileRun`, and returns the durable `plan_compile_run_id` synchronously. Projection reconciliation may show a pending launch shell in Orchestrator Plan Compile, but run identity itself may not be left to eventual projection. Duplicate delivery with the same CAS inputs and idempotency key returns the same `PlanCompileRun`.
 
+Planning Wizard and PlanApproved records consume `execution_unit_context` only through the Executor-owned contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`. They must not define a local context field list, must not persist an embedded context payload without `schema_version`, and must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets in the context payload.
+
 The Planning Wizard and PMConcept concept surface must not expose `START`, `BUILD`, `Start Chain`, or `Approve & Continue` as ordinary build-launch controls. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch authority; later controls are post-approval Plan Compile or runtime controls with scoped commands, disabled reasons, receipt effects, and stale-projection behavior.
 
 
@@ -711,7 +713,7 @@ plan_unit_id: PWIZ-010
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'The Planning Wizard final approval button and command label is exactly Approve And Build. Approve And Build creates a versioned immutable ApprovedPlanPack containing canonical Plan docs, PlanUnit and acceptance-unit snapshots and hashes, source PRD Pack, project-context snapshot, amendments, policies, testing requirements, audit evidence, closure records, readiness report, and planning-ledger lineage references. The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon. In the finished-product native runtime contract, ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and proceeds without a second Start Build confirmation; optional HITL checkpoints are policy exceptions, not the default. During the current bootstrap ledger-to-Plans lane, this remains a product contract and does not launch PlanCompile. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator
+canonical_text: 'The Planning Wizard final approval button and command label is exactly Approve And Build. Approve And Build creates a versioned immutable ApprovedPlanPack containing canonical Plan docs, PlanUnit and acceptance-unit snapshots and hashes, source PRD Pack, project-context snapshot, amendments, policies, testing requirements, audit evidence, closure records, readiness report, and planning-ledger lineage references. The ApprovedPlanPack and frozen canonical PlanUnit and acceptance-unit indexes are Plan Compile authority; the Planning Wizard ledger remains source and reasoning lineage rather than executable canon. In the finished-product native runtime contract, ordinary Approve And Build flow immediately creates or resumes exactly one PlanCompileRun and proceeds without a second Start Build confirmation; optional HITL checkpoints are policy exceptions, not the default. Planning Wizard consumes execution_unit_context only through the Executor-owned Plans/Executor_Protocol.md and Plans/execution_unit_context.schema.json contract. During the current bootstrap ledger-to-Plans lane, this remains a product contract and does not launch PlanCompile. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator
   page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting.'
 gui_related: true
 gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
@@ -720,6 +722,7 @@ unblocks: []
 acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- Planning Wizard references the Executor-owned execution_unit_context schema instead of redefining context fields.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -734,6 +737,8 @@ implementation_surfaces:
 - Plans/Contracts_V0.md
 - Plans/Project_Output_Artifacts.md
 - Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/execution_unit_context.schema.json
 - Plans/Planning_Ledger_System.md
 - Plans/Goal_Runtime_System.md
 - Plans/Orchestrator_Page.md
@@ -769,11 +774,15 @@ preserved_exact_tokens:
 - lineage
 - automatic_after_approval
 - PlanCompileRun
+- execution_unit_context
+- schema_version
 - Orchestrator
 - Plan Compile tab
 negative_constraints:
 - Do not treat mutable planning-ledger projections as the sole Plan Compile authority.
 - Do not require a redundant ordinary Start Build confirmation after Approve And Build.
+- Do not redefine execution_unit_context required fields, optional fields, enum values, or nullability in Planning Wizard or PlanApproved payloads.
+- Do not persist execution_unit_context payloads without schema_version or with secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 owner_hints:
 - Plans/Planning_Wizard.md
 - Plans/FinalGUISpec.md
@@ -781,6 +790,8 @@ owner_hints:
 - Plans/Contracts_V0.md
 - Plans/Project_Output_Artifacts.md
 - Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/execution_unit_context.schema.json
 - Plans/Planning_Ledger_System.md
 - Plans/Goal_Runtime_System.md
 - Plans/Orchestrator_Page.md
@@ -795,7 +806,7 @@ plan_unit_id: PWIZ-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Planning_Wizard.md
-canonical_text: 'Approve And Build is a compare-and-swap approval transaction over the exact PlanningRun revision, topic map version, ApprovedPlanPack identity, pack version, pack hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash that were displayed in the final review. The approval command must carry those currentness inputs and fail closed when any planning state, source pack, project context, topic readiness, audit closure, testing policy, or Plan index input changes between final review and approval. A successful transaction atomically writes approval_cas_receipt, PlanApproved, and PlanCompileRun_created_or_bound, and returns the PlanCompileRun identity synchronously; projection reconciliation may lag, but run identity may not. Duplicate delivery with the same CAS inputs and idempotency key returns the same PlanCompileRun. A stale CAS input routes to bounded revalidation or final-review refresh rather than silently approving a different plan.'
+canonical_text: 'Approve And Build is a compare-and-swap approval transaction over the exact PlanningRun revision, topic map version, ApprovedPlanPack identity, pack version, pack hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash that were displayed in the final review. The approval command must carry those currentness inputs and fail closed when any planning state, source pack, project context, topic readiness, audit closure, testing policy, or Plan index input changes between final review and approval. A successful transaction atomically writes approval_cas_receipt, PlanApproved, and PlanCompileRun_created_or_bound, and returns the PlanCompileRun identity synchronously; projection reconciliation may lag, but run identity may not. PlanApproved and approval receipts consume any execution_unit_context payload through the Executor-owned schema and must preserve schema_version when embedding that packet. Duplicate delivery with the same CAS inputs and idempotency key returns the same PlanCompileRun. A stale CAS input routes to bounded revalidation or final-review refresh rather than silently approving a different plan.'
 gui_related: true
 gui_classification_reason: Approve And Build is a user-visible approval command and launch transition, while the CAS/currentness boundary is runtime contract behavior.
 depends_on: [PWIZ-010, PWIZ-012]
@@ -804,6 +815,7 @@ acceptance_criteria:
 - The final review shows the exact pack, PlanningRun revision, topic map version, project-context hash, PlanUnit and acceptance-unit index hashes, testing policy hash, and final audit/closure hash used by approval.
 - Approve And Build fails closed when any displayed approval input changes before the approval commit.
 - Approval writes an approval CAS receipt and synchronously creates or binds exactly one PlanCompileRun identity.
+- Embedded execution_unit_context payloads, if present, carry schema_version and follow the Executor-owned schema.
 - Duplicate approval delivery with the same idempotency key and CAS inputs returns the existing PlanCompileRun.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -815,6 +827,8 @@ implementation_surfaces:
 - Plans/Planning_Wizard.md
 - Plans/UI_Command_Catalog.md
 - Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/execution_unit_context.schema.json
 - Plans/Goal_Runtime_System.md
 - Plans/prd_planning_runtime_contracts.json
 - Plans/prd_planning_runtime_contracts.schema.json
@@ -835,14 +849,20 @@ preserved_exact_tokens:
 - PlanUnit index hash
 - acceptance-unit index hash
 - PlanCompileRun
+- execution_unit_context
+- schema_version
 negative_constraints:
 - Do not approve mutable planning state that changed after final review.
 - Do not leave PlanCompileRun identity to eventual projection reconciliation.
 - Do not convert stale approval inputs into a successful build launch.
+- Do not redefine execution_unit_context required fields, optional fields, enum values, or nullability in approval payloads.
+- Do not persist execution_unit_context payloads without schema_version or with secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 owner_hints:
 - Plans/Planning_Wizard.md
 - Plans/UI_Command_Catalog.md
 - Plans/Plan_To_Node_Compilation.md
+- Plans/Executor_Protocol.md
+- Plans/execution_unit_context.schema.json
 - Plans/Goal_Runtime_System.md
 ```
 

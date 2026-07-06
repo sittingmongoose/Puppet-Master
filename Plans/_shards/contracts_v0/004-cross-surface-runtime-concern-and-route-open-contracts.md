@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L312-L814
 
-Source SHA256: `62ac536232f2fe0947cc864c88fcd075628826b7e5ef05a81530c5b15169a232`
+Source SHA256: `95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3`
 
 ---
 
@@ -276,7 +276,7 @@ Scheduler, safe-point, and remediation records use one canonical payload block. 
 
 Attention rows, deep links, search, and palette results share the internal route payload. URLs, in-app actions, `/search/palette` results, deep links, and `resume_url` decode to the same route payload rather than separate link semantics. The canonical internal route payload is separate from command `IDs` and may carry `target_kind`, `project_id?`, `workspace_tab_id?`, `destination_surface`, `destination_tab?`, `focused_run_id?`, `historical_mode?`, `thread_id?`, `wizard_id?`, `object_kind?`, `object_id?`, `record_id?`, `artifact_id?`, `attempt_id?`, `lane_id?`, `worktree_id?`, `filter_payload?`, `inspector_target?`, `scroll_target?`, and `focus_behavior?`.
 
-Runtime storage and persistence records carry execution context before tier compatibility. `attempt_record`, `tier_runtime_record`, run-start/runtime snapshot events, `/runtime`, `/persistence`, `auth-account`, `/account/role`, `shared-runtime`, provider-account identity, and `operational_identity` blocks must retain requested/effective auth/account/role fields where those fields become auditable. The canonical replacement execution-context object reconciles node-native keys `run_id`, `thread_id`, `node_id`, `attempt_id`, `replan_generation`, and `scheduler_lane` with stale tier-native keys `tier_id`, `TierType`, `TierContext`, tier-level crews, and tier worktree ownership before downstream docs project execution identity.
+Runtime storage and persistence records carry execution context before tier compatibility. `attempt_record`, `tier_runtime_record`, run-start/runtime snapshot events, `/runtime`, `/persistence`, `auth-account`, `/account/role`, `shared-runtime`, provider-account identity, and `operational_identity` blocks must retain requested/effective auth/account/role fields where those fields become auditable. The canonical replacement execution-context object is the Executor-owned `execution_unit_context` contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`; Contracts_V0 consumes that schema for envelope and join behavior instead of redefining node-native keys or required fields.
 
 Execution ownership fields on that context include `execution_role`, `scheduler_lane`, `manual_priority?`, `safe_point_id?`, and remediation lineage refs when those facts control scheduling, recovery, or handoff priority.
 

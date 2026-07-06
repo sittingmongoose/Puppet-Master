@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L572-L972
+Source lines: L572-L979
 
-Source SHA256: `729f8c4661593d570526e69074dbac11808aa2566e7eee134ad54cbfbbe1140b`
+Source SHA256: `251de9d43cc5b0c5a19649e338bb296b6fd7c5e189171315196847f636ddbd0e`
 
 ---
 
@@ -272,7 +272,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Plan_To_Node_Compilation.md
 canonical_text: >-
-  Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Planning Wizard Approve And Build approval and the PlanApproved handoff into PlanCompileRun state, then through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name row_id, transition, source_artifact, destination_artifact, producer, consumer, owner, validator, receipt, schema_payload, retry_route, rollback_route, user_escalation_condition, evidence_refs, and plan_unit_refs. For the current bootstrap/v1 matrix, Plan Compile source authority is the immutable ApprovedPlanPack plus frozen PlanUnit and acceptance-unit indexes; the Planning Wizard ledger remains source and reasoning lineage rather than executable Plan Compile authority. The shared `Plans/plans_to_code_handoff.schema.json` document keeps top-level `schema_id` at `pm.plans_to_code_handoff.v1`; within that stable document identity, the current bootstrap/v1 branch is the historical design_only contract with launch disabled, while PNC-015 owns the runtime-capable v2 native_runtime branch with runtime enablement evidence. The schema draft in Plans/plans_to_code_handoff.schema.json records handoff_matrix, handoff_row, PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, WorkNode dispatch/change/completion receipts, Auditor cycle and verification receipts, repair attempt receipts, legacy validation_pass_report compatibility aliases, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes for the disabled design_only branch plus the runtime-aware native_runtime branch; neither branch creates runtime artifacts by itself.
+  Plan_To_Node_Compilation owns the Plan Compile side of the Plans-to-Code Handoff Matrix. Every transition from Planning Wizard Approve And Build approval and the PlanApproved handoff into PlanCompileRun state, then through PlanCompile, Executor intake, source-control preflight, dispatch, tests, Auditor verification, repair, promotion, graph completion, and certification must name row_id, transition, source_artifact, destination_artifact, producer, consumer, owner, validator, receipt, schema_payload, retry_route, rollback_route, user_escalation_condition, evidence_refs, and plan_unit_refs. For the current bootstrap/v1 matrix, Plan Compile source authority is the immutable ApprovedPlanPack plus frozen PlanUnit and acceptance-unit indexes; the Planning Wizard ledger remains source and reasoning lineage rather than executable Plan Compile authority. The shared `Plans/plans_to_code_handoff.schema.json` document keeps top-level `schema_id` at `pm.plans_to_code_handoff.v1`; within that stable document identity, the current bootstrap/v1 branch is the historical design_only contract with launch disabled, while PNC-015 owns the runtime-capable v2 native_runtime branch with runtime enablement evidence. PlanCompile and handoff rows consume the Executor-owned `execution_unit_context` contract only by reference through `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`; they must not define a local field list, omit schema_version from persisted context payloads, or persist secrets in context payloads. The schema draft in Plans/plans_to_code_handoff.schema.json records handoff_matrix, handoff_row, PlanCompileRun, stage card, compile worklist, NodeSeed candidate, NodeSeed review, WorkGraph draft, WorkNode request, compiler model routing, Codex work package, Codex external GUI-agent request, PlanCompile receipt, automated testing reports, test cases, test run receipts, visual evidence, source-control receipts, WorkNode dispatch/change/completion receipts, Auditor cycle and verification receipts, repair attempt receipts, legacy validation_pass_report compatibility aliases, model resolution receipts, ExecutorIntakeReport, and GoalCompletionReceipt shapes for the disabled design_only branch plus the runtime-aware native_runtime branch; neither branch creates runtime artifacts by itself.
   The PlanApproved handoff records the approval_cas_receipt, transactional outbox requirement, and deterministic idempotency_key over project_id, pack identity/version/hash, PlanningRun revision, topic map version, PlanUnit and acceptance-unit index hashes, testing policy hash, project-context snapshot hash, and final audit/closure hash so approval cannot create duplicate or stale PlanCompileRun state. The handoff matrix names Plans to WorkNodes as a design-only bridge. Do not expose this bridge as a built Puppet Master setting. Its schema boundary is the single `Plans/plans_to_code_handoff.schema.json` draft, whose `$defs` include a concrete strict payload definition for every `artifact_kind` enum value and whose top-level discriminator maps each `artifact_kind` to the matching `payload` schema, including `handoff_matrix`, `handoff_row`, `plan_compile_run`, `node_seed_candidate`, `worknode_request`, `test_capability_report`, `source_control_receipt`, `source_control_preflight_receipt`, `worknode_dispatch_receipt`, `auditor_cycle_report`, `validation_pass_report`, and `goal_completion_receipt` while preserving source_artifact, destination_artifact, retry_route, rollback_route, and user_escalation_condition fields. Within that single schema_id=v1 draft, current bootstrap/v1 records use the historical design_only branch and runtime-capable v2 records use native_runtime only with runtime enablement evidence. H-001 through H-018 must remain present exactly once, and each row's schema_payload refs must resolve to concrete `$defs` or artifact_kind payloads. The historical per-artifact filename tokens `plan_compile_run.schema.json`, `node_seed_candidate.schema.json`, `worknode_request.schema.json`, and `test_capability_report.schema.json` are compatibility aliases for `$defs` in `Plans/plans_to_code_handoff.schema.json`, not separate schema files. The artifact-backed handoff can carry Plans to code completion only after Auditor verifies and final certification evidence closes the chain.
 gui_related: false
 gui_classification_reason: Handoff matrix and schema boundaries are backend contract and traceability surfaces.
@@ -284,6 +284,7 @@ acceptance_criteria:
   - The schema draft distinguishes the current bootstrap/v1 design_only branch from the PNC-015 runtime-capable v2 native_runtime branch.
   - The schema draft discriminates payload schemas by artifact_kind and defines every artifact_kind payload under $defs.
   - The row-by-row handoff matrix below maps every required transition to schema_payload, producer, consumer, evidence_refs, and PlanUnit refs.
+  - PlanCompile consumes the Executor-owned execution_unit_context schema by reference and does not redefine context fields.
   - Codex bootstrap external GUI-agent request is documented as a bootstrap artifact only, not a built Puppet Master setting.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates
@@ -292,7 +293,7 @@ validation_surfaces:
 risk_class: handoff_gap
 reasoning_tier: high
 context_scope: plans_to_code_handoff
-implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/Executor_Protocol.md, Plans/Contracts_V0.md, Plans/Project_Output_Artifacts.md, Plans/plans_to_code_handoff.schema.json]
+implementation_surfaces: [Plans/Plan_To_Node_Compilation.md, Plans/Executor_Protocol.md, Plans/execution_unit_context.schema.json, Plans/Contracts_V0.md, Plans/Project_Output_Artifacts.md, Plans/plans_to_code_handoff.schema.json]
 node_compile_hint: {mode: handoff_matrix_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
   - pldg-20260618-001-prd-planning-wizard:atom-0002
@@ -347,6 +348,9 @@ preserved_exact_tokens:
   - "retry route"
   - "rollback route"
   - "Plans/plans_to_code_handoff.schema.json"
+  - "Plans/execution_unit_context.schema.json"
+  - "execution_unit_context"
+  - "schema_version"
   - "plan_compile_run"
   - "node_seed_candidate"
   - "worknode_request"
@@ -375,10 +379,13 @@ negative_constraints:
   - Do not show Executor code-generation progress inside the Plan Compile tab except final handoff status.
   - Do not expose the Codex external GUI-agent bridge as a built Puppet Master setting.
   - Do not compile vague roadmap prose that leaves future agents to infer the contracts.
+  - Do not redefine execution_unit_context required fields, optional fields, enum values, or nullability in PlanCompile artifacts.
+  - Do not persist execution_unit_context payloads without schema_version or with secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 owner_hints:
   - Plans/Plan_To_Node_Compilation.md
   - Plans/Goal_Runtime_System.md
   - Plans/Executor_Protocol.md
+  - Plans/execution_unit_context.schema.json
   - Plans/Contracts_V0.md
   - Plans/Project_Output_Artifacts.md
 ```

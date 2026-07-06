@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2676-L16892
+Source lines: L2660-L16887
 
-Source SHA256: `62ac536232f2fe0947cc864c88fcd075628826b7e5ef05a81530c5b15169a232`
+Source SHA256: `95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3`
 
 ---
 
@@ -7581,26 +7581,28 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-### CV-154 - Execution Unit Context Runtime Snapshot Packet
+### CV-154 - Execution Unit Context Consumer Envelope
 
 ```yaml
 plan_unit_id: CV-154
-unit_type: requirement
+unit_type: consumer_requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  execution_unit_context is the authoritative runtime snapshot packet carrying
-  run, node, attempt, lane, package, seam, worktree, execution role, requested
-  and effective account state, operational identity, and tool-use fields.
+  Contracts_V0 consumes the Executor-owned execution_unit_context runtime
+  snapshot packet from Plans/Executor_Protocol.md and
+  Plans/execution_unit_context.schema.json for shared envelope and join behavior;
+  it does not redefine required fields, optional fields, enum values,
+  nullability, schema_version, redaction rules, or lifecycle ownership.
 gui_related: false
 gui_classification_reason: This unit defines the runtime execution-unit context packet.
 split_recommended: true
 depends_on: [CV-060, CV-145]
 unblocks: []
 acceptance_criteria:
-  - "execution_unit_context remains the authoritative runtime snapshot packet."
-  - "Required runtime fields include run_id, node_id, attempt_id, lane_id, package_id, seam_id, worktree_id, and execution_role."
-  - "Required account and join fields include requested_account_id, requested_account_binding, requested_account_policy, effective_account_id, operational_identity, and tool_use_id."
+  - "execution_unit_context remains owned by Executor_Protocol."
+  - "Required and optional context fields are read from Plans/execution_unit_context.schema.json."
+  - "Contracts_V0 preserves account, action, tool-use, and attribution joins as envelope consumers."
   - "Requested and effective account state stays explicit across runtime, approval, and usage surfaces."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -7609,16 +7611,19 @@ risk_class: execution_unit_context_field_loss
 reasoning_tier: high
 context_scope: execution_unit_context_packet
 implementation_surfaces:
-  - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
+  - Plans/execution_unit_context.schema.json
+  - Plans/Contracts_V0.md
   - Plans/storage-plan.md
 node_compile_hint:
-  mode: execution_unit_context_contract
+  mode: execution_unit_context_consumer_envelope
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0053
 preserved_exact_tokens:
   - "`execution_unit_context`"
+  - "`schema_id`"
+  - "`schema_version`"
   - "`run_id`"
   - "`node_id`"
   - "`attempt_id`"
@@ -7629,7 +7634,13 @@ preserved_exact_tokens:
   - "`execution_role`"
   - "`operational_identity`"
   - "`tool_use_id`"
+negative_constraints:
+  - "Contracts_V0 must not redefine execution_unit_context required fields, optional fields, enum values, or nullability."
+  - "Persisted envelopes must not embed execution_unit_context without schema_version."
+  - "execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets."
 owner_hints:
+  - Plans/Executor_Protocol.md
+  - Plans/execution_unit_context.schema.json
   - Plans/Contracts_V0.md
 ```
 
