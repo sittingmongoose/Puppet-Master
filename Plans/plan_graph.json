@@ -78,7 +78,9 @@
         "ContractName:Plans/UI_Command_Catalog.md",
         "ContractName:Plans/Wiring_Matrix.md",
         "ContractName:Plans/Release_Supply_Chain.md",
-        "ContractName:Plans/event_record.schema.json"
+        "ContractName:Plans/event_record.schema.json",
+        "ContractName:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "ContractName:Plans/.implementation_readiness/non_executable_closure_evidence.json"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -88,7 +90,9 @@
         "dec-2026-06-16-goal-runtime-system-governance-seal",
         "dec-2026-06-18-plans-to-code-handoff-governance-registration-repair",
         "dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
-        "AD-20260621-prd-planning-runtime-contract-packet"
+        "AD-20260621-prd-planning-runtime-contract-packet",
+        "dec-2026-07-06-non-executable-readiness-closure-evidence-schema-governance-registration",
+        "dec-2026-07-06-non-executable-readiness-closure-evidence-governance-registration"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -211,6 +215,16 @@
           "kind": "file",
           "ref": "Plans/event_record.schema.json",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -327,6 +341,16 @@
         {
           "kind": "file",
           "ref": "Plans/event_record.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
           "note": "Registered canonical owner doc coverage."
         }
       ],

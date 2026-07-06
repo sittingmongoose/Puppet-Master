@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_Document_System.md`
 
-Source lines: L1012-L1101
+Source lines: L1012-L1183
 
-Source SHA256: `4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a`
+Source SHA256: `2b877c8321e049c0aab8fb6d3763d8e72471d91212a9402c449d9cf7b7dd1566`
 
 ---
 
@@ -33,8 +33,10 @@ canonical_text: >-
   are governed readiness inputs, buildability_gate_report.json is a generated governed report, and
   scripts/pm-implementation-readiness.py is the governed validator/generator registered through Spec Lock during
   governance seal. Passing plan validators, source-preservation acceptance, existing schemas, wiring JSON existence,
-  and semantic closure are explicitly insufficient to close a blocker without concrete behavioral, command-wiring,
-  security, persistence, currentness, provider, structural, owner-routing, and clean-room lifecycle evidence. Partial
+  and semantic closure are explicitly insufficient to close a blocker without scope-matched concrete evidence. PDS-020
+  owns the narrower non-executable spec/schema/validator/fixture closure lane for non-runtime families; ordinary
+  buildability still requires command-wiring, security, persistence, currentness, provider, structural, owner-routing,
+  and clean-room lifecycle evidence at the scope named by each blocker row. Partial
   PNC-019 bootstrap-authority evidence may be recorded while runtime_lifecycle and clean_room_harness blockers remain
   open; it must not be counted as blocker closure or ordinary product buildability.
 gui_related: false
@@ -97,4 +99,84 @@ owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/Plan_To_Node_Compilation.md
   - Plans/Progression_Gates.md
+```
+
+### PDS-020 - Non-Executable Readiness Closure Evidence Registry
+
+```yaml
+plan_unit_id: PDS-020
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  Plans/.implementation_readiness/non_executable_closure_evidence.schema.json owns the shape of the non-executable
+  implementation-readiness closure evidence artifact, and Plans/.implementation_readiness/non_executable_closure_evidence.json
+  records the current closure evidence for blocker families that can be proven from owner-routed specs, schemas,
+  validators, and positive/negative fixture contracts before executable PNC-019 certification. This closure lane may
+  close contract_materialization, persistence_materialization, provider_stream, security_boundary, gui_wiring,
+  behavioral_acceptance, structural_integrity, owner_routing, and currentness only at
+  closure_scope=non_executable_spec_schema_validator_fixture_only. It must leave runtime_lifecycle and
+  clean_room_harness open until executable lifecycle and clean-room harness receipts exist. The evidence file records
+  zero forbidden artifacts for WorkNodes, NodeSeeds, candidates, queues, manifests, implementation files, runtime
+  launches, and production build tasks, and scripts/pm-implementation-readiness.py validates the closed-family set,
+  remaining-family set, storage registry Draft 2020-12 validation, provider stream owner split, persistence/security
+  fixtures, GUI disabled-state binding, behavioral-acceptance rejection of preservation-only proof, structural
+  integrity, owner routing, currentness, Spec Lock registration, and buildability_gate_passed=false.
+gui_related: false
+gui_classification_reason: Defines readiness evidence governance and validation behavior, not visual presentation.
+depends_on: [PDS-019, PNC-019, PNC-021, PNC-022]
+unblocks: [PG-060, PWIZ-018]
+acceptance_criteria:
+  - The evidence JSON validates against Plans/.implementation_readiness/non_executable_closure_evidence.schema.json.
+  - Closed non-executable blocker rows carry closure_evidence_refs pointing to the evidence artifact.
+  - runtime_lifecycle and clean_room_harness remain open unless executable PNC-019 lifecycle and clean-room receipts exist.
+  - buildability_gate_passed remains false while PNC-019 hard-disabled evidence remains present.
+  - The evidence artifact and schema are registered in Spec Lock during governance seal.
+  - The closure lane does not create WorkNodes, NodeSeeds, candidates, queues, manifests, implementation files, runtime launches, or production build tasks.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-implementation-readiness.py self-test
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plan-index.py validate
+risk_class: false_non_executable_closure_overclaim
+reasoning_tier: high
+context_scope: non_executable_implementation_readiness_closure
+implementation_surfaces:
+  - Plans/Plan_Document_System.md
+  - Plans/.implementation_readiness/non_executable_closure_evidence.schema.json
+  - Plans/.implementation_readiness/non_executable_closure_evidence.json
+  - Plans/.implementation_readiness/readiness_blockers.jsonl
+  - Plans/.implementation_readiness/readiness_matrix.json
+  - Plans/.implementation_readiness/buildability_gate_report.json
+  - scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: non_executable_readiness_closure_registry
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - source_ref:chat:2026-07-06-non-executable-readiness-closure
+preserved_exact_tokens:
+  - "non_executable_spec_schema_validator_fixture_only"
+  - "contract_materialization"
+  - "persistence_materialization"
+  - "provider_stream"
+  - "security_boundary"
+  - "gui_wiring"
+  - "behavioral_acceptance"
+  - "structural_integrity"
+  - "owner_routing"
+  - "currentness"
+  - "runtime_lifecycle"
+  - "clean_room_harness"
+  - "buildability_gate_passed"
+  - "PNC-019"
+negative_constraints:
+  - Do not use non-executable closure evidence as executable lifecycle certification.
+  - Do not close runtime_lifecycle or clean_room_harness from static specs, schemas, validators, or fixture definitions.
+  - Do not declare Puppet Master buildable while PNC-019 remains hard-disabled.
+  - Do not create WorkNodes, NodeSeeds, candidates, queues, manifests, implementation files, runtime launches, or production build tasks from this closure evidence.
+owner_hints:
+  - Plans/Plan_Document_System.md
+  - Plans/.implementation_readiness/non_executable_closure_evidence.json
+  - scripts/pm-implementation-readiness.py
 ```

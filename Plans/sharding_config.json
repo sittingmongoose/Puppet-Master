@@ -89,7 +89,9 @@
     "Plans/Release_Supply_Chain.md",
     "Plans/event_record.schema.json",
     "Plans/storage_value_registry.schema.json",
-    "Plans/storage_value_registry.json"
+    "Plans/storage_value_registry.json",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.json"
   ],
   "recovery_register_policy": {
     "MUST CHANGE": "docs requiring direct canonical edits to land owner canon, retire stale same-file canon, or fix active fidelity blockers",

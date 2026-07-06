@@ -3,7 +3,7 @@
     "files": [
       {
         "path": "Plans/00-plans-index.md",
-        "sha256": "e45160a3bfdc59333e3ba09e8f54016d7df5fa000e8cb7280e2fb5addd786617"
+        "sha256": "f099986e87f10a19b4224f856687f21a2890a61463cb226ea40cc5b6c13ca30d"
       },
       {
         "path": "Plans/acceptance_manifest.schema.json",
@@ -99,11 +99,11 @@
       },
       {
         "path": "Plans/Plan_Document_System.md",
-        "sha256": "4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a"
+        "sha256": "2b877c8321e049c0aab8fb6d3763d8e72471d91212a9402c449d9cf7b7dd1566"
       },
       {
         "path": "Plans/plan_graph.json",
-        "sha256": "a23c8276a9cd6bd662d33a2c18ef3ac62503635598839156b41ad59e740ab99d"
+        "sha256": "556f1937f1319bd47e0e1bee09825b9dcaca4a66c940d2b2e226e024c0a73f18"
       },
       {
         "path": "Plans/plan_graph.schema.json",
@@ -147,7 +147,7 @@
       },
       {
         "path": "Plans/sharding_config.json",
-        "sha256": "8ff71dbfa863c3784e43fcdb97b2eb54d2a8f545634213e74fd34361ace73e98"
+        "sha256": "3279a2d35effd6524a2c5f4121aa4b098a9f07a0f644bf2280dfd8e1f69ca9db"
       },
       {
         "path": "Plans/test_strategy.schema.json",
@@ -215,7 +215,7 @@
       },
       {
         "path": "scripts/pm-implementation-readiness.py",
-        "sha256": "85499bb4980768c865f7382b0544cacfc707201711db685855d81226aff7cbc7"
+        "sha256": "2126d8a59e35b5c69dbba4d15cce207e3ac21ebaec50efa5f18156c9b67e756b"
       },
       {
         "path": "scripts/pm-plan-index.py",
@@ -223,15 +223,15 @@
       },
       {
         "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
-        "sha256": "7e7f160d819dca5652be33a1c0bbd4690e42bf43eb65175319716e447f4be125"
+        "sha256": "bccdb7098f9d81b8b4242d57e8f4d63af6d2a382d4eb0b3d9dd7b19f6386e655"
       },
       {
         "path": "Plans/.implementation_readiness/readiness_matrix.json",
-        "sha256": "e0122b29f7abbec9d726ff87908ec0d37e2b0898e9a9537e9223f8fcfad743a9"
+        "sha256": "e8353dd6c90df18f504e14c9a527c8e868f53a1428b7d8e35674ba21234b3b9d"
       },
       {
         "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-        "sha256": "c99cf73ddbdbec48a98ec8fcd85b4d9fc8bf9ac15e7c3acf305552e5195fc42d"
+        "sha256": "e72618d3fccab5dd618362276a95ee94dfe2a526a75507b29923d91067391fa1"
       },
       {
         "path": "Plans/event_record.schema.json",
@@ -239,7 +239,7 @@
       },
       {
         "path": "Plans/storage_value_registry.schema.json",
-        "sha256": "b727ce596727594fd136480c8a02072b20b2e7d1d48cb4363d4b94285a14b038"
+        "sha256": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a"
       },
       {
         "path": "Plans/storage_value_registry.json",
@@ -248,6 +248,14 @@
       {
         "path": "scripts/pm-audit-closure.py",
         "sha256": "e5bc1fe5261d5ddb92c40f7d997a743f0a6211775088390e047f4e88c8a8c961"
+      },
+      {
+        "path": "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "sha256": "ac29cab335aaec41b9938d7aaa9d319d192c2a55b18532d0c99cc8bdd6e12047"
+      },
+      {
+        "path": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+        "sha256": "75f093349681f59267347deef7ed0c9c8048ee0476406376ddc20965356a85ee"
       }
     ],
     "hash_alg": "sha256"

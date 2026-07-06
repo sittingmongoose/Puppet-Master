@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L494-L575
+Source lines: L495-L578
 
-Source SHA256: `e45160a3bfdc59333e3ba09e8f54016d7df5fa000e8cb7280e2fb5addd786617`
+Source SHA256: `f099986e87f10a19b4224f856687f21a2890a61463cb226ea40cc5b6c13ca30d`
 
 ---
 
@@ -89,4 +89,6 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `event_record.schema.json` | [`Plans/_shards/event_record.schema/00-index.md`](Plans/_shards/event_record.schema/00-index.md) |
 | `storage_value_registry.schema.json` | [`Plans/_shards/storage_value_registry.schema/00-index.md`](Plans/_shards/storage_value_registry.schema/00-index.md) |
 | `storage_value_registry.json` | [`Plans/_shards/storage_value_registry/00-index.md`](Plans/_shards/storage_value_registry/00-index.md) |
+| `non_executable_closure_evidence.schema.json` | [`Plans/_shards/non_executable_closure_evidence.schema/00-index.md`](Plans/_shards/non_executable_closure_evidence.schema/00-index.md) |
+| `non_executable_closure_evidence.json` | [`Plans/_shards/non_executable_closure_evidence/00-index.md`](Plans/_shards/non_executable_closure_evidence/00-index.md) |
 | `Release_Supply_Chain.md` | [`Plans/_shards/release_supply_chain/00-index.md`](Plans/_shards/release_supply_chain/00-index.md) |

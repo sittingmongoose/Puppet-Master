@@ -1,6 +1,6 @@
 # Shard Index: Plans/Progression_Gates.md
 
-Generated: 2026-07-06T20:20:33Z
+Generated: 2026-07-06T21:12:33Z
 
 Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
 

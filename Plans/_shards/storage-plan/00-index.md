@@ -1,6 +1,6 @@
 # Shard Index: Plans/storage-plan.md
 
-Generated: 2026-07-06T20:20:33Z
+Generated: 2026-07-06T21:12:33Z
 
 Source SHA256: `ad3f512795f628259dafc4e81b402f15adbfde16434e9548ea3b0101c41fb283`
 

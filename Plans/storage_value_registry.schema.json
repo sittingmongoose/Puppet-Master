@@ -6,6 +6,7 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "$schema",
     "schema_id",
     "schema_version",
     "generated_at_utc",
@@ -15,6 +16,10 @@
     "families"
   ],
   "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://puppetmaster.local/schemas/storage_value_registry.schema.json"
+    },
     "schema_id": {
       "type": "string",
       "const": "pm.storage_value_registry.v1"

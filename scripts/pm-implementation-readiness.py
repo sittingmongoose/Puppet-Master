@@ -19,6 +19,8 @@ READINESS_DIR = PLANS / ".implementation_readiness"
 BLOCKERS_PATH = READINESS_DIR / "readiness_blockers.jsonl"
 MATRIX_PATH = READINESS_DIR / "readiness_matrix.json"
 REPORT_PATH = READINESS_DIR / "buildability_gate_report.json"
+CLOSURE_EVIDENCE_PATH = READINESS_DIR / "non_executable_closure_evidence.json"
+CLOSURE_EVIDENCE_SCHEMA_PATH = READINESS_DIR / "non_executable_closure_evidence.schema.json"
 NODE_READINESS_PATH = PLANS / ".plan_index/node_readiness_report.json"
 PLAN_UNITS_INDEX_PATH = PLANS / ".plan_index/plan_units.jsonl"
 DEPENDENCIES_INDEX_PATH = PLANS / ".plan_index/dependencies.json"
@@ -48,6 +50,61 @@ REQUIRED_FALSE_PROOF_GUARDS = [
 ]
 
 CLOSED_BLOCKER_STATUSES = {"closed", "accepted_risk"}
+NON_EXECUTABLE_CLOSABLE_FAMILIES = [
+    "contract_materialization",
+    "persistence_materialization",
+    "provider_stream",
+    "security_boundary",
+    "gui_wiring",
+    "behavioral_acceptance",
+    "structural_integrity",
+    "owner_routing",
+    "currentness",
+]
+EXECUTABLE_PROOF_FAMILIES = ["runtime_lifecycle", "clean_room_harness"]
+CLOSURE_EVIDENCE_SCHEMA_ID = "pm.implementation_readiness.non_executable_closure_evidence.v1"
+CLOSURE_EVIDENCE_SCHEMA_VERSION = "1.0.0"
+REQUIRED_PLANCOMPILE_ARTIFACT_KINDS = [
+    "approved_plan_pack",
+    "plan_compile_run",
+    "compile_wave_contract",
+    "workgraph_draft",
+    "worknode_request",
+    "executor_intake_report",
+    "test_run_receipt",
+    "goal_completion_receipt",
+]
+REQUIRED_PROVIDER_STREAM_EVENT_KINDS = [
+    "request_started",
+    "auth_state",
+    "model_resolution",
+    "text_delta",
+    "tool_use",
+    "tool_result",
+    "usage_update",
+    "diagnostic",
+    "retry_scheduled",
+    "quota_state",
+    "degraded_state",
+    "cancel_requested",
+    "cancelled",
+    "done",
+    "error",
+]
+REQUIRED_PERSISTENCE_FIXTURE_IDS = [
+    "persist.replay_restart.plan_compile_run",
+    "persist.idempotent.duplicate_approve_and_build",
+    "persist.transactional_outbox.plan_approved",
+    "persist.currentness.cas_rejects_stale_pack",
+    "persist.activation_testing_receipts.ref_only",
+]
+REQUIRED_SECURITY_FIXTURE_IDS = [
+    "security.actor_identity.approval_scope",
+    "security.credential_ref_only.provider_call",
+    "security.provider_egress_ssrf.host_policy",
+    "security.command_approval_replay.preflight_revision",
+    "security.trust_destructive.plugin_container_worktree",
+]
 
 OWNER_DOCS = [
     "Plans/00-plans-index.md",
@@ -56,8 +113,17 @@ OWNER_DOCS = [
     "Plans/storage-plan.md",
     "Plans/storage_value_registry.schema.json",
     "Plans/storage_value_registry.json",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.json",
     "Plans/orchestrator-subagent-integration.md",
     "Plans/Prompt_Pipeline.md",
+    "Plans/CLI_Bridged_Providers.md",
+    "Plans/Multi-Account.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "Plans/Permissions_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Wiring_Matrix.production.json",
     "Plans/event_record.schema.json",
     "Plans/execution_unit_context.schema.json",
     "Plans/Planning_Wizard.md",
@@ -246,6 +312,8 @@ STORAGE_VALUE_REQUIRED_LAUNCH_FAMILIES = [
 STORAGE_VALUE_REGISTRY_SPEC_LOCK_PATHS = [
     "Plans/storage_value_registry.schema.json",
     "Plans/storage_value_registry.json",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+    "Plans/.implementation_readiness/non_executable_closure_evidence.json",
     "scripts/pm-implementation-readiness.py",
     "scripts/pm-audit-closure.py",
 ]
@@ -1269,6 +1337,159 @@ def storage_value_registry_spec_lock_failures() -> list[dict[str, Any]]:
     return failures
 
 
+def json_type_matches(value: Any, expected_type: str) -> bool:
+    if expected_type == "object":
+        return isinstance(value, dict)
+    if expected_type == "array":
+        return isinstance(value, list)
+    if expected_type == "string":
+        return isinstance(value, str)
+    if expected_type == "boolean":
+        return isinstance(value, bool)
+    if expected_type == "integer":
+        return isinstance(value, int) and not isinstance(value, bool)
+    if expected_type == "number":
+        return (isinstance(value, int | float) and not isinstance(value, bool))
+    if expected_type == "null":
+        return value is None
+    return False
+
+
+def json_pointer_escape(token: str) -> str:
+    return token.replace("~", "~0").replace("/", "~1")
+
+
+def resolve_local_schema_ref(root_schema: dict[str, Any], ref: str) -> Any:
+    if not ref.startswith("#/"):
+        raise ValueError(f"unsupported non-local schema ref: {ref}")
+    current: Any = root_schema
+    for raw_part in ref[2:].split("/"):
+        part = raw_part.replace("~1", "/").replace("~0", "~")
+        if not isinstance(current, dict) or part not in current:
+            raise KeyError(ref)
+        current = current[part]
+    return current
+
+
+def draft202012_schema_failures(instance: Any, schema: Any, *, path_label: str) -> list[dict[str, Any]]:
+    """Validate the Draft 2020-12 keywords used by PM readiness schemas."""
+    failures: list[dict[str, Any]] = []
+    if not isinstance(schema, dict):
+        return [{"path": path_label, "error": "json_schema_not_object"}]
+    root_schema = schema
+
+    def fail(pointer: str, keyword: str, detail: dict[str, Any] | None = None) -> None:
+        entry = {
+            "path": path_label,
+            "error": "draft_2020_12_schema_validation_failed",
+            "pointer": pointer,
+            "keyword": keyword,
+        }
+        if detail:
+            entry.update(detail)
+        failures.append(entry)
+
+    def validate_node(value: Any, node: Any, pointer: str) -> None:
+        if not isinstance(node, dict):
+            return
+        if "$ref" in node:
+            try:
+                target = resolve_local_schema_ref(root_schema, str(node["$ref"]))
+            except Exception as exc:  # noqa: BLE001
+                fail(pointer, "$ref", {"ref": node.get("$ref"), "detail": str(exc)})
+                return
+            validate_node(value, target, pointer)
+            return
+
+        expected_type = node.get("type")
+        if expected_type is not None:
+            allowed_types = expected_type if isinstance(expected_type, list) else [expected_type]
+            if not any(isinstance(item, str) and json_type_matches(value, item) for item in allowed_types):
+                fail(pointer, "type", {"expected": allowed_types, "actual_type": type(value).__name__})
+                return
+
+        if "const" in node and value != node["const"]:
+            fail(pointer, "const", {"expected": node["const"], "actual": value})
+        if "enum" in node:
+            enum = node.get("enum")
+            if isinstance(enum, list) and value not in enum:
+                fail(pointer, "enum", {"allowed": enum, "actual": value})
+        if isinstance(value, str):
+            min_length = node.get("minLength")
+            if isinstance(min_length, int) and len(value) < min_length:
+                fail(pointer, "minLength", {"minLength": min_length})
+            pattern = node.get("pattern")
+            if isinstance(pattern, str) and re.search(pattern, value) is None:
+                fail(pointer, "pattern", {"pattern": pattern, "actual": value})
+            if node.get("format") == "date-time" and not re.match(
+                r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$",
+                value,
+            ):
+                fail(pointer, "format", {"format": "date-time", "actual": value})
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            minimum = node.get("minimum")
+            if isinstance(minimum, (int, float)) and value < minimum:
+                fail(pointer, "minimum", {"minimum": minimum, "actual": value})
+
+        if isinstance(value, list):
+            min_items = node.get("minItems")
+            if isinstance(min_items, int) and len(value) < min_items:
+                fail(pointer, "minItems", {"minItems": min_items, "actual": len(value)})
+            if node.get("uniqueItems") is True:
+                seen: set[str] = set()
+                for item in value:
+                    marker = json.dumps(item, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+                    if marker in seen:
+                        fail(pointer, "uniqueItems")
+                        break
+                    seen.add(marker)
+            if "items" in node:
+                for index, item in enumerate(value):
+                    validate_node(item, node["items"], f"{pointer}/{index}")
+
+        if isinstance(value, dict):
+            required = node.get("required")
+            if isinstance(required, list):
+                for field in required:
+                    if field not in value:
+                        fail(pointer, "required", {"missing": field})
+            properties = node.get("properties")
+            known_properties = set(properties) if isinstance(properties, dict) else set()
+            if isinstance(properties, dict):
+                for key, child_schema in properties.items():
+                    if key in value:
+                        validate_node(value[key], child_schema, f"{pointer}/{json_pointer_escape(str(key))}")
+            if node.get("additionalProperties") is False:
+                for key in value:
+                    if key not in known_properties:
+                        fail(f"{pointer}/{json_pointer_escape(str(key))}", "additionalProperties", {"field": key})
+
+    validate_node(instance, schema, "$")
+    return failures
+
+
+def schema_document_instance_failures(
+    *,
+    schema_path: Path,
+    instance_path: Path,
+    schema_label: str,
+    instance_label: str,
+) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    try:
+        schema = read_json(schema_path)
+    except Exception as exc:  # noqa: BLE001
+        return [{"path": schema_label, "error": "json_parse_failed", "detail": str(exc)}]
+    try:
+        instance = read_json(instance_path)
+    except Exception as exc:  # noqa: BLE001
+        return [{"path": instance_label, "error": "json_parse_failed", "detail": str(exc)}]
+    if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
+        failures.append({"path": schema_label, "error": "json_schema_not_draft_2020_12"})
+    failures.extend(draft202012_schema_failures(instance, schema, path_label=instance_label))
+    return failures
+
+
 def storage_value_registry_data_failures(
     registry: Any,
     *,
@@ -1540,12 +1761,400 @@ def storage_value_registry_contract_failures(actual_report: dict[str, Any]) -> l
     except Exception as exc:  # noqa: BLE001
         return failures + [{"path": rel(STORAGE_VALUE_REGISTRY_PATH), "error": "json_parse_failed", "detail": str(exc)}]
 
+    failures.extend(
+        schema_document_instance_failures(
+            schema_path=STORAGE_VALUE_REGISTRY_SCHEMA_PATH,
+            instance_path=STORAGE_VALUE_REGISTRY_PATH,
+            schema_label=rel(STORAGE_VALUE_REGISTRY_SCHEMA_PATH),
+            instance_label=rel(STORAGE_VALUE_REGISTRY_PATH),
+        )
+    )
     failures.extend(storage_value_registry_data_failures(registry, path_label=rel(STORAGE_VALUE_REGISTRY_PATH)))
     failures.extend(storage_value_registry_spec_lock_failures())
 
     if actual_report.get("buildability_gate_passed") is True:
         failures.append({"path": rel(REPORT_PATH), "error": "tier0c2_storage_value_registry_unexpected_buildability_pass"})
 
+    return failures
+
+
+def json_pointer_exists(document: Any, fragment: str) -> bool:
+    if not fragment or fragment == "#":
+        return True
+    if not fragment.startswith("#/"):
+        return False
+    current = document
+    for raw_token in fragment[2:].split("/"):
+        token = raw_token.replace("~1", "/").replace("~0", "~")
+        if isinstance(current, dict):
+            if token not in current:
+                return False
+            current = current[token]
+            continue
+        if isinstance(current, list):
+            if not token.isdigit():
+                return False
+            index = int(token)
+            if index >= len(current):
+                return False
+            current = current[index]
+            continue
+        return False
+    return True
+
+
+def repo_ref_path_exists(ref: str) -> bool:
+    if ref.startswith("python3 "):
+        return True
+    path_text, separator, fragment_text = ref.partition("#")
+    if not path_text:
+        return True
+    if path_text.startswith("Plans/") or path_text.startswith("scripts/") or path_text.startswith("tests/"):
+        target = ROOT / path_text
+        if not target.exists():
+            return False
+        if separator and target.suffix == ".json":
+            try:
+                return json_pointer_exists(read_json(target), f"#{fragment_text}")
+            except Exception:  # noqa: BLE001
+                return False
+        return True
+    return True
+
+
+def non_executable_closure_evidence_spec_lock_failures() -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    spec_lock_path = PLANS / "Spec_Lock.json"
+    try:
+        spec_lock = read_json(spec_lock_path)
+    except Exception as exc:  # noqa: BLE001
+        return [{"path": rel(spec_lock_path), "error": "json_parse_failed", "detail": str(exc)}]
+    files = spec_lock.get("canonical_ssot_hashes", {}).get("files", [])
+    if not isinstance(files, list):
+        return [{"path": rel(spec_lock_path), "error": "spec_lock_canonical_ssot_files_missing"}]
+    by_path = {row.get("path"): row for row in files if isinstance(row, dict)}
+    for path in [
+        "Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
+        "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+        "scripts/pm-implementation-readiness.py",
+    ]:
+        entry = by_path.get(path)
+        if not isinstance(entry, dict):
+            failures.append(
+                {
+                    "path": rel(spec_lock_path),
+                    "error": "non_executable_closure_spec_lock_registration_missing",
+                    "required_path": path,
+                }
+            )
+            continue
+        target = ROOT / path
+        if not target.exists():
+            failures.append({"path": path, "error": "non_executable_closure_registered_path_missing"})
+            continue
+        current_hash = sha256_file(target)
+        if entry.get("sha256") != current_hash:
+            failures.append(
+                {
+                    "path": rel(spec_lock_path),
+                    "error": "non_executable_closure_spec_lock_hash_stale",
+                    "required_path": path,
+                    "expected": current_hash,
+                    "actual": entry.get("sha256"),
+                }
+            )
+    return failures
+
+
+def non_executable_closure_evidence_failures(
+    actual_report: dict[str, Any],
+    blockers: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    if not CLOSURE_EVIDENCE_SCHEMA_PATH.exists():
+        failures.append({"path": rel(CLOSURE_EVIDENCE_SCHEMA_PATH), "error": "non_executable_closure_schema_missing"})
+    if not CLOSURE_EVIDENCE_PATH.exists():
+        return failures + [{"path": rel(CLOSURE_EVIDENCE_PATH), "error": "non_executable_closure_evidence_missing"}]
+
+    if CLOSURE_EVIDENCE_SCHEMA_PATH.exists():
+        failures.extend(
+            schema_document_instance_failures(
+                schema_path=CLOSURE_EVIDENCE_SCHEMA_PATH,
+                instance_path=CLOSURE_EVIDENCE_PATH,
+                schema_label=rel(CLOSURE_EVIDENCE_SCHEMA_PATH),
+                instance_label=rel(CLOSURE_EVIDENCE_PATH),
+            )
+        )
+
+    try:
+        evidence = read_json(CLOSURE_EVIDENCE_PATH)
+    except Exception as exc:  # noqa: BLE001
+        return failures + [{"path": rel(CLOSURE_EVIDENCE_PATH), "error": "json_parse_failed", "detail": str(exc)}]
+
+    if evidence.get("schema_id") != CLOSURE_EVIDENCE_SCHEMA_ID:
+        failures.append(
+            {
+                "path": rel(CLOSURE_EVIDENCE_PATH),
+                "error": "non_executable_closure_schema_id_mismatch",
+                "expected": CLOSURE_EVIDENCE_SCHEMA_ID,
+                "actual": evidence.get("schema_id"),
+            }
+        )
+    if evidence.get("schema_version") != CLOSURE_EVIDENCE_SCHEMA_VERSION:
+        failures.append(
+            {
+                "path": rel(CLOSURE_EVIDENCE_PATH),
+                "error": "non_executable_closure_schema_version_mismatch",
+                "expected": CLOSURE_EVIDENCE_SCHEMA_VERSION,
+                "actual": evidence.get("schema_version"),
+            }
+        )
+    if evidence.get("closed_blocker_families") != NON_EXECUTABLE_CLOSABLE_FAMILIES:
+        failures.append(
+            {
+                "path": rel(CLOSURE_EVIDENCE_PATH),
+                "error": "non_executable_closed_family_set_mismatch",
+                "expected": NON_EXECUTABLE_CLOSABLE_FAMILIES,
+                "actual": evidence.get("closed_blocker_families"),
+            }
+        )
+    if evidence.get("remaining_blocker_families") != EXECUTABLE_PROOF_FAMILIES:
+        failures.append(
+            {
+                "path": rel(CLOSURE_EVIDENCE_PATH),
+                "error": "non_executable_remaining_family_set_mismatch",
+                "expected": EXECUTABLE_PROOF_FAMILIES,
+                "actual": evidence.get("remaining_blocker_families"),
+            }
+        )
+    policy = evidence.get("buildability_policy", {}) if isinstance(evidence.get("buildability_policy"), dict) else {}
+    if policy.get("buildability_gate_passed_must_remain_false") is not True:
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "non_executable_closure_buildability_policy_missing"})
+    for field, expected in {
+        "ordinary_product_worknodes_allowed": False,
+        "ordinary_product_nodeseeds_allowed": False,
+        "pnc019_executable_lifecycle_certification_required": True,
+    }.items():
+        if policy.get(field) is not expected:
+            failures.append(
+                {
+                    "path": rel(CLOSURE_EVIDENCE_PATH),
+                    "error": "non_executable_closure_policy_field_invalid",
+                    "field": field,
+                    "expected": expected,
+                    "actual": policy.get(field),
+                }
+            )
+
+    forbidden_counts = evidence.get("forbidden_artifact_counts", {})
+    if not isinstance(forbidden_counts, dict):
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "forbidden_artifact_counts_missing"})
+        forbidden_counts = {}
+    for field in [
+        "worknodes",
+        "nodeseeds",
+        "candidates",
+        "queues",
+        "manifests",
+        "implementation_files",
+        "runtime_launches",
+        "production_build_tasks",
+    ]:
+        if forbidden_counts.get(field) != 0:
+            failures.append(
+                {
+                    "path": rel(CLOSURE_EVIDENCE_PATH),
+                    "error": "forbidden_artifact_count_nonzero",
+                    "field": field,
+                    "actual": forbidden_counts.get(field),
+                }
+            )
+
+    records = evidence.get("closure_records", [])
+    if not isinstance(records, list):
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "closure_records_missing_or_invalid"})
+        records = []
+    records_by_family = {row.get("blocker_family"): row for row in records if isinstance(row, dict)}
+    for family in NON_EXECUTABLE_CLOSABLE_FAMILIES:
+        record = records_by_family.get(family)
+        if not isinstance(record, dict):
+            failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "closure_record_missing", "blocker_family": family})
+            continue
+        for ref in record.get("evidence_refs", []):
+            if not repo_ref_path_exists(str(ref)):
+                failures.append(
+                    {
+                        "path": rel(CLOSURE_EVIDENCE_PATH),
+                        "error": "closure_evidence_ref_missing",
+                        "blocker_family": family,
+                        "ref": ref,
+                    }
+                )
+    for family in EXECUTABLE_PROOF_FAMILIES:
+        if family in records_by_family:
+            failures.append(
+                {
+                    "path": rel(CLOSURE_EVIDENCE_PATH),
+                    "error": "executable_proof_family_must_not_have_non_executable_closure",
+                    "blocker_family": family,
+                }
+            )
+
+    artifact_rows = evidence.get("plancompile_artifact_payload_registry", [])
+    artifact_kinds = {row.get("artifact_kind") for row in artifact_rows if isinstance(row, dict)}
+    for artifact_kind in REQUIRED_PLANCOMPILE_ARTIFACT_KINDS:
+        if artifact_kind not in artifact_kinds:
+            failures.append(
+                {
+                    "path": rel(CLOSURE_EVIDENCE_PATH),
+                    "error": "plancompile_artifact_payload_missing",
+                    "artifact_kind": artifact_kind,
+                }
+            )
+    for row in artifact_rows if isinstance(artifact_rows, list) else []:
+        if not isinstance(row, dict):
+            continue
+        schema_ref = str(row.get("schema_ref", ""))
+        if not repo_ref_path_exists(schema_ref):
+            failures.append(
+                {
+                    "path": rel(CLOSURE_EVIDENCE_PATH),
+                    "error": "plancompile_artifact_schema_ref_missing",
+                    "artifact_kind": row.get("artifact_kind"),
+                    "schema_ref": schema_ref,
+                }
+            )
+
+    provider_contract = evidence.get("provider_stream_contract", {})
+    if not isinstance(provider_contract, dict):
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "provider_stream_contract_missing"})
+        provider_contract = {}
+    event_kinds = provider_contract.get("event_kinds", [])
+    for event_kind in REQUIRED_PROVIDER_STREAM_EVENT_KINDS:
+        if event_kind not in event_kinds:
+            failures.append(
+                {
+                    "path": rel(CLOSURE_EVIDENCE_PATH),
+                    "error": "provider_stream_event_kind_missing",
+                    "event_kind": event_kind,
+                }
+            )
+    owner_split = provider_contract.get("owner_split", {})
+    if not isinstance(owner_split, dict) or not provider_contract.get("circular_owner_break"):
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "provider_stream_owner_cycle_boundary_missing"})
+    else:
+        for owner_ref in owner_split.values():
+            if not repo_ref_path_exists(str(owner_ref)):
+                failures.append(
+                    {
+                        "path": rel(CLOSURE_EVIDENCE_PATH),
+                        "error": "provider_stream_owner_ref_missing",
+                        "ref": owner_ref,
+                    }
+                )
+
+    fixture_ids = {
+        row.get("fixture_id")
+        for row in evidence.get("persistence_behavior_fixtures", [])
+        if isinstance(row, dict)
+    }
+    for fixture_id in REQUIRED_PERSISTENCE_FIXTURE_IDS:
+        if fixture_id not in fixture_ids:
+            failures.append(
+                {
+                    "path": rel(CLOSURE_EVIDENCE_PATH),
+                    "error": "persistence_fixture_missing",
+                    "fixture_id": fixture_id,
+                }
+            )
+    security_fixture_ids = {
+        row.get("fixture_id")
+        for row in evidence.get("security_boundary_fixtures", [])
+        if isinstance(row, dict)
+    }
+    for fixture_id in REQUIRED_SECURITY_FIXTURE_IDS:
+        if fixture_id not in security_fixture_ids:
+            failures.append(
+                {
+                    "path": rel(CLOSURE_EVIDENCE_PATH),
+                    "error": "security_fixture_missing",
+                    "fixture_id": fixture_id,
+                }
+            )
+
+    gui_contract = evidence.get("gui_wiring_contract", {})
+    if not isinstance(gui_contract, dict):
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "gui_wiring_contract_missing"})
+        gui_contract = {}
+    if gui_contract.get("command_id") != "cmd.planning_wizard.approve_and_build":
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "gui_wiring_command_id_mismatch"})
+    for field in ["state_selector", "disabled_reason_projection", "source_report", "handler_location"]:
+        if not gui_contract.get(field):
+            failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "gui_wiring_field_missing", "field": field})
+    if not isinstance(gui_contract.get("slint_bindings"), list) or len(gui_contract.get("slint_bindings", [])) < 3:
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "gui_wiring_slint_bindings_incomplete"})
+    if "hard_disabled.PNC-019" not in gui_contract.get("failure_projections", []):
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "gui_wiring_pnc019_failure_projection_missing"})
+
+    behavioral_contract = evidence.get("behavioral_acceptance_contract", {})
+    if not isinstance(behavioral_contract, dict) or behavioral_contract.get("preservation_only_acceptance_allowed") is not False:
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "behavioral_acceptance_preservation_only_not_rejected"})
+    structural_contract = evidence.get("structural_integrity_contract", {})
+    if not isinstance(structural_contract, dict) or "runtime_lifecycle and clean_room_harness remain open until executable evidence exists" not in structural_contract.get("required_checks", []):
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "structural_integrity_executable_boundary_missing"})
+    owner_contract = evidence.get("owner_routing_contract", {})
+    if not isinstance(owner_contract, dict) or owner_contract.get("candidate_owners_allowed_for_closed_rows") is not False:
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "owner_routing_candidate_owner_policy_missing"})
+    currentness_contract = evidence.get("currentness_contract", {})
+    if not isinstance(currentness_contract, dict) or currentness_contract.get("reject_stale_but_valid_json") is not True:
+        failures.append({"path": rel(CLOSURE_EVIDENCE_PATH), "error": "currentness_stale_valid_json_rejection_missing"})
+
+    for row in blockers:
+        family = str(row.get("blocker_family", ""))
+        status = str(row.get("status", "")).lower()
+        row_path = f"{rel(BLOCKERS_PATH)}:{row.get('_line')}"
+        if family in NON_EXECUTABLE_CLOSABLE_FAMILIES and status not in CLOSED_BLOCKER_STATUSES:
+            failures.append(
+                {
+                    "path": row_path,
+                    "error": "non_executable_family_not_closed_against_closure_evidence",
+                    "blocker_family": family,
+                    "closure_evidence": rel(CLOSURE_EVIDENCE_PATH),
+                }
+            )
+        if family in EXECUTABLE_PROOF_FAMILIES and status in CLOSED_BLOCKER_STATUSES:
+            failures.append(
+                {
+                    "path": row_path,
+                    "error": "executable_proof_family_closed_without_pnc019_evidence",
+                    "blocker_family": family,
+                }
+            )
+        if status in CLOSED_BLOCKER_STATUSES and family in NON_EXECUTABLE_CLOSABLE_FAMILIES:
+            refs = row.get("closure_evidence_refs", [])
+            if not isinstance(refs, list) or rel(CLOSURE_EVIDENCE_PATH) not in [str(ref).split("#", 1)[0] for ref in refs]:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "error": "closed_blocker_missing_non_executable_closure_evidence_ref",
+                        "blocker_family": family,
+                    }
+                )
+            for ref in refs if isinstance(refs, list) else []:
+                if not repo_ref_path_exists(str(ref)):
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "error": "closed_blocker_closure_evidence_ref_missing",
+                            "blocker_family": family,
+                            "ref": ref,
+                        }
+                    )
+
+    if actual_report.get("buildability_gate_passed") is True:
+        failures.append({"path": rel(REPORT_PATH), "error": "non_executable_closure_unexpected_buildability_pass"})
+
+    failures.extend(non_executable_closure_evidence_spec_lock_failures())
     return failures
 
 
@@ -1991,6 +2600,7 @@ def run_self_tests() -> dict[str, Any]:
         return base
 
     storage_registry_fixture = {
+        "$schema": "https://puppetmaster.local/schemas/storage_value_registry.schema.json",
         "schema_id": STORAGE_VALUE_REGISTRY_SCHEMA_ID,
         "schema_version": STORAGE_VALUE_REGISTRY_SCHEMA_VERSION,
         "generated_at_utc": "2026-07-06T00:00:00Z",
@@ -2016,6 +2626,19 @@ def run_self_tests() -> dict[str, Any]:
         "valid_storage_value_registry": not storage_value_registry_data_failures(
             storage_registry_fixture,
             path_label="self-test:valid_storage_value_registry",
+        ),
+        "valid_storage_value_registry_draft_2020_12_schema": not draft202012_schema_failures(
+            storage_registry_fixture,
+            read_json(STORAGE_VALUE_REGISTRY_SCHEMA_PATH),
+            path_label="self-test:valid_storage_value_registry_draft_2020_12_schema",
+        ),
+        "draft_2020_12_schema_rejects_missing_owner_doc": any(
+            failure.get("keyword") == "required" and failure.get("missing") == "owner_doc"
+            for failure in draft202012_schema_failures(
+                {key: value for key, value in storage_registry_fixture.items() if key != "owner_doc"},
+                read_json(STORAGE_VALUE_REGISTRY_SCHEMA_PATH),
+                path_label="self-test:missing_owner_doc_storage_value_registry",
+            )
         ),
         "missing_schema_version_rejected": any(
             failure.get("error") == "storage_value_registry_persisted_value_missing_schema_version_requirement"
@@ -2172,6 +2795,7 @@ def validate() -> dict[str, Any]:
         failures.extend(pnc019_bootstrap_authority_failures(actual_report))
         failures.extend(event_record_contract_failures(actual_report))
         failures.extend(storage_value_registry_contract_failures(actual_report))
+        failures.extend(non_executable_closure_evidence_failures(actual_report, blockers))
         failures.extend(execution_unit_context_contract_failures(actual_report))
 
     self_test_report = run_self_tests()
