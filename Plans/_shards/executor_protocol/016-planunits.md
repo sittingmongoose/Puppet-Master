@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L855-L5732
+Source lines: L854-L5741
 
-Source SHA256: `7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d`
+Source SHA256: `fb9aabd06d324fae90cd54c82bf189bbba1a8a8b785856b07cc0bfeb7f09608e`
 
 ---
 
@@ -4372,8 +4372,10 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Orchestrator and Assistant Chat execution units that run inside a worktree
-  carry worktree identity through execution_unit_context fields including
-  working_directory, worktree_id, worktree_branch, and is_worktree.
+  carry worktree identity through execution_unit_context fields working_directory
+  and worktree_id; branch, HEAD, dirty-state, and worktree-mode details live in
+  safe-point, source-control, or worktree-binding context refs rather than in
+  execution_unit_context.
 gui_related: false
 gui_classification_reason: This unit defines runtime handoff identity fields, not GUI presentation.
 split_recommended: false
@@ -4382,7 +4384,9 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - working_directory is set to the worktree root path, not the project root, when a worktree is bound.
-- worktree_id, worktree_branch, and is_worktree remain explicit identity fields in the handoff context.
+- worktree_id and working_directory remain explicit execution_unit_context identity fields.
+- worktree_branch remains safe-point/source-control/worktree-binding context and is not an execution_unit_context field.
+- is_worktree is derived from worktree binding context and is not an execution_unit_context field.
 - ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -4406,11 +4410,14 @@ preserved_exact_tokens:
 - is_worktree
 - 'ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md'
 - 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md'
-negative_constraints: []
-compatibility_only_notes: []
+negative_constraints:
+- worktree_branch must not be added as an execution_unit_context field in schema_version 1.0.0.
+- is_worktree must not be added as an execution_unit_context field in schema_version 1.0.0.
+compatibility_only_notes:
+- worktree_branch and is_worktree are preserved source-lineage tokens for the older handoff wording; the canonical packet stores worktree_id and working_directory.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- The handoff consumes Orchestrator, Run Modes, Assistant Chat, and storage contracts through explicit execution context fields.
+- The handoff consumes Orchestrator, Run Modes, Assistant Chat, storage, safe-point, and source-control contracts through explicit execution context fields and refs.
 owner_hints:
 - Plans/Executor_Protocol.md
 ```
@@ -4425,8 +4432,9 @@ owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Orchestrator sets worktree execution fields when launching a DAE in a
   lane-owned worktree, Assistant Chat sets them for bound-thread agent-mode or
-  plan-mode work, and execution defaults to the project root when is_worktree is
-  false or absent.
+  plan-mode work, and execution defaults to the project root when
+  execution_unit_context.worktree_id is absent and no bound worktree context is
+  present.
 gui_related: false
 gui_classification_reason: This unit defines caller runtime responsibilities, not GUI presentation.
 split_recommended: false
@@ -4436,7 +4444,7 @@ acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - Orchestrator launch of a DAE in a lane-owned worktree sets the handoff fields.
 - Assistant Chat bound-thread agent-mode and plan-mode work set the handoff fields.
-- Missing or false is_worktree falls back to project-root execution.
+- Missing execution_unit_context.worktree_id and absent bound worktree context fall back to project-root execution.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -4462,7 +4470,8 @@ preserved_exact_tokens:
 - is_worktree
 - project root
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- is_worktree is preserved as source-lineage wording for older handoff text; worktree mode is derived from the bound worktree context, not stored in execution_unit_context.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Caller responsibilities define who populates runtime handoff fields before executor dispatch.
@@ -4552,7 +4561,7 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - File operations resolve relative to working_directory.
-- Git operations target the worktree, terminal sessions start in working_directory, and LSP root identity uses the worktree path when is_worktree is true.
+- Git operations target the worktree, terminal sessions start in working_directory, and LSP root identity uses the worktree path when bound worktree context is present.
 - File mutation logs store absolute paths.
 - A removed-worktree cmd.chat.revert reports the preserved error message and does not recreate missing directories.
 validation_surfaces:
@@ -4579,6 +4588,7 @@ preserved_exact_tokens:
 - 'Cannot restore file: original path no longer exists. The worktree may have been removed.'
 - 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md'
 negative_constraints:
+- is_worktree is a source-lineage token only; it must not become an execution_unit_context field in schema_version 1.0.0.
 - The executor does not recreate missing directories when a removed worktree makes the original path unavailable.
 compatibility_only_notes: []
 stale_retired_dispositions: []

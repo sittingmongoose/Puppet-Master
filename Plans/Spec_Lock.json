@@ -62,8 +62,12 @@
         "sha256": "12302339745460c6810efebb7bdf762aa8b52621245a70dca825dfc9aed21138"
       },
       {
+        "path": "Plans/execution_unit_context.schema.json",
+        "sha256": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25"
+      },
+      {
         "path": "Plans/Executor_Protocol.md",
-        "sha256": "7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d"
+        "sha256": "fb9aabd06d324fae90cd54c82bf189bbba1a8a8b785856b07cc0bfeb7f09608e"
       },
       {
         "path": "Plans/GitHub_API_Auth_and_Flows.md",
@@ -211,7 +215,11 @@
       },
       {
         "path": "scripts/pm-implementation-readiness.py",
-        "sha256": "0602b2c060f2841962d837f4608680347bddfe8b46816baaac3981eb45f1a0ef"
+        "sha256": "575619b4440994fa0794d334cb5b5171bf2352c4bc47fa9c851d153ee25a72d8"
+      },
+      {
+        "path": "scripts/pm-plan-index.py",
+        "sha256": "6bcbd531c41b19d28a35d26cbda6d45ba12a3866d31261f1f9fa6049f5ab0f32"
       },
       {
         "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
@@ -223,7 +231,7 @@
       },
       {
         "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-        "sha256": "4f6af3eed2ea805edebcb781f14f3c2204b98d7f3d0dbf097ccc6a907144ed1f"
+        "sha256": "ccfdc5c466293ec7c285d9cb1a9e74947dadb827b2edf33fb65d56d8f9e3c071"
       }
     ],
     "hash_alg": "sha256"

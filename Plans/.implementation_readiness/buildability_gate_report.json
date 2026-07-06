@@ -351,7 +351,7 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-07-06T16:17:40Z",
+  "generated_at_utc": "2026-07-06T17:17:59Z",
   "node_readiness": {
     "available": true,
     "bootstrap_authority_ref": "PNC-022",
@@ -866,10 +866,10 @@
   "source_hashes": {
     "Plans/.implementation_readiness/readiness_blockers.jsonl": "b1ba1a051ec8059a9c21768f8e822fb649e186a32bb08945a32f3f806939afd2",
     "Plans/.implementation_readiness/readiness_matrix.json": "e0122b29f7abbec9d726ff87908ec0d37e2b0898e9a9537e9223f8fcfad743a9",
-    "Plans/.plan_index/node_readiness_report.json": "c80208d3fa9c9f094c965c7797d15d4b5aa28a8ac5685ed2d0d1d0c1feb5bfaf",
+    "Plans/.plan_index/node_readiness_report.json": "c18af958955dc89b30f8e5abf825a0d578a94faa4e9e193d7610c3a0088eb3ce",
     "Plans/00-plans-index.md": "2d6142621ce666c50dbf0ed63daf63d22e9322dfcd71fc4c6654d98f739ee4d1",
     "Plans/Contracts_V0.md": "95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3",
-    "Plans/Executor_Protocol.md": "7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d",
+    "Plans/Executor_Protocol.md": "fb9aabd06d324fae90cd54c82bf189bbba1a8a8b785856b07cc0bfeb7f09608e",
     "Plans/Plan_Document_System.md": "4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a",
     "Plans/Plan_To_Node_Compilation.md": "251de9d43cc5b0c5a19649e338bb296b6fd7c5e189171315196847f636ddbd0e",
     "Plans/Planning_Wizard.md": "1677ca9806380b86ba43c87112e9afbfef328ffbdd1a612a2b9914053bc9b27f",
@@ -880,7 +880,7 @@
     "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
     "Plans/orchestrator-subagent-integration.md": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4",
     "Plans/storage-plan.md": "77b03422fed794c3fcb807b815cba8455acdbccf8ab76d842f86a980735a9022",
-    "scripts/pm-implementation-readiness.py": "0602b2c060f2841962d837f4608680347bddfe8b46816baaac3981eb45f1a0ef",
+    "scripts/pm-implementation-readiness.py": "575619b4440994fa0794d334cb5b5171bf2352c4bc47fa9c851d153ee25a72d8",
     "scripts/pm-plan-index.py": "6bcbd531c41b19d28a35d26cbda6d45ba12a3866d31261f1f9fa6049f5ab0f32",
     "scripts/pm-plans-verify.py": "4439f2740b2e042da96f823605d8eb0701d3cbf24a7e6bdee60b545c2342f73b"
   },

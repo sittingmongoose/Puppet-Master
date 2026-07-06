@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -93,11 +94,89 @@ EXECUTION_UNIT_CONTEXT_CONSUMER_DOCS = [
     PLANS / "Plan_To_Node_Compilation.md",
     PLANS / "Planning_Wizard.md",
 ]
+EXECUTION_UNIT_CONTEXT_FIELD_CLAIM_DOCS = [
+    PLANS / "Executor_Protocol.md",
+    *EXECUTION_UNIT_CONTEXT_CONSUMER_DOCS,
+]
 EXECUTION_UNIT_CONTEXT_FORBIDDEN_CONSUMER_PATTERNS = [
     "#### execution_unit_context canonical record",
     "execution_unit_context {\n",
     "`execution_unit_context` is the authoritative runtime snapshot packet",
     "The canonical replacement execution-context object reconciles node-native keys",
+]
+EXECUTION_UNIT_CONTEXT_SPEC_LOCK_PATHS = [
+    "Plans/execution_unit_context.schema.json",
+    "scripts/pm-plan-index.py",
+]
+EXECUTION_UNIT_CONTEXT_FIELD_CLAIM_RE = re.compile(
+    r"(?<![/A-Za-z0-9_-])execution_unit_context\.([A-Za-z_][A-Za-z0-9_]*)\b"
+)
+EXECUTION_UNIT_CONTEXT_FIELDS_INCLUDING_RE = re.compile(
+    r"\bexecution_unit_context\b[^.\n]{0,220}\bfields?\b[^.\n]{0,120}\b(?:including|include|as|through)\b(?P<body>[^.\n]+)",
+    re.IGNORECASE,
+)
+EXECUTION_UNIT_CONTEXT_FIELD_TOKEN_RE = re.compile(r"\b[a-z][a-z0-9_]*\b")
+EXECUTION_UNIT_CONTEXT_FIELD_TOKEN_STOPWORDS = {
+    "and",
+    "or",
+    "the",
+    "through",
+    "including",
+    "include",
+    "as",
+    "from",
+    "in",
+    "into",
+    "with",
+    "without",
+    "rather",
+    "than",
+    "field",
+    "fields",
+    "schema",
+    "owned",
+    "owner",
+    "executor",
+    "contract",
+    "packet",
+    "payload",
+    "context",
+    "refs",
+    "ref",
+    "safe",
+    "point",
+    "source",
+    "control",
+    "worktree",
+    "binding",
+    "details",
+    "live",
+    "branch",
+    "head",
+    "dirty",
+    "state",
+    "mode",
+}
+EXECUTION_UNIT_CONTEXT_NON_NORMATIVE_MARKERS = [
+    "compatibility",
+    "source-lineage",
+    "source lineage",
+    "example",
+    "non-normative",
+    "preserved_exact_tokens",
+    "stale_retired",
+    "retired",
+]
+EXECUTION_UNIT_CONTEXT_NEGATIVE_CLAIM_MARKERS = [
+    "must not",
+    "does not",
+    "do not",
+    "not an execution_unit_context field",
+    "not stored in execution_unit_context",
+    "outside execution_unit_context",
+    "outside the packet",
+    "rather than in execution_unit_context",
+    "derived from",
 ]
 
 
@@ -622,6 +701,100 @@ def pnc019_bootstrap_authority_failures(actual_report: dict[str, Any]) -> list[d
     return failures
 
 
+def line_no_for_index(text: str, index: int) -> int:
+    return text.count("\n", 0, index) + 1
+
+
+def execution_unit_context_marker_window(text: str, start: int, end: int) -> str:
+    return text[max(0, start - 700) : min(len(text), end + 700)].lower()
+
+
+def is_allowed_execution_unit_context_claim_context(text: str, start: int, end: int) -> bool:
+    window = execution_unit_context_marker_window(text, start, end)
+    return any(marker in window for marker in EXECUTION_UNIT_CONTEXT_NON_NORMATIVE_MARKERS) or any(
+        marker in window for marker in EXECUTION_UNIT_CONTEXT_NEGATIVE_CLAIM_MARKERS
+    )
+
+
+def execution_unit_context_field_claim_failures_for_text(
+    *,
+    path_label: str,
+    text: str,
+    schema_fields: set[str],
+) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    for match in EXECUTION_UNIT_CONTEXT_FIELD_CLAIM_RE.finditer(text):
+        field = match.group(1)
+        if field in schema_fields or is_allowed_execution_unit_context_claim_context(text, match.start(), match.end()):
+            continue
+        failures.append(
+            {
+                "path": f"{path_label}:{line_no_for_index(text, match.start())}",
+                "error": "execution_unit_context_field_claim_absent_from_schema",
+                "field": field,
+            }
+        )
+
+    for match in EXECUTION_UNIT_CONTEXT_FIELDS_INCLUDING_RE.finditer(text):
+        if is_allowed_execution_unit_context_claim_context(text, match.start(), match.end()):
+            continue
+        body = match.group("body")
+        tokens = {
+            token
+            for token in EXECUTION_UNIT_CONTEXT_FIELD_TOKEN_RE.findall(body)
+            if token not in EXECUTION_UNIT_CONTEXT_FIELD_TOKEN_STOPWORDS
+        }
+        for field in sorted(tokens - schema_fields):
+            failures.append(
+                {
+                    "path": f"{path_label}:{line_no_for_index(text, match.start())}",
+                    "error": "execution_unit_context_field_claim_absent_from_schema",
+                    "field": field,
+                }
+            )
+    return failures
+
+
+def execution_unit_context_spec_lock_failures() -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    spec_lock_path = PLANS / "Spec_Lock.json"
+    try:
+        spec_lock = read_json(spec_lock_path)
+    except Exception as exc:  # noqa: BLE001
+        return [{"path": rel(spec_lock_path), "error": "json_parse_failed", "detail": str(exc)}]
+    files = spec_lock.get("canonical_ssot_hashes", {}).get("files", [])
+    if not isinstance(files, list):
+        return [{"path": rel(spec_lock_path), "error": "spec_lock_canonical_ssot_files_missing"}]
+    by_path = {row.get("path"): row for row in files if isinstance(row, dict)}
+    for path in EXECUTION_UNIT_CONTEXT_SPEC_LOCK_PATHS:
+        entry = by_path.get(path)
+        if not isinstance(entry, dict):
+            failures.append(
+                {
+                    "path": rel(spec_lock_path),
+                    "error": "execution_unit_context_spec_lock_registration_missing",
+                    "required_path": path,
+                }
+            )
+            continue
+        target = ROOT / path
+        if not target.exists():
+            failures.append({"path": path, "error": "execution_unit_context_spec_lock_registered_path_missing"})
+            continue
+        current_hash = sha256_file(target)
+        if entry.get("sha256") != current_hash:
+            failures.append(
+                {
+                    "path": rel(spec_lock_path),
+                    "error": "execution_unit_context_spec_lock_hash_stale",
+                    "required_path": path,
+                    "expected": current_hash,
+                    "actual": entry.get("sha256"),
+                }
+            )
+    return failures
+
+
 def execution_unit_context_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     schema_path = EXECUTION_UNIT_CONTEXT_SCHEMA_PATH
@@ -651,6 +824,7 @@ def execution_unit_context_contract_failures(actual_report: dict[str, Any]) -> l
     if not isinstance(properties, dict):
         failures.append({"path": rel(schema_path), "error": "execution_unit_context_properties_missing_or_invalid"})
         properties = {}
+    schema_fields = set(properties)
     for field in EXECUTION_UNIT_CONTEXT_REQUIRED_FIELDS:
         if field not in properties:
             failures.append({"path": rel(schema_path), "error": "execution_unit_context_required_property_missing", "field": field})
@@ -720,6 +894,20 @@ def execution_unit_context_contract_failures(actual_report: dict[str, Any]) -> l
                 )
                 break
             start = index + len("execution_unit_context")
+
+    for claim_path in EXECUTION_UNIT_CONTEXT_FIELD_CLAIM_DOCS:
+        if not claim_path.exists():
+            failures.append({"path": rel(claim_path), "error": "execution_unit_context_field_claim_doc_missing"})
+            continue
+        failures.extend(
+            execution_unit_context_field_claim_failures_for_text(
+                path_label=rel(claim_path),
+                text=claim_path.read_text(encoding="utf-8"),
+                schema_fields=schema_fields,
+            )
+        )
+
+    failures.extend(execution_unit_context_spec_lock_failures())
 
     if actual_report.get("buildability_gate_passed") is True:
         failures.append({"path": rel(REPORT_PATH), "error": "tier0b_execution_unit_context_unexpected_buildability_pass"})
@@ -896,11 +1084,44 @@ def run_self_tests() -> dict[str, Any]:
                 "checks": checks,
             }
         )
+    fixture_schema_fields = {"schema_id", "schema_version", "worktree_id", "working_directory"}
+    field_claim_checks = {
+        "valid_schema_fields": not execution_unit_context_field_claim_failures_for_text(
+            path_label="self-test:valid_schema_fields",
+            text="execution_unit_context fields including working_directory and worktree_id.",
+            schema_fields=fixture_schema_fields,
+        ),
+        "invalid_normative_fields": {
+            failure["field"]
+            for failure in execution_unit_context_field_claim_failures_for_text(
+                path_label="self-test:invalid_normative_fields",
+                text="execution_unit_context fields including working_directory, worktree_branch, and is_worktree.",
+                schema_fields=fixture_schema_fields,
+            )
+        }
+        == {"worktree_branch", "is_worktree"},
+        "source_lineage_example_allowed": not execution_unit_context_field_claim_failures_for_text(
+            path_label="self-test:source_lineage_example_allowed",
+            text=(
+                "Compatibility/source-lineage example only, non-normative: "
+                "execution_unit_context.primary_language is a preserved old snippet."
+            ),
+            schema_fields=fixture_schema_fields,
+        ),
+    }
+    if not all(field_claim_checks.values()):
+        failures.append(
+            {
+                "scenario": "execution_unit_context_field_claims",
+                "checks": field_claim_checks,
+            }
+        )
     return {
         "schema_id": "pm.implementation_readiness.self_test_report.v1",
         "generated_at_utc": utc_now(),
         "status": "pass" if not failures else "fail",
         "scenarios": results,
+        "field_claim_checks": field_claim_checks,
         "failures": failures,
     }
 

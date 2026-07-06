@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L763-L847
+Source lines: L763-L846
 
-Source SHA256: `7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d`
+Source SHA256: `fb9aabd06d324fae90cd54c82bf189bbba1a8a8b785856b07cc0bfeb7f09608e`
 
 ---
 
@@ -13,22 +13,21 @@ Source SHA256: `7b03f36bc07eacf3833fc687ddac603c666fb4a030bca52fe3f2bc9915ec007d
 PM-native `Open With` stays inside the file/editor surface and carries the same worktree handoff context as other executor file operations. Any later OS handoff must be a separate explicit command such as `cmd.file.open_in_system_default`, so system-default launching does not dilute PM-native target selection, blocked/recovery semantics, or worktree-scoped file identity.
 
 
-When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes worktree identity.
+When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes the Executor-owned `execution_unit_context` packet plus safe-point or source-control context refs when branch/snapshot recovery data is needed. `execution_unit_context` owns `working_directory` and `worktree_id`; branch, HEAD, dirty-state, and worktree-mode booleans belong to safe-point/source-control/worktree-binding context rather than the closed execution-unit packet.
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
 
 The execution context MUST include:
-- `working_directory`: set to worktree root path (not project root) when worktree is bound
-- `worktree_id`: identifier of the target worktree
-- `worktree_branch`: branch name checked out in worktree
-- `is_worktree`: bool flag distinguishing worktree context from main repo context
+- `execution_unit_context.working_directory`: set to worktree root path (not project root) when a worktree is bound
+- `execution_unit_context.worktree_id`: identifier of the target worktree
+- `execution_unit_context.source_control_context_ref` or safe-point payload refs when branch, HEAD, dirty-state, or worktree snapshot data is required for recovery
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
 **Caller responsibilities:**
 - Orchestrator sets these fields when launching a DAE in a lane-owned worktree
 - Assistant Chat sets these fields when the active thread has a bound worktree and the user runs agent-mode or plan-mode work
-- If `is_worktree` is false or absent, execution defaults to project root
+- If `execution_unit_context.worktree_id` is absent and no bound safe-point/worktree context exists, execution defaults to project root
 
 For Assistant Chat, turn-start resolves `thread_state:{thread_id}:worktree_binding`, populates `execution_unit_context.worktree_id` and `working_directory`, and freezes both values for that turn. Mid-turn unbind changes apply only to the next turn or rotated follow-up. The executor propagates the frozen `working_directory` to FileSafe checks, tool invocations, bash/shell `cwd`, MCP tools, `@file` resolution, auto-retrieval scope context, and provider CLI or DAE execution-context JSON payloads. This is a cwd-based execution contract; it does not require separate prompt-only worktree injection.
 
@@ -36,7 +35,7 @@ For Assistant Chat, turn-start resolves `thread_state:{thread_id}:worktree_bindi
 - File operations resolve relative to `working_directory`
 - Git operations target the worktree, not the main repo
 - Terminal sessions start in `working_directory`
-- LSP root identity uses worktree path when `is_worktree` is true
+- LSP root identity uses the worktree path when the execution-unit worktree binding or safe-point context identifies a worktree
 - File mutation logs store absolute paths. If `cmd.chat.revert` targets an edit from a removed worktree, for example `/project/.puppet-master/worktrees/thread-abc/src/main.rs`, the executor reports `Cannot restore file: original path no longer exists. The worktree may have been removed.` and does not recreate missing directories.
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md

@@ -1,6 +1,6 @@
 # Shard Index: Plans/Formatters_System.md
 
-Generated: 2026-07-06T16:18:46Z
+Generated: 2026-07-06T17:18:57Z
 
 Source SHA256: `3d28212da48c59912d2d76b83215cf96ddad1aa544a65138fda23f7e0474ba5c`
 

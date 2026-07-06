@@ -765,22 +765,21 @@ ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/storage-plan.md,
 PM-native `Open With` stays inside the file/editor surface and carries the same worktree handoff context as other executor file operations. Any later OS handoff must be a separate explicit command such as `cmd.file.open_in_system_default`, so system-default launching does not dilute PM-native target selection, blocked/recovery semantics, or worktree-scoped file identity.
 
 
-When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes worktree identity.
+When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes the Executor-owned `execution_unit_context` packet plus safe-point or source-control context refs when branch/snapshot recovery data is needed. `execution_unit_context` owns `working_directory` and `worktree_id`; branch, HEAD, dirty-state, and worktree-mode booleans belong to safe-point/source-control/worktree-binding context rather than the closed execution-unit packet.
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
 
 The execution context MUST include:
-- `working_directory`: set to worktree root path (not project root) when worktree is bound
-- `worktree_id`: identifier of the target worktree
-- `worktree_branch`: branch name checked out in worktree
-- `is_worktree`: bool flag distinguishing worktree context from main repo context
+- `execution_unit_context.working_directory`: set to worktree root path (not project root) when a worktree is bound
+- `execution_unit_context.worktree_id`: identifier of the target worktree
+- `execution_unit_context.source_control_context_ref` or safe-point payload refs when branch, HEAD, dirty-state, or worktree snapshot data is required for recovery
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
 
 **Caller responsibilities:**
 - Orchestrator sets these fields when launching a DAE in a lane-owned worktree
 - Assistant Chat sets these fields when the active thread has a bound worktree and the user runs agent-mode or plan-mode work
-- If `is_worktree` is false or absent, execution defaults to project root
+- If `execution_unit_context.worktree_id` is absent and no bound safe-point/worktree context exists, execution defaults to project root
 
 For Assistant Chat, turn-start resolves `thread_state:{thread_id}:worktree_binding`, populates `execution_unit_context.worktree_id` and `working_directory`, and freezes both values for that turn. Mid-turn unbind changes apply only to the next turn or rotated follow-up. The executor propagates the frozen `working_directory` to FileSafe checks, tool invocations, bash/shell `cwd`, MCP tools, `@file` resolution, auto-retrieval scope context, and provider CLI or DAE execution-context JSON payloads. This is a cwd-based execution contract; it does not require separate prompt-only worktree injection.
 
@@ -788,7 +787,7 @@ For Assistant Chat, turn-start resolves `thread_state:{thread_id}:worktree_bindi
 - File operations resolve relative to `working_directory`
 - Git operations target the worktree, not the main repo
 - Terminal sessions start in `working_directory`
-- LSP root identity uses worktree path when `is_worktree` is true
+- LSP root identity uses the worktree path when the execution-unit worktree binding or safe-point context identifies a worktree
 - File mutation logs store absolute paths. If `cmd.chat.revert` targets an edit from a removed worktree, for example `/project/.puppet-master/worktrees/thread-abc/src/main.rs`, the executor reports `Cannot restore file: original path no longer exists. The worktree may have been removed.` and does not recreate missing directories.
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md
@@ -5216,8 +5215,10 @@ status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Orchestrator and Assistant Chat execution units that run inside a worktree
-  carry worktree identity through execution_unit_context fields including
-  working_directory, worktree_id, worktree_branch, and is_worktree.
+  carry worktree identity through execution_unit_context fields working_directory
+  and worktree_id; branch, HEAD, dirty-state, and worktree-mode details live in
+  safe-point, source-control, or worktree-binding context refs rather than in
+  execution_unit_context.
 gui_related: false
 gui_classification_reason: This unit defines runtime handoff identity fields, not GUI presentation.
 split_recommended: false
@@ -5226,7 +5227,9 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - working_directory is set to the worktree root path, not the project root, when a worktree is bound.
-- worktree_id, worktree_branch, and is_worktree remain explicit identity fields in the handoff context.
+- worktree_id and working_directory remain explicit execution_unit_context identity fields.
+- worktree_branch remains safe-point/source-control/worktree-binding context and is not an execution_unit_context field.
+- is_worktree is derived from worktree binding context and is not an execution_unit_context field.
 - ContractRefs, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5250,11 +5253,14 @@ preserved_exact_tokens:
 - is_worktree
 - 'ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md'
 - 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md'
-negative_constraints: []
-compatibility_only_notes: []
+negative_constraints:
+- worktree_branch must not be added as an execution_unit_context field in schema_version 1.0.0.
+- is_worktree must not be added as an execution_unit_context field in schema_version 1.0.0.
+compatibility_only_notes:
+- worktree_branch and is_worktree are preserved source-lineage tokens for the older handoff wording; the canonical packet stores worktree_id and working_directory.
 stale_retired_dispositions: []
 owner_boundary_notes:
-- The handoff consumes Orchestrator, Run Modes, Assistant Chat, and storage contracts through explicit execution context fields.
+- The handoff consumes Orchestrator, Run Modes, Assistant Chat, storage, safe-point, and source-control contracts through explicit execution context fields and refs.
 owner_hints:
 - Plans/Executor_Protocol.md
 ```
@@ -5269,8 +5275,9 @@ owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
   Orchestrator sets worktree execution fields when launching a DAE in a
   lane-owned worktree, Assistant Chat sets them for bound-thread agent-mode or
-  plan-mode work, and execution defaults to the project root when is_worktree is
-  false or absent.
+  plan-mode work, and execution defaults to the project root when
+  execution_unit_context.worktree_id is absent and no bound worktree context is
+  present.
 gui_related: false
 gui_classification_reason: This unit defines caller runtime responsibilities, not GUI presentation.
 split_recommended: false
@@ -5280,7 +5287,7 @@ acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - Orchestrator launch of a DAE in a lane-owned worktree sets the handoff fields.
 - Assistant Chat bound-thread agent-mode and plan-mode work set the handoff fields.
-- Missing or false is_worktree falls back to project-root execution.
+- Missing execution_unit_context.worktree_id and absent bound worktree context fall back to project-root execution.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -5306,7 +5313,8 @@ preserved_exact_tokens:
 - is_worktree
 - project root
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- is_worktree is preserved as source-lineage wording for older handoff text; worktree mode is derived from the bound worktree context, not stored in execution_unit_context.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Caller responsibilities define who populates runtime handoff fields before executor dispatch.
@@ -5396,7 +5404,7 @@ unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
 - File operations resolve relative to working_directory.
-- Git operations target the worktree, terminal sessions start in working_directory, and LSP root identity uses the worktree path when is_worktree is true.
+- Git operations target the worktree, terminal sessions start in working_directory, and LSP root identity uses the worktree path when bound worktree context is present.
 - File mutation logs store absolute paths.
 - A removed-worktree cmd.chat.revert reports the preserved error message and does not recreate missing directories.
 validation_surfaces:
@@ -5423,6 +5431,7 @@ preserved_exact_tokens:
 - 'Cannot restore file: original path no longer exists. The worktree may have been removed.'
 - 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md'
 negative_constraints:
+- is_worktree is a source-lineage token only; it must not become an execution_unit_context field in schema_version 1.0.0.
 - The executor does not recreate missing directories when a removed worktree makes the original path unavailable.
 compatibility_only_notes: []
 stale_retired_dispositions: []
