@@ -143,57 +143,62 @@ ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executo
 
 ---
 
-The canonical dispatch/runtime packet carries `execution_unit_context`.
+### 5.0 `execution_unit_context` canonical contract
 
-**Authoritative execution_unit_context fields**
+`Plans/Executor_Protocol.md` is the sole canonical owner of `execution_unit_context`. The normative machine-readable contract is `Plans/execution_unit_context.schema.json` with `schema_id = "pm.execution_unit_context"` and `schema_version = "1.0.0"`. Consumer docs may reference fields from that schema, but they must not copy or redefine the required or optional field set.
 
-| Field | Requirement |
+Required fields are closed and must appear exactly as the schema lists them:
+
+| Field | Type and nullability | Requirement |
+| --- | --- | --- |
+| `schema_id` | string const, non-null | Contract identity; always `pm.execution_unit_context`. |
+| `schema_version` | string const, non-null | Contract version; always `1.0.0` until a governed successor schema exists. |
+| `execution_unit_type` | closed enum, non-null | Runtime unit class: `run`, `seam`, `package`, `node`, `overseer`, `delegated_subagent`, `recovery`, `verification`, or `host_operation`. |
+| `execution_unit_id` | string, non-null | Canonical identity for the runtime unit being executed or recovered. |
+| `run_id` | string, non-null | Canonical run identity for execution lineage. |
+| `node_id` | string, non-null | Canonical node identity for dispatch and receipts. |
+| `attempt_id` | string, non-null | Immutable local execution-attempt identity. |
+| `execution_role` | closed enum, non-null | Runtime actor role: `assistant`, `interviewer`, `requirements_builder`, `prd_builder`, `package_overseer`, `seam_overseer`, `node_worker`, `reviewer`, `verifier`, `corroborator`, `recovery_actor`, or `host_operator`. |
+| `operational_identity` | object, non-null | Stable audit identity with closed `identity_kind` and non-empty `identity_id`. |
+| `requested_account_binding` | closed enum, non-null | Binding mode: `none`, `preferred`, `required`, or `system_default`. |
+| `approval_scope_key` | string, non-null | Approval and blocked-action scope key for recovery/HITL joins. |
+| `created_at_utc` | date-time string, non-null | UTC creation timestamp for persistence and replay ordering. |
+
+Optional fields are closed by the same schema. When present, nullable optional string fields may be `null` only when unknown or not applicable; arrays and closed enums are non-null when present:
+
+| Optional field family | Fields |
 | --- | --- |
-| `run_id` | Canonical run identity for execution lineage. |
-| `node_id` | Canonical node identity for dispatch and receipts. |
-| `attempt_id` | Immutable local execution-attempt identity. |
-| `lane_id` | Lane identity when the node is lane-bound. |
-| `package_id` | Package identity for orchestration joins. |
-| `seam_id` | Seam identity when dispatch is feature-scoped. |
-| `worktree_id` | Durable worktree identity when execution runs in a bound worktree. |
-| `execution_role` | Canonical execution-role disclosure for the packet. |
-| `requested_account_id` | Requested account identity before routing resolution. |
-| `requested_account_binding` | Binding mode that distinguishes preference from requirement. |
-| `requested_account_policy` | Requested account-policy selection for routing and approvals. |
-| `effective_account_id` | Effective resolved account identity. |
-| `operational_identity` | Stable runtime identity for audit and joins. |
-| `blocked_sequence` | Blocked-episode anchor when execution is paused or recovered through blocked state. |
-| `allowed_action_ids[]` | Ordered blocked-action set carried into recovery surfaces. |
+| Parent/project/planning linkage | `parent_execution_unit_id`, `project_id`, `thread_id`, `wizard_id`, `resolution_id` |
+| Graph/lane/worktree linkage | `lane_id`, `package_id`, `seam_id`, `worktree_id`, `working_directory`, `scheduler_pass_id` |
+| Account/policy resolution | `requested_account_id`, `requested_account_policy`, `effective_account_id` |
+| Blocked/recovery/action linkage | `blocked_sequence`, `allowed_action_ids[]`, `permission_snapshot_id`, `safe_point_id` |
+| Artifact/runtime/source-control refs | `usage_event_ref`, `runtime_policy_snapshot_ref`, `source_control_context_ref`, `host_assignment_id` |
+| Persistence/replay controls | `redaction_profile`, `replay_policy`, `updated_at_utc` |
+
+Lifecycle ownership is Executor-owned: the scheduler, Executor intake, worker spawn, recovery, remediation, verification, and host-operation boundaries mint, receive, rehydrate, and persist the same `execution_unit_context` packet. Prompt Pipeline produces the immutable handoff inputs, Executor materializes the runtime packet, and storage/events/artifacts/UI/PlanCompile/Planning Wizard consume the packet or a ref to it.
+
+Persistence and replay rules:
+- Persisted `execution_unit_context` payloads MUST include `schema_id` and `schema_version`; refs may point to a separately persisted payload only when the referenced payload carries those fields.
+- Replay, retry, remediation, recovery, and safe-point restoration MUST rehydrate the persisted packet or fail closed; they MUST NOT reconstruct required identity from tier-era compatibility objects or loose prose fields.
+- `additionalProperties: false` in the schema is normative. Adding, renaming, or widening fields requires a governed successor `schema_version`.
+
+Redaction and secret rules:
+- `execution_unit_context` MUST NOT persist raw secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+- Secret-bearing state is represented only through governed refs outside this payload; `redaction_profile` may disclose `no_secrets`, `redacted`, or `secret_refs_only`.
+
+Negative constraints:
+- No consumer may redefine the field set, required list, optional list, enum values, or nullability rules.
+- No persisted context payload is valid without `schema_version`.
+- No runtime, storage, provider, GUI, PlanCompile, or Planning Wizard consumer may treat this contract as evidence that Puppet Master is buildable.
 
 Stale local worker identity names such as `requested_persona_id`, `effective_persona_id`, `_persona_id`, and `/values` persona slots are compatibility inputs only; provider and model choices remain precedence inputs that must resolve into `execution_unit_context` identity fields before dispatch.
 
-Recommended `execution_role` values include `assistant`, `interviewer`, `requirements_builder`, `prd_builder`, `package_overseer`, `seam_overseer`, `node_worker`, `reviewer`, `corroborator`, and `recovery_actor`.
-
 `execution_unit_context` is the node-native execution-core handoff that replaces or wraps `TierContext` between scheduler, worker spawn, verification, remediation, recovery, and UI projections.
 
-ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
+ContractRef: ContractName:Plans/execution_unit_context.schema.json, Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
 
-### 5.1 Unified `DispatchContext` schema
-The canonical dispatch view is the unified `DispatchContext` projection over `execution_unit_context`.
-
-The canonical dispatch/runtime packet carries execution_unit_context.
-
-Required fields:
-- `run_id`
-- `node_id`
-- `attempt_id`
-- `lane_id`
-- `package_id`
-- `seam_id`
-- `worktree_id`
-- `execution_role`
-- `requested_account_id`
-- `requested_account_binding`
-- `requested_account_policy`
-- `effective_account_id`
-- `operational_identity`
-- `blocked_sequence`
-- `approval_scope_key`
+### 5.1 Unified `DispatchContext` projection
+The canonical dispatch view is the unified `DispatchContext` projection over one `execution_unit_context` instance. `DispatchContext` reads the required, optional, type, nullability, and enum rules from `Plans/execution_unit_context.schema.json`; it does not own a second required-field list.
 
 Behavioral rules:
 - dispatch, recovery, remediation, and inspection read one execution-unit packet rather than tier-era compatibility objects.
@@ -1408,7 +1413,7 @@ plan_unit_id: EP-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: The canonical dispatch/runtime packet carries execution_unit_context with authoritative run, node, attempt, lane, package, seam, worktree, execution role, account, operational identity, blocked sequence, and allowed action fields; stale persona names are compatibility inputs only.
+canonical_text: The canonical dispatch/runtime packet carries the Executor-owned execution_unit_context contract with schema_id pm.execution_unit_context, schema_version 1.0.0, closed required and optional field sets, closed enums, persistence/replay rules, redaction requirements, and consumer-reference-only boundaries; stale persona names are compatibility inputs only.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -1449,6 +1454,11 @@ preserved_exact_tokens:
 - operational_identity
 - blocked_sequence
 - allowed_action_ids[]
+- schema_id
+- schema_version
+- execution_unit_type
+- execution_unit_id
+- approval_scope_key
 - requested_persona_id
 - effective_persona_id
 - _persona_id
@@ -1464,7 +1474,10 @@ preserved_exact_tokens:
 - corroborator
 - recovery_actor
 - 'ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership'
-negative_constraints: []
+negative_constraints:
+- No consumer may redefine the execution_unit_context required or optional field set.
+- No persisted execution_unit_context payload is valid without schema_version.
+- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 compatibility_only_notes:
 - Stale local worker identity names and persona slots are compatibility inputs only.
 stale_retired_dispositions: []
@@ -1480,7 +1493,7 @@ plan_unit_id: EP-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
-canonical_text: DispatchContext is the canonical projection over execution_unit_context and carries required run, node, attempt, lane, package, seam, worktree, execution role, account, operational identity, blocked sequence, and approval_scope_key fields.
+canonical_text: DispatchContext is a projection over the Executor-owned execution_unit_context schema and reads required fields, optional fields, nullability, enum values, and persistence rules from Plans/execution_unit_context.schema.json instead of defining a second required-field list.
 gui_related: false
 gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
 split_recommended: false
@@ -1512,7 +1525,9 @@ preserved_exact_tokens:
 - effective_account_id
 - operational_identity
 - blocked_sequence
-negative_constraints: []
+negative_constraints:
+- DispatchContext must not define an alternate execution_unit_context required-field list.
+- DispatchContext must not omit schema_version when a persisted context payload is stored.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -5417,7 +5432,7 @@ owner_hints:
 - Plans/Executor_Protocol.md
 ```
 
-### EP-092 - Execution Unit Context Required Fields And Labels
+### EP-092 - Execution Unit Context Canonical Contract
 
 ```yaml
 plan_unit_id: EP-092
@@ -5425,10 +5440,12 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Executor_Protocol.md
 canonical_text: >-
-  Execution-unit context preserves required run, node, attempt, lane, package,
-  seam, role, account, operational identity, blocked sequence, and approval
-  scope fields plus the canonical labels execution unit context and blocked
-  episode.
+  Executor Protocol owns the canonical execution_unit_context contract through
+  Plans/execution_unit_context.schema.json with schema_id pm.execution_unit_context
+  and schema_version 1.0.0. The contract defines a closed required field list,
+  closed optional field set, field types, nullability, closed enums, identity
+  and linkage fields, persistence and replay rules, redaction and no-secret
+  constraints, lifecycle ownership, and producer/consumer boundaries.
 gui_related: false
 gui_classification_reason: This unit defines runtime identity schema and labels, not GUI presentation.
 split_recommended: false
@@ -5436,19 +5453,23 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - The covered source span remains losslessly available for exact-text audit.
-- All required fields from the source span remain explicit.
-- Canonical terms and values duplicate the required fields so consumers use the same runtime vocabulary.
+- All required fields from the schema remain explicit and closed.
+- Optional fields, nullability, enum values, persistence/replay constraints, and redaction rules remain explicit.
+- Consumer docs reference this owner and schema instead of redefining execution_unit_context.
 - The labels execution unit context and blocked episode remain preserved.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-implementation-readiness.py validate
 risk_class: executor_protocol_drift
 reasoning_tier: standard
 context_scope: executor_protocol_standardization
 implementation_surfaces:
 - Plans/Executor_Protocol.md
+- Plans/execution_unit_context.schema.json
+- scripts/pm-implementation-readiness.py
 node_compile_hint:
-  mode: execution_unit_context_required_fields_and_labels
+  mode: execution_unit_context_canonical_contract
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
@@ -5456,23 +5477,35 @@ preserved_exact_tokens:
 - run_id
 - node_id
 - attempt_id
+- schema_id
+- schema_version
+- execution_unit_type
+- execution_unit_id
 - lane_id
 - package_id
 - seam_id
+- worktree_id
 - execution_role
+- requested_account_binding
 - requested_account_id
 - effective_account_id
 - operational_identity
 - blocked_sequence
+- allowed_action_ids[]
 - approval_scope_key
+- created_at_utc
 - execution unit context
 - blocked episode
 - 'ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor'
-negative_constraints: []
+negative_constraints:
+- No consumer may redefine the execution_unit_context required or optional field set.
+- No persisted execution_unit_context payload is valid without schema_version.
+- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Required identity fields align executor runtime scope with the canonical blocked-episode approval anchor.
+- Executor Protocol is the sole owner of the execution_unit_context contract; Prompt Pipeline, Contracts_V0, storage-plan, orchestrator-subagent-integration, Plan_To_Node_Compilation, and Planning_Wizard are consumers.
 owner_hints:
 - Plans/Executor_Protocol.md
 ```

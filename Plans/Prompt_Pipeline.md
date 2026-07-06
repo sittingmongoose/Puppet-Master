@@ -588,22 +588,14 @@ Those selections remain explicit policy or configuration decisions surfaced thro
 
 The effective-resolution record therefore preserves `requested_account_id`, `effective_account_id`, `requested_operational_identity`, `effective_operational_identity`, `execution_role`, `account_switch_lineage[]`, `account_pressure_owner`, `blocked_sequence`, `approval_id?`, and `dae_jail_posture`.
 
-#### execution_unit_context canonical record
-- Introduce `execution_unit_context` as canonical runtime-facing context object.
-- Demote `TierContext` to a derived or compatibility-only selection/decomposition helper.
-- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to `execution_unit_context`.
-- Retire `tier_id`; canonical selection now keys from `execution_unit_type` plus `execution_unit_id` inside `execution_unit_context`.
+#### execution_unit_context consumer reference
+- Prompt Pipeline consumes the Executor-owned `execution_unit_context` contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`.
+- Prompt assembly may carry or reference one immutable `execution_unit_context` packet, but it MUST NOT redefine required fields, optional fields, enum values, or nullability.
+- `TierContext` remains a derived or compatibility-only selection/decomposition helper, and `tier_id` remains retired as canonical selection identity.
+- Canonical selection keys come from the schema-owned `execution_unit_type` plus `execution_unit_id`.
+- No persisted prompt handoff, attempt snapshot, or runtime identity payload may store `execution_unit_context` without `schema_version`, and the payload must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 
-```typescript
-execution_unit_context {
-  execution_unit_id: string,
-  execution_unit_type: 'run' | 'seam' | 'package' | 'node' | 'overseer' | 'delegated_subagent',
-  parent_execution_unit_id?: string,
-  execution_role: string,
-  worktree_id?: string,
-  ownership_transition_from?: string
-}
-```
+ContractRef: ContractName:Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract, ContractName:Plans/execution_unit_context.schema.json
 
 #### Blocked-policy and usage transfer
 - `blocked_sequence` is minted once per blocked episode lineage and reused by startup recovery instead of being reminted.
@@ -2945,7 +2937,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  execution_unit_context is the canonical runtime-facing context object for worker spawn, recovery, remediation, and coordination; TierContext is compatibility/decomposition metadata, tier_id is retired, and canonical selection keys from execution_unit_type plus execution_unit_id.
+  Prompt Pipeline consumes the Executor-owned execution_unit_context contract and schema for prompt handoff, attempt snapshots, worker spawn inputs, recovery, remediation, and coordination; TierContext is compatibility/decomposition metadata, tier_id is retired, and canonical selection keys from schema-owned execution_unit_type plus execution_unit_id.
 gui_related: false
 gui_classification_reason: This unit defines runtime context identity rather than visual presentation.
 split_recommended: false
@@ -2953,7 +2945,8 @@ depends_on:
   - "PP-045"
 unblocks: []
 acceptance_criteria:
-  - "Execution Unit Context Runtime Record remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "Execution Unit Context Runtime Record remains addressable as a fine-grained Prompt Pipeline consumer PlanUnit."
+  - "Prompt Pipeline references Plans/Executor_Protocol.md and Plans/execution_unit_context.schema.json instead of redefining execution_unit_context fields."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -2975,6 +2968,7 @@ preserved_exact_tokens:
   - "tier_id"
   - "execution_unit_id"
   - "execution_unit_type"
+  - "schema_version"
   - "run"
   - "seam"
   - "package"
@@ -2984,8 +2978,10 @@ preserved_exact_tokens:
   - "parent_execution_unit_id"
   - "execution_role"
   - "worktree_id"
-  - "ownership_transition_from"
-negative_constraints: []
+negative_constraints:
+  - "Prompt Pipeline must not redefine execution_unit_context required fields, optional fields, enum values, or nullability."
+  - "Persisted prompt handoff or attempt snapshot payloads must not store execution_unit_context without schema_version."
+  - "execution_unit_context payloads must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets."
 preserved_contractrefs: []
 compatibility_only_notes:
   - "TierContext is a derived or compatibility-only selection/decomposition helper."
@@ -2993,6 +2989,8 @@ stale_retired_dispositions:
   - "tier_id is retired as canonical selection identity."
 owner_hints:
   - "Plans/Prompt_Pipeline.md"
+  - "Plans/Executor_Protocol.md"
+  - "Plans/execution_unit_context.schema.json"
 ```
 
 ### PP-047 - Execution Unit Context UI Inspection Hook

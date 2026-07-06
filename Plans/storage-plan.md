@@ -693,11 +693,12 @@ Required rules:
 - Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins
 
 Canonical ownership split:
-- `execution_unit_context` is the canonical runtime-facing context object persisted with account pressure episodes, switch history, runtime artifacts, receipts, and usage joins.
+- `execution_unit_context` is the Executor-owned canonical runtime-facing context object defined in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`; storage persists the packet or packet refs for account pressure episodes, switch history, runtime artifacts, receipts, and usage joins without redefining the field set.
 - Any `TierContext` or `tier_id` decomposition is compatibility-only derived metadata for legacy selection helpers and MUST NOT own runtime canon, storage keys, or join identity.
 - Worker spawn, recovery, remediation, coordination, and UI inspection all resolve runtime identity from `execution_unit_context` so restart flows and inspectors reuse the same run/node/attempt/account anchors.
-- Contracts_V0 owns the cross-family attribution packet shape, including run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity.
+- Executor_Protocol owns the execution_unit_context schema; Contracts_V0 owns cross-family envelope behavior that consumes that schema, including run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity.
 - storage-plan owns persistence and projection of the attempt/usage/receipt/artifact joins that materialize that packet for history, audit, and inspector consumers.
+- Persisted storage payloads MUST NOT embed `execution_unit_context` without `schema_version`, and the payload must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 - Remaining storage/event cleanup is doc-by-doc reconciliation of these frozen placement rules, not invention of new storage concepts.
 
 ### Artifacts index, export manifests, and route/open linkage (ownership split)
@@ -5140,7 +5141,7 @@ plan_unit_id: SP-050
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: "Storage owns persistence/projection of attempt, usage, receipt, and artifact joins from execution_unit_context while TierContext and tier_id remain compatibility-only derived metadata."
+canonical_text: "Storage consumes the Executor-owned execution_unit_context schema for persisted packet refs and attempt, usage, receipt, and artifact joins while TierContext and tier_id remain compatibility-only derived metadata."
 gui_related: true
 gui_classification_reason: "This unit preserves GUI/runtime inspection identity and storage ownership for execution context."
 split_recommended: true
@@ -5154,6 +5155,7 @@ unblocks: []
 acceptance_criteria:
 - "SP-050 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "Storage references Plans/Executor_Protocol.md and Plans/execution_unit_context.schema.json instead of redefining execution_unit_context fields."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -5179,15 +5181,23 @@ preserved_exact_tokens:
 - "coordination"
 - "UI inspection"
 - "Contracts_V0"
+- "Executor_Protocol"
+- "schema_version"
+- "Plans/execution_unit_context.schema.json"
 - "cross-family attribution packet"
 - "attempt/usage/receipt/artifact joins"
 negative_constraints:
 - "Any TierContext or tier_id decomposition is compatibility-only derived metadata for legacy selection helpers and MUST NOT own runtime canon, storage keys, or join identity."
+- "storage-plan must not redefine execution_unit_context required fields, optional fields, enum values, or nullability."
+- "Persisted storage payloads must not embed execution_unit_context without schema_version."
+- "execution_unit_context payloads must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets."
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_hints:
 - "Plans/storage-plan.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/execution_unit_context.schema.json"
 - "Plans/Contracts_V0.md"
 ```
 

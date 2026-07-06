@@ -577,7 +577,7 @@ Scheduler, safe-point, and remediation records use one canonical payload block. 
 
 Attention rows, deep links, search, and palette results share the internal route payload. URLs, in-app actions, `/search/palette` results, deep links, and `resume_url` decode to the same route payload rather than separate link semantics. The canonical internal route payload is separate from command `IDs` and may carry `target_kind`, `project_id?`, `workspace_tab_id?`, `destination_surface`, `destination_tab?`, `focused_run_id?`, `historical_mode?`, `thread_id?`, `wizard_id?`, `object_kind?`, `object_id?`, `record_id?`, `artifact_id?`, `attempt_id?`, `lane_id?`, `worktree_id?`, `filter_payload?`, `inspector_target?`, `scroll_target?`, and `focus_behavior?`.
 
-Runtime storage and persistence records carry execution context before tier compatibility. `attempt_record`, `tier_runtime_record`, run-start/runtime snapshot events, `/runtime`, `/persistence`, `auth-account`, `/account/role`, `shared-runtime`, provider-account identity, and `operational_identity` blocks must retain requested/effective auth/account/role fields where those fields become auditable. The canonical replacement execution-context object reconciles node-native keys `run_id`, `thread_id`, `node_id`, `attempt_id`, `replan_generation`, and `scheduler_lane` with stale tier-native keys `tier_id`, `TierType`, `TierContext`, tier-level crews, and tier worktree ownership before downstream docs project execution identity.
+Runtime storage and persistence records carry execution context before tier compatibility. `attempt_record`, `tier_runtime_record`, run-start/runtime snapshot events, `/runtime`, `/persistence`, `auth-account`, `/account/role`, `shared-runtime`, provider-account identity, and `operational_identity` blocks must retain requested/effective auth/account/role fields where those fields become auditable. The canonical replacement execution-context object is the Executor-owned `execution_unit_context` contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`; Contracts_V0 consumes that schema for envelope and join behavior instead of redefining node-native keys or required fields.
 
 Execution ownership fields on that context include `execution_role`, `scheduler_lane`, `manual_priority?`, `safe_point_id?`, and remediation lineage refs when those facts control scheduling, recovery, or handoff priority.
 
@@ -1588,29 +1588,13 @@ Runtime snapshot payloads preserve `requested_persona` and `effective_persona` a
 Legacy source labels `persona_active_persona_id`, `persona_display_label`, `persona_display_icon`, `persona_system_prompt_sha`, `mode_overlay_runtime_mode`, and `mode_overlay_ceiling` are source-lineage aliases only; live payloads use the requested/effective Persona fields, runtime identity fields, and canonical `runtime_mode`/`mode_family?`/`mode_policy_ref?` names instead of reviving the legacy snapshot vocabulary.
 
 
-`execution_unit_context` is the authoritative runtime snapshot packet.
+Contracts_V0 consumes the Executor-owned `execution_unit_context` runtime snapshot packet from `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`.
 
-Required fields:
-- `run_id`
-- `node_id`
-- `attempt_id`
-- `lane_id`
-- `package_id`
-- `seam_id`
-- `worktree_id`
-- `execution_role`
-- `requested_account_id`
-- `requested_account_binding`
-- `requested_account_policy`
-- `effective_account_id`
-- `operational_identity`
-- `tool_use_id`
-
-Rules:
-- Requested and effective account state stays explicit across runtime, approval, and usage surfaces.
-- `requested_account_binding` distinguishes preference from requirement.
-- `requested_account_policy` remains explicit in the stored snapshot.
-- `operational_identity` and `tool_use_id` survive into downstream joins.
+Consumer rules:
+- Required fields, optional fields, enum values, and nullability come only from the Executor-owned schema.
+- Requested and effective account state stays explicit across runtime, approval, and usage surfaces by reference to the schema-owned packet or packet ref.
+- `requested_account_binding`, `requested_account_policy`, `operational_identity`, and action/tool joins survive into downstream envelopes without Contracts_V0 redefining the context field set.
+- No persisted envelope may embed `execution_unit_context` without `schema_version`, and no embedded context may store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
 ## 6. HITLRequest
 
 Approval and recovery are anchored to runtime blocked episodes rather than to tier-boundary request objects.
@@ -10246,26 +10230,28 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-### CV-154 - Execution Unit Context Runtime Snapshot Packet
+### CV-154 - Execution Unit Context Consumer Envelope
 
 ```yaml
 plan_unit_id: CV-154
-unit_type: requirement
+unit_type: consumer_requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  execution_unit_context is the authoritative runtime snapshot packet carrying
-  run, node, attempt, lane, package, seam, worktree, execution role, requested
-  and effective account state, operational identity, and tool-use fields.
+  Contracts_V0 consumes the Executor-owned execution_unit_context runtime
+  snapshot packet from Plans/Executor_Protocol.md and
+  Plans/execution_unit_context.schema.json for shared envelope and join behavior;
+  it does not redefine required fields, optional fields, enum values,
+  nullability, schema_version, redaction rules, or lifecycle ownership.
 gui_related: false
 gui_classification_reason: This unit defines the runtime execution-unit context packet.
 split_recommended: true
 depends_on: [CV-060, CV-145]
 unblocks: []
 acceptance_criteria:
-  - "execution_unit_context remains the authoritative runtime snapshot packet."
-  - "Required runtime fields include run_id, node_id, attempt_id, lane_id, package_id, seam_id, worktree_id, and execution_role."
-  - "Required account and join fields include requested_account_id, requested_account_binding, requested_account_policy, effective_account_id, operational_identity, and tool_use_id."
+  - "execution_unit_context remains owned by Executor_Protocol."
+  - "Required and optional context fields are read from Plans/execution_unit_context.schema.json."
+  - "Contracts_V0 preserves account, action, tool-use, and attribution joins as envelope consumers."
   - "Requested and effective account state stays explicit across runtime, approval, and usage surfaces."
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -10274,16 +10260,19 @@ risk_class: execution_unit_context_field_loss
 reasoning_tier: high
 context_scope: execution_unit_context_packet
 implementation_surfaces:
-  - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
+  - Plans/execution_unit_context.schema.json
+  - Plans/Contracts_V0.md
   - Plans/storage-plan.md
 node_compile_hint:
-  mode: execution_unit_context_contract
+  mode: execution_unit_context_consumer_envelope
   create_worknodes: false
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0053
 preserved_exact_tokens:
   - "`execution_unit_context`"
+  - "`schema_id`"
+  - "`schema_version`"
   - "`run_id`"
   - "`node_id`"
   - "`attempt_id`"
@@ -10294,7 +10283,13 @@ preserved_exact_tokens:
   - "`execution_role`"
   - "`operational_identity`"
   - "`tool_use_id`"
+negative_constraints:
+  - "Contracts_V0 must not redefine execution_unit_context required fields, optional fields, enum values, or nullability."
+  - "Persisted envelopes must not embed execution_unit_context without schema_version."
+  - "execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets."
 owner_hints:
+  - Plans/Executor_Protocol.md
+  - Plans/execution_unit_context.schema.json
   - Plans/Contracts_V0.md
 ```
 
