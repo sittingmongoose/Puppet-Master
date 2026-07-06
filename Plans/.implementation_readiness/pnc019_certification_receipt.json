@@ -1,0 +1,1149 @@
+{
+  "artifact_receipts": {
+    "activation_receipt": {
+      "attempt_id": "attempt-pnc019-0001",
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "destination_artifact_refs": [
+        "memory://pnc019/activation"
+      ],
+      "evidence_refs": [
+        "Plans/Executor_Protocol.md#EP-108"
+      ],
+      "execution_unit_context_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/execution_unit_context",
+      "node_id": "node-pnc019-0001",
+      "project_id": "pnc019-clean-room-project",
+      "provider_attempt_ref": null,
+      "receipt_id": "receipt-pnc019-activation",
+      "receipt_kind": "ActivationReceipt",
+      "redaction_profile": "no_secrets",
+      "result_summary": {
+        "activation_pending": true,
+        "harness_only": true,
+        "records_materialized": false
+      },
+      "retry_route": "restart_from_activation_receipt",
+      "rollback_route": "drop_memory_only_harness_activation",
+      "run_id": "pcr-pnc019-0001",
+      "safe_point_id": "safe-point:pnc019",
+      "schema_id": "pm.storage_value.attempt_receipt.v1",
+      "schema_version": "1.0.0",
+      "source_artifact_refs": [
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/worknode_request"
+      ],
+      "status": "completed",
+      "unresolved_risks": [],
+      "usage_event_ref": null,
+      "validator_refs": [
+        "scripts/pm-pnc019-certification-harness.py"
+      ],
+      "worktree_id": null
+    },
+    "approved_plan_pack": {
+      "acceptance_unit_index_hash": "sha256:f1d176688e490ebd41fd544fc4161fbede9bb1eacb29002ee2ac6d2a318c91c8",
+      "approved_plan_pack_id": "app-pnc019-0001",
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "created_by_actor_ref": "actor:pnc019-certifier",
+      "final_audit_closure_hash": "sha256:final-audit-pnc019",
+      "pack_hash": "sha256:04d7fdbe74084dad0e309e7b0b76255b4123fd928e90b5b2f03b585210760eb4",
+      "pack_version": 1,
+      "plan_unit_index_hash": "sha256:03f9c3e13b9e7a3868fad53dc7e645adeda3d550c3ffb7eb78d3fb6af45563fd",
+      "planning_run_id": "planning-run-pnc019",
+      "planning_run_revision": 7,
+      "project_context_snapshot_hash": "sha256:project-context-pnc019",
+      "project_id": "pnc019-clean-room-project",
+      "readiness_report_ref": "Plans/.plan_index/node_readiness_report.json",
+      "redaction_profile": "no_secrets",
+      "schema_id": "pm.storage_value.approved_plan_pack.v1",
+      "schema_version": "1.0.0",
+      "source_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-010",
+        "Plans/Planning_Wizard.md#PWIZ-014",
+        "Plans/Plan_To_Node_Compilation.md#PNC-022"
+      ],
+      "supersedes_pack_id": null,
+      "testing_policy_hash": "sha256:testing-policy-pnc019",
+      "topic_map_version": 3
+    },
+    "execution_unit_context": {
+      "allowed_action_ids": [
+        "cmd.planning_wizard.approve_and_build",
+        "cmd.executor.activate"
+      ],
+      "approval_scope_key": "approval-scope:pnc019-certification",
+      "attempt_id": "attempt-pnc019-0001",
+      "blocked_sequence": null,
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "effective_account_id": "account:certification-harness",
+      "execution_role": "verifier",
+      "execution_unit_id": "exec-unit-pnc019-0001",
+      "execution_unit_type": "node",
+      "host_assignment_id": null,
+      "lane_id": "lane-certification",
+      "node_id": "node-pnc019-0001",
+      "operational_identity": {
+        "display_label": "PNC-019 certification harness",
+        "identity_id": "identity:pnc019-certifier",
+        "identity_kind": "system_service",
+        "source_ref": "scripts/pm-pnc019-certification-harness.py"
+      },
+      "package_id": null,
+      "parent_execution_unit_id": null,
+      "permission_snapshot_id": "permission-snapshot:pnc019",
+      "project_id": "pnc019-clean-room-project",
+      "redaction_profile": "no_secrets",
+      "replay_policy": "rehydrate_exact",
+      "requested_account_binding": "required",
+      "requested_account_id": "account:certification-harness",
+      "requested_account_policy": "policy:pnc019-no-secrets",
+      "resolution_id": "resolution-pnc019",
+      "run_id": "pcr-pnc019-0001",
+      "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
+      "safe_point_id": "safe-point:pnc019",
+      "scheduler_pass_id": "scheduler-pnc019",
+      "schema_id": "pm.execution_unit_context",
+      "schema_version": "1.0.0",
+      "seam_id": null,
+      "source_control_context_ref": "source-control:pnc019-clean-room",
+      "thread_id": "thread-pnc019",
+      "updated_at_utc": null,
+      "usage_event_ref": null,
+      "wizard_id": "wizard-pnc019",
+      "working_directory": null,
+      "worktree_id": null
+    },
+    "executor_intake_report": {
+      "accepted_at_utc": "2026-07-06T00:00:00Z",
+      "authority_result": {
+        "scope": "pnc019_certification_harness_only",
+        "status": "pass"
+      },
+      "blocked_reason_code": null,
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "execution_unit_context_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/execution_unit_context",
+      "graph_integrity_result": {
+        "acyclic": true,
+        "status": "pass"
+      },
+      "intake_id": "intake-pnc019-0001",
+      "intake_status": "accepted",
+      "model_routing_result": {
+        "provider": "none",
+        "status": "pass"
+      },
+      "project_id": "pnc019-clean-room-project",
+      "readiness_result": {
+        "required_inputs_current": true,
+        "status": "pass"
+      },
+      "redaction_profile": "no_secrets",
+      "rejected_reason_code": null,
+      "request_id": "wnr-pnc019-0001",
+      "scheduler_metadata_result": {
+        "entrypoints": [
+          "node-pnc019-0001"
+        ],
+        "status": "pass"
+      },
+      "schema_id": "pm.storage_value.executor_intake_report.v1",
+      "schema_version": "1.0.0",
+      "source_control_result": {
+        "mode": "clean_room_memory",
+        "status": "pass"
+      },
+      "test_binding_result": {
+        "required": true,
+        "status": "pass"
+      }
+    },
+    "goal_receipt": {
+      "certification_tier": "pnc019_clean_room",
+      "child_receipt_refs": [],
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "effective_runtime_ref": "scripts/pm-pnc019-certification-harness.py",
+      "evidence_refs": [
+        "memory://pnc019/test-evidence/receipt",
+        "Plans/Goal_Runtime_System.md#GRS-026"
+      ],
+      "final_certifier_decision": "accepted",
+      "goal_id": "goal-pnc019-0001",
+      "goal_run_id": "goalrun-pnc019-0001",
+      "project_id": "pnc019-clean-room-project",
+      "receipt_id": "receipt-pnc019-goal-completion",
+      "receipt_kind": "GoalCompletionReceipt",
+      "redaction_profile": "no_secrets",
+      "requested_runtime_ref": "Plans/Plan_To_Node_Compilation.md#PNC-019",
+      "schema_id": "pm.storage_value.goal_receipt.v1",
+      "schema_version": "1.0.0",
+      "unresolved_risks": [],
+      "validator_outputs": [
+        "validator:pnc019-test-receipt-evidence-check:pass",
+        "validator:pnc019-lifecycle-chain-check:pass"
+      ],
+      "workgraph_ref": "wg-pnc019-0001",
+      "worknode_receipt_refs": [
+        "receipt-pnc019-activation",
+        "receipt-pnc019-entrypoint-queued",
+        "receipt-pnc019-test-run"
+      ]
+    },
+    "orchestrator_projection": {
+      "goal_run_id": "goalrun-pnc019-0001",
+      "owner_ref": "Plans/Orchestrator_Page.md#OP-023",
+      "plan_compile_run_id": "pcr-pnc019-0001",
+      "projection_id": "projection-pnc019-0001",
+      "schema_id": "pm.pnc019.orchestrator_projection.v1",
+      "schema_version": "1.0.0",
+      "source_receipt_refs": [
+        "receipt-pnc019-activation",
+        "receipt-pnc019-entrypoint-queued",
+        "receipt-pnc019-test-run"
+      ],
+      "status": "running",
+      "visible_tab": "Plan Compile"
+    },
+    "plan_approved_event": {
+      "actor_ref": "actor:pnc019-certifier",
+      "attempt_id": null,
+      "causation_event_id": null,
+      "correlation_id": "corr-pnc019-0001",
+      "effective_account_ref": "account:certification-harness",
+      "event_id": "evt-pnc019-plan-approved-0001",
+      "event_type": "planning.plan_approved",
+      "idempotency_key": "idem-pnc019-approved-plan-pack-0001",
+      "migration": {
+        "compatibility_event_type": null,
+        "migrated_from_schema_id": null,
+        "migrated_from_schema_version": null,
+        "migration_id": null
+      },
+      "node_id": null,
+      "observed_at_utc": "2026-07-06T00:00:00Z",
+      "occurred_at_utc": "2026-07-06T00:00:00Z",
+      "parent_event_id": null,
+      "payload": {
+        "approval_cas_receipt_id": "approval-cas-pnc019-0001",
+        "approved_plan_pack_id": "app-pnc019-0001",
+        "plan_compile_run_id": "pcr-pnc019-0001",
+        "source_refs": [
+          "Plans/Planning_Wizard.md#PWIZ-014"
+        ]
+      },
+      "payload_ref": null,
+      "payload_schema_id": "pm.event_payload.plan_approved.v1",
+      "persisted_at_utc": "2026-07-06T00:00:00Z",
+      "producer_sequence_id": 1,
+      "project_id": "pnc019-clean-room-project",
+      "redaction_profile": "no_secrets",
+      "replay_policy": "dedupe_by_idempotency_key",
+      "requested_account_ref": "account:certification-harness",
+      "run_id": "pcr-pnc019-0001",
+      "schema_id": "pm.event.v0",
+      "schema_version": "1.0.0",
+      "sequence_id": 1,
+      "thread_id": "thread-pnc019"
+    },
+    "plan_compile_run": {
+      "acceptance_unit_index_hash": "sha256:f1d176688e490ebd41fd544fc4161fbede9bb1eacb29002ee2ac6d2a318c91c8",
+      "approved_plan_pack_id": "app-pnc019-0001",
+      "artifacts": [
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json"
+      ],
+      "blockers": [],
+      "contract_mode": "bootstrap_authority_only",
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "current_stage": "plan_approved_bound",
+      "currentness_status": {
+        "cas_receipt_id": "approval-cas-pnc019-0001",
+        "status": "current"
+      },
+      "cursor": {
+        "event_id": "evt-pnc019-plan-approved-0001",
+        "stage": "plan_approved_bound"
+      },
+      "last_green_stage": "plan_approved_bound",
+      "launch_source": "planning_wizard_approve_and_build",
+      "next_required_stage": "workgraph_draft",
+      "plan_compile_run_id": "pcr-pnc019-0001",
+      "project_id": "pnc019-clean-room-project",
+      "receipts": [
+        "approval-cas-pnc019-0001",
+        "evt-pnc019-plan-approved-0001"
+      ],
+      "redaction_profile": "no_secrets",
+      "runtime_adapter": "disabled_until_pnc019",
+      "runtime_enablement_ref": "Plans/Plan_To_Node_Compilation.md#PNC-019",
+      "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
+      "schema_id": "pm.storage_value.plan_compile_run.v1",
+      "schema_version": "1.0.0",
+      "source_hashes": {
+        "acceptance_units": "sha256:f1d176688e490ebd41fd544fc4161fbede9bb1eacb29002ee2ac6d2a318c91c8",
+        "plan_units": "sha256:03f9c3e13b9e7a3868fad53dc7e645adeda3d550c3ffb7eb78d3fb6af45563fd"
+      },
+      "source_plan_index_hash": "sha256:03f9c3e13b9e7a3868fad53dc7e645adeda3d550c3ffb7eb78d3fb6af45563fd",
+      "status": "ready_for_bootstrap_validation",
+      "updated_at_utc": "2026-07-06T00:00:00Z"
+    },
+    "queued_entrypoint_receipt": {
+      "attempt_id": "attempt-pnc019-0001",
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "destination_artifact_refs": [
+        "memory://pnc019/entrypoint-queue"
+      ],
+      "evidence_refs": [
+        "Plans/Executor_Protocol.md#EP-108",
+        "Plans/Orchestrator_Page.md#OP-023"
+      ],
+      "execution_unit_context_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/execution_unit_context",
+      "node_id": "node-pnc019-0001",
+      "project_id": "pnc019-clean-room-project",
+      "provider_attempt_ref": null,
+      "receipt_id": "receipt-pnc019-entrypoint-queued",
+      "receipt_kind": "QueuedEntrypointReceipt",
+      "redaction_profile": "no_secrets",
+      "result_summary": {
+        "entrypoints_queued": [
+          "node-pnc019-0001"
+        ],
+        "queue_kind": "harness_memory_only"
+      },
+      "retry_route": "restart_from_activation_receipt",
+      "rollback_route": "drop_memory_only_harness_activation",
+      "run_id": "pcr-pnc019-0001",
+      "safe_point_id": "safe-point:pnc019",
+      "schema_id": "pm.storage_value.attempt_receipt.v1",
+      "schema_version": "1.0.0",
+      "source_artifact_refs": [
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/worknode_request"
+      ],
+      "status": "completed",
+      "unresolved_risks": [],
+      "usage_event_ref": null,
+      "validator_refs": [
+        "scripts/pm-pnc019-certification-harness.py"
+      ],
+      "worktree_id": null
+    },
+    "testing_receipt": {
+      "attempt_id": "attempt-pnc019-0001",
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "destination_artifact_refs": [
+        "memory://pnc019/test-run"
+      ],
+      "evidence_refs": [
+        "memory://pnc019/test-evidence/receipt"
+      ],
+      "execution_unit_context_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/execution_unit_context",
+      "node_id": "node-pnc019-0001",
+      "project_id": "pnc019-clean-room-project",
+      "provider_attempt_ref": null,
+      "receipt_id": "receipt-pnc019-test-run",
+      "receipt_kind": "TestRunReceipt",
+      "redaction_profile": "no_secrets",
+      "result_summary": {
+        "no_evidence": false,
+        "passed": 1,
+        "tests_run": 1
+      },
+      "retry_route": "restart_from_activation_receipt",
+      "rollback_route": "drop_memory_only_harness_activation",
+      "run_id": "pcr-pnc019-0001",
+      "safe_point_id": "safe-point:pnc019",
+      "schema_id": "pm.storage_value.attempt_receipt.v1",
+      "schema_version": "1.0.0",
+      "source_artifact_refs": [
+        "Plans/Automated_Testing_System.md#ATS-001"
+      ],
+      "status": "completed",
+      "unresolved_risks": [],
+      "usage_event_ref": null,
+      "validator_refs": [
+        "pnc019-test-receipt-evidence-check"
+      ],
+      "worktree_id": null
+    },
+    "workgraph_draft": {
+      "authority": {
+        "ordinary_product_worknodes": false,
+        "scope": "pnc019_certification_harness_only"
+      },
+      "created_at_utc": "2026-07-06T00:00:00Z",
+      "dependency_edges": [],
+      "entrypoints": [
+        "node-pnc019-0001"
+      ],
+      "evidence": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-007",
+        "Plans/Executor_Protocol.md#EP-107"
+      ],
+      "graph_integrity": {
+        "acyclic": true,
+        "entrypoint_count": 1,
+        "missing_dependency_count": 0
+      },
+      "nodes": [
+        {
+          "node_id": "node-pnc019-0001",
+          "request_id": "wnr-pnc019-0001"
+        }
+      ],
+      "plan_compile_run_id": "pcr-pnc019-0001",
+      "project_id": "pnc019-clean-room-project",
+      "redaction_profile": "no_secrets",
+      "revision": 1,
+      "scheduler_policy": {
+        "parallelism": 1,
+        "policy_id": "scheduler-pnc019"
+      },
+      "schema_id": "pm.storage_value.workgraph_draft.v1",
+      "schema_version": "1.0.0",
+      "supersedes_revision": null,
+      "validation_state": {
+        "status": "certified",
+        "validator": "pnc019-clean-room-graph-check"
+      },
+      "workgraph_id": "wg-pnc019-0001"
+    },
+    "worknode_request": {
+      "acceptance_criteria": [
+        "Executable lifecycle proof records positive and negative receipts.",
+        "Ordinary product WorkNodes and NodeSeeds remain zero."
+      ],
+      "authority": {
+        "scope": "pnc019_certification_harness_only",
+        "write_mode": "readiness_artifact_only"
+      },
+      "blocked_reason_refs": [],
+      "cancellation_policy": {
+        "safe_after_activation": "receipt_required",
+        "safe_before_mutation": true
+      },
+      "capability_lane": "local_deterministic",
+      "capability_requirements": [
+        "no_network",
+        "no_secrets",
+        "no_product_output"
+      ],
+      "dependency_refs": [],
+      "effort_class": "bounded",
+      "frontend_related": false,
+      "gui_related": false,
+      "idempotency_key": "idem-worknode-request-pnc019-0001",
+      "implementation_surfaces": [
+        "scripts/pm-pnc019-certification-harness.py"
+      ],
+      "model_routing": {
+        "mode": "deterministic_local",
+        "provider": "none"
+      },
+      "objective": "Run PNC-019 certification-only lifecycle proof without product output.",
+      "ordering_metadata": {
+        "entrypoint": true,
+        "topological_index": 1
+      },
+      "project_id": "pnc019-clean-room-project",
+      "read_set_candidates": [
+        "Plans/event_record.schema.json",
+        "Plans/storage_value_registry.json"
+      ],
+      "reasoning_tier": "high",
+      "redaction_profile": "no_secrets",
+      "request_id": "wnr-pnc019-0001",
+      "schema_id": "pm.storage_value.worknode_request.v1",
+      "schema_version": "1.0.0",
+      "source_plan_unit_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/Plan_To_Node_Compilation.md#PNC-022"
+      ],
+      "test_binding": {
+        "receipt_kind": "TestRunReceipt",
+        "required": true
+      },
+      "validator_candidates": [
+        "python3 scripts/pm-implementation-readiness.py validate"
+      ],
+      "work_type": "certification_harness",
+      "workgraph_id": "wg-pnc019-0001",
+      "write_set_candidates": [
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json"
+      ]
+    }
+  },
+  "certification_id": "PNC-019",
+  "event_record_count": 1,
+  "evidence_refs": [
+    "Plans/Plan_To_Node_Compilation.md#PNC-019",
+    "Plans/Plan_To_Node_Compilation.md#PNC-022",
+    "Plans/Planning_Wizard.md#PWIZ-014",
+    "Plans/Executor_Protocol.md#EP-108",
+    "Plans/Goal_Runtime_System.md#GRS-026",
+    "Plans/Orchestrator_Page.md#OP-023",
+    "Plans/Automated_Testing_System.md#ATS-001",
+    "Plans/storage_value_registry.json",
+    "Plans/event_record.schema.json",
+    "Plans/execution_unit_context.schema.json"
+  ],
+  "generated_at_utc": "2026-07-06T00:00:00Z",
+  "generated_by": {
+    "harness_path": "scripts/pm-pnc019-certification-harness.py",
+    "mode": "local_deterministic_clean_room",
+    "uses_repo_contracts": true
+  },
+  "harness_scoped_artifact_counts": {
+    "approved_plan_packs": 1,
+    "attempt_receipts": 6,
+    "executor_intake_reports": 2,
+    "goal_receipts": 1,
+    "plan_approved_events": 1,
+    "plan_compile_runs": 1,
+    "workgraph_drafts": 1,
+    "worknode_requests": 1
+  },
+  "lifecycle_trace": [
+    {
+      "artifact_ref": "#/artifact_receipts/approved_plan_pack",
+      "step_id": "approved_plan_pack_intake"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/plan_approved_event",
+      "step_id": "plan_approved_event_record"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/plan_compile_run",
+      "step_id": "plan_compile_run_identity"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/workgraph_draft",
+      "step_id": "workgraph_draft"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/worknode_request",
+      "step_id": "worknode_request"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/executor_intake_report",
+      "step_id": "executor_intake"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/activation_receipt",
+      "step_id": "activation_commit"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/queued_entrypoint_receipt",
+      "step_id": "queued_entrypoint"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/orchestrator_projection",
+      "step_id": "orchestrator_projection"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/testing_receipt",
+      "step_id": "testing_receipt"
+    },
+    {
+      "artifact_ref": "#/artifact_receipts/goal_receipt",
+      "step_id": "goal_receipt"
+    }
+  ],
+  "negative_cases": [
+    {
+      "case_id": "missing_schema_version",
+      "details": {},
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "event_record_missing_schema_version",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "invalid_event_record",
+      "details": {},
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "event_record_schema_validation_failed",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "invalid_execution_unit_context",
+      "details": {},
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "execution_unit_context_schema_validation_failed",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "invalid_storage_value",
+      "details": {},
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "storage_value_schema_validation_failed",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "raw_secret_credential",
+      "details": {},
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "raw_secret_or_credential_rejected",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "provider_stream_missing_refs",
+      "details": {
+        "provider_events": [
+          {
+            "event_kind": "tool_result",
+            "event_ref": null,
+            "evidence_ref": null
+          }
+        ]
+      },
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "provider_stream_refs_missing",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "gui_disabled_bypass",
+      "details": {
+        "attempted_emit_plan_approved": true,
+        "buildability_gate_passed": false
+      },
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "approve_and_build_disabled_bypass_rejected",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "graph_cycle",
+      "details": {
+        "cycle_edges": [
+          {
+            "from": "node-pnc019-0001",
+            "to": "node-pnc019-0001"
+          }
+        ]
+      },
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "workgraph_cycle_rejected",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "missing_behavioral_acceptance",
+      "details": {},
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "behavioral_acceptance_missing",
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "static_only_proof",
+      "details": {
+        "ran": false,
+        "schema_id": "pm.pnc019.static_only_proof",
+        "schema_version": "1.0.0"
+      },
+      "emitted_forbidden_artifact_counts": {
+        "activation_receipts": 0,
+        "plan_approved_events": 0,
+        "plan_compile_runs": 0,
+        "worknode_requests": 0
+      },
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md#PNC-019",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/negative_cases"
+      ],
+      "executed": true,
+      "expected_error": "static_only_proof_rejected",
+      "rejected": true,
+      "status": "pass"
+    }
+  ],
+  "ordinary_product_artifact_counts": {
+    "manifests": 0,
+    "nodeseeds": 0,
+    "production_build_tasks": 0,
+    "queues": 0,
+    "runtime_launches": 0,
+    "worknodes": 0
+  },
+  "positive_cases": [
+    {
+      "case_id": "fresh_run",
+      "evidence_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-014",
+        "Plans/Plan_To_Node_Compilation.md#PNC-007",
+        "Plans/Executor_Protocol.md#EP-108",
+        "Plans/Orchestrator_Page.md#OP-023",
+        "Plans/Automated_Testing_System.md#ATS-001",
+        "Plans/Goal_Runtime_System.md#GRS-026",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/goal_receipt"
+      ],
+      "executed": true,
+      "lifecycle_steps": [
+        "approved_plan_pack_intake",
+        "plan_approved_event_record",
+        "plan_compile_run_identity",
+        "workgraph_draft",
+        "worknode_request",
+        "executor_intake",
+        "activation_commit",
+        "queued_entrypoint",
+        "orchestrator_projection",
+        "testing_receipt",
+        "goal_receipt"
+      ],
+      "observations": {
+        "goal_receipt_decision": "accepted",
+        "plan_compile_run_id": "pcr-pnc019-0001"
+      },
+      "status": "pass",
+      "trace": [
+        {
+          "artifact_ref": "#/artifact_receipts/approved_plan_pack",
+          "step_id": "approved_plan_pack_intake"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/plan_approved_event",
+          "step_id": "plan_approved_event_record"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/plan_compile_run",
+          "step_id": "plan_compile_run_identity"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/workgraph_draft",
+          "step_id": "workgraph_draft"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/worknode_request",
+          "step_id": "worknode_request"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/executor_intake_report",
+          "step_id": "executor_intake"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/activation_receipt",
+          "step_id": "activation_commit"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/queued_entrypoint_receipt",
+          "step_id": "queued_entrypoint"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/orchestrator_projection",
+          "step_id": "orchestrator_projection"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/testing_receipt",
+          "step_id": "testing_receipt"
+        },
+        {
+          "artifact_ref": "#/artifact_receipts/goal_receipt",
+          "step_id": "goal_receipt"
+        }
+      ]
+    },
+    {
+      "case_id": "duplicate_idempotency",
+      "evidence_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-014",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/plan_compile_run"
+      ],
+      "executed": true,
+      "observations": {
+        "plan_compile_run_count_after": 1,
+        "plan_compile_run_count_before": 1,
+        "same_plan_compile_run_id": true
+      },
+      "status": "pass"
+    },
+    {
+      "case_id": "restart_resume",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/Plan_To_Node_Compilation.md#PNC-007",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/artifact_receipts/plan_compile_run"
+      ],
+      "executed": true,
+      "observations": {
+        "resume_ref": "resume:pnc019:activation",
+        "same_plan_compile_run_id": true,
+        "storage_rows_replayed": 12
+      },
+      "status": "pass"
+    },
+    {
+      "case_id": "cancellation",
+      "evidence_refs": [
+        "Plans/Executor_Protocol.md#EP-108",
+        "Plans/Goal_Runtime_System.md#GRS-026"
+      ],
+      "executed": true,
+      "observations": {
+        "activation_receipts_emitted": 0,
+        "cancelled_before_mutation": true,
+        "validation_failures": []
+      },
+      "status": "pass"
+    },
+    {
+      "case_id": "stale_cas_rejection",
+      "evidence_refs": [
+        "Plans/Planning_Wizard.md#PWIZ-014",
+        "Plans/storage-plan.md"
+      ],
+      "executed": true,
+      "expected_error": "approval_cas_hash_mismatch",
+      "observations": {
+        "current_pack_hash": "sha256:04d7fdbe74084dad0e309e7b0b76255b4123fd928e90b5b2f03b585210760eb4",
+        "displayed_pack_hash": "sha256:old-pack",
+        "plan_approved_events_emitted": 0,
+        "plan_compile_runs_emitted": 0
+      },
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "blocked_permission_security",
+      "evidence_refs": [
+        "Plans/Permissions_System.md",
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json#/positive_cases/5"
+      ],
+      "executed": true,
+      "expected_error": "permission_scope_missing",
+      "observations": {
+        "blocked_projection_health": "healthy"
+      },
+      "rejected": true,
+      "status": "pass"
+    },
+    {
+      "case_id": "provider_degraded_error",
+      "evidence_refs": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Multi-Account.md"
+      ],
+      "executed": true,
+      "observations": {
+        "event_kinds": [
+          "request_started",
+          "degraded_state",
+          "error"
+        ],
+        "provider_stream_status": "blocked_with_refs"
+      },
+      "status": "pass"
+    },
+    {
+      "case_id": "storage_replay_currentness",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/event_record.schema.json"
+      ],
+      "executed": true,
+      "observations": {
+        "event_count_replayed": 1,
+        "plan_compile_run_recovered": true,
+        "projection_freshness": "current"
+      },
+      "status": "pass"
+    },
+    {
+      "case_id": "no_evidence_test_rejection",
+      "evidence_refs": [
+        "Plans/Automated_Testing_System.md#ATS-001",
+        "Plans/Goal_Runtime_System.md#GRS-026"
+      ],
+      "executed": true,
+      "expected_error": "test_receipt_missing_evidence_refs",
+      "observations": {
+        "goal_receipt_emitted": false,
+        "testing_receipt_evidence_refs": []
+      },
+      "rejected": true,
+      "status": "pass"
+    }
+  ],
+  "required_lifecycle_steps": [
+    "approved_plan_pack_intake",
+    "plan_approved_event_record",
+    "plan_compile_run_identity",
+    "workgraph_draft",
+    "worknode_request",
+    "executor_intake",
+    "activation_commit",
+    "queued_entrypoint",
+    "orchestrator_projection",
+    "testing_receipt",
+    "goal_receipt"
+  ],
+  "required_negative_case_ids": [
+    "missing_schema_version",
+    "invalid_event_record",
+    "invalid_execution_unit_context",
+    "invalid_storage_value",
+    "raw_secret_credential",
+    "provider_stream_missing_refs",
+    "gui_disabled_bypass",
+    "graph_cycle",
+    "missing_behavioral_acceptance",
+    "static_only_proof"
+  ],
+  "required_positive_case_ids": [
+    "fresh_run",
+    "duplicate_idempotency",
+    "restart_resume",
+    "cancellation",
+    "stale_cas_rejection",
+    "blocked_permission_security",
+    "provider_degraded_error",
+    "storage_replay_currentness",
+    "no_evidence_test_rejection"
+  ],
+  "schema_id": "pm.implementation_readiness.pnc019_certification_receipt.v1",
+  "schema_version": "1.0.0",
+  "scope_policy": {
+    "allowed_scope": [
+      "PNC-019 executable lifecycle certification harness",
+      "readiness receipt generation",
+      "in-memory harness-only WorkNodeRequest and activation receipt simulation"
+    ],
+    "forbidden_scope": [
+      "ordinary product WorkNodes",
+      "NodeSeeds",
+      "runtime queues",
+      "final node manifests",
+      "runtime launches",
+      "production build tasks"
+    ],
+    "harness_only_create_nodeseeds": false,
+    "harness_only_create_worknodes": false,
+    "ordinary_product_worknodes_allowed_by_harness": false
+  },
+  "source_hashes": {
+    "Plans/Automated_Testing_System.md": "3cbee3116b7e62dfdc7fcd5912218c33044fab8b1f1dde709d2b19fd56ce8b39",
+    "Plans/Executor_Protocol.md": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
+    "Plans/Goal_Runtime_System.md": "50159de77b54714b528deb77faf74dd1eb9725125f226d21e6e39e19a4357c4d",
+    "Plans/Orchestrator_Page.md": "1cd9f3b8bbd02e7f5efa00d917914479f3f73acba3ceea7122857d17ba3a75bb",
+    "Plans/Plan_To_Node_Compilation.md": "aae1bcd7b0585b1da5252a65a606d986e6d7de8a3541e527a2968eac4c9f7b7d",
+    "Plans/Planning_Wizard.md": "7985705efd82ad41a95b883fee67580fde2b51fb3218dd4fa672d79bfcd2c421",
+    "Plans/Progression_Gates.md": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785",
+    "Plans/event_record.schema.json": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
+    "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
+    "Plans/storage_value_registry.json": "7fea3458141c04f2a7f4a03596afebda2f14a0b70b142a93c7d8907258c959b7",
+    "Plans/storage_value_registry.schema.json": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
+    "scripts/pm-pnc019-certification-harness.py": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896"
+  },
+  "status": "pass",
+  "storage_validation_summary": {
+    "validated_family_ids": [
+      "approved_plan_pack",
+      "attempt_receipt",
+      "blocked_projection",
+      "compiler_wave_contract",
+      "event_record_index",
+      "executor_intake_report",
+      "goal_receipt",
+      "plan_approved_outbox",
+      "plan_compile_run",
+      "workgraph_draft",
+      "worknode_request"
+    ],
+    "validation_count": 17,
+    "validations": [
+      {
+        "family_id": "approved_plan_pack",
+        "label": "fresh_run.approved_plan_pack",
+        "schema_ref": "Plans/storage_value_registry.json#/families/approved_plan_pack/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "plan_approved_outbox",
+        "label": "fresh_run.plan_approved_outbox",
+        "schema_ref": "Plans/storage_value_registry.json#/families/plan_approved_outbox/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "event_record_index",
+        "label": "fresh_run.plan_approved_event.event_record_index",
+        "schema_ref": "Plans/storage_value_registry.json#/families/event_record_index/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "plan_compile_run",
+        "label": "fresh_run.plan_compile_run",
+        "schema_ref": "Plans/storage_value_registry.json#/families/plan_compile_run/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "compiler_wave_contract",
+        "label": "fresh_run.compiler_wave_contract",
+        "schema_ref": "Plans/storage_value_registry.json#/families/compiler_wave_contract/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "workgraph_draft",
+        "label": "fresh_run.workgraph_draft",
+        "schema_ref": "Plans/storage_value_registry.json#/families/workgraph_draft/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "worknode_request",
+        "label": "fresh_run.worknode_request",
+        "schema_ref": "Plans/storage_value_registry.json#/families/worknode_request/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "executor_intake_report",
+        "label": "fresh_run.executor_intake_report",
+        "schema_ref": "Plans/storage_value_registry.json#/families/executor_intake_report/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "attempt_receipt",
+        "label": "fresh_run.activation_receipt",
+        "schema_ref": "Plans/storage_value_registry.json#/families/attempt_receipt/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "attempt_receipt",
+        "label": "fresh_run.queued_entrypoint_receipt",
+        "schema_ref": "Plans/storage_value_registry.json#/families/attempt_receipt/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "attempt_receipt",
+        "label": "fresh_run.testing_receipt",
+        "schema_ref": "Plans/storage_value_registry.json#/families/attempt_receipt/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "goal_receipt",
+        "label": "fresh_run.goal_receipt",
+        "schema_ref": "Plans/storage_value_registry.json#/families/goal_receipt/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "blocked_projection",
+        "label": "blocked_permission_security.blocked_projection",
+        "schema_ref": "Plans/storage_value_registry.json#/families/blocked_projection/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "executor_intake_report",
+        "label": "fresh_run.executor_intake_report",
+        "schema_ref": "Plans/storage_value_registry.json#/families/executor_intake_report/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "attempt_receipt",
+        "label": "fresh_run.activation_receipt",
+        "schema_ref": "Plans/storage_value_registry.json#/families/attempt_receipt/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "attempt_receipt",
+        "label": "fresh_run.queued_entrypoint_receipt",
+        "schema_ref": "Plans/storage_value_registry.json#/families/attempt_receipt/value_schema",
+        "status": "pass"
+      },
+      {
+        "family_id": "attempt_receipt",
+        "label": "no_evidence_test_rejection.testing_receipt",
+        "schema_ref": "Plans/storage_value_registry.json#/families/attempt_receipt/value_schema",
+        "status": "pass"
+      }
+    ]
+  }
+}

@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "8dbdf8bb3759040ed46f99dcf7eae79dcdf0631e464b439d7a0d0f1679c7cb78"
+      "sha256": "319a21fb877b353c5dc46fd163f2bd7c4e7fb67ecb0d7c100aeccd3d6810470e"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -84,194 +84,194 @@
       "result": "PASS"
     },
     {
+      "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing.",
       "name": "audit-20260616-warning-repair-evidence-hash-refresh",
-      "result": "PASS",
-      "details": "Audit-20260616 warning repair refreshed evidence artifact hashes after Spec_Lock.json and auto_decisions.jsonl changed during governance sealing."
+      "result": "PASS"
     },
     {
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created.",
       "name": "no-node-artifacts-created",
-      "result": "PASS",
-      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, or production build tasks were created."
+      "result": "PASS"
     },
     {
+      "details": "scripts/pm-plans-verify.py validate-evidence and validate-plan-graph check evidence node ids against Plans/plan_graph.json.",
       "name": "validator-evidence-node-join",
-      "result": "PASS",
-      "details": "scripts/pm-plans-verify.py validate-evidence and validate-plan-graph check evidence node ids against Plans/plan_graph.json."
+      "result": "PASS"
     },
     {
+      "details": "Audit audit-20260616-002 repair refreshed Spec Lock support evidence after updating evidence-node validation.",
       "name": "audit-20260616-002-repair",
-      "result": "PASS",
-      "details": "Audit audit-20260616-002 repair refreshed Spec Lock support evidence after updating evidence-node validation."
+      "result": "PASS"
     },
     {
+      "details": "PlanUnit index regenerated for PNC-019 certification closeout; validate reports plan_unit_count=5483, acceptance_unit_count=19702, node_readiness_status=ready_for_node_compile, no WorkNodes created, no NodeSeed candidates created.",
       "name": "plan-index-validate",
-      "result": "PASS",
-      "details": "PlanUnit index regenerated after audit-20260704-001 metadata-hygiene repair; corrected external repo import source-lineage line refs; node readiness remains blocked_runtime_certification_incomplete and no WorkNodes/NodeSeeds were created."
+      "result": "PASS"
     },
     {
+      "details": "Audit audit-20260616-006-goal-runtime-system repair refreshed transitive evidence hashes after regenerated PlanUnit index, migration, shard report, Spec Lock, and ledger registry artifacts changed.",
       "name": "audit-20260616-006-repair-transitive-evidence-refresh",
-      "result": "PASS",
-      "details": "Audit audit-20260616-006-goal-runtime-system repair refreshed transitive evidence hashes after regenerated PlanUnit index, migration, shard report, Spec Lock, and ledger registry artifacts changed."
+      "result": "PASS"
     },
     {
-      "name": "node-readiness-status-preserved",
-      "result": "PASS",
-      "details": "Plans/.plan_index/node_readiness_report.json status remains blocked_compiler_contract_incomplete."
+      "details": "Plans/.plan_index/node_readiness_report.json status is ready_for_node_compile after executable PNC-019 certification; PlanUnit indexing remains non-emitting.",
+      "name": "node-readiness-status-current",
+      "result": "PASS"
     },
     {
+      "details": "Product prose was not changed in this governance seal phase; generated governance artifacts and ledger projections were refreshed.",
       "name": "governance-scope-only",
-      "result": "PASS",
-      "details": "Product prose was not changed in this governance seal phase; generated governance artifacts and ledger projections were refreshed."
+      "result": "PASS"
     },
     {
+      "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections.",
       "name": "post-audit-repair-governance-seal",
-      "result": "PASS",
-      "details": "pldg-20260616-002 post-audit repair refreshed live Plan semantics, allowed PlanUnit indexes, migration proof, configured shards, evidence hashes, Spec Lock, auto_decision provenance, and sealed ledger projections."
+      "result": "PASS"
     },
     {
+      "details": "Spec Lock hashes refreshed after bounded atom-0088 repair and regenerated PlanUnit index/shard/evidence artifacts.",
       "name": "audit-20260617-008-spec-lock-refresh",
-      "result": "PASS",
-      "details": "Spec Lock hashes refreshed after bounded atom-0088 repair and regenerated PlanUnit index/shard/evidence artifacts."
+      "result": "PASS"
     },
     {
+      "details": "pldg-20260617-001-plans-to-code-handoff governance seal refreshed configured shards, evidence hashes, and Spec Lock after Plans/index stabilization; product prose unchanged in seal phase.",
       "name": "plans-to-code-handoff-governance-seal",
-      "result": "PASS",
-      "details": "pldg-20260617-001-plans-to-code-handoff governance seal refreshed configured shards, evidence hashes, and Spec Lock after Plans/index stabilization; product prose unchanged in seal phase."
+      "result": "PASS"
     },
     {
+      "details": "51 configured docs and 925 shards generated from live Plans.",
       "name": "shard-generate",
-      "result": "PASS",
-      "details": "51 configured docs and 925 shards generated from live Plans."
+      "result": "PASS"
     },
     {
+      "details": "pldg-20260617-001-plans-to-code-handoff compact state, registry, and compile queue are compiled/governance-sealed.",
       "name": "plans-to-code-handoff-ledger-projection",
-      "result": "PASS",
-      "details": "pldg-20260617-001-plans-to-code-handoff compact state, registry, and compile queue are compiled/governance-sealed."
+      "result": "PASS"
     },
     {
+      "details": "Plans/Automated_Testing_System.md is registered in sharding_config, Spec Lock, plan graph refs, and generated shards/evidence.",
       "name": "automated-testing-shard-registration",
-      "result": "PASS",
-      "details": "Plans/Automated_Testing_System.md is registered in sharding_config, Spec Lock, plan graph refs, and generated shards/evidence."
+      "result": "PASS"
     },
     {
-      "name": "node-readiness-status-runtime-disabled",
-      "result": "PASS",
-      "details": "Plans/.plan_index/node_readiness_report.json status is runtime_disabled because runtime PlanCompile launch and node artifact generation are disabled."
+      "details": "Plans/.plan_index/node_readiness_report.json runtime_enablement_status is runtime_certified_ready_for_plancompile with executable_lifecycle_certification_complete=true; no index-generated WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created.",
+      "name": "node-readiness-status-runtime-certified",
+      "result": "PASS"
     },
     {
-      "name": "plans-to-code-runtime-disabled-repair",
-      "result": "PASS",
-      "details": "Plans-to-code repair replaced compiler-incomplete readiness wording with runtime_disabled across PNC, scripts, generated index, and the current handoff ledger projections."
+      "details": "PNC-019 executable certification supersedes the previous runtime-disabled readiness boundary; runtime_lifecycle and clean_room_harness are closed by Plans/.implementation_readiness/pnc019_certification_receipt.json.",
+      "name": "pnc019-runtime-certification-closeout",
+      "result": "PASS"
     },
     {
+      "details": "Fixed Pass 1 / Pass 2 / Pass 3 validation model settings are retired; validation pass reports mirror the single Auditor validation loop provider/model.",
       "name": "auditor-loop-settings-repair",
-      "result": "PASS",
-      "details": "Fixed Pass 1 / Pass 2 / Pass 3 validation model settings are retired; validation pass reports mirror the single Auditor validation loop provider/model."
+      "result": "PASS"
     },
     {
+      "details": "Plans/plans_to_code_handoff.schema.json defines a payload $defs schema for every artifact_kind and discriminates payload by artifact_kind.",
       "name": "handoff-schema-discriminator",
-      "result": "PASS",
-      "details": "Plans/plans_to_code_handoff.schema.json defines a payload $defs schema for every artifact_kind and discriminates payload by artifact_kind."
+      "result": "PASS"
     },
     {
+      "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only.",
       "name": "seven-tab-reference-repair",
-      "result": "PASS",
-      "details": "Active Orchestrator shell references name Progress, Plan Compile, Seams, Node Graph, Evidence, History, and Ledger; Tiers/six-tab wording is compatibility lineage only."
+      "result": "PASS"
     },
     {
+      "details": "Governance seal refreshed generated shards, migration proof, evidence hashes, and Spec Lock after live Plans and PlanUnit index stabilization.",
       "name": "governance-seal-scope",
-      "result": "PASS",
-      "details": "Governance seal refreshed generated shards, migration proof, evidence hashes, and Spec Lock after live Plans and PlanUnit index stabilization."
+      "result": "PASS"
     },
     {
+      "details": "Closed 94 audit rows across semantic risks, atom fidelity, PlanUnit source claims, owner routing, ledger consistency, and validator context.",
       "name": "audit_20260618_007_closure_matrix",
-      "result": "PASS",
-      "details": "Closed 94 audit rows across semantic risks, atom fidelity, PlanUnit source claims, owner routing, ledger consistency, and validator context."
+      "result": "PASS"
     },
     {
+      "details": "Post-audit repair refreshed PNC-014 Planning Wizard handoff semantics, PlanUnit index, migration proof, configured shards, evidence hashes, Spec Lock, closure registry, and ledger projections without node/build artifacts.",
       "name": "audit-20260618-009-prd-planning-wizard-post-closure-repair",
-      "result": "PASS",
-      "details": "Post-audit repair refreshed PNC-014 Planning Wizard handoff semantics, PlanUnit index, migration proof, configured shards, evidence hashes, Spec Lock, closure registry, and ledger projections without node/build artifacts."
+      "result": "PASS"
     },
     {
+      "details": "Refreshed Spec Lock, shard report, plan index, and migration batch hashes after process-owner PlanUnit updates; no node/build/runtime artifacts created.",
       "name": "pm-semantic-terminal-state-governance-refresh",
-      "result": "PASS",
-      "details": "Refreshed Spec Lock, shard report, plan index, and migration batch hashes after process-owner PlanUnit updates; no node/build/runtime artifacts created."
+      "result": "PASS"
     },
     {
+      "details": "Bounded repair closes five audit-009 actionable rows without WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
       "name": "audit-20260619-009-repair",
-      "result": "PASS",
-      "details": "Bounded repair closes five audit-009 actionable rows without WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks."
+      "result": "PASS"
     },
     {
+      "details": "Migration validation passed after batch/final-summary hash refresh.",
       "name": "migration-validate",
-      "result": "PASS",
-      "details": "Migration validation passed after batch/final-summary hash refresh."
+      "result": "PASS"
     },
     {
+      "details": "PASS: 56 configured docs and 1042 shards checked with no failures after regeneration.",
       "name": "shard-check",
-      "result": "PASS",
-      "details": "PASS: 56 configured docs and 1042 shards checked with no failures after regeneration."
+      "result": "PASS"
     },
     {
+      "details": "PASS: node_readiness_report.status is ready_for_node_compile and runtime_enablement_status is runtime_certified_ready_for_plancompile after executable PNC-019 certification; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created by indexing.",
       "name": "node-readiness-boundary",
-      "result": "PASS",
-      "details": "PASS: node_readiness_report.status remains blocked_compiler_contract_incomplete and runtime_enablement_status remains runtime_disabled; no WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks were created."
+      "result": "PASS"
     },
     {
+      "details": "Spec Lock hash refreshed for CV-291 schema registry repair.",
       "name": "audit-20260623-002-fff-spec-lock-refresh",
-      "result": "PASS",
-      "details": "Spec Lock hash refreshed for CV-291 schema registry repair."
+      "result": "PASS"
     },
     {
+      "details": "PASS: pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary for pldg-20260626-001-feature-name.",
       "name": "plan-migration-validate",
-      "result": "PASS",
-      "details": "PASS: pds-20260611-002-atomize-planunits validates after refreshed batch hashes and postseal final summary for pldg-20260626-001-feature-name."
+      "result": "PASS"
     },
     {
+      "details": "Feature-intake governance remains sealed; PNC-019 runtime certification was closed separately by the executable receipt, and this closeout emitted no ordinary product WorkNodes, NodeSeeds, runtime queues, or production build tasks.",
       "name": "feature-intake-governance-seal",
-      "result": "PASS",
-      "details": "pldg-20260627-001-feature-intake governance_status=sealed; node_readiness_report.status remains blocked_compiler_contract_incomplete/runtime_disabled; no runtime compiler enablement was performed."
+      "result": "PASS"
     },
     {
+      "details": "Closed 12 repair-required rows for audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity; post_repair_audit_report.json reports repair_required_count=0.",
       "name": "semantic-repair-closure",
-      "result": "PASS",
-      "details": "Closed 12 repair-required rows for audit-20260701-003-doctor-onboarding-closed-world-semantic-fidelity; post_repair_audit_report.json reports repair_required_count=0."
+      "result": "PASS"
     },
     {
+      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime/build surfaces, or production build tasks were created by this bounded repair.",
       "name": "no-forbidden-artifacts",
-      "result": "PASS",
-      "details": "No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime/build surfaces, or production build tasks were created by this bounded repair."
+      "result": "PASS"
     },
     {
+      "details": "PASS: blk-0003 closed as documentation/build-packet blocker by evt-0042 with F3-410/CRAU-092/UCC-105 evidence; code/runtime implementation remains disabled.",
       "name": "docker-hosts-blk-0003-closure",
-      "result": "PASS",
-      "details": "PASS: blk-0003 closed as documentation/build-packet blocker by evt-0042 with F3-410/CRAU-092/UCC-105 evidence; code/runtime implementation remains disabled."
+      "result": "PASS"
     },
     {
+      "details": "PASS: Rust stable 1.96.1 and Slint 1.17.0 verified on 2026-07-02; PMConcept stale terminal strings are fixture-only.",
       "name": "toolchain-currentness",
-      "result": "PASS",
-      "details": "PASS: Rust stable 1.96.1 and Slint 1.17.0 verified on 2026-07-02; PMConcept stale terminal strings are fixture-only."
+      "result": "PASS"
     },
     {
+      "details": "PASS: PMConcept remains concept/source-lineage only; production GUI authority is FinalGUISpec, Wiring Matrix, UI Command Catalog, and owner docs.",
       "name": "pmconcept-concept-scope",
-      "result": "PASS",
-      "details": "PASS: PMConcept remains concept/source-lineage only; production GUI authority is FinalGUISpec, Wiring Matrix, UI Command Catalog, and owner docs."
+      "result": "PASS"
     },
     {
+      "details": "PASS: zero_incomplete_disposition.json contains governed dispositions for TODO/TBD/stub/placeholder/mock/demo/empty-section/duplicate-heading signals, including PMConcept demo/toolchain fixture text.",
       "name": "zero-incomplete-disposition",
-      "result": "PASS",
-      "details": "PASS: zero_incomplete_disposition.json contains governed dispositions for TODO/TBD/stub/placeholder/mock/demo/empty-section/duplicate-heading signals, including PMConcept demo/toolchain fixture text."
+      "result": "PASS"
     },
     {
+      "details": "PASS: dedicated smoke validates every Plans/ledgers/v2/pldg-* ledger, including historical sealed ledgers; run-gates intentionally remains plan-governance only.",
       "name": "bootstrap-ledger-smoke",
-      "result": "PASS",
-      "details": "PASS: dedicated smoke validates every Plans/ledgers/v2/pldg-* ledger, including historical sealed ledgers; run-gates intentionally remains plan-governance only."
+      "result": "PASS"
     },
     {
+      "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded.",
       "name": "wiring-matrix-reverse-catalog-coverage",
-      "result": "PASS",
-      "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded."
+      "result": "PASS"
     }
   ],
   "commands_run": [

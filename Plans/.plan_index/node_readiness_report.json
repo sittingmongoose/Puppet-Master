@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2027,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-06T21:12:06Z",
+  "generated_at_utc": "2026-07-06T21:55:21Z",
   "gui_related_units": {
     "count": 2382,
     "units": [
@@ -29193,41 +29193,31 @@
     }
   },
   "runtime_enablement_status": {
-    "artifact_generation_policy": "PlanUnit indexing never emits NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts.",
+    "artifact_generation_policy": "PlanUnit indexing still emits no NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts; ordinary PlanCompile output may start only through the certified runtime compiler, Executor intake, activation, and Goal Runtime certification contracts.",
     "bootstrap_authority_ref": "PNC-022",
     "bootstrap_authority_refs": [
       "PNC-022"
     ],
     "bootstrap_authorized": true,
     "bootstrap_scope": "pnc019_certification_harness_only",
-    "certification_authority": "Goal Runtime completion receipt after Executor activation and receipt verification.",
+    "certification_authority": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
     "certification_harness_specified": true,
     "compiler_contract_complete": true,
-    "disabled_guards": [
-      {
-        "evidence": "PNC-019 states that static contract fixtures are only preconditions; enabled runtime readiness requires an executable lifecycle certification harness proving Approve And Build through PlanCompile, Executor intake, activation, queued entrypoint, Orchestrator projection, restarts, cancellation, testing evidence, and negative-case rejection.",
-        "guard": "executable_lifecycle_certification_required",
-        "plan_unit_id": "PNC-019",
-        "source_location": {
-          "heading": "PNC-019 - Static Scenario Boundary And Executable Certification Requirement",
-          "heading_level": 3,
-          "heading_line": 1325,
-          "line": 1327,
-          "path": "Plans/Plan_To_Node_Compilation.md"
-        }
-      }
-    ],
-    "executable_lifecycle_certification_complete": false,
-    "ordinary_product_worknodes_allowed": false,
+    "disabled_guards": [],
+    "executable_lifecycle_certification_complete": true,
+    "executable_lifecycle_certification_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+    "ordinary_product_worknodes_allowed": true,
     "owner_doc": "Plans/Plan_To_Node_Compilation.md",
-    "runtime_blocked_by_ref": "PNC-019",
-    "runtime_enabled": false,
+    "pnc019_negative_case_count": 10,
+    "pnc019_positive_case_count": 9,
+    "runtime_blocked_by_ref": null,
+    "runtime_enabled": true,
     "runtime_enablement_ref": "PNC-007",
     "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
-    "status": "blocked_runtime_certification_incomplete"
+    "status": "runtime_certified_ready_for_plancompile"
   },
   "schema_id": "pm.plan_index.node_readiness_report.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
-  "status": "blocked_runtime_certification_incomplete",
-  "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary."
+  "status": "ready_for_node_compile",
+  "status_reason": "Plans are indexed with required PlanUnit metadata and an accepted PlanCompile compiler contract; the PlanUnit index remains non-emitting and native runtime implementation must materialize artifacts only through the compiler, Executor intake, activation, and Goal Runtime certification contracts."
 }

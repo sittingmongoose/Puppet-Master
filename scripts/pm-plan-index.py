@@ -65,6 +65,67 @@ REQUIRED_NEW_PLAN_BASE_HEADINGS = [
 PNC019_BOOTSTRAP_AUTHORITY_MODE = "pnc019_bootstrap_authority"
 PNC019_BOOTSTRAP_SCOPE = "pnc019_certification_harness_only"
 DOCUMENTED_BUILD_ORDER_EXCEPTION_IDS: set[str] = set()
+PNC019_CERTIFICATION_RECEIPT_PATH = PLANS / ".implementation_readiness/pnc019_certification_receipt.json"
+PNC019_CERTIFICATION_SCHEMA_ID = "pm.implementation_readiness.pnc019_certification_receipt.v1"
+PNC019_CERTIFICATION_SCHEMA_VERSION = "1.0.0"
+REQUIRED_PNC019_POSITIVE_CASE_IDS = [
+    "fresh_run",
+    "duplicate_idempotency",
+    "restart_resume",
+    "cancellation",
+    "stale_cas_rejection",
+    "blocked_permission_security",
+    "provider_degraded_error",
+    "storage_replay_currentness",
+    "no_evidence_test_rejection",
+]
+REQUIRED_PNC019_NEGATIVE_CASE_IDS = [
+    "missing_schema_version",
+    "invalid_event_record",
+    "invalid_execution_unit_context",
+    "invalid_storage_value",
+    "raw_secret_credential",
+    "provider_stream_missing_refs",
+    "gui_disabled_bypass",
+    "graph_cycle",
+    "missing_behavioral_acceptance",
+    "static_only_proof",
+]
+REQUIRED_PNC019_LIFECYCLE_STEPS = [
+    "approved_plan_pack_intake",
+    "plan_approved_event_record",
+    "plan_compile_run_identity",
+    "workgraph_draft",
+    "worknode_request",
+    "executor_intake",
+    "activation_commit",
+    "queued_entrypoint",
+    "orchestrator_projection",
+    "testing_receipt",
+    "goal_receipt",
+]
+REQUIRED_PNC019_ORDINARY_ZERO_FIELDS = [
+    "worknodes",
+    "nodeseeds",
+    "queues",
+    "manifests",
+    "runtime_launches",
+    "production_build_tasks",
+]
+REQUIRED_PNC019_SOURCE_HASH_PATHS = [
+    "Plans/event_record.schema.json",
+    "Plans/execution_unit_context.schema.json",
+    "Plans/storage_value_registry.schema.json",
+    "Plans/storage_value_registry.json",
+    "Plans/Plan_To_Node_Compilation.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Progression_Gates.md",
+    "scripts/pm-pnc019-certification-harness.py",
+]
 
 
 @dataclass(frozen=True)
@@ -120,6 +181,79 @@ def sha256_file(path: Path) -> str:
 
 def read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def pnc019_certification_status() -> dict[str, Any]:
+    if not PNC019_CERTIFICATION_RECEIPT_PATH.exists():
+        return {
+            "complete": False,
+            "receipt_ref": rel(PNC019_CERTIFICATION_RECEIPT_PATH),
+            "failures": [{"error": "pnc019_certification_receipt_missing"}],
+        }
+    try:
+        receipt = read_json(PNC019_CERTIFICATION_RECEIPT_PATH)
+    except Exception as exc:  # noqa: BLE001
+        return {
+            "complete": False,
+            "receipt_ref": rel(PNC019_CERTIFICATION_RECEIPT_PATH),
+            "failures": [{"error": "pnc019_certification_receipt_parse_failed", "detail": str(exc)}],
+        }
+
+    failures: list[dict[str, Any]] = []
+    if receipt.get("schema_id") != PNC019_CERTIFICATION_SCHEMA_ID:
+        failures.append({"error": "pnc019_certification_schema_id_mismatch", "actual": receipt.get("schema_id")})
+    if receipt.get("schema_version") != PNC019_CERTIFICATION_SCHEMA_VERSION:
+        failures.append({"error": "pnc019_certification_schema_version_mismatch", "actual": receipt.get("schema_version")})
+    if receipt.get("certification_id") != "PNC-019":
+        failures.append({"error": "pnc019_certification_id_mismatch", "actual": receipt.get("certification_id")})
+    if receipt.get("status") != "pass":
+        failures.append({"error": "pnc019_certification_status_not_pass", "actual": receipt.get("status")})
+
+    positive_cases = receipt.get("positive_cases", [])
+    negative_cases = receipt.get("negative_cases", [])
+    positive_ids = {case.get("case_id") for case in positive_cases if isinstance(case, dict)}
+    negative_ids = {case.get("case_id") for case in negative_cases if isinstance(case, dict)}
+    for case_id in REQUIRED_PNC019_POSITIVE_CASE_IDS:
+        if case_id not in positive_ids:
+            failures.append({"error": "pnc019_positive_case_missing", "case_id": case_id})
+    for case_id in REQUIRED_PNC019_NEGATIVE_CASE_IDS:
+        if case_id not in negative_ids:
+            failures.append({"error": "pnc019_negative_case_missing", "case_id": case_id})
+    for case in positive_cases if isinstance(positive_cases, list) else []:
+        if isinstance(case, dict) and (case.get("status") != "pass" or case.get("executed") is not True):
+            failures.append({"error": "pnc019_positive_case_not_passed", "case_id": case.get("case_id")})
+    for case in negative_cases if isinstance(negative_cases, list) else []:
+        if not isinstance(case, dict):
+            continue
+        if case.get("status") != "pass" or case.get("executed") is not True or case.get("rejected") is not True:
+            failures.append({"error": "pnc019_negative_case_not_rejected", "case_id": case.get("case_id")})
+        counts = case.get("emitted_forbidden_artifact_counts", {})
+        for field in ["plan_approved_events", "plan_compile_runs", "worknode_requests", "activation_receipts"]:
+            if not isinstance(counts, dict) or counts.get(field) != 0:
+                failures.append({"error": "pnc019_negative_case_forbidden_emission", "case_id": case.get("case_id"), "field": field})
+
+    trace_steps = [row.get("step_id") for row in receipt.get("lifecycle_trace", []) if isinstance(row, dict)]
+    if trace_steps != REQUIRED_PNC019_LIFECYCLE_STEPS:
+        failures.append({"error": "pnc019_lifecycle_trace_order_mismatch"})
+
+    ordinary_counts = receipt.get("ordinary_product_artifact_counts", {})
+    for field in REQUIRED_PNC019_ORDINARY_ZERO_FIELDS:
+        if not isinstance(ordinary_counts, dict) or ordinary_counts.get(field) != 0:
+            failures.append({"error": "pnc019_ordinary_product_artifact_count_nonzero", "field": field})
+
+    source_hashes = receipt.get("source_hashes", {})
+    for path in REQUIRED_PNC019_SOURCE_HASH_PATHS:
+        target = ROOT / path
+        if not target.exists() or not isinstance(source_hashes, dict) or source_hashes.get(path) != sha256_file(target):
+            failures.append({"error": "pnc019_source_hash_stale_or_missing", "source_path": path})
+
+    return {
+        "complete": not failures,
+        "receipt_ref": rel(PNC019_CERTIFICATION_RECEIPT_PATH),
+        "failures": failures,
+        "positive_case_count": len(positive_ids),
+        "negative_case_count": len(negative_ids),
+    }
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -782,6 +916,7 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
         "evidence": "PNC-019 states that static contract fixtures are only preconditions; enabled runtime readiness requires an executable lifecycle certification harness proving Approve And Build through PlanCompile, Executor intake, activation, queued entrypoint, Orchestrator projection, restarts, cancellation, testing evidence, and negative-case rejection.",
         "source_location": pnc_019.get("source_location") if pnc_019 else None,
     }
+    certification = pnc019_certification_status()
     compiler_hint = pnc_007.get("node_compile_hint", {}) if isinstance(pnc_007, dict) else {}
     compiler_contract_complete = (
         pnc_007 is not None
@@ -789,6 +924,29 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
         and bool(compiler_hint.get("compiler_contract_complete"))
     )
     if compiler_contract_complete:
+        if certification["complete"]:
+            return {
+                "runtime_enabled": True,
+                "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+                "status": "runtime_certified_ready_for_plancompile",
+                "bootstrap_authorized": bootstrap_authorized,
+                "bootstrap_authority_ref": unit_id(bootstrap_unit) if bootstrap_unit else None,
+                "bootstrap_authority_refs": [unit_id(unit) for unit in bootstrap_units],
+                "bootstrap_scope": PNC019_BOOTSTRAP_SCOPE if bootstrap_unit else None,
+                "compiler_contract_complete": True,
+                "certification_harness_specified": certification_harness_specified,
+                "executable_lifecycle_certification_complete": True,
+                "executable_lifecycle_certification_ref": certification["receipt_ref"],
+                "pnc019_positive_case_count": certification["positive_case_count"],
+                "pnc019_negative_case_count": certification["negative_case_count"],
+                "ordinary_product_worknodes_allowed": True,
+                "runtime_enablement_ref": "PNC-007",
+                "runtime_blocked_by_ref": None,
+                "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
+                "artifact_generation_policy": "PlanUnit indexing still emits no NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts; ordinary PlanCompile output may start only through the certified runtime compiler, Executor intake, activation, and Goal Runtime certification contracts.",
+                "disabled_guards": [],
+                "certification_authority": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+            }
         return {
             "runtime_enabled": False,
             "owner_doc": "Plans/Plan_To_Node_Compilation.md",
@@ -800,6 +958,8 @@ def runtime_enablement_status(units: list[dict[str, Any]]) -> dict[str, Any]:
             "compiler_contract_complete": True,
             "certification_harness_specified": certification_harness_specified,
             "executable_lifecycle_certification_complete": False,
+            "executable_lifecycle_certification_ref": certification["receipt_ref"],
+            "executable_lifecycle_certification_failures": certification["failures"],
             "ordinary_product_worknodes_allowed": False,
             "runtime_enablement_ref": "PNC-007",
             "runtime_blocked_by_ref": "PNC-019",
