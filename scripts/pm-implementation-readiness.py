@@ -216,6 +216,8 @@ EVENT_RECORD_CONSUMER_DOCS = [
     PLANS / "Executor_Protocol.md",
     PLANS / "Plan_To_Node_Compilation.md",
     PLANS / "Planning_Wizard.md",
+    PLANS / "Plugins_System.md",
+    PLANS / "Runtime_Artifacts_Panel.md",
 ]
 EVENT_RECORD_SPEC_LOCK_PATHS = [
     "Plans/event_record.schema.json",
@@ -226,6 +228,28 @@ EVENT_RECORD_FORBIDDEN_CONSUMER_PATTERNS = [
     "EventRecord required fields",
     "EventRecord {",
 ]
+EVENT_RECORD_LOCAL_DEFINITION_FIELD_TOKENS = {
+    "schema",
+    "timestamp",
+    "ts",
+    "seq",
+    "type",
+    "event_type",
+    "plugin_id",
+    "source",
+    "run_id",
+    "thread_id",
+    "payload",
+}
+EVENT_RECORD_LOCAL_DEFINITION_ALLOWED_MARKERS = (
+    "legacy",
+    "source-lineage",
+    "source lineage",
+    "compatibility",
+    "non-normative",
+    "stale",
+    "example",
+)
 SECRET_MATERIAL_KEY_RE = re.compile(
     r"(?:^|_)(?:secret|token|password|credential|api_key|oauth|refresh_token)(?:_|$)",
     re.IGNORECASE,
@@ -949,6 +973,55 @@ def event_record_spec_lock_failures() -> list[dict[str, Any]]:
     return failures
 
 
+def event_record_consumer_allows_local_shape(lines: list[str], index: int) -> bool:
+    start = max(0, index - 2)
+    end = min(len(lines), index + 3)
+    context = " ".join(lines[start:end]).lower()
+    return any(marker in context for marker in EVENT_RECORD_LOCAL_DEFINITION_ALLOWED_MARKERS)
+
+
+def event_record_consumer_local_definition_failures(path: Path, text: str) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        normalized = line.replace("`", "").lower()
+        has_event_record_context = "eventrecord" in normalized
+        has_type_value_claim = bool(re.search(r"\btype\s+value\s+is\s+exactly\b", normalized))
+        if not has_event_record_context and not has_type_value_claim:
+            continue
+
+        tokens = {
+            token
+            for token in EVENT_RECORD_LOCAL_DEFINITION_FIELD_TOKENS
+            if re.search(rf"\b{re.escape(token)}\b", normalized)
+        }
+        matched_patterns: list[str] = []
+        if "eventrecord-shaped" in normalized:
+            matched_patterns.append("eventrecord_shaped_tuple")
+        if re.search(r"eventrecord[^\n]*\([^)]*\bschema\b[^)]*\bts\b[^)]*\bseq\b[^)]*\btype\b", normalized):
+            matched_patterns.append("eventrecord_legacy_parenthesized_tuple")
+        if re.search(r"eventrecord[^\n]*\btimestamp\b[^\n]*\bplugin_id\b[^\n]*\bevent_type\b[^\n]*\bpayload\b", normalized):
+            matched_patterns.append("eventrecord_plugin_tuple")
+        if has_type_value_claim:
+            matched_patterns.append("eventrecord_type_field_claim")
+        if has_event_record_context and len(tokens) >= 4:
+            matched_patterns.append("eventrecord_local_field_tuple")
+
+        if not matched_patterns:
+            continue
+        if event_record_consumer_allows_local_shape(lines, index):
+            continue
+        failures.append(
+            {
+                "path": f"{rel(path)}:{index + 1}",
+                "error": "event_record_consumer_local_definition",
+                "patterns": sorted(set(matched_patterns)),
+                "field_tokens": sorted(tokens),
+            }
+        )
+    return failures
+
+
 def event_record_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     contracts_path = PLANS / "Contracts_V0.md"
@@ -1055,6 +1128,7 @@ def event_record_contract_failures(actual_report: dict[str, Any]) -> list[dict[s
                         "pattern": pattern,
                     }
                 )
+        failures.extend(event_record_consumer_local_definition_failures(consumer_path, text))
 
     failures.extend(event_record_spec_lock_failures())
 
@@ -1438,6 +1512,19 @@ def run_self_tests() -> dict[str, Any]:
         "secret_payload_rejected": any(
             failure.get("error") == "event_record_secret_material_key"
             for failure in event_record_instance_failures(secret_record, path_label="self-test:secret_payload")
+        ),
+        "consumer_local_tuple_rejected": bool(
+            event_record_consumer_local_definition_failures(
+                Path("self-test/EventRecordConsumer.md"),
+                "EventRecord entries include timestamp, plugin_id, event_type, payload, and source.",
+            )
+        ),
+        "legacy_consumer_tuple_allowed": not event_record_consumer_local_definition_failures(
+            Path("self-test/EventRecordConsumer.md"),
+            (
+                "Legacy/source-lineage compatibility note only, non-normative: "
+                "EventRecord entries include timestamp, plugin_id, event_type, payload, and source."
+            ),
         ),
     }
     if not all(event_record_checks.values()):

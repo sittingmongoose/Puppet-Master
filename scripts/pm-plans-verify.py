@@ -2405,6 +2405,111 @@ def cmd_validate_audit_status_index(args: argparse.Namespace) -> dict[str, Any]:
     return report
 
 
+def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
+    validator = ROOT / "scripts" / "pm-audit-closure.py"
+    registry = Path(getattr(args, "registry", None) or "Plans/.audits/_semantic_closure_registry.jsonl")
+    if not registry.is_absolute():
+        registry = ROOT / registry
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(validator), "validate", "--registry", rel(registry)],
+            cwd=ROOT,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+            timeout=timeout_seconds if timeout_seconds > 0 else None,
+        )
+    except subprocess.TimeoutExpired as exc:
+        return report_status(
+            "validate-audit-closure",
+            [
+                {
+                    "path": rel(validator),
+                    "registry": rel(registry),
+                    "error": "subprocess_timeout",
+                    "timeout_seconds": timeout_seconds,
+                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
+                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
+                }
+            ],
+        )
+    try:
+        raw_report = json.loads(proc.stdout)
+    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
+        return report_status(
+            "validate-audit-closure",
+            [
+                {
+                    "path": rel(validator),
+                    "registry": rel(registry),
+                    "error": "validator_output_not_json",
+                    "detail": str(exc),
+                    "stdout": proc.stdout[-8000:],
+                    "stderr": proc.stderr[-8000:],
+                    "returncode": proc.returncode,
+                }
+            ],
+        )
+
+    failures: list[dict[str, Any]] = []
+    for detail in raw_report.get("errors", [])[:200]:
+        failures.append(
+            {
+                "path": rel(registry),
+                "error": "audit_closure_validator_error",
+                "detail": detail,
+            }
+        )
+    if proc.returncode != 0 and raw_report.get("status") == "pass":
+        failures.append(
+            {"path": rel(validator), "registry": rel(registry), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
+        )
+
+    reopened_rows: list[dict[str, Any]] = []
+    if registry.exists():
+        for line_no, line in enumerate(registry.read_text(encoding="utf-8").splitlines(), start=1):
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except Exception as exc:  # noqa: BLE001
+                failures.append({"path": f"{rel(registry)}:{line_no}", "error": "json_parse_failed", "detail": str(exc)})
+                continue
+            if row.get("closure_status") == "reopened":
+                reopened_rows.append(
+                    {
+                        "line": line_no,
+                        "closure_id": row.get("closure_id"),
+                        "finding_key": row.get("finding_key"),
+                    }
+                )
+    else:
+        failures.append({"path": rel(registry), "error": "missing_audit_closure_registry"})
+    if reopened_rows:
+        failures.append(
+            {
+                "path": rel(registry),
+                "error": "audit_closure_reopened_rows_present",
+                "rows": reopened_rows[:50],
+                "row_count": len(reopened_rows),
+            }
+        )
+
+    report = report_status(
+        "validate-audit-closure",
+        failures,
+        registry=rel(registry),
+        row_count=raw_report.get("registry", {}).get("row_count"),
+        status_counts=raw_report.get("registry", {}).get("status_counts"),
+        raw_status=raw_report.get("status"),
+    )
+    if proc.stderr:
+        report["stderr"] = proc.stderr
+    return report
+
+
 def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
     progress = progress_enabled(args)
     timeout_seconds = subcheck_timeout_seconds(args)
@@ -2426,6 +2531,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
+        ("validate_audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("validate_audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
         ("check_shards", cmd_check_shards, argparse.Namespace(report=None)),
     ]
@@ -2466,6 +2572,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
+        ("audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
     ]
     checks = [
@@ -2495,6 +2602,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
+        audit_closure=compact_gate_report(check_map["audit_closure"]),
         audit_status_index=compact_gate_report(check_map["audit_status_index"]),
         subcheck_timeout_seconds=timeout_seconds,
     )
@@ -2520,6 +2628,7 @@ COMMANDS = {
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
     "validate-wiring-matrix": cmd_validate_wiring_matrix,
     "validate-bootstrap-ledgers": cmd_validate_bootstrap_ledgers,
+    "validate-audit-closure": cmd_validate_audit_closure,
     "validate-audit-status-index": cmd_validate_audit_status_index,
     "run-gates": cmd_run_gates,
     "audit-governance": cmd_audit_governance,
@@ -2539,6 +2648,9 @@ def main() -> int:
             sub.add_argument("--timeout-seconds", type=int, default=180, help="Maximum seconds per ledger validation.")
         if name == "validate-plan-migration":
             sub.add_argument("--run-dir", default=str(DEFAULT_PLAN_MIGRATION_RUN.relative_to(ROOT)))
+            sub.add_argument("--subcheck-timeout-seconds", type=int, default=180)
+        if name == "validate-audit-closure":
+            sub.add_argument("--registry", default="Plans/.audits/_semantic_closure_registry.jsonl")
             sub.add_argument("--subcheck-timeout-seconds", type=int, default=180)
         if name in {"run-gates", "audit-governance"}:
             sub.add_argument(
