@@ -825,6 +825,8 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
+Persisted PlanCompile, handoff, and certification events consume the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord` and `Plans/event_record.schema.json`. This document may name event semantics, receipts, and PlanCompile artifacts, but it must not copy the EventRecord field set or treat EventRecord schema materialization as runtime enablement.
+
 ### PNC-014 - Plans-To-Code Handoff Matrix And Schema Boundary
 
 ```yaml

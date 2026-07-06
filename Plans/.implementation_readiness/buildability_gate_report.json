@@ -351,7 +351,7 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-07-06T17:17:59Z",
+  "generated_at_utc": "2026-07-06T18:26:29Z",
   "node_readiness": {
     "available": true,
     "bootstrap_authority_ref": "PNC-022",
@@ -390,7 +390,7 @@
       ],
       "blocker_family": "contract_materialization",
       "blocker_id": "IRB-001",
-      "notes": "Tier 0B closes only the exact execution_unit_context contract-materialization slice. IRB-001 remains open; closing the remaining blocker must not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.",
+      "notes": "Tier 0B closes only the exact execution_unit_context contract-materialization slice. Tier 0C-1 closes only the EventRecord envelope contract slice. IRB-001 remains open; closing the remaining blocker must not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks.",
       "owner_docs": [
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Plan_Document_System.md",
@@ -405,17 +405,35 @@
             "scripts/pm-implementation-readiness.py validate"
           ],
           "remaining_scope": [
-            "EventRecord payload materialization",
-            "storage value schemas",
+            "concrete event-type payload schemas beyond EventRecord envelope",
+            "storage value schemas beyond EventRecord persistence boundary",
             "provider stream payloads",
             "runtime lifecycle activation",
             "clean-room harness",
             "GUI command execution",
             "security boundary fixtures",
-            "PlanCompile artifact payload contracts beyond execution_unit_context"
+            "PlanCompile artifact payload contracts beyond execution_unit_context and EventRecord envelope"
           ],
           "scope": "execution_unit_context_contract",
           "status": "closed_for_tier_0b_only"
+        },
+        {
+          "evidence": [
+            "Plans/Contracts_V0.md#EventRecord",
+            "Plans/event_record.schema.json",
+            "scripts/pm-implementation-readiness.py validate"
+          ],
+          "remaining_scope": [
+            "concrete event-type payload schemas beyond EventRecord envelope",
+            "provider stream payloads",
+            "runtime lifecycle activation",
+            "clean-room harness",
+            "GUI command execution",
+            "security boundary fixtures",
+            "PlanCompile artifact payload contracts beyond execution_unit_context and EventRecord envelope"
+          ],
+          "scope": "event_record_envelope_contract",
+          "status": "closed_for_tier_0c_1_only"
         }
       ],
       "required_evidence": [
@@ -430,7 +448,10 @@
         "Plans/Plan_To_Node_Compilation.md#PNC-018",
         "Plans/Plan_Document_System.md#PDS-016",
         "Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract",
-        "Plans/execution_unit_context.schema.json"
+        "Plans/execution_unit_context.schema.json",
+        "Plans/Contracts_V0.md#EventRecord",
+        "Plans/event_record.schema.json",
+        "Plans/storage-plan.md#2.2.5-eventrecord-persistence-boundary"
       ],
       "status": "open",
       "summary": "PlanCompile and Planning Wizard contracts are not buildable until every runtime artifact has a concrete payload contract, producer, consumer, validator, receipt, retry route, rollback route, and executable proof path; schema-file existence alone is insufficient."
@@ -454,11 +475,32 @@
       ],
       "blocker_family": "persistence_materialization",
       "blocker_id": "IRB-002",
-      "notes": "This blocker is about runtime persistence evidence only; it does not authorize creating runtime records in this docs lane.",
+      "notes": "Tier 0C-1 closes only the EventRecord seglog/redb persistence-boundary slice. IRB-002 remains open for runtime persistence evidence and does not authorize creating runtime records in this docs lane.",
       "owner_docs": [
         "Plans/Planning_Wizard.md",
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/storage-plan.md"
+      ],
+      "partial_closures": [
+        {
+          "evidence": [
+            "Plans/storage-plan.md#2.2.5-eventrecord-persistence-boundary",
+            "Plans/Contracts_V0.md#EventRecord",
+            "Plans/event_record.schema.json",
+            "scripts/pm-implementation-readiness.py validate"
+          ],
+          "remaining_scope": [
+            "ApprovedPlanPack persistence",
+            "PlanApproved transactional outbox persistence",
+            "PlanCompileRun replay and restart fixtures",
+            "Executor intake and activation receipt persistence",
+            "Goal Runtime certification receipt persistence",
+            "redb value schemas beyond EventRecord lookup/projection boundary",
+            "idempotency fixtures for duplicate Approve And Build delivery and PlanCompile resume"
+          ],
+          "scope": "event_record_persistence_boundary",
+          "status": "closed_for_tier_0c_1_only"
+        }
       ],
       "required_evidence": [
         "Durable storage lifecycle contract for each buildability artifact and receipt.",
@@ -470,7 +512,10 @@
       "source_refs": [
         "Plans/Planning_Wizard.md#PWIZ-014",
         "Plans/Plan_To_Node_Compilation.md#PNC-010",
-        "Plans/storage-plan.md"
+        "Plans/storage-plan.md",
+        "Plans/storage-plan.md#2.2.5-eventrecord-persistence-boundary",
+        "Plans/Contracts_V0.md#EventRecord",
+        "Plans/event_record.schema.json"
       ],
       "status": "open",
       "summary": "Buildability requires durable state, idempotency, transactional outbox, replay/restart, and receipt persistence for ApprovedPlanPack, PlanApproved, PlanCompileRun, compiler waves, Executor intake, activation, testing, and certification; preserved source lineage does not prove persistence behavior."
@@ -864,23 +909,24 @@
   ],
   "schema_id": "pm.implementation_readiness.buildability_gate_report.v1",
   "source_hashes": {
-    "Plans/.implementation_readiness/readiness_blockers.jsonl": "b1ba1a051ec8059a9c21768f8e822fb649e186a32bb08945a32f3f806939afd2",
+    "Plans/.implementation_readiness/readiness_blockers.jsonl": "85db71f2bae3de50266de7712066b8b984f9cf518fd903460c14136ae530cd54",
     "Plans/.implementation_readiness/readiness_matrix.json": "e0122b29f7abbec9d726ff87908ec0d37e2b0898e9a9537e9223f8fcfad743a9",
-    "Plans/.plan_index/node_readiness_report.json": "c18af958955dc89b30f8e5abf825a0d578a94faa4e9e193d7610c3a0088eb3ce",
-    "Plans/00-plans-index.md": "2d6142621ce666c50dbf0ed63daf63d22e9322dfcd71fc4c6654d98f739ee4d1",
-    "Plans/Contracts_V0.md": "95764e679d8f5e19964eb92f4eada69292b875f1f9e8645507710e2bbb9746b3",
-    "Plans/Executor_Protocol.md": "fb9aabd06d324fae90cd54c82bf189bbba1a8a8b785856b07cc0bfeb7f09608e",
+    "Plans/.plan_index/node_readiness_report.json": "4064d85b0e0f47cb8289a51fa9da45d228659c441a92bab51aebb21128649d84",
+    "Plans/00-plans-index.md": "a8f9b4b77daec6226f1529dd796390d7e3d149ebf0b1834746ca9fd26392ac2f",
+    "Plans/Contracts_V0.md": "64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530",
+    "Plans/Executor_Protocol.md": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
     "Plans/Plan_Document_System.md": "4dca51cb80155e1161f5ae8d6be071e799127202dc2a376584eac6938b829f3a",
-    "Plans/Plan_To_Node_Compilation.md": "251de9d43cc5b0c5a19649e338bb296b6fd7c5e189171315196847f636ddbd0e",
-    "Plans/Planning_Wizard.md": "1677ca9806380b86ba43c87112e9afbfef328ffbdd1a612a2b9914053bc9b27f",
+    "Plans/Plan_To_Node_Compilation.md": "aae1bcd7b0585b1da5252a65a606d986e6d7de8a3541e527a2968eac4c9f7b7d",
+    "Plans/Planning_Wizard.md": "7985705efd82ad41a95b883fee67580fde2b51fb3218dd4fa672d79bfcd2c421",
     "Plans/Progression_Gates.md": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785",
     "Plans/Prompt_Pipeline.md": "a3660ba6d7c9fa3f2e8d7cf7b481d31cc2f1bd584d2367fe58790b47d17d5d6f",
     "Plans/UI_Wiring_Rules.md": "13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb",
     "Plans/bootstrap/Codex_Prompts.md": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793",
+    "Plans/event_record.schema.json": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
     "Plans/execution_unit_context.schema.json": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
     "Plans/orchestrator-subagent-integration.md": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4",
-    "Plans/storage-plan.md": "77b03422fed794c3fcb807b815cba8455acdbccf8ab76d842f86a980735a9022",
-    "scripts/pm-implementation-readiness.py": "575619b4440994fa0794d334cb5b5171bf2352c4bc47fa9c851d153ee25a72d8",
+    "Plans/storage-plan.md": "3e47688cac83928d9ce1e6e39ce627a4cd5e945975bea34233d3e60380d86ddb",
+    "scripts/pm-implementation-readiness.py": "add43530de91f0fdefff330861354682afcdff4479a1008fba953e0619303acb",
     "scripts/pm-plan-index.py": "6bcbd531c41b19d28a35d26cbda6d45ba12a3866d31261f1f9fa6049f5ab0f32",
     "scripts/pm-plans-verify.py": "4439f2740b2e042da96f823605d8eb0701d3cbf24a7e6bdee60b545c2342f73b"
   },

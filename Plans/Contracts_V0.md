@@ -892,6 +892,40 @@ For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: `p
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
+### 1.2 EventRecord
+
+`EventRecord` is the canonical persisted event envelope for `schema_id = pm.event.v0`. The normative machine-readable schema is `Plans/event_record.schema.json` with `schema_version = 1.0.0`. New persisted writers MUST emit this envelope; `EventEnvelopeV1` remains reader/upgrader compatibility only.
+
+Field contract:
+
+| Field | Rule |
+|---|---|
+| `schema_id` | Required string const `pm.event.v0`. |
+| `schema_version` | Required string const `1.0.0`; every persisted EventRecord value carries the version. |
+| `event_id` | Required stable event identity; writers MUST NOT reuse it for a different semantic event. |
+| `event_type` | Required canonical event name such as `run.started`; this is the persisted field name. |
+| `type` | Compatibility alias only for legacy `EventEnvelopeV1` readers and mirrors; it MUST normalize to `event_type` before EventRecord persistence and MUST NOT be stored as a second top-level EventRecord field. |
+| `project_id`, `thread_id`, `run_id`, `node_id`, `attempt_id` | Required identity join fields; nullable fields are present with `null` when the event is outside that scope. |
+| `actor_ref`, `requested_account_ref`, `effective_account_ref` | Required actor/account identity references. Raw account identifiers, tokens, OAuth values, credential paths, and local secret material are forbidden; account-sensitive details live behind refs owned by the relevant account or permission contract. |
+| `occurred_at_utc`, `observed_at_utc`, `persisted_at_utc` | Required timestamp fields for source/authored time, writer-observed time, and durable append time. Timestamp values do not define replay order. |
+| `sequence_id`, `producer_sequence_id` | Required monotonic ordering fields. `sequence_id` is the storage-assigned canonical replay sequence; `producer_sequence_id` is nullable and may preserve an upstream monotonic source sequence. |
+| `correlation_id`, `causation_event_id`, `parent_event_id` | Required causality/correlation fields; nullable causality fields remain present when no parent or cause exists. |
+| `idempotency_key` | Required duplicate-delivery key. Replay and append paths MUST use it with `event_id` according to `replay_policy` instead of inventing timestamp-based dedupe. |
+| `payload_schema_id`, `payload`, `payload_ref` | Required payload dispatch fields. `payload_schema_id` selects the registered event-type payload schema, `payload` carries the bounded in-envelope value, and `payload_ref` points to external blob/detail storage when the payload is too large or separately governed. |
+| `redaction_profile` | Required enum: `no_secrets`, `redacted`, or `secret_refs_only`. Raw secrets are never valid EventRecord content. |
+| `replay_policy` | Required enum: `append_once`, `dedupe_by_event_id`, `dedupe_by_idempotency_key`, or `projector_replay_only`. |
+| `migration` | Required closed object carrying nullable `migrated_from_schema_id`, `migrated_from_schema_version`, `migration_id`, and `compatibility_event_type`. |
+
+Rules:
+- `Plans/Contracts_V0.md` owns the EventRecord envelope and cross-cutting event identity, causality, idempotency, redaction, replay, and versioning rules.
+- `Plans/storage-plan.md` owns seglog/redb persistence mechanics, replay ordering, retention/compaction, migration execution, and the concrete persisted event-type payload schema registry.
+- Producer docs own event semantics and payload meaning, but they MUST reference `Contracts_V0.md#EventRecord` and MUST NOT define local EventRecord field lists.
+- Payload schemas MAY close event-specific fields independently; the top-level EventRecord envelope stays closed while `payload` remains the dispatch region for the selected schema.
+- Migration is forward-only. A schema change requires a governed successor schema/version and a storage-owned upgrader; readers may accept older envelopes only by recording the migration fields.
+- No validator, schema file, or doc reference by itself makes Puppet Master buildable. This closes only the EventRecord envelope materialization slice; provider stream, runtime lifecycle, clean-room harness, GUI, security, behavioral acceptance, and broader storage value schemas remain blockers.
+
+ContractRef: ContractName:Plans/storage-plan.md, SchemaID:pm.event.v0, ContractName:Plans/event_record.schema.json
+
 ### 1.3 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 
@@ -1320,7 +1354,7 @@ Rules:
 - no_previous_version
 ### 3.5 Debug investigation events
 
-Debug investigations use persisted `EventRecord` envelopes with the following stable `type` values. Collectively these rows define the `debug.investigation.*` event family; Assistant Chat consumes that family for status and visibility but does not duplicate its payload ownership.
+Debug investigations use persisted `EventRecord` envelopes with the following stable `event_type` values. Collectively these rows define the `debug.investigation.*` event family; Assistant Chat consumes that family for status and visibility but does not duplicate its payload ownership.
 
 | Event type | Minimum payload |
 |---|---|
@@ -1430,7 +1464,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
 ### 4.3 AuthEvent
-Auth flows MUST emit persisted events using `EventRecord` (§1.2), with stable `type` strings owned by the provider's plan.
+Auth flows MUST emit persisted events using `EventRecord` (§1.2), with stable `event_type` strings owned by the provider's plan.
 
 Example (GitHub):
 - `auth.github.device_code.issued`
@@ -19315,4 +19349,84 @@ pm_current_coverage: Seglog/redb/Tantivy design; exclusive writer lock; projecto
 pm_gap_or_delta: No explicit session prompt admission inbox/event family
 proposal_or_recommendation: Add SESSION-PROMPT-ADMISSION-INBOX events and idempotency semantics
 compile_disposition: create_new_planunit
+```
+
+### CV-309 - EventRecord Canonical Envelope
+
+```yaml
+plan_unit_id: CV-309
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 owns the canonical persisted EventRecord envelope for schema_id
+  pm.event.v0 and schema_version 1.0.0 through Plans/event_record.schema.json.
+  The envelope requires schema_id, schema_version, event_id, canonical
+  event_type, project/thread/run/node/attempt identity fields, actor and
+  requested/effective account refs, occurred/observed/persisted timestamps,
+  monotonic sequence fields, correlation and causation ids, idempotency_key,
+  payload_schema_id, payload and payload_ref dispatch fields, redaction_profile,
+  replay_policy, and closed migration metadata. Legacy type is a compatibility
+  alias for EventEnvelopeV1 only and must normalize to event_type before
+  EventRecord persistence.
+gui_related: false
+gui_classification_reason: This unit defines a persisted event schema envelope and storage contract boundary, not GUI presentation.
+depends_on: [CV-002, CV-087, CV-088]
+unblocks: []
+acceptance_criteria:
+  - Contracts_V0 contains canonical section 1.2 EventRecord for pm.event.v0.
+  - Plans/event_record.schema.json is Draft 2020-12, top-level closed, and requires schema_version.
+  - EventRecord uses event_type as the persisted field name; type remains compatibility-only.
+  - EventRecord forbids raw secrets and stores account-sensitive values only by reference.
+  - This unit closes only the EventRecord envelope slice and does not close provider_stream, runtime_lifecycle, clean_room_harness, GUI, security, behavioral, or broad storage blockers.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120
+risk_class: event_record_envelope_drift
+reasoning_tier: high
+context_scope: event_record_persistence_contract
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+  - Plans/storage-plan.md
+  - scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: event_record_envelope_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - chat:2026-07-06-tier-0c-1-eventrecord-envelope
+preserved_exact_tokens:
+  - "`EventRecord`"
+  - "`pm.event.v0`"
+  - "`schema_id`"
+  - "`schema_version`"
+  - "`event_id`"
+  - "`event_type`"
+  - "`type`"
+  - "`project_id`"
+  - "`thread_id`"
+  - "`run_id`"
+  - "`node_id`"
+  - "`attempt_id`"
+  - "`actor_ref`"
+  - "`requested_account_ref`"
+  - "`effective_account_ref`"
+  - "`sequence_id`"
+  - "`correlation_id`"
+  - "`causation_event_id`"
+  - "`idempotency_key`"
+  - "`payload_schema_id`"
+  - "`redaction_profile`"
+  - "`replay_policy`"
+negative_constraints:
+  - Do not persist `type` as a second top-level EventRecord field.
+  - Do not store raw secrets, tokens, passwords, credentials, API keys, OAuth values, or local machine secrets in EventRecord.
+  - Do not treat EventRecord schema materialization as proof that all event payload schemas, provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundaries, or behavioral acceptance are complete.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this contract unit.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/event_record.schema.json
+  - Plans/storage-plan.md
 ```

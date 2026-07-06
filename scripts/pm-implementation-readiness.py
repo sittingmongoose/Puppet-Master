@@ -56,6 +56,7 @@ OWNER_DOCS = [
     "Plans/storage-plan.md",
     "Plans/orchestrator-subagent-integration.md",
     "Plans/Prompt_Pipeline.md",
+    "Plans/event_record.schema.json",
     "Plans/execution_unit_context.schema.json",
     "Plans/Planning_Wizard.md",
     "Plans/Plan_Document_System.md",
@@ -178,6 +179,57 @@ EXECUTION_UNIT_CONTEXT_NEGATIVE_CLAIM_MARKERS = [
     "rather than in execution_unit_context",
     "derived from",
 ]
+
+EVENT_RECORD_SCHEMA_PATH = PLANS / "event_record.schema.json"
+EVENT_RECORD_SCHEMA_ID = "pm.event.v0"
+EVENT_RECORD_SCHEMA_VERSION = "1.0.0"
+EVENT_RECORD_REQUIRED_FIELDS = [
+    "schema_id",
+    "schema_version",
+    "event_id",
+    "event_type",
+    "project_id",
+    "thread_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "actor_ref",
+    "requested_account_ref",
+    "effective_account_ref",
+    "occurred_at_utc",
+    "observed_at_utc",
+    "persisted_at_utc",
+    "sequence_id",
+    "producer_sequence_id",
+    "correlation_id",
+    "causation_event_id",
+    "parent_event_id",
+    "idempotency_key",
+    "payload_schema_id",
+    "payload",
+    "payload_ref",
+    "redaction_profile",
+    "replay_policy",
+    "migration",
+]
+EVENT_RECORD_CONSUMER_DOCS = [
+    PLANS / "Executor_Protocol.md",
+    PLANS / "Plan_To_Node_Compilation.md",
+    PLANS / "Planning_Wizard.md",
+]
+EVENT_RECORD_SPEC_LOCK_PATHS = [
+    "Plans/event_record.schema.json",
+    "scripts/pm-implementation-readiness.py",
+]
+EVENT_RECORD_FORBIDDEN_CONSUMER_PATTERNS = [
+    "EventRecord fields include",
+    "EventRecord required fields",
+    "EventRecord {",
+]
+SECRET_MATERIAL_KEY_RE = re.compile(
+    r"(?:^|_)(?:secret|token|password|credential|api_key|oauth|refresh_token)(?:_|$)",
+    re.IGNORECASE,
+)
 
 
 def utc_now() -> str:
@@ -795,6 +847,223 @@ def execution_unit_context_spec_lock_failures() -> list[dict[str, Any]]:
     return failures
 
 
+def event_record_secret_key_failures(value: Any, *, path_label: str, pointer: str = "$") -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_pointer = f"{pointer}.{key}"
+            if SECRET_MATERIAL_KEY_RE.search(str(key)):
+                failures.append(
+                    {
+                        "path": path_label,
+                        "error": "event_record_secret_material_key",
+                        "pointer": child_pointer,
+                        "field": key,
+                    }
+                )
+            failures.extend(event_record_secret_key_failures(child, path_label=path_label, pointer=child_pointer))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            failures.extend(
+                event_record_secret_key_failures(child, path_label=path_label, pointer=f"{pointer}[{index}]")
+            )
+    return failures
+
+
+def event_record_instance_failures(record: Any, *, path_label: str) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    if not isinstance(record, dict):
+        return [{"path": path_label, "error": "event_record_not_object"}]
+    for field in EVENT_RECORD_REQUIRED_FIELDS:
+        if field not in record:
+            failures.append({"path": path_label, "error": "event_record_missing_required_field", "field": field})
+    if record.get("schema_id") != EVENT_RECORD_SCHEMA_ID:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "event_record_schema_id_mismatch",
+                "expected": EVENT_RECORD_SCHEMA_ID,
+                "actual": record.get("schema_id"),
+            }
+        )
+    if record.get("schema_version") != EVENT_RECORD_SCHEMA_VERSION:
+        failures.append(
+            {
+                "path": path_label,
+                "error": "event_record_schema_version_mismatch",
+                "expected": EVENT_RECORD_SCHEMA_VERSION,
+                "actual": record.get("schema_version"),
+            }
+        )
+    failures.extend(event_record_secret_key_failures(record, path_label=path_label))
+    return failures
+
+
+def event_record_spec_lock_failures() -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    spec_lock_path = PLANS / "Spec_Lock.json"
+    try:
+        spec_lock = read_json(spec_lock_path)
+    except Exception as exc:  # noqa: BLE001
+        return [{"path": rel(spec_lock_path), "error": "json_parse_failed", "detail": str(exc)}]
+    schema_versions = spec_lock.get("schema_versions", {})
+    if not isinstance(schema_versions, dict) or schema_versions.get("event_record") != EVENT_RECORD_SCHEMA_ID:
+        failures.append(
+            {
+                "path": rel(spec_lock_path),
+                "error": "event_record_schema_version_registration_missing",
+                "expected": EVENT_RECORD_SCHEMA_ID,
+                "actual": schema_versions.get("event_record") if isinstance(schema_versions, dict) else None,
+            }
+        )
+    files = spec_lock.get("canonical_ssot_hashes", {}).get("files", [])
+    if not isinstance(files, list):
+        return [{"path": rel(spec_lock_path), "error": "spec_lock_canonical_ssot_files_missing"}]
+    by_path = {row.get("path"): row for row in files if isinstance(row, dict)}
+    for path in EVENT_RECORD_SPEC_LOCK_PATHS:
+        entry = by_path.get(path)
+        if not isinstance(entry, dict):
+            failures.append(
+                {
+                    "path": rel(spec_lock_path),
+                    "error": "event_record_spec_lock_registration_missing",
+                    "required_path": path,
+                }
+            )
+            continue
+        target = ROOT / path
+        if not target.exists():
+            failures.append({"path": path, "error": "event_record_spec_lock_registered_path_missing"})
+            continue
+        current_hash = sha256_file(target)
+        if entry.get("sha256") != current_hash:
+            failures.append(
+                {
+                    "path": rel(spec_lock_path),
+                    "error": "event_record_spec_lock_hash_stale",
+                    "required_path": path,
+                    "expected": current_hash,
+                    "actual": entry.get("sha256"),
+                }
+            )
+    return failures
+
+
+def event_record_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
+    failures: list[dict[str, Any]] = []
+    contracts_path = PLANS / "Contracts_V0.md"
+    if not contracts_path.exists():
+        failures.append({"path": rel(contracts_path), "error": "contracts_v0_missing"})
+    else:
+        contracts_text = contracts_path.read_text(encoding="utf-8")
+        for marker in ["### 1.2 EventRecord", "`pm.event.v0`", "Plans/event_record.schema.json"]:
+            if marker not in contracts_text:
+                failures.append(
+                    {
+                        "path": rel(contracts_path),
+                        "error": "event_record_contract_marker_missing",
+                        "marker": marker,
+                    }
+                )
+
+    schema_path = EVENT_RECORD_SCHEMA_PATH
+    if not schema_path.exists():
+        return failures + [{"path": rel(schema_path), "error": "event_record_schema_missing"}]
+    try:
+        schema = read_json(schema_path)
+    except Exception as exc:  # noqa: BLE001
+        return failures + [{"path": rel(schema_path), "error": "json_parse_failed", "detail": str(exc)}]
+
+    if schema.get("$schema") != "https://json-schema.org/draft/2020-12/schema":
+        failures.append({"path": rel(schema_path), "error": "event_record_schema_not_draft_2020_12"})
+    if schema.get("type") != "object":
+        failures.append({"path": rel(schema_path), "error": "event_record_schema_type_not_object"})
+    if schema.get("additionalProperties") is not False:
+        failures.append({"path": rel(schema_path), "error": "event_record_schema_top_level_not_closed"})
+    if schema.get("required") != EVENT_RECORD_REQUIRED_FIELDS:
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "event_record_required_fields_mismatch",
+                "expected": EVENT_RECORD_REQUIRED_FIELDS,
+                "actual": schema.get("required"),
+            }
+        )
+    properties = schema.get("properties", {})
+    if not isinstance(properties, dict):
+        failures.append({"path": rel(schema_path), "error": "event_record_properties_missing_or_invalid"})
+        properties = {}
+    for field in EVENT_RECORD_REQUIRED_FIELDS:
+        if field not in properties:
+            failures.append({"path": rel(schema_path), "error": "event_record_required_property_missing", "field": field})
+    if "type" in properties:
+        failures.append({"path": rel(schema_path), "error": "event_record_legacy_type_property_persisted"})
+    schema_id = properties.get("schema_id", {}) if isinstance(properties.get("schema_id"), dict) else {}
+    if schema_id.get("const") != EVENT_RECORD_SCHEMA_ID:
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "event_record_schema_id_const_mismatch",
+                "expected": EVENT_RECORD_SCHEMA_ID,
+                "actual": schema_id.get("const"),
+            }
+        )
+    schema_version = properties.get("schema_version", {}) if isinstance(properties.get("schema_version"), dict) else {}
+    if schema_version.get("const") != EVENT_RECORD_SCHEMA_VERSION:
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "event_record_schema_version_const_mismatch",
+                "expected": EVENT_RECORD_SCHEMA_VERSION,
+                "actual": schema_version.get("const"),
+            }
+        )
+    for field in ["redaction_profile", "replay_policy"]:
+        value = properties.get(field, {})
+        enum = value.get("enum") if isinstance(value, dict) else None
+        if not isinstance(enum, list) or not enum:
+            failures.append({"path": rel(schema_path), "error": "event_record_closed_enum_missing", "field": field})
+    payload = properties.get("payload", {}) if isinstance(properties.get("payload"), dict) else {}
+    if payload.get("type") != "object":
+        failures.append({"path": rel(schema_path), "error": "event_record_payload_dispatch_not_object"})
+    migration = properties.get("migration", {}) if isinstance(properties.get("migration"), dict) else {}
+    migration_ref = migration.get("$ref")
+    defs = schema.get("$defs", {}) if isinstance(schema.get("$defs"), dict) else {}
+    migration_def = defs.get("migration", {}) if isinstance(defs.get("migration"), dict) else {}
+    if migration_ref != "#/$defs/migration":
+        failures.append({"path": rel(schema_path), "error": "event_record_migration_not_ref"})
+    if migration_def.get("additionalProperties") is not False:
+        failures.append({"path": rel(schema_path), "error": "event_record_migration_not_closed"})
+
+    for key in properties:
+        if SECRET_MATERIAL_KEY_RE.search(str(key)):
+            failures.append({"path": rel(schema_path), "error": "event_record_secret_material_property", "field": key})
+
+    for consumer_path in EVENT_RECORD_CONSUMER_DOCS:
+        if not consumer_path.exists():
+            failures.append({"path": rel(consumer_path), "error": "event_record_consumer_doc_missing"})
+            continue
+        text = consumer_path.read_text(encoding="utf-8")
+        if "Plans/Contracts_V0.md#EventRecord" not in text and "Contracts_V0.md §1.2" not in text:
+            failures.append({"path": rel(consumer_path), "error": "event_record_consumer_contract_ref_missing"})
+        for pattern in EVENT_RECORD_FORBIDDEN_CONSUMER_PATTERNS:
+            if pattern in text:
+                failures.append(
+                    {
+                        "path": rel(consumer_path),
+                        "error": "event_record_consumer_local_definition",
+                        "pattern": pattern,
+                    }
+                )
+
+    failures.extend(event_record_spec_lock_failures())
+
+    if actual_report.get("buildability_gate_passed") is True:
+        failures.append({"path": rel(REPORT_PATH), "error": "tier0c_event_record_unexpected_buildability_pass"})
+
+    return failures
+
+
 def execution_unit_context_contract_failures(actual_report: dict[str, Any]) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     schema_path = EXECUTION_UNIT_CONTEXT_SCHEMA_PATH
@@ -1116,12 +1385,75 @@ def run_self_tests() -> dict[str, Any]:
                 "checks": field_claim_checks,
             }
         )
+    base_event_record = {
+        "schema_id": EVENT_RECORD_SCHEMA_ID,
+        "schema_version": EVENT_RECORD_SCHEMA_VERSION,
+        "event_id": "evt_fixture_001",
+        "event_type": "run.started",
+        "project_id": "project_fixture",
+        "thread_id": None,
+        "run_id": "run_fixture",
+        "node_id": None,
+        "attempt_id": None,
+        "actor_ref": "actor:fixture",
+        "requested_account_ref": None,
+        "effective_account_ref": None,
+        "occurred_at_utc": "2026-07-06T00:00:00Z",
+        "observed_at_utc": "2026-07-06T00:00:00Z",
+        "persisted_at_utc": "2026-07-06T00:00:00Z",
+        "sequence_id": 1,
+        "producer_sequence_id": None,
+        "correlation_id": "corr_fixture",
+        "causation_event_id": None,
+        "parent_event_id": None,
+        "idempotency_key": "idem_fixture",
+        "payload_schema_id": "pm.event_payload.run.started.v1",
+        "payload": {"status": "started"},
+        "payload_ref": None,
+        "redaction_profile": "no_secrets",
+        "replay_policy": "dedupe_by_idempotency_key",
+        "migration": {
+            "migrated_from_schema_id": None,
+            "migrated_from_schema_version": None,
+            "migration_id": None,
+            "compatibility_event_type": None,
+        },
+    }
+    missing_schema_version_record = dict(base_event_record)
+    missing_schema_version_record.pop("schema_version")
+    secret_record = dict(base_event_record)
+    secret_record["payload"] = {"api_key": "do-not-store"}
+    event_record_checks = {
+        "valid_event_record": not event_record_instance_failures(
+            base_event_record,
+            path_label="self-test:valid_event_record",
+        ),
+        "missing_schema_version_rejected": any(
+            failure.get("field") == "schema_version"
+            for failure in event_record_instance_failures(
+                missing_schema_version_record,
+                path_label="self-test:missing_schema_version",
+            )
+        ),
+        "secret_payload_rejected": any(
+            failure.get("error") == "event_record_secret_material_key"
+            for failure in event_record_instance_failures(secret_record, path_label="self-test:secret_payload")
+        ),
+    }
+    if not all(event_record_checks.values()):
+        failures.append(
+            {
+                "scenario": "event_record_envelope",
+                "checks": event_record_checks,
+            }
+        )
     return {
         "schema_id": "pm.implementation_readiness.self_test_report.v1",
         "generated_at_utc": utc_now(),
         "status": "pass" if not failures else "fail",
         "scenarios": results,
         "field_claim_checks": field_claim_checks,
+        "event_record_checks": event_record_checks,
         "failures": failures,
     }
 
@@ -1226,6 +1558,7 @@ def validate() -> dict[str, Any]:
             )
         )
         failures.extend(pnc019_bootstrap_authority_failures(actual_report))
+        failures.extend(event_record_contract_failures(actual_report))
         failures.extend(execution_unit_context_contract_failures(actual_report))
 
     self_test_report = run_self_tests()
