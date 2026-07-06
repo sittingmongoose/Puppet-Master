@@ -87,7 +87,9 @@
     "Plans/prd_planning_runtime_contracts.json",
     "Plans/prd_planning_runtime_contracts.schema.json",
     "Plans/Release_Supply_Chain.md",
-    "Plans/event_record.schema.json"
+    "Plans/event_record.schema.json",
+    "Plans/storage_value_registry.schema.json",
+    "Plans/storage_value_registry.json"
   ],
   "recovery_register_policy": {
     "MUST CHANGE": "docs requiring direct canonical edits to land owner canon, retire stale same-file canon, or fix active fidelity blockers",

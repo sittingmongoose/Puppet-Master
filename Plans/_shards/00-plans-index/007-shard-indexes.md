@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L493-L572
+Source lines: L494-L575
 
-Source SHA256: `a8f9b4b77daec6226f1529dd796390d7e3d149ebf0b1834746ca9fd26392ac2f`
+Source SHA256: `e45160a3bfdc59333e3ba09e8f54016d7df5fa000e8cb7280e2fb5addd786617`
 
 ---
 
@@ -87,4 +87,6 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `prd_planning_runtime_contracts.json` | [`Plans/_shards/prd_planning_runtime_contracts/00-index.md`](Plans/_shards/prd_planning_runtime_contracts/00-index.md) |
 | `prd_planning_runtime_contracts.schema.json` | [`Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md`](Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md) |
 | `event_record.schema.json` | [`Plans/_shards/event_record.schema/00-index.md`](Plans/_shards/event_record.schema/00-index.md) |
+| `storage_value_registry.schema.json` | [`Plans/_shards/storage_value_registry.schema/00-index.md`](Plans/_shards/storage_value_registry.schema/00-index.md) |
+| `storage_value_registry.json` | [`Plans/_shards/storage_value_registry/00-index.md`](Plans/_shards/storage_value_registry/00-index.md) |
 | `Release_Supply_Chain.md` | [`Plans/_shards/release_supply_chain/00-index.md`](Plans/_shards/release_supply_chain/00-index.md) |

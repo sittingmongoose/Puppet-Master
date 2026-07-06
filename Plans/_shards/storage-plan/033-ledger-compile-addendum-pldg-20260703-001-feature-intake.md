@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16045-L16370
+Source lines: L16075-L16481
 
-Source SHA256: `3e47688cac83928d9ce1e6e39ce627a4cd5e945975bea34233d3e60380d86ddb`
+Source SHA256: `ad3f512795f628259dafc4e81b402f15adbfde16434e9548ea3b0101c41fb283`
 
 ---
 
@@ -333,4 +333,85 @@ owner_hints:
   - Plans/storage-plan.md
   - Plans/Contracts_V0.md
   - Plans/event_record.schema.json
+```
+
+### SP-231 - Storage Value Registry And Launch-Critical Value Materialization
+
+```yaml
+plan_unit_id: SP-231
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  storage-plan owns the Tier 0C-2 storage value-schema registry in
+  Plans/storage_value_registry.json, with file shape governed by
+  Plans/storage_value_registry.schema.json. The registry converts redb and
+  seglog key-template prose into versioned value contracts. Launch-critical
+  rows are fully materialized for ApprovedPlanPack, PlanApproved outbox,
+  PlanCompileRun, compiler wave contract, WorkGraph draft, WorkNodeRequest,
+  Executor intake report, attempt receipt, EventRecord index, blocked
+  projection, and goal receipt. Later GUI, provider, analytics, terminal,
+  browser, project-state, worktree/lane, permission/safe-point, and feature
+  projection families are inventoried as deferred_not_build_blocking with an
+  owner, reason, and reopen condition. Persisted values require schema_version,
+  name key shape and value owner, specify replay, migration, retention and
+  compaction behavior, and reject raw secrets, tokens, passwords, credentials,
+  API keys, OAuth values, local credential paths, or local machine secrets.
+gui_related: false
+gui_classification_reason: This unit defines backend storage value contracts and registry validation, not GUI presentation.
+depends_on: [SP-214, SP-215, SP-216, SP-230, CV-287, CV-288, CV-290, CV-309, PWIZ-014, PNC-010, PNC-013, PNC-014, EP-099, EP-103]
+unblocks: []
+acceptance_criteria:
+  - Plans/storage_value_registry.json parses and conforms to Plans/storage_value_registry.schema.json.
+  - Every registered storage family has key_shape, value_schema_id/ref, owner_doc, producer, consumers, schema_version, encoding, replay, migration, retention/compaction, redaction/no-secret, and legacy/canonical crosswalk status.
+  - Launch-critical rows are materialized for approved_plan_pack, plan_approved_outbox, plan_compile_run, compiler_wave_contract, workgraph_draft, worknode_request, executor_intake_report, attempt_receipt, event_record_index, blocked_projection, and goal_receipt.
+  - Every persisted value requires schema_version and materialized schemas carry matching schema_id and schema_version constants.
+  - Non-critical families are not prose-only authority; deferred rows include owner, reason, and reopen condition.
+  - scripts/pm-implementation-readiness.py validate rejects missing schema_version, missing owners, missing materialized launch-critical families, and unredacted secret-bearing fields.
+  - This is partial storage-value progress only; IRB-002 remains open until all required persistence families and replay/migration behavior are executable and proven.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-implementation-readiness.py self-test
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120
+risk_class: storage_value_schema_registry_drift
+reasoning_tier: high
+context_scope: tier_0c_2_storage_value_registry
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.schema.json
+  - Plans/storage_value_registry.json
+  - scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: tier_0c_2_storage_value_registry
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - chat:2026-07-06-tier-0c-2-storage-value-registry
+preserved_exact_tokens:
+  - "`ApprovedPlanPack`"
+  - "`PlanApproved`"
+  - "`PlanCompileRun`"
+  - "`compiler wave`"
+  - "`WorkGraph draft`"
+  - "`WorkNodeRequest`"
+  - "`Executor intake`"
+  - "`attempt receipt`"
+  - "`event_record_index.v1:{project_id}:{sequence_id}:{event_id}`"
+  - "`blocked_projection.v1:{project_id}:{node_id}`"
+  - "`goal_receipt.v1:{project_id}:{receipt_id}`"
+  - "`schema_version`"
+  - "`deferred_not_build_blocking`"
+negative_constraints:
+  - Do not declare Puppet Master implementation-buildable from storage value schemas alone.
+  - Do not close provider_stream, runtime_lifecycle, clean_room_harness, GUI, security, behavioral_acceptance, or broad redb-family blockers from this registry.
+  - Do not create WorkNodes, NodeSeeds, candidates, queues, manifests, implementation files, runtime launches, product build tasks, or executable PlanCompile artifacts.
+  - Do not rely on prose-only redb key templates as implementation authority after this registry exists.
+  - Do not store raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets in persisted values.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/storage_value_registry.schema.json
+  - scripts/pm-implementation-readiness.py
 ```

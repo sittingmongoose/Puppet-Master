@@ -1,6 +1,6 @@
 # Shard Index: Plans/Plugins_System.md
 
-Generated: 2026-07-06T19:30:54Z
+Generated: 2026-07-06T20:20:33Z
 
 Source SHA256: `859e6e3a575c853176765a54ab22dc98d65be1785625fe50ecf40448273bd67f`
 

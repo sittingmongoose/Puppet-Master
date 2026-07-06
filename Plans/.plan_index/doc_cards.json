@@ -59,7 +59,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 5258,
+      "line_count": 5261,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 66,
       "plan_unit_ids": [
@@ -196,7 +196,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "a8f9b4b77daec6226f1529dd796390d7e3d149ebf0b1834746ca9fd26392ac2f",
+      "sha256": "e45160a3bfdc59333e3ba09e8f54016d7df5fa000e8cb7280e2fb5addd786617",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 66
@@ -11855,10 +11855,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 143,
+        "False": 144,
         "True": 87
       },
-      "heading_count": 370,
+      "heading_count": 372,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -11880,6 +11880,8 @@
         "Plans/event_record.schema.json",
         "Plans/goal_runtime_events.schema.json",
         "Plans/storage-plan.md",
+        "Plans/storage_value_registry.json",
+        "Plans/storage_value_registry.schema.json",
         "future DiscoveryIndex",
         "future History projection store",
         "future Runtime Artifacts receipt store",
@@ -11892,9 +11894,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 16370,
+      "line_count": 16481,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 230,
+      "plan_unit_count": 231,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -12125,7 +12127,8 @@
         "SP-227",
         "SP-228",
         "SP-229",
-        "SP-230"
+        "SP-230",
+        "SP-231"
       ],
       "reasoning_tiers": [
         "high",
@@ -12150,19 +12153,20 @@
         "rollback_diagnostics_storage_drift",
         "storage_owner_stub_loss",
         "storage_plan_drift",
+        "storage_value_schema_registry_drift",
         "teach_memory_persistence_drift"
       ],
-      "sha256": "3e47688cac83928d9ce1e6e39ce627a4cd5e945975bea34233d3e60380d86ddb",
+      "sha256": "ad3f512795f628259dafc4e81b402f15adbfde16434e9548ea3b0101c41fb283",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 229,
+        "accepted": 230,
         "retired": 1
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "requirement": 228,
-        "schema_contract": 1
+        "schema_contract": 2
       },
       "validation_surfaces": [
         "127MB metadata fixture is rejected/segmented before UI or model context load.",
@@ -12192,11 +12196,13 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-implementation-readiness.py self-test",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
-        "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures"
+        "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness"
       ]
     },
     {
@@ -13275,7 +13281,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-06T19:30:02Z",
+  "generated_at_utc": "2026-07-06T20:20:07Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13283,13 +13289,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3099,
+      "False": 3100,
       "True": 2382
     },
-    "plan_unit_count": 5481,
+    "plan_unit_count": 5482,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5303,
+      "accepted": 5304,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13335,7 +13341,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 5,
+      "schema_contract": 6,
       "schema_mirror": 1,
       "selection_contract": 1,
       "selection_policy": 2,
