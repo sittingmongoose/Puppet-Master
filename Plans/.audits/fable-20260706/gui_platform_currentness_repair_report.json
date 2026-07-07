@@ -1,0 +1,92 @@
+{
+  "audit_id": "fable-20260706",
+  "changed_files": [
+    "Plans/Spec_Lock.json",
+    "Plans/FinalGUISpec.md",
+    "Plans/00-plans-index.md",
+    "Plans/BinaryLocator_Spec.md",
+    "Plans/MiscPlan.md",
+    "Plans/LSPSupport.md",
+    "Plans/PMConcept_Control_Reconciliation.json",
+    "Plans/OpenCode_Deep_Extraction.md",
+    "Plans/FileSafe.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/UI_Command_Catalog.md",
+    "scripts/pm-gui-asset-policy.py"
+  ],
+  "closure_status": "repair_validated",
+  "contracts_added": {
+    "capability_matrix_states": [
+      "native_full",
+      "web_supported_direct",
+      "web_supported_via_trusted_local_daemon",
+      "web_simulated_or_degraded",
+      "web_disabled"
+    ],
+    "icons": "Production GUI uses bundled SVG icon_id manifest entries, accessible labels, fallback text, non-icon state text, and no emoji/pictographic pseudo-icons or network/CDN icons.",
+    "renderer": "Native Winit + Skia compiled/default on Windows/Linux/macOS, then Winit + FemtoVG-wgpu, then Winit software emergency; SLINT_BACKEND override remains first.",
+    "trusted_daemon": "OS-owned web capabilities route through authenticated local origin/pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded reason, and deterministic test hooks.",
+    "web_wasm": "First GUI build includes native desktop plus Rust Slint/WASM canvas client compiled as cdylib with wasm-bindgen/wasm-pack or approved equivalent and minimal HTML/canvas bootstrap."
+  },
+  "deterministic_finding_key": "sfk-4332f4dc0daf756614caa8f3",
+  "generated_at_utc": "2026-07-07T14:25:22Z",
+  "schema_id": "pm.gui_platform_currentness_repair_report.v1",
+  "slint_strings": {
+    "active_target": "Slint 1.17.1",
+    "changed_from": [
+      "Slint 1.15.1",
+      "Slint 1.17.0"
+    ],
+    "preserved_only_as_history_source_lineage": [
+      "fablereport.md",
+      "Plans/.audits/fable-20260706/* historical triage files",
+      "Plans/ledgers/**",
+      "Concepts/PMConcept.html fixture transcripts",
+      "FinalGUISpec compatibility note"
+    ]
+  },
+  "source_finding_key": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+  "validator_results": [
+    {
+      "command": "python3 scripts/pm-gui-asset-policy.py",
+      "status": "not_applicable",
+      "details": "No GUI source tree exists yet; policy state is pending_no_gui_source_yet with 0 checked files."
+    },
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact gui_platform_currentness_findings.jsonl",
+      "status": "pass",
+      "details": "Original repair_required count 1, post-repair count 0, terminal_repair_state repair_validated, effective_status PASS."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass",
+      "details": "Spec_Lock hashes current after governance refresh."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "status": "pass",
+      "details": "Readiness report is current and truthful; buildability_gate_passed=true and node readiness is ready_for_node_compile after the bounded PNC-019 certification harness, with no product WorkNodes or build artifacts emitted by this repair."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "status": "pass",
+      "details": "Dev-preview cmd.gui_dev_preview.* commands are excluded from production wiring rather than promoted into production runtime commands."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "status": "pass",
+      "details": "Plan migration hashes and final summary are current."
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "details": "78 docs checked, 1414 shards checked."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass",
+      "details": "Standard plan-governance gate passed after evidence, audit-closure, audit-status, shard, readiness, wiring, and migration settle passes."
+    }
+  ],
+  "wrapper_hangs": []
+}

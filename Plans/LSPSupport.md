@@ -241,7 +241,7 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assist
 
 Our GUI is **Rust + Slint** (FinalGUISpec); we include **slint-lsp** so that editing `.slint` files in the in-app editor gets diagnostics, completion, goto definition, and live-preview support.
 
-- **Crate:** [slint-lsp](https://crates.io/crates/slint-lsp) (latest stable 1.15.1). LSP implementation for [Slint](https://slint.dev). Binary: `slint-lsp` (or `slint-lsp.exe` on Windows). Communicates via **stdio** (stdin/stdout); no special command-line arguments -- editors spawn the binary and use LSP over stdio.
+- **Crate:** [slint-lsp](https://crates.io/crates/slint-lsp) (align with the Slint 1.17.1 toolchain target). LSP implementation for [Slint](https://slint.dev). Binary: `slint-lsp` (or `slint-lsp.exe` on Windows). Communicates via **stdio** (stdin/stdout); no special command-line arguments -- editors spawn the binary and use LSP over stdio.
 - **Features:** Diagnostics, code completion, goto definition, **live-preview**. Code formatting is part of the LSP (see [Slint tooling docs](https://snapshots.slint.dev/master/docs/guide/tooling/manual-setup/#slint-lsp)).
 - **Install:** `cargo install slint-lsp`, or use pre-built binaries from [Slint GitHub releases](https://github.com/slint-ui/slint/releases). Requirement: `slint-lsp` command available on PATH.
 - **Extensions:** `.slint` (Slint UI markup).
@@ -267,7 +267,7 @@ Our GUI is **Rust + Slint** (FinalGUISpec); we include **slint-lsp** so that edi
 
 ## 4. Rust Stack (Client Side)
 
-Our rewrite is Rust/Slint (1.15.1). We only need an **LSP client** in the app.
+Our rewrite is Rust/Slint (Slint 1.17.1). We only need an **LSP client** in the app.
 
 - **Protocol types:** [lsp-types](https://docs.rs/lsp-types/) -- LSP 3.x types (requests, notifications, capabilities, DocumentUri, Range, Diagnostic, etc.). Use for all LSP data structures.
 - **Client implementation:** One of:

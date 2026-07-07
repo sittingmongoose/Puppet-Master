@@ -3,7 +3,7 @@
     "files": [
       {
         "path": "Plans/00-plans-index.md",
-        "sha256": "f099986e87f10a19b4224f856687f21a2890a61463cb226ea40cc5b6c13ca30d"
+        "sha256": "8d8fcd113d95e62f8848e4d6228d81f5c7461196bd4caa578c4f5b6de74565ae"
       },
       {
         "path": "Plans/acceptance_manifest.schema.json",
@@ -19,7 +19,7 @@
       },
       {
         "path": "Plans/Automated_Testing_System.md",
-        "sha256": "3cbee3116b7e62dfdc7fcd5912218c33044fab8b1f1dde709d2b19fd56ce8b39"
+        "sha256": "567dbf2107e47a32484038605a1443291b7f409543e8f8ae78350afa4db15397"
       },
       {
         "path": "Plans/Bootstrap_Planning_Migration.md",
@@ -155,7 +155,7 @@
       },
       {
         "path": "Plans/UI_Command_Catalog.md",
-        "sha256": "b5a7bf1c16ef291183fdfd2c6dab1da887e32db411cc9b61ae090594244e8eed"
+        "sha256": "1233eddff60c1760cbb886d2813017af6c4986a073dbb70ee2db4a1ab25f832b"
       },
       {
         "path": "Plans/Wiring_Matrix.schema.json",
@@ -191,7 +191,7 @@
       },
       {
         "path": "Plans/FinalGUISpec.md",
-        "sha256": "67b3c6cb82e58c33ef67ce42dd87f942dab8bdf6d25937075799cb105ed0f0eb"
+        "sha256": "b788c81e168d096c1ad7ae242f8539734f138f439804ca862fa26ac3b4576b89"
       },
       {
         "path": "Plans/Models_System.md",
@@ -231,7 +231,7 @@
       },
       {
         "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-        "sha256": "bc673fac33c6ccba0db6b5efe7de8148a3ac3e3a658f2a815181a45ca9ffb51e"
+        "sha256": "40c1e6887ff22548ed12ea2c7b3b77b1c91d00c2814927ec8c370e465f4c3882"
       },
       {
         "path": "Plans/event_record.schema.json",
@@ -263,7 +263,7 @@
       },
       {
         "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
-        "sha256": "c1f075522273fe5983cb691c2a4df954ec8a67170b182ed3df2c2aaaadc3681c"
+        "sha256": "705ad986178b9c36758114b8378e9430832e88174eda4864897904c3a4e4d3a0"
       },
       {
         "path": "scripts/pm-pnc019-certification-harness.py",
@@ -333,7 +333,7 @@
       "legacy_toolkit": "iced",
       "preserve_visual_identity": true,
       "toolkit": "slint",
-      "toolkit_version": "1.15.1"
+      "toolkit_version": "1.17.1"
     }
   },
   "platform_name": "Puppet Master",

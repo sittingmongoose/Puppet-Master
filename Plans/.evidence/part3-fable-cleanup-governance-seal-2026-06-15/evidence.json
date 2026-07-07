@@ -14,11 +14,11 @@
     },
     {
       "path": "Plans/FileSafe.md",
-      "sha256": "147a712b665ff7bfe29a2998c948ef99e5dbce6d20babb34ab1a2a1d17f13b46"
+      "sha256": "11ec6ad7f04086cecbf3c52435e7b04f55d7a83599ae35d3723c2109120547b9"
     },
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "67b3c6cb82e58c33ef67ce42dd87f942dab8bdf6d25937075799cb105ed0f0eb"
+      "sha256": "b788c81e168d096c1ad7ae242f8539734f138f439804ca862fa26ac3b4576b89"
     },
     {
       "path": "Plans/Media_Generation_and_Capabilities.md",
@@ -26,7 +26,7 @@
     },
     {
       "path": "Plans/MiscPlan.md",
-      "sha256": "6efd1f14efc90c9d0eaa3701fa3bc82e1a0a605259c5707bc92a355b13da5b24"
+      "sha256": "3164dbccba2caba3a75329d9497758a3c9a5976ed1384cdd8dfafecf9d979c5e"
     },
     {
       "path": "Plans/Permissions_System.md",
@@ -62,35 +62,35 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "03f9c3e13b9e7a3868fad53dc7e645adeda3d550c3ffb7eb78d3fb6af45563fd"
+      "sha256": "e6a93191bdc64e00ca5f0e6e1c08eb4cddd62946b1d69dfdda8b72491e35cfe6"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "838a17ecf426348d9f755e5f43e696f4388dae3a76ae8206be72d410f25af648"
+      "sha256": "505bc78a0eb8ce03bf2d023b716162dd84e99dc58bda5a3e0eae97160c8256b8"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "c3063112a32a5bf55c3f9e430bb10a7f5902148b406ff019cbe859c4ec1c6c5c"
+      "sha256": "8fe8bcdeeada473a65c162575fcf3e1a7084bdbe16985084c5f348771471d877"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "f1d176688e490ebd41fd544fc4161fbede9bb1eacb29002ee2ac6d2a318c91c8"
+      "sha256": "a474f12fa65a37fc8a0d060bc9076719b14bea2af8d34cae1cf7d115ca447de2"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "b5d8092179c3a38670df4b367767d087ce17a3c880f4f3ae743c42c50c8737fe"
+      "sha256": "f613eb1fe2c4c2edafd3ec743c9a2ab4bc4b12626344aefd144f9144fb2dc430"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "51d41faca1ff44a006c29c15f36789ee68c8cac8916aae7993b1e1426adf2607"
+      "sha256": "7e7daed588005d20625868defa468427fb7fea47cf734fdbfb406a3c60a46215"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "cb50ecb66297ca3cc30bda072c50402b74ebf514d03eec7ccce924c0af485102"
+      "sha256": "042c48471e2645f6844b046e34a1af59b858c9aa0a8670b1a2fb0093344a170d"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "be01634cf1af62d6e2806aa051c49f99a5e01da8f55fe098a263c9728bc5243a"
+      "sha256": "781edff6e7ba60dc432cb1d643813291f86bb0628105c0297a59082139b4ee05"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -98,7 +98,7 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "51c89874c12cc1f8cc3968c6f6f30c69851aca89d4eb89aff0b9cd72b9cd1d11"
+      "sha256": "1dacab1dff377f0cd047967244311edfb1ea86857ebb8c18ed019fa00947a758"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -106,7 +106,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "319a21fb877b353c5dc46fd163f2bd7c4e7fb67ecb0d7c100aeccd3d6810470e"
+      "sha256": "a35d683b62cae6e9405475986e55c15bc6af59165d1bd5ab775e35d7d6e1d253"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -292,6 +292,11 @@
       "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded.",
       "name": "wiring-matrix-reverse-catalog-coverage",
       "result": "PASS"
+    },
+    {
+      "name": "gui-platform-currentness-repair",
+      "result": "PASS",
+      "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
     }
   ],
   "commands_run": [

@@ -211,10 +211,10 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/D
 
 ### 2.1 Module Structure
 
-Create the FileSafe module under `src-tauri/src/filesafe/`.
+Create the FileSafe module under `crates/puppet-master-core/src/filesafe/`.
 
 ```
-src-tauri/src/filesafe/
+crates/puppet-master-core/src/filesafe/
 ├── mod.rs        # Module declaration + re-exports
 ├── types.rs      # Shared FileSafe data types
 ├── scope.rs      # Scope and canonical-path enforcement
@@ -229,7 +229,7 @@ src-tauri/src/filesafe/
 - **Project-specific:** `.puppet-master/destructive-commands.local.txt` (optional override)
 - **Resolution order:** Custom path → Project-specific → Bundled baseline; if no trustworthy baseline exists, fail closed
 
-**Module Declaration (`src-tauri/src/filesafe/mod.rs`):**
+**Module Declaration (`crates/puppet-master-core/src/filesafe/mod.rs`):**
 ```rust
 //! FileSafe — guards for preventing destructive operations
 //!
@@ -248,7 +248,7 @@ pub use bash_guard::{BashGuard, GuardError};
 ### 2.2 Core Types
 
 ```rust
-// src-tauri/src/filesafe/bash_guard.rs
+// crates/puppet-master-core/src/filesafe/bash_guard.rs
 
 use regex::Regex;
 use std::path::PathBuf;
@@ -1177,12 +1177,12 @@ The `rewrite-conflict` presentation label maps to `error.concurrent_edit_conflic
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
 - [ ] **Create FileSafe module structure**
-  - [ ] Create `src-tauri/src/filesafe/mod.rs`
-  - [ ] Create `src-tauri/src/filesafe/types.rs`
-  - [ ] Create `src-tauri/src/filesafe/scope.rs`
-  - [ ] Create `src-tauri/src/filesafe/bash_guard.rs`
-  - [ ] Create `src-tauri/src/filesafe/snapshot.rs`
-  - [ ] Create `src-tauri/src/filesafe/validator.rs`
+  - [ ] Create `crates/puppet-master-core/src/filesafe/mod.rs`
+  - [ ] Create `crates/puppet-master-core/src/filesafe/types.rs`
+  - [ ] Create `crates/puppet-master-core/src/filesafe/scope.rs`
+  - [ ] Create `crates/puppet-master-core/src/filesafe/bash_guard.rs`
+  - [ ] Create `crates/puppet-master-core/src/filesafe/snapshot.rs`
+  - [ ] Create `crates/puppet-master-core/src/filesafe/validator.rs`
 - [ ] **Port pattern file**
   - [ ] Copy destructive command patterns from OpenCode `backend/src/security/bash.ts`
   - [ ] Convert JS regex patterns to Rust `regex::Regex`
@@ -2559,7 +2559,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 Use this section to derive a phased implementation plan. Dependencies are stated so an agent can order tasks and avoid gaps.
 
 **Phase 1 -- Core guards (no GUI, no Assistant)**  
-1. Create the `src-tauri/src/filesafe/` module files listed in §9 Implementation Checklist.  
+1. Create the `crates/puppet-master-core/src/filesafe/` module files listed in §9 Implementation Checklist.
 2. Implement pattern loading (§2.3), bundled + project-local resolution (§2.2).  
 3. Implement `BashGuard` (new, disabled, check_command, **commands_match** §2.2, approved_commands from config).  
 4. Implement **check_prompt** and **extract_commands_from_prompt** (§11.3).  
@@ -4016,7 +4016,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  The FileSafe module layout is under src-tauri/src/filesafe with mod.rs, types.rs, scope.rs,
+  The FileSafe module layout is under crates/puppet-master-core/src/filesafe with mod.rs, types.rs, scope.rs,
   bash_guard.rs, snapshot.rs, and validator.rs, and scope.rs owns scope and canonical-path
   enforcement.
 gui_related: false
@@ -4044,7 +4044,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0014"
 preserved_exact_tokens:
-- "src-tauri/src/filesafe/"
+- "crates/puppet-master-core/src/filesafe/"
 - "mod.rs"
 - "types.rs"
 - "scope.rs"
@@ -6040,7 +6040,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  FileSafe implementation checklist lineage includes the src-tauri filesafe module structure and
+  FileSafe implementation checklist lineage includes the Rust workspace filesafe module structure and
   a port from OpenCode backend/src/security/bash.ts pinned to upstream dev checkout baseline
   9330bc5339b3ca82975f768200450d4c9aabcd35, requiring an external-reference currentness refresh
   before changing FileSafe canon for later OpenCode changes.
@@ -6069,12 +6069,12 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0033"
 preserved_exact_tokens:
-- "src-tauri/src/filesafe/mod.rs"
-- "src-tauri/src/filesafe/types.rs"
-- "src-tauri/src/filesafe/scope.rs"
-- "src-tauri/src/filesafe/bash_guard.rs"
-- "src-tauri/src/filesafe/snapshot.rs"
-- "src-tauri/src/filesafe/validator.rs"
+- "crates/puppet-master-core/src/filesafe/mod.rs"
+- "crates/puppet-master-core/src/filesafe/types.rs"
+- "crates/puppet-master-core/src/filesafe/scope.rs"
+- "crates/puppet-master-core/src/filesafe/bash_guard.rs"
+- "crates/puppet-master-core/src/filesafe/snapshot.rs"
+- "crates/puppet-master-core/src/filesafe/validator.rs"
 - "backend/src/security/bash.ts"
 - "9330bc5339b3ca82975f768200450d4c9aabcd35"
 - "external-reference currentness refresh"

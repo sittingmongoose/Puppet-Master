@@ -130,8 +130,8 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 **Date:** 2026-02-22
 **Status:** Authoritative specification for AI agent implementation
-**Tech Stack:** Rust stable 1.96.1 + Slint 1.17.0 (.slint markup compiled via slint_build)
-**Renderer:** Default winit + Skia; fallback winit + FemtoVG-wgpu; emergency software renderer
+**Tech Stack:** Rust stable 1.96.1 + Slint 1.17.1 (.slint markup compiled via slint_build)
+**Renderer:** Native desktop uses Slint Winit with Skia compiled in and selected by default; fallback is Winit + FemtoVG-wgpu, then Winit software renderer only as an emergency path.
 
 ---
 
@@ -163,7 +163,7 @@ Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.
 
 ## 1. Executive Summary
 
-This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.0 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with three user-facing theme families (Retro Dark, Retro Light, Basic Modern) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with three user-facing theme families (Retro Dark, Retro Light, Basic Modern) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
 
 The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
 
@@ -195,21 +195,60 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 | Component | Technology | Notes |
 |-----------|-----------|-------|
 | Language | Rust stable 1.96.1 | All logic, state management, and Slint bridge code; verified current stable on 2026-07-02 |
-| UI Framework | Slint 1.17.0 | `.slint` markup files compiled via `slint_build` in `build.rs`; verified current stable on 2026-07-02 |
-| Default Renderer | winit + Skia | Best quality and performance |
-| Fallback Renderer | winit + FemtoVG-wgpu | When Skia is unavailable |
-| Emergency Renderer | Software renderer | Headless/CI environments |
+| UI Framework | Slint 1.17.1 | `.slint` markup files compiled via `slint_build` in `build.rs`; selected by owner decision on 2026-07-07 |
+| Default Renderer | Winit + Skia | Skia is compiled in for Windows, Linux, and macOS native desktop builds and is the default renderer |
+| Fallback Renderer | Winit + FemtoVG-wgpu | Used when Skia is unavailable after explicit override and persisted-preference resolution |
+| Emergency Renderer | Winit software renderer | Last resort for headless, CI, unsupported GPU, or emergency recovery environments |
 | Persistence (layout) | redb | Durable KV store for layout state, preferences, editor state |
 | Persistence (events) | seglog | Canonical event ledger for usage, chat, orchestrator events |
 | Search | Tantivy | Full-text search index over seglog projections |
 
-Toolchain currentness is a certification input, not PMConcept evidence. Runtime implementation or production build packets must re-check the official Rust stable channel and Slint current stable release before code work starts; stale PMConcept terminal transcripts or demo version strings are concept fixtures only.
+Toolchain currentness is a certification input, not PMConcept evidence. Runtime implementation or production build packets must re-check the official Rust stable channel and Slint current stable release before code work starts; stale PMConcept terminal transcripts, demo version strings, and old audit references are concept/source-lineage fixtures only.
 
-### 2.2 What Is NOT Used
+### 2.2 Native Desktop Renderer Contract
 
-No React, JavaScript, TypeScript, HTML, or CSS. The entire GUI is Rust + Slint `.slint` markup.
+Native desktop targets Windows, Linux, and macOS through the Slint Winit backend. The compiled renderer availability order is Winit + Skia, Winit + FemtoVG-wgpu, then Winit software renderer. Runtime selection resolves in this order: `SLINT_BACKEND` explicit override, persisted renderer preference, compiled Skia default, FemtoVG-wgpu fallback, and software emergency fallback. `SLINT_BACKEND` remains valid for debugging, CI, and operator override, but persisted preferences must not silently override an explicit environment override. Startup diagnostics record the requested backend, effective backend, fallback reason, platform, GPU/driver summary when available, and whether the fallback was operator-selected or automatic.
 
-### 2.3 Build Integration
+### 2.3 Web/WASM GUI Contract
+
+The first GUI implementation includes both the native desktop target and a Slint Rust WASM web GUI. The web GUI is a Slint/WASM canvas client compiled as a Rust `cdylib` with `wasm-bindgen`, `wasm-pack`, or an approved equivalent toolchain and loaded by a minimal HTML/canvas bootstrap. The web target does not use React, Tauri, or DOM-rendered product UI. Browser JavaScript is limited to generated or minimal bootstrap glue needed to load the WASM canvas client, route static assets, attach the canvas, and connect to approved local services.
+
+Browser-only WASM is not allowed to pretend it owns OS capabilities. It must not claim direct ownership of PTY, project filesystem mutation or watching, process/container execution, CEF-class browser embedding, system tray, native windows, native child windows, or raw native OS drag/drop. When a capability is unavailable in the browser sandbox, the UI shows the capability state, degraded reason, and the approved native or daemon-mediated route.
+
+### 2.4 Trusted Local Daemon Contract
+
+The web GUI may use OS-owned capabilities only through a trusted local Puppet Master daemon. The daemon boundary requires authenticated local origin or pairing, origin and CSRF protection, capability probing before feature enablement, explicit permission requests for sensitive operations, receipt/audit events for granted or denied actions, redaction before display or persistence, degraded reasons when the daemon is absent or narrowed, and deterministic agent-test hooks for fixture mode and browser automation. The web GUI consumes daemon capability receipts; it does not infer authority from localhost reachability alone.
+
+### 2.5 Web Capability Matrix
+
+Web capability state values are exactly `native_full`, `web_supported_direct`, `web_supported_via_trusted_local_daemon`, `web_simulated_or_degraded`, and `web_disabled`.
+
+| Capability family | Native desktop state | Web state | Required web alternative |
+|-------------------|----------------------|-----------|--------------------------|
+| Terminal/PTY | `native_full` | `web_supported_via_trusted_local_daemon` | Daemon-owned PTY session stream, permission receipt, redacted transcript/evidence |
+| Git, process, and container operations | `native_full` | `web_supported_via_trusted_local_daemon` | Daemon-owned command execution, capability probe, audit receipt, disabled/degraded reason |
+| Project filesystem watching and mutation | `native_full` | `web_supported_via_trusted_local_daemon` | Project-root grant, watch proxy, FileSafe/permission receipt, redacted path display |
+| Browser automation | `native_full` | `web_supported_via_trusted_local_daemon` | Daemon-owned automation session with screenshots, state capture, console/network receipt |
+| CEF embedding / native child browser host | `native_full` | `web_disabled` | Evidence stream, in-canvas browser status panels, or browser popup clients when permitted |
+| System tray and OS notifications/tray menu | `native_full` | `web_disabled` | Status page, in-canvas notification center, browser notification permission where supported |
+| Native detached Slint windows and redock | `native_full` | `web_simulated_or_degraded` | In-canvas panels, browser popup clients, persisted layout state without OS window authority |
+| Raw native OS drag/drop paths | `native_full` | `web_supported_via_trusted_local_daemon` | File drops, project-root grants, browser File API metadata, daemon-mediated path binding |
+
+### 2.6 SVG Icon And No-Emoji UI Contract
+
+Production GUI surfaces use bundled local SVG assets referenced by stable `icon_id`. The production UI must not use emoji, emoji-like pictographs, Dingbat-style pseudo-icons, or Unicode pictographs as controls, badges, status indicators, or decorative substitutes for icons. Concept glyphs from PMConcept or other source-lineage artifacts map only to approved `icon_id` entries before promotion.
+
+The local SVG manifest includes `icon_id`, file path, semantic label, theme behavior, size slots, accessible label, fallback text, and any state-variant mapping. Icons are never the sole carrier of state: every icon-only control has an accessible label, tooltip or equivalent label projection, keyboard/focus behavior, and nearby or programmatic state text. Network/CDN icon fonts or remote SVG/icon imports are forbidden for production GUI source.
+
+### 2.7 GUI Web Dev/Test Workflow
+
+The web GUI development workflow uses a local trusted daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Development preview controls may expose reload, fixture-mode selection, screenshot/state capture, and daemon capability inspection only in configured development or automated-test builds. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless an explicit production configuration authorizes that capability and records the permission/audit surface.
+
+### 2.8 What Is NOT Used
+
+Native product UI does not use React, JavaScript, TypeScript, HTML, CSS, Tauri, or DOM-rendered controls. The native desktop GUI is Rust + Slint `.slint` markup. The web GUI uses Rust Slint compiled to WASM canvas plus minimal bootstrap glue only; it is not a React/Tauri/web-DOM product UI.
+
+### 2.9 Build Integration
 
 ```rust
 // build.rs
@@ -2584,7 +2623,7 @@ LF-007 stale-reference cleanup applies to this appendix and to `Plans/assistant-
 
 These decisions are final and must not be revisited during implementation:
 
-1. **Slint 1.17.0 on Rust stable 1.96.1, verified 2026-07-02** -- no other UI framework; reverify official stable releases before runtime implementation
+1. **Slint 1.17.1 on Rust stable 1.96.1, verified 2026-07-02** -- no other UI framework; reverify official stable releases before runtime implementation
 2. **winit + Skia** default, **winit + FemtoVG-wgpu** fallback
 3. **No React/JS/TS/HTML/CSS** -- pure Rust + Slint shell
 4. **IDE shell layout** -- Activity Bar + Primary Content + Side Panel + Bottom Panel
@@ -4963,7 +5002,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   FinalGUISpec follows DRY_Rules and Contracts_V0, uses Puppet Master naming and deterministic
-  defaults, and establishes Rust stable 1.96.1 plus Slint 1.17.0 with slint_build and renderer choices as the
+  defaults, and establishes Rust stable 1.96.1 plus Slint 1.17.1 with slint_build and renderer choices as the
   authoritative implementation baseline.
 gui_related: true
 gui_classification_reason: >-
@@ -4994,7 +5033,7 @@ preserved_exact_tokens:
 - "Plans/Contracts_V0.md"
 - "Puppet Master"
 - "Rust stable 1.96.1"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "slint_build"
 - "winit + Skia"
 - "FemtoVG-wgpu"
@@ -5045,7 +5084,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0022"
 preserved_exact_tokens:
 - "Iced-based GUI"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "IDE-shell layout"
 - "Activity Bar"
 - "Primary Content"
@@ -5157,7 +5196,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0024"
 preserved_exact_tokens:
 - "Rust"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "slint_build"
 - "winit + Skia"
 - "winit + FemtoVG-wgpu"
@@ -14374,7 +14413,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0138"
 preserved_exact_tokens:
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "accessible-role"
 - "accessible-label"
 - "docked/floating"
@@ -16445,7 +16484,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
 preserved_exact_tokens:
 - "ImageFit.repeat"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "SharedPixelBuffer"
 - "GridLayout"
 negative_constraints: []
@@ -18081,7 +18120,7 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Implementation decisions are final for Slint 1.17.0 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
+  Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
   no React/JS/TS/HTML/CSS shell, IDE shell layout, three theme families, Settings restructure,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
@@ -18111,7 +18150,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0158"
 preserved_exact_tokens:
 - "Rust stable 1.96.1"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "winit + Skia"
 - "winit + FemtoVG-wgpu"
 - "No React/JS/TS/HTML/CSS"
@@ -27037,4 +27076,91 @@ negative_constraints: []
 observed_signal: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate.
 pm_gap_or_delta: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts.
 compile_disposition: create_new_planunit
+```
+
+### F3-417 - GUI Platform Currentness Renderer Web And Icon Contract
+
+```yaml
+plan_unit_id: F3-417
+unit_type: decision
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia compiled
+  in and selected by default on Windows, Linux, and macOS; fallback order is explicit SLINT_BACKEND override, persisted
+  preference, Winit + Skia, Winit + FemtoVG-wgpu, then Winit software emergency mode. The first GUI build includes
+  native desktop plus a Rust Slint/WASM canvas web GUI compiled as cdylib through wasm-bindgen, wasm-pack, or an
+  approved equivalent and loaded through minimal HTML/canvas bootstrap rather than React, Tauri, or DOM product UI.
+  Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
+  authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or
+  pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded
+  reason, and deterministic agent-test hooks. Web capability state values are native_full, web_supported_direct,
+  web_supported_via_trusted_local_daemon, web_simulated_or_degraded, and web_disabled. Production GUI source uses
+  bundled SVGs through stable icon_id entries and must not use emoji, emoji-like pictographs, Unicode pseudo-icons,
+  network/CDN icons, or icon-only controls without accessible labels and non-icon state text.
+gui_related: true
+gui_classification_reason: This unit locks GUI platform, renderer, web GUI, visible capability, and icon policy decisions.
+split_recommended: false
+depends_on:
+- F3-026
+- F3-029
+- F3-030
+- F3-033
+- ATS-023
+unblocks: []
+acceptance_criteria:
+- Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history.
+- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults.
+- Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon.
+- Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision.
+validation_surfaces:
+- python3 scripts/pm-gui-asset-policy.py
+- python3 scripts/pm-plans-verify.py verify-spec-lock
+- python3 scripts/pm-plan-index.py validate
+risk_class: gui_platform_currentness_drift
+reasoning_tier: high
+context_scope: fable_20260706_gui_platform_currentness_repair
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/00-plans-index.md
+- Plans/BinaryLocator_Spec.md
+- Plans/MiscPlan.md
+- Plans/LSPSupport.md
+- Plans/PMConcept_Control_Reconciliation.json
+- Plans/Spec_Lock.json
+- scripts/pm-gui-asset-policy.py
+node_compile_hint:
+  mode: gui_platform_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- fablereport.md:103-112
+- Plans/.audits/fable-20260706/currentness_check_report.json
+- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:8
+source_atom_ids: []
+preserved_exact_tokens:
+- "Slint 1.17.1"
+- "Winit + Skia"
+- "Winit + FemtoVG-wgpu"
+- "Winit software renderer"
+- "SLINT_BACKEND"
+- "Slint/WASM canvas"
+- "trusted local daemon"
+- "native_full"
+- "web_supported_direct"
+- "web_supported_via_trusted_local_daemon"
+- "web_simulated_or_degraded"
+- "web_disabled"
+- "icon_id"
+- "no emoji"
+negative_constraints:
+- "Do not create WorkNodes, NodeSeeds, queues, implementation files, runtime launches, or production build artifacts."
+- "Do not allow browser-only WASM to pretend it directly owns OS capabilities."
+- "Do not use React, Tauri, or DOM-rendered product UI for the Slint web GUI."
+- "Do not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only state carriers in production GUI source."
+compatibility_only_notes:
+- "Slint 1.17.0, Slint 1.15.1, PMConcept terminal transcripts, and FABLE pre-repair wording are source-lineage/history only after this repair."
+owner_boundary_notes:
+- "FinalGUISpec owns GUI platform and visible capability policy; Automated_Testing_System owns web GUI dev/test workflow; UI_Command_Catalog owns only development-preview command IDs."
 ```
