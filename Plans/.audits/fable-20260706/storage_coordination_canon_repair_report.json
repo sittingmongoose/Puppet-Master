@@ -1,0 +1,219 @@
+{
+  "active_file_canon_scan": {
+    "claim": "No active file-based coordination source-of-truth claim remains in scoped docs; old tokens appear only in preserved/source-lineage or negative-constraint contexts.",
+    "patterns": [
+      "File-based coordination (canonical)",
+      "single source of coordination truth",
+      "File-based coordination is always on",
+      "source of truth.*active-agents",
+      "active-agents.*source of truth"
+    ],
+    "remaining_hits_disposition": [
+      {
+        "disposition": "retired preserved_exact_tokens source-lineage token in OSI-271",
+        "line": 22313,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "disposition": "retired preserved_exact_tokens source-lineage token in OSI-271",
+        "line": 22316,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "disposition": "compatibility-only note retiring the preserved OSI-271 token",
+        "line": 22321,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "disposition": "negative constraint prohibiting the optional active-agents debug mirror from becoming source of truth",
+        "line": 23793,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "disposition": "retired preserved_exact_tokens source-lineage token in OSI-432",
+        "line": 31280,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      },
+      {
+        "disposition": "retired preserved_exact_tokens source-lineage token in OSI-432",
+        "line": 31281,
+        "path": "Plans/orchestrator-subagent-integration.md"
+      }
+    ],
+    "status": "pass"
+  },
+  "audit_id": "fable-20260706",
+  "canonical_event_families": [
+    "coordination.agent_registered",
+    "coordination.agent_status_updated",
+    "coordination.agent_operation_updated",
+    "coordination.agent_file_ownership_updated",
+    "coordination.agent_unregistered",
+    "coordination.agent_crashed",
+    "coordination.agent_aborted",
+    "coordination.debug_mirror_exported"
+  ],
+  "canonical_projections": [
+    "coordination_agent_projection.v1:{project_id}:{agent_id}",
+    "coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}",
+    "coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}",
+    "coordination_snapshot_projection.v1:{project_id}:{projection_scope}",
+    "projector.checkpoint.coordination:{project_id}"
+  ],
+  "closure_evidence": [
+    "Plans/.audits/fable-20260706/STORAGE_COORDINATION_CANON_REPAIR.md",
+    "Plans/.audits/fable-20260706/storage_coordination_canon_repair_report.json",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6",
+    "Plans/.audits/fable-20260706/currentness_check_report.json",
+    "Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md",
+    "Plans/orchestrator-subagent-integration.md:3671",
+    "Plans/orchestrator-subagent-integration.md:3701",
+    "Plans/orchestrator-subagent-integration.md:31232",
+    "Plans/storage-plan.md:514",
+    "Plans/storage-plan.md:16527",
+    "Plans/Contracts_V0.md:2642",
+    "Plans/Contracts_V0.md:19475",
+    "Plans/storage_value_registry.json",
+    "Plans/path_reference_registry.json"
+  ],
+  "closure_id": "closure-fable-20260706-storage-coordination-canon-001",
+  "concurrency_atomicity": {
+    "active_agent_bound": 32,
+    "canonical_rmw_prohibition": "read-modify-write of .puppet-master/state/*.json is prohibited for canonical coordination state",
+    "lost_update_prevention": "stale expected revision returns a coordination conflict diagnostic; writers reload projections and append successor events",
+    "mutation_boundary": "PM-owned append API with idempotency key and expected agent_revision or last_applied_event_id",
+    "projection_boundary": "redb projection rows and coordination checkpoint advance in one transaction"
+  },
+  "decision_applied": "Canonical durable coordination truth is seglog EventRecord coordination families and redb projections; JSON files may exist only as compatibility/debug/export mirrors or retired source-lineage.",
+  "finding_key": "fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb",
+  "generated_at_utc": "2026-07-07T18:05:49Z",
+  "ledger_id": "storage-coordination-canon-repair-20260707",
+  "mirror_contract": {
+    "authority": "Mirrors cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions.",
+    "corruption": "Invalid JSON, partial writes, stale checkpoints, missing mirrors, and disk-full failures are mirror failures recovered by quarantine or regeneration from seglog/redb.",
+    "lag": "Mirrors may lag projection commits, may be absent, and must expose source sequence/checkpoint when present.",
+    "writers": [
+      "PM projection/export code only"
+    ]
+  },
+  "owner_evidence": [
+    {
+      "evidence": "canonical coordination record/projection families",
+      "line": 3671,
+      "path": "Plans/orchestrator-subagent-integration.md"
+    },
+    {
+      "evidence": "compatibility/debug mirror contract",
+      "line": 3701,
+      "path": "Plans/orchestrator-subagent-integration.md"
+    },
+    {
+      "evidence": "OSI-432 behavioral PlanUnit",
+      "line": 31232,
+      "path": "Plans/orchestrator-subagent-integration.md"
+    },
+    {
+      "evidence": "storage-owned coordination record/projection/mirror section",
+      "line": 514,
+      "path": "Plans/storage-plan.md"
+    },
+    {
+      "evidence": "SP-232 behavioral PlanUnit",
+      "line": 16527,
+      "path": "Plans/storage-plan.md"
+    },
+    {
+      "evidence": "stable active-agent coordination event family table",
+      "line": 2642,
+      "path": "Plans/Contracts_V0.md"
+    },
+    {
+      "evidence": "CV-310 behavioral PlanUnit",
+      "line": 19475,
+      "path": "Plans/Contracts_V0.md"
+    },
+    {
+      "evidence": "coordination_event_records registry row",
+      "line": 2576,
+      "path": "Plans/storage_value_registry.json"
+    },
+    {
+      "evidence": "coordination_read_model_projections registry row",
+      "line": 2633,
+      "path": "Plans/storage_value_registry.json"
+    },
+    {
+      "evidence": "coordination_debug_mirror_exports registry row",
+      "line": 2678,
+      "path": "Plans/storage_value_registry.json"
+    },
+    {
+      "evidence": "active-agents mirror/source-lineage classification",
+      "line": 442,
+      "path": "Plans/path_reference_registry.json"
+    }
+  ],
+  "registered_or_retired_paths": [
+    ".puppet-master/state/active-agents.json",
+    ".puppet-master/state/agent-messages.json",
+    ".puppet-master/state/verification-{node_id}-end.json",
+    ".puppet-master/state/handoff-validation-{node_id}.json"
+  ],
+  "schema_id": "pm.audit.storage_coordination_canon_repair_report.v1",
+  "scope": {
+    "excluded": [
+      "platform_specs",
+      "FileSafe",
+      "UI command catalog",
+      "wiring matrix",
+      "Goal Runtime",
+      "Executor Protocol",
+      "broad PlanUnit boilerplate"
+    ],
+    "repaired": "storage/coordination canon conflict and directly required contract/gate references"
+  },
+  "semantic_finding_key": "sfk-ae3fb5e70321020dfe0917b7",
+  "status": "repair_validated",
+  "validation_results": [
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate",
+      "status": "pass",
+      "summary": "Semantic closure registry validated after storage/coordination canon repair and evidence-hash refresh; registry row count is 369."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass",
+      "summary": "Spec Lock hashes are current after governance refresh."
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "summary": "Plan index validates with 5489 PlanUnits, 19755 acceptance units, and node_readiness_status blocked_runtime_certification_incomplete."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "status": "pass",
+      "summary": "Implementation-readiness artifacts are current; buildability_gate_passed remains false because runtime_lifecycle IRB-005 and clean_room_harness IRB-011 are outside this repair scope."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "status": "pass",
+      "summary": "Plan migration metadata validates after refreshing batch hashes and the final validation summary for the changed PlanUnits."
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "summary": "Shard check validated 78 docs and 1420 shards."
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates",
+      "status": "pass",
+      "summary": "Full run-gates passed at 2026-07-07T18:05:49Z after evidence, audit-status, closure, migration, shard, and Spec Lock refreshes."
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass",
+      "summary": "No whitespace errors reported."
+    }
+  ]
+}

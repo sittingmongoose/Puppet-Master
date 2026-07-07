@@ -7,59 +7,98 @@
     "buildability_gate_report": {
       "approve_and_build_gate": {
         "command_id": "cmd.planning_wizard.approve_and_build",
-        "disabled": false,
+        "disabled": true,
         "disabled_reason_projection": "state.planning_wizard.final_review.approve_and_build.disabled_reason",
-        "disabled_reasons": [],
-        "enabled": true,
-        "hard_disabled_reasons": [],
+        "disabled_reasons": [
+          {
+            "blocker_family": "runtime_lifecycle",
+            "blocker_ids": [
+              "IRB-005"
+            ],
+            "code": "buildability_blocked.runtime_lifecycle",
+            "owner_docs": [
+              "Plans/Automated_Testing_System.md",
+              "Plans/Executor_Protocol.md",
+              "Plans/Goal_Runtime_System.md",
+              "Plans/Orchestrator_Page.md",
+              "Plans/Plan_To_Node_Compilation.md"
+            ]
+          },
+          {
+            "blocker_family": "clean_room_harness",
+            "blocker_ids": [
+              "IRB-011"
+            ],
+            "code": "buildability_blocked.clean_room_harness",
+            "owner_docs": [
+              "Plans/Automated_Testing_System.md",
+              "Plans/Plan_To_Node_Compilation.md",
+              "Plans/Planning_Wizard.md",
+              "Plans/Progression_Gates.md"
+            ]
+          }
+        ],
+        "enabled": false,
+        "hard_disabled_reasons": [
+          {
+            "code": "hard_disabled.PNC-019",
+            "owner_docs": [
+              "Plans/Plan_To_Node_Compilation.md"
+            ],
+            "plan_unit_id": "PNC-019",
+            "source": "Plans/.plan_index/node_readiness_report.json"
+          }
+        ],
         "must_list_blocker_families": true,
         "must_list_exact_owner_docs": true
       },
-      "buildability_gate_passed": true,
-      "buildability_status": "pass",
+      "buildability_gate_passed": false,
+      "buildability_status": "blocked",
       "node_readiness": {
         "available": true,
         "bootstrap_authority_ref": "PNC-022",
         "bootstrap_authorized": true,
         "build_order_available": true,
         "certification_harness_specified": true,
-        "executable_lifecycle_certification_complete": true,
-        "hard_disabled": false,
-        "hard_disabled_reason": null,
-        "ordinary_product_worknodes_allowed": true,
+        "executable_lifecycle_certification_complete": false,
+        "hard_disabled": true,
+        "hard_disabled_reason": "PNC-019 executable lifecycle certification is incomplete",
+        "ordinary_product_worknodes_allowed": false,
         "owner_doc": "Plans/Plan_To_Node_Compilation.md",
-        "runtime_blocked_by_ref": null,
-        "runtime_enabled": true,
+        "runtime_blocked_by_ref": "PNC-019",
+        "runtime_enabled": false,
         "source": "Plans/.plan_index/node_readiness_report.json",
-        "status": "ready_for_node_compile",
-        "status_reason": "Plans are indexed with required PlanUnit metadata and an accepted PlanCompile compiler contract; the PlanUnit index remains non-emitting and native runtime implementation must materialize artifacts only through the compiler, Executor intake, activation, and Goal Runtime certification contracts.",
+        "status": "blocked_runtime_certification_incomplete",
+        "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary.",
         "true_cycle_component_count": 0
       },
+      "open_blocker_count": 2,
       "path": "Plans/.implementation_readiness/buildability_gate_report.json"
     },
     "node_readiness_report": {
-      "generated_at_utc": "2026-07-06T21:55:21Z",
+      "generated_at_utc": "2026-07-07T17:58:10Z",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "status": "ready_for_node_compile"
+      "status": "blocked_runtime_certification_incomplete"
     },
     "readiness_blockers": {
       "family_status": {
         "behavioral_acceptance": "closed",
-        "clean_room_harness": "closed",
+        "clean_room_harness": "open",
         "contract_materialization": "closed",
         "currentness": "closed",
         "gui_wiring": "closed",
         "owner_routing": "closed",
         "persistence_materialization": "closed",
         "provider_stream": "closed",
-        "runtime_lifecycle": "closed",
+        "runtime_lifecycle": "open",
         "security_boundary": "closed",
         "structural_integrity": "closed"
       },
       "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
       "row_count": 11,
       "status_counts": {
-        "closed": 11
+        "closed": 9,
+        "open": 2
       }
     },
     "wiring_matrix_stats": {
@@ -90,6 +129,17 @@
         "Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md",
         "Plans/.audits/fable-20260706/gui_platform_hardening_repair_report.json"
       ]
+    },
+    {
+      "finding_key": "fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb",
+      "reason": "The active storage/coordination canon now names EventRecord coordination families, redb projections, append/CAS and mirror recovery semantics; active-agents.json and .puppet-master/state/*.json are compatibility/debug/export mirrors or retired source-lineage only.",
+      "repair_required": false,
+      "status": "repaired_current",
+      "superseded_at_utc": "2026-07-07T17:56:52Z",
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/STORAGE_COORDINATION_CANON_REPAIR.md",
+        "Plans/.audits/fable-20260706/storage_coordination_canon_repair_report.json"
+      ]
     }
   ],
   "gate_change_recommendation_summary": [
@@ -101,7 +151,7 @@
     "Require event catalogs to have per-event payload minima and schema refs, not just generic envelopes.",
     "Require behavioral acceptance and dependency graph quality for P0/gui_related PlanUnits instead of preservation-only acceptance criteria."
   ],
-  "generated_at_utc": "2026-07-07T11:56:40Z",
+  "generated_at_utc": "2026-07-07T17:56:52Z",
   "outputs": {
     "currentness_report": "Plans/.audits/fable-20260706/currentness_check_report.json",
     "registry": "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
@@ -110,18 +160,26 @@
   "p0_p1_currentness_findings": [
     {
       "blocker_family": "persistence_materialization",
-      "classification": "partial_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T17:56:52Z",
+      "closure_status": "repair_validated",
       "dependency_order": 10,
       "finding_key": "fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb",
+      "notes": "Closed by STORAGE_COORDINATION_CANON_REPAIR.md; active file-based coordination canon retired into debug/export mirror/source-lineage contexts.",
       "owner_docs": [
         "Plans/orchestrator-subagent-integration.md",
         "Plans/storage-plan.md",
         "Plans/Contracts_V0.md"
       ],
       "priority": "P0",
-      "repair_required": true,
+      "repair_required": false,
+      "semantic_finding_key": "sfk-ae3fb5e70321020dfe0917b7",
       "source_severity": "Critical",
-      "title": "Storage/coordination canon still mixes file-based source-of-truth wording with seglog/redb projection canon."
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/STORAGE_COORDINATION_CANON_REPAIR.md",
+        "Plans/.audits/fable-20260706/storage_coordination_canon_repair_report.json"
+      ],
+      "title": "Storage/coordination canon closed: named EventRecord/redb coordination families own runtime truth; JSON files are mirrors only."
     },
     {
       "blocker_family": "contract_materialization",
@@ -338,7 +396,8 @@
       "false_alarm_corrected": 5,
       "needs_repair": 359,
       "owner_decision_required": 10,
-      "partial_current": 6,
+      "partial_current": 5,
+      "repaired_current": 1,
       "source_lineage_only": 2
     },
     "mechanical_overcapture_removed_rows": 78,

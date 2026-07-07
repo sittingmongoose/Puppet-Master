@@ -6,7 +6,7 @@
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530"
+      "sha256": "7ea4f791ed4f3033a35e469c5d6337a9b562daeaf7ad5339541e7259c0fc7075"
     },
     {
       "path": "Plans/FileManager.md",
@@ -58,39 +58,39 @@
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4"
+      "sha256": "82df656d5d3c4926dfed2de494372a58ac426b46f18ba1c7b1885b135b20d241"
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "633f04b2dac7dce9dbfd381ecdec42d51c3d6e22692884c351f030f7dd8e633b"
+      "sha256": "f283464d8d9d80d485c0f7e541b447012eb73ad02a0c76b682d3aedf65a4fcc7"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "64d4ad8302b8eb0cd36064ccbbf6ba3180b8ae283d9440cb02ab368da6cf063e"
+      "sha256": "136c8267ec37fcda5e29c504c90d68ad3adbc5359390a280e92e5cbd00cc272f"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "e308121923116dbd78d54c287614771efa618399d16f6d7efb4b05a866520f86"
+      "sha256": "f920ad4ec70e00e629628672ccb2f3874ea29c16e6aef8f25891e8e0f2f81037"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "441df5edc13a5c0c2bfb312ed1023e2d9226a3f9232ece38f6fa498782497b1b"
+      "sha256": "9a7e8172d3e59cc02b916cbe6a8f89d014ec9422f29a1b063a16b1853cbe0060"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "ccc241754c48af4233de8d58b4f7ecceafa8d94589426de2b402bfc82dd2db36"
+      "sha256": "9e7e27f50a9939e7eef76c29ce7aa5d4c8d6fdca28b22041940132277ee4edfc"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "a21a540bbcbe452cc59e2174c81d90eebf55ab5eee62f080a9f9ecc622a1412f"
+      "sha256": "8fd24137874cafaaf9b3cdbb851fb9f923d1846d8e211299d0b700bdf9d9c2ac"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "929ccfd21a5d3bdd1f577c4aebc18206dc9bac616d14977f43f9171aad87081d"
+      "sha256": "8ddff8080d440d0f0efd9de91b717d1e294e349a0b0ec5b0043475a860b82e4e"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "3ceb8930ae988dd0dddd3dc00bbcd1180ec645f2b5a520d40b07f02f0cc3c891"
+      "sha256": "0db608bc55a762f5b986dfd7f7618df51987879d590ac8089794ff3445b018c3"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -106,7 +106,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "5899047505683d85b21d8f9dc60a9e319eb4aefc056ac5fe91b7b0ef00ac4606"
+      "sha256": "4290fca530556d2b9c7548372d6b090f64f372410adf5395643ffba64628f83f"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -302,6 +302,11 @@
       "name": "gui-platform-hardening-repair",
       "result": "PASS",
       "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
+    },
+    {
+      "name": "storage-coordination-canon-repair-evidence-restamp",
+      "result": "PASS",
+      "details": "Evidence artifact hashes refreshed after the FABLE storage/coordination canon repair regenerated canonical docs, plan index, migration metadata, Spec Lock, and plan-sharding evidence."
     }
   ],
   "commands_run": [

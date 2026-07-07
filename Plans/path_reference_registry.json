@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.path_reference_registry.v1",
-  "generated_at_utc": "2026-07-02T00:00:00Z",
+  "generated_at_utc": "2026-07-07T17:54:01Z",
   "classifications": [
     {
       "raw_ref": "Plans/runtime_artifact_envelope.schema.json",
@@ -8,8 +8,13 @@
       "surface_type": "concrete_path",
       "match_kind": "exact",
       "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
-      "evidence_refs": ["Plans/Runtime_Artifacts_Panel.md"],
-      "allowed_contexts": ["Runtime artifact schema payload validation", "PlanUnit implementation_surfaces after schema materialization"],
+      "evidence_refs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "allowed_contexts": [
+        "Runtime artifact schema payload validation",
+        "PlanUnit implementation_surfaces after schema materialization"
+      ],
       "validator_policy": "allow",
       "notes": "The runtime artifact envelope schema is materialized as a concrete Plans schema file."
     },
@@ -19,8 +24,13 @@
       "surface_type": "generated_family",
       "match_kind": "exact",
       "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
-      "evidence_refs": ["Plans/Runtime_Artifacts_Panel.md"],
-      "allowed_contexts": ["Runtime artifact schema family references", "PlanUnit implementation_surfaces that name the per-type schema family"],
+      "evidence_refs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "allowed_contexts": [
+        "Runtime artifact schema family references",
+        "PlanUnit implementation_surfaces that name the per-type schema family"
+      ],
       "validator_policy": "allow",
       "materialization_pattern": "Plans/runtime_artifact_<family>.schema.json",
       "notes": "The literal placeholder refers to the governed per-type schema family, not a single file."
@@ -31,8 +41,12 @@
       "surface_type": "generated_family",
       "match_kind": "glob",
       "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
-      "evidence_refs": ["Plans/Runtime_Artifacts_Panel.md"],
-      "allowed_contexts": ["Runtime artifact per-type schema files"],
+      "evidence_refs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "allowed_contexts": [
+        "Runtime artifact per-type schema files"
+      ],
       "validator_policy": "allow",
       "materialization_pattern": "Plans/runtime_artifact_<family>.schema.json",
       "notes": "Per-type runtime artifact schemas are materialized as a governed schema family."
@@ -43,8 +57,14 @@
       "surface_type": "concrete_path",
       "match_kind": "exact",
       "canonical_route": "Plans/Contracts_V0.md",
-      "evidence_refs": ["Plans/Contracts_V0.md", "Plans/Goal_Runtime_System.md", "Plans/storage-plan.md"],
-      "allowed_contexts": ["Goal Runtime event schema references"],
+      "evidence_refs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "allowed_contexts": [
+        "Goal Runtime event schema references"
+      ],
       "validator_policy": "allow",
       "notes": "Goal Runtime event names and payload minima are materialized as a concrete schema file."
     },
@@ -54,8 +74,15 @@
       "surface_type": "generated_family",
       "match_kind": "glob",
       "canonical_route": "Plans/00-plans-index.md",
-      "evidence_refs": ["Plans/00-plans-index.md", "Plans/Plan_Document_System.md", "Plans/Plan_To_Node_Compilation.md"],
-      "allowed_contexts": ["Plan owner document families", "Broad implementation_surfaces families"],
+      "evidence_refs": [
+        "Plans/00-plans-index.md",
+        "Plans/Plan_Document_System.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "allowed_contexts": [
+        "Plan owner document families",
+        "Broad implementation_surfaces families"
+      ],
       "validator_policy": "allow",
       "notes": "Top-level Plans markdown owner docs are a governed document family; exact owner docs should be preferred when known."
     },
@@ -65,8 +92,14 @@
       "surface_type": "generated_family",
       "match_kind": "glob",
       "canonical_route": "Plans/Planning_Ledger_System.md",
-      "evidence_refs": ["AGENTS.md", "Plans/Planning_Ledger_System.md"],
-      "allowed_contexts": ["Structured v2 ledger layout", "Source-lineage ledger implementation_surfaces"],
+      "evidence_refs": [
+        "AGENTS.md",
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "allowed_contexts": [
+        "Structured v2 ledger layout",
+        "Source-lineage ledger implementation_surfaces"
+      ],
       "validator_policy": "allow",
       "notes": "Structured v2 ledgers use per-ledger manifest files."
     },
@@ -76,8 +109,14 @@
       "surface_type": "generated_family",
       "match_kind": "glob",
       "canonical_route": "Plans/Planning_Ledger_System.md",
-      "evidence_refs": ["AGENTS.md", "Plans/Planning_Ledger_System.md"],
-      "allowed_contexts": ["Structured v2 ledger generated family", "Ledger records, state, source shard, and validation surfaces"],
+      "evidence_refs": [
+        "AGENTS.md",
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "allowed_contexts": [
+        "Structured v2 ledger generated family",
+        "Ledger records, state, source shard, and validation surfaces"
+      ],
       "validator_policy": "allow",
       "notes": "Ledger records and projections are source/source-lineage memory, not canonical product prose."
     },
@@ -87,8 +126,15 @@
       "surface_type": "process_artifact",
       "match_kind": "glob",
       "canonical_route": "Plans/00-plans-index.md",
-      "evidence_refs": ["Plans/00-plans-index.md", "Plans/Planning_Ledger_System.md", "Plans/Plan_Document_System.md"],
-      "allowed_contexts": ["Audit process artifacts", "Closed-world audit references"],
+      "evidence_refs": [
+        "Plans/00-plans-index.md",
+        "Plans/Planning_Ledger_System.md",
+        "Plans/Plan_Document_System.md"
+      ],
+      "allowed_contexts": [
+        "Audit process artifacts",
+        "Closed-world audit references"
+      ],
       "validator_policy": "allow",
       "notes": "Audit bundle paths are process artifacts to regenerate or verify, not canonical product prose."
     },
@@ -98,8 +144,13 @@
       "surface_type": "process_artifact",
       "match_kind": "glob",
       "canonical_route": "Plans/Plan_To_Node_Compilation.md",
-      "evidence_refs": ["Plans/Plan_To_Node_Compilation.md"],
-      "allowed_contexts": ["PlanUnit index outputs", "Node-readiness reporting"],
+      "evidence_refs": [
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "allowed_contexts": [
+        "PlanUnit index outputs",
+        "Node-readiness reporting"
+      ],
       "validator_policy": "allow",
       "notes": "Plan index artifacts are regenerated by scripts/pm-plan-index.py and must not be hand-edited."
     },
@@ -109,8 +160,13 @@
       "surface_type": "process_artifact",
       "match_kind": "glob",
       "canonical_route": "Plans/Plan_Document_System.md",
-      "evidence_refs": ["Plans/Plan_Document_System.md"],
-      "allowed_contexts": ["Plan migration process artifacts", "Source-span lineage evidence"],
+      "evidence_refs": [
+        "Plans/Plan_Document_System.md"
+      ],
+      "allowed_contexts": [
+        "Plan migration process artifacts",
+        "Source-span lineage evidence"
+      ],
       "validator_policy": "allow",
       "notes": "Plan migration artifacts are process and lineage outputs, not implementation target files."
     },
@@ -120,8 +176,14 @@
       "surface_type": "future_artifact",
       "match_kind": "prefix",
       "canonical_route": "Plans/00-plans-index.md",
-      "evidence_refs": ["Plans/00-plans-index.md", "Plans/Plan_To_Node_Compilation.md"],
-      "allowed_contexts": ["Explicit future implementation_surfaces", "Out-of-scope runtime or app artifacts"],
+      "evidence_refs": [
+        "Plans/00-plans-index.md",
+        "Plans/Plan_To_Node_Compilation.md"
+      ],
+      "allowed_contexts": [
+        "Explicit future implementation_surfaces",
+        "Out-of-scope runtime or app artifacts"
+      ],
       "validator_policy": "allow",
       "notes": "Implementation surfaces prefixed with future are intentionally future artifacts and cannot count as clean-checkout concrete paths."
     },
@@ -131,8 +193,12 @@
       "surface_type": "concrete_path",
       "match_kind": "exact",
       "canonical_route": "Plans/Runtime_Artifacts_Panel.md",
-      "evidence_refs": ["Plans/Runtime_Artifacts_Panel.md"],
-      "allowed_contexts": ["Raw path scanner findings"],
+      "evidence_refs": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "allowed_contexts": [
+        "Raw path scanner findings"
+      ],
       "validator_policy": "warn",
       "replacement_ref": "Plans/runtime_artifact_envelope.schema.json",
       "notes": "Panel-named schema path is not a canonical schema filename."
@@ -143,8 +209,12 @@
       "surface_type": "future_artifact",
       "match_kind": "exact",
       "canonical_route": "Plans/assistant-chat-design.md",
-      "evidence_refs": ["Plans/assistant-chat-design.md"],
-      "allowed_contexts": ["Assistant chat security carry-through"],
+      "evidence_refs": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "allowed_contexts": [
+        "Assistant chat security carry-through"
+      ],
       "validator_policy": "allow",
       "notes": "assistant-chat-design remains the current owner until a dedicated security sanitization owner exists."
     },
@@ -154,8 +224,13 @@
       "surface_type": "concrete_path",
       "match_kind": "exact",
       "canonical_route": "Plans/FinalGUISpec.md",
-      "evidence_refs": ["Plans/00-plans-index.md", "Plans/FinalGUISpec.md"],
-      "allowed_contexts": ["Settings implementation surface mentions"],
+      "evidence_refs": [
+        "Plans/00-plans-index.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "allowed_contexts": [
+        "Settings implementation surface mentions"
+      ],
       "validator_policy": "warn",
       "replacement_ref": "Plans/FinalGUISpec.md",
       "notes": "Settings is a projected surface routed through current owner docs, not a top-level Plans/Settings.md owner file."
@@ -166,8 +241,14 @@
       "surface_type": "future_artifact",
       "match_kind": "exact",
       "canonical_route": "Plans/Widget_System.md",
-      "evidence_refs": ["Plans/FinalGUISpec.md", "Plans/00-plans-index.md"],
-      "allowed_contexts": ["Legacy widget source-lineage tokens", "Preserved exact tokens"],
+      "evidence_refs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/00-plans-index.md"
+      ],
+      "allowed_contexts": [
+        "Legacy widget source-lineage tokens",
+        "Preserved exact tokens"
+      ],
       "validator_policy": "allow",
       "notes": "Widget reference docs are preserved historical tokens; Widget_System owns active widget behavior."
     },
@@ -177,8 +258,14 @@
       "surface_type": "future_artifact",
       "match_kind": "exact",
       "canonical_route": "Plans/Widget_System.md",
-      "evidence_refs": ["Plans/FinalGUISpec.md", "Plans/00-plans-index.md"],
-      "allowed_contexts": ["Legacy widget source-lineage tokens", "Preserved exact tokens"],
+      "evidence_refs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/00-plans-index.md"
+      ],
+      "allowed_contexts": [
+        "Legacy widget source-lineage tokens",
+        "Preserved exact tokens"
+      ],
       "validator_policy": "allow",
       "notes": "Widget quick reference docs are preserved historical tokens; Widget_System owns active widget behavior."
     },
@@ -188,8 +275,13 @@
       "surface_type": "future_artifact",
       "match_kind": "exact",
       "canonical_route": "Plans/FileManager.md",
-      "evidence_refs": ["Plans/FileManager.md"],
-      "allowed_contexts": ["Legacy GUI concept input refs", "FileManager source-lineage"],
+      "evidence_refs": [
+        "Plans/FileManager.md"
+      ],
+      "allowed_contexts": [
+        "Legacy GUI concept input refs",
+        "FileManager source-lineage"
+      ],
       "validator_policy": "allow",
       "notes": "Composergui5 is retained as historical GUI concept input only."
     },
@@ -199,8 +291,13 @@
       "surface_type": "future_artifact",
       "match_kind": "exact",
       "canonical_route": "Plans/FileManager.md",
-      "evidence_refs": ["Plans/FileManager.md"],
-      "allowed_contexts": ["Legacy GUI concept input refs", "FileManager source-lineage"],
+      "evidence_refs": [
+        "Plans/FileManager.md"
+      ],
+      "allowed_contexts": [
+        "Legacy GUI concept input refs",
+        "FileManager source-lineage"
+      ],
       "validator_policy": "allow",
       "notes": "Bare Composergui5 token is a concept lineage label, not a live repo path."
     },
@@ -210,8 +307,14 @@
       "surface_type": "concrete_path",
       "match_kind": "exact",
       "canonical_route": "Concepts/PMConcept.html",
-      "evidence_refs": ["Plans/feature-list.md", "Plans/UI_Wiring_Rules.md"],
-      "allowed_contexts": ["GUI concept references", "feature-list legacy link"],
+      "evidence_refs": [
+        "Plans/feature-list.md",
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "allowed_contexts": [
+        "GUI concept references",
+        "feature-list legacy link"
+      ],
       "validator_policy": "warn",
       "replacement_ref": "Concepts/PMConcept.html",
       "notes": "The live concept input path is Concepts/PMConcept.html; PMConcept remains source-lineage, not canonical implementation HTML."
@@ -222,8 +325,15 @@
       "surface_type": "concrete_path",
       "match_kind": "exact",
       "canonical_route": "Plans/UI_Wiring_Rules.md",
-      "evidence_refs": ["Concepts/PMConcept.html", "Plans/UI_Wiring_Rules.md", "Plans/FinalGUISpec.md"],
-      "allowed_contexts": ["GUI concept references", "PMConcept lineage"],
+      "evidence_refs": [
+        "Concepts/PMConcept.html",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "allowed_contexts": [
+        "GUI concept references",
+        "PMConcept lineage"
+      ],
       "validator_policy": "allow",
       "notes": "PMConcept is concept/source-lineage input only."
     },
@@ -233,8 +343,14 @@
       "surface_type": "process_artifact",
       "match_kind": "exact",
       "canonical_route": "Plans/00-plans-index.md",
-      "evidence_refs": ["Plans/Decision_Log.md", "Plans/00-plans-index.md"],
-      "allowed_contexts": ["Packet process artifacts", "Reconciliation reports"],
+      "evidence_refs": [
+        "Plans/Decision_Log.md",
+        "Plans/00-plans-index.md"
+      ],
+      "allowed_contexts": [
+        "Packet process artifacts",
+        "Reconciliation reports"
+      ],
       "validator_policy": "allow",
       "notes": "Research packet outputs are process artifacts to regenerate or revalidate, not canonical plan prose."
     },
@@ -244,8 +360,13 @@
       "surface_type": "process_artifact",
       "match_kind": "exact",
       "canonical_route": "Plans/00-plans-index.md",
-      "evidence_refs": ["Plans/00-plans-index.md"],
-      "allowed_contexts": ["Legacy pipeline evidence", "Source-lineage reports"],
+      "evidence_refs": [
+        "Plans/00-plans-index.md"
+      ],
+      "allowed_contexts": [
+        "Legacy pipeline evidence",
+        "Source-lineage reports"
+      ],
       "validator_policy": "allow",
       "notes": "Ledger fidelity report is source-lineage only and is not a live target-path requirement."
     },
@@ -255,8 +376,13 @@
       "surface_type": "generated_family",
       "match_kind": "exact",
       "canonical_route": "Plans/Planning_Ledger_System.md",
-      "evidence_refs": ["AGENTS.md", "Plans/Planning_Ledger_System.md"],
-      "allowed_contexts": ["Bootstrap ledger layout shorthand"],
+      "evidence_refs": [
+        "AGENTS.md",
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "allowed_contexts": [
+        "Bootstrap ledger layout shorthand"
+      ],
       "validator_policy": "warn",
       "replacement_ref": "Plans/ledgers/v2/*/manifest.json",
       "notes": "Structured v2 ledgers use per-ledger manifest files; no aggregate Plans/ledgers/v2/manifest.json exists."
@@ -267,8 +393,14 @@
       "surface_type": "future_artifact",
       "match_kind": "exact",
       "canonical_route": "Plans/UI_Command_Catalog.md",
-      "evidence_refs": ["Plans/UI_Command_Catalog.md", "Plans/BinaryLocator_Spec.md"],
-      "allowed_contexts": ["Future typed command implementation crate", "Preserved source-lineage command tokens"],
+      "evidence_refs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "allowed_contexts": [
+        "Future typed command implementation crate",
+        "Preserved source-lineage command tokens"
+      ],
       "validator_policy": "allow",
       "replacement_ref": "future typed UICommand implementation crate",
       "notes": "The current repo has no runtime crate; typed UICommand implementation belongs to a future Rust/Slint build lane."
@@ -279,8 +411,12 @@
       "surface_type": "concrete_path",
       "match_kind": "doc_anchor",
       "canonical_route": "Plans/FinalGUISpec.md",
-      "evidence_refs": ["Plans/FinalGUISpec.md"],
-      "allowed_contexts": ["Legacy Chain Wizard owner-anchor references"],
+      "evidence_refs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "allowed_contexts": [
+        "Legacy Chain Wizard owner-anchor references"
+      ],
       "validator_policy": "warn",
       "replacement_ref": "Plans/FinalGUISpec.md",
       "notes": "The anchor is source-lineage shorthand; implementation surfaces should name the owner doc."
@@ -291,11 +427,95 @@
       "surface_type": "concrete_path",
       "match_kind": "doc_anchor",
       "canonical_route": "Plans/Prompt_Pipeline.md",
-      "evidence_refs": ["Plans/Prompt_Pipeline.md"],
-      "allowed_contexts": ["Legacy effective-resolution owner-anchor references"],
+      "evidence_refs": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "allowed_contexts": [
+        "Legacy effective-resolution owner-anchor references"
+      ],
       "validator_policy": "warn",
       "replacement_ref": "Plans/Prompt_Pipeline.md",
       "notes": "The anchor is source-lineage shorthand; implementation surfaces should name the owner doc."
+    },
+    {
+      "raw_ref": ".puppet-master/state/active-agents.json",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/storage-plan.md",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "allowed_contexts": [
+        "Compatibility/debug mirror references",
+        "Preserved source-lineage tokens",
+        "Explicit export or corruption-recovery notes"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+      "notes": "Non-canonical debug/export mirror of coordination agent projection; canonical truth is seglog coordination events and redb projections."
+    },
+    {
+      "raw_ref": ".puppet-master/state/agent-messages.json",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/storage-plan.md",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "allowed_contexts": [
+        "Compatibility/debug mirror references",
+        "Preserved source-lineage tokens",
+        "Explicit export or corruption-recovery notes"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+      "notes": "Non-canonical debug/interoperability mirror of crew-board coordination records; canonical truth is EventRecord-backed crew coordination."
+    },
+    {
+      "raw_ref": ".puppet-master/state/verification-{node_id}-end.json",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/storage-plan.md",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "allowed_contexts": [
+        "Compatibility/debug mirror references",
+        "Preserved source-lineage tokens",
+        "Explicit export or corruption-recovery notes"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+      "notes": "Retired source-lineage/debug export for verification result mirrors; canonical truth is runtime verification/receipt records and redb projections."
+    },
+    {
+      "raw_ref": ".puppet-master/state/handoff-validation-{node_id}.json",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/storage-plan.md",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "allowed_contexts": [
+        "Compatibility/debug mirror references",
+        "Preserved source-lineage tokens",
+        "Explicit export or corruption-recovery notes"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+      "notes": "Retired source-lineage/debug export for handoff validation mirrors; canonical truth is runtime verification/receipt records and redb projections."
     }
   ]
 }

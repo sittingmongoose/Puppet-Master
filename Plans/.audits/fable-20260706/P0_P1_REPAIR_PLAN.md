@@ -1,8 +1,9 @@
 # P0/P1 Buildability Repair Plan — FABLE 20260706 Currentness Triage
 
 Generated: 2026-07-07T11:56:40Z
+Updated: 2026-07-07T17:54:01Z for storage/coordination canon repair.
 
-Scope: triage only. No canonical Plans content was repaired in this run.
+Scope: triage plus bounded storage/coordination canon repair. Platform_specs, FileSafe, UI command catalog, wiring matrix, Goal Runtime, Executor Protocol, and broad PlanUnit boilerplate remain out of scope.
 
 ## Current Buildability Reality
 
@@ -12,7 +13,7 @@ Scope: triage only. No canonical Plans content was repaired in this run.
 
 ## Dependency Order
 
-10. `fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb` — **partial_current** — Storage/coordination canon still mixes file-based source-of-truth wording with seglog/redb projection canon.
+10. `fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb` — **repaired_current** — Closed by `STORAGE_COORDINATION_CANON_REPAIR.md` and `storage_coordination_canon_repair_report.json`; active canon now names coordination EventRecord families, redb projections, append/CAS semantics, and debug/export mirror-only `.puppet-master/state/*.json` disposition.
 20. `fable-20260706-p0-platform-specs-authority-drift` — **confirmed_current** — platform_specs authority remains contradictory: assistant-chat still uses it live while Models_System has no replacement field contract.
 30. `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` — **repaired_superseded** — Closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; active canon now pins Slint 1.17.1, Slint/WASM canvas web bootstrap limits, native Rust + Slint `.slint` markup, and `validate-gui-asset-policy` governance coverage.
 40. `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` — **owner_decision_required** — Tier-era config and iteration wording remain live beside node/package/seam/lane canon.
@@ -30,8 +31,8 @@ Scope: triage only. No canonical Plans content was repaired in this run.
 ## Owner-Grouped Repairs
 
 ### Plans/orchestrator-subagent-integration.md
-- `fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb` (P0, Critical, partial_current): FABLE P0 #1: retire OSI-271 file-based canonical coordination and active-agents.json/state-file mechanisms in favor of named seglog/redb records/events plus concurrency/crash contracts.
-  - Repair target: Add validator that rejects active-agents.json/file-based source-of-truth claims outside compatibility/debug-mirror contexts.; Require canonical record/event names and concurrency semantics for coordination state before buildability can pass.
+- `fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb` (P0, Critical, repaired_current): FABLE P0 #1 is closed by `STORAGE_COORDINATION_CANON_REPAIR.md`; OSI-271 and related coordination units now retire file-based canon, and `OSI-432` names the canonical event/projection/mirror contract.
+  - Repair target satisfied: `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are compatibility/debug/export mirrors only; canonical coordination uses `coordination.*` EventRecords plus `coordination_*_projection.v1` redb projections with append/CAS and transactional checkpoint semantics.
 - `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` (P0, High, owner_decision_required): FABLE P0 #4: decide tier vocabulary; reconcile OSI-425/OSI-428/OSI-408 and define the fanout/parallel/cost/retry schema with exact fields/defaults.
   - Repair target: Add a banned-live-vocabulary check for tier-era runtime/config labels unless the row is marked compatibility/source-lineage.; Require SubagentPolicy schema fields, units, and defaults before subagent runtime readiness can pass.
 
