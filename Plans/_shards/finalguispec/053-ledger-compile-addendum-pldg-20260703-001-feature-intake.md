@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L26709-L27166
+Source lines: L26713-L27171
 
-Source SHA256: `b788c81e168d096c1ad7ae242f8539734f138f439804ca862fa26ac3b4576b89`
+Source SHA256: `78b8bff95c32647029957b604e25f475c268cb881d0ab0b32e0cb7d343f180e9`
 
 ---
 
@@ -418,6 +418,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision.
 validation_surfaces:
 - python3 scripts/pm-gui-asset-policy.py
+- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
 - python3 scripts/pm-plans-verify.py verify-spec-lock
 - python3 scripts/pm-plan-index.py validate
 risk_class: gui_platform_currentness_drift

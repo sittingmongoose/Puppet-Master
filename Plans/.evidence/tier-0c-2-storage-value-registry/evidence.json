@@ -13,17 +13,17 @@
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "40c1e6887ff22548ed12ea2c7b3b77b1c91d00c2814927ec8c370e465f4c3882"
+      "sha256": "f68ec590863704cc33fa637e2f1d9ece326ebab8ad568076965612cb4097dc95"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "7e7daed588005d20625868defa468427fb7fea47cf734fdbfb406a3c60a46215"
+      "sha256": "a21a540bbcbe452cc59e2174c81d90eebf55ab5eee62f080a9f9ecc622a1412f"
     },
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a35d683b62cae6e9405475986e55c15bc6af59165d1bd5ab775e35d7d6e1d253"
+      "sha256": "5899047505683d85b21d8f9dc60a9e319eb4aefc056ac5fe91b7b0ef00ac4606"
     }
   ],
   "checks": [
@@ -61,6 +61,11 @@
       "name": "gui-platform-currentness-repair",
       "result": "PASS",
       "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
+    },
+    {
+      "name": "gui-platform-hardening-repair",
+      "result": "PASS",
+      "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
     }
   ],
   "commands_run": [
@@ -107,6 +112,11 @@
     {
       "cmd": "git diff --check",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
     }
   ],
   "contract_refs_satisfied": [

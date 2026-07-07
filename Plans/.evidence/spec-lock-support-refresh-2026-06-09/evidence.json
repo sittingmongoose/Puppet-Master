@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a35d683b62cae6e9405475986e55c15bc6af59165d1bd5ab775e35d7d6e1d253"
+      "sha256": "5899047505683d85b21d8f9dc60a9e319eb4aefc056ac5fe91b7b0ef00ac4606"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -18,7 +18,7 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "fdcd4cbd48468a783cbef789ddb06ebcc050eb71d69384f6a22cf80230ebf847"
+      "sha256": "f9b56f64de6207653e17bd53431a4283808a43678f2dc7efa0413db500ae88be"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -277,6 +277,11 @@
       "name": "gui-platform-currentness-repair",
       "result": "PASS",
       "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
+    },
+    {
+      "name": "gui-platform-hardening-repair",
+      "result": "PASS",
+      "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
     }
   ],
   "commands_run": [
@@ -476,6 +481,11 @@
     {
       "cmd": "python3 scripts/pm-prd-planning-runtime-validate.py",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
     }
   ],
   "contract_refs_satisfied": [

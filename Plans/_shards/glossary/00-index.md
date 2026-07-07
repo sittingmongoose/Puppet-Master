@@ -1,6 +1,6 @@
 # Shard Index: Plans/Glossary.md
 
-Generated: 2026-07-07T14:27:50Z
+Generated: 2026-07-07T16:57:08Z
 
 Source SHA256: `3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5`
 

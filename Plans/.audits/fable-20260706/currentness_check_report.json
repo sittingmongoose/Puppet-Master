@@ -78,6 +78,20 @@
       "real_location_and_non_placeholder_event_count": 35
     }
   },
+  "effective_supersessions": [
+    {
+      "finding_key": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+      "reason": "Slint 1.17.1 is active in Spec_Lock and GUI owner docs; Slint/WASM bootstrap boundaries and validate-gui-asset-policy were added as hardening coverage.",
+      "repair_required": false,
+      "status": "repaired_superseded",
+      "superseded_at_utc": "2026-07-07T16:51:26Z",
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/GUI_PLATFORM_CURRENTNESS_REPAIR.md",
+        "Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md",
+        "Plans/.audits/fable-20260706/gui_platform_hardening_repair_report.json"
+      ]
+    }
+  ],
   "gate_change_recommendation_summary": [
     "Fail buildability when production wiring rows are still pre-implementation contracts or use placeholder *.command_applied events.",
     "Fail buildability when launch-chain commands lack render/control, dispatcher, receipt/event, state-selector, disabled-reason, and regression evidence.",
@@ -127,18 +141,26 @@
     },
     {
       "blocker_family": "currentness",
-      "classification": "owner_decision_required",
+      "classification": "repaired_superseded",
+      "closure_status": "repair_validated",
       "dependency_order": 30,
       "finding_key": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+      "notes": "Historical stale evidence is preserved in this report, but this finding is no longer open in the effective projection.",
       "owner_docs": [
         "Plans/Spec_Lock.json",
         "Plans/FinalGUISpec.md",
         "Plans/PMConcept_Control_Reconciliation.json"
       ],
       "priority": "P0",
-      "repair_required": true,
+      "repair_required": false,
       "source_severity": "High",
-      "title": "Spec_Lock still pins Slint 1.15.1 while FinalGUISpec pins Slint 1.17.0 verified 2026-07-02."
+      "superseded_at_utc": "2026-07-07T16:51:26Z",
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/GUI_PLATFORM_CURRENTNESS_REPAIR.md",
+        "Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md",
+        "Plans/.audits/fable-20260706/gui_platform_hardening_repair_report.json"
+      ],
+      "title": "GUI toolkit truth closed: active canon pins Slint 1.17.1 and hardens Slint/WASM/no-emoji policy gates."
     },
     {
       "blocker_family": "owner_routing",

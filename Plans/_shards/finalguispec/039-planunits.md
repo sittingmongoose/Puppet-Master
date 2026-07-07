@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L3759-L24601
+Source lines: L3759-L24605
 
-Source SHA256: `b788c81e168d096c1ad7ae242f8539734f138f439804ca862fa26ac3b4576b89`
+Source SHA256: `78b8bff95c32647029957b604e25f475c268cb881d0ab0b32e0cb7d343f180e9`
 
 ---
 
@@ -1472,8 +1472,11 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  The GUI implementation does not use React, JavaScript, TypeScript, HTML, or CSS; the entire GUI
-  is Rust plus Slint markup.
+  The native desktop GUI does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered
+  product UI; it is Rust + Slint `.slint` markup. The Slint/WASM web target may use only minimal
+  HTML/canvas bootstrap and generated/minimal JavaScript glue to load the Slint WASM canvas client,
+  attach assets and canvas, and connect to approved local services; it must not become an HTML/CSS/JS
+  product shell.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -1481,13 +1484,14 @@ split_recommended: false
 depends_on: []
 unblocks: []
 acceptance_criteria:
-- "The covered source span remains losslessly available for exact-text audit."
-- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
-- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Native desktop GUI source remains Rust + Slint `.slint` markup and does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered product UI."
+- "Slint/WASM web GUI source uses only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client, attach assets and canvas, and connect to approved local services."
+- "HTML/CSS/JS product shell, React product UI, Tauri product UI, and DOM-rendered product UI remain forbidden for both native desktop and web product surfaces."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
 - "python3 scripts/pm-plan-index.py validate"
+- "python3 scripts/pm-plans-verify.py validate-gui-asset-policy"
 risk_class: finalgui_drift
 reasoning_tier: standard
 context_scope: finalgui_standardization
@@ -1499,14 +1503,14 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0025"
 preserved_exact_tokens:
-- "No React"
-- "JavaScript"
-- "TypeScript"
-- "HTML"
-- "CSS"
+- "No React/Tauri/DOM-rendered product UI"
+- "minimal HTML/canvas bootstrap"
+- "generated/minimal JavaScript glue"
+- "HTML/CSS/JS product shell"
 - "Rust + Slint `.slint` markup"
 negative_constraints:
-- "React, JavaScript, TypeScript, HTML, and CSS are not used for the GUI implementation."
+- "React, Tauri, DOM-rendered product UI, and HTML/CSS/JS product shells are not used for the GUI implementation."
+- "The Slint/WASM web target may not expand its bootstrap HTML/canvas and generated/minimal JavaScript glue into a product UI shell."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

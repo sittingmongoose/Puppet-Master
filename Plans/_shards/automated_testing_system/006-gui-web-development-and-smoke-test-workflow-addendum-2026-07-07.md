@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L97-L311
+Source lines: L97-L312
 
-Source SHA256: `567dbf2107e47a32484038605a1443291b7f409543e8f8ae78350afa4db15397`
+Source SHA256: `dc6bbd08ba743899b05f7b1c013c133f4ca919cbf2e04068a2403fd6aac0330a`
 
 ---
 
@@ -39,6 +39,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec.
 validation_surfaces:
 - python3 scripts/pm-gui-asset-policy.py
+- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
 - python3 scripts/pm-plans-verify.py validate-implementation-readiness
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: web_gui_dev_test_authority_leak

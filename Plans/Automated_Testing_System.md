@@ -125,6 +125,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec.
 validation_surfaces:
 - python3 scripts/pm-gui-asset-policy.py
+- python3 scripts/pm-plans-verify.py validate-gui-asset-policy
 - python3 scripts/pm-plans-verify.py validate-implementation-readiness
 - python3 scripts/pm-plans-verify.py run-gates
 risk_class: web_gui_dev_test_authority_leak

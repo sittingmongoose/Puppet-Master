@@ -2114,6 +2114,69 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
     )
 
 
+def cmd_validate_gui_asset_policy(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+    validator = ROOT / "scripts/pm-gui-asset-policy.py"
+    if not validator.exists():
+        return report_status("validate-gui-asset-policy", [{"path": rel(validator), "error": "missing_gui_asset_policy_validator"}])
+
+    proc = subprocess.run(
+        [sys.executable, str(validator), "validate"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    raw_report: dict[str, Any] = {}
+    try:
+        parsed = json.loads(proc.stdout)
+        if isinstance(parsed, dict):
+            raw_report = parsed
+        else:
+            failures.append({"path": rel(validator), "error": "gui_asset_policy_report_not_object"})
+    except json.JSONDecodeError as exc:
+        failures.append(
+            {
+                "path": rel(validator),
+                "error": "gui_asset_policy_report_invalid_json",
+                "detail": str(exc),
+                "stdout_excerpt": proc.stdout[:500],
+            }
+        )
+
+    raw_status = raw_report.get("status")
+    if raw_status not in {"pass", "not_applicable"}:
+        failures.append(
+            {
+                "path": rel(validator),
+                "error": "gui_asset_policy_failed",
+                "status": raw_status,
+                "policy_state": raw_report.get("policy_state"),
+                "failures": raw_report.get("failures", [])[:50] if isinstance(raw_report.get("failures"), list) else [],
+            }
+        )
+    if proc.returncode != 0 and raw_status in {"pass", "not_applicable"}:
+        failures.append(
+            {
+                "path": rel(validator),
+                "error": "gui_asset_policy_exit_nonzero_with_passing_status",
+                "returncode": proc.returncode,
+            }
+        )
+
+    report = report_status(
+        "validate-gui-asset-policy",
+        failures,
+        raw_status=raw_status,
+        policy_state=raw_report.get("policy_state"),
+        checked_files=raw_report.get("checked_files"),
+        source_roots=raw_report.get("source_roots"),
+        warning_count=len(raw_report.get("warnings", [])) if isinstance(raw_report.get("warnings"), list) else 0,
+    )
+    if proc.stderr:
+        report["stderr"] = proc.stderr
+    return report
+
+
 def cmd_validate_bootstrap_ledgers(args: argparse.Namespace) -> dict[str, Any]:
     ledger_root = PLANS / "ledgers/v2"
     requested_ids = getattr(args, "ledger_id", []) or []
@@ -2530,6 +2593,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
+        ("validate_gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
         ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
         ("validate_audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("validate_audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -2571,6 +2635,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
+        ("gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
         ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
         ("audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -2601,6 +2666,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         runtime_artifact_schemas=compact_gate_report(check_map["runtime_artifact_schemas"]),
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
+        gui_asset_policy=compact_gate_report(check_map["gui_asset_policy"]),
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
         audit_status_index=compact_gate_report(check_map["audit_status_index"]),
@@ -2626,6 +2692,7 @@ COMMANDS = {
     "validate-runtime-artifact-schemas": cmd_validate_runtime_artifact_schemas,
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
+    "validate-gui-asset-policy": cmd_validate_gui_asset_policy,
     "validate-wiring-matrix": cmd_validate_wiring_matrix,
     "validate-bootstrap-ledgers": cmd_validate_bootstrap_ledgers,
     "validate-audit-closure": cmd_validate_audit_closure,

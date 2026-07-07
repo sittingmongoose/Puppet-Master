@@ -22,6 +22,11 @@ SOURCE_ROOTS = [
     "web",
     "wasm",
     "native",
+    "assets",
+    "resources",
+    "tests",
+    "fixtures",
+    "snapshots",
 ]
 SOURCE_EXTENSIONS = {
     ".slint",
@@ -35,7 +40,9 @@ SOURCE_EXTENSIONS = {
     ".svg",
     ".json",
     ".toml",
+    ".snap",
 }
+GUI_POLICY_TRIGGER_EXTENSIONS = SOURCE_EXTENSIONS - {".json", ".toml", ".snap"}
 TEXT_EXTENSIONS = SOURCE_EXTENSIONS - {".svg", ".json", ".toml"}
 EXCLUDED_DIRS = {
     ".git",
@@ -69,11 +76,38 @@ REMOTE_ICON_RE = re.compile(
     r"cdn\.jsdelivr|unpkg|cdnjs|fonts\.googleapis|fonts\.gstatic)",
     re.IGNORECASE,
 )
+ALLOWED_SVG_NAMESPACE_URLS = {
+    "http://www.w3.org/2000/svg",
+    "https://www.w3.org/2000/svg",
+    "http://www.w3.org/1999/xlink",
+    "https://www.w3.org/1999/xlink",
+}
 ICON_ONLY_RE = re.compile(r"\bIconButton\b|\bicon_id\b|\bicon-id\b", re.IGNORECASE)
 ACCESSIBLE_LABEL_RE = re.compile(
     r"accessible[-_ ]?label|aria-label|tooltip|semantic_label|fallback_text|\blabel\s*[:=]",
     re.IGNORECASE,
 )
+ICON_ID_REF_RE = re.compile(
+    r"(?:\bicon[_-]id\b|[\"']icon_id[\"'])\s*(?:[:=]|\()\s*[\"']([A-Za-z0-9_.:-]+)[\"']",
+    re.IGNORECASE,
+)
+PSEUDO_ICON_CHARS = {
+    "\u00d7",  # multiplication sign often used as a close icon
+    "\u2022",  # bullet
+    "\u2023",
+    "\u203a",
+    "\u2039",
+    "\u2043",
+    "\u204c",
+    "\u204d",
+    "\u2212",
+    "\u2303",
+    "\u2318",
+    "\u2325",
+    "\u2326",
+    "\u232b",
+    "\u238b",
+}
 
 
 def rel(path: Path) -> str:
@@ -107,6 +141,31 @@ def iter_source_files(roots: list[Path]) -> list[Path]:
     return sorted(set(files))
 
 
+def file_has_gui_policy_trigger(path: Path) -> bool:
+    suffix = path.suffix.lower()
+    if suffix in GUI_POLICY_TRIGGER_EXTENSIONS:
+        return True
+    if suffix not in {".json", ".toml", ".snap"}:
+        return False
+    if path.name == "icon_manifest.json":
+        return True
+    try:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return False
+    return any(
+        token in text
+        for token in [
+            "icon_id",
+            "icon-id",
+            "IconButton",
+            "aria-label",
+            "accessible_label",
+            "fallback_text",
+        ]
+    ) or any(line_has_forbidden_remote_icon(line) for line in text.splitlines())
+
+
 def codepoint_is_pictographic(value: int) -> bool:
     # Conservative Extended_Pictographic-style guard for GUI source. It includes
     # emoji blocks plus common symbolic pseudo-icon ranges.
@@ -122,6 +181,19 @@ def codepoint_is_pictographic(value: int) -> bool:
     return any(start <= value <= end for start, end in ranges)
 
 
+def char_is_pseudo_icon(char: str) -> bool:
+    return char in PSEUDO_ICON_CHARS or codepoint_is_pictographic(ord(char))
+
+
+def line_has_forbidden_remote_icon(line: str) -> bool:
+    for match in REMOTE_ICON_RE.finditer(line):
+        url = match.group(0)
+        if url in ALLOWED_SVG_NAMESPACE_URLS:
+            continue
+        return True
+    return False
+
+
 def scan_text_policy(path: Path, failures: list[dict[str, Any]]) -> None:
     try:
         text = path.read_text(encoding="utf-8")
@@ -130,7 +202,7 @@ def scan_text_policy(path: Path, failures: list[dict[str, Any]]) -> None:
 
     for line_no, line in enumerate(text.splitlines(), 1):
         for char in line:
-            if codepoint_is_pictographic(ord(char)):
+            if char_is_pseudo_icon(char):
                 failures.append(
                     {
                         "path": rel(path),
@@ -141,7 +213,7 @@ def scan_text_policy(path: Path, failures: list[dict[str, Any]]) -> None:
                     }
                 )
                 break
-        if REMOTE_ICON_RE.search(line):
+        if line_has_forbidden_remote_icon(line):
             failures.append(
                 {
                     "path": rel(path),
@@ -207,7 +279,11 @@ def resolve_manifest_icon_path(manifest_path: Path, value: str) -> Path:
 
 def validate_svg_manifest(files: list[Path], failures: list[dict[str, Any]], warnings: list[str]) -> None:
     svg_files = [path for path in files if path.suffix.lower() == ".svg"]
-    icon_references = [path for path in files if path.suffix.lower() in TEXT_EXTENSIONS and path.read_text(encoding="utf-8", errors="ignore").find("icon_id") >= 0]
+    icon_references = [
+        path
+        for path in files
+        if path.suffix.lower() != ".svg" and path.read_text(encoding="utf-8", errors="ignore").find("icon_id") >= 0
+    ]
     if not svg_files and not icon_references:
         return
 
@@ -307,17 +383,34 @@ def validate_svg_manifest(files: list[Path], failures: list[dict[str, Any]], war
                 }
             )
 
+    for reference_path in icon_references:
+        text = reference_path.read_text(encoding="utf-8", errors="ignore")
+        for line_no, line in enumerate(text.splitlines(), 1):
+            for match in ICON_ID_REF_RE.finditer(line):
+                icon_id = match.group(1)
+                if icon_id not in icon_ids:
+                    failures.append(
+                        {
+                            "path": rel(reference_path),
+                            "line": line_no,
+                            "policy": "icon_id_reference_missing_manifest_entry",
+                            "icon_id": icon_id,
+                            "message": "Every icon_id reference must resolve to an icon manifest entry.",
+                        }
+                    )
+
     if not entries:
         warnings.append(f"{rel(manifest_path)} exists but contains no icon entries.")
 
 
 def build_report(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     roots = source_roots(args.source_root)
-    files = iter_source_files(roots)
+    discovered_files = iter_source_files(roots)
+    files = [path for path in discovered_files if file_has_gui_policy_trigger(path)]
     failures: list[dict[str, Any]] = []
     warnings: list[str] = []
 
-    if not roots or not files:
+    if not files:
         report = {
             "schema_id": "pm.gui_asset_policy_report.v1",
             "status": "not_applicable",
@@ -350,6 +443,9 @@ def build_report(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "validate":
+        argv = argv[1:]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--source-root",

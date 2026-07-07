@@ -1532,7 +1532,7 @@
         "future onboarding/Health/Planning Wizard acceptance tests",
         "future vision bridge tests"
       ],
-      "line_count": 1847,
+      "line_count": 1848,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 23,
       "plan_unit_ids": [
@@ -1585,7 +1585,7 @@
         "weak_test_oracle",
         "web_gui_dev_test_authority_leak"
       ],
-      "sha256": "567dbf2107e47a32484038605a1443291b7f409543e8f8ae78350afa4db15397",
+      "sha256": "dc6bbd08ba743899b05f7b1c013c133f4ca919cbf2e04068a2403fd6aac0330a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 23
@@ -1620,6 +1620,7 @@
         "python3 scripts/pm-gui-asset-policy.py",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts"
@@ -4956,7 +4957,7 @@
         "future run control UI",
         "scripts/pm-gui-asset-policy.py"
       ],
-      "line_count": 27166,
+      "line_count": 27171,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 417,
       "plan_unit_ids": [
@@ -5421,7 +5422,7 @@
         "user_visible_config_drift",
         "visualizer_script_policy_drift"
       ],
-      "sha256": "b788c81e168d096c1ad7ae242f8539734f138f439804ca862fa26ac3b4576b89",
+      "sha256": "78b8bff95c32647029957b604e25f475c268cb881d0ab0b32e0cb7d343f180e9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 416,
@@ -5482,6 +5483,7 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
         "python3 scripts/pm-plans-verify.py verify-spec-lock"
       ]
     },
@@ -13305,7 +13307,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-07T14:27:11Z",
+  "generated_at_utc": "2026-07-07T16:56:04Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

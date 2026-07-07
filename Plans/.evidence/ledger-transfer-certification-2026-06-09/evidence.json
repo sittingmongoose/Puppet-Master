@@ -150,6 +150,11 @@
       "name": "gui-platform-currentness-repair",
       "result": "PASS",
       "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
+    },
+    {
+      "name": "gui-platform-hardening-repair",
+      "result": "PASS",
+      "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
     }
   ],
   "commands_run": [
@@ -313,6 +318,11 @@
     {
       "cmd": "python3 scripts/pm-prd-planning-runtime-validate.py",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
     }
   ],
   "contract_refs_satisfied": [
