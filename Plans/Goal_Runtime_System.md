@@ -2275,6 +2275,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 - Approve And Build records an approval CAS receipt and fails closed when final-review currentness inputs drift.
 - The PlanCompileRun identity is created or returned synchronously; projection identity reconciliation cannot be the source of run identity truth.
+- "`cmd.runtime.approve` consumes canonical approval/currentness inputs, records UICommandResponse and approval/dispatch receipt refs, and emits only canonical runtime events or explicit receipts, never `runtime.command_applied`."
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
@@ -2956,13 +2957,13 @@ priority: P1
 finding_family: Third-party agent import, continuation, and session provenance
 target_docs:
 - Goal_Runtime_System.md
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Provider_OpenCode.md
 - MCP_Integration.md
 - FinalGUISpec.md
 owner_hints:
 - Goal_Runtime_System.md
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Provider_OpenCode.md
 - MCP_Integration.md
 - FinalGUISpec.md

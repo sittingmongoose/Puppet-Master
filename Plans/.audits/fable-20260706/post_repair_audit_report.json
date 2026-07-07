@@ -17,14 +17,24 @@
     "sfk-25f560042a5c9ae441d0ff94",
     "fable-20260706-p1-goal-runtime-event-payload-minima",
     "sfk-f0482f87ab39247ff397968f",
-    "fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section"
+    "fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section",
+    "sfk-786b4d3818ded90e6dbf2449",
+    "fable-20260706-p1-ui-command-catalog-missing-families",
+    "sfk-aec7779a63d5cab9f4fafa9d",
+    "fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events",
+    "sfk-9983364f21e71fcdcf626a35",
+    "fable-20260706-p1-launch-approval-chain-preimplementation-proof",
+    "sfk-550935b67e77925470fd303c",
+    "fable-20260706-p1-missing-referenced-docs-and-openrefs",
+    "sfk-591be68b33c8b9df6b78e3b2",
+    "fable-20260706-p1-progression-gates-registry-and-run-gates-coverage"
   ],
-  "evidence_summary": "GUI toolkit currentness, storage/coordination canon, platform_specs authority, FileSafe fail-closed security, and the contract-runtime core super-slice are repaired in the FABLE closure matrix. UI command catalog, wiring matrix, launch approval implementation proof, missing docs, progression-gate coverage, broad PlanUnit boilerplate, runtime certification, and buildability proof remain out of this bounded repair.",
-  "generated_at_utc": "2026-07-07T21:35:04Z",
-  "ledger_id": "contract-runtime-core-repair-20260707",
-  "observation_ref": "contract_runtime_core_repair",
+  "evidence_summary": "GUI toolkit currentness, storage/coordination canon, platform_specs authority, FileSafe fail-closed security, contract-runtime core, and the GUI command/wiring/gate/openref slice are repaired in the FABLE closure matrix. Broad PlanUnit boilerplate, runtime certification, unrelated mechanical findings, and buildability proof remain out of scope.",
+  "generated_at_utc": "2026-07-07T22:45:00Z",
+  "ledger_id": "gui-command-wiring-gate-repair-20260707",
+  "observation_ref": "gui_command_wiring_gate_repair",
   "repair_required_count": 0,
   "schema_id": "pm.post_repair_audit_report.v1",
   "status": "PASS",
-  "subject_ref": "Plans/Contracts_V0.md::fable_contract_runtime_core_schema_closure"
+  "subject_ref": "Plans/UI_Command_Catalog.md::fable_gui_command_wiring_gate_repair"
 }

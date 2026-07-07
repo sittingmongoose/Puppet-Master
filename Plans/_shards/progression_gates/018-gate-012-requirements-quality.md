@@ -1,10 +1,10 @@
-# Shard 016: GATE-012 -- Requirements quality
+# Shard 018: GATE-012 -- Requirements quality
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L382-L436
+Source lines: L427-L481
 
-Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
+Source SHA256: `8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33`
 
 ---
 
@@ -56,7 +56,7 @@ Required evidence:
     - Unblock/re-run evidence (required before progression resumes from BLOCKED): subsequent report shows `needs_user_clarification[] == []` and `verdict == "PASS"`.
    ContractRef: SchemaID:evidence.schema.json, Gate:GATE-012, ContractName:Plans/assistant-chat-design.md, PolicyRule:Decision_Policy.md§6
 
-**Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after traceability artifact generation is integrated.
+**Script enforcement status:** `manual_pending_requirements_quality_tooling`. Owner docs are `Plans/Progression_Gates.md`, `Plans/Decision_Policy.md`, and `Plans/assistant-chat-design.md`. `run-gates` passing is not a GATE-012 PASS claim until a validator explicitly checks the live requirements quality report, blocked escalation evidence, redaction evidence, and unblock/re-run evidence above.
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, Gate:GATE-012, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§6, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
 

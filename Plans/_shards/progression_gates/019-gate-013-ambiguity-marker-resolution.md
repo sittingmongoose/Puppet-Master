@@ -1,10 +1,10 @@
-# Shard 017: GATE-013 -- Ambiguity marker resolution
+# Shard 019: GATE-013 -- Ambiguity marker resolution
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L437-L479
+Source lines: L482-L524
 
-Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
+Source SHA256: `8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33`
 
 ---
 
@@ -44,7 +44,7 @@ Required evidence:
   - Schema validation of each referenced `auto_decisions.jsonl` row against `pm.auto_decisions.schema.v1`  
   ContractRef: SchemaID:evidence.schema.json
 
-**Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after traceability artifact generation is integrated.
+**Script enforcement status:** `manual_pending_ambiguity_marker_tooling`. Owner docs are `Plans/Progression_Gates.md`, `Plans/Decision_Policy.md`, and `Plans/Project_Output_Artifacts.md`. `run-gates` passing is not a GATE-013 PASS claim until a validator explicitly scans the live generated project artifacts and validates matching schema-valid auto-decision rows.
 
 ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evidence.schema.json, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Project_Output_Artifacts.md
 

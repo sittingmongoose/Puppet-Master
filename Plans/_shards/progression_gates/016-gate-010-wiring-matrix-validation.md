@@ -1,10 +1,10 @@
-# Shard 014: GATE-010 -- Wiring matrix validation
+# Shard 016: GATE-010 -- Wiring matrix validation
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L311-L336
+Source lines: L350-L381
 
-Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
+Source SHA256: `8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33`
 
 ---
 
@@ -18,6 +18,9 @@ The gate must fail when any of the following are true:
 - a deprecated alias is treated as an independent canonical command
 - a routed command bypasses the canonical `route_target` / `OpenSubject` contract family
 - routing-adjacent owner docs contain unresolved spec-integrity defects that make route/open verification ambiguous or contradictory
+- production rows use generic `Cataloged GUI surface` locations when concrete owner surfaces exist
+- production rows emit fabricated placeholder events such as `*.command_applied`
+- catalog namespace roots appear as production rows instead of explicit concrete commands or exact parser-artifact exclusions
 - a command row claims layout-only semantics while actually targeting a runtime object, usage object, or cross-surface focus action
 - a command/action payload still keys approval or usage correlation by `request_id` or `tier_id` where blocked/runtime or usage identity is canonical
 - command-family expansion is a broad-pass change: Source Control `git*`, GitHub Actions `actions*`, Docker Manager, and Docker `/registry/Kubernetes` command-family additions also require wiring-matrix expansion and renewed `GATE-010` coverage
@@ -34,3 +37,6 @@ Evidence for this gate must capture:
 - failure reason when the row is invalid
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/evidence.schema.json, ContractName:Plans/Wiring_Matrix.schema.json
+---
+
+<a id="GATE-011"></a>

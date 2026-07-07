@@ -37,6 +37,7 @@ depends_on: []
 unblocks: []
 acceptance_criteria:
 - The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- "`cmd.prd_builder.approve_for_planning_wizard` carries PRD Pack id/version/hash, source manifest hash, approval actor, currentness refs, idempotency key, projected availability, disabled reason, and a handoff receipt without emitting fabricated command_applied events."
 - Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 validation_surfaces:

@@ -1,6 +1,6 @@
 # Shard Index: Plans/MCP_Integration.md
 
-Generated: 2026-07-07T21:36:37Z
+Generated: 2026-07-07T22:36:27Z
 
 Source SHA256: `39e56d792e720650e1f08d19e939eb0793a918ac26b8df903fe39dd1f5837f0c`
 

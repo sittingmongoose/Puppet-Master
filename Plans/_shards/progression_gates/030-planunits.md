@@ -1,10 +1,10 @@
-# Shard 028: PlanUnits
+# Shard 030: PlanUnits
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L648-L3366
+Source lines: L693-L3414
 
-Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
+Source SHA256: `8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33`
 
 ---
 
@@ -1489,7 +1489,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Progression_Gates.md
 canonical_text: >-
-  GATE-011 evidence must include machine-readable check entries and failure-detail arrays; script enforcement remains future traceability-tooling work.
+  GATE-011 evidence must include machine-readable check entries and failure-detail arrays; script enforcement is manual_pending_traceability_tooling with named owner docs until a validator checks live requirements coverage artifacts.
 gui_related: false
 gui_classification_reason: >-
   This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
@@ -1499,6 +1499,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "GATE-011 Evidence And Enforcement Status remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "GATE-011 has owners for its manual-pending status and cannot be reported as PASS from run-gates alone."
   - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -1638,7 +1639,7 @@ unit_type: validation_rule
 status: accepted
 owner_doc: Plans/Progression_Gates.md
 canonical_text: >-
-  GATE-012 evidence must classify state from verdict plus needs_user_clarification[], include blocked escalation and redaction evidence, and require a later PASS report before progression resumes.
+  GATE-012 evidence must classify state from verdict plus needs_user_clarification[], include blocked escalation and redaction evidence, require a later PASS report before progression resumes, and remain manual_pending_requirements_quality_tooling with named owner docs until live requirements quality tooling is integrated.
 gui_related: true
 gui_classification_reason: >-
   This unit includes UI escalation evidence and blocked-state presentation validation.
@@ -1649,6 +1650,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "GATE-012 Evidence And Re-Run remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "GATE-012 has owners for its manual-pending status and cannot be reported as PASS from run-gates alone."
   - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -1742,7 +1744,7 @@ unit_type: validation_rule
 status: accepted
 owner_doc: Plans/Progression_Gates.md
 canonical_text: >-
-  GATE-013 detection scans project artifacts, extracts marker IDs, validates matching decisions, and records grep plus decision evidence.
+  GATE-013 detection scans project artifacts, extracts marker IDs, validates matching decisions, records grep plus decision evidence, and remains manual_pending_ambiguity_marker_tooling with named owner docs until live generated artifact scanning is integrated.
 gui_related: false
 gui_classification_reason: >-
   This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
@@ -1752,6 +1754,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "GATE-013 Detection And Evidence remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "GATE-013 has owners for its manual-pending status and cannot be reported as PASS from run-gates alone."
   - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:

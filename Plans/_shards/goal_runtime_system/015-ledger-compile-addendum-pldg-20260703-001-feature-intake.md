@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L2393-L3113
+Source lines: L2394-L3114
 
-Source SHA256: `6ae31015d29f6c61c2ae83a8c97dabe16bfce362fae59ec3e0eaa0d3ebfb3458`
+Source SHA256: `c364c8a56534bfa55e15d74218dac25322c02987445aec5d2980f4bc89f62fec`
 
 ---
 
@@ -574,13 +574,13 @@ priority: P1
 finding_family: Third-party agent import, continuation, and session provenance
 target_docs:
 - Goal_Runtime_System.md
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Provider_OpenCode.md
 - MCP_Integration.md
 - FinalGUISpec.md
 owner_hints:
 - Goal_Runtime_System.md
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Provider_OpenCode.md
 - MCP_Integration.md
 - FinalGUISpec.md

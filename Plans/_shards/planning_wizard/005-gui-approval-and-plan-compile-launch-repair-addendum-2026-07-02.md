@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L97-L1139
+Source lines: L97-L1140
 
-Source SHA256: `7985705efd82ad41a95b883fee67580fde2b51fb3218dd4fa672d79bfcd2c421`
+Source SHA256: `a2ac3668827960ebcc4362263a03a0d86723f955bb8869095086a27aa9f0335a`
 
 ---
 
@@ -731,6 +731,7 @@ acceptance_criteria:
 - The final review shows the exact pack, PlanningRun revision, topic map version, project-context hash, PlanUnit and acceptance-unit index hashes, testing policy hash, and final audit/closure hash used by approval.
 - Approve And Build fails closed when any displayed approval input changes before the approval commit.
 - Approval writes an approval CAS receipt and synchronously creates or binds exactly one PlanCompileRun identity.
+- "`cmd.planning_wizard.approve_and_build` exposes projected availability, disabled reason, UICommandResponse, approval receipt, and canonical PlanApproved/PlanCompileRun-created-or-bound effects without emitting fabricated command_applied events."
 - Embedded execution_unit_context payloads, if present, carry schema_version and follow the Executor-owned schema.
 - Duplicate approval delivery with the same idempotency key and CAS inputs returns the existing PlanCompileRun.
 validation_surfaces:

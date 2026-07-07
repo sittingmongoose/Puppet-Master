@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1459-L1528
+Source lines: L1460-L1530
 
-Source SHA256: `7985705efd82ad41a95b883fee67580fde2b51fb3218dd4fa672d79bfcd2c421`
+Source SHA256: `a2ac3668827960ebcc4362263a03a0d86723f955bb8869095086a27aa9f0335a`
 
 ---
 
@@ -40,6 +40,7 @@ acceptance_criteria:
   - Planning Wizard distinguishes Captured, Plan-complete, and Buildable states.
   - Approve And Build is disabled whenever buildability_gate_passed is false.
   - The disabled reason lists currently open blocker families and exact owner docs from Plans/.implementation_readiness/buildability_gate_report.json.
+  - The production final-review control projects availability and disabled reason through the wiring matrix and cannot emit PlanApproved while buildability_gate_passed is false.
   - PNC-019 appears as a hard disabled reason while node readiness remains blocked_runtime_certification_incomplete.
   - PNC-019 bootstrap authority does not enable ordinary product Approve And Build or suppress open blocker-family disabled reasons.
   - Closed or accepted_risk readiness-blocker rows may remain as historical evidence without keeping Approve And Build disabled.

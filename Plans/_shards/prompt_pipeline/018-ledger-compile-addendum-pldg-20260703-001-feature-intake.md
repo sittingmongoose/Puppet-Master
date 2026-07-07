@@ -4,7 +4,7 @@ Source: `Plans/Prompt_Pipeline.md`
 
 Source lines: L4014-L5016
 
-Source SHA256: `a3660ba6d7c9fa3f2e8d7cf7b481d31cc2f1bd584d2367fe58790b47d17d5d6f`
+Source SHA256: `7058487b8665c45ef7a5394a271e4a7a64d6e5c76760abdbd7ed82f1512a8ac0`
 
 ---
 
@@ -786,14 +786,14 @@ source_row_id: P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
 priority: P1
 finding_family: AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling
 target_docs:
-- Context_Management.md
-- Skill_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/Skills_System.md
 - Goal_Runtime_System.md
 - Models_System.md
 - Contracts_V0.md
 owner_hints:
-- Context_Management.md
-- Skill_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/Skills_System.md
 - Goal_Runtime_System.md
 - Models_System.md
 - Contracts_V0.md

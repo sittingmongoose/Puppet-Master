@@ -4,7 +4,7 @@ Source: `Plans/Automated_Testing_System.md`
 
 Source lines: L1716-L1848
 
-Source SHA256: `dc6bbd08ba743899b05f7b1c013c133f4ca919cbf2e04068a2403fd6aac0330a`
+Source SHA256: `ec775dbc769757d01fd7586b2b7909f4e277de25c1a78eff0323a71794a4b563`
 
 ---
 
@@ -121,12 +121,12 @@ source_row_id: P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS
 priority: P1
 finding_family: Terminal parser/rendering fuzzing, replay corpora, error injection, and giant-output recordings
 target_docs:
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Automated_Testing_System.md
 - Runtime_Artifacts_Panel.md
 - Contracts_V0.md
 owner_hints:
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Automated_Testing_System.md
 - Runtime_Artifacts_Panel.md
 - Contracts_V0.md

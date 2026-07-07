@@ -9072,12 +9072,12 @@ source_row_id: P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
 priority: P1
 finding_family: 'Terminal side channels: pasteboard, one-time codes, drag/drop, file URLs, and OS autofill'
 target_docs:
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - FinalGUISpec.md
 - Permissions_System.md
 - FileSafe.md
 owner_hints:
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - FinalGUISpec.md
 - Permissions_System.md
 - FileSafe.md

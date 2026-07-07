@@ -1,10 +1,10 @@
-# Shard 030: Ledger Compile Addendum - pldg-20260614-002
+# Shard 032: Ledger Compile Addendum - pldg-20260614-002
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L3380-L3424
+Source lines: L3428-L3472
 
-Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
+Source SHA256: `8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33`
 
 ---
 

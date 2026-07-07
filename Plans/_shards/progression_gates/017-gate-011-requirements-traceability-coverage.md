@@ -1,10 +1,10 @@
-# Shard 015: GATE-011 -- Requirements traceability coverage
+# Shard 017: GATE-011 -- Requirements traceability coverage
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L337-L381
+Source lines: L382-L426
 
-Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
+Source SHA256: `8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33`
 
 ---
 
@@ -46,7 +46,7 @@ ContractRef: Gate:GATE-011
   - Evidence payload MUST include machine-readable failure detail fields for each check (for example `missing_in_md_ids[]`, `missing_in_json_ids[]`, `uncovered_requirement_ids[]`, `orphaned_refs[]`, `uncovered_acceptance_ids[]`, `missing_node_mapping_req_ids[]`, `missing_acceptance_mapping_req_ids[]`); all lists MUST be empty on PASS.  
    ContractRef: SchemaID:evidence.schema.json, Gate:GATE-011
 
-**Script enforcement status:** Not currently enforced by `run-gates`; targeted for future enforcement after traceability tooling is in place.
+**Script enforcement status:** `manual_pending_traceability_tooling`. Owner docs are `Plans/Progression_Gates.md` and `Plans/Project_Output_Artifacts.md`. `run-gates` passing is not a GATE-011 PASS claim until a validator explicitly checks the live requirements coverage artifacts and emits the failure-detail arrays above.
 
 ContractRef: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:evidence.schema.json, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 

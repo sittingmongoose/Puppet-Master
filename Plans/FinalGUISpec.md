@@ -1781,7 +1781,7 @@ The runtime zone must provide:
 
 ## 8. Widget Catalog
 
-Section 8 defines the **atomic** widget catalog used to compose pages and panels. Detailed widget references align with `Plans/WIDGETS_VISUAL_REFERENCE.md` and `Plans/WIDGETS_QUICK_REFERENCE.md`.
+Section 8 defines the **atomic** widget catalog used to compose pages and panels. Detailed widget references align with `Plans/FinalGUISpec.md#8-widget-catalog` and the Widget System hostability/catalog linkage in `Plans/Widget_System.md#2-hostability-and-data-contracts` and `Plans/Widget_System.md#4-orchestrator-progress-widget-scope-and-catalog-linkage`.
 
 ### 8.1 SelectableText contract
 
@@ -11812,7 +11812,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   Section 8 defines the atomic widget catalog used to compose pages and panels and aligns detailed
-  widget references with WIDGETS_VISUAL_REFERENCE and WIDGETS_QUICK_REFERENCE.
+  widget references with the local Widget Catalog plus Widget_System hostability and catalog-linkage sections.
 gui_related: true
 gui_classification_reason: This unit defines visible widget catalog scope and GUI composition vocabulary.
 split_recommended: false
@@ -11822,6 +11822,7 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Widget reference owners resolve to Plans/FinalGUISpec.md#8-widget-catalog and Widget_System hostability/catalog-linkage sections rather than missing standalone widget reference docs."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -11843,10 +11844,12 @@ preserved_exact_tokens:
 - "Plans/WIDGETS_QUICK_REFERENCE.md"
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "Plans/WIDGETS_VISUAL_REFERENCE.md and Plans/WIDGETS_QUICK_REFERENCE.md are retired standalone-doc placeholders; current owners are Plans/FinalGUISpec.md#8-widget-catalog and Plans/Widget_System.md."
 owner_boundary_notes: []
 owner_hints:
 - "Plans/FinalGUISpec.md"
+- "Plans/Widget_System.md"
 ```
 
 ### F3-155 - SelectableText Contract

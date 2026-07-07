@@ -11787,13 +11787,13 @@ priority: P0
 finding_family: 'Command intent shape: shell-string vs argv vs PowerShell wrapper vs PTY/TUI command'
 target_docs:
 - Tools.md
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Executor_Protocol.md
 - Permissions_System.md
 - Contracts_V0.md
 owner_hints:
 - Tools.md
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Executor_Protocol.md
 - Permissions_System.md
 - Contracts_V0.md

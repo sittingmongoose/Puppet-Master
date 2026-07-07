@@ -5,8 +5,9 @@ Updated: 2026-07-07T18:49:00Z for storage/coordination canon repair and platform
 Updated: 2026-07-07T19:36:27Z for platform_specs closure hardening and non-provider residue adjudication.
 Updated: 2026-07-07T20:26:31Z for FileSafe fail-closed security repair and stale GUI toolkit mechanical row closure hygiene.
 Updated: 2026-07-07T21:35:04Z for contract-runtime core repair.
+Updated: 2026-07-07T22:45:00Z for GUI command, production wiring, launch-chain, openref, and gate registry repair.
 
-Scope: triage plus bounded storage/coordination canon repair, platform_specs authority repair, FileSafe fail-closed security repair, stale GUI toolkit mechanical row closure hygiene, and contract-runtime core repair. UI command catalog, wiring matrix, launch-chain implementation proof, missing docs, progression-gate coverage, broad PlanUnit boilerplate, runtime certification harness, and buildability proof remain out of scope.
+Scope: triage plus bounded storage/coordination canon repair, platform_specs authority repair, FileSafe fail-closed security repair, stale GUI toolkit mechanical row closure hygiene, contract-runtime core repair, and GUI command/wiring/gate/openref repair. Broad PlanUnit boilerplate, runtime certification harness, unrelated mechanical findings, and buildability proof remain out of scope.
 
 ## Current Buildability Reality
 
@@ -21,14 +22,14 @@ Scope: triage plus bounded storage/coordination canon repair, platform_specs aut
 30. `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` — **repaired_superseded** — Closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; active canon now pins Slint 1.17.1, Slint/WASM canvas web bootstrap limits, native Rust + Slint `.slint` markup, and `validate-gui-asset-policy` governance coverage.
 40. `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` — **repaired_current** — Closed by `CONTRACT_RUNTIME_CORE_REPAIR.md` and `contract_runtime_core_repair_report.json`; tier-era Phase/Task/Subtask/Iteration and subagent config labels are compatibility/search aliases, while `SubagentPolicy` owns runtime field names, units, defaults, limits, fanout, cost, retry, and alias normalization.
 50. `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` — **repaired_current** — Closed by `FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md` and `filesafe_fail_closed_security_repair_report.json`; active canon now blocks guard initialization failure, requires exact normalized approved-command matching, fails closed on missing/empty allowlists and missing baselines regardless of `strict_mode`, treats `PUPPET_MASTER_ALLOW_DESTRUCTIVE=1` as a request signal only, requires authenticated scoped destructive override receipts, and fences fail-open/prefix snippets as noncanonical source-lineage.
-110. `fable-20260706-p1-ui-command-catalog-missing-families` — **confirmed_current** — Core UI command families remain absent, including cmd.chat.send and theme/persona/alert/concern/model command families.
-120. `fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events` — **confirmed_current** — Production wiring matrix still has 179 generic locations, 323 rows without events, 99 placeholder command_applied event rows, and 35/459 fully located+evented rows.
-125. `fable-20260706-p1-launch-approval-chain-preimplementation-proof` — **partial_current** — Launch/approval chain is partially current: PRD and Approve And Build rows now have real events/locations, but runtime.approve and plan_compile.open_build still use placeholder events/pre-implementation evidence while buildability gate is enabled.
+110. `fable-20260706-p1-ui-command-catalog-missing-families` — **repaired_current** — Closed by `GUI_COMMAND_WIRING_GATE_REPAIR.md`, `gui_command_wiring_gate_repair_report.json`, and UCC-108; command families and field-level response/receipt contracts are cataloged.
+120. `fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events` — **repaired_current** — Closed by `GUI_COMMAND_WIRING_GATE_REPAIR.md` and WM-042; production wiring has zero generic `Cataloged GUI surface` rows, zero placeholder `*.command_applied` events, and validates through `validate-wiring-matrix`.
+125. `fable-20260706-p1-launch-approval-chain-preimplementation-proof` — **repaired_current** — Closed for command/wiring contract scope by `GUI_COMMAND_WIRING_GATE_REPAIR.md`; launch-chain commands now require projected availability, disabled reasons, UICommandResponse/receipt refs, and canonical effects without claiming runtime certification or buildability.
 130. `fable-20260706-p1-contracts-v0-open-enums-field-drift` — **repaired_current** — Closed by `CONTRACT_RUNTIME_CORE_REPAIR.md` and `contract_runtime_core_repair_report.json`; Contracts_V0 now closes runtime enums, safe-point fields, auth-required handling, UI command response, concern/AuthEvent minima, per-event payload schema_version, and package_id compatibility.
 140. `fable-20260706-p1-goal-runtime-event-payload-minima` — **repaired_current** — Closed by `CONTRACT_RUNTIME_CORE_REPAIR.md` and `contract_runtime_core_repair_report.json`; Goal Runtime now lists payload minima for all goal/goal_run events and defines the required runtime records.
 150. `fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section` — **repaired_current** — Closed by `CONTRACT_RUNTIME_CORE_REPAIR.md` and `contract_runtime_core_repair_report.json`; Executor Protocol now owns wake reasons/coalescing, score tuple sort, closed mapping, timeout, backpressure, and transport decision receipts.
-160. `fable-20260706-p1-missing-referenced-docs-and-openrefs` — **confirmed_current** — Several normative referenced docs remain absent; corrected false alarms are separately suppressed.
-170. `fable-20260706-p1-progression-gates-registry-and-run-gates-coverage` — **partial_current** — GATE-007 and GATE-008 still do not exist; run-gates is named-check based and does not prove every gate ID is wired or manually dispositioned.
+160. `fable-20260706-p1-missing-referenced-docs-and-openrefs` — **repaired_current** — Closed by repointing missing normative references to existing owner sections for widgets, release, terminal, context management, and Skills_System.
+170. `fable-20260706-p1-progression-gates-registry-and-run-gates-coverage` — **repaired_current** — Closed by PG-061: GATE-007/008 are tombstoned, GATE-010 rejects wiring semantic defects, and GATE-011/012/013 are explicitly manual-pending with owners.
 180. `fable-20260706-p1-planunit-layer-behavioral-acceptance-dependencies` — **confirmed_current** — PlanUnit layer still relies heavily on migration-preservation acceptance and sparse dependency/unblocks metadata.
 
 ## Owner-Grouped Repairs
@@ -60,15 +61,15 @@ Scope: triage plus bounded storage/coordination canon repair, platform_specs aut
 - `Plans/chain-wizard-flexibility.md` is compatibility/source-lineage only; its `platform_specs` mentions are not active product canon.
 
 ### Plans/UI_Command_Catalog.md
-- `fable-20260706-p1-ui-command-catalog-missing-families` (P1, High, confirmed_current): FABLE P1 #6: add missing command families and field-level payload/response schemas; map recovery allowed_action_ids.
+- `fable-20260706-p1-ui-command-catalog-missing-families` (P1, High, repaired_current): closed by UCC-108 and GUI command/wiring repair artifacts.
   - Repair target: validate-wiring-matrix should fail when production rows reference command families absent from UI_Command_Catalog.; validate-implementation-readiness should require launch-critical command payload/result schemas, not just command IDs.
 
 ### Plans/Wiring_Matrix.production.json
-- `fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events` (P1, Critical, confirmed_current): FABLE P1 #7 and concept showstopper: regenerate/fix production wiring so production rows have real UI locations, event/receipt effects, state selectors, disabled reasons, and implementation evidence.
+- `fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events` (P1, Critical, repaired_current): closed by WM-042 and production wiring validation; runtime implementation certification remains separate.
   - Repair target: validate-wiring-matrix should fail on ui_location == Cataloged GUI surface for production launch/safety rows.; Reject placeholder *.command_applied event types unless defined as real domain events in Contracts_V0.
 
 ### Plans/Planning_Wizard.md
-- `fable-20260706-p1-launch-approval-chain-preimplementation-proof` (P1, Critical, partial_current): FABLE concept gap #1: launch authority path must not be treated as executable proof until render, dispatcher, receipt/event, state selector, disabled reason, and regression evidence exist end to end.
+- `fable-20260706-p1-launch-approval-chain-preimplementation-proof` (P1, Critical, repaired_current for command/wiring contract scope): launch authority path now has command/receipt contract coverage without claiming executable proof.
   - Repair target: Buildability gate must require end-to-end launch-chain implementation evidence, not pre-implementation wiring contract rows.; Approve And Build must remain disabled if any launch-chain command effect is placeholder or evidence_required is pre-implementation only.
 
 ### Plans/Contracts_V0.md
@@ -84,11 +85,11 @@ Scope: triage plus bounded storage/coordination canon repair, platform_specs aut
   - Repair target satisfied: `### Wake reasons and coalescing` now exists and owns the closed wake list plus coalescing algorithm.
 
 ### Plans/FinalGUISpec.md
-- `fable-20260706-p1-missing-referenced-docs-and-openrefs` (P1, High, confirmed_current): FABLE P1 #11: create or repoint WIDGETS_VISUAL_REFERENCE.md, WIDGETS_QUICK_REFERENCE.md, Release_Process.md, Terminal_Integration.md, Context_Management.md, and Skill_System.md typo refs as applicable.
+- `fable-20260706-p1-missing-referenced-docs-and-openrefs` (P1, High, repaired_current): missing docs were repointed to existing owner sections; no placeholder docs were created.
   - Repair target: lint-path-refs should fail normative OpenRefs unless explicitly tagged future/source-lineage/manual.; Add typo-aware guard for singular Skill_System.md when Skills_System.md exists.
 
 ### Plans/Progression_Gates.md
-- `fable-20260706-p1-progression-gates-registry-and-run-gates-coverage` (P1, High, partial_current): FABLE P1 #12: define GATE-007/008 or tombstones and wire GATE-011/012/013/014 or mark manual with owners.
+- `fable-20260706-p1-progression-gates-registry-and-run-gates-coverage` (P1, High, repaired_current): GATE-007/008 tombstones and GATE-011/012/013 manual owner dispositions are recorded; GATE-014 remains separately manual pending document-set tooling.
   - Repair target: run-gates should emit gate-id coverage mapping and fail if any Progression_Gates.md registry entry is not enforced or explicitly manual.; Progression_Gates validator should reject missing GATE number tombstones.
 
 ### Plans/.plan_index/plan_units.jsonl

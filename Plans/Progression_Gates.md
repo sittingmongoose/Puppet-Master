@@ -141,14 +141,20 @@ The Verifier is an AI role that runs these gates and returns a progression decis
 **Current script-enforceable coverage (`run-gates`):**
 - `GATE-001` schema validation (plan graph + node change budgets + auto decisions)
 - `GATE-002` Spec Lock integrity (SSOT hash verification)
+- `GATE-003` is manual/dedicated-invariant pending (`Plans/Progression_Gates.md`, `Plans/Architecture_Invariants.md`)
 - `GATE-004` drift phrase lint (`TBD`, `Open Questions`, `ask later`)
 - `GATE-005` non-example node evidence existence + schema validation
 - `GATE-006` non-example node change-budget declaration checks
+- `GATE-007` reserved/tombstoned in this registry; it has no pass/fail condition and cannot be reused silently
+- `GATE-008` reserved/tombstoned in this registry; it has no pass/fail condition and cannot be reused silently
 - `GATE-009` ContractRef coverage lint
-- `GATE-011`, `GATE-012`, `GATE-013` target the traceability layer (not yet enforced by `run-gates`; pending traceability artifact generation integration)
-- `GATE-014` targets Document Set packaging verification (not yet enforced by `run-gates`; pending Document Set artifact generation integration)
+- `GATE-010` wiring matrix validation through `python3 scripts/pm-plans-verify.py validate-wiring-matrix`
+- `GATE-011` is `manual_pending_traceability_tooling` with owners `Plans/Progression_Gates.md` and `Plans/Project_Output_Artifacts.md`
+- `GATE-012` is `manual_pending_requirements_quality_tooling` with owners `Plans/Progression_Gates.md`, `Plans/Decision_Policy.md`, and `Plans/assistant-chat-design.md`
+- `GATE-013` is `manual_pending_ambiguity_marker_tooling` with owners `Plans/Progression_Gates.md`, `Plans/Decision_Policy.md`, and `Plans/Project_Output_Artifacts.md`
+- `GATE-014` is manual pending Document Set artifact generation integration with owners `Plans/Progression_Gates.md` and `Plans/Project_Output_Artifacts.md`
 
-ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-009, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014
+ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-003, Gate:GATE-004, Gate:GATE-005, Gate:GATE-006, Gate:GATE-007, Gate:GATE-008, Gate:GATE-009, Gate:GATE-010, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014
 
 ### Verifier scope boundary
 
@@ -157,6 +163,7 @@ ContractRef: Gate:GATE-001, Gate:GATE-002, Gate:GATE-004, Gate:GATE-005, Gate:GA
 
 - Generated user-project artifacts under `.puppet-master/project/**` MUST satisfy the relevant gate contracts defined here.
 - They are not implied to be fully covered by the current repo-local `run-gates` script unless a validator explicitly targets them.
+- Manual or tombstoned gate disposition MUST name owner docs and MUST NOT be reported as a script-enforced PASS merely because `run-gates` passes.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-011, Gate:GATE-012, Gate:GATE-013, Gate:GATE-014
 
@@ -293,6 +300,38 @@ ContractRef: SchemaID:change_budget.schema.json, SchemaID:plan_graph.schema.json
 
 ---
 
+<a id="GATE-007"></a>
+## GATE-007 -- Reserved tombstone
+
+`GATE-007` is a reserved/tombstoned registry slot. It has no active pass/fail condition, no run-gates check, and no executable progression authority.
+
+Registry obligations:
+- The slot MUST remain visible in the canonical registry so numbered gates do not appear silently omitted.
+- The number MUST NOT be reused for a new gate without a governance migration that records the prior tombstone and updates ContractRefs, generated shards, and affected PlanUnits.
+- Consumers that previously inferred a hidden `GATE-007` from retired/source-lineage material MUST resolve to this tombstone or to the explicit current gate that owns their behavior.
+
+**Script enforcement status:** Tombstoned/manual. Owner docs are `Plans/Progression_Gates.md`; source-lineage consumers include `Plans/Run_Modes.md` and retired `Plans/chain-wizard-flexibility.md` references where present.
+
+ContractRef: Gate:GATE-007, ContractName:Plans/Run_Modes.md
+
+---
+
+<a id="GATE-008"></a>
+## GATE-008 -- Reserved tombstone
+
+`GATE-008` is a reserved/tombstoned registry slot. It has no active pass/fail condition, no run-gates check, and no executable progression authority.
+
+Registry obligations:
+- The slot MUST remain visible in the canonical registry so numbered gates do not appear silently omitted.
+- The number MUST NOT be reused for a new gate without a governance migration that records the prior tombstone and updates ContractRefs, generated shards, and affected PlanUnits.
+- Consumers that previously inferred a hidden `GATE-008` from retired/source-lineage material MUST resolve to this tombstone or to the explicit current gate that owns their behavior.
+
+**Script enforcement status:** Tombstoned/manual. Owner docs are `Plans/Progression_Gates.md`; source-lineage consumers include `Plans/Run_Modes.md` and retired `Plans/chain-wizard-flexibility.md` references where present.
+
+ContractRef: Gate:GATE-008, ContractName:Plans/Run_Modes.md
+
+---
+
 <a id="GATE-009"></a>
 ## GATE-009 -- ContractRef coverage
 **Pass condition:** Every operational requirement line contains at least one `ContractRef:`.
@@ -318,6 +357,9 @@ The gate must fail when any of the following are true:
 - a deprecated alias is treated as an independent canonical command
 - a routed command bypasses the canonical `route_target` / `OpenSubject` contract family
 - routing-adjacent owner docs contain unresolved spec-integrity defects that make route/open verification ambiguous or contradictory
+- production rows use generic `Cataloged GUI surface` locations when concrete owner surfaces exist
+- production rows emit fabricated placeholder events such as `*.command_applied`
+- catalog namespace roots appear as production rows instead of explicit concrete commands or exact parser-artifact exclusions
 - a command row claims layout-only semantics while actually targeting a runtime object, usage object, or cross-surface focus action
 - a command/action payload still keys approval or usage correlation by `request_id` or `tier_id` where blocked/runtime or usage identity is canonical
 - command-family expansion is a broad-pass change: Source Control `git*`, GitHub Actions `actions*`, Docker Manager, and Docker `/registry/Kubernetes` command-family additions also require wiring-matrix expansion and renewed `GATE-010` coverage
@@ -334,6 +376,9 @@ Evidence for this gate must capture:
 - failure reason when the row is invalid
 
 ContractRef: ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/evidence.schema.json, ContractName:Plans/Wiring_Matrix.schema.json
+---
+
+<a id="GATE-011"></a>
 ## GATE-011 -- Requirements traceability coverage
 
 
@@ -372,7 +417,7 @@ ContractRef: Gate:GATE-011
   - Evidence payload MUST include machine-readable failure detail fields for each check (for example `missing_in_md_ids[]`, `missing_in_json_ids[]`, `uncovered_requirement_ids[]`, `orphaned_refs[]`, `uncovered_acceptance_ids[]`, `missing_node_mapping_req_ids[]`, `missing_acceptance_mapping_req_ids[]`); all lists MUST be empty on PASS.  
    ContractRef: SchemaID:evidence.schema.json, Gate:GATE-011
 
-**Script enforcement status:** Not currently enforced by `run-gates`; targeted for future enforcement after traceability tooling is in place.
+**Script enforcement status:** `manual_pending_traceability_tooling`. Owner docs are `Plans/Progression_Gates.md` and `Plans/Project_Output_Artifacts.md`. `run-gates` passing is not a GATE-011 PASS claim until a validator explicitly checks the live requirements coverage artifacts and emits the failure-detail arrays above.
 
 ContractRef: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:evidence.schema.json, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -427,7 +472,7 @@ Required evidence:
     - Unblock/re-run evidence (required before progression resumes from BLOCKED): subsequent report shows `needs_user_clarification[] == []` and `verdict == "PASS"`.
    ContractRef: SchemaID:evidence.schema.json, Gate:GATE-012, ContractName:Plans/assistant-chat-design.md, PolicyRule:Decision_Policy.md§6
 
-**Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after traceability artifact generation is integrated.
+**Script enforcement status:** `manual_pending_requirements_quality_tooling`. Owner docs are `Plans/Progression_Gates.md`, `Plans/Decision_Policy.md`, and `Plans/assistant-chat-design.md`. `run-gates` passing is not a GATE-012 PASS claim until a validator explicitly checks the live requirements quality report, blocked escalation evidence, redaction evidence, and unblock/re-run evidence above.
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, Gate:GATE-012, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§6, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
 
@@ -470,7 +515,7 @@ Required evidence:
   - Schema validation of each referenced `auto_decisions.jsonl` row against `pm.auto_decisions.schema.v1`  
   ContractRef: SchemaID:evidence.schema.json
 
-**Script enforcement status:** Not yet enforced by `run-gates`; targeted for inclusion after traceability artifact generation is integrated.
+**Script enforcement status:** `manual_pending_ambiguity_marker_tooling`. Owner docs are `Plans/Progression_Gates.md`, `Plans/Decision_Policy.md`, and `Plans/Project_Output_Artifacts.md`. `run-gates` passing is not a GATE-013 PASS claim until a validator explicitly scans the live generated project artifacts and validates matching schema-valid auto-decision rows.
 
 ContractRef: SchemaID:pm.auto_decisions.schema.v1, Gate:GATE-013, SchemaID:evidence.schema.json, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -2126,7 +2171,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Progression_Gates.md
 canonical_text: >-
-  GATE-011 evidence must include machine-readable check entries and failure-detail arrays; script enforcement remains future traceability-tooling work.
+  GATE-011 evidence must include machine-readable check entries and failure-detail arrays; script enforcement is manual_pending_traceability_tooling with named owner docs until a validator checks live requirements coverage artifacts.
 gui_related: false
 gui_classification_reason: >-
   This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
@@ -2136,6 +2181,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "GATE-011 Evidence And Enforcement Status remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "GATE-011 has owners for its manual-pending status and cannot be reported as PASS from run-gates alone."
   - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -2275,7 +2321,7 @@ unit_type: validation_rule
 status: accepted
 owner_doc: Plans/Progression_Gates.md
 canonical_text: >-
-  GATE-012 evidence must classify state from verdict plus needs_user_clarification[], include blocked escalation and redaction evidence, and require a later PASS report before progression resumes.
+  GATE-012 evidence must classify state from verdict plus needs_user_clarification[], include blocked escalation and redaction evidence, require a later PASS report before progression resumes, and remain manual_pending_requirements_quality_tooling with named owner docs until live requirements quality tooling is integrated.
 gui_related: true
 gui_classification_reason: >-
   This unit includes UI escalation evidence and blocked-state presentation validation.
@@ -2286,6 +2332,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "GATE-012 Evidence And Re-Run remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "GATE-012 has owners for its manual-pending status and cannot be reported as PASS from run-gates alone."
   - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -2379,7 +2426,7 @@ unit_type: validation_rule
 status: accepted
 owner_doc: Plans/Progression_Gates.md
 canonical_text: >-
-  GATE-013 detection scans project artifacts, extracts marker IDs, validates matching decisions, and records grep plus decision evidence.
+  GATE-013 detection scans project artifacts, extracts marker IDs, validates matching decisions, records grep plus decision evidence, and remains manual_pending_ambiguity_marker_tooling with named owner docs until live generated artifact scanning is integrated.
 gui_related: false
 gui_classification_reason: >-
   This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
@@ -2389,6 +2436,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "GATE-013 Detection And Evidence remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "GATE-013 has owners for its manual-pending status and cannot be reported as PASS from run-gates alone."
   - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -3581,4 +3629,68 @@ owner_hints:
   - Plans/Planning_Wizard.md
   - Plans/Plan_Document_System.md
   - Plans/Plan_To_Node_Compilation.md
+```
+
+## FABLE Gate Registry Repair Addendum - 2026-07-07
+
+This addendum closes the FABLE gate-registry portion of the GUI command/wiring repair. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime certification harnesses, generated governance artifacts, or production build tasks.
+
+### PG-061 - FABLE Gate Registry Tombstones And Manual Traceability Status
+
+```yaml
+plan_unit_id: PG-061
+unit_type: validation_rule
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  The FABLE gate-registry repair makes GATE-007 and GATE-008 explicit reserved tombstones, strengthens GATE-010
+  to reject generic production wiring locations, fabricated command_applied events, and catalog namespace-root rows,
+  and records GATE-011, GATE-012, and GATE-013 as manual-pending traceability gates with named owner docs until
+  live generated-project validators exist. A successful run-gates result cannot be reported as PASS evidence for
+  tombstoned or manual-pending gates unless a validator explicitly targets that gate.
+gui_related: false
+gui_classification_reason: Defines gate-registry validation and governance status rather than visual presentation.
+depends_on: [PG-034, PG-037, PG-039]
+unblocks: []
+acceptance_criteria:
+  - GATE-007 and GATE-008 have visible anchors, tombstone sections, owners, and no hidden executable semantics.
+  - GATE-010 fails semantic wiring defects for generic production locations, fabricated command_applied events, and catalog namespace-root production rows.
+  - GATE-011, GATE-012, and GATE-013 state their manual-pending dispositions, owner docs, and the validator evidence needed before they can be script-enforced.
+  - run-gates passing is not claimed as PASS evidence for GATE-007, GATE-008, GATE-011, GATE-012, or GATE-013.
+  - No FileSafe, storage, platform_specs, GUI implementation, broad PlanUnit boilerplate, WorkNodes, NodeSeeds, executable queues, or runtime certification harnesses are created by this repair.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-wiring-matrix
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: gate_registry_drift
+reasoning_tier: high
+context_scope: fable_gui_command_wiring_gate_repair
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+  - Plans/Wiring_Matrix.production.json
+  - Plans/Wiring_Matrix.production.exclusions.json
+node_compile_hint:
+  mode: gate_registry_repair
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md:fable-20260706-p1-progression-gates-registry-and-run-gates-coverage
+preserved_exact_tokens:
+  - GATE-007
+  - GATE-008
+  - GATE-011
+  - GATE-012
+  - GATE-013
+  - manual_pending_traceability_tooling
+  - manual_pending_requirements_quality_tooling
+  - manual_pending_ambiguity_marker_tooling
+negative_constraints:
+  - Do not treat run-gates passing as PASS evidence for manual-pending or tombstoned gates.
+  - Do not reuse tombstoned gate numbers without a governed migration.
+  - Do not create runtime certification harnesses or executable build tasks in this repair.
+owner_hints:
+  - Plans/Progression_Gates.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/Decision_Policy.md
+  - Plans/assistant-chat-design.md
 ```

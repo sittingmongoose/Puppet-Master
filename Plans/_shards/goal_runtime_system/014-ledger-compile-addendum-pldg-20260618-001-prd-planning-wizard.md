@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L2253-L2391
+Source lines: L2253-L2392
 
-Source SHA256: `6ae31015d29f6c61c2ae83a8c97dabe16bfce362fae59ec3e0eaa0d3ebfb3458`
+Source SHA256: `c364c8a56534bfa55e15d74218dac25322c02987445aec5d2980f4bc89f62fec`
 
 ---
 
@@ -33,6 +33,7 @@ acceptance_criteria:
 - No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
 - Approve And Build records an approval CAS receipt and fails closed when final-review currentness inputs drift.
 - The PlanCompileRun identity is created or returned synchronously; projection identity reconciliation cannot be the source of run identity truth.
+- "`cmd.runtime.approve` consumes canonical approval/currentness inputs, records UICommandResponse and approval/dispatch receipt refs, and emits only canonical runtime events or explicit receipts, never `runtime.command_applied`."
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard

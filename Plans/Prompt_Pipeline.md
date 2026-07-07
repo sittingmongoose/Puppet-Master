@@ -4789,14 +4789,14 @@ source_row_id: P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH
 priority: P1
 finding_family: AGENTS/rules/skills/plugin instruction source fidelity and invalid encoding handling
 target_docs:
-- Context_Management.md
-- Skill_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/Skills_System.md
 - Goal_Runtime_System.md
 - Models_System.md
 - Contracts_V0.md
 owner_hints:
-- Context_Management.md
-- Skill_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/Skills_System.md
 - Goal_Runtime_System.md
 - Models_System.md
 - Contracts_V0.md

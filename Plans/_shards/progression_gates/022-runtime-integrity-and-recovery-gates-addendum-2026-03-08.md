@@ -1,10 +1,10 @@
-# Shard 020: Runtime Integrity and Recovery Gates Addendum (2026-03-08)
+# Shard 022: Runtime Integrity and Recovery Gates Addendum (2026-03-08)
 
 Source: `Plans/Progression_Gates.md`
 
-Source lines: L518-L560
+Source lines: L563-L605
 
-Source SHA256: `04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785`
+Source SHA256: `8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33`
 
 ---
 

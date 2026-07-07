@@ -4,7 +4,7 @@ Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
 Source lines: L8181-L9212
 
-Source SHA256: `e09970932e63fb5b7698366d909c24ed399a794e0c7ba5e23368b01a02774e8a`
+Source SHA256: `da2e1c9d9a1aecce5930958fa972e31f9b67b57cced326bf1b5fac76a9d1185f`
 
 ---
 
@@ -902,12 +902,12 @@ source_row_id: P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
 priority: P1
 finding_family: 'Terminal side channels: pasteboard, one-time codes, drag/drop, file URLs, and OS autofill'
 target_docs:
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - FinalGUISpec.md
 - Permissions_System.md
 - FileSafe.md
 owner_hints:
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - FinalGUISpec.md
 - Permissions_System.md
 - FileSafe.md

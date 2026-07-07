@@ -4,7 +4,7 @@ Source: `Plans/Tools.md`
 
 Source lines: L11409-L12095
 
-Source SHA256: `fad0090cf4defb757e32e94a22f7da845733f5148a6ca4a3d0d45bafc148ba0c`
+Source SHA256: `bac28d46265a27f980d8a49d2431cbe03bd4fdc376207edd0d2b4da2f8d5b574`
 
 ---
 
@@ -389,13 +389,13 @@ priority: P0
 finding_family: 'Command intent shape: shell-string vs argv vs PowerShell wrapper vs PTY/TUI command'
 target_docs:
 - Tools.md
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Executor_Protocol.md
 - Permissions_System.md
 - Contracts_V0.md
 owner_hints:
 - Tools.md
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Executor_Protocol.md
 - Permissions_System.md
 - Contracts_V0.md

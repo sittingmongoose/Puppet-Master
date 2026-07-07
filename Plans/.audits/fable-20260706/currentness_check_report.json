@@ -12,11 +12,6 @@
     ],
     "ledger_id": "contract-runtime-core-repair-20260707",
     "out_of_scope_remaining": [
-      "fable-20260706-p1-ui-command-catalog-missing-families",
-      "fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events",
-      "fable-20260706-p1-launch-approval-chain-preimplementation-proof",
-      "fable-20260706-p1-missing-referenced-docs-and-openrefs",
-      "fable-20260706-p1-progression-gates-registry-and-run-gates-coverage",
       "fable-20260706-p1-planunit-layer-behavioral-acceptance-dependencies"
     ],
     "registry_closure_ids": [
@@ -231,6 +226,43 @@
     "Require behavioral acceptance and dependency graph quality for P0/gui_related PlanUnits instead of preservation-only acceptance criteria."
   ],
   "generated_at_utc": "2026-07-07T21:35:04Z",
+  "gui_command_wiring_gate_repair": {
+    "closed_curated_fable_findings": [
+      "fable-20260706-p1-ui-command-catalog-missing-families",
+      "fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events",
+      "fable-20260706-p1-launch-approval-chain-preimplementation-proof",
+      "fable-20260706-p1-missing-referenced-docs-and-openrefs",
+      "fable-20260706-p1-progression-gates-registry-and-run-gates-coverage"
+    ],
+    "ledger_id": "gui-command-wiring-gate-repair-20260707",
+    "out_of_scope_remaining": [
+      "fable-20260706-p1-planunit-layer-behavioral-acceptance-dependencies",
+      "runtime certification harness",
+      "buildability proof"
+    ],
+    "registry_closure_ids": [
+      "closure-fable-20260706-gui-command-catalog-001",
+      "closure-fable-20260706-wiring-matrix-production-001",
+      "closure-fable-20260706-launch-approval-chain-proof-001",
+      "closure-fable-20260706-missing-openrefs-001",
+      "closure-fable-20260706-progression-gate-coverage-001"
+    ],
+    "semantic_finding_keys": [
+      "sfk-786b4d3818ded90e6dbf2449",
+      "sfk-aec7779a63d5cab9f4fafa9d",
+      "sfk-9983364f21e71fcdcf626a35",
+      "sfk-550935b67e77925470fd303c",
+      "sfk-591be68b33c8b9df6b78e3b2"
+    ],
+    "status": "repair_validated",
+    "wiring_metrics": {
+      "bare_namespace_root_rows": 0,
+      "cataloged_gui_surface_count": 0,
+      "placeholder_command_applied_count": 0,
+      "production_entry_count": 481,
+      "receipt_only_rows": 405
+    }
+  },
   "gui_toolkit_stale_mechanical_row_hygiene": {
     "decision": "Closed as stale mechanical overcapture by existing GUI platform hardening evidence; no new GUI product scope reopened.",
     "mechanical_buildability_row": "fable-20260706-report-l1294-critical-spec-lock-json-locked-decisions-ui-toolkit-version-1-15-1-direc-1d056fc9",
@@ -377,7 +409,12 @@
     },
     {
       "blocker_family": "gui_wiring",
-      "classification": "confirmed_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T22:45:00Z",
+      "closure_evidence_paths": [
+        "Plans/.audits/fable-20260706/GUI_COMMAND_WIRING_GATE_REPAIR.md",
+        "Plans/.audits/fable-20260706/gui_command_wiring_gate_repair_report.json"
+      ],
       "dependency_order": 110,
       "finding_key": "fable-20260706-p1-ui-command-catalog-missing-families",
       "owner_docs": [
@@ -386,13 +423,19 @@
         "Plans/FinalGUISpec.md"
       ],
       "priority": "P1",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-gui-command-catalog-001",
+      "repair_required": false,
       "source_severity": "High",
       "title": "Core UI command families remain absent, including cmd.chat.send and theme/persona/alert/concern/model command families."
     },
     {
       "blocker_family": "gui_wiring",
-      "classification": "confirmed_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T22:45:00Z",
+      "closure_evidence_paths": [
+        "Plans/.audits/fable-20260706/GUI_COMMAND_WIRING_GATE_REPAIR.md",
+        "Plans/.audits/fable-20260706/gui_command_wiring_gate_repair_report.json"
+      ],
       "dependency_order": 120,
       "finding_key": "fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events",
       "owner_docs": [
@@ -402,13 +445,19 @@
         "Plans/UI_Command_Catalog.md"
       ],
       "priority": "P1",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-wiring-matrix-production-001",
+      "repair_required": false,
       "source_severity": "Critical",
-      "title": "Production wiring matrix still has 179 generic locations, 323 rows without events, 99 placeholder command_applied event rows, and 35/459 fully located+evented rows."
+      "title": "Production wiring matrix has concrete locations, no placeholder command_applied events, and validates through validate-wiring-matrix."
     },
     {
       "blocker_family": "runtime_lifecycle",
-      "classification": "partial_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T22:45:00Z",
+      "closure_evidence_paths": [
+        "Plans/.audits/fable-20260706/GUI_COMMAND_WIRING_GATE_REPAIR.md",
+        "Plans/.audits/fable-20260706/gui_command_wiring_gate_repair_report.json"
+      ],
       "dependency_order": 125,
       "finding_key": "fable-20260706-p1-launch-approval-chain-preimplementation-proof",
       "owner_docs": [
@@ -418,9 +467,10 @@
         "Plans/.implementation_readiness/buildability_gate_report.json"
       ],
       "priority": "P1",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-launch-approval-chain-proof-001",
+      "repair_required": false,
       "source_severity": "Critical",
-      "title": "Launch/approval chain is partially current: PRD and Approve And Build rows now have real events/locations, but runtime.approve and plan_compile.open_build still use placeholder events/pre-implementation evidence while buildability gate is enabled."
+      "title": "Launch/approval chain command and receipt contracts are specified without claiming runtime certification or buildability."
     },
     {
       "blocker_family": "contract_materialization",
@@ -498,7 +548,12 @@
     },
     {
       "blocker_family": "owner_routing",
-      "classification": "confirmed_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T22:45:00Z",
+      "closure_evidence_paths": [
+        "Plans/.audits/fable-20260706/GUI_COMMAND_WIRING_GATE_REPAIR.md",
+        "Plans/.audits/fable-20260706/gui_command_wiring_gate_repair_report.json"
+      ],
       "dependency_order": 160,
       "finding_key": "fable-20260706-p1-missing-referenced-docs-and-openrefs",
       "owner_docs": [
@@ -509,13 +564,19 @@
         "Plans/Automated_Testing_System.md"
       ],
       "priority": "P1",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-missing-openrefs-001",
+      "repair_required": false,
       "source_severity": "High",
       "title": "Several normative referenced docs remain absent; corrected false alarms are separately suppressed."
     },
     {
       "blocker_family": "structural_integrity",
-      "classification": "partial_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T22:45:00Z",
+      "closure_evidence_paths": [
+        "Plans/.audits/fable-20260706/GUI_COMMAND_WIRING_GATE_REPAIR.md",
+        "Plans/.audits/fable-20260706/gui_command_wiring_gate_repair_report.json"
+      ],
       "dependency_order": 170,
       "finding_key": "fable-20260706-p1-progression-gates-registry-and-run-gates-coverage",
       "owner_docs": [
@@ -524,9 +585,10 @@
         "Plans/DRY_Rules.md"
       ],
       "priority": "P1",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-progression-gate-coverage-001",
+      "repair_required": false,
       "source_severity": "High",
-      "title": "GATE-007 and GATE-008 still do not exist; run-gates is named-check based and does not prove every gate ID is wired or manually dispositioned."
+      "title": "GATE-007/008 are tombstoned and GATE-011/012/013 have explicit manual owner dispositions."
     },
     {
       "blocker_family": "behavioral_acceptance",

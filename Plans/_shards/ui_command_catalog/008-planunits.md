@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1246-L6857
+Source lines: L1246-L6859
 
-Source SHA256: `1233eddff60c1760cbb886d2813017af6c4986a073dbb70ee2db4a1ab25f832b`
+Source SHA256: `7c376c2ea94a1213a1d13a21a080924552798c001d7d6f415da86e6944a8bb32`
 
 ---
 
@@ -664,7 +664,8 @@ preserved_exact_tokens:
 - cmd.panel.switch
 - navigation_wrapper
 - cmd.project.open
-- cmd.artifacts.show_in_*
+- cmd.artifacts.show_in_usage
+- cmd.artifacts.show_in_ledger
 - cmd.nav.open_subject
 - cmd.nav.open_usage_subject
 - cmd.nav.focus_route
@@ -1061,8 +1062,9 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0015
 preserved_exact_tokens:
-- cmd.orchestrator.preview_
-- cmd.orchestrator.preview_*
+- cmd.orchestrator.preview_open
+- cmd.orchestrator.preview_stop
+- cmd.orchestrator.open_preview_artifact
 - cmd.orchestrator.push_image
 - /build/open-artifact
 - CustomHeadlessTool
@@ -2041,7 +2043,7 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md'
 compatibility_only_notes:
-- cmd.orchestrator.open_* pivots are compatibility aliases for owner-surface route opens.
+- Listed Orchestrator open pivots are compatibility aliases for owner-surface route opens.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/UI_Command_Catalog.md

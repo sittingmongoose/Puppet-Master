@@ -1,10 +1,10 @@
-# Shard 023: Ledger Compile Addendum - pldg-20260701-001-feature-intake
+# Shard 024: Ledger Compile Addendum - pldg-20260701-001-feature-intake
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L3321-L3477
+Source lines: L3388-L3544
 
-Source SHA256: `706b23aeae0e3a6b18fd2b9f9790023b13f5094d62a12bc95f330dc441beb64a`
+Source SHA256: `0e61b92e963a49a3a7d2ef861c8715659d4a977bdb72d2594152ec2699d8363c`
 
 ---
 
