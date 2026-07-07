@@ -1,19 +1,20 @@
 # Shard Index: Plans/GitHub_API_Auth_and_Flows.md
 
-Generated: 2026-07-07T22:36:27Z
+Generated: 2026-07-07T23:24:02Z
 
-Source SHA256: `32b5e5b19be60784a5bf8d23de9b82d5af02249906cd2b65834b12450d631751`
+Source SHA256: `bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L39 `78c520bf11b3e5dae74aa5e1ef737f86b46ce46f529d2fc645bd1ba52dc007b9`
-- [002 - Change Summary](002-change-summary.md) L41-L45 `177b0c8618dd6362bd82ba3e7c214a5ee777aef748cc07ceded30e54a6664d42`
-- [003 - Purpose](003-purpose.md) L47-L76 `e54fa14ec17e988adadec128ac73ea81d5f26d197039af26c009a823c9413f85`
-- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L78-L119 `c0d241107be70ee1cf331db51d27b167da303146ff4fa277528947ad708c0a96`
-- [005 - Browser/debug auth handoff and session shaping](005-browser-debug-auth-handoff-and-session-shaping.md) L121-L123 `cd9d8de3c981c69cb6e805480f290b70aaa2c6049d5ac4765e49597d912af3e6`
-- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L125-L129 `7c7637875ed41f7bebdc1f9c4b138ea325d7e9136d5e857628494b801eaed27b`
-- [007 - PlanUnits](007-planunits.md) L131-L774 `40b991c0d922e9e67006585198aac48ac5b23c10ee65b64470d93ec64241a82b`
-- [008 - Migration Coverage](008-migration-coverage.md) L776-L786 `1af72d6d861070af7da5177aa7cba77ce296c7b4b648ae482360862a5aaa25a6`
-- [009 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L789-L851 `9715fc50738832a55df23de3137226bbb99601ce2d0b4d537f89dd5336d01bcd`
+- [001 - Preamble](001-preamble.md) L1-L39 `c34a11deb9d9b2ad7ac0c0aa0740d4447b23ebc764736a68eb0c734ba38e7bd0`
+- [002 - Change Summary](002-change-summary.md) L41-L45 `d76499daed3039395e8ec3771f4af1e46fd10db331a3ee752fe1680bc3c4a5e6`
+- [003 - Purpose](003-purpose.md) L47-L107 `d9124320e9a98cb7ad0d918fa432296df0410680878b2e7f8f071813cf4b0074`
+- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L109-L150 `49c5be790e3873a6adfa3bb47aa94a52b15d2ae2bde7f24cc5c74080e992a5be`
+- [005 - Browser/debug auth handoff and session shaping](005-browser-debug-auth-handoff-and-session-shaping.md) L152-L154 `a626260e5c5d3af6af5553952332a786dd0a763fdbe35fb8ca6175146227b7aa`
+- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L156-L160 `b47a93891f76fb7bb7fd14859ae59bdfff9164cfcb6afb223dd3e53f290e6c5d`
+- [007 - PlanUnits](007-planunits.md) L162-L805 `657c58d0847fee968f00a391eee316e062b4af3385c483bdbf614487c309941b`
+- [008 - Migration Coverage](008-migration-coverage.md) L807-L817 `955812697d3767d07e127c81a68a4ff83a08501a2cd3230efa255cdfb7645d2a`
+- [009 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L820-L882 `d1a397d5524b3cc29b2b735b23cbb5af32b6b28703c7b688a9505dd260dde2e1`
+- [010 - FABLE Residual GitHub Auth Cleanup Addendum - 2026-07-07](010-fable-residual-github-auth-cleanup-addendum-2026-07-07.md) L884-L952 `5d11f1786aafa2695f527714763d312fb78730624fc07443eb43ec2966085fc1`

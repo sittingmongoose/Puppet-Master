@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L1316-L1446
+Source lines: L1316-L1398
 
-Source SHA256: `f378e678d5026f04ed7692d91e16bddcfecee234cc66a7af465f15b8ec2ad415`
+Source SHA256: `343107263a39fdf98bdde8b8ece01c26d3f7c26664a0af42a24432be3abdde2c`
 
 ---
 
@@ -89,53 +89,5 @@ observed_signal: Agent Zero CLI/server mismatch produced terminal corruption, fa
 pm_current_coverage: PM has CLI_Bridged_Providers and ProviderRequestEnvelope.
 pm_gap_or_delta: Need version/capability handshake and terminal-mode restore around all CLI bridges.
 proposal_or_recommendation: 'Add BridgeHandshakeReceipt: protocol version, binary hash, provider version, shell/terminal mode pre/post, cwd, capabilities, keepalive, timeout policy.'
-compile_disposition: create_new_planunit
-```
-
-### CBP-025 - CBP-025
-
-```yaml
-plan_unit_id: CBP-025
-unit_type: constraint
-status: accepted
-owner_doc: Plans/CLI_Bridged_Providers.md
-canonical_text: >-
-  CLI/server/stdout/unix-socket/HTTP transport lessons must remain adapter/provider bridge implementation details underneath PM envelopes. ProviderRequestEnvelope remains canonical above command-line or HTTP encodings, and no user workflow may require an opaque PM CLI-only state.
-gui_related: false
-gui_classification_reason: Backend/orchestration import guardrail; not itself GUI implementation work.
-depends_on:
-- PDS-003
-- PNC-001
-unblocks: []
-acceptance_criteria:
-- atom-0119 source details remain traceable through source_lineage and preserved source fields.
-- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
-validation_surfaces:
-- python3 scripts/pm-plan-index.py validate
-- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-risk_class: external_repo_guardrail
-reasoning_tier: standard
-context_scope: import_guardrail
-implementation_surfaces:
-- Plans/CLI_Bridged_Providers.md
-node_compile_hint:
-  mode: atom_0119
-  create_worknodes: false
-  create_nodeseeds: false
-source_lineage:
-- pldg-20260703-001-feature-intake:atom-0119
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0119
-- subagent:019f297e-fcd6-71f1-a6f2-e410e13a3c38
-source_atom_ids:
-- atom-0119
-owner_hints:
-- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/parallel_agent_synthesis_20260703.json
-preserved_exact_tokens:
-- ProviderRequestEnvelope
-- No user workflow may require an opaque PM CLI-only state
-- CLI transports are adapter details only
-negative_constraints:
-- Do not turn CLI/server transports into PM product shape.
-- Do not require opaque PM CLI-only state for user workflows.
 compile_disposition: create_new_planunit
 ```

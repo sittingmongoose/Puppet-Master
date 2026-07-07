@@ -267,6 +267,9 @@ Rules:
 - Stop becomes disabled when a run completes and no next message is queued
 - Edit restores content into composer and discards later history/work
 - Resend retries the most recent message and discards later history/work
+- Stop first records `chat_run.cancel_requested`, sends cancel to the active model/tool/subagent leases, waits up to `cancel_grace_ms = 3000`, and then records `chat_run.cancelled` or `chat_run.cancel_timeout` before queued messages may advance.
+- Edit and Resend perform a soft history mutation: later generated messages, tool cards, and draft operation cards are marked `superseded_by_message_id` and hidden from the active transcript, while audit/export views retain tombstones and source refs.
+- Queue entries use `{queue_entry_id, thread_id, draft_message_id, enqueued_at, position, state, text_ref, attachment_refs[], source_composer_id}`; when the max-2 queue is full, the new draft remains in the composer and the send action is disabled with `queue_full` until the user removes or sends an existing entry.
 
 ### Composer Behavior
 
@@ -568,6 +571,51 @@ Labels and values:
 - questionnaire
 - single_question
 - unavailable
+
+Canonical questionnaire envelope shape:
+
+```typescript
+type QuestionnaireEnvelope = {
+  schema_version: "1.0.0";
+  questionnaire_id: string;
+  mode: "single_question" | "questionnaire";
+  thread_id: string;
+  source_ref?: string;
+  flow_state: "draft" | "incomplete" | "ready_to_submit" | "submitted" | "paused" | "dismissed" | "timed_out" | "unavailable";
+  autosave_debounce_ms: 300;
+  paused_expires_after_ms: 604800000;
+  questions: QuestionItem[];
+  answers: QuestionAnswer[];
+  created_at: string;
+  updated_at: string;
+  submitted_at?: string;
+};
+
+type QuestionItem = {
+  question_id: string;
+  label: string;
+  prompt: string;
+  description?: string;
+  response_kind: "selection" | "freeform" | "mixed";
+  required: boolean;
+  multi_select?: boolean;
+  allow_freeform?: boolean;
+  placeholder?: string;
+  options?: Array<{id: string; label: string; description?: string}>;
+  default_values?: string[];
+  draft_value?: string | string[];
+  validation_state?: "valid" | "invalid" | "pending";
+};
+
+type QuestionAnswer = {
+  question_id: string;
+  values: string[];
+  source: "option" | "other" | "freeform";
+  answered_at: string;
+};
+```
+
+Question lifecycle command ids are `cmd.questionnaire.draft_update`, `cmd.questionnaire.submit`, `cmd.questionnaire.dismiss`, `cmd.questionnaire.resume`, `cmd.questionnaire.expire`, and `cmd.questionnaire.mark_unavailable`. `cmd.questionnaire.draft_update` is debounced by `autosave_debounce_ms = 300`; paused question flows expire after `paused_expires_after_ms = 604800000` unless the owning thread resumes first.
 - dismissed
 - incomplete
 - ready_to_submit
@@ -836,6 +884,8 @@ Document selection and annotation handoff rules:
 - V1 surface matrix: `/source-backed` editable text docs and deterministic markdown previews expose all five actions; read-only rendered views without stable source mapping may allow `quote-only` `Comment / Ask` and `Send selection to chat`; `Replace / Insert / Remove` stay disabled there; browser/HTML click-to-context surfaces do not inherit `document-annotation` semantics in v1.
 - Conflict and stale outcomes are explicit: `overlaps`, `contradicts`, and `stale_after_edit` are later-phase conflict/status labels that can appear in audit or review UI, while current automatic revision still excludes conflicting mutating annotations until resolved.
 - Re-anchoring outcomes are `position_match`, `quote_match`, and `anchor_not_found`; `position_match` or `quote_match` keeps the annotation eligible, while `anchor_not_found` leaves it `/unresolved` and open.
+- Re-anchoring tries exact range identity first, then quote matching with normalized whitespace and case-sensitive text. A quote match is eligible only when similarity is at least 0.97, the matched span length differs by no more than 10 percent, and there is exactly one best match; ambiguous or lower-confidence matches become `anchor_not_found`.
+- Mutating annotation actions never write a document directly from the palette. `Replace with...`, `Insert after...`, and `Remove / Strike this` create targeted-revision intents with annotation_id, operation_type, base_document_version, anchor_selector, proposed_text?, and permission_snapshot_id; the targeted revision runner validates FileSafe and patch applicability before writing.
 - `/resubmit` may target all open annotations or a selected subset. Selected-subset resubmit, consistent rationale capture, and compact chat-side digesting for many sent selections are `later-phase` improvements, not current hard requirements.
 - Recovery is anchored by `revision_run.{bundle_id}.{revision_id}`. Interrupted runs preserve `revision_id`, `resumed_from_revision_id?`, `interrupted_at`, safe-point metadata, and per-annotation history; already-validated annotation outcomes remain persisted through resume/retry.
 - GUI impact stays first-class: the annotation action menu is a reusable `/palette`, not a one-off context-menu hack; drawer filters include `Open / Addressed / Resolved`, operation-type badges or filters, pre-send chip state, `/overlays`, and ghost-preview styling for pending or hover-only payload previews.
@@ -1035,14 +1085,22 @@ Thread lifecycle state is separate from operational status markers such as `atte
 Canonical lifecycle path:
 `creating -> active -> suspended -> archived -> deleted`
 
-Transitions:
-- `creating -> active`: first message sent
-- `active -> suspended`: user closes thread / session ends
-- `suspended -> active`: user reopens thread
-- `active -> archived`: user archives or retention policy triggers
-- `archived -> active`: user unarchives
-- `active -> deleted`: user deletes
-- `archived -> deleted`: retention policy or user deletes
+Allowed transitions:
+
+| From | To | Command or trigger | Notes |
+| --- | --- | --- | --- |
+| `creating` | `active` | `cmd.chat.thread.commit_first_message` | Mints the durable thread id and commits the first user message. |
+| `creating` | `deleted` | `cmd.chat.thread.discard_empty_draft` | Drops an unsent shell; no transcript tombstone is required. |
+| `active` | `suspended` | `cmd.chat.thread.suspend` | User closes the thread or the session ends without archiving. |
+| `suspended` | `active` | `cmd.chat.thread.restore` | Restores transcript, metadata, and restorable UI state; ephemeral stream/queue state is not restored. |
+| `active` | `archived` | `cmd.chat.thread.archive` or retention policy | Preserves lineage and audit metadata while hiding from active lists. |
+| `suspended` | `archived` | `cmd.chat.thread.archive` or retention policy | Allows archival of inactive threads without first making them active. |
+| `archived` | `active` | `cmd.chat.thread.unarchive` | Restores to active navigation with the same thread id and lineage. |
+| `active` | `deleted` | `cmd.chat.thread.delete` | Terminal for ordinary navigation. |
+| `suspended` | `deleted` | `cmd.chat.thread.delete` | Terminal for ordinary navigation. |
+| `archived` | `deleted` | `cmd.chat.thread.delete` or retention policy | Terminal for ordinary navigation. |
+
+No transition restores `deleted` to another lifecycle state. Compliance-only tombstones may remain outside ordinary chat navigation and must not be treated as restorable threads.
 
 Persistence behavior by state:
 - `creating`: keep only lightweight draft shell metadata; no durable transcript is required until the first user message commits
@@ -1055,6 +1113,7 @@ Rules:
 - lifecycle transitions MUST be explicit and auditable
 - archiving does not rewrite message ids, thread lineage, or worktree lineage
 - deletion is terminal for ordinary user navigation even if compliance metadata is retained elsewhere
+- restore commands must validate that retained attachments, worktree refs, and source-thread refs still belong to the same project or degrade with an inline restore error
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
 
@@ -23377,4 +23436,77 @@ negative_constraints: []
 observed_signal: 'OpenCode Desktop issue: previous submitted text/images reappear in another session composer.'
 pm_gap_or_delta: Context/session plans need a GUI draft boundary with explicit draft/session/composer identity and state transitions.
 compile_disposition: create_new_planunit
+```
+
+## FABLE Residual Chat Mechanics Cleanup Addendum - 2026-07-07
+
+This addendum closes only the residual FABLE Assistant Chat feature-contract rows for questionnaire shape, question lifecycle mechanics, Stop/Edit/Resend mutation and cancellation, annotation reanchoring minima, empty revert behavior, and thread lifecycle reverse/restore transitions. It does not repair unrelated GUI wiring, FileSafe, runtime certification, or implementation-build evidence.
+
+### ACD-433 - FABLE Residual Chat Contract Mechanics
+
+```yaml
+plan_unit_id: ACD-433
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat closes the residual FABLE mechanics gaps by making the questionnaire envelope and
+  QuestionItem shape inline, assigning command ids to question lifecycle transitions, adding thread lifecycle
+  reverse and restore transitions, defining Stop/Edit/Resend as soft history mutation plus active-work
+  cancellation, specifying annotation reanchor thresholds, and defining empty revert as a disabled/no-op
+  inline error state. Conversation rewind never mutates files, and revert never fabricates a target when no
+  eligible prior mutating assistant turn exists.
+gui_related: true
+gui_classification_reason: These contracts define visible chat controls, questionnaire cards, annotation actions, thread restore behavior, and user-facing empty states.
+depends_on: [ACD-012, ACD-013, ACD-027, ACD-028, ACD-048, ACD-050, ACD-057, ACD-074]
+unblocks: []
+acceptance_criteria:
+  - QuestionnaireEnvelope and QuestionItem fields, enums, option shape, answer shape, autosave debounce, and paused expiry are defined inline in the question system section.
+  - Question transitions use command ids for draft update, submit, dismiss, resume, expire, and unavailable outcomes.
+  - Stop sends cancellation to active model/tool/subagent leases, records cancellation or timeout, and does not silently clear queued messages.
+  - Edit and Resend soft-supersede later generated transcript and operation records with tombstones rather than hard-deleting audit history.
+  - Queue entries have stable ids, state, position, text refs, attachment refs, and a defined max-2 overflow state.
+  - Thread restore and unarchive edges are explicit, and deleted threads have no ordinary restore transition.
+  - Annotation reanchoring uses exact range, then normalized quote matching with similarity >= 0.97, max 10 percent span-length delta, and no ambiguous best match.
+  - Empty `cmd.chat.revert` is disabled when precomputed, or returns `no_eligible_mutating_turn` without changing transcript, files, worktree, or queue state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status
+risk_class: fable_residual_chat_mechanics_drift
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: residual_chat_mechanics_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:476
+  - fablereport.md:477
+  - fablereport.md:478
+  - fablereport.md:479
+  - fablereport.md:481
+  - fablereport.md:483
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "QuestionItem"
+  - "questionnaire"
+  - "Stop/Edit/Resend"
+  - "creating -> active -> suspended -> archived -> deleted"
+  - "quote_match"
+  - "cmd.chat.revert"
+  - "cmd.chat.rewind"
+  - "no_eligible_mutating_turn"
+negative_constraints:
+  - Do not treat this chat mechanics repair as GUI wiring, FileSafe, runtime certification, implementation readiness, or buildability proof.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, runtime certification evidence, production build tasks, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
 ```

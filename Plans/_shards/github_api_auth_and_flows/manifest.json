@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-07T22:36:27Z",
+  "generated_at_utc": "2026-07-07T23:24:02Z",
   "index_path": "Plans/_shards/github_api_auth_and_flows/00-index.md",
-  "index_sha256": "2357435fe1dc528a78d48603124ca814c5136fbbac637153d838b8e750ebdc9e",
+  "index_sha256": "f4a0e5bce4614c600c4e7481b9fa6cdc845cd0b26a4d32aeffb2ba100ce56345",
   "manifest_path": "Plans/_shards/github_api_auth_and_flows/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/github_api_auth_and_flows/001-preamble.md",
-      "sha256": "78c520bf11b3e5dae74aa5e1ef737f86b46ce46f529d2fc645bd1ba52dc007b9",
+      "sha256": "c34a11deb9d9b2ad7ac0c0aa0740d4447b23ebc764736a68eb0c734ba38e7bd0",
       "shard_id": "001",
       "source_line_end": 39,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/github_api_auth_and_flows/002-change-summary.md",
-      "sha256": "177b0c8618dd6362bd82ba3e7c214a5ee777aef748cc07ceded30e54a6664d42",
+      "sha256": "d76499daed3039395e8ec3771f4af1e46fd10db331a3ee752fe1680bc3c4a5e6",
       "shard_id": "002",
       "source_line_end": 45,
       "source_line_start": 41,
@@ -26,70 +26,79 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/github_api_auth_and_flows/003-purpose.md",
-      "sha256": "e54fa14ec17e988adadec128ac73ea81d5f26d197039af26c009a823c9413f85",
+      "sha256": "d9124320e9a98cb7ad0d918fa432296df0410680878b2e7f8f071813cf4b0074",
       "shard_id": "003",
-      "source_line_end": 76,
+      "source_line_end": 107,
       "source_line_start": 47,
       "split_rule": "heading-##"
     },
     {
       "heading": "Canonical data-shape reconciliation",
       "path": "Plans/_shards/github_api_auth_and_flows/004-canonical-data-shape-reconciliation.md",
-      "sha256": "c0d241107be70ee1cf331db51d27b167da303146ff4fa277528947ad708c0a96",
+      "sha256": "49c5be790e3873a6adfa3bb47aa94a52b15d2ae2bde7f24cc5c74080e992a5be",
       "shard_id": "004",
-      "source_line_end": 119,
-      "source_line_start": 78,
+      "source_line_end": 150,
+      "source_line_start": 109,
       "split_rule": "heading-##"
     },
     {
       "heading": "Browser/debug auth handoff and session shaping",
       "path": "Plans/_shards/github_api_auth_and_flows/005-browser-debug-auth-handoff-and-session-shaping.md",
-      "sha256": "cd9d8de3c981c69cb6e805480f290b70aaa2c6049d5ac4765e49597d912af3e6",
+      "sha256": "a626260e5c5d3af6af5553952332a786dd0a763fdbe35fb8ca6175146227b7aa",
       "shard_id": "005",
-      "source_line_end": 123,
-      "source_line_start": 121,
+      "source_line_end": 154,
+      "source_line_start": 152,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/github_api_auth_and_flows/006-owner-consumer-map.md",
-      "sha256": "7c7637875ed41f7bebdc1f9c4b138ea325d7e9136d5e857628494b801eaed27b",
+      "sha256": "b47a93891f76fb7bb7fd14859ae59bdfff9164cfcb6afb223dd3e53f290e6c5d",
       "shard_id": "006",
-      "source_line_end": 129,
-      "source_line_start": 125,
+      "source_line_end": 160,
+      "source_line_start": 156,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/github_api_auth_and_flows/007-planunits.md",
-      "sha256": "40b991c0d922e9e67006585198aac48ac5b23c10ee65b64470d93ec64241a82b",
+      "sha256": "657c58d0847fee968f00a391eee316e062b4af3385c483bdbf614487c309941b",
       "shard_id": "007",
-      "source_line_end": 774,
-      "source_line_start": 131,
+      "source_line_end": 805,
+      "source_line_start": 162,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/github_api_auth_and_flows/008-migration-coverage.md",
-      "sha256": "1af72d6d861070af7da5177aa7cba77ce296c7b4b648ae482360862a5aaa25a6",
+      "sha256": "955812697d3767d07e127c81a68a4ff83a08501a2cd3230efa255cdfb7645d2a",
       "shard_id": "008",
-      "source_line_end": 786,
-      "source_line_start": 776,
+      "source_line_end": 817,
+      "source_line_start": 807,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/github_api_auth_and_flows/009-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "9715fc50738832a55df23de3137226bbb99601ce2d0b4d537f89dd5336d01bcd",
+      "sha256": "d1a397d5524b3cc29b2b735b23cbb5af32b6b28703c7b688a9505dd260dde2e1",
       "shard_id": "009",
-      "source_line_end": 851,
-      "source_line_start": 789,
+      "source_line_end": 882,
+      "source_line_start": 820,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Residual GitHub Auth Cleanup Addendum - 2026-07-07",
+      "path": "Plans/_shards/github_api_auth_and_flows/010-fable-residual-github-auth-cleanup-addendum-2026-07-07.md",
+      "sha256": "5d11f1786aafa2695f527714763d312fb78730624fc07443eb43ec2966085fc1",
+      "shard_id": "010",
+      "source_line_end": 952,
+      "source_line_start": 884,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 851,
+    "line_count": 952,
     "path": "Plans/GitHub_API_Auth_and_Flows.md",
-    "sha256": "32b5e5b19be60784a5bf8d23de9b82d5af02249906cd2b65834b12450d631751"
+    "sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4"
   }
 }

@@ -8676,6 +8676,72 @@ proposal_or_recommendation: Add AutonomyCeilingReceipt checked after provider/to
 compile_disposition: create_new_planunit
 ```
 
+## FABLE Residual Permission Consent Cleanup Addendum - 2026-07-07
+
+This addendum binds skill invocation and other blocked feature actions to the canonical ask/consent flow without creating a Skills-local approval model.
+
+### PS-131 - Invocation-Time Consent Bridge
+
+```yaml
+plan_unit_id: PS-131
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: >-
+  Invocation-time consent uses the existing permission ask flow for tools, skills, web operations, and blocked
+  feature actions. A blocked invocation carries blocked_reason_code, approval_scope_key, permission_snapshot_id?,
+  ordered allowed_action_ids[], requested_permission_state, effective_permission_state, requesting_context, and
+  normalized invocation identity. once, for session, and always remain distinct approval leases, while Skills and
+  other consumers route to Permissions through command refs instead of local approval dialogs.
+gui_related: true
+gui_classification_reason: Permission approval cards, remediation actions, and blocked invocation states are user-visible.
+depends_on: [PS-041, PS-042, PS-082, SS-035]
+unblocks: [SS-035]
+acceptance_criteria:
+  - Skill `Needs permission` states use the same blocked payload as tool permission prompts.
+  - "`cmd.permissions.review_request` opens the canonical approval/settings path with approval_scope_key and requesting_context."
+  - "`cmd.permissions.revoke` remains the canonical revocation command for durable rules and must receive rule_id or approval_scope_key plus scope."
+  - Approval leases bind to normalized invocation identity, cwd, env digest, namespace, purpose, project/worktree, and retry lineage.
+  - Headless ask denial returns a blocked outcome with allowed remediation actions instead of silently failing.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status
+risk_class: invocation_consent_drift
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/Permissions_System.md
+  - Plans/Skills_System.md
+node_compile_hint:
+  mode: invocation_time_consent_bridge
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:348
+  - fablereport.md:691
+  - fablereport.md:696
+  - fablereport.md:1047
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "deny"
+  - "once"
+  - "for session"
+  - "always"
+  - "approval_scope_key"
+  - "allowed_action_ids[]"
+  - "cmd.permissions.revoke"
+  - "cmd.permissions.review_request"
+negative_constraints:
+  - Do not create a parallel Skills-only consent dialog.
+  - Do not treat approval as reusable CLI privilege outside the normalized invocation identity and approval scope.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, runtime certification evidence, production build tasks, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Permissions_System.md
+  - Plans/Skills_System.md
+```
+
 ### PS-128 - P0-PROVIDER-EGRESS-HTTP-POLICY
 
 ```yaml

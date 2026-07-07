@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11660,
+    "depends_on_edge_count": 11739,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13713,
-    "node_count": 5499,
+    "edge_count": 13793,
+    "node_count": 5513,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2053,
+    "unblocks_edge_count": 2054,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-07T22:36:14Z",
+  "generated_at_utc": "2026-07-07T23:23:11Z",
   "gui_related_units": {
-    "count": 2387,
+    "count": 2394,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -407,8 +407,8 @@
         "source_location": {
           "heading": "ACD-002 - Assistant Chat Scope And Source Authority",
           "heading_level": 3,
-          "heading_line": 3494,
-          "line": 3496,
+          "heading_line": 3553,
+          "line": 3555,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -418,8 +418,8 @@
         "source_location": {
           "heading": "ACD-003 - Rewrite Runtime Identity Boundary",
           "heading_level": 3,
-          "heading_line": 3543,
-          "line": 3545,
+          "heading_line": 3602,
+          "line": 3604,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -429,8 +429,8 @@
         "source_location": {
           "heading": "ACD-004 - Primary Assistant Mode Strip",
           "heading_level": 3,
-          "heading_line": 3594,
-          "line": 3596,
+          "heading_line": 3653,
+          "line": 3655,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -440,8 +440,8 @@
         "source_location": {
           "heading": "ACD-006 - Debug Overlay Entrypoint",
           "heading_level": 3,
-          "heading_line": 3691,
-          "line": 3693,
+          "heading_line": 3750,
+          "line": 3752,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -451,8 +451,8 @@
         "source_location": {
           "heading": "ACD-007 - Debug Phase And Revalidation Loop",
           "heading_level": 3,
-          "heading_line": 3736,
-          "line": 3738,
+          "heading_line": 3795,
+          "line": 3797,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -462,8 +462,8 @@
         "source_location": {
           "heading": "ACD-008 - Runtime Mode Normalization And Project Gating",
           "heading_level": 3,
-          "heading_line": 3785,
-          "line": 3787,
+          "heading_line": 3844,
+          "line": 3846,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -473,8 +473,8 @@
         "source_location": {
           "heading": "ACD-009 - Chat Header Runtime Controls",
           "heading_level": 3,
-          "heading_line": 3832,
-          "line": 3834,
+          "heading_line": 3891,
+          "line": 3893,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -484,8 +484,8 @@
         "source_location": {
           "heading": "ACD-010 - Dual ELI5 Toggle Contract",
           "heading_level": 3,
-          "heading_line": 3882,
-          "line": 3884,
+          "heading_line": 3941,
+          "line": 3943,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -495,8 +495,8 @@
         "source_location": {
           "heading": "ACD-011 - Permission Posture And Approval Ladder",
           "heading_level": 3,
-          "heading_line": 3929,
-          "line": 3931,
+          "heading_line": 3988,
+          "line": 3990,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -506,8 +506,8 @@
         "source_location": {
           "heading": "ACD-012 - Message Controls And Queue Semantics",
           "heading_level": 3,
-          "heading_line": 3974,
-          "line": 3976,
+          "heading_line": 4033,
+          "line": 4035,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -517,8 +517,8 @@
         "source_location": {
           "heading": "ACD-013 - Footer Queue And Files-Touched Projection",
           "heading_level": 3,
-          "heading_line": 4025,
-          "line": 4027,
+          "heading_line": 4084,
+          "line": 4086,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -528,8 +528,8 @@
         "source_location": {
           "heading": "ACD-015 - Web Command Family And Capability Disclosure",
           "heading_level": 3,
-          "heading_line": 4123,
-          "line": 4125,
+          "heading_line": 4182,
+          "line": 4184,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -539,8 +539,8 @@
         "source_location": {
           "heading": "ACD-016 - Skill Invocation Paths",
           "heading_level": 3,
-          "heading_line": 4177,
-          "line": 4179,
+          "heading_line": 4236,
+          "line": 4238,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -550,8 +550,8 @@
         "source_location": {
           "heading": "ACD-019 - Dispatcher Parity For Web Intents",
           "heading_level": 3,
-          "heading_line": 4309,
-          "line": 4311,
+          "heading_line": 4368,
+          "line": 4370,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -561,8 +561,8 @@
         "source_location": {
           "heading": "ACD-025 - Visible Composer And Browser Capture Attachments",
           "heading_level": 3,
-          "heading_line": 4576,
-          "line": 4578,
+          "heading_line": 4635,
+          "line": 4637,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -572,8 +572,8 @@
         "source_location": {
           "heading": "ACD-026 - Web Search Chat Disclosure",
           "heading_level": 3,
-          "heading_line": 4626,
-          "line": 4628,
+          "heading_line": 4685,
+          "line": 4687,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -583,8 +583,8 @@
         "source_location": {
           "heading": "ACD-027 - Question Flow Lifecycle",
           "heading_level": 3,
-          "heading_line": 4671,
-          "line": 4673,
+          "heading_line": 4730,
+          "line": 4732,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -594,8 +594,8 @@
         "source_location": {
           "heading": "ACD-029 - Question Card Rendering Contract",
           "heading_level": 3,
-          "heading_line": 4769,
-          "line": 4771,
+          "heading_line": 4828,
+          "line": 4830,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -605,8 +605,8 @@
         "source_location": {
           "heading": "ACD-030 - Question Submit And Dismiss Contract",
           "heading_level": 3,
-          "heading_line": 4815,
-          "line": 4817,
+          "heading_line": 4874,
+          "line": 4876,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -616,8 +616,8 @@
         "source_location": {
           "heading": "ACD-033 - Visible Plan Review Surface",
           "heading_level": 3,
-          "heading_line": 4956,
-          "line": 4958,
+          "heading_line": 5015,
+          "line": 5017,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -627,8 +627,8 @@
         "source_location": {
           "heading": "ACD-035 - Plan Thoroughness Control Surface",
           "heading_level": 3,
-          "heading_line": 5044,
-          "line": 5046,
+          "heading_line": 5103,
+          "line": 5105,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -638,8 +638,8 @@
         "source_location": {
           "heading": "ACD-039 - Standard Plan Artifact Surface",
           "heading_level": 3,
-          "heading_line": 5202,
-          "line": 5204,
+          "heading_line": 5261,
+          "line": 5263,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -649,8 +649,8 @@
         "source_location": {
           "heading": "ACD-041 - Deep Plan Artifact Opening",
           "heading_level": 3,
-          "heading_line": 5285,
-          "line": 5287,
+          "heading_line": 5344,
+          "line": 5346,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -660,8 +660,8 @@
         "source_location": {
           "heading": "ACD-045 - TODO Auto-Use Review Surface",
           "heading_level": 3,
-          "heading_line": 5469,
-          "line": 5471,
+          "heading_line": 5528,
+          "line": 5530,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -671,8 +671,8 @@
         "source_location": {
           "heading": "ACD-046 - Standard Plan Review Loop",
           "heading_level": 3,
-          "heading_line": 5513,
-          "line": 5515,
+          "heading_line": 5572,
+          "line": 5574,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -682,8 +682,8 @@
         "source_location": {
           "heading": "ACD-047 - Deep Plan Annotation Palette",
           "heading_level": 3,
-          "heading_line": 5556,
-          "line": 5558,
+          "heading_line": 5615,
+          "line": 5617,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -693,8 +693,8 @@
         "source_location": {
           "heading": "ACD-051 - Document Selection Composer Handoff",
           "heading_level": 3,
-          "heading_line": 5747,
-          "line": 5749,
+          "heading_line": 5806,
+          "line": 5808,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -704,8 +704,8 @@
         "source_location": {
           "heading": "ACD-052 - Selection Target Privacy And GUI Drawer",
           "heading_level": 3,
-          "heading_line": 5800,
-          "line": 5802,
+          "heading_line": 5859,
+          "line": 5861,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -715,8 +715,8 @@
         "source_location": {
           "heading": "ACD-053 - Post-Plan Approval Actions",
           "heading_level": 3,
-          "heading_line": 5849,
-          "line": 5851,
+          "heading_line": 5908,
+          "line": 5910,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -726,8 +726,8 @@
         "source_location": {
           "heading": "ACD-055 - Planning Wizard Escalation",
           "heading_level": 3,
-          "heading_line": 5944,
-          "line": 5946,
+          "heading_line": 6003,
+          "line": 6005,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -737,8 +737,8 @@
         "source_location": {
           "heading": "ACD-056 - File Reference Handoff",
           "heading_level": 3,
-          "heading_line": 5991,
-          "line": 5993,
+          "heading_line": 6050,
+          "line": 6052,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -748,8 +748,8 @@
         "source_location": {
           "heading": "ACD-058 - Chat Diff Source Control Consumer",
           "heading_level": 3,
-          "heading_line": 6086,
-          "line": 6088,
+          "heading_line": 6145,
+          "line": 6147,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -759,8 +759,8 @@
         "source_location": {
           "heading": "ACD-059 - Files Touched SCM Projection",
           "heading_level": 3,
-          "heading_line": 6141,
-          "line": 6143,
+          "heading_line": 6200,
+          "line": 6202,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -770,8 +770,8 @@
         "source_location": {
           "heading": "ACD-060 - Chat Search Owner Boundary",
           "heading_level": 3,
-          "heading_line": 6193,
-          "line": 6195,
+          "heading_line": 6252,
+          "line": 6254,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -781,8 +781,8 @@
         "source_location": {
           "heading": "ACD-061 - Human Chat History Search",
           "heading_level": 3,
-          "heading_line": 6238,
-          "line": 6240,
+          "heading_line": 6297,
+          "line": 6299,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -792,8 +792,8 @@
         "source_location": {
           "heading": "ACD-065 - Auto Retrieval Settings Surface",
           "heading_level": 3,
-          "heading_line": 6417,
-          "line": 6419,
+          "heading_line": 6476,
+          "line": 6478,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -803,8 +803,8 @@
         "source_location": {
           "heading": "ACD-069 - GUI Log Search Surface",
           "heading_level": 3,
-          "heading_line": 6602,
-          "line": 6604,
+          "heading_line": 6661,
+          "line": 6663,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -814,8 +814,8 @@
         "source_location": {
           "heading": "ACD-073 - Message Rendering Persistence Boundary",
           "heading_level": 3,
-          "heading_line": 6773,
-          "line": 6775,
+          "heading_line": 6832,
+          "line": 6834,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -825,8 +825,8 @@
         "source_location": {
           "heading": "ACD-080 - Debug Restore Context Surface",
           "heading_level": 3,
-          "heading_line": 7081,
-          "line": 7083,
+          "heading_line": 7140,
+          "line": 7142,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -836,8 +836,8 @@
         "source_location": {
           "heading": "ACD-085 - Runtime Identity Display Snapshot",
           "heading_level": 3,
-          "heading_line": 7320,
-          "line": 7322,
+          "heading_line": 7379,
+          "line": 7381,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -847,8 +847,8 @@
         "source_location": {
           "heading": "ACD-087 - Branch Conversation UI Confirmation",
           "heading_level": 3,
-          "heading_line": 7401,
-          "line": 7403,
+          "heading_line": 7460,
+          "line": 7462,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -858,8 +858,8 @@
         "source_location": {
           "heading": "ACD-088 - Session Browser Thread Focus",
           "heading_level": 3,
-          "heading_line": 7439,
-          "line": 7441,
+          "heading_line": 7498,
+          "line": 7500,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -869,8 +869,8 @@
         "source_location": {
           "heading": "ACD-089 - Context Usage Display Ownership",
           "heading_level": 3,
-          "heading_line": 7479,
-          "line": 7481,
+          "heading_line": 7538,
+          "line": 7540,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -880,8 +880,8 @@
         "source_location": {
           "heading": "ACD-090 - Context Usage Route Stale Disposition",
           "heading_level": 3,
-          "heading_line": 7519,
-          "line": 7521,
+          "heading_line": 7578,
+          "line": 7580,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -891,8 +891,8 @@
         "source_location": {
           "heading": "ACD-091 - Context Usage Thread Signals",
           "heading_level": 3,
-          "heading_line": 7564,
-          "line": 7566,
+          "heading_line": 7623,
+          "line": 7625,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -902,8 +902,8 @@
         "source_location": {
           "heading": "ACD-092 - Context Detail Pane Information Architecture",
           "heading_level": 3,
-          "heading_line": 7611,
-          "line": 7613,
+          "heading_line": 7670,
+          "line": 7672,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -913,8 +913,8 @@
         "source_location": {
           "heading": "ACD-093 - Context Breakdown Source Taxonomy",
           "heading_level": 3,
-          "heading_line": 7662,
-          "line": 7664,
+          "heading_line": 7721,
+          "line": 7723,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -924,8 +924,8 @@
         "source_location": {
           "heading": "ACD-094 - Context Usage Runtime Source Boundary",
           "heading_level": 3,
-          "heading_line": 7708,
-          "line": 7710,
+          "heading_line": 7767,
+          "line": 7769,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -935,8 +935,8 @@
         "source_location": {
           "heading": "ACD-095 - Investigation Context Debug Surface Scope",
           "heading_level": 3,
-          "heading_line": 7757,
-          "line": 7759,
+          "heading_line": 7816,
+          "line": 7818,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -946,8 +946,8 @@
         "source_location": {
           "heading": "ACD-098 - Debug Auto-Ingestion Visibility Boundary",
           "heading_level": 3,
-          "heading_line": 7914,
-          "line": 7916,
+          "heading_line": 7973,
+          "line": 7975,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -957,8 +957,8 @@
         "source_location": {
           "heading": "ACD-100 - Investigation Context Rendering Filtering Actions",
           "heading_level": 3,
-          "heading_line": 8008,
-          "line": 8010,
+          "heading_line": 8067,
+          "line": 8069,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -968,8 +968,8 @@
         "source_location": {
           "heading": "ACD-101 - Activity Transparency Operation Card Owner Scope",
           "heading_level": 3,
-          "heading_line": 8060,
-          "line": 8062,
+          "heading_line": 8119,
+          "line": 8121,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -979,8 +979,8 @@
         "source_location": {
           "heading": "ACD-102 - Operation Card Bounded Preview Anatomy",
           "heading_level": 3,
-          "heading_line": 8109,
-          "line": 8111,
+          "heading_line": 8168,
+          "line": 8170,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -990,8 +990,8 @@
         "source_location": {
           "heading": "ACD-103 - Operation Card Family Subtypes And Actions",
           "heading_level": 3,
-          "heading_line": 8155,
-          "line": 8157,
+          "heading_line": 8214,
+          "line": 8216,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1001,8 +1001,8 @@
         "source_location": {
           "heading": "ACD-104 - Operation Card State Machine And Blocked Recovery",
           "heading_level": 3,
-          "heading_line": 8203,
-          "line": 8205,
+          "heading_line": 8262,
+          "line": 8264,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1012,8 +1012,8 @@
         "source_location": {
           "heading": "ACD-105 - Operation Card Widget Exclusions",
           "heading_level": 3,
-          "heading_line": 8256,
-          "line": 8258,
+          "heading_line": 8315,
+          "line": 8317,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1023,8 +1023,8 @@
         "source_location": {
           "heading": "ACD-107 - Operation Permission Status Carry-Through",
           "heading_level": 3,
-          "heading_line": 8355,
-          "line": 8357,
+          "heading_line": 8414,
+          "line": 8416,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1034,8 +1034,8 @@
         "source_location": {
           "heading": "ACD-108 - Terminal Handoff From Operation Cards",
           "heading_level": 3,
-          "heading_line": 8412,
-          "line": 8414,
+          "heading_line": 8471,
+          "line": 8473,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1045,8 +1045,8 @@
         "source_location": {
           "heading": "ACD-109 - Web Activity Owner Contract Bridge",
           "heading_level": 3,
-          "heading_line": 8459,
-          "line": 8461,
+          "heading_line": 8518,
+          "line": 8520,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1056,8 +1056,8 @@
         "source_location": {
           "heading": "ACD-111 - Web Routing Setup And Priority Disclosure",
           "heading_level": 3,
-          "heading_line": 8559,
-          "line": 8561,
+          "heading_line": 8618,
+          "line": 8620,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1067,8 +1067,8 @@
         "source_location": {
           "heading": "ACD-112 - Site Reader Native Identity Boundary",
           "heading_level": 3,
-          "heading_line": 8606,
-          "line": 8608,
+          "heading_line": 8665,
+          "line": 8667,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1078,8 +1078,8 @@
         "source_location": {
           "heading": "ACD-114 - Firecrawl Transport Route Disclosure",
           "heading_level": 3,
-          "heading_line": 8699,
-          "line": 8701,
+          "heading_line": 8758,
+          "line": 8760,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1089,8 +1089,8 @@
         "source_location": {
           "heading": "ACD-120 - Web Activity Card Labels Details Badges",
           "heading_level": 3,
-          "heading_line": 9000,
-          "line": 9002,
+          "heading_line": 9059,
+          "line": 9061,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1100,8 +1100,8 @@
         "source_location": {
           "heading": "ACD-121 - Web Inspector Deferred Dereference",
           "heading_level": 3,
-          "heading_line": 9055,
-          "line": 9057,
+          "heading_line": 9114,
+          "line": 9116,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1111,8 +1111,8 @@
         "source_location": {
           "heading": "ACD-123 - Batch Webfetch Domain Permission Prompt",
           "heading_level": 3,
-          "heading_line": 9150,
-          "line": 9152,
+          "heading_line": 9209,
+          "line": 9211,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1122,8 +1122,8 @@
         "source_location": {
           "heading": "ACD-125 - Provider-Native Research And Upload Carry-Through",
           "heading_level": 3,
-          "heading_line": 9238,
-          "line": 9240,
+          "heading_line": 9297,
+          "line": 9299,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1133,8 +1133,8 @@
         "source_location": {
           "heading": "ACD-126 - Bash Terminal Card Preview Anatomy",
           "heading_level": 3,
-          "heading_line": 9282,
-          "line": 9284,
+          "heading_line": 9341,
+          "line": 9343,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1144,8 +1144,8 @@
         "source_location": {
           "heading": "ACD-127 - Terminal Promotion Session Ownership",
           "heading_level": 3,
-          "heading_line": 9331,
-          "line": 9333,
+          "heading_line": 9390,
+          "line": 9392,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1155,8 +1155,8 @@
         "source_location": {
           "heading": "ACD-128 - Terminal Action Canon And Detach Alias",
           "heading_level": 3,
-          "heading_line": 9380,
-          "line": 9382,
+          "heading_line": 9439,
+          "line": 9441,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1166,8 +1166,8 @@
         "source_location": {
           "heading": "ACD-129 - Terminal Attach Recovery And Inline-Only Actions",
           "heading_level": 3,
-          "heading_line": 9430,
-          "line": 9432,
+          "heading_line": 9489,
+          "line": 9491,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1177,8 +1177,8 @@
         "source_location": {
           "heading": "ACD-130 - Shared Collapsible Result Behavior",
           "heading_level": 3,
-          "heading_line": 9481,
-          "line": 9483,
+          "heading_line": 9540,
+          "line": 9542,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1188,8 +1188,8 @@
         "source_location": {
           "heading": "ACD-131 - Terminal Consumer Owner Boundary",
           "heading_level": 3,
-          "heading_line": 9528,
-          "line": 9530,
+          "heading_line": 9587,
+          "line": 9589,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1199,8 +1199,8 @@
         "source_location": {
           "heading": "ACD-132 - Terminal Product Fidelity",
           "heading_level": 3,
-          "heading_line": 9573,
-          "line": 9575,
+          "heading_line": 9632,
+          "line": 9634,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1210,8 +1210,8 @@
         "source_location": {
           "heading": "ACD-133 - PTY Backed Continuity",
           "heading_level": 3,
-          "heading_line": 9621,
-          "line": 9623,
+          "heading_line": 9680,
+          "line": 9682,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1221,8 +1221,8 @@
         "source_location": {
           "heading": "ACD-134 - Shell First Surface Routing",
           "heading_level": 3,
-          "heading_line": 9668,
-          "line": 9670,
+          "heading_line": 9727,
+          "line": 9729,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1232,8 +1232,8 @@
         "source_location": {
           "heading": "ACD-135 - Terminal Workspace Controller Split",
           "heading_level": 3,
-          "heading_line": 9719,
-          "line": 9721,
+          "heading_line": 9778,
+          "line": 9780,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1243,8 +1243,8 @@
         "source_location": {
           "heading": "ACD-136 - Terminal Search Review Tool",
           "heading_level": 3,
-          "heading_line": 9770,
-          "line": 9772,
+          "heading_line": 9829,
+          "line": 9831,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1254,8 +1254,8 @@
         "source_location": {
           "heading": "ACD-137 - Command Block Confidence Rules",
           "heading_level": 3,
-          "heading_line": 9815,
-          "line": 9817,
+          "heading_line": 9874,
+          "line": 9876,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1265,8 +1265,8 @@
         "source_location": {
           "heading": "ACD-138 - Terminal Empty Restore Review States",
           "heading_level": 3,
-          "heading_line": 9863,
-          "line": 9865,
+          "heading_line": 9922,
+          "line": 9924,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1276,8 +1276,8 @@
         "source_location": {
           "heading": "ACD-139 - Pane Status Badges Notifications",
           "heading_level": 3,
-          "heading_line": 9912,
-          "line": 9914,
+          "heading_line": 9971,
+          "line": 9973,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1287,8 +1287,8 @@
         "source_location": {
           "heading": "ACD-140 - Transcript Alternate Screen Reset Actions",
           "heading_level": 3,
-          "heading_line": 9960,
-          "line": 9962,
+          "heading_line": 10019,
+          "line": 10021,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1298,8 +1298,8 @@
         "source_location": {
           "heading": "ACD-141 - Terminal Labels Accessibility",
           "heading_level": 3,
-          "heading_line": 10010,
-          "line": 10012,
+          "heading_line": 10069,
+          "line": 10071,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1309,8 +1309,8 @@
         "source_location": {
           "heading": "ACD-142 - Terminal Diagnostics Recovery",
           "heading_level": 3,
-          "heading_line": 10056,
-          "line": 10058,
+          "heading_line": 10115,
+          "line": 10117,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1320,8 +1320,8 @@
         "source_location": {
           "heading": "ACD-143 - Command Card Transcript Adjacent Summary",
           "heading_level": 3,
-          "heading_line": 10105,
-          "line": 10107,
+          "heading_line": 10164,
+          "line": 10166,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1331,8 +1331,8 @@
         "source_location": {
           "heading": "ACD-144 - Command Card Opaque Degradation",
           "heading_level": 3,
-          "heading_line": 10157,
-          "line": 10159,
+          "heading_line": 10216,
+          "line": 10218,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1342,8 +1342,8 @@
         "source_location": {
           "heading": "ACD-145 - Terminal Reveal Focus Origin",
           "heading_level": 3,
-          "heading_line": 10200,
-          "line": 10202,
+          "heading_line": 10259,
+          "line": 10261,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1353,8 +1353,8 @@
         "source_location": {
           "heading": "ACD-146 - Command Card Status Linked Surfaces",
           "heading_level": 3,
-          "heading_line": 10250,
-          "line": 10252,
+          "heading_line": 10309,
+          "line": 10311,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1364,8 +1364,8 @@
         "source_location": {
           "heading": "ACD-147 - Shared Runtime Identity Owner Boundary",
           "heading_level": 3,
-          "heading_line": 10303,
-          "line": 10305,
+          "heading_line": 10362,
+          "line": 10364,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1375,8 +1375,8 @@
         "source_location": {
           "heading": "ACD-148 - Message Runtime Popover Closed Fields",
           "heading_level": 3,
-          "heading_line": 10350,
-          "line": 10352,
+          "heading_line": 10409,
+          "line": 10411,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1386,8 +1386,8 @@
         "source_location": {
           "heading": "ACD-149 - Runtime Mode Display Mapping",
           "heading_level": 3,
-          "heading_line": 10402,
-          "line": 10404,
+          "heading_line": 10461,
+          "line": 10463,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1397,8 +1397,8 @@
         "source_location": {
           "heading": "ACD-151 - Parent Thread Subagent Visibility",
           "heading_level": 3,
-          "heading_line": 10500,
-          "line": 10502,
+          "heading_line": 10559,
+          "line": 10561,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1408,8 +1408,8 @@
         "source_location": {
           "heading": "ACD-152 - Subagent Visibility Projection Boundary",
           "heading_level": 3,
-          "heading_line": 10549,
-          "line": 10551,
+          "heading_line": 10608,
+          "line": 10610,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1419,8 +1419,8 @@
         "source_location": {
           "heading": "ACD-153 - Inline Child Card Required Presence",
           "heading_level": 3,
-          "heading_line": 10594,
-          "line": 10596,
+          "heading_line": 10653,
+          "line": 10655,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1430,8 +1430,8 @@
         "source_location": {
           "heading": "ACD-154 - Collapsed Child Card Metadata",
           "heading_level": 3,
-          "heading_line": 10633,
-          "line": 10635,
+          "heading_line": 10692,
+          "line": 10694,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1441,8 +1441,8 @@
         "source_location": {
           "heading": "ACD-155 - Expanded Child Panel Stream Blocks",
           "heading_level": 3,
-          "heading_line": 10673,
-          "line": 10675,
+          "heading_line": 10732,
+          "line": 10734,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1452,8 +1452,8 @@
         "source_location": {
           "heading": "ACD-156 - Expanded Child Context State Disclosure",
           "heading_level": 3,
-          "heading_line": 10714,
-          "line": 10716,
+          "heading_line": 10773,
+          "line": 10775,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1463,8 +1463,8 @@
         "source_location": {
           "heading": "ACD-160 - Batch Card Subgroup Inspection",
           "heading_level": 3,
-          "heading_line": 10906,
-          "line": 10908,
+          "heading_line": 10965,
+          "line": 10967,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1474,8 +1474,8 @@
         "source_location": {
           "heading": "ACD-162 - Child Awaiting Blocked User Input Display",
           "heading_level": 3,
-          "heading_line": 10999,
-          "line": 11001,
+          "heading_line": 11058,
+          "line": 11060,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1485,8 +1485,8 @@
         "source_location": {
           "heading": "ACD-164 - Attributable Crew Board",
           "heading_level": 3,
-          "heading_line": 11086,
-          "line": 11088,
+          "heading_line": 11145,
+          "line": 11147,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1496,8 +1496,8 @@
         "source_location": {
           "heading": "ACD-168 - Crew Selection Provider Resolution",
           "heading_level": 3,
-          "heading_line": 11267,
-          "line": 11269,
+          "heading_line": 11326,
+          "line": 11328,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1507,8 +1507,8 @@
         "source_location": {
           "heading": "ACD-169 - Interview Shared Question System Bridge",
           "heading_level": 3,
-          "heading_line": 11315,
-          "line": 11317,
+          "heading_line": 11374,
+          "line": 11376,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1518,8 +1518,8 @@
         "source_location": {
           "heading": "ACD-170 - Shared Question Card Baseline Fields",
           "heading_level": 3,
-          "heading_line": 11354,
-          "line": 11356,
+          "heading_line": 11413,
+          "line": 11415,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1529,8 +1529,8 @@
         "source_location": {
           "heading": "ACD-171 - Questionnaire Order Optional Dismissed State",
           "heading_level": 3,
-          "heading_line": 11399,
-          "line": 11401,
+          "heading_line": 11458,
+          "line": 11460,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1540,8 +1540,8 @@
         "source_location": {
           "heading": "ACD-173 - Interview Runtime Disclosure",
           "heading_level": 3,
-          "heading_line": 11493,
-          "line": 11495,
+          "heading_line": 11552,
+          "line": 11554,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1551,8 +1551,8 @@
         "source_location": {
           "heading": "ACD-175 - Approval Runtime Account Display Copy",
           "heading_level": 3,
-          "heading_line": 11581,
-          "line": 11583,
+          "heading_line": 11640,
+          "line": 11642,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1562,8 +1562,8 @@
         "source_location": {
           "heading": "ACD-177 - Compact Session Chat Entrypoint",
           "heading_level": 3,
-          "heading_line": 11671,
-          "line": 11673,
+          "heading_line": 11730,
+          "line": 11732,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1573,8 +1573,8 @@
         "source_location": {
           "heading": "ACD-180 - Injected Context Breakdown Transparency",
           "heading_level": 3,
-          "heading_line": 11834,
-          "line": 11836,
+          "heading_line": 11893,
+          "line": 11895,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1584,8 +1584,8 @@
         "source_location": {
           "heading": "ACD-181 - Context Injector User Configuration",
           "heading_level": 3,
-          "heading_line": 11880,
-          "line": 11882,
+          "heading_line": 11939,
+          "line": 11941,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1595,8 +1595,8 @@
         "source_location": {
           "heading": "ACD-185 - AGENTS Promotion UI Enforcement",
           "heading_level": 3,
-          "heading_line": 12062,
-          "line": 12064,
+          "heading_line": 12121,
+          "line": 12123,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1606,8 +1606,8 @@
         "source_location": {
           "heading": "ACD-189 - Gist Review Memory Command Canon",
           "heading_level": 3,
-          "heading_line": 12237,
-          "line": 12239,
+          "heading_line": 12296,
+          "line": 12298,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1617,8 +1617,8 @@
         "source_location": {
           "heading": "ACD-191 - Project Retrieval Controls",
           "heading_level": 3,
-          "heading_line": 12326,
-          "line": 12328,
+          "heading_line": 12385,
+          "line": 12387,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1628,8 +1628,8 @@
         "source_location": {
           "heading": "ACD-192 - Context Lens Control",
           "heading_level": 3,
-          "heading_line": 12371,
-          "line": 12373,
+          "heading_line": 12430,
+          "line": 12432,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1639,8 +1639,8 @@
         "source_location": {
           "heading": "ACD-193 - Context Lens Modes",
           "heading_level": 3,
-          "heading_line": 12416,
-          "line": 12418,
+          "heading_line": 12475,
+          "line": 12477,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1650,8 +1650,8 @@
         "source_location": {
           "heading": "ACD-197 - BrainStorm Execution Switch",
           "heading_level": 3,
-          "heading_line": 12592,
-          "line": 12594,
+          "heading_line": 12651,
+          "line": 12653,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1661,8 +1661,8 @@
         "source_location": {
           "heading": "ACD-198 - BrainStorm Subagent Projection",
           "heading_level": 3,
-          "heading_line": 12637,
-          "line": 12639,
+          "heading_line": 12696,
+          "line": 12698,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1672,8 +1672,8 @@
         "source_location": {
           "heading": "ACD-199 - AI Overseer Documentation",
           "heading_level": 3,
-          "heading_line": 12683,
-          "line": 12685,
+          "heading_line": 12742,
+          "line": 12744,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1683,8 +1683,8 @@
         "source_location": {
           "heading": "ACD-203 - Dashboard CtA Attention",
           "heading_level": 3,
-          "heading_line": 12863,
-          "line": 12865,
+          "heading_line": 12922,
+          "line": 12924,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1694,8 +1694,8 @@
         "source_location": {
           "heading": "ACD-204 - Assistant Addresses CtA",
           "heading_level": 3,
-          "heading_line": 12904,
-          "line": 12906,
+          "heading_line": 12963,
+          "line": 12965,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1705,8 +1705,8 @@
         "source_location": {
           "heading": "ACD-205 - HITL Continue In Assistant",
           "heading_level": 3,
-          "heading_line": 12942,
-          "line": 12944,
+          "heading_line": 13001,
+          "line": 13003,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1716,8 +1716,8 @@
         "source_location": {
           "heading": "ACD-206 - Dev Action Mapping",
           "heading_level": 3,
-          "heading_line": 12995,
-          "line": 12997,
+          "heading_line": 13054,
+          "line": 13056,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1727,8 +1727,8 @@
         "source_location": {
           "heading": "ACD-207 - Dev Output Projection Boundary",
           "heading_level": 3,
-          "heading_line": 13036,
-          "line": 13038,
+          "heading_line": 13095,
+          "line": 13097,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1738,8 +1738,8 @@
         "source_location": {
           "heading": "ACD-208 - Dev Session Consequence Disclosure",
           "heading_level": 3,
-          "heading_line": 13083,
-          "line": 13085,
+          "heading_line": 13142,
+          "line": 13144,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1749,8 +1749,8 @@
         "source_location": {
           "heading": "ACD-210 - Dev Session Surface Reveal",
           "heading_level": 3,
-          "heading_line": 13162,
-          "line": 13164,
+          "heading_line": 13221,
+          "line": 13223,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1760,8 +1760,8 @@
         "source_location": {
           "heading": "ACD-211 - Editor Pane Reconciliation",
           "heading_level": 3,
-          "heading_line": 13208,
-          "line": 13210,
+          "heading_line": 13267,
+          "line": 13269,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1771,8 +1771,8 @@
         "source_location": {
           "heading": "ACD-213 - Project Switch State",
           "heading_level": 3,
-          "heading_line": 13291,
-          "line": 13293,
+          "heading_line": 13350,
+          "line": 13352,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1782,8 +1782,8 @@
         "source_location": {
           "heading": "ACD-214 - No Silent Dev Session Orphan",
           "heading_level": 3,
-          "heading_line": 13336,
-          "line": 13338,
+          "heading_line": 13395,
+          "line": 13397,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1793,8 +1793,8 @@
         "source_location": {
           "heading": "ACD-215 - Gap Review MVP Scope",
           "heading_level": 3,
-          "heading_line": 13379,
-          "line": 13381,
+          "heading_line": 13438,
+          "line": 13440,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1804,8 +1804,8 @@
         "source_location": {
           "heading": "ACD-216 - File Reference Chips",
           "heading_level": 3,
-          "heading_line": 13414,
-          "line": 13416,
+          "heading_line": 13473,
+          "line": 13475,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1815,8 +1815,8 @@
         "source_location": {
           "heading": "ACD-217 - Revert Rewind Split",
           "heading_level": 3,
-          "heading_line": 13453,
-          "line": 13455,
+          "heading_line": 13512,
+          "line": 13514,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1826,8 +1826,8 @@
         "source_location": {
           "heading": "ACD-219 - Queue FIFO Resolution",
           "heading_level": 3,
-          "heading_line": 13538,
-          "line": 13540,
+          "heading_line": 13597,
+          "line": 13599,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1837,8 +1837,8 @@
         "source_location": {
           "heading": "ACD-221 - Thought Stream Unification",
           "heading_level": 3,
-          "heading_line": 13627,
-          "line": 13629,
+          "heading_line": 13686,
+          "line": 13688,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1848,8 +1848,8 @@
         "source_location": {
           "heading": "ACD-224 - Long Thread Risk Mitigation",
           "heading_level": 3,
-          "heading_line": 13744,
-          "line": 13746,
+          "heading_line": 13803,
+          "line": 13805,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1859,8 +1859,8 @@
         "source_location": {
           "heading": "ACD-225 - Competitive Matrix",
           "heading_level": 3,
-          "heading_line": 13782,
-          "line": 13784,
+          "heading_line": 13841,
+          "line": 13843,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1870,8 +1870,8 @@
         "source_location": {
           "heading": "ACD-226 - MVP Scope Summary",
           "heading_level": 3,
-          "heading_line": 13822,
-          "line": 13824,
+          "heading_line": 13881,
+          "line": 13883,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1881,8 +1881,8 @@
         "source_location": {
           "heading": "ACD-227 - Adopted Command Thread Lifecycle",
           "heading_level": 3,
-          "heading_line": 13865,
-          "line": 13867,
+          "heading_line": 13924,
+          "line": 13926,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1892,8 +1892,8 @@
         "source_location": {
           "heading": "ACD-228 - Adopted Queue Interrupt Error UX",
           "heading_level": 3,
-          "heading_line": 13909,
-          "line": 13911,
+          "heading_line": 13968,
+          "line": 13970,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1903,8 +1903,8 @@
         "source_location": {
           "heading": "ACD-229 - Adopted Platform Input Streaming",
           "heading_level": 3,
-          "heading_line": 13952,
-          "line": 13954,
+          "heading_line": 14011,
+          "line": 14013,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1914,8 +1914,8 @@
         "source_location": {
           "heading": "ACD-230 - Adopted HITL Run Notifications",
           "heading_level": 3,
-          "heading_line": 13992,
-          "line": 13994,
+          "heading_line": 14051,
+          "line": 14053,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1925,8 +1925,8 @@
         "source_location": {
           "heading": "ACD-231 - Assistant Concurrency Boundary",
           "heading_level": 3,
-          "heading_line": 14033,
-          "line": 14035,
+          "heading_line": 14092,
+          "line": 14094,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1936,8 +1936,8 @@
         "source_location": {
           "heading": "ACD-232 - Plan Panel Error Scope",
           "heading_level": 3,
-          "heading_line": 14072,
-          "line": 14074,
+          "heading_line": 14131,
+          "line": 14133,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1947,8 +1947,8 @@
         "source_location": {
           "heading": "ACD-234 - Git Parity Chat",
           "heading_level": 3,
-          "heading_line": 14148,
-          "line": 14150,
+          "heading_line": 14207,
+          "line": 14209,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1958,8 +1958,8 @@
         "source_location": {
           "heading": "ACD-235 - Long Thread Performance Scope",
           "heading_level": 3,
-          "heading_line": 14189,
-          "line": 14191,
+          "heading_line": 14248,
+          "line": 14250,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1969,8 +1969,8 @@
         "source_location": {
           "heading": "ACD-236 - Virtualized Message List",
           "heading_level": 3,
-          "heading_line": 14228,
-          "line": 14230,
+          "heading_line": 14287,
+          "line": 14289,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1980,8 +1980,8 @@
         "source_location": {
           "heading": "ACD-237 - Slint Visible Slice Stable ID",
           "heading_level": 3,
-          "heading_line": 14271,
-          "line": 14273,
+          "heading_line": 14330,
+          "line": 14332,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -1991,8 +1991,8 @@
         "source_location": {
           "heading": "ACD-238 - No Full Replace Streaming",
           "heading_level": 3,
-          "heading_line": 14314,
-          "line": 14316,
+          "heading_line": 14373,
+          "line": 14375,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2002,8 +2002,8 @@
         "source_location": {
           "heading": "ACD-239 - Scroll Layout Stability",
           "heading_level": 3,
-          "heading_line": 14353,
-          "line": 14355,
+          "heading_line": 14412,
+          "line": 14414,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2013,8 +2013,8 @@
         "source_location": {
           "heading": "ACD-240 - Streaming Single Update Path",
           "heading_level": 3,
-          "heading_line": 14393,
-          "line": 14395,
+          "heading_line": 14452,
+          "line": 14454,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2024,8 +2024,8 @@
         "source_location": {
           "heading": "ACD-241 - Lazy Collapsed Content",
           "heading_level": 3,
-          "heading_line": 14431,
-          "line": 14433,
+          "heading_line": 14490,
+          "line": 14492,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2035,8 +2035,8 @@
         "source_location": {
           "heading": "ACD-242 - Load Older Optional",
           "heading_level": 3,
-          "heading_line": 14470,
-          "line": 14472,
+          "heading_line": 14529,
+          "line": 14531,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2046,8 +2046,8 @@
         "source_location": {
           "heading": "ACD-244 - Performance Enhancement Integration",
           "heading_level": 3,
-          "heading_line": 14551,
-          "line": 14553,
+          "heading_line": 14610,
+          "line": 14612,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2057,8 +2057,8 @@
         "source_location": {
           "heading": "ACD-245 - Skeleton Placeholders",
           "heading_level": 3,
-          "heading_line": 14590,
-          "line": 14592,
+          "heading_line": 14649,
+          "line": 14651,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2068,8 +2068,8 @@
         "source_location": {
           "heading": "ACD-246 - Jump To Message",
           "heading_level": 3,
-          "heading_line": 14630,
-          "line": 14632,
+          "heading_line": 14689,
+          "line": 14691,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2079,8 +2079,8 @@
         "source_location": {
           "heading": "ACD-247 - Search Thread Highlights",
           "heading_level": 3,
-          "heading_line": 14672,
-          "line": 14674,
+          "heading_line": 14731,
+          "line": 14733,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2090,8 +2090,8 @@
         "source_location": {
           "heading": "ACD-248 - Overscan Height Mitigation",
           "heading_level": 3,
-          "heading_line": 14715,
-          "line": 14717,
+          "heading_line": 14774,
+          "line": 14776,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2101,8 +2101,8 @@
         "source_location": {
           "heading": "ACD-249 - Scroll Restore Mitigation",
           "heading_level": 3,
-          "heading_line": 14754,
-          "line": 14756,
+          "heading_line": 14813,
+          "line": 14815,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2112,8 +2112,8 @@
         "source_location": {
           "heading": "ACD-250 - Streaming Tail Display Limit",
           "heading_level": 3,
-          "heading_line": 14792,
-          "line": 14794,
+          "heading_line": 14851,
+          "line": 14853,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2123,8 +2123,8 @@
         "source_location": {
           "heading": "ACD-252 - Context Popout Retired",
           "heading_level": 3,
-          "heading_line": 14878,
-          "line": 14880,
+          "heading_line": 14937,
+          "line": 14939,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2134,8 +2134,8 @@
         "source_location": {
           "heading": "ACD-253 - Validation Settings Context",
           "heading_level": 3,
-          "heading_line": 14922,
-          "line": 14924,
+          "heading_line": 14981,
+          "line": 14983,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2145,8 +2145,8 @@
         "source_location": {
           "heading": "ACD-254 - Validation Settings Location",
           "heading_level": 3,
-          "heading_line": 14962,
-          "line": 14964,
+          "heading_line": 15021,
+          "line": 15023,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2156,8 +2156,8 @@
         "source_location": {
           "heading": "ACD-255 - Validation Pass Controls",
           "heading_level": 3,
-          "heading_line": 15003,
-          "line": 15005,
+          "heading_line": 15062,
+          "line": 15064,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2167,8 +2167,8 @@
         "source_location": {
           "heading": "ACD-256 - No Effort Control Widget Tag",
           "heading_level": 3,
-          "heading_line": 15059,
-          "line": 15061,
+          "heading_line": 15118,
+          "line": 15120,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2178,8 +2178,8 @@
         "source_location": {
           "heading": "ACD-261 - Validation UX Copy",
           "heading_level": 3,
-          "heading_line": 15272,
-          "line": 15274,
+          "heading_line": 15331,
+          "line": 15333,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2189,8 +2189,8 @@
         "source_location": {
           "heading": "ACD-263 - Validation Dropdown Reuse",
           "heading_level": 3,
-          "heading_line": 15360,
-          "line": 15362,
+          "heading_line": 15419,
+          "line": 15421,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2200,8 +2200,8 @@
         "source_location": {
           "heading": "ACD-265 - Validation Unavailable Provider Warning",
           "heading_level": 3,
-          "heading_line": 15440,
-          "line": 15442,
+          "heading_line": 15499,
+          "line": 15501,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2211,8 +2211,8 @@
         "source_location": {
           "heading": "ACD-267 - Validation Default Indicator Lifecycle",
           "heading_level": 3,
-          "heading_line": 15522,
-          "line": 15524,
+          "heading_line": 15581,
+          "line": 15583,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2222,8 +2222,8 @@
         "source_location": {
           "heading": "ACD-274 - Current Persona Display Fields",
           "heading_level": 3,
-          "heading_line": 15820,
-          "line": 15822,
+          "heading_line": 15879,
+          "line": 15881,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2233,8 +2233,8 @@
         "source_location": {
           "heading": "ACD-277 - Persona Override Display",
           "heading_level": 3,
-          "heading_line": 15955,
-          "line": 15957,
+          "heading_line": 16014,
+          "line": 16016,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2244,8 +2244,8 @@
         "source_location": {
           "heading": "ACD-281 - Manual Persona Picker Validation",
           "heading_level": 3,
-          "heading_line": 16121,
-          "line": 16123,
+          "heading_line": 16180,
+          "line": 16182,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2255,8 +2255,8 @@
         "source_location": {
           "heading": "ACD-283 - Chat Persona Controls",
           "heading_level": 3,
-          "heading_line": 16197,
-          "line": 16199,
+          "heading_line": 16256,
+          "line": 16258,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2266,8 +2266,8 @@
         "source_location": {
           "heading": "ACD-284 - Subagent Persona Display",
           "heading_level": 3,
-          "heading_line": 16239,
-          "line": 16241,
+          "heading_line": 16298,
+          "line": 16300,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2277,8 +2277,8 @@
         "source_location": {
           "heading": "ACD-285 - Requested Effective Runtime Disclosure",
           "heading_level": 3,
-          "heading_line": 16281,
-          "line": 16283,
+          "heading_line": 16340,
+          "line": 16342,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2288,8 +2288,8 @@
         "source_location": {
           "heading": "ACD-286 - Child Run Runtime Disclosure",
           "heading_level": 3,
-          "heading_line": 16323,
-          "line": 16325,
+          "heading_line": 16382,
+          "line": 16384,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2299,8 +2299,8 @@
         "source_location": {
           "heading": "ACD-287 - Runtime Fallback Disclosure Constraint",
           "heading_level": 3,
-          "heading_line": 16363,
-          "line": 16365,
+          "heading_line": 16422,
+          "line": 16424,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2310,8 +2310,8 @@
         "source_location": {
           "heading": "ACD-288 - Crew Runtime Surface Disclosure",
           "heading_level": 3,
-          "heading_line": 16404,
-          "line": 16406,
+          "heading_line": 16463,
+          "line": 16465,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2321,8 +2321,8 @@
         "source_location": {
           "heading": "ACD-289 - Persona Acceptance Addendum",
           "heading_level": 3,
-          "heading_line": 16451,
-          "line": 16453,
+          "heading_line": 16510,
+          "line": 16512,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2332,8 +2332,8 @@
         "source_location": {
           "heading": "ACD-290 - Mermaid Inline Visualizer Split",
           "heading_level": 3,
-          "heading_line": 16498,
-          "line": 16500,
+          "heading_line": 16557,
+          "line": 16559,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2343,8 +2343,8 @@
         "source_location": {
           "heading": "ACD-291 - Visualizer Widget Taxonomy",
           "heading_level": 3,
-          "heading_line": 16537,
-          "line": 16539,
+          "heading_line": 16596,
+          "line": 16598,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2354,8 +2354,8 @@
         "source_location": {
           "heading": "ACD-292 - Inline Visual Module Iframe Path",
           "heading_level": 3,
-          "heading_line": 16584,
-          "line": 16586,
+          "heading_line": 16643,
+          "line": 16645,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2365,8 +2365,8 @@
         "source_location": {
           "heading": "ACD-296 - Visualizer Theme Token Injection",
           "heading_level": 3,
-          "heading_line": 16763,
-          "line": 16765,
+          "heading_line": 16822,
+          "line": 16824,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2376,8 +2376,8 @@
         "source_location": {
           "heading": "ACD-299 - Inline Visual Module Controls And Source",
           "heading_level": 3,
-          "heading_line": 16906,
-          "line": 16908,
+          "heading_line": 16965,
+          "line": 16967,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2387,8 +2387,8 @@
         "source_location": {
           "heading": "ACD-305 - Mode Compact Display Labels",
           "heading_level": 3,
-          "heading_line": 17187,
-          "line": 17189,
+          "heading_line": 17246,
+          "line": 17248,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2398,8 +2398,8 @@
         "source_location": {
           "heading": "ACD-307 - Planning Wizard Recommendation CTA",
           "heading_level": 3,
-          "heading_line": 17268,
-          "line": 17270,
+          "heading_line": 17327,
+          "line": 17329,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2409,8 +2409,8 @@
         "source_location": {
           "heading": "ACD-311 - Wizard Handoff Visibility And Audit",
           "heading_level": 3,
-          "heading_line": 17448,
-          "line": 17450,
+          "heading_line": 17507,
+          "line": 17509,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2420,8 +2420,8 @@
         "source_location": {
           "heading": "ACD-312 - Wizard Launch Context Routing",
           "heading_level": 3,
-          "heading_line": 17491,
-          "line": 17493,
+          "heading_line": 17550,
+          "line": 17552,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2431,8 +2431,8 @@
         "source_location": {
           "heading": "ACD-314 - Mode And Wizard Acceptance",
           "heading_level": 3,
-          "heading_line": 17577,
-          "line": 17579,
+          "heading_line": 17636,
+          "line": 17638,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2442,8 +2442,8 @@
         "source_location": {
           "heading": "ACD-317 - Blocked Episode Display",
           "heading_level": 3,
-          "heading_line": 17705,
-          "line": 17707,
+          "heading_line": 17764,
+          "line": 17766,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2453,8 +2453,8 @@
         "source_location": {
           "heading": "ACD-318 - Worktrees In Assistant Scope",
           "heading_level": 3,
-          "heading_line": 17754,
-          "line": 17756,
+          "heading_line": 17813,
+          "line": 17815,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2464,8 +2464,8 @@
         "source_location": {
           "heading": "ACD-321 - Source Control Worktree Filter State",
           "heading_level": 3,
-          "heading_line": 17887,
-          "line": 17889,
+          "heading_line": 17946,
+          "line": 17948,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2475,8 +2475,8 @@
         "source_location": {
           "heading": "ACD-322 - Worktree Header Button Placement",
           "heading_level": 3,
-          "heading_line": 17937,
-          "line": 17939,
+          "heading_line": 17996,
+          "line": 17998,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2486,8 +2486,8 @@
         "source_location": {
           "heading": "ACD-323 - Worktree Header Icon States",
           "heading_level": 3,
-          "heading_line": 17985,
-          "line": 17987,
+          "heading_line": 18044,
+          "line": 18046,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2497,8 +2497,8 @@
         "source_location": {
           "heading": "ACD-324 - Worktree Dropdown Rows",
           "heading_level": 3,
-          "heading_line": 18032,
-          "line": 18034,
+          "heading_line": 18091,
+          "line": 18093,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2508,8 +2508,8 @@
         "source_location": {
           "heading": "ACD-325 - Worktree Binding Change Rules",
           "heading_level": 3,
-          "heading_line": 18080,
-          "line": 18082,
+          "heading_line": 18139,
+          "line": 18141,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2519,8 +2519,8 @@
         "source_location": {
           "heading": "ACD-331 - Create Worktree Dialog Surface",
           "heading_level": 3,
-          "heading_line": 18350,
-          "line": 18352,
+          "heading_line": 18409,
+          "line": 18411,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2530,8 +2530,8 @@
         "source_location": {
           "heading": "ACD-333 - Create Worktree Dialog Result States",
           "heading_level": 3,
-          "heading_line": 18441,
-          "line": 18443,
+          "heading_line": 18500,
+          "line": 18502,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2541,8 +2541,8 @@
         "source_location": {
           "heading": "ACD-338 - Assistant Worktree Settings Registry",
           "heading_level": 3,
-          "heading_line": 18664,
-          "line": 18666,
+          "heading_line": 18723,
+          "line": 18725,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2552,8 +2552,8 @@
         "source_location": {
           "heading": "ACD-339 - Assistant Worktrees Settings Placement",
           "heading_level": 3,
-          "heading_line": 18715,
-          "line": 18717,
+          "heading_line": 18774,
+          "line": 18776,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2563,8 +2563,8 @@
         "source_location": {
           "heading": "ACD-341 - Thread Selector Worktree Icon",
           "heading_level": 3,
-          "heading_line": 18797,
-          "line": 18799,
+          "heading_line": 18856,
+          "line": 18858,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2574,8 +2574,8 @@
         "source_location": {
           "heading": "ACD-342 - Worktree Projection Status Compatibility",
           "heading_level": 3,
-          "heading_line": 18841,
-          "line": 18843,
+          "heading_line": 18900,
+          "line": 18902,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2585,8 +2585,8 @@
         "source_location": {
           "heading": "ACD-344 - Thread Delete Worktree Confirmation UI",
           "heading_level": 3,
-          "heading_line": 18931,
-          "line": 18933,
+          "heading_line": 18990,
+          "line": 18992,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2596,8 +2596,8 @@
         "source_location": {
           "heading": "ACD-346 - Completed Thread Worktree Retention",
           "heading_level": 3,
-          "heading_line": 19014,
-          "line": 19016,
+          "heading_line": 19073,
+          "line": 19075,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2607,8 +2607,8 @@
         "source_location": {
           "heading": "ACD-347 - Worktree Merge PR Entry Paths",
           "heading_level": 3,
-          "heading_line": 19056,
-          "line": 19058,
+          "heading_line": 19115,
+          "line": 19117,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2618,8 +2618,8 @@
         "source_location": {
           "heading": "ACD-349 - Merge Confirmation Dialog",
           "heading_level": 3,
-          "heading_line": 19141,
-          "line": 19143,
+          "heading_line": 19200,
+          "line": 19202,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2629,8 +2629,8 @@
         "source_location": {
           "heading": "ACD-350 - Merge Dialog Loading State",
           "heading_level": 3,
-          "heading_line": 19182,
-          "line": 19184,
+          "heading_line": 19241,
+          "line": 19243,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2640,8 +2640,8 @@
         "source_location": {
           "heading": "ACD-351 - Pre Merge Guard Matrix",
           "heading_level": 3,
-          "heading_line": 19222,
-          "line": 19224,
+          "heading_line": 19281,
+          "line": 19283,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2651,8 +2651,8 @@
         "source_location": {
           "heading": "ACD-355 - Stale Merge Lock Recovery Compatibility",
           "heading_level": 3,
-          "heading_line": 19386,
-          "line": 19388,
+          "heading_line": 19445,
+          "line": 19447,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2662,8 +2662,8 @@
         "source_location": {
           "heading": "ACD-357 - Worktree Merge Auto Fetch",
           "heading_level": 3,
-          "heading_line": 19468,
-          "line": 19470,
+          "heading_line": 19527,
+          "line": 19529,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2673,8 +2673,8 @@
         "source_location": {
           "heading": "ACD-360 - Post Merge Modal",
           "heading_level": 3,
-          "heading_line": 19591,
-          "line": 19593,
+          "heading_line": 19650,
+          "line": 19652,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2684,8 +2684,8 @@
         "source_location": {
           "heading": "ACD-361 - Source Control Conflict Routing",
           "heading_level": 3,
-          "heading_line": 19634,
-          "line": 19636,
+          "heading_line": 19693,
+          "line": 19695,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2695,8 +2695,8 @@
         "source_location": {
           "heading": "ACD-362 - Natural Language Conflict Assistance Boundary",
           "heading_level": 3,
-          "heading_line": 19676,
-          "line": 19678,
+          "heading_line": 19735,
+          "line": 19737,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2706,8 +2706,8 @@
         "source_location": {
           "heading": "ACD-364 - Worktree PR Panel Prefill",
           "heading_level": 3,
-          "heading_line": 19759,
-          "line": 19761,
+          "heading_line": 19818,
+          "line": 19820,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2717,8 +2717,8 @@
         "source_location": {
           "heading": "ACD-365 - Worktree PR Push And Failure Flow",
           "heading_level": 3,
-          "heading_line": 19797,
-          "line": 19799,
+          "heading_line": 19856,
+          "line": 19858,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2728,8 +2728,8 @@
         "source_location": {
           "heading": "ACD-366 - Natural Language Merge Structured Action",
           "heading_level": 3,
-          "heading_line": 19842,
-          "line": 19844,
+          "heading_line": 19901,
+          "line": 19903,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2739,8 +2739,8 @@
         "source_location": {
           "heading": "ACD-368 - Natural Language Merge Mode Guard",
           "heading_level": 3,
-          "heading_line": 19925,
-          "line": 19927,
+          "heading_line": 19984,
+          "line": 19986,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2750,8 +2750,8 @@
         "source_location": {
           "heading": "ACD-373 - Pre Merge Test Detection First Run UX",
           "heading_level": 3,
-          "heading_line": 20132,
-          "line": 20134,
+          "heading_line": 20191,
+          "line": 20193,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2761,8 +2761,8 @@
         "source_location": {
           "heading": "ACD-376 - Pre Merge Test Dialog UX",
           "heading_level": 3,
-          "heading_line": 20261,
-          "line": 20263,
+          "heading_line": 20320,
+          "line": 20322,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2772,8 +2772,8 @@
         "source_location": {
           "heading": "ACD-384 - Worktree Command Visibility Enablement",
           "heading_level": 3,
-          "heading_line": 20604,
-          "line": 20606,
+          "heading_line": 20663,
+          "line": 20665,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2783,8 +2783,8 @@
         "source_location": {
           "heading": "ACD-385 - File Manager Worktree Root Follow",
           "heading_level": 3,
-          "heading_line": 20647,
-          "line": 20649,
+          "heading_line": 20706,
+          "line": 20708,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2794,8 +2794,8 @@
         "source_location": {
           "heading": "ACD-386 - File Manager Worktree UI Scope",
           "heading_level": 3,
-          "heading_line": 20689,
-          "line": 20691,
+          "heading_line": 20748,
+          "line": 20750,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2805,8 +2805,8 @@
         "source_location": {
           "heading": "ACD-388 - Worktree Relative File Edit Cards",
           "heading_level": 3,
-          "heading_line": 20773,
-          "line": 20775,
+          "heading_line": 20832,
+          "line": 20834,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2816,8 +2816,8 @@
         "source_location": {
           "heading": "ACD-394 - Worktree Lifecycle Error Handling",
           "heading_level": 3,
-          "heading_line": 21031,
-          "line": 21033,
+          "heading_line": 21090,
+          "line": 21092,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2827,8 +2827,8 @@
         "source_location": {
           "heading": "ACD-395 - Merge Test Lock Error Handling",
           "heading_level": 3,
-          "heading_line": 21074,
-          "line": 21076,
+          "heading_line": 21133,
+          "line": 21135,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2838,8 +2838,8 @@
         "source_location": {
           "heading": "ACD-396 - Worktree UI Acceptance Criteria",
           "heading_level": 3,
-          "heading_line": 21117,
-          "line": 21119,
+          "heading_line": 21176,
+          "line": 21178,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2849,8 +2849,8 @@
         "source_location": {
           "heading": "ACD-398 - Worktree UI MVP Non Goals",
           "heading_level": 3,
-          "heading_line": 21194,
-          "line": 21196,
+          "heading_line": 21253,
+          "line": 21255,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2860,8 +2860,8 @@
         "source_location": {
           "heading": "ACD-403 - Shared Conversational Runtime Identity",
           "heading_level": 3,
-          "heading_line": 21410,
-          "line": 21412,
+          "heading_line": 21469,
+          "line": 21471,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2871,8 +2871,8 @@
         "source_location": {
           "heading": "ACD-405 - Execution Policy UI Identity Split",
           "heading_level": 3,
-          "heading_line": 21501,
-          "line": 21503,
+          "heading_line": 21560,
+          "line": 21562,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2882,8 +2882,8 @@
         "source_location": {
           "heading": "ACD-406 - Chat Package Seam Lane Boundary",
           "heading_level": 3,
-          "heading_line": 21544,
-          "line": 21546,
+          "heading_line": 21603,
+          "line": 21605,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2893,8 +2893,8 @@
         "source_location": {
           "heading": "ACD-409 - History Settings Graph Performance",
           "heading_level": 3,
-          "heading_line": 21682,
-          "line": 21684,
+          "heading_line": 21741,
+          "line": 21743,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2904,8 +2904,8 @@
         "source_location": {
           "heading": "ACD-410 - Internal Target Payload Navigation",
           "heading_level": 3,
-          "heading_line": 21727,
-          "line": 21729,
+          "heading_line": 21786,
+          "line": 21788,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2915,8 +2915,8 @@
         "source_location": {
           "heading": "ACD-413 - Extensibility And Traceability Recovery Compile Addendum",
           "heading_level": 3,
-          "heading_line": 21895,
-          "line": 21897,
+          "heading_line": 21954,
+          "line": 21956,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2926,8 +2926,8 @@
         "source_location": {
           "heading": "ACD-414 - Stale Newfeatures Reference Retargeting",
           "heading_level": 3,
-          "heading_line": 21934,
-          "line": 21936,
+          "heading_line": 21993,
+          "line": 21995,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2937,8 +2937,8 @@
         "source_location": {
           "heading": "ACD-415 - Extract Block Semantics Normalization",
           "heading_level": 3,
-          "heading_line": 21985,
-          "line": 21987,
+          "heading_line": 22044,
+          "line": 22046,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2948,8 +2948,8 @@
         "source_location": {
           "heading": "ACD-416 - Goal Mode Activation Status And Thread Controls",
           "heading_level": 3,
-          "heading_line": 22084,
-          "line": 22086,
+          "heading_line": 22143,
+          "line": 22145,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2959,8 +2959,8 @@
         "source_location": {
           "heading": "ACD-417 - Goal Task Tracker Replan And Blocked State Projection",
           "heading_level": 3,
-          "heading_line": 22194,
-          "line": 22196,
+          "heading_line": 22253,
+          "line": 22255,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2970,8 +2970,8 @@
         "source_location": {
           "heading": "ACD-418 - Goal Evidence Activity And Completion Reports",
           "heading_level": 3,
-          "heading_line": 22263,
-          "line": 22265,
+          "heading_line": 22322,
+          "line": 22324,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2981,8 +2981,8 @@
         "source_location": {
           "heading": "ACD-419 - Collapsible Child Goal Display",
           "heading_level": 3,
-          "heading_line": 22337,
-          "line": 22339,
+          "heading_line": 22396,
+          "line": 22398,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -2992,8 +2992,8 @@
         "source_location": {
           "heading": "ACD-420 - Visible Chat Goal Boundary And Doc Builder Exclusion",
           "heading_level": 3,
-          "heading_line": 22398,
-          "line": 22400,
+          "heading_line": 22457,
+          "line": 22459,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3003,8 +3003,8 @@
         "source_location": {
           "heading": "ACD-421 - Planning Product Chat Reuse And Structured Handoff",
           "heading_level": 3,
-          "heading_line": 22470,
-          "line": 22472,
+          "heading_line": 22529,
+          "line": 22531,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3014,8 +3014,8 @@
         "source_location": {
           "heading": "ACD-422 - Assistant Chat Discovery Activity And Toggle",
           "heading_level": 3,
-          "heading_line": 22558,
-          "line": 22560,
+          "heading_line": 22617,
+          "line": 22619,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3025,8 +3025,8 @@
         "source_location": {
           "heading": "ACD-423 - Assistant Chat File Mention Discovery Routing",
           "heading_level": 3,
-          "heading_line": 22602,
-          "line": 22604,
+          "heading_line": 22661,
+          "line": 22663,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3036,8 +3036,8 @@
         "source_location": {
           "heading": "ACD-424 - Chat Provider Model Effort And Media Route Consumers",
           "heading_level": 3,
-          "heading_line": 2745,
-          "line": 2747,
+          "heading_line": 2804,
+          "line": 2806,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3047,8 +3047,8 @@
         "source_location": {
           "heading": "ACD-425 - Assistant Chat Vision Bridge Controls",
           "heading_level": 3,
-          "heading_line": 22649,
-          "line": 22651,
+          "heading_line": 22708,
+          "line": 22710,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3058,8 +3058,8 @@
         "source_location": {
           "heading": "ACD-426 - Teach Teacher Threaded Guidance Workflow",
           "heading_level": 3,
-          "heading_line": 22783,
-          "line": 22785,
+          "heading_line": 22842,
+          "line": 22844,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3069,8 +3069,8 @@
         "source_location": {
           "heading": "ACD-427 - Inline Visualizer V2 Stream And Host Bridge",
           "heading_level": 3,
-          "heading_line": 23025,
-          "line": 23027,
+          "heading_line": 23084,
+          "line": 23086,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3080,8 +3080,8 @@
         "source_location": {
           "heading": "ACD-428 - Notification Trust Copy And Remote Action Boundary",
           "heading_level": 3,
-          "heading_line": 23112,
-          "line": 23114,
+          "heading_line": 23171,
+          "line": 23173,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3091,8 +3091,8 @@
         "source_location": {
           "heading": "ACD-429 - DRY Method What And Why Disclosure",
           "heading_level": 3,
-          "heading_line": 23170,
-          "line": 23172,
+          "heading_line": 23229,
+          "line": 23231,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3102,8 +3102,8 @@
         "source_location": {
           "heading": "ACD-430 - Assistant Chat Host Readiness Cards And Docker/Hosts Pivots",
           "heading_level": 3,
-          "heading_line": 2675,
-          "line": 2677,
+          "heading_line": 2734,
+          "line": 2736,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3113,8 +3113,8 @@
         "source_location": {
           "heading": "ACD-431 - First-Run Teacher Handoff From Onboarding",
           "heading_level": 3,
-          "heading_line": 23238,
-          "line": 23240,
+          "heading_line": 23297,
+          "line": 23299,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3124,8 +3124,19 @@
         "source_location": {
           "heading": "ACD-432 - P0-SESSION-DRAFT-ATTACHMENT-ISOLATION",
           "heading_level": 3,
-          "heading_line": 23319,
-          "line": 23321,
+          "heading_line": 23378,
+          "line": 23380,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-433",
+        "source_location": {
+          "heading": "ACD-433 - FABLE Residual Chat Contract Mechanics",
+          "heading_level": 3,
+          "heading_line": 23445,
+          "line": 23447,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -5291,8 +5302,8 @@
         "source_location": {
           "heading": "CV-001 - Contracts V0 Explicit Residual Source-Token-Bank Disposition",
           "heading_level": 3,
-          "heading_line": 16685,
-          "line": 16687,
+          "heading_line": 16708,
+          "line": 16710,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5302,8 +5313,8 @@
         "source_location": {
           "heading": "CV-002 - Contracts V0 Cross-Cutting Contract SSOT",
           "heading_level": 3,
-          "heading_line": 2890,
-          "line": 2892,
+          "heading_line": 2913,
+          "line": 2915,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5313,8 +5324,8 @@
         "source_location": {
           "heading": "CV-015 - Requested Effective Identity Projection Display",
           "heading_level": 3,
-          "heading_line": 3561,
-          "line": 3563,
+          "heading_line": 3584,
+          "line": 3586,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5324,8 +5335,8 @@
         "source_location": {
           "heading": "CV-018 - Gemini Display And Provider Grouping Constraint",
           "heading_level": 3,
-          "heading_line": 3703,
-          "line": 3705,
+          "heading_line": 3726,
+          "line": 3728,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5335,8 +5346,8 @@
         "source_location": {
           "heading": "CV-020 - Provider Family Connection Profile Additive Fields",
           "heading_level": 3,
-          "heading_line": 3791,
-          "line": 3793,
+          "heading_line": 3814,
+          "line": 3816,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5346,8 +5357,8 @@
         "source_location": {
           "heading": "CV-021 - Selectable Unit Resolver Debug Boundary",
           "heading_level": 3,
-          "heading_line": 3838,
-          "line": 3840,
+          "heading_line": 3861,
+          "line": 3863,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5357,8 +5368,8 @@
         "source_location": {
           "heading": "CV-028 - Requested Effective Projection Visibility",
           "heading_level": 3,
-          "heading_line": 4169,
-          "line": 4171,
+          "heading_line": 4192,
+          "line": 4194,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5368,8 +5379,8 @@
         "source_location": {
           "heading": "CV-030 - Blocked GUI Action Projection Safety",
           "heading_level": 3,
-          "heading_line": 4268,
-          "line": 4270,
+          "heading_line": 4291,
+          "line": 4293,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5379,8 +5390,8 @@
         "source_location": {
           "heading": "CV-037 - Run Graph Projection And Inspector Contract",
           "heading_level": 3,
-          "heading_line": 4600,
-          "line": 4602,
+          "heading_line": 4623,
+          "line": 4625,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5390,8 +5401,8 @@
         "source_location": {
           "heading": "CV-041 - Command Route Shared Primitive Contract",
           "heading_level": 3,
-          "heading_line": 4796,
-          "line": 4798,
+          "heading_line": 4819,
+          "line": 4821,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5401,8 +5412,8 @@
         "source_location": {
           "heading": "CV-043 - Shared Concern Projection Family",
           "heading_level": 3,
-          "heading_line": 4894,
-          "line": 4896,
+          "heading_line": 4917,
+          "line": 4919,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5412,8 +5423,8 @@
         "source_location": {
           "heading": "CV-051 - Project Attention Route Payload",
           "heading_level": 3,
-          "heading_line": 5260,
-          "line": 5262,
+          "heading_line": 5283,
+          "line": 5285,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5423,8 +5434,8 @@
         "source_location": {
           "heading": "CV-058 - Inspector Target Closed Focus Enum",
           "heading_level": 3,
-          "heading_line": 5585,
-          "line": 5587,
+          "heading_line": 5608,
+          "line": 5610,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5434,8 +5445,8 @@
         "source_location": {
           "heading": "CV-073 - Durable Approver Identity Events",
           "heading_level": 3,
-          "heading_line": 6309,
-          "line": 6311,
+          "heading_line": 6332,
+          "line": 6334,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5445,8 +5456,8 @@
         "source_location": {
           "heading": "CV-074 - Lifecycle Reason Code Fields",
           "heading_level": 3,
-          "heading_line": 6358,
-          "line": 6360,
+          "heading_line": 6381,
+          "line": 6383,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5456,8 +5467,8 @@
         "source_location": {
           "heading": "CV-075 - Task Lifecycle Durability Over Projections",
           "heading_level": 3,
-          "heading_line": 6406,
-          "line": 6408,
+          "heading_line": 6429,
+          "line": 6431,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5467,8 +5478,8 @@
         "source_location": {
           "heading": "CV-077 - Bundle Annotation And Selection Handoff",
           "heading_level": 3,
-          "heading_line": 6505,
-          "line": 6507,
+          "heading_line": 6528,
+          "line": 6530,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5478,8 +5489,8 @@
         "source_location": {
           "heading": "CV-082 - Bundle Revision And Approval Event Minima",
           "heading_level": 3,
-          "heading_line": 6757,
-          "line": 6759,
+          "heading_line": 6780,
+          "line": 6782,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5489,8 +5500,8 @@
         "source_location": {
           "heading": "CV-089 - Provider Stream Persistence Boundary",
           "heading_level": 3,
-          "heading_line": 7107,
-          "line": 7109,
+          "heading_line": 7130,
+          "line": 7132,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5500,8 +5511,8 @@
         "source_location": {
           "heading": "CV-091 - Provider Consumer Normalization And Tool Access",
           "heading_level": 3,
-          "heading_line": 7205,
-          "line": 7207,
+          "heading_line": 7228,
+          "line": 7230,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5511,8 +5522,8 @@
         "source_location": {
           "heading": "CV-094 - Provider Support-State And Provenance Dispositions",
           "heading_level": 3,
-          "heading_line": 7355,
-          "line": 7357,
+          "heading_line": 7378,
+          "line": 7380,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5522,8 +5533,8 @@
         "source_location": {
           "heading": "CV-103 - Common Web Provenance Provider And Execution Path Fields",
           "heading_level": 3,
-          "heading_line": 7876,
-          "line": 7878,
+          "heading_line": 7899,
+          "line": 7901,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5533,8 +5544,8 @@
         "source_location": {
           "heading": "CV-105 - Web Input Quality And Provenance Badge Contract",
           "heading_level": 3,
-          "heading_line": 7984,
-          "line": 7986,
+          "heading_line": 8007,
+          "line": 8009,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5544,8 +5555,8 @@
         "source_location": {
           "heading": "CV-107 - Question Lifecycle Runtime UI State Mapping",
           "heading_level": 3,
-          "heading_line": 8082,
-          "line": 8084,
+          "heading_line": 8105,
+          "line": 8107,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5555,8 +5566,8 @@
         "source_location": {
           "heading": "CV-108 - Structured Question Responses And Option Wire Format",
           "heading_level": 3,
-          "heading_line": 8133,
-          "line": 8135,
+          "heading_line": 8156,
+          "line": 8158,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5566,8 +5577,8 @@
         "source_location": {
           "heading": "CV-113 - Provider Fallback Audit Disclosure",
           "heading_level": 3,
-          "heading_line": 8384,
-          "line": 8386,
+          "heading_line": 8407,
+          "line": 8409,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5577,8 +5588,8 @@
         "source_location": {
           "heading": "CV-117 - Chat Plan TODO Mutation Schema",
           "heading_level": 3,
-          "heading_line": 8586,
-          "line": 8588,
+          "heading_line": 8609,
+          "line": 8611,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5588,8 +5599,8 @@
         "source_location": {
           "heading": "CV-128 - Orthogonal Account State And UI Chip Derivation",
           "heading_level": 3,
-          "heading_line": 9156,
-          "line": 9158,
+          "heading_line": 9179,
+          "line": 9181,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5599,8 +5610,8 @@
         "source_location": {
           "heading": "CV-129 - Multi-Account Status Summary Projection",
           "heading_level": 3,
-          "heading_line": 9210,
-          "line": 9212,
+          "heading_line": 9233,
+          "line": 9235,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5610,8 +5621,8 @@
         "source_location": {
           "heading": "CV-132 - Product Auth Copy And Anthropic Helper Action",
           "heading_level": 3,
-          "heading_line": 9356,
-          "line": 9358,
+          "heading_line": 9379,
+          "line": 9381,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5621,8 +5632,8 @@
         "source_location": {
           "heading": "CV-138 - Setup Readiness Split And Auth-Surface Validation Branches",
           "heading_level": 3,
-          "heading_line": 9659,
-          "line": 9661,
+          "heading_line": 9682,
+          "line": 9684,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5632,8 +5643,8 @@
         "source_location": {
           "heading": "CV-140 - Usage Warning Quiet Window And Setup Action Labels",
           "heading_level": 3,
-          "heading_line": 9777,
-          "line": 9779,
+          "heading_line": 9800,
+          "line": 9802,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5643,8 +5654,8 @@
         "source_location": {
           "heading": "CV-144 - Model Lifecycle State And Sunset Dispatch Boundary",
           "heading_level": 3,
-          "heading_line": 9976,
-          "line": 9978,
+          "heading_line": 9999,
+          "line": 10001,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5654,8 +5665,8 @@
         "source_location": {
           "heading": "CV-156 - HITL Labels And Approval UI Actions",
           "heading_level": 3,
-          "heading_line": 10576,
-          "line": 10578,
+          "heading_line": 10599,
+          "line": 10601,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5665,8 +5676,8 @@
         "source_location": {
           "heading": "CV-159 - Assistant Worktree UICommand Registrations",
           "heading_level": 3,
-          "heading_line": 10719,
-          "line": 10721,
+          "heading_line": 10742,
+          "line": 10744,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5676,8 +5687,8 @@
         "source_location": {
           "heading": "CV-165 - Terminal And Dev Session Route Identity",
           "heading_level": 3,
-          "heading_line": 11027,
-          "line": 11029,
+          "heading_line": 11050,
+          "line": 11052,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5687,8 +5698,8 @@
         "source_location": {
           "heading": "CV-166 - Route Activation Scope And Shell-State Boundary",
           "heading_level": 3,
-          "heading_line": 11081,
-          "line": 11083,
+          "heading_line": 11104,
+          "line": 11106,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5698,8 +5709,8 @@
         "source_location": {
           "heading": "CV-167 - Inspector Target Refinement Boundary",
           "heading_level": 3,
-          "heading_line": 11134,
-          "line": 11136,
+          "heading_line": 11157,
+          "line": 11159,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5709,8 +5720,8 @@
         "source_location": {
           "heading": "CV-178 - Durable Panel Settings Ownership",
           "heading_level": 3,
-          "heading_line": 11686,
-          "line": 11688,
+          "heading_line": 11709,
+          "line": 11711,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5720,8 +5731,8 @@
         "source_location": {
           "heading": "CV-179 - Live Panel State Is Not Settings Canon",
           "heading_level": 3,
-          "heading_line": 11739,
-          "line": 11741,
+          "heading_line": 11762,
+          "line": 11764,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5731,8 +5742,8 @@
         "source_location": {
           "heading": "CV-180 - Account-Sensitive UI Cache Partitioning",
           "heading_level": 3,
-          "heading_line": 11784,
-          "line": 11786,
+          "heading_line": 11807,
+          "line": 11809,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5742,8 +5753,8 @@
         "source_location": {
           "heading": "CV-182 - Runtime Admin Capability Disclosure",
           "heading_level": 3,
-          "heading_line": 11882,
-          "line": 11884,
+          "heading_line": 11905,
+          "line": 11907,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5753,8 +5764,8 @@
         "source_location": {
           "heading": "CV-184 - Provider Recovery Labels And Entitlement Copy",
           "heading_level": 3,
-          "heading_line": 11976,
-          "line": 11978,
+          "heading_line": 11999,
+          "line": 12001,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5764,8 +5775,8 @@
         "source_location": {
           "heading": "CV-185 - Current Requested Effective Runtime Inspector Visibility",
           "heading_level": 3,
-          "heading_line": 12029,
-          "line": 12031,
+          "heading_line": 12052,
+          "line": 12054,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5775,8 +5786,8 @@
         "source_location": {
           "heading": "CV-187 - UI Scale Setting Field Contract",
           "heading_level": 3,
-          "heading_line": 12119,
-          "line": 12121,
+          "heading_line": 12142,
+          "line": 12144,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5786,8 +5797,8 @@
         "source_location": {
           "heading": "CV-188 - Slint Native Scale Mechanism And Iced Prohibition",
           "heading_level": 3,
-          "heading_line": 12169,
-          "line": 12171,
+          "heading_line": 12192,
+          "line": 12194,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5797,8 +5808,8 @@
         "source_location": {
           "heading": "CV-190 - Thread Usage Detail Surface Replacement",
           "heading_level": 3,
-          "heading_line": 12263,
-          "line": 12265,
+          "heading_line": 12286,
+          "line": 12288,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5808,8 +5819,8 @@
         "source_location": {
           "heading": "CV-191 - Compact Message Usage Row Schema",
           "heading_level": 3,
-          "heading_line": 12323,
-          "line": 12325,
+          "heading_line": 12346,
+          "line": 12348,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5819,8 +5830,8 @@
         "source_location": {
           "heading": "CV-192 - Context Detail Editor Tab Paths",
           "heading_level": 3,
-          "heading_line": 12376,
-          "line": 12378,
+          "heading_line": 12399,
+          "line": 12401,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5830,8 +5841,8 @@
         "source_location": {
           "heading": "CV-193 - Thread Estimated Cost Display",
           "heading_level": 3,
-          "heading_line": 12425,
-          "line": 12427,
+          "heading_line": 12448,
+          "line": 12450,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5841,8 +5852,8 @@
         "source_location": {
           "heading": "CV-202 - Gemini OAuth API-Key Auth Surface Boundary",
           "heading_level": 3,
-          "heading_line": 12861,
-          "line": 12863,
+          "heading_line": 12884,
+          "line": 12886,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5852,8 +5863,8 @@
         "source_location": {
           "heading": "CV-206 - Cost USD Presentation Precision",
           "heading_level": 3,
-          "heading_line": 13058,
-          "line": 13060,
+          "heading_line": 13081,
+          "line": 13083,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5863,8 +5874,8 @@
         "source_location": {
           "heading": "CV-214 - UI Readiness Projection Consumer Boundary",
           "heading_level": 3,
-          "heading_line": 13458,
-          "line": 13460,
+          "heading_line": 13481,
+          "line": 13483,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5874,8 +5885,8 @@
         "source_location": {
           "heading": "CV-225 - Safe Point Worktree Context Restoration",
           "heading_level": 3,
-          "heading_line": 13976,
-          "line": 13978,
+          "heading_line": 13999,
+          "line": 14001,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5885,8 +5896,8 @@
         "source_location": {
           "heading": "CV-235 - Canonical Event Projection Derivation",
           "heading_level": 3,
-          "heading_line": 14463,
-          "line": 14465,
+          "heading_line": 14486,
+          "line": 14488,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5896,8 +5907,8 @@
         "source_location": {
           "heading": "CV-236 - Safe-Point Recovery Boundary And Graph Lock",
           "heading_level": 3,
-          "heading_line": 14509,
-          "line": 14511,
+          "heading_line": 14532,
+          "line": 14534,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5907,8 +5918,8 @@
         "source_location": {
           "heading": "CV-252 - Wait State And No-Inference Constraints",
           "heading_level": 3,
-          "heading_line": 15314,
-          "line": 15316,
+          "heading_line": 15337,
+          "line": 15339,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5918,8 +5929,8 @@
         "source_location": {
           "heading": "CV-253 - Timestamp Provenance And Display Rules",
           "heading_level": 3,
-          "heading_line": 15366,
-          "line": 15368,
+          "heading_line": 15389,
+          "line": 15391,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5929,8 +5940,8 @@
         "source_location": {
           "heading": "CV-254 - Clock Skew And Scheduled Projection Rules",
           "heading_level": 3,
-          "heading_line": 15416,
-          "line": 15418,
+          "heading_line": 15439,
+          "line": 15441,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5940,8 +5951,8 @@
         "source_location": {
           "heading": "CV-260 - Child-To-Parent Signals And Legacy Labels",
           "heading_level": 3,
-          "heading_line": 15728,
-          "line": 15730,
+          "heading_line": 15751,
+          "line": 15753,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5951,8 +5962,8 @@
         "source_location": {
           "heading": "CV-261 - Child Projection Identity And Reversibility",
           "heading_level": 3,
-          "heading_line": 15786,
-          "line": 15788,
+          "heading_line": 15809,
+          "line": 15811,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5962,8 +5973,8 @@
         "source_location": {
           "heading": "CV-290 - Planning Runtime Events, Packs, Records, And Exceptions",
           "heading_level": 3,
-          "heading_line": 17799,
-          "line": 17801,
+          "heading_line": 17822,
+          "line": 17824,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5973,8 +5984,8 @@
         "source_location": {
           "heading": "CV-306 - P0-WEBSOCKET-SECURITY-BOUNDARIES",
           "heading_level": 3,
-          "heading_line": 19343,
-          "line": 19345,
+          "heading_line": 19366,
+          "line": 19368,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5984,8 +5995,8 @@
         "source_location": {
           "heading": "CV-307 - P0-RUNTIME-SURFACE-READINESS-PROBE",
           "heading_level": 3,
-          "heading_line": 19413,
-          "line": 19415,
+          "heading_line": 19441,
+          "line": 19443,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5995,8 +6006,19 @@
         "source_location": {
           "heading": "CV-308 - prompt_admission_execution",
           "heading_level": 3,
-          "heading_line": 19478,
-          "line": 19480,
+          "heading_line": 19511,
+          "line": 19513,
+          "path": "Plans/Contracts_V0.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Contracts_V0.md",
+        "plan_unit_id": "CV-314",
+        "source_location": {
+          "heading": "CV-314 - FABLE Residual Contracts Feature Boundary",
+          "heading_level": 3,
+          "heading_line": 19938,
+          "line": 19940,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -12980,8 +13002,8 @@
         "source_location": {
           "heading": "GAAAF-003 - Local Git, GitHub Hosting, And Remote Consumer Boundary",
           "heading_level": 3,
-          "heading_line": 187,
-          "line": 189,
+          "heading_line": 218,
+          "line": 220,
           "path": "Plans/GitHub_API_Auth_and_Flows.md"
         }
       },
@@ -12991,8 +13013,8 @@
         "source_location": {
           "heading": "GAAAF-005 - GitHub Host Policy And Enterprise Disabled-state UX",
           "heading_level": 3,
-          "heading_line": 298,
-          "line": 300,
+          "heading_line": 329,
+          "line": 331,
           "path": "Plans/GitHub_API_Auth_and_Flows.md"
         }
       },
@@ -13002,8 +13024,8 @@
         "source_location": {
           "heading": "GAAAF-007 - Requested Effective Account Disclosure And Blocked Copy",
           "heading_level": 3,
-          "heading_line": 401,
-          "line": 403,
+          "heading_line": 432,
+          "line": 434,
           "path": "Plans/GitHub_API_Auth_and_Flows.md"
         }
       },
@@ -13013,8 +13035,19 @@
         "source_location": {
           "heading": "GAAAF-008 - Command Surface Trust And Projection Gating",
           "heading_level": 3,
-          "heading_line": 451,
-          "line": 453,
+          "heading_line": 482,
+          "line": 484,
+          "path": "Plans/GitHub_API_Auth_and_Flows.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/GitHub_API_Auth_and_Flows.md",
+        "plan_unit_id": "GAAAF-014",
+        "source_location": {
+          "heading": "GAAAF-014 - OAuth Device Flow, Scope Matrix, And Credential Keys",
+          "heading_level": 3,
+          "heading_line": 888,
+          "line": 890,
           "path": "Plans/GitHub_API_Auth_and_Flows.md"
         }
       },
@@ -15719,8 +15752,8 @@
         "source_location": {
           "heading": "MI-033 - P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH",
           "heading_level": 3,
-          "heading_line": 2081,
-          "line": 2083,
+          "heading_line": 2146,
+          "line": 2148,
           "path": "Plans/MCP_Integration.md"
         }
       },
@@ -15730,8 +15763,8 @@
         "source_location": {
           "heading": "MI-035 - P1-MCP-HEADER-SECRET-HOOKS",
           "heading_level": 3,
-          "heading_line": 2237,
-          "line": 2239,
+          "heading_line": 2302,
+          "line": 2304,
           "path": "Plans/MCP_Integration.md"
         }
       },
@@ -15741,8 +15774,8 @@
         "source_location": {
           "heading": "MI-037 - P0-MCP-LIFECYCLE-RUNTIME-LIVENESS",
           "heading_level": 3,
-          "heading_line": 2383,
-          "line": 2385,
+          "heading_line": 2448,
+          "line": 2450,
           "path": "Plans/MCP_Integration.md"
         }
       },
@@ -18755,8 +18788,8 @@
         "source_location": {
           "heading": "PLS-017 - P2-AI-TRIAGE-CLOSURE-CONFIDENCE",
           "heading_level": 3,
-          "heading_line": 1032,
-          "line": 1034,
+          "heading_line": 1094,
+          "line": 1096,
           "path": "Plans/Planning_Ledger_System.md"
         }
       },
@@ -18915,13 +18948,24 @@
         }
       },
       {
+        "owner_doc": "Plans/Plugins_System.md",
+        "plan_unit_id": "PLUG-064",
+        "source_location": {
+          "heading": "PLUG-064 - Manifest, Sandbox, Signature, And Hook Mapping Contract",
+          "heading_level": 3,
+          "heading_line": 4126,
+          "line": 4128,
+          "path": "Plans/Plugins_System.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Plan_To_Node_Compilation.md",
         "plan_unit_id": "PNC-013",
         "source_location": {
           "heading": "PNC-013 - WorkGraph Draft And WorkNode Request Contract",
           "heading_level": 3,
-          "heading_line": 753,
-          "line": 755,
+          "heading_line": 815,
+          "line": 817,
           "path": "Plans/Plan_To_Node_Compilation.md"
         }
       },
@@ -19531,6 +19575,17 @@
         }
       },
       {
+        "owner_doc": "Plans/PRD_Builder.md",
+        "plan_unit_id": "PRDB-011",
+        "source_location": {
+          "heading": "PRDB-011 - Conflict, Scoring, Resource Defaults, And Approval Command Contract",
+          "heading_level": 3,
+          "heading_line": 800,
+          "line": 802,
+          "path": "Plans/PRD_Builder.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Permissions_System.md",
         "plan_unit_id": "PS-002",
         "source_location": {
@@ -20119,8 +20174,8 @@
         "source_location": {
           "heading": "PS-128 - P0-PROVIDER-EGRESS-HTTP-POLICY",
           "heading_level": 3,
-          "heading_line": 8679,
-          "line": 8681,
+          "heading_line": 8745,
+          "line": 8747,
           "path": "Plans/Permissions_System.md"
         }
       },
@@ -20130,8 +20185,8 @@
         "source_location": {
           "heading": "PS-129 - P0-COMMAND-APPROVAL-LEASE",
           "heading_level": 3,
-          "heading_line": 8754,
-          "line": 8756,
+          "heading_line": 8820,
+          "line": 8822,
           "path": "Plans/Permissions_System.md"
         }
       },
@@ -20141,8 +20196,19 @@
         "source_location": {
           "heading": "PS-130 - PS-130",
           "heading_level": 3,
-          "heading_line": 8819,
-          "line": 8821,
+          "heading_line": 8885,
+          "line": 8887,
+          "path": "Plans/Permissions_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Permissions_System.md",
+        "plan_unit_id": "PS-131",
+        "source_location": {
+          "heading": "PS-131 - Invocation-Time Consent Bridge",
+          "heading_level": 3,
+          "heading_line": 8683,
+          "line": 8685,
           "path": "Plans/Permissions_System.md"
         }
       },
@@ -23012,8 +23078,8 @@
         "source_location": {
           "heading": "SS-002 - Skills SSOT Authority And DRY References",
           "heading_level": 3,
-          "heading_line": 417,
-          "line": 419,
+          "heading_line": 421,
+          "line": 423,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23023,8 +23089,8 @@
         "source_location": {
           "heading": "SS-008 - Shadowed And Invalid Skill GUI Visibility",
           "heading_level": 3,
-          "heading_line": 760,
-          "line": 762,
+          "heading_line": 764,
+          "line": 766,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23034,8 +23100,8 @@
         "source_location": {
           "heading": "SS-015 - User Invocation Surfaces And MVP Grammar",
           "heading_level": 3,
-          "heading_line": 1183,
-          "line": 1185,
+          "heading_line": 1187,
+          "line": 1189,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23045,8 +23111,8 @@
         "source_location": {
           "heading": "SS-019 - Projection Provenance GUI Visibility",
           "heading_level": 3,
-          "heading_line": 1433,
-          "line": 1435,
+          "heading_line": 1437,
+          "line": 1439,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23056,8 +23122,8 @@
         "source_location": {
           "heading": "SS-023 - Agent Config Skills Ownership",
           "heading_level": 3,
-          "heading_line": 1667,
-          "line": 1669,
+          "heading_line": 1671,
+          "line": 1673,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23067,8 +23133,8 @@
         "source_location": {
           "heading": "SS-024 - Skills Catalog Filters Badges Actions",
           "heading_level": 3,
-          "heading_line": 1733,
-          "line": 1735,
+          "heading_line": 1737,
+          "line": 1739,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23078,8 +23144,8 @@
         "source_location": {
           "heading": "SS-025 - GUI Provenance And Remediation States",
           "heading_level": 3,
-          "heading_line": 1795,
-          "line": 1797,
+          "heading_line": 1799,
+          "line": 1801,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23089,8 +23155,8 @@
         "source_location": {
           "heading": "SS-026 - Validation Readiness GUI Taxonomy",
           "heading_level": 3,
-          "heading_line": 1859,
-          "line": 1861,
+          "heading_line": 1863,
+          "line": 1865,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23100,8 +23166,8 @@
         "source_location": {
           "heading": "SS-028 - Import Install GUI And Package Flows",
           "heading_level": 3,
-          "heading_line": 1982,
-          "line": 1984,
+          "heading_line": 1986,
+          "line": 1988,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23111,8 +23177,8 @@
         "source_location": {
           "heading": "SS-030 - Slash And Runtime Invocation Boundary",
           "heading_level": 3,
-          "heading_line": 2103,
-          "line": 2105,
+          "heading_line": 2107,
+          "line": 2109,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -23122,8 +23188,19 @@
         "source_location": {
           "heading": "SS-033 - Duplicate Skill Shadowing GUI Acceptance",
           "heading_level": 3,
-          "heading_line": 2280,
-          "line": 2282,
+          "heading_line": 2284,
+          "line": 2286,
+          "path": "Plans/Skills_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Skills_System.md",
+        "plan_unit_id": "SS-035",
+        "source_location": {
+          "heading": "SS-035 - FABLE Residual Skills Invocation And Import Contract",
+          "heading_level": 3,
+          "heading_line": 2492,
+          "line": 2494,
           "path": "Plans/Skills_System.md"
         }
       },
@@ -26281,10 +26358,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5499,
+  "plan_unit_count": 5513,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1171,
+      "high": 1185,
       "low": 5,
       "standard": 4323
     },
@@ -27209,6 +27286,19 @@
       "fable_contract_runtime_core_schema_drift": 1,
       "fable_executor_wake_coalescing_drift": 1,
       "fable_goal_runtime_event_payload_drift": 1,
+      "fable_residual_chat_mechanics_drift": 1,
+      "fable_residual_cli_bridge_contract_drift": 1,
+      "fable_residual_contract_feature_gap": 1,
+      "fable_residual_github_auth_drift": 1,
+      "fable_residual_ledger_service_boundary_drift": 1,
+      "fable_residual_mcp_contract_drift": 1,
+      "fable_residual_models_contract_drift": 1,
+      "fable_residual_multi_account_contract_drift": 1,
+      "fable_residual_plan_to_node_schema_drift": 1,
+      "fable_residual_plugin_contract_drift": 1,
+      "fable_residual_prd_builder_contract_drift": 1,
+      "fable_residual_release_supply_chain_contract_drift": 1,
+      "fable_residual_skills_invocation_drift": 1,
       "failure_class_enum_drift": 1,
       "failure_taxonomy_drift": 1,
       "failure_warning_category_invariant": 1,
@@ -27565,6 +27655,7 @@
       "investigation_budget_kinds_and_defaults": 1,
       "investigation_evidence_state_and_replay_heuristics": 1,
       "investigation_surface": 1,
+      "invocation_consent_drift": 1,
       "justified_source_token_bank_residual": 1,
       "k8s_deep_linkage_gap": 1,
       "k8s_scope_creep": 1,
@@ -29200,7 +29291,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5321,
+      "accepted": 5335,
       "retired": 178
     },
     "unit_type_counts": {
@@ -29241,12 +29332,12 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4566,
+      "requirement": 4570,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 14,
+      "schema_contract": 24,
       "schema_mirror": 1,
       "selection_contract": 1,
       "selection_policy": 2,
@@ -29282,8 +29373,8 @@
         "source_location": {
           "heading": "PNC-019 - Static Scenario Boundary And Executable Certification Requirement",
           "heading_level": 3,
-          "heading_line": 1326,
-          "line": 1328,
+          "heading_line": 1388,
+          "line": 1390,
           "path": "Plans/Plan_To_Node_Compilation.md"
         }
       }

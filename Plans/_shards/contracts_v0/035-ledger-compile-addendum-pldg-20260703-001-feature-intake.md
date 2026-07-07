@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19339-L19893
+Source lines: L19362-L19932
 
-Source SHA256: `fe90fc80e248a7b95f53ff541653411553e3aa052e64c578e3a37aa62265cf53`
+Source SHA256: `3ef8366c0f71bdb4ffff6f8b08889f8e31a11c1ef44d34037a60aaceba6102e2`
 
 ---
 
@@ -31,6 +31,8 @@ acceptance_criteria:
 - Remote/tunnel WS requires configured auth
 - wrong Origin/CSRF/runtime id is rejected before initialize
 - security receipts are visible and redacted.
+- WSAuthSession records auth_scheme, credential_ref, origin, csrf_token_hash, runtime_id, tunnel_id, permission_snapshot_id, expires_at_ms, and redacted_receipt_ref before any remote initialize is admitted.
+- Auth failure receipts use reason_code values missing_auth, invalid_origin, invalid_csrf, runtime_id_mismatch, expired_session, or permission_scope_denied without logging raw credentials or CSRF tokens.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -77,7 +79,10 @@ preserved_exact_tokens:
 - P0-WEBSOCKET-SECURITY-BOUNDARIES
 - P0
 - Add WebSocket origin/auth/CSRF/runtime-id security gates
-negative_constraints: []
+negative_constraints:
+- Do not allow remote or tunneled WebSocket initialize before auth, Origin, CSRF, runtime id, and permission scope checks pass.
+- Do not store raw credentials, raw CSRF tokens, bearer tokens, or provider secrets in security receipts.
+- Do not treat this contract as runtime launch, implementation readiness, or buildability proof.
 proposal_or_recommendation: Remote/tunnel WS requires configured auth; wrong Origin/CSRF/runtime id is rejected before initialize; security receipts are visible and redacted.
 compile_disposition: create_new_planunit
 ```
@@ -101,6 +106,8 @@ acceptance_criteria:
 - Restarted workspace probes every configured surface before run
 - Unavailable plugin is shown before model attempts tool use
 - WSL path namespace translation is explicit and tested
+- RuntimeSurfaceReadinessProbe records surface_id, surface_kind, configured_enabled, process_or_port_ref, injection_state, model_visible, ui_visible, roundtrip_state, last_probe_at_ms, failure_reason_code, and recovery_command_ref.
+- Readiness status values are ready, degraded, unavailable, disabled_by_policy, auth_required, restart_required, and namespace_mismatch; unavailable or degraded surfaces block model-visible tool use until recovery is acknowledged.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -141,7 +148,10 @@ preserved_exact_tokens:
 - Runtime surface readiness probe
 - OpenAI Codex
 - OpenCode
-negative_constraints: []
+negative_constraints:
+- Do not mark a surface ready from configuration presence alone.
+- Do not expose unavailable tools to the model as callable.
+- Do not treat readiness probes as executable runtime certification or implementation-readiness proof.
 observed_signal: Browser port forwarding fails until restart; computer-use plugin unavailable after restart; WSL path/bridge mismatch; OpenCode V2 MCP lifecycle need.
 pm_gap_or_delta: Configured tool/browser/terminal/MCP surfaces must prove started, injected, model-visible, UI-visible, and roundtrip-ready after restart/restore.
 compile_disposition: create_new_planunit
@@ -165,6 +175,9 @@ unblocks: []
 acceptance_criteria:
 - Crash/retry/duplicate prompt tests
 - seglog replay tests
+- SessionPromptAdmission events include admission_id, thread_id, prompt_id, prompt_hash, client_sequence, idempotency_key, submitted_at_ms, admitted_at_ms, admission_state, duplicate_of?, execution_ref?, and rejection_reason_code?.
+- Admission states are queued, admitted, duplicate_ignored, rejected, expired, cancelled_before_execution, and execution_bound; replay uses idempotency_key plus prompt_hash to avoid duplicate execution.
+- Prompt admission and execution remain separate event families so stored prompts can be audited without implying a runtime execution started.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -209,7 +222,10 @@ preserved_exact_tokens:
 - extrepo-20260703-0101
 - prompt_admission_execution
 - P0
-negative_constraints: []
+negative_constraints:
+- Do not execute a prompt directly from UI receipt without a persisted admission event.
+- Do not create duplicate executions for the same idempotency_key and prompt_hash replay.
+- Do not use session prompt admission as proof of runtime launch or runtime certification.
 observed_signal: OpenCode v2 session_input admission inbox and prompt/execution split; session seq/storage bugs
 pm_current_coverage: Seglog/redb/Tantivy design; exclusive writer lock; projector checkpoints
 pm_gap_or_delta: No explicit session prompt admission inbox/event family

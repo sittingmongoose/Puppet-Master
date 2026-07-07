@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-07T22:36:27Z",
+  "generated_at_utc": "2026-07-07T23:24:02Z",
   "index_path": "Plans/_shards/mcp_integration/00-index.md",
-  "index_sha256": "f25331104a82e9ce0f264312dea912b2b9aa24a133ccae7154b121b28dacf477",
+  "index_sha256": "6abb23326e0481683395df424b02af2696417060e8cdce9dd2677b1dda1e7e6e",
   "manifest_path": "Plans/_shards/mcp_integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/mcp_integration/001-preamble.md",
-      "sha256": "36298f2974f61481715a62b74e6a60a1668f952b01d48f0402fcf1425e18bc6c",
+      "sha256": "6691e90923b7f29984bc61232d001239b68c3e97ec42e02c2475d9fc75457821",
       "shard_id": "001",
       "source_line_end": 6,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "1. Canonical naming",
       "path": "Plans/_shards/mcp_integration/002-1.-canonical-naming.md",
-      "sha256": "12837cf1ef1e6b5e83a86ff12b04b4884ab76098cd8cb2256a5acbec36fbb21f",
+      "sha256": "fb8ad1155da22a21853b2eb87d20ab06cf3949fe2c1532367135838bdd7bbed8",
       "shard_id": "002",
       "source_line_end": 25,
       "source_line_start": 8,
@@ -26,7 +26,7 @@
     {
       "heading": "2. Requested versus effective availability",
       "path": "Plans/_shards/mcp_integration/003-2.-requested-versus-effective-availability.md",
-      "sha256": "5ad4fecedf8a561d6d0f52cbc8bd36f2470e332b94dc653f3baecd1e8de9e047",
+      "sha256": "9016b1d8e47ce70e49017bdcbf740ed222d2bbe04ef2dc338d84e07807e5131f",
       "shard_id": "003",
       "source_line_end": 46,
       "source_line_start": 26,
@@ -35,7 +35,7 @@
     {
       "heading": "3. Credential binding and invalidation",
       "path": "Plans/_shards/mcp_integration/004-3.-credential-binding-and-invalidation.md",
-      "sha256": "0f0ca37906a2d2cdd602602677f39ae4583bdf839e66543642a5d4f5ab8c48ca",
+      "sha256": "ddf21a62b6587b89710fb38517c3a32a34d84ecce87511508965e1a1fc308970",
       "shard_id": "004",
       "source_line_end": 66,
       "source_line_start": 47,
@@ -44,7 +44,7 @@
     {
       "heading": "4. Cross-surface responsibilities",
       "path": "Plans/_shards/mcp_integration/005-4.-cross-surface-responsibilities.md",
-      "sha256": "8da9759739d3fc4897ad057268eb59b4a968a8675f3bfc25a030d886a91fe0b9",
+      "sha256": "cd9b0b17b1ac9079f99889d1efaa096ac7a920d745aff9d20d243ac1bedac34b",
       "shard_id": "005",
       "source_line_end": 79,
       "source_line_start": 67,
@@ -53,7 +53,7 @@
     {
       "heading": "5. Server config schema",
       "path": "Plans/_shards/mcp_integration/006-5.-server-config-schema.md",
-      "sha256": "a3a43110d556f2f50d8533db551440a7d30976bba5cc6fc913ad0f985a4b43da",
+      "sha256": "7ba93c0ac6bea6c7c121a7ebc2a296b7fffb4f05ec080351f42d53212e94e284",
       "shard_id": "006",
       "source_line_end": 138,
       "source_line_start": 81,
@@ -62,7 +62,7 @@
     {
       "heading": "6. Supported flows",
       "path": "Plans/_shards/mcp_integration/007-6.-supported-flows.md",
-      "sha256": "af068e5cb6baf6cc77603509a49e3aa54b2821a2b7a817f82bb8f36e346e1731",
+      "sha256": "95e7f133b335bf134d6c3fb966f6f8d941856eaf9747a49538fb231199a08183",
       "shard_id": "007",
       "source_line_end": 150,
       "source_line_start": 140,
@@ -71,7 +71,7 @@
     {
       "heading": "7. Effective tool availability and GUI surfacing",
       "path": "Plans/_shards/mcp_integration/008-7.-effective-tool-availability-and-gui-surfacing.md",
-      "sha256": "2db8f6389dc2342cda9c8bb58ec2b2067eb251f11d49cb1cfce8300711ef7a1c",
+      "sha256": "caece7a8508054655f2bf639b29346cc9fe68a7cc8218bb430dfe6e6ed5f27bd",
       "shard_id": "008",
       "source_line_end": 183,
       "source_line_start": 152,
@@ -80,7 +80,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/mcp_integration/009-owner-consumer-map.md",
-      "sha256": "7ad184a1b3dff04ad32b2c411cdb135929a77ede93fd1cb927ae15a7356013f6",
+      "sha256": "64e36c39beee28f4f8421ebf93f393b163e7f2781ba022e88e184996191e96d1",
       "shard_id": "009",
       "source_line_end": 189,
       "source_line_start": 185,
@@ -89,7 +89,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/mcp_integration/010-planunits.md",
-      "sha256": "e1da6345c997aae40909536261446a94ef18894ea62d414334eb944551e53e88",
+      "sha256": "fe9b7b1f30c6c34d13be78c7cfc5d75a2e37407d9c28df06df7b8883d4745fd6",
       "shard_id": "010",
       "source_line_end": 242,
       "source_line_start": 191,
@@ -98,7 +98,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/mcp_integration/011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "be8e308502f3748405b050a3006ba7dd37eaabc1c2e62e70300f70cc9ba6fcaf",
+      "sha256": "61df3f04dc3c172aeeab1255eb7bee01bc68d1ec6aa3c1afc92b39a10c874d2c",
       "shard_id": "011",
       "source_line_end": 1980,
       "source_line_start": 244,
@@ -107,7 +107,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/mcp_integration/012-migration-coverage.md",
-      "sha256": "8a5c24d9af864c0cfbb7109a88431e1f873e3c11a31fc3f1582262ba2f7ee147",
+      "sha256": "ca00d68dc864a2066b2c739565ced5fe6ffcf90d1515c26ac6ea0e8a0ef16db6",
       "shard_id": "012",
       "source_line_end": 1992,
       "source_line_start": 1982,
@@ -116,16 +116,25 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/mcp_integration/013-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "86e73b05085e335d432ec6ed4cfe1132b4f5169ea0129fe6a4dc1cdc3849302f",
+      "sha256": "2fdc5f81a2f99fbc747dc8ad514b3b47b555dab0aa6c4b0ff90222e34d6bc183",
       "shard_id": "013",
-      "source_line_end": 2516,
+      "source_line_end": 2079,
       "source_line_start": 1994,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Residual MCP Contract Cleanup Addendum - 2026-07-07",
+      "path": "Plans/_shards/mcp_integration/014-fable-residual-mcp-contract-cleanup-addendum-2026-07-07.md",
+      "sha256": "dc0b1fe3ffd32a3b3a93c843aca7f4b1ee3e1275cb7a95afb4e9e91e05788846",
+      "shard_id": "014",
+      "source_line_end": 2581,
+      "source_line_start": 2081,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 2516,
+    "line_count": 2581,
     "path": "Plans/MCP_Integration.md",
-    "sha256": "39e56d792e720650e1f08d19e939eb0793a918ac26b8df903fe39dd1f5837f0c"
+    "sha256": "c781b2f9be022f5a88d695bc90721ba64c422065e13b0e42b5e7832ce3b83e41"
   }
 }

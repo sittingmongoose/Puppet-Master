@@ -506,9 +506,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 184,
-        "True": 248
+        "True": 249
       },
-      "heading_count": 627,
+      "heading_count": 629,
       "implementation_surfaces": [
         "AGENTS.md",
         "Plans/Architecture_Invariants.md",
@@ -575,9 +575,9 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 23380,
+      "line_count": 23512,
       "path": "Plans/assistant-chat-design.md",
-      "plan_unit_count": 432,
+      "plan_unit_count": 433,
       "plan_unit_ids": [
         "ACD-430",
         "ACD-424",
@@ -1010,7 +1010,8 @@
         "ACD-428",
         "ACD-429",
         "ACD-431",
-        "ACD-432"
+        "ACD-432",
+        "ACD-433"
       ],
       "reasoning_tiers": [
         "high",
@@ -1113,6 +1114,7 @@
         "execution_policy",
         "executor_boundary",
         "expanded_child_panel",
+        "fable_residual_chat_mechanics_drift",
         "fallback_cost_routing",
         "fanout_cardinality",
         "field_name_drift",
@@ -1320,17 +1322,17 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "c5f64a9608b35cad74fcbc27576b671f798b00c5e7599115dd6e9f50ead14283",
+      "sha256": "b322ef7e272004fa5b90acbdd24df5f9b75f2a65ce81cd5833b9b9f17ad35cb4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 432
+        "accepted": 433
       },
       "title": "Assistant & Chat UI -- Design Plan",
       "unit_type_counts": {
         "compatibility_disposition": 7,
         "constraint": 137,
         "decision": 6,
-        "requirement": 280,
+        "requirement": 281,
         "validation_rule": 2
       },
       "validation_surfaces": [
@@ -1354,6 +1356,7 @@
         "inline visualizer stream and bridge fixtures",
         "manual assistant-chat cross-reference review",
         "notification redaction and route-action fixtures",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
@@ -1361,6 +1364,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "rg newfeatures.md Plans/assistant-chat-design.md"
       ]
     },
@@ -2291,10 +2295,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 20,
+        "False": 21,
         "True": 5
       },
-      "heading_count": 41,
+      "heading_count": 43,
       "implementation_surfaces": [
         "Plans/BinaryLocator_Spec.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -2311,9 +2315,9 @@
         "Plans/usage-feature.md",
         "future ProviderRequestEnvelope and CLI bridge context payloads"
       ],
-      "line_count": 1446,
+      "line_count": 1514,
       "path": "Plans/CLI_Bridged_Providers.md",
-      "plan_unit_count": 25,
+      "plan_unit_count": 26,
       "plan_unit_ids": [
         "CBP-023",
         "CBP-001",
@@ -2339,6 +2343,7 @@
         "CBP-021",
         "CBP-022",
         "CBP-024",
+        "CBP-026",
         "CBP-025"
       ],
       "reasoning_tiers": [
@@ -2355,6 +2360,7 @@
         "cli_protocol_misclassification",
         "direct_provider_cli_bridge_drift",
         "external_repo_guardrail",
+        "fable_residual_cli_bridge_contract_drift",
         "finish_reason_tool_identity_retry_drift",
         "migration_lineage",
         "normalized_output_loss",
@@ -2372,26 +2378,29 @@
         "stream_resilience_drift",
         "worktree_context_drift"
       ],
-      "sha256": "f378e678d5026f04ed7692d91e16bddcfecee234cc66a7af465f15b8ec2ad415",
+      "sha256": "343107263a39fdf98bdde8b8ece01c26d3f7c26664a0af42a24432be3abdde2c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 25
+        "accepted": 26
       },
       "title": "CLI-Bridged Providers (Provider Facade)",
       "unit_type_counts": {
         "compatibility_disposition": 5,
         "constraint": 11,
-        "requirement": 9
+        "requirement": 9,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Bridge restores cooked mode/echo on crash or timeout.",
         "Orphan process cleanup receipts written.",
         "Version mismatch blocks before raw protocol noise hits terminal.",
         "future bridged-provider host-context fixture",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs"
       ]
     },
     {
@@ -2824,9 +2833,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 248,
-        "True": 65
+        "True": 66
       },
-      "heading_count": 454,
+      "heading_count": 456,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -2896,9 +2905,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 19893,
+      "line_count": 20002,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 313,
+      "plan_unit_count": 314,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -3212,7 +3221,8 @@
         "CV-310",
         "CV-311",
         "CV-312",
-        "CV-313"
+        "CV-313",
+        "CV-314"
       ],
       "reasoning_tiers": [
         "high",
@@ -3322,6 +3332,7 @@
         "execution_unit_context_field_loss",
         "executor_usage_owner_boundary_drift",
         "fable_contract_runtime_core_schema_drift",
+        "fable_residual_contract_feature_gap",
         "failure_class_enum_drift",
         "filesafe_event_payload_drift",
         "filesafe_safe_point_owner_split",
@@ -3532,10 +3543,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "fe90fc80e248a7b95f53ff541653411553e3aa052e64c578e3a37aa62265cf53",
+      "sha256": "3ef8366c0f71bdb4ffff6f8b08889f8e31a11c1ef44d34037a60aaceba6102e2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 313
+        "accepted": 314
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -3544,7 +3555,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "requirement": 220,
-        "schema_contract": 5,
+        "schema_contract": 6,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -3566,6 +3577,7 @@
         "git diff --check",
         "inline visualizer bridge registry and native host adapter fixtures",
         "notification delivery contract fixtures",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260615-001-part-4-fable-cleanup",
@@ -5563,20 +5575,21 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 9,
-        "True": 4
+        "True": 5
       },
-      "heading_count": 28,
+      "heading_count": 31,
       "implementation_surfaces": [
         "Plans/Executor_Protocol.md",
         "Plans/FileSafe.md",
         "Plans/GitHub_API_Auth_and_Flows.md",
         "Plans/GitHub_Integration.md",
+        "Plans/Multi-Account.md",
         "Plans/Permissions_System.md",
         "Plans/Planning_Wizard.md"
       ],
-      "line_count": 851,
+      "line_count": 952,
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
-      "plan_unit_count": 13,
+      "plan_unit_count": 14,
       "plan_unit_ids": [
         "GAAAF-002",
         "GAAAF-003",
@@ -5590,30 +5603,35 @@
         "GAAAF-011",
         "GAAAF-012",
         "GAAAF-001",
-        "GAAAF-013"
+        "GAAAF-013",
+        "GAAAF-014"
       ],
       "reasoning_tiers": [
+        "high",
         "standard"
       ],
       "risk_classes": [
+        "fable_residual_github_auth_drift",
         "github_auth_drift",
         "migration_lineage",
         "owner_drift"
       ],
-      "sha256": "32b5e5b19be60784a5bf8d23de9b82d5af02249906cd2b65834b12450d631751",
+      "sha256": "bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 13
+        "accepted": 14
       },
       "title": "Puppet Master -- GitHub API Auth and Flows",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 12
+        "requirement": 13
       },
       "validation_surfaces": [
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs"
       ]
     },
     {
@@ -6364,10 +6382,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 27,
+        "False": 28,
         "True": 11
       },
-      "heading_count": 51,
+      "heading_count": 53,
       "implementation_surfaces": [
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Executor_Protocol.md",
@@ -6380,9 +6398,9 @@
         "Plans/Tools.md",
         "future MCP tool registry and provider bridge context payloads"
       ],
-      "line_count": 2516,
+      "line_count": 2581,
       "path": "Plans/MCP_Integration.md",
-      "plan_unit_count": 38,
+      "plan_unit_count": 39,
       "plan_unit_ids": [
         "MI-002",
         "MI-031",
@@ -6416,6 +6434,7 @@
         "MI-030",
         "MI-001",
         "MI-032",
+        "MI-039",
         "MI-033",
         "MI-034",
         "MI-035",
@@ -6428,6 +6447,7 @@
         "standard"
       ],
       "risk_classes": [
+        "fable_residual_mcp_contract_drift",
         "mcp_contract_drift",
         "mcp_host_authority_drift",
         "migration_lineage",
@@ -6437,15 +6457,16 @@
         "p1_mcp_tools_and_tool_settlement_hardening",
         "p1_terminal_runtime_hardening"
       ],
-      "sha256": "39e56d792e720650e1f08d19e939eb0793a918ac26b8df903fe39dd1f5837f0c",
+      "sha256": "c781b2f9be022f5a88d695bc90721ba64c422065e13b0e42b5e7832ce3b83e41",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 38
+        "accepted": 39
       },
       "title": "MCP Integration",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "requirement": 36
+        "requirement": 36,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Array/object payloads survive plugin/bridge hooks",
@@ -6468,9 +6489,11 @@
         "future MCP host-context projection fixture",
         "lazy-selected rich outputs normalize identically to eager invocation",
         "provider schema subset tests",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs"
       ]
     },
     {
@@ -6868,10 +6891,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 86,
+        "False": 87,
         "True": 48
       },
-      "heading_count": 224,
+      "heading_count": 226,
       "implementation_surfaces": [
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Contracts_V0.md",
@@ -6901,9 +6924,9 @@
         "future Teacher thread model chips",
         "future model route resolver"
       ],
-      "line_count": 9346,
+      "line_count": 9420,
       "path": "Plans/Models_System.md",
-      "plan_unit_count": 134,
+      "plan_unit_count": 135,
       "plan_unit_ids": [
         "MS-113",
         "MS-114",
@@ -7038,7 +7061,8 @@
         "MS-131",
         "MS-132",
         "MS-133",
-        "MS-134"
+        "MS-134",
+        "MS-135"
       ],
       "reasoning_tiers": [
         "high",
@@ -7089,6 +7113,7 @@
         "effort_gui_requested_effective_disclosure",
         "effort_transform_drift",
         "execution_unit_defaults_worker_delegation",
+        "fable_residual_models_contract_drift",
         "firecrawl_deployment_disclosure_boundary",
         "firecrawl_identity_config_registry",
         "free_tier_billing_provenance_display",
@@ -7172,10 +7197,10 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "1cb6c90beff8f25fe7a4e73492591a6633aa0604bb00de41849855bcbee3887a",
+      "sha256": "833f70931ad87a94dd29ad3f8d8854a3a4584aa45281645a35a7e54e4c1ca67b",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 134
+        "accepted": 135
       },
       "title": "Models System (Canonical SSOT)",
       "unit_type_counts": {
@@ -7208,7 +7233,7 @@
         "runtime_contract": 12,
         "runtime_disclosure": 2,
         "runtime_policy": 5,
-        "schema_contract": 3,
+        "schema_contract": 4,
         "schema_mirror": 1,
         "selection_contract": 1,
         "selection_policy": 2,
@@ -7263,6 +7288,7 @@
         "future first-run provider sequencing fixtures",
         "git diff --check",
         "manual provider/model owner review",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
@@ -7278,10 +7304,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 30,
+        "False": 31,
         "True": 37
       },
-      "heading_count": 112,
+      "heading_count": 114,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -7293,9 +7319,9 @@
         "Plans/Permissions_System.md",
         "Plans/usage-feature.md"
       ],
-      "line_count": 5018,
+      "line_count": 5081,
       "path": "Plans/Multi-Account.md",
-      "plan_unit_count": 67,
+      "plan_unit_count": 68,
       "plan_unit_ids": [
         "MA-002",
         "MA-062",
@@ -7363,7 +7389,8 @@
         "MA-064",
         "MA-065",
         "MA-066",
-        "MA-067"
+        "MA-067",
+        "MA-068"
       ],
       "reasoning_tiers": [
         "high",
@@ -7395,6 +7422,7 @@
         "credential_ownership_drift",
         "cursor_account_isolation",
         "direct_provider_capability_boundary",
+        "fable_residual_multi_account_contract_drift",
         "family_pooling_guardrails",
         "gemini_auth_quota_readiness",
         "gemini_usage_labels",
@@ -7438,15 +7466,16 @@
         "usage_pressure_owner",
         "usage_runtime_visibility"
       ],
-      "sha256": "bbbb3f95b27e904ffc3172fe6d2bcaf876fe0d6c888961f8f11319923d1b762d",
+      "sha256": "2c97f1c991901e3d089fdc3426f437c9ce4dce541900acf0b70427dc69ffd91c",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 67
+        "accepted": 68
       },
       "title": "Multi-Account Specification",
       "unit_type_counts": {
         "compatibility_disposition": 3,
-        "requirement": 64
+        "requirement": 64,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Credential refresh changes epoch and invalidates cached route claims",
@@ -7459,11 +7488,13 @@
         "future Goal Runtime account-identity resolver review",
         "future account readiness label mapping fixtures",
         "future first-run provider setup return-context fixtures",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs"
       ]
     },
     {
@@ -9183,9 +9214,9 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 74,
-        "True": 56
+        "True": 57
       },
-      "heading_count": 223,
+      "heading_count": 225,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -9202,6 +9233,7 @@
         "Plans/Run_Modes.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Skills_System.md",
         "Plans/Tools.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/human-in-the-loop.md",
@@ -9216,9 +9248,9 @@
         "future notification credential custody",
         "future permission settings"
       ],
-      "line_count": 8864,
+      "line_count": 8930,
       "path": "Plans/Permissions_System.md",
-      "plan_unit_count": 130,
+      "plan_unit_count": 131,
       "plan_unit_ids": [
         "PS-119",
         "PS-002",
@@ -9347,6 +9379,7 @@
         "PS-125",
         "PS-126",
         "PS-127",
+        "PS-131",
         "PS-128",
         "PS-129",
         "PS-130"
@@ -9362,6 +9395,7 @@
         "goalrun_write_authority_drift",
         "history_permission_leak",
         "import_guardrail_compile",
+        "invocation_consent_drift",
         "notification_secret_exfiltration",
         "p0_security_release_supply_chain_hardening",
         "p0_terminal_runtime_hardening",
@@ -9376,17 +9410,17 @@
         "vision_disclosure_leak",
         "visualizer_sandbox_escape"
       ],
-      "sha256": "97ed251bf22bfe1db126a705f2e1042a4463a0f5cb4e033f72bec21f30a532f6",
+      "sha256": "09de784b5bcb5fc6bfc78c581abfe7956deb1ffec88e2cd0cada9156fd16f907",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 130
+        "accepted": 131
       },
       "title": "Permissions System (Canonical SSOT)",
       "unit_type_counts": {
         "constraint": 40,
         "generated_artifact_residual": 1,
         "reference": 3,
-        "requirement": 86
+        "requirement": 87
       },
       "validation_surfaces": [
         "A malicious/buggy tool call with requires_approval=false is still blocked under Plan/Read-only mode.",
@@ -9410,6 +9444,7 @@
         "future external-effects policy validation",
         "future privileged DinD default-disabled fixture",
         "git diff --check",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates",
@@ -9417,6 +9452,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates"
       ]
     },
@@ -9726,10 +9762,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 21,
+        "False": 22,
         "True": 1
       },
-      "heading_count": 32,
+      "heading_count": 34,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.implementation_readiness/buildability_gate_report.json",
@@ -9768,13 +9804,14 @@
         "scripts/pm-plans-verify.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 1426,
+      "line_count": 1488,
       "path": "Plans/Plan_To_Node_Compilation.md",
-      "plan_unit_count": 22,
+      "plan_unit_count": 23,
       "plan_unit_ids": [
         "PNC-001",
         "PNC-002",
         "PNC-003",
+        "PNC-023",
         "PNC-021",
         "PNC-022",
         "PNC-004",
@@ -9805,6 +9842,7 @@
         "compiler_algorithm_contract",
         "execution_boundary",
         "executor_boundary_bypass",
+        "fable_residual_plan_to_node_schema_drift",
         "false_completion",
         "false_node_generation",
         "false_plancompile_buildability",
@@ -9817,15 +9855,16 @@
         "stale_or_forbidden_behavior",
         "static_fixture_false_certification"
       ],
-      "sha256": "6a03ff0d0172ddaf31067960ec92a2ee7d98d17f5fd4c8662389bfc3c4c8fcf7",
+      "sha256": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 22
+        "accepted": 23
       },
       "title": "Plan To Node Compilation",
       "unit_type_counts": {
         "constraint": 5,
-        "requirement": 17
+        "requirement": 17,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Future compiler boundary tests.",
@@ -9841,6 +9880,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
@@ -9850,10 +9890,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 16,
+        "False": 17,
         "True": 2
       },
-      "heading_count": 28,
+      "heading_count": 30,
       "implementation_surfaces": [
         "Plans/*.md",
         "Plans/.audits/_semantic_closure_registry.jsonl",
@@ -9902,9 +9942,9 @@
         "scripts/pm-prd-planning-runtime-validate.py",
         "tests/test_pm_audit_closure.py"
       ],
-      "line_count": 1165,
+      "line_count": 1227,
       "path": "Plans/Planning_Ledger_System.md",
-      "plan_unit_count": 18,
+      "plan_unit_count": 19,
       "plan_unit_ids": [
         "PLS-001",
         "PLS-002",
@@ -9922,6 +9962,7 @@
         "PLS-014",
         "PLS-015",
         "PLS-016",
+        "PLS-019",
         "PLS-017",
         "PLS-018"
       ],
@@ -9936,6 +9977,7 @@
         "continuity",
         "data_integrity",
         "execution_boundary",
+        "fable_residual_ledger_service_boundary_drift",
         "false_completion",
         "governance_boundary",
         "implementation_readiness",
@@ -9948,16 +9990,17 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "bc0dcf5d1474a5934120108ec8f954287762e0bbf6f9271505ae354198694d58",
+      "sha256": "8df9c0e932c9ad97f837db1d87d8546baa5a1cb68ef9007756c082ae9003df07",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 18
+        "accepted": 19
       },
       "title": "Planning Ledger System",
       "unit_type_counts": {
         "constraint": 1,
         "decision": 1,
-        "requirement": 16
+        "requirement": 16,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Auto-closed upstream issue is not treated as false merely because upstream closed it; PM can keep it as design evidence with status=upstream_auto_closed_pm_relevant.",
@@ -9985,10 +10028,12 @@
         "python3 -m unittest tests/test_pm_audit_closure.py",
         "python3 scripts/pm-audit-closure.py validate",
         "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts",
@@ -10101,18 +10146,18 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 49,
-        "True": 14
+        "True": 15
       },
-      "heading_count": 134,
+      "heading_count": 136,
       "implementation_surfaces": [
         "Plans/FinalGUISpec.md",
         "Plans/MCP_Integration.md",
         "Plans/Permissions_System.md",
         "Plans/Plugins_System.md"
       ],
-      "line_count": 4120,
+      "line_count": 4184,
       "path": "Plans/Plugins_System.md",
-      "plan_unit_count": 63,
+      "plan_unit_count": 64,
       "plan_unit_ids": [
         "PLUG-002",
         "PLUG-003",
@@ -10176,20 +10221,23 @@
         "PLUG-061",
         "PLUG-062",
         "PLUG-001",
-        "PLUG-063"
+        "PLUG-063",
+        "PLUG-064"
       ],
       "reasoning_tiers": [
+        "high",
         "standard"
       ],
       "risk_classes": [
+        "fable_residual_plugin_contract_drift",
         "p1_ui_projection_and_hard_gates_hardening",
         "plugins_system_drift",
         "residual_bridge_overreach"
       ],
-      "sha256": "859e6e3a575c853176765a54ab22dc98d65be1785625fe50ecf40448273bd67f",
+      "sha256": "bf875f3ffc181eb594657726a7bfe97bf5456d5d06d5422d8705286383679d15",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 63
+        "accepted": 64
       },
       "title": "Plugins System (Canonical SSOT)",
       "unit_type_counts": {
@@ -10198,24 +10246,27 @@
         "constraint": 17,
         "decision": 2,
         "generated_artifact_residual": 1,
-        "requirement": 37
+        "requirement": 37,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Hook writes trigger permission re-evaluation",
         "Plugin can add MCP row badge through typed slot only",
         "Private store monkey-patch rejected on privileged surfaces",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs"
       ]
     },
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 3,
-        "True": 7
+        "True": 8
       },
-      "heading_count": 23,
+      "heading_count": 25,
       "implementation_surfaces": [
         "Plans/00-plans-index.md",
         "Plans/Contracts_V0.md",
@@ -10237,9 +10288,9 @@
         "future PRD Builder output records",
         "future PRD Builder source picker"
       ],
-      "line_count": 794,
+      "line_count": 857,
       "path": "Plans/PRD_Builder.md",
-      "plan_unit_count": 10,
+      "plan_unit_count": 11,
       "plan_unit_ids": [
         "PRDB-001",
         "PRDB-002",
@@ -10250,35 +10301,40 @@
         "PRDB-008",
         "PRDB-007",
         "PRDB-009",
-        "PRDB-010"
+        "PRDB-010",
+        "PRDB-011"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "fable_residual_prd_builder_contract_drift",
         "owner_drift",
         "prd_history_lineage_loss",
         "prd_source_provenance_drift",
         "stale_or_forbidden_behavior",
         "untrusted_source_security_bypass"
       ],
-      "sha256": "8ddb65428efcb8861dc708a75e58f45313560cd01b26c75760461de4172b7516",
+      "sha256": "e9769cb50487f832d0101abd9fea1326ce9b589a88ed94975e4f0665075de62a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 10
+        "accepted": 11
       },
       "title": "PRD Builder",
       "unit_type_counts": {
-        "requirement": 10
+        "requirement": 10,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Future PRD Builder source picker local/SSH tests.",
         "Future hidden-by-policy source no-leak tests.",
         "git diff --check",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts"
       ]
     },
@@ -10957,10 +11013,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 3,
+        "False": 4,
         "True": 4
       },
-      "heading_count": 17,
+      "heading_count": 19,
       "implementation_surfaces": [
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Goal_Runtime_System.md",
@@ -10971,9 +11027,9 @@
         "Plans/Release_Supply_Chain.md",
         "Plans/storage-plan.md"
       ],
-      "line_count": 587,
+      "line_count": 648,
       "path": "Plans/Release_Supply_Chain.md",
-      "plan_unit_count": 7,
+      "plan_unit_count": 8,
       "plan_unit_ids": [
         "RSC-001",
         "RSC-002",
@@ -10981,27 +11037,30 @@
         "RSC-004",
         "RSC-005",
         "RSC-006",
-        "RSC-007"
+        "RSC-007",
+        "RSC-008"
       ],
       "reasoning_tiers": [
         "high",
         "standard"
       ],
       "risk_classes": [
+        "fable_residual_release_supply_chain_contract_drift",
         "p0_security_release_supply_chain_hardening",
         "p1_security_release_supply_chain_hardening",
         "p1_terminal_runtime_hardening",
         "p2_security_release_supply_chain_coverage",
         "p2_transport_websocket_streaming_coverage"
       ],
-      "sha256": "7a66cebd41b1727629082d5d520e87516e1ea570fb03f880067af2b085a1fef5",
+      "sha256": "9f06cc4699b43dead8417046d588b265631f17d65466e2eec60ba43fc710782e",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 7
+        "accepted": 8
       },
       "title": "Release Supply Chain",
       "unit_type_counts": {
-        "requirement": 7
+        "requirement": 7,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "AI issue/PR triage workflows must default to read-only/no-shell/no-write permissions and require explicit escalation receipts for any tool with filesystem, shell, cache, credential, or release access.",
@@ -11023,8 +11082,10 @@
         "Self-update records source/hash/channel/rollback",
         "Signing/notarization/entitlement checks are surfaced before rollout",
         "Startup diagnostics distinguish code-signing/AMFI/quarantine/GPU/sandbox/network-deny failures from generic launch failures.",
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
-        "python3 scripts/pm-plan-index.py validate"
+        "python3 scripts/pm-plan-index.py validate",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs"
       ]
     },
     {
@@ -11844,15 +11905,16 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 23,
-        "True": 11
+        "True": 12
       },
-      "heading_count": 67,
+      "heading_count": 69,
       "implementation_surfaces": [
+        "Plans/Permissions_System.md",
         "Plans/Skills_System.md"
       ],
-      "line_count": 2482,
+      "line_count": 2554,
       "path": "Plans/Skills_System.md",
-      "plan_unit_count": 34,
+      "plan_unit_count": 35,
       "plan_unit_ids": [
         "SS-002",
         "SS-003",
@@ -11887,30 +11949,35 @@
         "SS-032",
         "SS-033",
         "SS-034",
-        "SS-001"
+        "SS-001",
+        "SS-035"
       ],
       "reasoning_tiers": [
+        "high",
         "standard"
       ],
       "risk_classes": [
+        "fable_residual_skills_invocation_drift",
         "retired_bridge_overreach",
         "skills_acceptance_drift",
         "skills_system_drift"
       ],
-      "sha256": "af72c8b2b4c87a83e5c51f62c503bee27e12cfbfcfd3f468ce2b36aa8dedb235",
+      "sha256": "22c154c6e7258dcfcd07fdfcd2e76e72d563bbe5d69c5b5c41d5fe61e08943c2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 33,
+        "accepted": 34,
         "retired": 1
       },
       "title": "Skills System (Canonical SSOT)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 33
+        "requirement": 34
       },
       "validation_surfaces": [
+        "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs"
       ]
     },
     {
@@ -13363,7 +13430,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-07T22:36:14Z",
+  "generated_at_utc": "2026-07-07T23:23:10Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13371,13 +13438,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3112,
-      "True": 2387
+      "False": 3119,
+      "True": 2394
     },
-    "plan_unit_count": 5499,
+    "plan_unit_count": 5513,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5321,
+      "accepted": 5335,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13418,12 +13485,12 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4566,
+      "requirement": 4570,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 14,
+      "schema_contract": 24,
       "schema_mirror": 1,
       "selection_contract": 1,
       "selection_policy": 2,

@@ -159,6 +159,8 @@ This section defines the canonical contract for this surface.
 Runtime contract addendum:
 - The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
 - The shared `invoke_skill` payload carries `skill_id`, `input`, optional `context`, and optional `timeout`; when context is supplied it includes `project_root`, optional `active_file`, optional `selection`, and `conversation_id` so invocation is tied to the active thread and workspace scope.
+- `timeout` is measured in milliseconds. When omitted, `invoke_skill` uses `timeout_ms = 120000`; callers may lower it, and may raise it only up to `max_timeout_ms = 600000` when the active runtime policy permits. Timeout expiry emits `skill.invocation_timed_out`, cancels any outstanding skill-owned work, and returns a non-success result without retrying automatically.
+- If a skill is valid but blocked by missing permissions, invocation pauses before tool dispatch and emits a permission blocked payload with `blocked_reason_code = permission_required`, `approval_scope_key`, `permission_snapshot_id?`, ordered `allowed_action_ids[]`, and the required tool/capability refs. `Review permissions` routes to the canonical Permissions approval/settings surface; Skills never owns a parallel consent dialog.
 - Skill defines its own `input` schema via manifest, and PM validates that schema before invocation.
 - The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.
 - Assistant awareness (`assistant-awareness`) does not make every discovered skill assistant-auto-usable. Auto-invoking is limited to skills that are `runtime-ready`, eligible in the active project/session, permission-allowed, and flagged `auto_invokable`; `runtime-ready-with-warnings`, `ready_with_warnings`, imported-with-warnings, invalid, disabled, shadowed, and `warning-blocked` skills require explicit user or agent selection.
@@ -307,10 +309,10 @@ Actionable provenance stores a human-readable origin label and a canonical origi
 GUI skill rows/cards use plain-language primary states instead of leaking internal `/error` or `/telemetry` categories. User-facing primary states are `Ready`, `Needs setup`, `Needs permission`, `Has problems`, and `Warning`; technical reasons remain secondary text. Each skill row/card shows name, short description, provenance/source, the primary user-facing state, one-line remediation text when not `Ready`, and a primary action button matched to the issue.
 
 Examples of remediation/action pairing:
-- `Needs setup` + `Context7 is not configured for this provider` + action `Set up Context7`
-- `Needs permission` + `This skill needs access to Context7 Docs` + action `Review permissions`
-- `Has problems` + `The skill file has invalid frontmatter` + action `Edit skill`
-- `Warning` + `Optional tool Web Search is unavailable` + action `Review tool setup`
+- `Needs setup` + `Context7 is not configured for this provider` + action `cmd.skills.setup_dependency` with `dependency_id = context7`
+- `Needs permission` + `This skill needs access to Context7 Docs` + action `cmd.permissions.review_request` with the current `approval_scope_key`
+- `Has problems` + `The skill file has invalid frontmatter` + action `cmd.skills.open_source_for_edit` with `skill_id`
+- `Warning` + `Optional tool Web Search is unavailable` + action `cmd.skills.review_tool_requirement` with `tool_ref`
 
 When the technical reason must name a raw tool id for audit or permission resolution, the secondary text may preserve that exact id while the primary state stays plain-language: `Needs permission` may show `This skill needs access to context7_query_docs`, and `Warning` may show `Optional tool websearch_cited is unavailable`.
 
@@ -336,6 +338,8 @@ Flow rules:
 - readiness is evaluated after install and surfaced as `ready`, `ready_with_warnings`, `invalid`, `shadowed`, or `disabled`
 - file-browser import and drag-and-drop skill folders/files are supported MVP entry points into the same canonical install flow
 - manual import may accept a folder drop, a single `SKILL.md`, or a zip/tar (`/tar`) archive containing one or more skill folders; each imported skill still resolves to one canonical `SKILL.md`, and single-file `SKILL.md` import creates a generated enclosing folder if needed. Exact archive internals remain implementation details, and imported resources still use the same `skill_id` and readiness model
+- archive import rejects zip-slip/path traversal, absolute paths, symlink or hardlink escape, duplicate canonical paths after case normalization, nested archive recursion beyond depth 2, package bytes above `max_skill_package_bytes = 52428800`, and expanded bytes above `max_skill_expanded_bytes = 209715200`
+- name collisions resolve by stable `skill_id`: same id and same content hash is idempotent, same id with different content requires Replace, Keep Both with generated suffix, or Cancel, and a case-only collision is rejected on all platforms
 - remote git clone URL import remains out of v1; URL provenance may be displayed for catalog-installed or GitHub-installed skills, but ad-hoc remote URL pulls do not bypass the Catalog system
 - validated `/runtime-ready` skills are auto-invokable by default; `ready_with_warnings` and other imported-with-warnings entries remain discoverable in the loaded-skills catalog but require explicit user or agent selection before invocation
 - imported resources stay within FileSafe-constrained disclosure rules
@@ -2480,3 +2484,71 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 171 atomized `Skills_System-S0001` through `Skills_System-S0029` into fine-grained PlanUnits `SS-002` through `SS-031`. Phase 2B batch 172 atomized `Skills_System-S0030` into `SS-032` through `SS-034`, structurally dispositioned generated metadata spans `Skills_System-S0031`, `Skills_System-S0032`, and `Skills_System-S0034`, and retired generated bridge span `Skills_System-S0033` through `SS-001`. No residual source-preserving product bridge remains for `Plans/Skills_System.md`. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## FABLE Residual Skills Invocation Cleanup Addendum - 2026-07-07
+
+This addendum closes the residual FABLE Skills rows for invocation-time permission consent, timeout defaults, remediation command refs, and requested import package safety. Import hardening is included as a user-requested scope item, but the Critical/High closure set remains limited to the rows named in the FABLE registry.
+
+### SS-035 - FABLE Residual Skills Invocation And Import Contract
+
+```yaml
+plan_unit_id: SS-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: >-
+  Skill invocation uses a millisecond timeout with default 120000 and max 600000, reports timeout as
+  skill.invocation_timed_out, and routes missing-permission invocation through the canonical Permissions ask
+  flow using blocked_reason_code, approval_scope_key, permission_snapshot_id, and ordered allowed_action_ids.
+  Remediation buttons resolve to stable command refs rather than prose-only labels. Manual archive import rejects
+  path traversal, symlink escape, package-size overflow, expanded-size overflow, archive recursion overflow, and
+  deterministic skill id/name collisions.
+gui_related: true
+gui_classification_reason: Skill cards, remediation actions, permission prompts, and import errors are visible management and invocation surfaces.
+depends_on: [SS-011, SS-025, SS-027, SS-028, PS-041, PS-042]
+unblocks: []
+acceptance_criteria:
+  - "`invoke_skill.timeout` is milliseconds, defaults to 120000, caps at 600000, and expires with cancellation plus `skill.invocation_timed_out`."
+  - Missing permissions produce a blocked payload with `blocked_reason_code = permission_required`, `approval_scope_key`, optional `permission_snapshot_id`, and ordered `allowed_action_ids[]`.
+  - "`Review permissions` routes to `cmd.permissions.review_request`; Skills does not define a local consent dialog."
+  - Remediation commands are `cmd.skills.setup_dependency`, `cmd.permissions.review_request`, `cmd.skills.open_source_for_edit`, and `cmd.skills.review_tool_requirement`.
+  - Archive import rejects zip-slip, absolute paths, symlink/hardlink escape, case-normalized duplicate paths, nested archive recursion above 2, package bytes above 52428800, and expanded bytes above 209715200.
+  - Skill id/name collisions resolve as idempotent same-hash import, explicit Replace, explicit Keep Both with generated suffix, or Cancel; case-only collisions are rejected.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status
+risk_class: fable_residual_skills_invocation_drift
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/Skills_System.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: residual_skills_invocation_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:1047
+  - fablereport.md:1048
+  - fablereport.md:1049
+  - fablereport.md:1050
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "invoke_skill"
+  - "timeout"
+  - "Needs permission"
+  - "Review permissions"
+  - "Set up Context7"
+  - "Edit skill"
+  - "Review tool setup"
+  - "zip/tar"
+  - "zip-slip"
+negative_constraints:
+  - Do not treat this Skills repair as a UI wiring repair, runtime certification, implementation readiness, or buildability proof.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, runtime certification evidence, production build tasks, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Skills_System.md
+  - Plans/Permissions_System.md
+```

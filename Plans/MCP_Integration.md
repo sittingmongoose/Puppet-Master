@@ -2078,6 +2078,71 @@ proposal_or_recommendation: 'Add ImportedToolConfigSource records: source app/fi
 compile_disposition: create_new_planunit
 ```
 
+## FABLE Residual MCP Contract Cleanup Addendum - 2026-07-07
+
+This addendum closes only residual FABLE Critical/High MCP rows for schema resolver rules, record persistence/versioning, and runtime-call liveness defaults. It does not implement MCP runtime behavior.
+
+### MI-039 - Schema Resolver, Record Persistence, And Liveness Defaults
+
+```yaml
+plan_unit_id: MI-039
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/MCP_Integration.md
+canonical_text: >-
+  MCP tool exposure uses a deterministic schema resolver and persisted record family before tools become model-visible.
+  Resolver order is pinned tool override, server-declared schema, cached compatible schema, lazy discovery refresh, then
+  blocked schema_unavailable. Runtime liveness defaults define initialize timeout, call timeout, heartbeat, interrupt,
+  cache TTL, and synthetic settlement receipts for blocked or timed-out calls.
+gui_related: false
+gui_classification_reason: MCP schema resolution and liveness defaults are backend integration contracts.
+depends_on: [MI-025, MI-032, MI-033, MI-034, MI-035, MI-036, MI-037, MI-038]
+unblocks: []
+acceptance_criteria:
+  - MCPToolSchemaRecord persists record_id, server_id, tool_name, schema_version, schema_sha256, source_kind, discovered_at_ms, expires_at_ms, compatibility_state, and provider_projection_ref?.
+  - Resolver returns tool_schema_ref, schema_source, compatibility_state, cache_state, refresh_attempted, blocked_reason_code?, and settlement_receipt_ref?.
+  - Schema cache defaults to ttl_ms = 3600000, max_records_per_server = 1000, and eviction order expired, incompatible, least_recently_used.
+  - initialize_timeout_ms defaults to 10000, tool_call_timeout_ms defaults to 120000, heartbeat_interval_ms defaults to 15000, and interrupt_grace_ms defaults to 3000.
+  - Synthetic ToolSettlementReceipt is emitted for schema_unavailable, timeout, interrupted, heartbeat_lost, server_unhealthy, and provider_schema_budget_exceeded.
+  - Record versioning increments schema_version on schema hash change and preserves prior schema refs for audit/replay until retention policy expires.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl
+risk_class: fable_residual_mcp_contract_drift
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/MCP_Integration.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: residual_mcp_schema_liveness_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:1030
+  - fablereport.md:1031
+  - fablereport.md:1032
+  - fablereport.md:1033
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "schema resolver"
+  - "MCPToolSchemaRecord"
+  - "runtime call timeout"
+  - "heartbeat"
+  - "interrupt"
+  - "cache eviction"
+  - "synthetic settlement"
+negative_constraints:
+  - Do not implement MCP server runtime, tool dispatch, WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, or runtime certification evidence.
+  - Do not expose an MCP tool to the model with schema_unavailable or incompatible schema state.
+owner_hints:
+  - Plans/MCP_Integration.md
+  - Plans/Tools.md
+  - Plans/Prompt_Pipeline.md
+```
+
 ### MI-033 - P0-MCP-LAZY-CATALOG-SHARED-RESULT-PATH
 
 ```yaml

@@ -1029,6 +1029,68 @@ relationship_to_prior_reports: Meta-process addition rather than product runtime
 compile_disposition: create_new_planunit
 ```
 
+## FABLE Residual Planning Ledger Service Cleanup Addendum - 2026-07-07
+
+This addendum closes only residual FABLE Critical/High Planning Ledger rows for native service storage/API boundaries. It keeps the ledger as planning/source memory and does not write canonical Plans except through explicit compile phases.
+
+### PLS-019 - Native Ledger Service Storage And API Boundary
+
+```yaml
+plan_unit_id: PLS-019
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: >-
+  Native Ledger Service is an in-process API boundary over the ledger storage plan, not an implied network daemon.
+  Its default persistence is the governed ledger directory plus EventRecord/seglog-backed projections when available;
+  redb indexes are projections, and markdown/export files are derived views. The service exposes append_event,
+  commit_turn, recover_turn, snapshot_state, import_package, and export_package request/response shapes with CAS,
+  idempotency, source_ref, actor_ref, and validation receipt fields.
+gui_related: false
+gui_classification_reason: Ledger service storage and API boundaries are planning infrastructure contracts, not GUI presentation.
+depends_on: [PLS-002, PLS-015]
+unblocks: []
+acceptance_criteria:
+  - append_event requires ledger_id, event_id, idempotency_key, event_type, payload, source_ref?, actor_ref, parent_event_ids[], and expected_projection_version?.
+  - commit_turn requires ledger_id, turn_id, accepted_atom_ids[], rejected_atom_ids[], open_item_updates[], expected_current_version, and emits committed_projection_version plus validation_receipt_ref.
+  - recover_turn returns last_committed_turn_id, unapplied_event_ids[], projection_version, conflict_records[], and recommended_replay_start_event_id.
+  - import_package rejects path traversal, absolute paths, symlink escape, package-size overflow, expanded-size overflow, and ledger id/name collision unless explicit replace or keep-both policy is recorded.
+  - Storage bindings name canonical ledger JSONL/state files as source memory and mark redb/search/projection/export surfaces as rebuildable derived views.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl
+risk_class: fable_residual_ledger_service_boundary_drift
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/Planning_Ledger_System.md
+node_compile_hint:
+  mode: native_ledger_service_storage_api_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:1190
+  - fablereport.md:1191
+  - fablereport.md:1192
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "Native Ledger Service"
+  - "storage-backed"
+  - "append_event"
+  - "commit_turn"
+  - "recover_turn"
+  - "import"
+  - "export"
+negative_constraints:
+  - Do not turn ledger source memory into canonical product prose without an explicit compile request.
+  - Do not imply a network service, runtime dispatch, WorkNode creation, NodeSeed creation, executable queue, implementation file, or production build task.
+owner_hints:
+  - Plans/Planning_Ledger_System.md
+  - Plans/storage-plan.md
+```
+
 ### PLS-017 - P2-AI-TRIAGE-CLOSURE-CONFIDENCE
 
 ```yaml

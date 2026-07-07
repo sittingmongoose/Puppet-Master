@@ -1,10 +1,10 @@
-# Shard 005: Implementation Readiness Gate Addendum - 2026-07-05
+# Shard 006: Implementation Readiness Gate Addendum - 2026-07-05
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L144-L448
+Source lines: L206-L510
 
-Source SHA256: `6a03ff0d0172ddaf31067960ec92a2ee7d98d17f5fd4c8662389bfc3c4c8fcf7`
+Source SHA256: `196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2`
 
 ---
 
