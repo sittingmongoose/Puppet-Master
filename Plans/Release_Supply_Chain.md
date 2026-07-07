@@ -293,7 +293,7 @@ implementation_surfaces:
 - Plans/MCP_Integration.md
 - Plans/Provider_OpenCode.md
 - Plans/CLI_Bridged_Providers.md
-- Plans/Release_Process.md
+- Plans/Release_Supply_Chain.md
 node_compile_hint:
   mode: p2_config_schema_migration_fixtures
   create_worknodes: false
@@ -320,12 +320,12 @@ target_docs:
 - Plans/MCP_Integration.md
 - Plans/Provider_OpenCode.md
 - Plans/CLI_Bridged_Providers.md
-- Plans/Release_Process.md
+- Plans/Release_Supply_Chain.md
 owner_hints:
 - Plans/MCP_Integration.md
 - Plans/Provider_OpenCode.md
 - Plans/CLI_Bridged_Providers.md
-- Plans/Release_Process.md
+- Plans/Release_Supply_Chain.md
 preserved_exact_tokens:
 - extrepo-20260703-0036
 - P2-CONFIG-SCHEMA-MIGRATION-FIXTURES

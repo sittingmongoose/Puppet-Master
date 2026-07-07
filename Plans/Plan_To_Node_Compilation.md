@@ -848,6 +848,7 @@ acceptance_criteria:
   - The schema draft discriminates payload schemas by artifact_kind and defines every artifact_kind payload under $defs.
   - The row-by-row handoff matrix below maps every required transition to schema_payload, producer, consumer, evidence_refs, and PlanUnit refs.
   - PlanCompile consumes the Executor-owned execution_unit_context schema by reference and does not redefine context fields.
+  - "`cmd.plan_compile.open_build` is a route/open or post-build reveal command with projected availability, disabled reason, and explicit receipt; it must not fabricate a PlanCompile success event or claim runtime activation while the branch is design_only."
   - Codex bootstrap external GUI-agent request is documented as a bootstrap artifact only, not a built Puppet Master setting.
 validation_surfaces:
   - python3 scripts/pm-plans-verify.py run-gates

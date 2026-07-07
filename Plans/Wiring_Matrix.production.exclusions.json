@@ -1,16 +1,31 @@
 {
-  "generated_at": "2026-07-02T15:53:33Z",
+  "generated_at": "2026-07-07T22:24:00Z",
   "excluded_tokens": [
-    "cmd.artifacts.show_in_",
+    "cmd.actions",
+    "cmd.alert",
+    "cmd.browser",
     "cmd.chat",
+    "cmd.container",
+    "cmd.concern",
+    "cmd.debug",
+    "cmd.discovery",
     "cmd.docker",
+    "cmd.github_actions",
+    "cmd.graph",
     "cmd.gui_dev_preview.*",
     "cmd.k8s",
     "cmd.nav",
     "cmd.orchestrator",
-    "cmd.orchestrator.open_",
-    "cmd.orchestrator.preview_",
-    "cmd.runtime"
+    "cmd.plan_compile",
+    "cmd.planning_wizard",
+    "cmd.persona",
+    "cmd.prd_builder",
+    "cmd.runtime",
+    "cmd.search",
+    "cmd.source_control",
+    "cmd.theme",
+    "cmd.web",
+    "cmd.widget"
   ],
-  "reason": "Excluded from production wiring JSON because token is a generic family root, glob/parser artifact, invalid under schema, or explicit compatibility-only namespace root. Concrete aliases are handled in UI_Command_Catalog and PMConcept_Control_Reconciliation."
+  "reason": "Excluded from production wiring JSON because token is a parser artifact, invalid historical alias, generic family root, or compatibility-only namespace root. Concrete production commands remain in Wiring_Matrix.production.json and are not excluded by broad prefix tokens."
 }

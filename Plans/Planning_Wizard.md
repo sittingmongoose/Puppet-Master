@@ -817,6 +817,7 @@ acceptance_criteria:
 - The final review shows the exact pack, PlanningRun revision, topic map version, project-context hash, PlanUnit and acceptance-unit index hashes, testing policy hash, and final audit/closure hash used by approval.
 - Approve And Build fails closed when any displayed approval input changes before the approval commit.
 - Approval writes an approval CAS receipt and synchronously creates or binds exactly one PlanCompileRun identity.
+- "`cmd.planning_wizard.approve_and_build` exposes projected availability, disabled reason, UICommandResponse, approval receipt, and canonical PlanApproved/PlanCompileRun-created-or-bound effects without emitting fabricated command_applied events."
 - Embedded execution_unit_context payloads, if present, carry schema_version and follow the Executor-owned schema.
 - Duplicate approval delivery with the same idempotency key and CAS inputs returns the existing PlanCompileRun.
 validation_surfaces:
@@ -1488,6 +1489,7 @@ acceptance_criteria:
   - Planning Wizard distinguishes Captured, Plan-complete, and Buildable states.
   - Approve And Build is disabled whenever buildability_gate_passed is false.
   - The disabled reason lists currently open blocker families and exact owner docs from Plans/.implementation_readiness/buildability_gate_report.json.
+  - The production final-review control projects availability and disabled reason through the wiring matrix and cannot emit PlanApproved while buildability_gate_passed is false.
   - PNC-019 appears as a hard disabled reason while node readiness remains blocked_runtime_certification_incomplete.
   - PNC-019 bootstrap authority does not enable ordinary product Approve And Build or suppress open blocker-family disabled reasons.
   - Closed or accepted_risk readiness-blocker rows may remain as historical evidence without keeping Approve And Build disabled.

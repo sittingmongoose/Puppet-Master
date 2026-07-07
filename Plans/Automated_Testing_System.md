@@ -1826,12 +1826,12 @@ source_row_id: P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS
 priority: P1
 finding_family: Terminal parser/rendering fuzzing, replay corpora, error injection, and giant-output recordings
 target_docs:
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Automated_Testing_System.md
 - Runtime_Artifacts_Panel.md
 - Contracts_V0.md
 owner_hints:
-- Terminal_Integration.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
 - Automated_Testing_System.md
 - Runtime_Artifacts_Panel.md
 - Contracts_V0.md

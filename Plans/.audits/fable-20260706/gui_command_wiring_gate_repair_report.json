@@ -1,0 +1,113 @@
+{
+  "audit_id": "fable-20260706",
+  "closed_curated_fable_findings": [
+    "fable-20260706-p1-ui-command-catalog-missing-families",
+    "fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events",
+    "fable-20260706-p1-launch-approval-chain-preimplementation-proof",
+    "fable-20260706-p1-missing-referenced-docs-and-openrefs",
+    "fable-20260706-p1-progression-gates-registry-and-run-gates-coverage"
+  ],
+  "generated_at_utc": "2026-07-07T22:40:53Z",
+  "ledger_id": "gui-command-wiring-gate-repair-20260707",
+  "metrics": {
+    "bare_namespace_root_rows": 0,
+    "cataloged_gui_surface_count": 0,
+    "placeholder_command_applied_count": 0,
+    "production_entry_count": 481,
+    "receipt_only_rows": 405
+  },
+  "notes": [
+    "This repair does not close runtime certification, broad PlanUnit boilerplate, FileSafe, storage, platform_specs, or unrelated mechanical registry findings.",
+    "validate-wiring-matrix was already run during repair and passed after the production wiring cleanup; final validation receipts are appended after derived artifact regeneration."
+  ],
+  "out_of_scope_remaining": [
+    "fable-20260706-p1-planunit-layer-behavioral-acceptance-dependencies",
+    "runtime certification harness",
+    "IRB-005 runtime_lifecycle",
+    "IRB-011 clean_room_harness",
+    "buildability_gate_passed false"
+  ],
+  "registry_closure_ids": [
+    "closure-fable-20260706-gui-command-catalog-001",
+    "closure-fable-20260706-wiring-matrix-production-001",
+    "closure-fable-20260706-launch-approval-chain-proof-001",
+    "closure-fable-20260706-missing-openrefs-001",
+    "closure-fable-20260706-progression-gate-coverage-001"
+  ],
+  "schema_id": "pm.fable.gui_command_wiring_gate_repair_report.v1",
+  "scope": "ui command catalog, production wiring, launch-chain command receipts, missing-doc/openref repoints, and gate registry tombstones/manual dispositions",
+  "semantic_finding_keys": [
+    "sfk-786b4d3818ded90e6dbf2449",
+    "sfk-aec7779a63d5cab9f4fafa9d",
+    "sfk-9983364f21e71fcdcf626a35",
+    "sfk-550935b67e77925470fd303c",
+    "sfk-591be68b33c8b9df6b78e3b2"
+  ],
+  "validation_receipts": [
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 60",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    },
+    {
+      "command": "git diff --check",
+      "observed_at_utc": "2026-07-07T22:40:53Z",
+      "status": "pass"
+    }
+  ]
+}
