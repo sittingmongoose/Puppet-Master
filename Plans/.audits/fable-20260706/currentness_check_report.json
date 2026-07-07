@@ -1,0 +1,512 @@
+{
+  "actual_source_report_path_used": "fablereport.md",
+  "actual_source_report_sha256": "cd94794ef30bcddb492055c8974da3391c7d85ded3253699deb2ea7f44eb70e8",
+  "audit_id": "fable-20260706",
+  "content_failures": [],
+  "current_buildability_artifacts": {
+    "buildability_gate_report": {
+      "approve_and_build_gate": {
+        "command_id": "cmd.planning_wizard.approve_and_build",
+        "disabled": false,
+        "disabled_reason_projection": "state.planning_wizard.final_review.approve_and_build.disabled_reason",
+        "disabled_reasons": [],
+        "enabled": true,
+        "hard_disabled_reasons": [],
+        "must_list_blocker_families": true,
+        "must_list_exact_owner_docs": true
+      },
+      "buildability_gate_passed": true,
+      "buildability_status": "pass",
+      "node_readiness": {
+        "available": true,
+        "bootstrap_authority_ref": "PNC-022",
+        "bootstrap_authorized": true,
+        "build_order_available": true,
+        "certification_harness_specified": true,
+        "executable_lifecycle_certification_complete": true,
+        "hard_disabled": false,
+        "hard_disabled_reason": null,
+        "ordinary_product_worknodes_allowed": true,
+        "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+        "runtime_blocked_by_ref": null,
+        "runtime_enabled": true,
+        "source": "Plans/.plan_index/node_readiness_report.json",
+        "status": "ready_for_node_compile",
+        "status_reason": "Plans are indexed with required PlanUnit metadata and an accepted PlanCompile compiler contract; the PlanUnit index remains non-emitting and native runtime implementation must materialize artifacts only through the compiler, Executor intake, activation, and Goal Runtime certification contracts.",
+        "true_cycle_component_count": 0
+      },
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json"
+    },
+    "node_readiness_report": {
+      "generated_at_utc": "2026-07-06T21:55:21Z",
+      "path": "Plans/.plan_index/node_readiness_report.json",
+      "status": "ready_for_node_compile"
+    },
+    "readiness_blockers": {
+      "family_status": {
+        "behavioral_acceptance": "closed",
+        "clean_room_harness": "closed",
+        "contract_materialization": "closed",
+        "currentness": "closed",
+        "gui_wiring": "closed",
+        "owner_routing": "closed",
+        "persistence_materialization": "closed",
+        "provider_stream": "closed",
+        "runtime_lifecycle": "closed",
+        "security_boundary": "closed",
+        "structural_integrity": "closed"
+      },
+      "path": "Plans/.implementation_readiness/readiness_blockers.jsonl",
+      "row_count": 11,
+      "status_counts": {
+        "closed": 11
+      }
+    },
+    "wiring_matrix_stats": {
+      "cataloged_gui_surface_count": 179,
+      "empty_expected_event_types_count": 323,
+      "entry_count": 459,
+      "placeholder_command_applied_only_count": 99,
+      "placeholder_event_values": [
+        "onboarding.command_applied",
+        "plan_compile.command_applied",
+        "planning_wizard.command_applied",
+        "prd_builder.command_applied",
+        "runtime.command_applied",
+        "source_control.command_applied"
+      ],
+      "real_location_and_non_placeholder_event_count": 35
+    }
+  },
+  "gate_change_recommendation_summary": [
+    "Fail buildability when production wiring rows are still pre-implementation contracts or use placeholder *.command_applied events.",
+    "Fail buildability when launch-chain commands lack render/control, dispatcher, receipt/event, state-selector, disabled-reason, and regression evidence.",
+    "Add gate-id coverage mapping from Progression_Gates.md to scripts/pm-plans-verify.py run-gates; fail missing gate IDs or unowned manual gates.",
+    "Reject live source-lineage/retired authority terms in current owner docs unless fenced by explicit compatibility disposition.",
+    "Make Spec_Lock/toolchain currentness and canonical owner-doc agreement a gate, with explicit auto_decision exceptions only.",
+    "Require event catalogs to have per-event payload minima and schema refs, not just generic envelopes.",
+    "Require behavioral acceptance and dependency graph quality for P0/gui_related PlanUnits instead of preservation-only acceptance criteria."
+  ],
+  "generated_at_utc": "2026-07-07T11:56:40Z",
+  "outputs": {
+    "currentness_report": "Plans/.audits/fable-20260706/currentness_check_report.json",
+    "registry": "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
+    "repair_plan": "Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md"
+  },
+  "p0_p1_currentness_findings": [
+    {
+      "blocker_family": "persistence_materialization",
+      "classification": "partial_current",
+      "dependency_order": 10,
+      "finding_key": "fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb",
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "priority": "P0",
+      "repair_required": true,
+      "source_severity": "Critical",
+      "title": "Storage/coordination canon still mixes file-based source-of-truth wording with seglog/redb projection canon."
+    },
+    {
+      "blocker_family": "contract_materialization",
+      "classification": "confirmed_current",
+      "dependency_order": 20,
+      "finding_key": "fable-20260706-p0-platform-specs-authority-drift",
+      "owner_docs": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Models_System.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "priority": "P0",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "platform_specs authority remains contradictory: assistant-chat still uses it live while Models_System has no replacement field contract."
+    },
+    {
+      "blocker_family": "currentness",
+      "classification": "owner_decision_required",
+      "dependency_order": 30,
+      "finding_key": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+      "owner_docs": [
+        "Plans/Spec_Lock.json",
+        "Plans/FinalGUISpec.md",
+        "Plans/PMConcept_Control_Reconciliation.json"
+      ],
+      "priority": "P0",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "Spec_Lock still pins Slint 1.15.1 while FinalGUISpec pins Slint 1.17.0 verified 2026-07-02."
+    },
+    {
+      "blocker_family": "owner_routing",
+      "classification": "owner_decision_required",
+      "dependency_order": 40,
+      "finding_key": "fable-20260706-p0-tier-vocabulary-and-subagent-config-canon",
+      "owner_docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "priority": "P0",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "Tier-era config and iteration wording remain live beside node/package/seam/lane canon."
+    },
+    {
+      "blocker_family": "security_boundary",
+      "classification": "partial_current",
+      "dependency_order": 50,
+      "finding_key": "fable-20260706-p0-filesafe-fail-open-and-allowlist-security",
+      "owner_docs": [
+        "Plans/FileSafe.md",
+        "Plans/Permissions_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "priority": "P0",
+      "repair_required": true,
+      "source_severity": "Critical",
+      "title": "FileSafe still preserves fail-open and prefix-match source snippets while later rows attempt to demote them to source-lineage."
+    },
+    {
+      "blocker_family": "gui_wiring",
+      "classification": "confirmed_current",
+      "dependency_order": 110,
+      "finding_key": "fable-20260706-p1-ui-command-catalog-missing-families",
+      "owner_docs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "Core UI command families remain absent, including cmd.chat.send and theme/persona/alert/concern/model command families."
+    },
+    {
+      "blocker_family": "gui_wiring",
+      "classification": "confirmed_current",
+      "dependency_order": 120,
+      "finding_key": "fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events",
+      "owner_docs": [
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "Critical",
+      "title": "Production wiring matrix still has 179 generic locations, 323 rows without events, 99 placeholder command_applied event rows, and 35/459 fully located+evented rows."
+    },
+    {
+      "blocker_family": "runtime_lifecycle",
+      "classification": "partial_current",
+      "dependency_order": 125,
+      "finding_key": "fable-20260706-p1-launch-approval-chain-preimplementation-proof",
+      "owner_docs": [
+        "Plans/Planning_Wizard.md",
+        "Plans/Wiring_Matrix.production.json",
+        "Plans/Progression_Gates.md",
+        "Plans/.implementation_readiness/buildability_gate_report.json"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "Critical",
+      "title": "Launch/approval chain is partially current: PRD and Approve And Build rows now have real events/locations, but runtime.approve and plan_compile.open_build still use placeholder events/pre-implementation evidence while buildability gate is enabled."
+    },
+    {
+      "blocker_family": "contract_materialization",
+      "classification": "partial_current",
+      "dependency_order": 130,
+      "finding_key": "fable-20260706-p1-contracts-v0-open-enums-field-drift",
+      "owner_docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "Contracts_V0 still has open wake_reason ellipsis and safe_point.created field drift; blocked_reason/auth handling remains suspect."
+    },
+    {
+      "blocker_family": "runtime_lifecycle",
+      "classification": "partial_current",
+      "dependency_order": 140,
+      "finding_key": "fable-20260706-p1-goal-runtime-event-payload-minima",
+      "owner_docs": [
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "Goal/GoalRun catalog now has a shared envelope and family-specific payload minima for only selected events; the remaining event names still lack per-event payload contracts."
+    },
+    {
+      "blocker_family": "runtime_lifecycle",
+      "classification": "confirmed_current",
+      "dependency_order": 150,
+      "finding_key": "fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section",
+      "owner_docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "Executor_Protocol still references a missing Wake reasons and coalescing section six times."
+    },
+    {
+      "blocker_family": "owner_routing",
+      "classification": "confirmed_current",
+      "dependency_order": 160,
+      "finding_key": "fable-20260706-p1-missing-referenced-docs-and-openrefs",
+      "owner_docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Release_Supply_Chain.md",
+        "Plans/Goal_Runtime_System.md",
+        "Plans/Automated_Testing_System.md"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "Several normative referenced docs remain absent; corrected false alarms are separately suppressed."
+    },
+    {
+      "blocker_family": "structural_integrity",
+      "classification": "partial_current",
+      "dependency_order": 170,
+      "finding_key": "fable-20260706-p1-progression-gates-registry-and-run-gates-coverage",
+      "owner_docs": [
+        "Plans/Progression_Gates.md",
+        "scripts/pm-plans-verify.py",
+        "Plans/DRY_Rules.md"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "GATE-007 and GATE-008 still do not exist; run-gates is named-check based and does not prove every gate ID is wired or manually dispositioned."
+    },
+    {
+      "blocker_family": "behavioral_acceptance",
+      "classification": "confirmed_current",
+      "dependency_order": 180,
+      "finding_key": "fable-20260706-p1-planunit-layer-behavioral-acceptance-dependencies",
+      "owner_docs": [
+        "Plans/.plan_index/plan_units.jsonl",
+        "Plans/.plan_index/dependencies.json",
+        "Plans/Plan_Document_System.md"
+      ],
+      "priority": "P1",
+      "repair_required": true,
+      "source_severity": "High",
+      "title": "PlanUnit layer still relies heavily on migration-preservation acceptance and sparse dependency/unblocks metadata."
+    }
+  ],
+  "registry_summary": {
+    "classification_counts": {
+      "already_fixed_in_latest_repo": 1,
+      "confirmed_current": 6,
+      "false_alarm_corrected": 5,
+      "needs_repair": 359,
+      "owner_decision_required": 10,
+      "partial_current": 6,
+      "source_lineage_only": 2
+    },
+    "mechanical_overcapture_removed_rows": 78,
+    "priority_counts": {
+      "P0": 5,
+      "P1": 9,
+      "guardrail": 5,
+      "report_critical_high": 370
+    },
+    "record_type_counts": {
+      "curated_p0_p1_currentness": 14,
+      "mechanical_critical_high_report_line": 370,
+      "suppressed_false_alarm_guard": 5
+    },
+    "row_count": 389,
+    "top_owner_docs": [
+      [
+        "Plans/Contracts_V0.md",
+        28
+      ],
+      [
+        "Plans/orchestrator-subagent-integration.md",
+        25
+      ],
+      [
+        "Plans/FinalGUISpec.md",
+        20
+      ],
+      [
+        "Plans/Permissions_System.md",
+        18
+      ],
+      [
+        "Plans/UI_Command_Catalog.md",
+        16
+      ],
+      [
+        "Plans/assistant-chat-design.md",
+        14
+      ],
+      [
+        "Plans/Release_Supply_Chain.md",
+        13
+      ],
+      [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        12
+      ],
+      [
+        "Plans/storage-plan.md",
+        12
+      ],
+      [
+        "Plans/FileSafe.md",
+        12
+      ],
+      [
+        "Plans/Executor_Protocol.md",
+        12
+      ],
+      [
+        "Plans/Models_System.md",
+        11
+      ],
+      [
+        "Plans/Tools.md",
+        11
+      ],
+      [
+        "Plans/newtools.md",
+        10
+      ],
+      [
+        "Plans/Media_Generation_and_Capabilities.md",
+        10
+      ],
+      [
+        "Plans/chain-wizard-flexibility.md",
+        9
+      ],
+      [
+        "Plans/Orchestrator_Page.md",
+        9
+      ],
+      [
+        "Plans/Skills_System.md",
+        8
+      ],
+      [
+        "Plans/MiscPlan.md",
+        8
+      ],
+      [
+        "Plans/Goal_Runtime_System.md",
+        7
+      ],
+      [
+        "Plans/Planning_Wizard.md",
+        6
+      ],
+      [
+        "Plans/Progression_Gates.md",
+        6
+      ],
+      [
+        "Plans/MCP_Integration.md",
+        5
+      ],
+      [
+        "Plans/Run_Graph_View.md",
+        5
+      ],
+      [
+        "Plans/Wiring_Matrix.md",
+        5
+      ]
+    ]
+  },
+  "requested_source_report_exists": false,
+  "requested_source_report_path": "Plans/.audits/fable-20260706/FINAL_REPORT.md",
+  "schema_id": "pm.audit.currentness_check_report.v1",
+  "scope": {
+    "mechanical_report_lines_preserved_for_non_p0_p1": true,
+    "p0_p1_reverified_only": true,
+    "plans_repaired": false,
+    "triage_only": true
+  },
+  "validator_invocation_errors": [
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-audit-status-index --subcheck-timeout-seconds 30",
+      "elapsed_ms": 58,
+      "exit_code": 2,
+      "status": "fail",
+      "stderr_tail": "usage: pm-plans-verify.py [-h]\n                          {json-syntax,verify-spec-lock,validate-auto-decisions,validate-evidence,validate-plan-graph,lint-contractrefs,lint-banned-phrases,lint-path-refs,check-shards,check-project-artifacts,validate-plans-to-code-handoff-schema,validate-prd-planning-runtime-contracts,validate-implementation-readiness,validate-plan-migration,validate-runtime-artifact-schemas,validate-goal-runtime-event-fixtures,validate-project-output-fixtures,validate-wiring-matrix,validate-bootstrap-ledgers,validate-audit-closure,validate-audit-status-index,run-gates,audit-governance}\n                          ...\npm-plans-verify.py: error: unrecognized arguments: --subcheck-timeout-seconds 30\n",
+      "stdout_tail": "",
+      "wrapper_hang": false,
+      "wrapper_timeout_seconds": 180
+    }
+  ],
+  "validator_results": [
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "elapsed_ms": 723,
+      "exit_code": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"docs_checked\": 78,\n  \"failures\": [],\n  \"shards_checked\": 1413,\n  \"source_count\": 78,\n  \"status\": \"pass\"\n}\n",
+      "wrapper_hang": false,
+      "wrapper_timeout_seconds": 180
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 30 --quiet-progress",
+      "elapsed_ms": 25670,
+      "exit_code": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"run-gates\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-07T11:58:01Z\",\n  \"status\": \"pass\"\n}\n",
+      "wrapper_hang": false,
+      "wrapper_timeout_seconds": 180
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "elapsed_ms": 381,
+      "exit_code": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-07T11:58:01Z\",\n  \"status\": \"pass\"\n}\n",
+      "wrapper_hang": false,
+      "wrapper_timeout_seconds": 180
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "elapsed_ms": 105,
+      "exit_code": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"check\": \"validate-wiring-matrix\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-07T11:58:01Z\",\n  \"status\": \"pass\"\n}\n",
+      "wrapper_hang": false,
+      "wrapper_timeout_seconds": 180
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-audit-status-index",
+      "elapsed_ms": 112,
+      "exit_code": 0,
+      "status": "pass",
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-07T11:58:19Z\",\n  \"status\": \"pass\"\n}\n",
+      "wrapper_hang": false,
+      "wrapper_timeout_seconds": 180
+    }
+  ],
+  "wrapper_hangs": []
+}
