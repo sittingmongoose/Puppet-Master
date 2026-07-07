@@ -9,14 +9,22 @@
     "sfk-cb2dfb3a4e797fdb4a876fdf",
     "fable-20260706-p0-platform-specs-authority-drift",
     "sfk-27ef857a0b0c7384b032ea5d",
-    "fable-20260706-p0-filesafe-fail-open-and-allowlist-security"
+    "fable-20260706-p0-filesafe-fail-open-and-allowlist-security",
+    "sfk-bf672e490e40da8728a41177",
+    "fable-20260706-p0-tier-vocabulary-and-subagent-config-canon",
+    "sfk-d2b5460eeb07dc6589d07f81",
+    "fable-20260706-p1-contracts-v0-open-enums-field-drift",
+    "sfk-25f560042a5c9ae441d0ff94",
+    "fable-20260706-p1-goal-runtime-event-payload-minima",
+    "sfk-f0482f87ab39247ff397968f",
+    "fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section"
   ],
-  "evidence_summary": "GUI toolkit currentness, storage/coordination canon, platform_specs authority, and FileSafe fail-closed security local closure rows are repaired in the FABLE closure matrix. Broader FABLE rows remain out of this bounded repair.",
-  "generated_at_utc": "2026-07-07T20:26:31Z",
-  "ledger_id": "platform-specs-authority-repair-20260707",
-  "observation_ref": "fable-20260706-p0-platform-specs-authority-drift",
+  "evidence_summary": "GUI toolkit currentness, storage/coordination canon, platform_specs authority, FileSafe fail-closed security, and the contract-runtime core super-slice are repaired in the FABLE closure matrix. UI command catalog, wiring matrix, launch approval implementation proof, missing docs, progression-gate coverage, broad PlanUnit boilerplate, runtime certification, and buildability proof remain out of this bounded repair.",
+  "generated_at_utc": "2026-07-07T21:35:04Z",
+  "ledger_id": "contract-runtime-core-repair-20260707",
+  "observation_ref": "contract_runtime_core_repair",
   "repair_required_count": 0,
   "schema_id": "pm.post_repair_audit_report.v1",
   "status": "PASS",
-  "subject_ref": "Plans/Models_System.md::provider_model_capability_snapshot_authority"
+  "subject_ref": "Plans/Contracts_V0.md::fable_contract_runtime_core_schema_closure"
 }

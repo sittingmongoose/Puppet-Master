@@ -1,0 +1,154 @@
+{
+  "audit_id": "fable-20260706",
+  "baseline_ref": "7db016bca34ad0050b2c5ceafecb309de3cb3489",
+  "buildability_boundary": {
+    "buildability_gate_passed": false,
+    "clean_room_harness_open_unless_repaired_separately": true,
+    "runtime_lifecycle_open_unless_executable_pnc019_receipt_exists": true
+  },
+  "closed_curated_fable_findings": [
+    "fable-20260706-p0-tier-vocabulary-and-subagent-config-canon",
+    "fable-20260706-p1-contracts-v0-open-enums-field-drift",
+    "fable-20260706-p1-goal-runtime-event-payload-minima",
+    "fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section"
+  ],
+  "closed_mechanical_buildability_rows": [
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:9",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:14",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:15",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:16"
+  ],
+  "generated_artifacts": {
+    "audit_status_index": [
+      "Plans/.audits/status_index.json"
+    ],
+    "evidence": [
+      "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
+      "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json"
+    ],
+    "plan_index": [
+      "Plans/.plan_index/plan_units.jsonl",
+      "Plans/.plan_index/doc_cards.json",
+      "Plans/.plan_index/dependencies.json",
+      "Plans/.plan_index/node_readiness_report.json"
+    ],
+    "shards": [
+      "Plans/_shards/**"
+    ],
+    "spec_lock": [
+      "Plans/Spec_Lock.json"
+    ]
+  },
+    "generated_at_utc": "2026-07-07T21:43:16Z",
+  "ledger_id": "contract-runtime-core-repair-20260707",
+  "owner_evidence": [
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md"
+  ],
+  "partial_or_remaining_open": [
+    "fable-20260706-p1-ui-command-catalog-missing-families",
+    "fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events",
+    "fable-20260706-p1-launch-approval-chain-preimplementation-proof",
+    "fable-20260706-p1-missing-referenced-docs-and-openrefs",
+    "fable-20260706-p1-progression-gates-registry-and-run-gates-coverage",
+    "fable-20260706-p1-planunit-layer-behavioral-acceptance-dependencies"
+  ],
+  "registry_closure_ids": [
+    "closure-fable-20260706-contract-runtime-core-tier-policy-001",
+    "closure-fable-20260706-contract-runtime-core-contracts-v0-001",
+    "closure-fable-20260706-contract-runtime-core-goal-runtime-001",
+    "closure-fable-20260706-contract-runtime-core-executor-001"
+  ],
+  "schema_id": "pm.audit.contract_runtime_core_repair_report.v1",
+  "semantic_finding_keys": [
+    "sfk-bf672e490e40da8728a41177",
+    "sfk-d2b5460eeb07dc6589d07f81",
+    "sfk-25f560042a5c9ae441d0ff94",
+    "sfk-f0482f87ab39247ff397968f"
+  ],
+  "source_artifact": "semantic_risks.jsonl",
+  "source_rows": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "status": "repair_validated",
+    "validation_results": [
+        {
+            "command": "python3 scripts/pm-audit-closure.py validate",
+            "elapsed_ms": 1705,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
+            "elapsed_ms": 1727,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+            "elapsed_ms": 84,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-plan-index.py validate",
+            "elapsed_ms": 16144,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+            "elapsed_ms": 15877,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+            "elapsed_ms": 386,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+            "elapsed_ms": 4530,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+            "elapsed_ms": 68,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+            "elapsed_ms": 1020,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-shard-plans.py --check",
+            "elapsed_ms": 748,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 60",
+            "elapsed_ms": 26812,
+            "exit_code": 0,
+            "status": "pass"
+        },
+        {
+            "command": "git diff --check",
+            "elapsed_ms": 298,
+            "exit_code": 0,
+            "status": "pass"
+        }
+    ]
+}

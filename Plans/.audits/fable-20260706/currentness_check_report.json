@@ -3,6 +3,36 @@
   "actual_source_report_sha256": "cd94794ef30bcddb492055c8974da3391c7d85ded3253699deb2ea7f44eb70e8",
   "audit_id": "fable-20260706",
   "content_failures": [],
+  "contract_runtime_core_repair": {
+    "closed_curated_fable_findings": [
+      "fable-20260706-p0-tier-vocabulary-and-subagent-config-canon",
+      "fable-20260706-p1-contracts-v0-open-enums-field-drift",
+      "fable-20260706-p1-goal-runtime-event-payload-minima",
+      "fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section"
+    ],
+    "ledger_id": "contract-runtime-core-repair-20260707",
+    "out_of_scope_remaining": [
+      "fable-20260706-p1-ui-command-catalog-missing-families",
+      "fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events",
+      "fable-20260706-p1-launch-approval-chain-preimplementation-proof",
+      "fable-20260706-p1-missing-referenced-docs-and-openrefs",
+      "fable-20260706-p1-progression-gates-registry-and-run-gates-coverage",
+      "fable-20260706-p1-planunit-layer-behavioral-acceptance-dependencies"
+    ],
+    "registry_closure_ids": [
+      "closure-fable-20260706-contract-runtime-core-tier-policy-001",
+      "closure-fable-20260706-contract-runtime-core-contracts-v0-001",
+      "closure-fable-20260706-contract-runtime-core-goal-runtime-001",
+      "closure-fable-20260706-contract-runtime-core-executor-001"
+    ],
+    "semantic_finding_keys": [
+      "sfk-bf672e490e40da8728a41177",
+      "sfk-d2b5460eeb07dc6589d07f81",
+      "sfk-25f560042a5c9ae441d0ff94",
+      "sfk-f0482f87ab39247ff397968f"
+    ],
+    "status": "repair_validated"
+  },
   "current_buildability_artifacts": {
     "buildability_gate_report": {
       "approve_and_build_gate": {
@@ -200,7 +230,7 @@
     "Require event catalogs to have per-event payload minima and schema refs, not just generic envelopes.",
     "Require behavioral acceptance and dependency graph quality for P0/gui_related PlanUnits instead of preservation-only acceptance criteria."
   ],
-  "generated_at_utc": "2026-07-07T20:26:31Z",
+  "generated_at_utc": "2026-07-07T21:35:04Z",
   "gui_toolkit_stale_mechanical_row_hygiene": {
     "decision": "Closed as stale mechanical overcapture by existing GUI platform hardening evidence; no new GUI product scope reopened.",
     "mechanical_buildability_row": "fable-20260706-report-l1294-critical-spec-lock-json-locked-decisions-ui-toolkit-version-1-15-1-direc-1d056fc9",
@@ -212,6 +242,9 @@
     ]
   },
   "outputs": {
+    "contract_runtime_core_findings": "Plans/.audits/fable-20260706/semantic_risks.jsonl",
+    "contract_runtime_core_repair": "Plans/.audits/fable-20260706/CONTRACT_RUNTIME_CORE_REPAIR.md",
+    "contract_runtime_core_repair_report": "Plans/.audits/fable-20260706/contract_runtime_core_repair_report.json",
     "currentness_report": "Plans/.audits/fable-20260706/currentness_check_report.json",
     "filesafe_fail_closed_security_findings": "Plans/.audits/fable-20260706/filesafe_fail_closed_security_findings.jsonl",
     "filesafe_fail_closed_security_repair": "Plans/.audits/fable-20260706/FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md",
@@ -296,18 +329,28 @@
     },
     {
       "blocker_family": "owner_routing",
-      "classification": "owner_decision_required",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T21:35:04Z",
+      "closure_status": "repair_validated",
       "dependency_order": 40,
       "finding_key": "fable-20260706-p0-tier-vocabulary-and-subagent-config-canon",
+      "notes": "orchestrator-subagent-integration now fences tier-era Phase/Task/Subtask/Iteration and tier_overrides/enable_tier_subagents as compatibility/search aliases, and defines SubagentPolicy with field names, units, defaults, hard limits, fanout thresholds, max parallel children, cost ceilings, retry policy, and receipt requirements.",
       "owner_docs": [
         "Plans/orchestrator-subagent-integration.md",
         "Plans/Run_Graph_View.md",
         "Plans/Orchestrator_Page.md"
       ],
       "priority": "P0",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-contract-runtime-core-tier-policy-001",
+      "repair_required": false,
+      "semantic_finding_key": "sfk-bf672e490e40da8728a41177",
       "source_severity": "High",
-      "title": "Tier-era config and iteration wording remain live beside node/package/seam/lane canon."
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/CONTRACT_RUNTIME_CORE_REPAIR.md",
+        "Plans/.audits/fable-20260706/contract_runtime_core_repair_report.json",
+        "Plans/.audits/fable-20260706/semantic_risks.jsonl:1"
+      ],
+      "title": "Tier-era runtime/config vocabulary is retired to compatibility aliases and SubagentPolicy carries numeric fanout/cost/retry defaults."
     },
     {
       "blocker_family": "security_boundary",
@@ -381,47 +424,77 @@
     },
     {
       "blocker_family": "contract_materialization",
-      "classification": "partial_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T21:35:04Z",
+      "closure_status": "repair_validated",
       "dependency_order": 130,
       "finding_key": "fable-20260706-p1-contracts-v0-open-enums-field-drift",
+      "notes": "Contracts_V0 now closes wake, stop, attention, budget, unblock, conflict, blocked/auth, UI command response, concern, AuthEvent, safe-point, and package identity schema drift with CV-313 as the acceptance/dependency closure unit.",
       "owner_docs": [
         "Plans/Contracts_V0.md",
         "Plans/storage-plan.md",
         "Plans/Executor_Protocol.md"
       ],
       "priority": "P1",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-contract-runtime-core-contracts-v0-001",
+      "repair_required": false,
+      "semantic_finding_key": "sfk-d2b5460eeb07dc6589d07f81",
       "source_severity": "High",
-      "title": "Contracts_V0 still has open wake_reason ellipsis and safe_point.created field drift; blocked_reason/auth handling remains suspect."
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/CONTRACT_RUNTIME_CORE_REPAIR.md",
+        "Plans/.audits/fable-20260706/contract_runtime_core_repair_report.json",
+        "Plans/.audits/fable-20260706/semantic_risks.jsonl:2"
+      ],
+      "title": "Contracts_V0 critical runtime enums and schema drift are closed for the contract-runtime core slice."
     },
     {
       "blocker_family": "runtime_lifecycle",
-      "classification": "partial_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T21:35:04Z",
+      "closure_status": "repair_validated",
       "dependency_order": 140,
       "finding_key": "fable-20260706-p1-goal-runtime-event-payload-minima",
+      "notes": "Goal_Runtime_System now defines the shared payload envelope, all 15 goal events, all 6 goal_run events, LoopBreakerRegistry, AgentControlEnvelope, CertificationReceipt, ChildAgentLease, WorkNodeRequests, and AuditCycle/Finding/Closure records, with GRS-041 as the closure PlanUnit.",
       "owner_docs": [
         "Plans/Goal_Runtime_System.md",
         "Plans/Contracts_V0.md",
         "Plans/storage-plan.md"
       ],
       "priority": "P1",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-contract-runtime-core-goal-runtime-001",
+      "repair_required": false,
+      "semantic_finding_key": "sfk-25f560042a5c9ae441d0ff94",
       "source_severity": "High",
-      "title": "Goal/GoalRun catalog now has a shared envelope and family-specific payload minima for only selected events; the remaining event names still lack per-event payload contracts."
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/CONTRACT_RUNTIME_CORE_REPAIR.md",
+        "Plans/.audits/fable-20260706/contract_runtime_core_repair_report.json",
+        "Plans/.audits/fable-20260706/semantic_risks.jsonl:3"
+      ],
+      "title": "Goal Runtime now enumerates all goal/goal_run event payload minima and required primitive records at spec level."
     },
     {
       "blocker_family": "runtime_lifecycle",
-      "classification": "confirmed_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T21:35:04Z",
+      "closure_status": "repair_validated",
       "dependency_order": 150,
       "finding_key": "fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section",
+      "notes": "Executor_Protocol now defines the Wake reasons and coalescing owner section, deterministic ready-node sort, closed failure/blocked mapping, stream coalescer timeout, backpressure bounds, and transport_decision_receipt with EP-114 as the acceptance/dependency closure unit.",
       "owner_docs": [
         "Plans/Executor_Protocol.md",
         "Plans/Contracts_V0.md"
       ],
       "priority": "P1",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-contract-runtime-core-executor-001",
+      "repair_required": false,
+      "semantic_finding_key": "sfk-f0482f87ab39247ff397968f",
       "source_severity": "High",
-      "title": "Executor_Protocol still references a missing Wake reasons and coalescing section six times."
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/CONTRACT_RUNTIME_CORE_REPAIR.md",
+        "Plans/.audits/fable-20260706/contract_runtime_core_repair_report.json",
+        "Plans/.audits/fable-20260706/semantic_risks.jsonl:4"
+      ],
+      "title": "Executor Protocol now owns wake reasons/coalescing, score tuple sort, closed mapping, stream timeout, backpressure, and transport receipts."
     },
     {
       "blocker_family": "owner_routing",

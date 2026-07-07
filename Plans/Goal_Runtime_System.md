@@ -1765,6 +1765,49 @@ Goal Runtime requires these data-shape families:
 - Progress state: `progress_fingerprint`, `blocker_signature`, artifact hashes, retry count, `repeat_count`, and no-progress continuation markers.
 - Write authority: `read_only`, `proposal_only`, `isolated_worktree`, `direct_write_single_owner`, `direct_write_partitioned`, and parent-granted `single-writer lease`.
 
+### Goal and GoalRun payload minima
+
+Every persisted Goal Runtime event carries the shared runtime envelope from `Contracts_V0`: `event_name`, payload `schema_version`, `occurred_at_utc`, `project_id`, `thread_id?`, `goal_id`, `parent_goal_id?`, `goal_revision`, `expected_goal_revision?` when compare-and-swap applies, `actor_ref`, `execution_role`, requested/effective provider refs, requested/effective model refs, requested/effective account refs, `correlation_id`, `causation_event_ref?`, `idempotency_key?`, `evidence_refs[]`, `artifact_refs[]`, `approval_refs[]?`, and `block_refs[]?`.
+
+Event-specific minima:
+
+| Event | Additional minimum payload |
+| --- | --- |
+| `goal.created` | `objective`, `acceptance_criteria[]`, `non_goals[]`, `allowed_scope`, `constraints[]`, `budget`, `attachment_refs[]`, `model_policy`, `agent_control_envelope_ref`, `agent_control_envelope_hash` |
+| `goal.scheduled` | `scheduler_reason`, `eligible_at_utc`, `queue_id?`, `priority`, `budget_snapshot_ref`, `next_action` |
+| `goal.progressed` | `progress_fingerprint`, `task_delta`, `status_before`, `status_after`, `artifact_hashes[]`, `repeat_count?`, `no_progress_marker?` |
+| `goal.tool_check_recorded` | `tool_call_id`, `tool_name`, `check_kind`, `check_result`, `policy_decision`, `output_ref?`, `log_ref?` |
+| `goal.updated` | `previous_revision`, `new_revision`, `objective_delta?`, `scope_delta?`, `constraint_delta?`, `budget_delta?`, `active_child_goal_ids[]`, `stale_child_goal_ids[]` |
+| `goal.replanned` | `interruption_class`, `impact_summary`, `affected_child_goal_ids[]`, `affected_worknode_refs[]`, `child_decisions[]`, `remaining_evidence_refs[]`, `new_revision`, `next_action` |
+| `goal.child_status_changed` | `child_goal_id`, `child_agent_lease_id?`, `previous_status`, `next_status`, `result_ref?`, `receipt_ref?`, `parent_action_required?` |
+| `goal.evidence_captured` | `evidence_ref`, `evidence_kind`, `source_spans[]`, `content_hash`, `snapshot_ref?`, `currentness_state`, `redaction_profile`, `retention_policy_ref?` |
+| `goal.verification_decided` | `audit_cycle_id?`, `verification_cycle_id?`, `decision`, `verifier_ref`, `adjudicator_ref?`, `finding_refs[]`, `closure_refs[]`, `unresolved_risk_refs[]` |
+| `goal.receipt_recorded` | `receipt_id`, `receipt_kind`, `certification_tier`, `validator_outputs[]`, `child_receipt_refs[]`, `worknode_receipt_refs[]`, `certifier_decision` |
+| `goal.completed` | `completion_receipt_ref`, `acceptance_criteria_disposition[]`, `changed_artifact_refs[]`, `validator_outputs[]`, `final_certifier_decision` |
+| `goal.degraded` | `degraded_reason`, `affected_scope`, `exception_refs[]?`, `approval_refs[]?`, `residual_risk_refs[]`, `allowed_actions[]` |
+| `goal.stopped` | `stop_reason_code`, `safe_point_ref?`, `interruption_boundary`, `child_settlement_refs[]`, `tool_settlement_refs[]`, `resumable` |
+| `goal.blocked` | `blocker_class`, `blocked_reason_code`, `cause`, `affected_scope`, `last_recovery_attempt_ref?`, `autonomous_recovery_stop_reason`, `next_safe_action`, `allowed_action_ids[]` |
+| `goal.cancelled` | `cancel_reason`, `mutation_started`, `cancellation_scope`, `settlement_refs[]`, `rollback_refs[]?` |
+| `goal_run.started` | `goal_run_id`, `workgraph_ref`, `activation_receipt_ref`, `active_worknode_request_refs[]`, `write_mode`, `certification_tier` |
+| `goal_run.replanned` | `goal_run_id`, `previous_workgraph_ref`, `new_workgraph_ref`, `replan_generation`, `affected_worknode_refs[]`, `cancelled_or_resteered_refs[]`, `next_action` |
+| `goal_run.blocked` | `goal_run_id`, `blocked_reason_code`, `blocked_scope`, `allowed_action_ids[]`, `preserved_work_refs[]`, `block_receipt_ref` |
+| `goal_run.certified` | `goal_run_id`, `certification_receipt_ref`, `validator_outputs[]`, `worknode_receipt_refs[]`, `unresolved_risk_refs[]`, `final_certifier_decision` |
+| `goal_run.cancelled` | `goal_run_id`, `cancel_reason`, `mutation_started`, `settlement_refs[]`, `rollback_refs[]?` |
+| `goal_run.stopped` | `goal_run_id`, `stop_reason_code`, `safe_point_ref?`, `child_settlement_refs[]`, `resumable` |
+
+Runtime records:
+
+| Record | Spec-level minimum |
+| --- | --- |
+| `LoopBreakerRegistry` | `registry_id`, `schema_version`, families `identical_tool_failure`, `empty_assistant`, `no_tool_progress`, `repeated_edit_miss`, `compaction_no_gain`, `context_overflow_replay`, `MCP_resource_missing`, `first_event_timeout`, `transport_idle`, `reasoning_no_action`, `subagent_same_read`, and `spend_anomaly`; each family has `fingerprint_fields[]`, `max_count`, `observation_window`, `terminal_action`, and `user_facing_reason`. |
+| `AgentControlEnvelope` | `envelope_id`, `schema_version`, `autonomy_mode`, `write_surface`, provider/model/effort policy refs, tool/MCP permission ceiling, context/token budgets, loop budgets, wall-clock budgets, terminal/browser/device authority, child-spawn policy, cancellation/steering policy, progress heartbeat policy, and receipt refs. |
+| `CertificationReceipt` | `receipt_id`, `schema_version`, `goal_id`, `goal_run_id?`, `certification_tier`, acceptance-criteria disposition, changed artifact refs, validator outputs, child/worknode receipt refs, authority checks, unresolved risks, certifier identity, and final decision. |
+| `ChildAgentLease` | `lease_id`, `schema_version`, `parent_goal_id`, `child_goal_id?`, `agent_id`, `allowed_phase`, `read_write_mode`, `max_depth`, `delegation_depth`, `cannot_resume_parent_goal`, `terminal_return_channel`, budget ceiling, and settlement requirement. |
+| `WorkNodeRequests` | `request_set_id`, `schema_version`, `goal_run_id`, active required request refs, optional request refs, accepted/deferred/excluded disposition, readiness snapshot, activation transaction ref, and reason for any mixed result. |
+| `AuditCycle` | `audit_cycle_id`, `schema_version`, `goal_id`, `target_ref`, `cycle_index`, auditor refs, scope refs, finding refs, closure refs, validator outputs, status, and next action. |
+| `AuditFinding` | `finding_id`, `schema_version`, `audit_cycle_id`, `finding_family`, severity, target refs, evidence refs, root_cause_key?, repeated_signature_count?, proposed repair refs, status, and owner refs. |
+| `AuditClosure` | `closure_id`, `schema_version`, `finding_id`, `audit_cycle_id`, repair evidence refs, validation outputs, residual risks, reopen conditions, closed_by_ref, and closure decision. |
+
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
 These data-shape bullets are Goal Runtime feature-local constraints; adjacent owner docs carry the shared envelope, concrete event-name registry, persistence, replay, projection, retention, and approval-scope registration needed for cross-owner routing. Concrete cross-owner Goal event names and payload minima are registered in `Plans/Contracts_V0.md` and persisted/replayed through `Plans/storage-plan.md`. `Plans/Goal_Runtime_System.md` remains the semantic owner for Goal Runtime behavior.
@@ -2980,4 +3023,91 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not let imported external sessions bypass Goal/Tool/Permission ownership.
 compile_disposition: create_new_planunit
+```
+
+### GRS-041 - FABLE Goal Runtime Event Payload Closure
+
+```yaml
+plan_unit_id: GRS-041
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime enumerates the shared envelope and event-specific payload minima for
+  all canonical goal and goal_run events, and defines the spec-level runtime
+  records LoopBreakerRegistry, AgentControlEnvelope, CertificationReceipt,
+  ChildAgentLease, WorkNodeRequests, AuditCycle, AuditFinding, and AuditClosure.
+  The closure preserves Goal Runtime as the semantic owner while consuming
+  Contracts_V0 for cross-surface field names, storage-plan for persistence and
+  replay, Executor for WorkNode scheduling and safe-point behavior, and
+  Permissions/Models/Multi-Account owners for authority and requested/effective
+  identity.
+gui_related: false
+gui_classification_reason: This unit defines backend Goal Runtime event payload and record semantics, not visual presentation.
+depends_on: [GRS-005, GRS-026, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, EP-098, PNC-013]
+unblocks: []
+acceptance_criteria:
+  - The common payload envelope includes event_name, schema_version, occurred_at_utc, project/thread/goal identity, revisions, actor/execution role, requested/effective provider/model/account refs, correlation/causation/idempotency, evidence/artifact refs, approval refs, and block refs.
+  - All 15 goal events and all 6 goal_run events list event-specific payload minima.
+  - LoopBreakerRegistry includes the required loop families with fingerprint, max count, observation window, terminal action, and user-facing reason.
+  - AgentControlEnvelope, CertificationReceipt, ChildAgentLease, WorkNodeRequests, AuditCycle, AuditFinding, and AuditClosure define stable identities and required proof/authority fields.
+  - Goal Runtime does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this payload closure.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: fable_goal_runtime_event_payload_drift
+reasoning_tier: high
+context_scope: contract_runtime_core_repair
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: goal_runtime_event_payload_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`goal.created`"
+  - "`goal.scheduled`"
+  - "`goal.progressed`"
+  - "`goal.tool_check_recorded`"
+  - "`goal.updated`"
+  - "`goal.replanned`"
+  - "`goal.child_status_changed`"
+  - "`goal.evidence_captured`"
+  - "`goal.verification_decided`"
+  - "`goal.receipt_recorded`"
+  - "`goal.completed`"
+  - "`goal.degraded`"
+  - "`goal.stopped`"
+  - "`goal.blocked`"
+  - "`goal.cancelled`"
+  - "`goal_run.started`"
+  - "`goal_run.replanned`"
+  - "`goal_run.blocked`"
+  - "`goal_run.certified`"
+  - "`goal_run.cancelled`"
+  - "`goal_run.stopped`"
+  - "`LoopBreakerRegistry`"
+  - "`AgentControlEnvelope`"
+  - "`CertificationReceipt`"
+  - "`ChildAgentLease`"
+  - "`WorkNodeRequests`"
+  - "`AuditCycle`"
+  - "`AuditFinding`"
+  - "`AuditClosure`"
+negative_constraints:
+  - Do not treat event payload closure as runtime certification harness or implementation readiness proof.
+  - Do not re-own Executor scheduling, storage replay, permission enforcement, or provider/model/account resolution.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
 ```

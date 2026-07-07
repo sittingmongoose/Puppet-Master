@@ -177,7 +177,14 @@ Rules:
 - worktree ownership, recovery, approval, usage, and routing must align to run/node/attempt/lane/worktree identity rather than to `tier_id`
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
-## Tier-Level Subagent Strategy
+## Compatibility Tier-Level Subagent Strategy
+
+This legacy section is retained for import/search compatibility. Live runtime
+subagent routing uses GoalRun, WorkGraph, WorkNode, package, seam, lane, phase,
+capability_lane, agent_role, SubagentWave, and SubagentPolicy vocabulary. Terms
+such as tier, phase/task/subtask/iteration tier, tier_overrides, and
+enable_tier_subagents are compatibility aliases only and must normalize through
+`SubagentPolicy` before runtime admission.
 Canonical worker strategy remains graph-owned rather than tier-owned, but provider/runtime selection for node workers must now use the reconciled runtime ontology.
 
 This heading is retained as a compatibility/search anchor. Canonical worker strategy is capability-lane and graph/package/seam/lane owned, with tier labels permitted only as legacy projection or migration vocabulary.
@@ -640,6 +647,11 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 ## Configuration
 
 ### Subagent Configuration
+
+The `subagentConfig` block is a compatibility import/export surface. Runtime
+admission reads `SubagentPolicy`; legacy fields remain searchable aliases and
+must not become active execution vocabulary.
+
 ```yaml
 subagentConfig:
   enable_tier_subagents: true
@@ -652,7 +664,93 @@ subagentConfig:
   disabled_subagents: []
   required_subagents: []
   advanced_raw_registry_controls: false
+  subagentPolicy:
+    schema_id: pm.subagent_policy.v1
+    schema_version: "1.0.0"
+    enabled: true
+    mandatory_when:
+      broad_stage: true
+      high_risk: true
+      audit_or_closure: true
+      owner_conflict: true
+      user_requested: true
+    fanout_thresholds:
+      min_plan_units_for_wave: 8
+      min_owner_docs_for_wave: 3
+      min_independent_lanes_for_wave: 2
+      min_changed_files_for_wave: 6
+      min_risk_class_for_wave: high
+    limits:
+      max_parallel_subagents: 4
+      hard_max_parallel_subagents: 8
+      max_subagents_per_wave: 8
+      hard_max_subagents_per_wave: 12
+      max_waves_per_goal: 3
+      max_estimated_cost_microusd_per_wave: 2000000
+      hard_max_estimated_cost_microusd_per_wave: 10000000
+      max_estimated_tokens_per_wave: 16000
+      hard_max_estimated_tokens_per_wave: 20000
+      max_input_refs_per_subagent: 12
+      hard_max_input_refs_per_subagent: 24
+      max_input_bytes_per_subagent: 200000
+      hard_max_input_bytes_per_subagent: 1000000
+      max_prompt_tokens_per_subagent: 6000
+      hard_max_prompt_tokens_per_subagent: 12000
+      max_result_tokens_per_subagent: 2000
+      hard_max_result_tokens_per_subagent: 4000
+      max_write_targets_per_subagent: 0
+      hard_max_write_targets_per_subagent: 1
+      max_wall_clock_ms_per_child: 900000
+      hard_max_wall_clock_ms_per_child: 3600000
+      max_tool_rounds_per_child: 12
+      hard_max_tool_rounds_per_child: 30
+    retry_policy:
+      max_retry_attempts_per_child: 2
+      max_retry_attempts_per_wave: 1
+      retry_backoff_ms: 30000
+      retryable_reasons:
+        - provider_transient
+        - rate_limit
+        - tool_timeout
+        - coordination_conflict
+      non_retryable_reasons:
+        - permission_denied
+        - filesafe_denied
+        - authority_scope_denied
+        - validation_failed
+        - scope_mismatch
+        - repeated_same_read
+    compatibility_aliases:
+      enable_tier_subagents: enabled
+      subagentConfig: subagentPolicy
+      tier_overrides: scope_overrides
+      tier_overrides.phase: legacy_phase_lane_defaults
+      tier_overrides.task: legacy_package_or_work_type_defaults
+      tier_overrides.subtask: legacy_work_unit_defaults
+      tier_overrides.iteration: legacy_bounded_work_unit_defaults
 ```
+
+### SubagentPolicy runtime defaults and compatibility aliases
+
+`SubagentPolicy` with `schema_id = pm.subagent_policy.v1` is the canonical runtime policy record for delegated
+SubagentWave admission. It is evaluated before any child_goal, bounded_work_unit,
+or delegated thread is spawned and is recorded in the parent GoalRun receipt.
+
+Field contract:
+- `schema_id`: string const `pm.subagent_policy.v1`.
+- `schema_version`: string, default `1.0.0`.
+- `enabled`: boolean, default `true`; compatibility alias `enable_tier_subagents`.
+- `mandatory_when`: booleans for `broad_stage`, `high_risk`, `audit_or_closure`, `owner_conflict`, and `user_requested`; all default `true`.
+- `fanout_thresholds`: integer thresholds `min_plan_units_for_wave = 8`, `min_owner_docs_for_wave = 3`, `min_independent_lanes_for_wave = 2`, `min_changed_files_for_wave = 6`, and enum `min_risk_class_for_wave = high`.
+- `limits`: `max_parallel_subagents = 4` with hard limit `8`; `max_subagents_per_wave = 8` with hard limit `12`; `max_waves_per_goal = 3`; `max_estimated_cost_microusd_per_wave = 2000000` with hard limit `10000000`; `max_estimated_tokens_per_wave = 16000` with hard limit `20000`; `max_input_refs_per_subagent = 12` with hard limit `24`; `max_input_bytes_per_subagent = 200000` with hard limit `1000000`; `max_prompt_tokens_per_subagent = 6000` with hard limit `12000`; `max_result_tokens_per_subagent = 2000` with hard limit `4000`; `max_write_targets_per_subagent = 0` for read-only waves with hard limit `1` unless parent write policy explicitly grants more; `max_wall_clock_ms_per_child = 900000` with hard limit `3600000`; `max_tool_rounds_per_child = 12` with hard limit `30`.
+- `parent_budget_ceiling`: every numeric limit must be less than or equal to the parent run envelope from `Plans/Run_Modes.md`; narrower parent remaining budget wins over the defaults above.
+- `retry_policy`: retry only `provider_transient`, `rate_limit`, `tool_timeout`, and `coordination_conflict`; default `max_retry_attempts_per_child = 2`, `max_retry_attempts_per_wave = 1`, and `retry_backoff_ms = 30000`; never retry `permission_denied`, `filesafe_denied`, `authority_scope_denied`, `validation_failed`, `scope_mismatch`, or `repeated_same_read`.
+- `write_policy`: child units default to `read_only` or `proposal_only`; live canonical writes require an explicit parent-owned `leased_writer` or `parent_writer` grant.
+- `compatibility_aliases`: maps `tier_overrides.phase`, `tier_overrides.task`, `tier_overrides.subtask`, and `tier_overrides.iteration` into compatibility import hints only. These aliases can seed lane or role defaults, but active runtime prose and receipts use node/package/seam/lane/phase, WorkNode, capability_lane, agent_role, and bounded_work_unit terms.
+
+SubagentPolicy receipts include the evaluated thresholds, selected child count,
+parallelism cap, cost ceiling, retry budget, assigned capability_lane values,
+write policy, and the exact compatibility aliases consumed, if any.
 
 ## Execution unit context and worktree allocation strategy
 
@@ -6063,7 +6161,7 @@ Canonical rule:
 ### Acceptance criteria addendum
 
 - Orchestrator must support Persona defaults/auto selection per tier.
-- Iteration remains the lowest tier; Persona switching must not add tiers.
+- The legacy Iteration label remains a compatibility/defaulting alias only; Persona switching must not add live runtime tiers.
 - Every tier run must emit effective Persona/model/platform state and selection reason.
 - Registry and plan language must standardize on `explorer`, not `explore`.
 
@@ -29837,8 +29935,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Persona acceptance criteria preserve defaults/auto selection per tier, Iteration as lowest tier, effective Persona/model/platform
-  state emission, and registry language standardized on explorer rather than explore.
+  Persona acceptance criteria preserve defaults/auto selection by canonical execution scope: node, package, seam, lane, and phase.
+  Legacy Phase/Task/Subtask/Iteration labels, including "Iteration remains the lowest tier," are compatibility/search aliases
+  only and must not drive live runtime routing, Persona selection, or completion authority. Effective Persona/model/platform
+  state emission and registry language standardized on explorer rather than explore remain required.
 gui_related: false
 gui_classification_reason: This unit covers backend Persona acceptance criteria, not GUI presentation.
 split_recommended: false
@@ -29851,7 +29951,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered Persona acceptance criteria remain losslessly available for exact-text audit.
-- Persona switching must not add tiers.
+- Persona switching must not add live runtime tiers or use legacy task/subtask/iteration labels for runtime authority.
+- Legacy Phase/Task/Subtask/Iteration labels are retained only as compatibility/search aliases.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -30887,17 +30988,23 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  The recovered Subagent Configuration block is a routing/config contract, not Persona storage. SubagentGuiConfig
-  serializes subagentConfig with enable_tier_subagents, tier_overrides, disabled_subagents, required_subagents, and an
-  advanced_raw_registry_controls flag. The ordinary v1 user flow is Simple Persona-aware overrides by tier; full contextual
-  keys stay advanced-only unless later promoted by a PlanUnit.
+  The recovered Subagent Configuration block is a compatibility import/export
+  surface for routing/config, not Persona storage and not active runtime
+  vocabulary. SubagentGuiConfig serializes subagentConfig with
+  enable_tier_subagents, tier_overrides, disabled_subagents, required_subagents,
+  advanced_raw_registry_controls, and canonical subagentPolicy. Runtime
+  admission reads SubagentPolicy (`schema_id: pm.subagent_policy.v1`) with defaults, units, hard limits, retry
+  policy, fanout thresholds, max parallel subagents, max cost per wave, and
+  compatibility aliases; old tier override keys remain search/import aliases
+  only.
 gui_related: true
 gui_classification_reason: The configuration is exposed through user-visible Agent Config and Settings controls even though the persisted record is runtime config.
 depends_on: [P-053, OSI-081, OSI-082, OSI-084, OSI-402, OSI-403]
 unblocks: []
 acceptance_criteria:
   - The Subagent Configuration YAML fence contains actual YAML and closes before unrelated markdown sections.
-  - Simple v1 tier override lists can express phase, task, subtask, and iteration Persona preferences.
+  - Simple v1 tier override lists remain compatibility aliases and normalize through SubagentPolicy before runtime admission.
+  - SubagentPolicy defines numeric defaults, units, hard limits, retry policy, fanout thresholds, max parallel subagents, max cost per wave, and compatibility aliases.
   - Advanced raw subagent registry controls are available only for advanced/internal use and never replace the Simple v1 flow.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
@@ -30922,6 +31029,7 @@ negative_constraints:
   - Do not keep unrelated markdown inside the Subagent Configuration YAML fence.
   - Do not store Persona prompt bodies or canonical Persona descriptions in SubagentGuiConfig.
   - Do not expose full contextual override keys as the default v1 user flow.
+  - Do not treat tier_overrides or enable_tier_subagents as active runtime vocabulary after SubagentPolicy normalization.
 owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Personas.md, Plans/FinalGUISpec.md]
 ```
 
@@ -31018,7 +31126,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. Subagent policy must govern fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and when subagents are mandatory.
+  Subagents remain extensive in Orchestrator GoalRuns, but each SubagentWave is bounded, cost-aware, auditable, and parent-supervised. The rewritten vocabulary uses child_goal, subagent_wave, bounded_work_unit, capability_lane, agent_role, write_policy, parent_synthesis, verification_cycle, receipt, write_mode, and certification_tier instead of old tier-era wording; controller, planner, executor, reviewer, verifier, adjudicator, certifier, root_cause, and replan roles remain distinct in subagent routing and certification authority. Old fixed-hierarchy and tier-era labels may remain only as compatibility/search aliases for search or import; canonical runtime prose uses GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, and Receipt, and stale tier labels are not active canonical runtime semantics. Contracts_V0 owns shared schema/envelope references for these runtime records and storage-plan owns their persistence/projection boundaries. Low-end subagents may execute one bounded WorkNode, inspect one file/window, map evidence, review one diff, run one acceptance-check group, classify one blocker, diagnose one test/failure, check source lineage, or check stale evidence/spans; they must not make final routing, final certification, broad architecture, authority/scope, governance unlock, user/product tradeoff, or parent completion decisions. SubagentPolicy governs fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory-subagent rules with default limits of 4 parallel children, 8 children per wave, 3 waves per GoalRun, 2000000 microusd per wave, 16000 estimated tokens per wave, 900000 wall-clock ms per child, 2 retry attempts per child, 1 retry attempt per wave, and 30000 ms retry backoff for provider_transient, rate_limit, tool_timeout, or coordination_conflict only.
 gui_related: false
 gui_classification_reason: Subagent task boundaries, capability lanes, and certification authority are runtime/orchestration behavior, not visual presentation.
 depends_on: [GRS-026, GRS-027, OSI-426, EP-098, MS-109, PS-115, W-071]
@@ -31028,6 +31136,9 @@ acceptance_criteria:
   - Each SubagentWave records task boundaries, assigned inputs, capability lane, cost/budget policy, outputs, failures, and evidence refs.
   - Each bounded_work_unit records child_goal or parent WorkNode context, capability_lane, agent_role, write_policy, parent_synthesis expectation, verification_cycle expectation, receipt expectation, write_mode, and certification_tier when applicable.
   - Subagent policy records fanout thresholds, max parallel subagents, max cost per wave, bounded input limits, retry policy, and mandatory subagent rules.
+  - SubagentPolicy receipts record evaluated thresholds, selected child count, parallelism cap, cost ceiling, retry budget, capability lanes, write policy, and compatibility aliases consumed.
+  - Default limits are measurable in children, waves, microusd, estimated tokens, bytes, refs, write targets, wall-clock ms, and tool rounds; hard-limit exceedance blocks the wave rather than silently widening scope.
+  - SubagentPolicy limits cannot exceed the parent Run_Modes run-envelope budget or remaining budget.
   - Low-end subagents cannot certify parent GoalRun completion or approve governance unlocks.
   - Parent synthesis and high-end certification remain required for meaningful completion.
   - Old fixed-hierarchy and tier-era labels remain compatibility/search aliases only; they do not replace GoalRun, WorkGraph, WorkNode, capability_lane, agent_role, SubagentWave, VerificationCycle, or Receipt terminology in active runtime prose.
