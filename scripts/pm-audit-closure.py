@@ -203,6 +203,7 @@ DEFAULT_AUDIT_SOURCE_ARTIFACTS = [
     "filesafe_fail_closed_security_findings.jsonl",
     "semantic_risks.jsonl",
     "gui_command_wiring_gate_openref_findings.jsonl",
+    "residual_feature_contract_findings.jsonl",
     "atom_fidelity_matrix.jsonl",
     "planunit_source_claims.jsonl",
     "owner_routing_findings.jsonl",

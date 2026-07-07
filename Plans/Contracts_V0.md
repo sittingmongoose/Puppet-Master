@@ -228,47 +228,64 @@ These requirements are canonical live specification text for this owner document
 
 ### Owner-first canonicalization order
 
+Contracts_V0 owns only stable cross-surface record envelopes, shared primitive names, and typed payload minima. Domain-specific docs own their behavior and may reference these contracts without copying them. When an owner-specific section and a consumer note disagree, the owner section wins; compatibility/source-lineage tokens remain traceable but do not create peer canon.
 
 ### Requested/effective account identity contract
 
 
 - Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+- Account-bearing envelopes use `requested_account_id`, `requested_account_binding`, `requested_account_policy`, `effective_account_id`, `effective_provider_identity`, `execution_role`, and `operational_identity`. Provider-native labels such as login names or provider account ids are display/audit metadata and never replace the stable PM identity.
 ### Shared governance/runtime record envelope
 
+Shared governance/runtime records carry `record_id`, `record_kind`, `schema_version`, `created_at`, `updated_at`, `owner_ref`, `source_event_refs[]`, `subject_ref`, `status`, `visibility_level`, `redaction_profile`, and `evidence_refs[]`. Records may project into multiple UI or audit surfaces, but the persisted record remains one typed family.
 
 ### Concern record family definition
 
+`ConcernRecord` is the cross-surface record for user-visible or governance-visible concerns. Required fields are `concern_id`, `schema_version`, `concern_category`, `severity`, `visibility_level`, `attention_level`, `status`, `owner_ref`, `creator_ref`, `subject_ref`, `source_event_refs[]`, `summary`, `created_at`, and `updated_at`. Optional fields are `blocking_effect`, `resolution_kind`, `accepted_risk`, `resolver_ref`, `resolved_at`, `linked_record_refs[]`, `suggested_action_ids[]`, and `evidence_refs[]`.
 
 ### Concern lifecycle and resolution kinds
 
+Allowed `ConcernRecord.status` values are `active`, `acknowledged`, `resolved`, `dismissed`, and `superseded`. Allowed `resolution_kind` values are `fixed`, `accepted_risk`, `not_reproducible`, `duplicate`, `replaced_by_new_record`, and `not_applicable`. `dismissed` requires a non-empty reason and resolver; `accepted_risk` requires `accepted_risk = true` plus an evidence ref.
 
 ### Concern action policy and authority model
 
+Concern actions are authorized by `approval_scope_key`, `actor_ref`, `permission_snapshot_id`, and `allowed_action_ids[]`. User-visible actions such as acknowledge, resolve, dismiss, reopen, or link evidence must produce a typed command response and cannot mutate a concern record by editing projections directly.
 
 ### Concern linkage to adjacent families
 
+Concern records may link to EventRecord, AuditFinding, AuditClosure, AuthEvent, UICommandResponse, RuntimeArtifact, PlanUnit, and storage projection refs through `linked_record_refs[]`. A linked record is evidence or routing context, not a second owner for the concern lifecycle.
 
 ### Promotion classes and gate evidence
 
+Promotion classes are `informational`, `attention_required`, `blocking`, `security_blocking`, and `governance_blocking`. Promotion to any blocking class requires `gate_id`, `blocked_subject_ref`, `blocking_effect`, `owner_ref`, and at least one evidence ref. A projection may display a promoted concern only after these fields exist.
 
 ### Historical semantic consistency
 
+Historical concerns preserve the original `summary`, `source_event_refs[]`, and source-lineage tokens. Later owner corrections append updates instead of rewriting history, and projections must display the current resolved state without erasing the prior concern id.
 
 ### Coverage blocker concern lifecycle owner section
+
+Coverage blockers are concerns whose `concern_category = coverage_blocker`. They carry `missing_owner_ref?`, `missing_contract_ref?`, `blocked_validation_surface`, and `reopen_condition`. Closing a coverage blocker requires either a repaired owner section or an explicit source-lineage-only disposition.
+
 ### Concern owner vs creator vs resolver separation
 
+`creator_ref` is the actor or validator that raised the concern. `owner_ref` is the accountable owner doc or runtime authority. `resolver_ref` is the actor or tool that changed the concern to a terminal state. These fields must not collapse into a single user label.
 
 ### Concern source-event vs record vs projection split
 
+`source_event_refs[]` cite the events that caused or justified the concern. The `ConcernRecord` is the durable record. UI, ledger, audit, and history rows are projections of that record and may not invent fields not present in the durable family.
 
 ### Runtime attribution ownership split
 
+Runtime attribution uses `package_id`, `run_id`, `node_id`, `attempt_id`, `execution_unit_context_ref`, and `provider_account_ref` where applicable. `package_id` is canonical; `work_package_id` is import/export compatibility only and must normalize before persistence.
 
 ### Approval scope key and approver identity
 
+`approval_scope_key` is a stable string composed as `scope_kind:scope_id:action_family:normalized_subject_hash`. The approver identity is stored as `approver_ref`, with optional `approval_lease_id`, `permission_snapshot_id`, and `expires_at`. Approval keys are not reusable across different normalized command identities, projects, worktrees, or purpose strings.
 
 ### Concern update heuristics
 
+Updates with the same `subject_ref`, `concern_category`, and `owner_ref` amend the existing concern while it is active or acknowledged. A terminal concern may be reopened only when its reopen condition is met or when owner/evidence hashes change. Otherwise a new concern id is required.
 
 ### Route/open compatibility-only fallback marking
 
@@ -279,9 +296,15 @@ These requirements are canonical live specification text for this owner document
   - Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed.
 ### Recommended minimum concern record shape
 
+The minimum serialized shape is:
+
+```json
+{"concern_id":"concern_01","schema_version":"1.0.0","concern_category":"coverage_blocker","severity":"high","visibility_level":"user_visible","attention_level":"needs_action","status":"active","owner_ref":"Plans/Contracts_V0.md","creator_ref":"validator:pm-audit-closure","subject_ref":"Plans/Contracts_V0.md::owner-section","source_event_refs":[],"summary":"Owner section lacks typed fields.","created_at":"2026-07-07T00:00:00Z","updated_at":"2026-07-07T00:00:00Z","evidence_refs":[]}
+```
 
 ### Concern ownership / authority direction
 
+Concern ownership flows from source event to durable record to projections. Projections may request actions, but record mutation must go through the owning command/contract path and return a typed UICommandResponse or validator closure receipt.
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -19359,6 +19382,8 @@ acceptance_criteria:
 - Remote/tunnel WS requires configured auth
 - wrong Origin/CSRF/runtime id is rejected before initialize
 - security receipts are visible and redacted.
+- WSAuthSession records auth_scheme, credential_ref, origin, csrf_token_hash, runtime_id, tunnel_id, permission_snapshot_id, expires_at_ms, and redacted_receipt_ref before any remote initialize is admitted.
+- Auth failure receipts use reason_code values missing_auth, invalid_origin, invalid_csrf, runtime_id_mismatch, expired_session, or permission_scope_denied without logging raw credentials or CSRF tokens.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -19405,7 +19430,10 @@ preserved_exact_tokens:
 - P0-WEBSOCKET-SECURITY-BOUNDARIES
 - P0
 - Add WebSocket origin/auth/CSRF/runtime-id security gates
-negative_constraints: []
+negative_constraints:
+- Do not allow remote or tunneled WebSocket initialize before auth, Origin, CSRF, runtime id, and permission scope checks pass.
+- Do not store raw credentials, raw CSRF tokens, bearer tokens, or provider secrets in security receipts.
+- Do not treat this contract as runtime launch, implementation readiness, or buildability proof.
 proposal_or_recommendation: Remote/tunnel WS requires configured auth; wrong Origin/CSRF/runtime id is rejected before initialize; security receipts are visible and redacted.
 compile_disposition: create_new_planunit
 ```
@@ -19429,6 +19457,8 @@ acceptance_criteria:
 - Restarted workspace probes every configured surface before run
 - Unavailable plugin is shown before model attempts tool use
 - WSL path namespace translation is explicit and tested
+- RuntimeSurfaceReadinessProbe records surface_id, surface_kind, configured_enabled, process_or_port_ref, injection_state, model_visible, ui_visible, roundtrip_state, last_probe_at_ms, failure_reason_code, and recovery_command_ref.
+- Readiness status values are ready, degraded, unavailable, disabled_by_policy, auth_required, restart_required, and namespace_mismatch; unavailable or degraded surfaces block model-visible tool use until recovery is acknowledged.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -19469,7 +19499,10 @@ preserved_exact_tokens:
 - Runtime surface readiness probe
 - OpenAI Codex
 - OpenCode
-negative_constraints: []
+negative_constraints:
+- Do not mark a surface ready from configuration presence alone.
+- Do not expose unavailable tools to the model as callable.
+- Do not treat readiness probes as executable runtime certification or implementation-readiness proof.
 observed_signal: Browser port forwarding fails until restart; computer-use plugin unavailable after restart; WSL path/bridge mismatch; OpenCode V2 MCP lifecycle need.
 pm_gap_or_delta: Configured tool/browser/terminal/MCP surfaces must prove started, injected, model-visible, UI-visible, and roundtrip-ready after restart/restore.
 compile_disposition: create_new_planunit
@@ -19493,6 +19526,9 @@ unblocks: []
 acceptance_criteria:
 - Crash/retry/duplicate prompt tests
 - seglog replay tests
+- SessionPromptAdmission events include admission_id, thread_id, prompt_id, prompt_hash, client_sequence, idempotency_key, submitted_at_ms, admitted_at_ms, admission_state, duplicate_of?, execution_ref?, and rejection_reason_code?.
+- Admission states are queued, admitted, duplicate_ignored, rejected, expired, cancelled_before_execution, and execution_bound; replay uses idempotency_key plus prompt_hash to avoid duplicate execution.
+- Prompt admission and execution remain separate event families so stored prompts can be audited without implying a runtime execution started.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
@@ -19537,7 +19573,10 @@ preserved_exact_tokens:
 - extrepo-20260703-0101
 - prompt_admission_execution
 - P0
-negative_constraints: []
+negative_constraints:
+- Do not execute a prompt directly from UI receipt without a persisted admission event.
+- Do not create duplicate executions for the same idempotency_key and prompt_hash replay.
+- Do not use session prompt admission as proof of runtime launch or runtime certification.
 observed_signal: OpenCode v2 session_input admission inbox and prompt/execution split; session seq/storage bugs
 pm_current_coverage: Seglog/redb/Tantivy design; exclusive writer lock; projector checkpoints
 pm_gap_or_delta: No explicit session prompt admission inbox/event family
@@ -19890,4 +19929,74 @@ owner_hints:
   - Plans/Executor_Protocol.md
   - Plans/Goal_Runtime_System.md
   - Plans/orchestrator-subagent-integration.md
+```
+
+## FABLE Residual Feature-Contract Cleanup Addendum - 2026-07-07
+
+This addendum closes the residual FABLE feature-contract rows assigned to Contracts_V0 for empty owner-section bodies and the explicit WebSocket auth, runtime-surface readiness, and session-prompt admission inbox gaps. It does not reopen the earlier contract-runtime core closure and does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime certification evidence, production build tasks, generated governance artifacts, or a buildability pass claim.
+
+### CV-314 - FABLE Residual Contracts Feature Boundary
+
+```yaml
+plan_unit_id: CV-314
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel
+  WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events.
+  Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to
+  runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects
+  missing, expired, mismatched, replayed, or origin-invalid handshakes before initialize and emits redacted
+  auth receipts. Runtime readiness is a typed probe with request fields, result states, reasons, and roundtrip
+  evidence refs. Session-prompt admission is a typed inbox event family with idempotency derived from
+  session_id, prompt_id, target_thread_id, and normalized prompt hash.
+gui_related: true
+gui_classification_reason: WebSocket/session readiness errors and session-prompt admission are visible to runtime/chat surfaces, while the fields themselves are backend contracts.
+depends_on: [CV-306, CV-307, CV-308, CV-313]
+unblocks: []
+acceptance_criteria:
+  - Owner-section headings in Contracts_V0 either carry live typed contract text or are explicitly source-lineage only.
+  - WebSocket handshake requests carry runtime_id, project_id, session_id, origin, csrf_nonce, token_binding, permission_snapshot_id, requested_capabilities, protocol_version, and client_nonce.
+  - WebSocket rejections use closed error codes: missing_token, expired_token, invalid_signature, origin_mismatch, csrf_mismatch, runtime_id_mismatch, insufficient_scope, replay_detected, and protocol_version_unsupported.
+  - Runtime-surface readiness probes use request fields probe_id, runtime_id, session_id, surface_id, requested_checks, timeout_ms, and trace_level.
+  - Runtime-surface readiness results use state = not_ready, model_visible, ui_visible, roundtrip_ready, degraded, or failed, with reason_code, checked_at, evidence_refs, and retry_after_ms when applicable.
+  - Session-prompt inbox events include session_prompt.admitted, session_prompt.rejected, session_prompt.cancelled, and session_prompt.expired with prompt_id, target_thread_id, admission_state, idempotency_key, source_session_id, and redacted_prompt_ref.
+  - None of these records stores raw credentials, raw prompts beyond redacted refs, or runtime certification evidence.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status
+risk_class: fable_residual_contract_feature_gap
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: residual_contract_feature_boundary
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:505
+  - fablereport.md:517
+  - fablereport.md:518
+  - fablereport.md:519
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "Canonical owner-section requirements"
+  - "P0-security WS-auth contract"
+  - "runtime-surface readiness probe"
+  - "session-prompt-admission-inbox"
+  - "wrong Origin/CSRF/runtime id"
+  - "session_prompt.admitted"
+negative_constraints:
+  - Do not treat this residual feature-contract cleanup as contract-runtime core, FileSafe, storage, GUI wiring, Slint/web, runtime certification, or buildability closure.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, runtime certification evidence, production build tasks, generated governance artifacts, or governance seal outputs.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+  - Plans/assistant-chat-design.md
 ```

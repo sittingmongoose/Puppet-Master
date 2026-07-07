@@ -1,16 +1,18 @@
 {
   "audit_id": "fable-20260706",
   "baseline_ref": "7db016bca34ad0050b2c5ceafecb309de3cb3489",
-  "finding_count": 13,
-  "generated_at_utc": "2026-07-07T22:45:00Z",
-  "ledger_id": "gui-command-wiring-gate-repair-20260707",
+  "finding_count": 63,
+  "generated_at_utc": "2026-07-07T23:30:00Z",
+  "ledger_id": "residual-feature-contract-repair-20260707",
   "notes": [
     "Bounded audit_report for local FABLE closure matrix source rows only; broader FABLE backlog remains represented by currentness_check_report.json and buildability_repair_registry.jsonl.",
     "Row-scoped ledger_id/subject_ref/observation_ref values are permitted for FABLE repair ledgers under the same audit_id.",
-    "GUI command/wiring/gate/openref rows are included through gui_command_wiring_gate_openref_findings.jsonl and closed by GUI_COMMAND_WIRING_GATE_REPAIR.md."
+    "GUI command/wiring/gate/openref rows are included through gui_command_wiring_gate_openref_findings.jsonl and closed by GUI_COMMAND_WIRING_GATE_REPAIR.md.",
+    "Residual feature-contract rows are included through residual_feature_contract_findings.jsonl and closed by RESIDUAL_FEATURE_CONTRACT_REPAIR.md.",
+    "This BLOCKED audit_report remains the historical pre-closure projection; effective_status.json and terminal_state.json project the scoped matrix as repair_validated."
   ],
-  "observation_ref": "gui_command_wiring_gate_repair",
-  "repair_required_count": 13,
+  "observation_ref": "residual_feature_contract_repair",
+  "repair_required_count": 63,
   "schema_id": "pm.audit_report.v1",
   "source_artifacts": [
     "gui_platform_currentness_findings.jsonl",
@@ -18,8 +20,9 @@
     "platform_specs_authority_findings.jsonl",
     "filesafe_fail_closed_security_findings.jsonl",
     "semantic_risks.jsonl",
-    "gui_command_wiring_gate_openref_findings.jsonl"
+    "gui_command_wiring_gate_openref_findings.jsonl",
+    "residual_feature_contract_findings.jsonl"
   ],
   "status": "BLOCKED",
-  "subject_ref": "Plans/UI_Command_Catalog.md::fable_gui_command_wiring_gate_repair"
+  "subject_ref": "Plans/.audits/fable-20260706::residual_feature_contract_repair"
 }
