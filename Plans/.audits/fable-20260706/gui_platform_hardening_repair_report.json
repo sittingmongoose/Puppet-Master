@@ -1,0 +1,113 @@
+{
+  "audit_id": "fable-20260706",
+  "closed_finding_key": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+  "generated_at_utc": "2026-07-07T16:54:19Z",
+  "governance_scope": {
+    "created_worknodes": false,
+    "created_nodeseeds": false,
+    "created_queues": false,
+    "created_runtime_artifacts": false,
+    "created_implementation_files": false,
+    "created_production_build_tasks": false,
+    "process_spec_hardening_only": true,
+    "repaired_broader_fable_backlog": false
+  },
+  "hardening_status": "repaired_superseded",
+  "schema_id": "pm.audit.gui_platform_hardening_repair_report.v1",
+  "source_repairs": [
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "changes": [
+        "Appendix B separates Rust stable 1.96.1 verified 2026-07-02 from Slint 1.17.1 selected/currentness decision 2026-07-07.",
+        "Appendix B requires runtime implementation to reverify official releases before coding/build work.",
+        "Appendix B and F3-030 forbid React, Tauri, DOM-rendered product UI, and HTML/CSS/JS product shells.",
+        "F3-030 allows only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue for Slint/WASM web while native desktop remains Rust plus Slint .slint markup.",
+        "F3-030 and F3-417 surface validate-gui-asset-policy as a validation surface."
+      ]
+    },
+    {
+      "path": "Plans/Automated_Testing_System.md",
+      "changes": [
+        "ATS validation surfaces include python3 scripts/pm-plans-verify.py validate-gui-asset-policy."
+      ]
+    },
+    {
+      "path": "scripts/pm-gui-asset-policy.py",
+      "changes": [
+        "Default roots cover ui, src, app, apps, crates, frontend, web, wasm, native, assets, resources, tests, fixtures, and snapshots.",
+        "The default command and validate subcommand alias both execute the same policy.",
+        "The policy detects emoji, Extended_Pictographic-style characters, Dingbat-style symbols, arrow/symbol pseudo-icons, remote/CDN icon assets, SVG assets without manifest entries, unresolved icon_id references, and unlabeled icon-only controls.",
+        "The policy preserves valid local SVG namespace URLs so ordinary SVG markup is not treated as remote CDN usage.",
+        "No GUI source keeps status not_applicable with exit 0."
+      ]
+    },
+    {
+      "path": "scripts/pm-plans-verify.py",
+      "changes": [
+        "Adds validate-gui-asset-policy command.",
+        "Includes validate-gui-asset-policy in run-gates.",
+        "Includes validate-gui-asset-policy in audit-governance.",
+        "Treats raw pm-gui-asset-policy statuses pass and not_applicable as verifier pass states."
+      ]
+    }
+  ],
+  "validation_receipts": [
+    {
+      "command": "python3 scripts/pm-gui-asset-policy.py",
+      "exit_code": 0,
+      "raw_policy_state": "pending_no_gui_source_yet",
+      "raw_status": "not_applicable",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-gui-asset-policy.py validate",
+      "exit_code": 0,
+      "raw_policy_state": "pending_no_gui_source_yet",
+      "raw_status": "not_applicable",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
+      "exit_code": 0,
+      "status": "pass"
+    },
+    {
+      "command": "temporary negative policy probe outside repo",
+      "exit_code": 1,
+      "status": "expected_fail",
+      "observed_failure_policies": [
+        "no_emoji_or_unicode_pseudo_icons",
+        "no_network_or_cdn_icons",
+        "icon_only_controls_require_accessible_labels",
+        "missing_icon_manifest"
+      ],
+      "observed_codepoints": [
+        "U+2192",
+        "U+2728"
+      ]
+    }
+  ],
+  "projection_updates": [
+    {
+      "path": "Plans/.audits/fable-20260706/currentness_check_report.json",
+      "effect": "adds effective_supersessions and marks the exact GUI toolkit finding repair_required=false"
+    },
+    {
+      "path": "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
+      "effect": "marks the exact GUI toolkit finding as repaired_superseded while preserving historical report-line backlog rows"
+    },
+    {
+      "path": "Plans/.audits/fable-20260706/effective_status.json",
+      "effect": "adds this hardening report as effective status context"
+    },
+    {
+      "path": "Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md",
+      "effect": "marks only the GUI toolkit finding as repaired_superseded"
+    }
+  ],
+  "required_runtime_reverification": [
+    "Before coding/build work, reverify official Rust stable release currentness.",
+    "Before coding/build work, reverify official Slint release currentness.",
+    "No current process/spec hardening result is runtime implementation proof."
+  ]
+}

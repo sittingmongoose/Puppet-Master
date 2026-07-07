@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a35d683b62cae6e9405475986e55c15bc6af59165d1bd5ab775e35d7d6e1d253"
+      "sha256": "5899047505683d85b21d8f9dc60a9e319eb4aefc056ac5fe91b7b0ef00ac4606"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "1dacab1dff377f0cd047967244311edfb1ea86857ebb8c18ed019fa00947a758"
+      "sha256": "5493b8b3e13fcca6e8b80ce175108ef510e22ca3b876dcdf17f91296162492d6"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "98a76b26fb7dd78ab0c89aac1c54db8e47410bb6dccb3947a8442e9348c0a751"
+      "sha256": "f053315035e72f62c97cef447cab5a9760027e43735deaf05215a27631b902e5"
     }
   ],
   "checks": [
@@ -392,6 +392,11 @@
       "name": "gui-platform-currentness-repair",
       "result": "PASS",
       "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
+    },
+    {
+      "name": "gui-platform-hardening-repair",
+      "result": "PASS",
+      "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
     }
   ],
   "commands_run": [
@@ -733,6 +738,11 @@
     {
       "cmd": "python3 scripts/pm-prd-planning-runtime-validate.py",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
     }
   ],
   "contract_refs_satisfied": [

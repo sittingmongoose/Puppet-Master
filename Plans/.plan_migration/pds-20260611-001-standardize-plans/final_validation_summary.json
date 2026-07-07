@@ -1,4 +1,8 @@
 {
+  "coverage_disposition_type_counts": {
+    "standardized_section_and_planunit": 3618
+  },
+  "coverage_rows": 3618,
   "coverage_status_counts": {
     "already_standardized_existing_planunits": 55,
     "batch-001-unlocked-unsharded_converted_covered": 303,
@@ -6,6 +10,7 @@
     "batch-003-spec-locked_converted_covered": 955,
     "pilot_converted_covered": 17
   },
+  "docs_still_source_preserving_count": 0,
   "forbidden_during_this_run_confirmed_not_updated": [
     "Plans/Spec_Lock.json",
     "Plans/_shards/**",
@@ -13,43 +18,65 @@
     "Plans/plan_graph.json",
     "Plans/auto_decisions.jsonl"
   ],
+  "forbidden_governance_artifacts_changed": [],
+  "forbidden_governance_artifacts_confirmed_not_updated": [],
+  "generated_at_utc": "2026-07-07T16:56:37Z",
+  "governance_seal_required": false,
   "gui_related_counts": {
     "false": 34,
     "true": 71
   },
-  "migration_validation": "pass",
-  "historical_scope_status": "superseded_by_current_complete_run",
   "historical_scope_reason": "This run inventoried the 67 top-level Plans docs that existed on 2026-06-11. Later owner docs are covered by the current COMPLETE migration run pds-20260611-002-atomize-planunits, so this run remains historical proof for its original doc set rather than current inventory coverage.",
+  "historical_scope_status": "superseded_by_current_complete_run",
+  "implementation_files_created": false,
+  "live_plan_unit_count": 5486,
+  "migration_validation": "pass",
   "missing_current_docs_intentionally_not_inventoried": [
     "Plans/Automated_Testing_System.md",
     "Plans/Goal_Runtime_System.md",
     "Plans/PRD_Builder.md",
     "Plans/Planning_Wizard.md"
   ],
+  "no_executable_build_tasks_created": true,
+  "no_final_node_queues_created": true,
+  "no_worknodes_created": true,
+  "node_readiness_status": "blocked_runtime_certification_incomplete",
+  "nodeseed_candidates_created": false,
   "nodeseeds_created": false,
+  "notes": [
+    "Post-seal migration summary refreshed after live Plan repairs and governance artifact regeneration.",
+    "No WorkNodes, NodeSeeds, NodeSeed candidates, executable queues, final node manifests, product implementation files, production build tasks, or final node queues were created.",
+    "Node readiness remains blocked_runtime_certification_incomplete; runtime enablement remains blocked_runtime_certification_incomplete because PlanCompile runtime launch and node artifact generation are not enabled."
+  ],
   "original_spans": 3618,
   "plan_unit_count": 105,
   "planunit_field_check": "pass",
+  "pre_conversion_preserved_in_place_rows": 0,
+  "production_build_tasks_created": false,
+  "residual_source_preserving_plan_units": [],
   "run_id": "pds-20260611-001-standardize-plans",
+  "runtime_enablement_status": "blocked_runtime_certification_incomplete",
   "schema_id": "pm.plan_migration.final_validation_summary.v1",
-  "seal_phase_required": [
-    "Regenerate Plans/_shards/** with python3 scripts/pm-shard-plans.py --generate",
-    "Refresh evidence bundles that hash changed Plans docs",
-    "Refresh Plans/Spec_Lock.json through the explicit governance seal workflow",
-    "Refresh Plans/plan_graph.json only if the seal workflow requires it",
-    "Rerun python3 scripts/pm-plans-verify.py run-gates and python3 scripts/pm-shard-plans.py --check"
-  ],
-  "shard_check_status": "historical_superseded_not_current_gate",
-  "shard_failure_count": 92,
-  "standard_run_gates_expected_seal_failures": [
-    "verify_spec_lock",
-    "validate_plan_graph",
-    "validate_evidence",
-    "check_shards"
-  ],
-  "standard_run_gates_status": "historical_superseded_not_current_gate",
+  "seal_phase_required": [],
+  "shard_check_status": "passed_after_governance_seal",
+  "shard_failure_count": 0,
+  "source_lineage_residual_plan_units": [],
+  "source_preserving_unit_count_after_batch": 0,
+  "standard_run_gates_expected_seal_failures": [],
+  "standard_run_gates_status": "passed_after_governance_seal",
   "status": "HISTORICAL_SUPERSEDED",
   "superseded_by_run_id": "pds-20260611-002-atomize-planunits",
   "top_level_plan_docs": 67,
+  "unique_live_plan_unit_count": 5486,
+  "validators": {
+    "required_current_commands": [
+      "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans",
+      "python3 scripts/pm-plan-index.py validate",
+      "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/<ledger_id>",
+      "python3 scripts/pm-plans-verify.py run-gates",
+      "python3 scripts/pm-shard-plans.py --check",
+      "git diff --check"
+    ]
+  },
   "worknodes_created": false
 }

@@ -14,7 +14,7 @@ Scope: triage only. No canonical Plans content was repaired in this run.
 
 10. `fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb` — **partial_current** — Storage/coordination canon still mixes file-based source-of-truth wording with seglog/redb projection canon.
 20. `fable-20260706-p0-platform-specs-authority-drift` — **confirmed_current** — platform_specs authority remains contradictory: assistant-chat still uses it live while Models_System has no replacement field contract.
-30. `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` — **owner_decision_required** — Spec_Lock still pins Slint 1.15.1 while FinalGUISpec pins Slint 1.17.0 verified 2026-07-02.
+30. `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` — **repaired_superseded** — Closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; active canon now pins Slint 1.17.1, Slint/WASM canvas web bootstrap limits, native Rust + Slint `.slint` markup, and `validate-gui-asset-policy` governance coverage.
 40. `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` — **owner_decision_required** — Tier-era config and iteration wording remain live beside node/package/seam/lane canon.
 50. `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` — **partial_current** — FileSafe still preserves fail-open and prefix-match source snippets while later rows attempt to demote them to source-lineage.
 110. `fable-20260706-p1-ui-command-catalog-missing-families` — **confirmed_current** — Core UI command families remain absent, including cmd.chat.send and theme/persona/alert/concern/model command families.
@@ -40,8 +40,8 @@ Scope: triage only. No canonical Plans content was repaired in this run.
   - Repair target: Gate provider/model capability readiness on absence of live platform_specs references outside explicit source-lineage notes.; Require Models_System capability matrix to define context-window/fallback metadata before model-picker/context gates pass.
 
 ### Plans/Spec_Lock.json
-- `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` (P0, High, owner_decision_required): FABLE P0 #3: owner decision for UI toolkit truth; reconcile Spec_Lock and purge stale Tauri/source references before build work.
-  - Repair target: verify-spec-lock should cross-check locked UI toolkit fields against canonical owner docs or require an explicit auto_decision divergence row.; Implementation-readiness should fail on unresolved toolchain SSOT conflicts.
+- `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` (P0, High, repaired_superseded): FABLE P0 #3 is closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; historical `currentness_check_report.json` and original registry rows remain source evidence only.
+  - Repair target satisfied: `Plans/Spec_Lock.json` and active GUI owner docs use Slint 1.17.1; `FinalGUISpec.md` forbids React/Tauri/DOM-rendered product UI while allowing only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue for Slint/WASM; `scripts/pm-plans-verify.py validate-gui-asset-policy` is a run-gates and audit-governance check.
 
 ### Plans/FileSafe.md
 - `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` (P0, Critical, partial_current): FABLE P0 #5: replace disabled fallback, prefix allowlist, empty-allowlist warn-only, and destructive override with fail-closed/auth/audit semantics.

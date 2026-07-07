@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/FinalGUISpec.md",
-      "sha256": "b788c81e168d096c1ad7ae242f8539734f138f439804ca862fa26ac3b4576b89"
+      "sha256": "78b8bff95c32647029957b604e25f475c268cb881d0ab0b32e0cb7d343f180e9"
     },
     {
       "path": "Plans/assistant-chat-design.md",
@@ -26,35 +26,35 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "e6a93191bdc64e00ca5f0e6e1c08eb4cddd62946b1d69dfdda8b72491e35cfe6"
+      "sha256": "633f04b2dac7dce9dbfd381ecdec42d51c3d6e22692884c351f030f7dd8e633b"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "505bc78a0eb8ce03bf2d023b716162dd84e99dc58bda5a3e0eae97160c8256b8"
+      "sha256": "64d4ad8302b8eb0cd36064ccbbf6ba3180b8ae283d9440cb02ab368da6cf063e"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "8fe8bcdeeada473a65c162575fcf3e1a7084bdbe16985084c5f348771471d877"
+      "sha256": "e308121923116dbd78d54c287614771efa618399d16f6d7efb4b05a866520f86"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "a474f12fa65a37fc8a0d060bc9076719b14bea2af8d34cae1cf7d115ca447de2"
+      "sha256": "441df5edc13a5c0c2bfb312ed1023e2d9226a3f9232ece38f6fa498782497b1b"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "f613eb1fe2c4c2edafd3ec743c9a2ab4bc4b12626344aefd144f9144fb2dc430"
+      "sha256": "ccc241754c48af4233de8d58b4f7ecceafa8d94589426de2b402bfc82dd2db36"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "7e7daed588005d20625868defa468427fb7fea47cf734fdbfb406a3c60a46215"
+      "sha256": "a21a540bbcbe452cc59e2174c81d90eebf55ab5eee62f080a9f9ecc622a1412f"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "042c48471e2645f6844b046e34a1af59b858c9aa0a8670b1a2fb0093344a170d"
+      "sha256": "929ccfd21a5d3bdd1f577c4aebc18206dc9bac616d14977f43f9171aad87081d"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "781edff6e7ba60dc432cb1d643813291f86bb0628105c0297a59082139b4ee05"
+      "sha256": "3ceb8930ae988dd0dddd3dc00bbcd1180ec645f2b5a520d40b07f02f0cc3c891"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -62,7 +62,7 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "1dacab1dff377f0cd047967244311edfb1ea86857ebb8c18ed019fa00947a758"
+      "sha256": "5493b8b3e13fcca6e8b80ce175108ef510e22ca3b876dcdf17f91296162492d6"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -70,7 +70,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "a35d683b62cae6e9405475986e55c15bc6af59165d1bd5ab775e35d7d6e1d253"
+      "sha256": "5899047505683d85b21d8f9dc60a9e319eb4aefc056ac5fe91b7b0ef00ac4606"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -328,6 +328,11 @@
       "name": "gui-platform-currentness-repair",
       "result": "PASS",
       "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
+    },
+    {
+      "name": "gui-platform-hardening-repair",
+      "result": "PASS",
+      "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
     }
   ],
   "commands_run": [
@@ -576,6 +581,11 @@
     {
       "cmd": "python3 scripts/pm-prd-planning-runtime-validate.py",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
+      "exit_code": 0,
+      "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
     }
   ],
   "contract_refs_satisfied": [

@@ -2,10 +2,12 @@
   "audit_id": "fable-20260706",
   "effective_status": "PASS",
   "effective_terminal_report": "post_repair_audit_report.json",
+  "hardening_repair_report": "gui_platform_hardening_repair_report.json",
   "ledger_id": "gui-platform-currentness-repair-20260707",
   "notes": [
     "Historical status artifacts are preserved but superseded by this effective status projection.",
-    "No open actionable repair is represented by this audit effective status."
+    "No open actionable repair is represented by this audit effective status.",
+    "The GUI toolkit currentness finding is closed by GUI_PLATFORM_CURRENTNESS_REPAIR.md and hardened by GUI_PLATFORM_HARDENING_REPAIR.md; broader FABLE P0/P1 backlog rows remain out of scope."
   ],
   "original_repair_required_count": 1,
   "repair_required_count": 0,
@@ -22,7 +24,19 @@
   },
   "superseded_historical_reports": [
     "audit_report.json",
-    "terminal_state.json"
+    "terminal_state.json",
+    "currentness_check_report.json"
+  ],
+  "superseded_repaired_findings": [
+    {
+      "finding_key": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+      "status": "repaired_superseded",
+      "superseded_by": [
+        "GUI_PLATFORM_CURRENTNESS_REPAIR.md",
+        "GUI_PLATFORM_HARDENING_REPAIR.md",
+        "gui_platform_hardening_repair_report.json"
+      ]
+    }
   ],
   "terminal_repair_state": "repair_validated"
 }

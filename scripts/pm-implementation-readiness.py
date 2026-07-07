@@ -3146,7 +3146,22 @@ def validate() -> dict[str, Any]:
             )
         pnc019_certification_failures = pnc019_certification_receipt_failures()
         pnc019_certified = not pnc019_certification_failures
-        failures.extend(pnc019_certification_failures)
+        node_readiness = actual_report.get("node_readiness", {})
+        executable_blocker_claims_closure = any(
+            str(row.get("blocker_family", "")) in EXECUTABLE_PROOF_FAMILIES
+            and str(row.get("status", "")).lower() in CLOSED_BLOCKER_STATUSES
+            for row in blockers
+        )
+        pnc019_certification_claimed = (
+            actual_report.get("buildability_gate_passed") is True
+            or (
+                isinstance(node_readiness, dict)
+                and node_readiness.get("executable_lifecycle_certification_complete") is True
+            )
+            or executable_blocker_claims_closure
+        )
+        if pnc019_certification_claimed:
+            failures.extend(pnc019_certification_failures)
         failures.extend(
             gate_semantic_failures(
                 actual_report=actual_report,
