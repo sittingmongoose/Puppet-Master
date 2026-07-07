@@ -2823,10 +2823,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 246,
+        "False": 247,
         "True": 65
       },
-      "heading_count": 450,
+      "heading_count": 452,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -2893,11 +2893,12 @@
         "future notification delivery records",
         "future run receipts",
         "future vision_bridge result records",
-        "scripts/pm-implementation-readiness.py"
+        "scripts/pm-implementation-readiness.py",
+        "scripts/pm-plans-verify.py"
       ],
-      "line_count": 19619,
+      "line_count": 19721,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 311,
+      "plan_unit_count": 312,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -3209,7 +3210,8 @@
         "CV-308",
         "CV-309",
         "CV-310",
-        "CV-311"
+        "CV-311",
+        "CV-312"
       ],
       "reasoning_tiers": [
         "high",
@@ -3319,6 +3321,7 @@
         "execution_unit_context_field_loss",
         "executor_usage_owner_boundary_drift",
         "failure_class_enum_drift",
+        "filesafe_event_payload_drift",
         "filesafe_safe_point_owner_split",
         "firecrawl_event_family_fork",
         "future_concern_mutation_authority",
@@ -3527,10 +3530,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2",
+      "sha256": "9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 311
+        "accepted": 312
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -3539,7 +3542,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "requirement": 220,
-        "schema_contract": 3,
+        "schema_contract": 4,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -3574,6 +3577,7 @@
         "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
+        "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
         "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
@@ -4617,10 +4621,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 171,
+        "False": 172,
         "True": 27
       },
-      "heading_count": 319,
+      "heading_count": 322,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/Contracts_V0.md",
@@ -4644,11 +4648,12 @@
         "Plans/usage-feature.md",
         "future DiscoveryService policy filter",
         "future host FileSafe policy",
-        "future image source resolver"
+        "future image source resolver",
+        "scripts/pm-plans-verify.py"
       ],
-      "line_count": 13822,
+      "line_count": 14089,
       "path": "Plans/FileSafe.md",
-      "plan_unit_count": 198,
+      "plan_unit_count": 199,
       "plan_unit_ids": [
         "F2-002",
         "F2-003",
@@ -4847,7 +4852,8 @@
         "F2-195",
         "F2-196",
         "F2-197",
-        "F2-198"
+        "F2-198",
+        "F2-199"
       ],
       "reasoning_tiers": [
         "high",
@@ -4856,6 +4862,7 @@
       "risk_classes": [
         "containerized_host_filesafe_bypass",
         "filesafe_drift",
+        "filesafe_fail_closed_security_regression",
         "filesafe_no_leak",
         "image_source_policy_bypass",
         "implementation_sequence_drift",
@@ -4870,16 +4877,16 @@
         "unrecoverable_mutation",
         "unsafe_host_side_effect"
       ],
-      "sha256": "11ec6ad7f04086cecbf3c52435e7b04f55d7a83599ae35d3723c2109120547b9",
+      "sha256": "6728655f6cc482b6496f80070da53656d6dcf482f2821191f75eeb81e3a1ae25",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 198
+        "accepted": 199
       },
       "title": "FileSafe -- Implementation Plan",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "constraint": 1,
-        "requirement": 196
+        "requirement": 197
       },
       "validation_surfaces": [
         "FileSafe generated-adapter quarantine fixtures",
@@ -4903,7 +4910,8 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
-        "python3 scripts/pm-plans-verify.py run-gates"
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy"
       ]
     },
     {
@@ -13330,7 +13338,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-07T18:47:38Z",
+  "generated_at_utc": "2026-07-07T20:38:38Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13338,13 +13346,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3106,
+      "False": 3108,
       "True": 2385
     },
-    "plan_unit_count": 5491,
+    "plan_unit_count": 5493,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5313,
+      "accepted": 5315,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13385,12 +13393,12 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4563,
+      "requirement": 4564,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 11,
+      "schema_contract": 12,
       "schema_mirror": 1,
       "selection_contract": 1,
       "selection_policy": 2,

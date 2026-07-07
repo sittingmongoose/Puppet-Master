@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19206-L19619
+Source lines: L19241-L19721
 
-Source SHA256: `bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2`
+Source SHA256: `9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2`
 
 ---
 
@@ -421,4 +421,71 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/Models_System.md
   - Plans/assistant-chat-design.md
+```
+
+### CV-312 - FileSafe Fail Closed Security Event Payloads
+
+```yaml
+plan_unit_id: CV-312
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for
+  filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied,
+  filesafe.destructive_override_requested, filesafe.destructive_override_granted,
+  filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve
+  guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe
+  scope refs, project/run/worktree scope, authenticated operator override request/grant/denial
+  fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to
+  non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement
+  remains intact.
+gui_related: false
+gui_classification_reason: This unit defines security event payload contracts, not visual presentation.
+depends_on: [CV-309, CV-081, F2-199]
+unblocks: [F2-024, F2-028, F2-031, F2-052, F2-114, F2-116]
+acceptance_criteria:
+  - FileSafe init failure emits filesafe.guard_init_failed and blocks affected guarded execution.
+  - Command denial emits filesafe.command_denied with normalized command identity and denial_code.
+  - Path denial emits filesafe.path_denied with path/canonicalization denial_code and scope refs.
+  - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, event refs, and receipt fields.
+  - policy_degraded is not used when authoritative allowlist, baseline, root, canonical path, or override authority is absent.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: filesafe_event_payload_drift
+reasoning_tier: high
+context_scope: filesafe_fail_closed_security_repair
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FileSafe.md
+  - scripts/pm-plans-verify.py
+node_compile_hint:
+  mode: filesafe_fail_closed_security_event_payloads
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:10
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`filesafe.guard_init_failed`"
+  - "`filesafe.command_denied`"
+  - "`filesafe.path_denied`"
+  - "`filesafe.destructive_override_requested`"
+  - "`filesafe.destructive_override_granted`"
+  - "`filesafe.destructive_override_denied`"
+  - "`filesafe.policy_degraded`"
+  - "`approved_command_identity_mismatch`"
+  - "`path_toc_tou_recheck_failed`"
+  - "`override_expired`"
+negative_constraints:
+  - Do not treat PUPPET_MASTER_ALLOW_DESTRUCTIVE as sufficient destructive override authority.
+  - Do not use policy_degraded as a success-shaped substitute for missing allowlists, baselines, roots, canonical paths, or authorization.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this contract unit.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FileSafe.md
+  - Plans/Permissions_System.md
 ```

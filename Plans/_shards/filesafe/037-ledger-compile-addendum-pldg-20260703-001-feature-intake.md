@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L13506-L13822
+Source lines: L13702-L14089
 
-Source SHA256: `11ec6ad7f04086cecbf3c52435e7b04f55d7a83599ae35d3723c2109120547b9`
+Source SHA256: `6728655f6cc482b6496f80070da53656d6dcf482f2821191f75eeb81e3a1ae25`
 
 ---
 
@@ -324,4 +324,75 @@ pm_current_coverage: Path normalization/symlink fail-closed/external_directory g
 pm_gap_or_delta: Need exhaustive fixtures across read/bash/grep/glob/edit and child contexts
 proposal_or_recommendation: Add external path/symlink regression suite
 compile_disposition: create_new_planunit
+```
+
+### F2-199 - FileSafe Fail Closed Security Repair
+
+```yaml
+plan_unit_id: F2-199
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe fail-closed security canon requires BashGuard, FileGuard, and SecurityFilter
+  initialization failures to block guarded execution with typed diagnostics; approved commands to
+  match only exact normalized command identities; missing or empty command/path allowlists and
+  missing destructive baselines to block regardless of strict_mode; destructive override requests
+  to require authenticated operator grant, auth realm, identity, reason, scope, expiry, audit
+  events, and receipt; prompt/free-text extraction to remain advisory only; realpath/case-fold/
+  symlink checks to cover non-existent create targets and TOCTOU rechecks; and retired
+  fail-open/prefix snippets to be fenced as noncanonical source-lineage.
+gui_related: false
+gui_classification_reason: This unit defines FileSafe security behavior and validator coverage rather than visual presentation.
+depends_on: [F2-024, F2-028, F2-030, F2-031, F2-032, F2-040, F2-041, F2-052, F2-074, F2-101, F2-114, F2-115, F2-116]
+unblocks: [CV-312]
+acceptance_criteria:
+  - Guard initialization failure emits filesafe.guard_init_failed and blocks command/file execution.
+  - Missing or empty allowlists and missing baselines block regardless of strict_mode.
+  - Approved command git status rejects git status && rm -rf /.
+  - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, audit event, and receipt.
+  - Retired BashGuard::disabled(), SecurityFilter::disabled(), prefix-match, and starts_with snippets cannot be copied as implementation guidance.
+  - Prompt/free-text command and path extraction is advisory and never the sole Layer-1 enforcement boundary.
+  - Non-existent create targets and pre-dispatch/pre-rename rechecks enforce realpath/case-fold/symlink scope and emit filesafe.path_denied on TOCTOU drift.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: filesafe_fail_closed_security_regression
+reasoning_tier: high
+context_scope: filesafe_fail_closed_security_repair
+implementation_surfaces:
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+  - Plans/Tools.md
+  - scripts/pm-plans-verify.py
+node_compile_hint:
+  mode: filesafe_fail_closed_security_repair
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:10
+source_atom_ids: []
+priority: P0
+finding_family: filesafe_fail_open_and_allowlist_security
+preserved_exact_tokens:
+  - "fable-20260706-p0-filesafe-fail-open-and-allowlist-security"
+  - "`filesafe.guard_init_failed`"
+  - "`filesafe.command_denied`"
+  - "`filesafe.path_denied`"
+  - "`PUPPET_MASTER_ALLOW_DESTRUCTIVE`"
+  - "`approved_command_identity_mismatch`"
+  - "`path_toc_tou_recheck_failed`"
+negative_constraints:
+  - Do not use disabled guard fallback for initialization failure.
+  - Do not use prefix, substring, starts_with, shell-fragment, or chained-command expansion matching for approved_commands.
+  - Do not let strict_mode=false permit writes when the authoritative allowlist is missing or empty.
+  - Do not treat PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 as sufficient destructive override authority.
+  - Do not use prompt/free-text extraction as the sole Layer-1 enforcement boundary.
+owner_hints:
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
 ```

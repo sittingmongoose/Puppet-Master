@@ -1,0 +1,62 @@
+{
+  "audit_id": "fable-20260706",
+  "closed_mechanical_buildability_rows": [
+    "fable-20260706-report-l0569-critical-l204-211-690-708-bashguard-new-unwrap-or-else-bashguard-disable-5ff59664",
+    "fable-20260706-report-l0570-critical-l2421-2427-11196-11247-graceful-degradation-mitigation-re-endor-ffdb0fee",
+    "fable-20260706-report-l0571-critical-l414-423-vs-l1828-1829-commands-match-implements-prefix-matchin-2dfbb7d9",
+    "fable-20260706-report-l0572-high-l1638-1646-prompt-based-command-path-extraction-regex-over-free-tex-b333dcf2",
+    "fable-20260706-report-l0573-high-l1819-1955-puppet-master-allowed-files-fail-closed-default-is-downg-64cadc8b",
+    "fable-20260706-report-l0574-high-l5478-5525-f2-052-puppet-master-allow-destructive-1-has-no-auth-aud-57f787e4",
+    "fable-20260706-report-l0575-high-l5145-5196-6723-6780-realpath-case-fold-symlink-comparison-algorith-acff7059",
+    "fable-20260706-report-l0576-high-l8317-8319-f2-101-doc-explicitly-flags-an-unresolved-prose-example-5b393f9e",
+    "fable-20260706-report-l0577-high-l11097-11146-f2-153-warn-only-mode-preserved-alongside-fail-closed-0732c0d7",
+    "fable-20260706-report-l0579-high-l9043-9053-f2-115-embedded-minimal-fallback-pattern-list-when-bundl-db15f547"
+  ],
+  "closure_evidence": [
+    "Plans/.audits/fable-20260706/FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md",
+    "Plans/.audits/fable-20260706/filesafe_fail_closed_security_repair_report.json",
+    "Plans/.audits/fable-20260706/filesafe_fail_closed_security_findings.jsonl:1",
+    "Plans/.audits/fable-20260706/repair_closure_matrix.jsonl:4",
+    "Plans/.audits/fable-20260706/repair_impact_matrix.jsonl:4",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
+    "Plans/.audits/fable-20260706/currentness_check_report.json",
+    "Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md",
+    "Plans/FileSafe.md",
+    "Plans/Contracts_V0.md",
+    "scripts/pm-plans-verify.py"
+  ],
+  "curated_fable_finding_key": "fable-20260706-p0-filesafe-fail-open-and-allowlist-security",
+  "explicitly_out_of_scope_mechanical_rows": [
+    {
+      "finding_key": "fable-20260706-report-l0578-high-l13510-13589-13664-13754-f2-195-197-redactionsettlement-and-observa-10fc20d2",
+      "reason": "RedactionSettlement and Observability broad rows are outside this FileSafe fail-closed repair lane."
+    }
+  ],
+  "finding_key": "sfk-27ef857a0b0c7384b032ea5d",
+  "generated_at_utc": "2026-07-07T20:32:26Z",
+  "owner_evidence": [
+    "Plans/FileSafe.md",
+    "Plans/Contracts_V0.md",
+    "scripts/pm-plans-verify.py"
+  ],
+  "registry_closure_id": "closure-fable-20260706-filesafe-fail-closed-security-001",
+  "repair_summary": "FileSafe active canon now fails closed on guard initialization, missing/empty allowlists, missing baselines, env-var-alone destructive override requests, prompt/free-text-only extraction, prefix approved-command bypasses, and path canonicalization ambiguity; Contracts_V0 now owns FileSafe event and override receipt payload minima; validate-filesafe-security-policy is wired into run-gates.",
+  "schema_id": "pm.audit.filesafe_fail_closed_security_repair_report.v1",
+  "stale_gui_mechanical_row_closed_by_hygiene": {
+    "evidence": [
+      "Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md",
+      "Plans/.audits/fable-20260706/gui_platform_hardening_repair_report.json"
+    ],
+    "finding_key": "fable-20260706-report-l1294-critical-spec-lock-json-locked-decisions-ui-toolkit-version-1-15-1-direc-1d056fc9",
+    "registry_closure_id": "closure-fable-20260706-gui-toolkit-stale-mechanical-row-hygiene-001"
+  },
+  "status": "pass",
+  "validation_receipts": [
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_tail": "{\n  \"check\": \"validate-filesafe-security-policy\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-07T20:32:26Z\",\n  \"status\": \"pass\"\n}"
+    }
+  ]
+}

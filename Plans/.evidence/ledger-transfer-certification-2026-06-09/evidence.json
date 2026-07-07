@@ -155,6 +155,16 @@
       "name": "gui-platform-hardening-repair",
       "result": "PASS",
       "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
+    },
+    {
+      "name": "validate-filesafe-security-policy",
+      "result": "PASS",
+      "details": "PASS after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "validate-evidence",
+      "result": "PASS",
+      "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
     }
   ],
   "commands_run": [
@@ -323,6 +333,10 @@
       "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
       "exit_code": 0,
       "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

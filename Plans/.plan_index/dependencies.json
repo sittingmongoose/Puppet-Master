@@ -2079,6 +2079,7 @@
     "DP-003",
     "EP-096",
     "F-067",
+    "F2-199",
     "F3-392",
     "F3-390",
     "0PI-055",
@@ -4647,6 +4648,7 @@
     "CS-033",
     "CS-034",
     "CV-182",
+    "CV-312",
     "SP-230",
     "CV-091",
     "CV-092",
@@ -16489,6 +16491,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-312",
+      "to": "CV-081"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-312",
+      "to": "CV-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-312",
+      "to": "F2-199"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -18836,6 +18853,71 @@
       "edge_type": "depends_on",
       "from": "F2-198",
       "to": "PNC-001"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-028"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-030"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-031"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-032"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-040"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-041"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-052"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-101"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-114"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-115"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F2-199",
+      "to": "F2-116"
     },
     {
       "edge_type": "depends_on",
@@ -69919,6 +70001,36 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "CV-312",
+      "to": "F2-024"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-312",
+      "to": "F2-028"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-312",
+      "to": "F2-031"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-312",
+      "to": "F2-052"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-312",
+      "to": "F2-114"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-312",
+      "to": "F2-116"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "CW-002",
       "to": "CW-003"
     },
@@ -71406,6 +71518,11 @@
       "edge_type": "unblocks",
       "from": "F2-194",
       "to": "T-166"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "F2-199",
+      "to": "CV-312"
     },
     {
       "edge_type": "unblocks",
@@ -73698,7 +73815,7 @@
       "to": "ATS-020"
     }
   ],
-  "generated_at_utc": "2026-07-07T18:47:38Z",
+  "generated_at_utc": "2026-07-07T20:38:38Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -89384,8 +89501,8 @@
       "source_location": {
         "heading": "CV-001 - Contracts V0 Explicit Residual Source-Token-Bank Disposition",
         "heading_level": 3,
-        "heading_line": 16552,
-        "line": 16554,
+        "heading_line": 16587,
+        "line": 16589,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89401,8 +89518,8 @@
       "source_location": {
         "heading": "CV-002 - Contracts V0 Cross-Cutting Contract SSOT",
         "heading_level": 3,
-        "heading_line": 2757,
-        "line": 2759,
+        "heading_line": 2792,
+        "line": 2794,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89418,8 +89535,8 @@
       "source_location": {
         "heading": "CV-003 - Cross-Surface Runtime Concern Route Owner Boundary",
         "heading_level": 3,
-        "heading_line": 2812,
-        "line": 2814,
+        "heading_line": 2847,
+        "line": 2849,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89435,8 +89552,8 @@
       "source_location": {
         "heading": "CV-004 - Owner-First Canonicalization Sequence",
         "heading_level": 3,
-        "heading_line": 2857,
-        "line": 2859,
+        "heading_line": 2892,
+        "line": 2894,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89452,8 +89569,8 @@
       "source_location": {
         "heading": "CV-005 - Route Open Compatibility Fallback Disposition",
         "heading_level": 3,
-        "heading_line": 2918,
-        "line": 2920,
+        "heading_line": 2953,
+        "line": 2955,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89469,8 +89586,8 @@
       "source_location": {
         "heading": "CV-006 - Shared Governance Runtime Record Envelope Fields",
         "heading_level": 3,
-        "heading_line": 2975,
-        "line": 2977,
+        "heading_line": 3010,
+        "line": 3012,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89486,8 +89603,8 @@
       "source_location": {
         "heading": "CV-007 - Record Object Identity And Payload Specialization",
         "heading_level": 3,
-        "heading_line": 3031,
-        "line": 3033,
+        "heading_line": 3066,
+        "line": 3068,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89503,8 +89620,8 @@
       "source_location": {
         "heading": "CV-008 - Shared Attribution Historical Status Boundary",
         "heading_level": 3,
-        "heading_line": 3082,
-        "line": 3084,
+        "heading_line": 3117,
+        "line": 3119,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89520,8 +89637,8 @@
       "source_location": {
         "heading": "CV-009 - Temporal Wait Timeout Recovery Envelope Fields",
         "heading_level": 3,
-        "heading_line": 3138,
-        "line": 3140,
+        "heading_line": 3173,
+        "line": 3175,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89537,8 +89654,8 @@
       "source_location": {
         "heading": "CV-010 - Storage-Owned Runtime Persistence Boundary",
         "heading_level": 3,
-        "heading_line": 3185,
-        "line": 3187,
+        "heading_line": 3220,
+        "line": 3222,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89554,8 +89671,8 @@
       "source_location": {
         "heading": "CV-011 - RuntimeIdentity Owner ContractRefs",
         "heading_level": 3,
-        "heading_line": 3240,
-        "line": 3242,
+        "heading_line": 3275,
+        "line": 3277,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89571,8 +89688,8 @@
       "source_location": {
         "heading": "CV-012 - Persona Runtime Field Names And Alias Retirement",
         "heading_level": 3,
-        "heading_line": 3286,
-        "line": 3288,
+        "heading_line": 3321,
+        "line": 3323,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89588,8 +89705,8 @@
       "source_location": {
         "heading": "CV-013 - Requested Account Anchor Policy Binding Split",
         "heading_level": 3,
-        "heading_line": 3335,
-        "line": 3337,
+        "heading_line": 3370,
+        "line": 3372,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89605,8 +89722,8 @@
       "source_location": {
         "heading": "CV-014 - Effective Account And Provider Metadata Boundary",
         "heading_level": 3,
-        "heading_line": 3381,
-        "line": 3383,
+        "heading_line": 3416,
+        "line": 3418,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89622,8 +89739,8 @@
       "source_location": {
         "heading": "CV-015 - Requested Effective Identity Projection Display",
         "heading_level": 3,
-        "heading_line": 3428,
-        "line": 3430,
+        "heading_line": 3463,
+        "line": 3465,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89639,8 +89756,8 @@
       "source_location": {
         "heading": "CV-016 - Execution Role Operational Identity Attribution",
         "heading_level": 3,
-        "heading_line": 3478,
-        "line": 3480,
+        "heading_line": 3513,
+        "line": 3515,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89656,8 +89773,8 @@
       "source_location": {
         "heading": "CV-017 - Gemini Account Resolution Invariants",
         "heading_level": 3,
-        "heading_line": 3523,
-        "line": 3525,
+        "heading_line": 3558,
+        "line": 3560,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89673,8 +89790,8 @@
       "source_location": {
         "heading": "CV-018 - Gemini Display And Provider Grouping Constraint",
         "heading_level": 3,
-        "heading_line": 3570,
-        "line": 3572,
+        "heading_line": 3605,
+        "line": 3607,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89690,8 +89807,8 @@
       "source_location": {
         "heading": "CV-019 - Account Pressure Reset Horizon Fields",
         "heading_level": 3,
-        "heading_line": 3615,
-        "line": 3617,
+        "heading_line": 3650,
+        "line": 3652,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89707,8 +89824,8 @@
       "source_location": {
         "heading": "CV-020 - Provider Family Connection Profile Additive Fields",
         "heading_level": 3,
-        "heading_line": 3658,
-        "line": 3660,
+        "heading_line": 3693,
+        "line": 3695,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89724,8 +89841,8 @@
       "source_location": {
         "heading": "CV-021 - Selectable Unit Resolver Debug Boundary",
         "heading_level": 3,
-        "heading_line": 3705,
-        "line": 3707,
+        "heading_line": 3740,
+        "line": 3742,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89741,8 +89858,8 @@
       "source_location": {
         "heading": "CV-022 - Agent Runtime Account Isolation Evidence",
         "heading_level": 3,
-        "heading_line": 3751,
-        "line": 3753,
+        "heading_line": 3786,
+        "line": 3788,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89758,8 +89875,8 @@
       "source_location": {
         "heading": "CV-023 - Runtime Routing Consumer Anchor Preservation",
         "heading_level": 3,
-        "heading_line": 3796,
-        "line": 3798,
+        "heading_line": 3831,
+        "line": 3833,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89775,8 +89892,8 @@
       "source_location": {
         "heading": "CV-024 - Runtime Lineage Consumer Identity Boundary",
         "heading_level": 3,
-        "heading_line": 3844,
-        "line": 3846,
+        "heading_line": 3879,
+        "line": 3881,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89792,8 +89909,8 @@
       "source_location": {
         "heading": "CV-025 - Graph Runtime Schema Identity Keys",
         "heading_level": 3,
-        "heading_line": 3893,
-        "line": 3895,
+        "heading_line": 3928,
+        "line": 3930,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89809,8 +89926,8 @@
       "source_location": {
         "heading": "CV-026 - Runtime Event Snapshot Identity Completeness",
         "heading_level": 3,
-        "heading_line": 3945,
-        "line": 3947,
+        "heading_line": 3980,
+        "line": 3982,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89826,8 +89943,8 @@
       "source_location": {
         "heading": "CV-027 - Persona Alias Revival Prohibition",
         "heading_level": 3,
-        "heading_line": 3990,
-        "line": 3992,
+        "heading_line": 4025,
+        "line": 4027,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89843,8 +89960,8 @@
       "source_location": {
         "heading": "CV-028 - Requested Effective Projection Visibility",
         "heading_level": 3,
-        "heading_line": 4036,
-        "line": 4038,
+        "heading_line": 4071,
+        "line": 4073,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89860,8 +89977,8 @@
       "source_location": {
         "heading": "CV-029 - Blocked Episode Action Identity",
         "heading_level": 3,
-        "heading_line": 4083,
-        "line": 4085,
+        "heading_line": 4118,
+        "line": 4120,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89877,8 +89994,8 @@
       "source_location": {
         "heading": "CV-030 - Blocked GUI Action Projection Safety",
         "heading_level": 3,
-        "heading_line": 4135,
-        "line": 4137,
+        "heading_line": 4170,
+        "line": 4172,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89894,8 +90011,8 @@
       "source_location": {
         "heading": "CV-031 - Route Identity Normalization Before Addressability",
         "heading_level": 3,
-        "heading_line": 4181,
-        "line": 4183,
+        "heading_line": 4216,
+        "line": 4218,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89911,8 +90028,8 @@
       "source_location": {
         "heading": "CV-032 - Runtime UI SSOT Consumer Set",
         "heading_level": 3,
-        "heading_line": 4232,
-        "line": 4234,
+        "heading_line": 4267,
+        "line": 4269,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89928,8 +90045,8 @@
       "source_location": {
         "heading": "CV-033 - Package Overseer Authority Scope",
         "heading_level": 3,
-        "heading_line": 4280,
-        "line": 4282,
+        "heading_line": 4315,
+        "line": 4317,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89945,8 +90062,8 @@
       "source_location": {
         "heading": "CV-034 - Canonical Record Help Anchor Discovery",
         "heading_level": 3,
-        "heading_line": 4325,
-        "line": 4327,
+        "heading_line": 4360,
+        "line": 4362,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89962,8 +90079,8 @@
       "source_location": {
         "heading": "CV-035 - Package-Aware Storage Projection Scope",
         "heading_level": 3,
-        "heading_line": 4375,
-        "line": 4377,
+        "heading_line": 4410,
+        "line": 4412,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89979,8 +90096,8 @@
       "source_location": {
         "heading": "CV-036 - Worktree Lane Runtime Context Preservation",
         "heading_level": 3,
-        "heading_line": 4424,
-        "line": 4426,
+        "heading_line": 4459,
+        "line": 4461,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -89996,8 +90113,8 @@
       "source_location": {
         "heading": "CV-037 - Run Graph Projection And Inspector Contract",
         "heading_level": 3,
-        "heading_line": 4467,
-        "line": 4469,
+        "heading_line": 4502,
+        "line": 4504,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90013,8 +90130,8 @@
       "source_location": {
         "heading": "CV-038 - Tool Artifact Runtime Attribution",
         "heading_level": 3,
-        "heading_line": 4515,
-        "line": 4517,
+        "heading_line": 4550,
+        "line": 4552,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90030,8 +90147,8 @@
       "source_location": {
         "heading": "CV-039 - Handoff Identity Before Artifacts",
         "heading_level": 3,
-        "heading_line": 4564,
-        "line": 4566,
+        "heading_line": 4599,
+        "line": 4601,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90047,8 +90164,8 @@
       "source_location": {
         "heading": "CV-040 - Tier Event Alias Compatibility Disposition",
         "heading_level": 3,
-        "heading_line": 4611,
-        "line": 4613,
+        "heading_line": 4646,
+        "line": 4648,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90064,8 +90181,8 @@
       "source_location": {
         "heading": "CV-041 - Command Route Shared Primitive Contract",
         "heading_level": 3,
-        "heading_line": 4663,
-        "line": 4665,
+        "heading_line": 4698,
+        "line": 4700,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90081,8 +90198,8 @@
       "source_location": {
         "heading": "CV-042 - Owner Cleanup Order Guard",
         "heading_level": 3,
-        "heading_line": 4713,
-        "line": 4715,
+        "heading_line": 4748,
+        "line": 4750,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90098,8 +90215,8 @@
       "source_location": {
         "heading": "CV-043 - Shared Concern Projection Family",
         "heading_level": 3,
-        "heading_line": 4761,
-        "line": 4763,
+        "heading_line": 4796,
+        "line": 4798,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90115,8 +90232,8 @@
       "source_location": {
         "heading": "CV-044 - Event Table Runtime Snapshot Completeness",
         "heading_level": 3,
-        "heading_line": 4809,
-        "line": 4811,
+        "heading_line": 4844,
+        "line": 4846,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90132,8 +90249,8 @@
       "source_location": {
         "heading": "CV-045 - Scheduling And Handoff Identity",
         "heading_level": 3,
-        "heading_line": 4857,
-        "line": 4859,
+        "heading_line": 4892,
+        "line": 4894,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90149,8 +90266,8 @@
       "source_location": {
         "heading": "CV-046 - Route Payload Unified Ontology",
         "heading_level": 3,
-        "heading_line": 4901,
-        "line": 4903,
+        "heading_line": 4936,
+        "line": 4938,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90166,8 +90283,8 @@
       "source_location": {
         "heading": "CV-047 - Shared Record Envelope Join Completeness",
         "heading_level": 3,
-        "heading_line": 4946,
-        "line": 4948,
+        "heading_line": 4981,
+        "line": 4983,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90183,8 +90300,8 @@
       "source_location": {
         "heading": "CV-048 - Projection Health Safety States",
         "heading_level": 3,
-        "heading_line": 4992,
-        "line": 4994,
+        "heading_line": 5027,
+        "line": 5029,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90200,8 +90317,8 @@
       "source_location": {
         "heading": "CV-049 - Provider Account Bridge Disclosure",
         "heading_level": 3,
-        "heading_line": 5037,
-        "line": 5039,
+        "heading_line": 5072,
+        "line": 5074,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90217,8 +90334,8 @@
       "source_location": {
         "heading": "CV-050 - Account Switch Event Audit Fields",
         "heading_level": 3,
-        "heading_line": 5082,
-        "line": 5084,
+        "heading_line": 5117,
+        "line": 5119,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90234,8 +90351,8 @@
       "source_location": {
         "heading": "CV-051 - Project Attention Route Payload",
         "heading_level": 3,
-        "heading_line": 5127,
-        "line": 5129,
+        "heading_line": 5162,
+        "line": 5164,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90251,8 +90368,8 @@
       "source_location": {
         "heading": "CV-052 - Worktree Lane Lifecycle Records",
         "heading_level": 3,
-        "heading_line": 5171,
-        "line": 5173,
+        "heading_line": 5206,
+        "line": 5208,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90268,8 +90385,8 @@
       "source_location": {
         "heading": "CV-053 - Blocked Restart Recovery State",
         "heading_level": 3,
-        "heading_line": 5216,
-        "line": 5218,
+        "heading_line": 5251,
+        "line": 5253,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90285,8 +90402,8 @@
       "source_location": {
         "heading": "CV-054 - Route Target Selector Reject Rules",
         "heading_level": 3,
-        "heading_line": 5261,
-        "line": 5263,
+        "heading_line": 5296,
+        "line": 5298,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90302,8 +90419,8 @@
       "source_location": {
         "heading": "CV-055 - OpenFile And OpenSubject Identity Split",
         "heading_level": 3,
-        "heading_line": 5311,
-        "line": 5313,
+        "heading_line": 5346,
+        "line": 5348,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90319,8 +90436,8 @@
       "source_location": {
         "heading": "CV-056 - Generated Transport Compatibility Disposition",
         "heading_level": 3,
-        "heading_line": 5359,
-        "line": 5361,
+        "heading_line": 5394,
+        "line": 5396,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90336,8 +90453,8 @@
       "source_location": {
         "heading": "CV-057 - Resume URL Serialized Route Transport",
         "heading_level": 3,
-        "heading_line": 5408,
-        "line": 5410,
+        "heading_line": 5443,
+        "line": 5445,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90353,8 +90470,8 @@
       "source_location": {
         "heading": "CV-058 - Inspector Target Closed Focus Enum",
         "heading_level": 3,
-        "heading_line": 5452,
-        "line": 5454,
+        "heading_line": 5487,
+        "line": 5489,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90370,8 +90487,8 @@
       "source_location": {
         "heading": "CV-059 - Usage Route Key Normalization",
         "heading_level": 3,
-        "heading_line": 5501,
-        "line": 5503,
+        "heading_line": 5536,
+        "line": 5538,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90387,8 +90504,8 @@
       "source_location": {
         "heading": "CV-060 - Executor Dispatch Runtime Attribution Packet",
         "heading_level": 3,
-        "heading_line": 5547,
-        "line": 5549,
+        "heading_line": 5582,
+        "line": 5584,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90404,8 +90521,8 @@
       "source_location": {
         "heading": "CV-061 - Degraded Trust Concern Escalation",
         "heading_level": 3,
-        "heading_line": 5596,
-        "line": 5598,
+        "heading_line": 5631,
+        "line": 5633,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90421,8 +90538,8 @@
       "source_location": {
         "heading": "CV-062 - First-Class Concern Record Shape",
         "heading_level": 3,
-        "heading_line": 5643,
-        "line": 5645,
+        "heading_line": 5678,
+        "line": 5680,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90438,8 +90555,8 @@
       "source_location": {
         "heading": "CV-063 - Concern Lifecycle And Resolution Kinds",
         "heading_level": 3,
-        "heading_line": 5691,
-        "line": 5693,
+        "heading_line": 5726,
+        "line": 5728,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90455,8 +90572,8 @@
       "source_location": {
         "heading": "CV-064 - Concern Action Authority And Confirmation",
         "heading_level": 3,
-        "heading_line": 5738,
-        "line": 5740,
+        "heading_line": 5773,
+        "line": 5775,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90472,8 +90589,8 @@
       "source_location": {
         "heading": "CV-065 - Concern Linkage And Blocked Episode Relation",
         "heading_level": 3,
-        "heading_line": 5787,
-        "line": 5789,
+        "heading_line": 5822,
+        "line": 5824,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90489,8 +90606,8 @@
       "source_location": {
         "heading": "CV-066 - Concern Ownership Resolver And Reassignment",
         "heading_level": 3,
-        "heading_line": 5835,
-        "line": 5837,
+        "heading_line": 5870,
+        "line": 5872,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90506,8 +90623,8 @@
       "source_location": {
         "heading": "CV-067 - Concern Layers Heuristics And Attention Fields",
         "heading_level": 3,
-        "heading_line": 5882,
-        "line": 5884,
+        "heading_line": 5917,
+        "line": 5919,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90523,8 +90640,8 @@
       "source_location": {
         "heading": "CV-068 - Promotion Classes And Gate Evidence",
         "heading_level": 3,
-        "heading_line": 5934,
-        "line": 5936,
+        "heading_line": 5969,
+        "line": 5971,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90540,8 +90657,8 @@
       "source_location": {
         "heading": "CV-069 - Route Open Shared Payload Owner Boundary",
         "heading_level": 3,
-        "heading_line": 5976,
-        "line": 5978,
+        "heading_line": 6011,
+        "line": 6013,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90557,8 +90674,8 @@
       "source_location": {
         "heading": "CV-070 - Route Selector And Ref-Family Normalization",
         "heading_level": 3,
-        "heading_line": 6028,
-        "line": 6030,
+        "heading_line": 6063,
+        "line": 6065,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90574,8 +90691,8 @@
       "source_location": {
         "heading": "CV-071 - Blocked Runtime Owner Transfer Set",
         "heading_level": 3,
-        "heading_line": 6080,
-        "line": 6082,
+        "heading_line": 6115,
+        "line": 6117,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90591,8 +90708,8 @@
       "source_location": {
         "heading": "CV-072 - Blocked Episode Approval Scope Boundary",
         "heading_level": 3,
-        "heading_line": 6129,
-        "line": 6131,
+        "heading_line": 6164,
+        "line": 6166,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90608,8 +90725,8 @@
       "source_location": {
         "heading": "CV-073 - Durable Approver Identity Events",
         "heading_level": 3,
-        "heading_line": 6176,
-        "line": 6178,
+        "heading_line": 6211,
+        "line": 6213,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90625,8 +90742,8 @@
       "source_location": {
         "heading": "CV-074 - Lifecycle Reason Code Fields",
         "heading_level": 3,
-        "heading_line": 6225,
-        "line": 6227,
+        "heading_line": 6260,
+        "line": 6262,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90642,8 +90759,8 @@
       "source_location": {
         "heading": "CV-075 - Task Lifecycle Durability Over Projections",
         "heading_level": 3,
-        "heading_line": 6273,
-        "line": 6275,
+        "heading_line": 6308,
+        "line": 6310,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90659,8 +90776,8 @@
       "source_location": {
         "heading": "CV-076 - Seglog Event Family Coverage",
         "heading_level": 3,
-        "heading_line": 6322,
-        "line": 6324,
+        "heading_line": 6357,
+        "line": 6359,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90676,8 +90793,8 @@
       "source_location": {
         "heading": "CV-077 - Bundle Annotation And Selection Handoff",
         "heading_level": 3,
-        "heading_line": 6372,
-        "line": 6374,
+        "heading_line": 6407,
+        "line": 6409,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90693,8 +90810,8 @@
       "source_location": {
         "heading": "CV-078 - Runtime Event Catalog Boundary",
         "heading_level": 3,
-        "heading_line": 6423,
-        "line": 6425,
+        "heading_line": 6458,
+        "line": 6460,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90710,8 +90827,8 @@
       "source_location": {
         "heading": "CV-079 - Core Execution Tool Worktree Event Minima",
         "heading_level": 3,
-        "heading_line": 6470,
-        "line": 6472,
+        "heading_line": 6505,
+        "line": 6507,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90727,8 +90844,8 @@
       "source_location": {
         "heading": "CV-080 - Gate Event Score Ownership",
         "heading_level": 3,
-        "heading_line": 6520,
-        "line": 6522,
+        "heading_line": 6555,
+        "line": 6557,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90744,8 +90861,8 @@
       "source_location": {
         "heading": "CV-081 - LSP Platform Memory Lifecycle Events",
         "heading_level": 3,
-        "heading_line": 6569,
-        "line": 6571,
+        "heading_line": 6604,
+        "line": 6606,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90761,8 +90878,8 @@
       "source_location": {
         "heading": "CV-082 - Bundle Revision And Approval Event Minima",
         "heading_level": 3,
-        "heading_line": 6624,
-        "line": 6626,
+        "heading_line": 6659,
+        "line": 6661,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90778,8 +90895,8 @@
       "source_location": {
         "heading": "CV-083 - Append Observability Retention Boundary",
         "heading_level": 3,
-        "heading_line": 6678,
-        "line": 6680,
+        "heading_line": 6713,
+        "line": 6715,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90795,8 +90912,8 @@
       "source_location": {
         "heading": "CV-084 - Assistant Worktree Event Ownership",
         "heading_level": 3,
-        "heading_line": 6729,
-        "line": 6731,
+        "heading_line": 6764,
+        "line": 6766,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90812,8 +90929,8 @@
       "source_location": {
         "heading": "CV-085 - Assistant Worktree Name Normalization",
         "heading_level": 3,
-        "heading_line": 6774,
-        "line": 6776,
+        "heading_line": 6809,
+        "line": 6811,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90829,8 +90946,8 @@
       "source_location": {
         "heading": "CV-086 - Assistant Worktree Event Registrations",
         "heading_level": 3,
-        "heading_line": 6824,
-        "line": 6826,
+        "heading_line": 6859,
+        "line": 6861,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90846,8 +90963,8 @@
       "source_location": {
         "heading": "CV-087 - EventEnvelopeV1 Compatibility Envelope",
         "heading_level": 3,
-        "heading_line": 6878,
-        "line": 6880,
+        "heading_line": 6913,
+        "line": 6915,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90863,8 +90980,8 @@
       "source_location": {
         "heading": "CV-088 - EventRecord Payload Schema Ownership Split",
         "heading_level": 3,
-        "heading_line": 6929,
-        "line": 6931,
+        "heading_line": 6964,
+        "line": 6966,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90880,8 +90997,8 @@
       "source_location": {
         "heading": "CV-089 - Provider Stream Persistence Boundary",
         "heading_level": 3,
-        "heading_line": 6974,
-        "line": 6976,
+        "heading_line": 7009,
+        "line": 7011,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90897,8 +91014,8 @@
       "source_location": {
         "heading": "CV-090 - Unified Provider Facade Across Transports",
         "heading_level": 3,
-        "heading_line": 7024,
-        "line": 7026,
+        "heading_line": 7059,
+        "line": 7061,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90914,8 +91031,8 @@
       "source_location": {
         "heading": "CV-091 - Provider Consumer Normalization And Tool Access",
         "heading_level": 3,
-        "heading_line": 7072,
-        "line": 7074,
+        "heading_line": 7107,
+        "line": 7109,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90931,8 +91048,8 @@
       "source_location": {
         "heading": "CV-092 - Provider Transport Version Governance",
         "heading_level": 3,
-        "heading_line": 7125,
-        "line": 7127,
+        "heading_line": 7160,
+        "line": 7162,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90948,8 +91065,8 @@
       "source_location": {
         "heading": "CV-093 - Provider Transport Enum And Class Mapping",
         "heading_level": 3,
-        "heading_line": 7172,
-        "line": 7174,
+        "heading_line": 7207,
+        "line": 7209,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90965,8 +91082,8 @@
       "source_location": {
         "heading": "CV-094 - Provider Support-State And Provenance Dispositions",
         "heading_level": 3,
-        "heading_line": 7222,
-        "line": 7224,
+        "heading_line": 7257,
+        "line": 7259,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90982,8 +91099,8 @@
       "source_location": {
         "heading": "CV-095 - Transport-Specific Stream Completion Rules",
         "heading_level": 3,
-        "heading_line": 7301,
-        "line": 7303,
+        "heading_line": 7336,
+        "line": 7338,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -90999,8 +91116,8 @@
       "source_location": {
         "heading": "CV-096 - Provider Consumption And Platform Vocabulary Safety",
         "heading_level": 3,
-        "heading_line": 7362,
-        "line": 7364,
+        "heading_line": 7397,
+        "line": 7399,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91016,8 +91133,8 @@
       "source_location": {
         "heading": "CV-097 - Tool Invoked Attribution Payload",
         "heading_level": 3,
-        "heading_line": 7415,
-        "line": 7417,
+        "heading_line": 7450,
+        "line": 7452,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91033,8 +91150,8 @@
       "source_location": {
         "heading": "CV-098 - Tool Denied Attribution Payload",
         "heading_level": 3,
-        "heading_line": 7470,
-        "line": 7472,
+        "heading_line": 7505,
+        "line": 7507,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91050,8 +91167,8 @@
       "source_location": {
         "heading": "CV-099 - Auditor Cycle Report Event Payload",
         "heading_level": 3,
-        "heading_line": 7518,
-        "line": 7520,
+        "heading_line": 7553,
+        "line": 7555,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91067,8 +91184,8 @@
       "source_location": {
         "heading": "CV-100 - Inspection Refs And Resume Transport Boundary",
         "heading_level": 3,
-        "heading_line": 7576,
-        "line": 7578,
+        "heading_line": 7611,
+        "line": 7613,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91084,8 +91201,8 @@
       "source_location": {
         "heading": "CV-101 - Tool-Specific Payload Extension Owner And Lineage",
         "heading_level": 3,
-        "heading_line": 7629,
-        "line": 7631,
+        "heading_line": 7664,
+        "line": 7666,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91101,8 +91218,8 @@
       "source_location": {
         "heading": "CV-102 - WebAction Carry-Through Compatibility Fields",
         "heading_level": 3,
-        "heading_line": 7688,
-        "line": 7690,
+        "heading_line": 7723,
+        "line": 7725,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91118,8 +91235,8 @@
       "source_location": {
         "heading": "CV-103 - Common Web Provenance Provider And Execution Path Fields",
         "heading_level": 3,
-        "heading_line": 7743,
-        "line": 7745,
+        "heading_line": 7778,
+        "line": 7780,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91135,8 +91252,8 @@
       "source_location": {
         "heading": "CV-104 - Provider-Backed Web Fields And Firecrawl Alias Retirement",
         "heading_level": 3,
-        "heading_line": 7798,
-        "line": 7800,
+        "heading_line": 7833,
+        "line": 7835,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91152,8 +91269,8 @@
       "source_location": {
         "heading": "CV-105 - Web Input Quality And Provenance Badge Contract",
         "heading_level": 3,
-        "heading_line": 7851,
-        "line": 7853,
+        "heading_line": 7886,
+        "line": 7888,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91169,8 +91286,8 @@
       "source_location": {
         "heading": "CV-106 - Prompt-Based Web Action Payload Cost Dimensions",
         "heading_level": 3,
-        "heading_line": 7906,
-        "line": 7908,
+        "heading_line": 7941,
+        "line": 7943,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91186,8 +91303,8 @@
       "source_location": {
         "heading": "CV-107 - Question Lifecycle Runtime UI State Mapping",
         "heading_level": 3,
-        "heading_line": 7949,
-        "line": 7951,
+        "heading_line": 7984,
+        "line": 7986,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91203,8 +91320,8 @@
       "source_location": {
         "heading": "CV-108 - Structured Question Responses And Option Wire Format",
         "heading_level": 3,
-        "heading_line": 8000,
-        "line": 8002,
+        "heading_line": 8035,
+        "line": 8037,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91220,8 +91337,8 @@
       "source_location": {
         "heading": "CV-109 - Question Envelope Alias And Clarification Event Normalization",
         "heading_level": 3,
-        "heading_line": 8053,
-        "line": 8055,
+        "heading_line": 8088,
+        "line": 8090,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91237,8 +91354,8 @@
       "source_location": {
         "heading": "CV-110 - Subagent Question Escalation Prohibition",
         "heading_level": 3,
-        "heading_line": 8109,
-        "line": 8111,
+        "heading_line": 8144,
+        "line": 8146,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91254,8 +91371,8 @@
       "source_location": {
         "heading": "CV-111 - Web Operation Tool Event Family Boundary",
         "heading_level": 3,
-        "heading_line": 8152,
-        "line": 8154,
+        "heading_line": 8187,
+        "line": 8189,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91271,8 +91388,8 @@
       "source_location": {
         "heading": "CV-112 - Web Operation Invoked And Denied Meta Fields",
         "heading_level": 3,
-        "heading_line": 8200,
-        "line": 8202,
+        "heading_line": 8235,
+        "line": 8237,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91288,8 +91405,8 @@
       "source_location": {
         "heading": "CV-113 - Provider Fallback Audit Disclosure",
         "heading_level": 3,
-        "heading_line": 8251,
-        "line": 8253,
+        "heading_line": 8286,
+        "line": 8288,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91305,8 +91422,8 @@
       "source_location": {
         "heading": "CV-114 - Web Payload Size Ref Blob And Batch Audit Boundary",
         "heading_level": 3,
-        "heading_line": 8299,
-        "line": 8301,
+        "heading_line": 8334,
+        "line": 8336,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91322,8 +91439,8 @@
       "source_location": {
         "heading": "CV-115 - Runtime Snapshot And Tool Chat Payload Fields",
         "heading_level": 3,
-        "heading_line": 8347,
-        "line": 8349,
+        "heading_line": 8382,
+        "line": 8384,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91339,8 +91456,8 @@
       "source_location": {
         "heading": "CV-116 - Subagent Namespace And PM Lineage Envelope",
         "heading_level": 3,
-        "heading_line": 8398,
-        "line": 8400,
+        "heading_line": 8433,
+        "line": 8435,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91356,8 +91473,8 @@
       "source_location": {
         "heading": "CV-117 - Chat Plan TODO Mutation Schema",
         "heading_level": 3,
-        "heading_line": 8453,
-        "line": 8455,
+        "heading_line": 8488,
+        "line": 8490,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91373,8 +91490,8 @@
       "source_location": {
         "heading": "CV-118 - Investigation And Browser Evidence Reference-First Rule",
         "heading_level": 3,
-        "heading_line": 8503,
-        "line": 8505,
+        "heading_line": 8538,
+        "line": 8540,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91390,8 +91507,8 @@
       "source_location": {
         "heading": "CV-119 - Owner Hint Advisory Resolution Lifecycle",
         "heading_level": 3,
-        "heading_line": 8554,
-        "line": 8556,
+        "heading_line": 8589,
+        "line": 8591,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91407,8 +91524,8 @@
       "source_location": {
         "heading": "CV-120 - Web Error Core Taxonomy And Provider Mapping",
         "heading_level": 3,
-        "heading_line": 8603,
-        "line": 8605,
+        "heading_line": 8638,
+        "line": 8640,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91424,8 +91541,8 @@
       "source_location": {
         "heading": "CV-121 - Legacy Web Error Alias Normalization",
         "heading_level": 3,
-        "heading_line": 8651,
-        "line": 8653,
+        "heading_line": 8686,
+        "line": 8688,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91441,8 +91558,8 @@
       "source_location": {
         "heading": "CV-122 - Change Tracking Informational Outcome And Closed Error Set",
         "heading_level": 3,
-        "heading_line": 8707,
-        "line": 8709,
+        "heading_line": 8742,
+        "line": 8744,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91458,8 +91575,8 @@
       "source_location": {
         "heading": "CV-123 - Debug Investigation Event Family Registration",
         "heading_level": 3,
-        "heading_line": 8758,
-        "line": 8760,
+        "heading_line": 8793,
+        "line": 8795,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91475,8 +91592,8 @@
       "source_location": {
         "heading": "CV-124 - Debug Payload Redaction And Raw Material Refs",
         "heading_level": 3,
-        "heading_line": 8810,
-        "line": 8812,
+        "heading_line": 8845,
+        "line": 8847,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91492,8 +91609,8 @@
       "source_location": {
         "heading": "CV-125 - AuthState Snapshot And Omitted Optional Fields",
         "heading_level": 3,
-        "heading_line": 8860,
-        "line": 8862,
+        "heading_line": 8895,
+        "line": 8897,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91509,8 +91626,8 @@
       "source_location": {
         "heading": "CV-126 - Auth Subject Billing And Server Profile Fields",
         "heading_level": 3,
-        "heading_line": 8914,
-        "line": 8916,
+        "heading_line": 8949,
+        "line": 8951,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91526,8 +91643,8 @@
       "source_location": {
         "heading": "CV-127 - Auth Family Surface Separation And Credential Refresh",
         "heading_level": 3,
-        "heading_line": 8968,
-        "line": 8970,
+        "heading_line": 9003,
+        "line": 9005,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91543,8 +91660,8 @@
       "source_location": {
         "heading": "CV-128 - Orthogonal Account State And UI Chip Derivation",
         "heading_level": 3,
-        "heading_line": 9023,
-        "line": 9025,
+        "heading_line": 9058,
+        "line": 9060,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91560,8 +91677,8 @@
       "source_location": {
         "heading": "CV-129 - Multi-Account Status Summary Projection",
         "heading_level": 3,
-        "heading_line": 9077,
-        "line": 9079,
+        "heading_line": 9112,
+        "line": 9114,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91577,8 +91694,8 @@
       "source_location": {
         "heading": "CV-130 - Auth Storage Roots And Vocabulary Collision Guard",
         "heading_level": 3,
-        "heading_line": 9123,
-        "line": 9125,
+        "heading_line": 9158,
+        "line": 9160,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91594,8 +91711,8 @@
       "source_location": {
         "heading": "CV-131 - AuthPolicy Enums And Provider Method Defaults",
         "heading_level": 3,
-        "heading_line": 9177,
-        "line": 9179,
+        "heading_line": 9212,
+        "line": 9214,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91611,8 +91728,8 @@
       "source_location": {
         "heading": "CV-132 - Product Auth Copy And Anthropic Helper Action",
         "heading_level": 3,
-        "heading_line": 9223,
-        "line": 9225,
+        "heading_line": 9258,
+        "line": 9260,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91628,8 +91745,8 @@
       "source_location": {
         "heading": "CV-133 - Retired Gemini CLI Auth-Mode Filtering Lineage",
         "heading_level": 3,
-        "heading_line": 9270,
-        "line": 9272,
+        "heading_line": 9305,
+        "line": 9307,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91645,8 +91762,8 @@
       "source_location": {
         "heading": "CV-134 - Auto Auth Precedence And Operator Override",
         "heading_level": 3,
-        "heading_line": 9328,
-        "line": 9330,
+        "heading_line": 9363,
+        "line": 9365,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91662,8 +91779,8 @@
       "source_location": {
         "heading": "CV-135 - OAuth Callback Integrity And Reliability Safeguards",
         "heading_level": 3,
-        "heading_line": 9377,
-        "line": 9379,
+        "heading_line": 9412,
+        "line": 9414,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91679,8 +91796,8 @@
       "source_location": {
         "heading": "CV-136 - AuthEvent Provider-Owned Type Strings",
         "heading_level": 3,
-        "heading_line": 9428,
-        "line": 9430,
+        "heading_line": 9463,
+        "line": 9465,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91696,8 +91813,8 @@
       "source_location": {
         "heading": "CV-137 - Setup Health Canonical Enum Families",
         "heading_level": 3,
-        "heading_line": 9474,
-        "line": 9476,
+        "heading_line": 9509,
+        "line": 9511,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91713,8 +91830,8 @@
       "source_location": {
         "heading": "CV-138 - Setup Readiness Split And Auth-Surface Validation Branches",
         "heading_level": 3,
-        "heading_line": 9526,
-        "line": 9528,
+        "heading_line": 9561,
+        "line": 9563,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91730,8 +91847,8 @@
       "source_location": {
         "heading": "CV-139 - Usage Pressure Cooldown And Resolution Outcome",
         "heading_level": 3,
-        "heading_line": 9587,
-        "line": 9589,
+        "heading_line": 9622,
+        "line": 9624,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91747,8 +91864,8 @@
       "source_location": {
         "heading": "CV-140 - Usage Warning Quiet Window And Setup Action Labels",
         "heading_level": 3,
-        "heading_line": 9644,
-        "line": 9646,
+        "heading_line": 9679,
+        "line": 9681,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91764,8 +91881,8 @@
       "source_location": {
         "heading": "CV-141 - Provider Operational Blockers And Claude Import Boundary",
         "heading_level": 3,
-        "heading_line": 9695,
-        "line": 9697,
+        "heading_line": 9730,
+        "line": 9732,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91781,8 +91898,8 @@
       "source_location": {
         "heading": "CV-142 - Provider Profile Lifecycle Reconciliation",
         "heading_level": 3,
-        "heading_line": 9746,
-        "line": 9748,
+        "heading_line": 9781,
+        "line": 9783,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91798,8 +91915,8 @@
       "source_location": {
         "heading": "CV-143 - Provider-To-Child Execution Projection Boundary",
         "heading_level": 3,
-        "heading_line": 9795,
-        "line": 9797,
+        "heading_line": 9830,
+        "line": 9832,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91815,8 +91932,8 @@
       "source_location": {
         "heading": "CV-144 - Model Lifecycle State And Sunset Dispatch Boundary",
         "heading_level": 3,
-        "heading_line": 9843,
-        "line": 9845,
+        "heading_line": 9878,
+        "line": 9880,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91832,8 +91949,8 @@
       "source_location": {
         "heading": "CV-145 - Requested Effective Account Identity Fields",
         "heading_level": 3,
-        "heading_line": 9893,
-        "line": 9895,
+        "heading_line": 9928,
+        "line": 9930,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91849,8 +91966,8 @@
       "source_location": {
         "heading": "CV-146 - Non-Persona Runtime Field Adoption Guard",
         "heading_level": 3,
-        "heading_line": 9949,
-        "line": 9951,
+        "heading_line": 9984,
+        "line": 9986,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91866,8 +91983,8 @@
       "source_location": {
         "heading": "CV-147 - Provider Runtime Record Families",
         "heading_level": 3,
-        "heading_line": 9999,
-        "line": 10001,
+        "heading_line": 10034,
+        "line": 10036,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91883,8 +92000,8 @@
       "source_location": {
         "heading": "CV-148 - Account Binding Permission Carry-Through",
         "heading_level": 3,
-        "heading_line": 10047,
-        "line": 10049,
+        "heading_line": 10082,
+        "line": 10084,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91900,8 +92017,8 @@
       "source_location": {
         "heading": "CV-149 - Context Management Runtime Identity Scope",
         "heading_level": 3,
-        "heading_line": 10096,
-        "line": 10098,
+        "heading_line": 10131,
+        "line": 10133,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91917,8 +92034,8 @@
       "source_location": {
         "heading": "CV-150 - Investigation Attachment Additivity",
         "heading_level": 3,
-        "heading_line": 10138,
-        "line": 10140,
+        "heading_line": 10173,
+        "line": 10175,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91934,8 +92051,8 @@
       "source_location": {
         "heading": "CV-151 - Persona Runtime Snapshot Canonical Persona Fields",
         "heading_level": 3,
-        "heading_line": 10182,
-        "line": 10184,
+        "heading_line": 10217,
+        "line": 10219,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91951,8 +92068,8 @@
       "source_location": {
         "heading": "CV-152 - PersonaSnapshot Compatibility Label And Mode Fields",
         "heading_level": 3,
-        "heading_line": 10230,
-        "line": 10232,
+        "heading_line": 10265,
+        "line": 10267,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91968,8 +92085,8 @@
       "source_location": {
         "heading": "CV-153 - Legacy Persona Snapshot Vocabulary Disposition",
         "heading_level": 3,
-        "heading_line": 10279,
-        "line": 10281,
+        "heading_line": 10314,
+        "line": 10316,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -91985,8 +92102,8 @@
       "source_location": {
         "heading": "CV-154 - Execution Unit Context Consumer Envelope",
         "heading_level": 3,
-        "heading_line": 10328,
-        "line": 10330,
+        "heading_line": 10363,
+        "line": 10365,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92002,8 +92119,8 @@
       "source_location": {
         "heading": "CV-155 - HITL Runtime Blocked Episode Identity",
         "heading_level": 3,
-        "heading_line": 10391,
-        "line": 10393,
+        "heading_line": 10426,
+        "line": 10428,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92019,8 +92136,8 @@
       "source_location": {
         "heading": "CV-156 - HITL Labels And Approval UI Actions",
         "heading_level": 3,
-        "heading_line": 10443,
-        "line": 10445,
+        "heading_line": 10478,
+        "line": 10480,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92036,8 +92153,8 @@
       "source_location": {
         "heading": "CV-157 - HITL Scope Persistence And Failed Approval History",
         "heading_level": 3,
-        "heading_line": 10489,
-        "line": 10491,
+        "heading_line": 10524,
+        "line": 10526,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92053,8 +92170,8 @@
       "source_location": {
         "heading": "CV-158 - HITL Request ID Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 10538,
-        "line": 10540,
+        "heading_line": 10573,
+        "line": 10575,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92070,8 +92187,8 @@
       "source_location": {
         "heading": "CV-159 - Assistant Worktree UICommand Registrations",
         "heading_level": 3,
-        "heading_line": 10586,
-        "line": 10588,
+        "heading_line": 10621,
+        "line": 10623,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92087,8 +92204,8 @@
       "source_location": {
         "heading": "CV-160 - Assistant Worktree Command Alias Disposition",
         "heading_level": 3,
-        "heading_line": 10636,
-        "line": 10638,
+        "heading_line": 10671,
+        "line": 10673,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92104,8 +92221,8 @@
       "source_location": {
         "heading": "CV-161 - UICommand Envelope Fields And Closed Kinds",
         "heading_level": 3,
-        "heading_line": 10683,
-        "line": 10685,
+        "heading_line": 10718,
+        "line": 10720,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92121,8 +92238,8 @@
       "source_location": {
         "heading": "CV-162 - UICommand Wrapper Primitive Boundary",
         "heading_level": 3,
-        "heading_line": 10737,
-        "line": 10739,
+        "heading_line": 10772,
+        "line": 10774,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92138,8 +92255,8 @@
       "source_location": {
         "heading": "CV-163 - RouteTarget Required Scope And Destination Class",
         "heading_level": 3,
-        "heading_line": 10789,
-        "line": 10791,
+        "heading_line": 10824,
+        "line": 10826,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92155,8 +92272,8 @@
       "source_location": {
         "heading": "CV-164 - RouteTarget Primary Selector Families",
         "heading_level": 3,
-        "heading_line": 10841,
-        "line": 10843,
+        "heading_line": 10876,
+        "line": 10878,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92172,8 +92289,8 @@
       "source_location": {
         "heading": "CV-165 - Terminal And Dev Session Route Identity",
         "heading_level": 3,
-        "heading_line": 10894,
-        "line": 10896,
+        "heading_line": 10929,
+        "line": 10931,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92189,8 +92306,8 @@
       "source_location": {
         "heading": "CV-166 - Route Activation Scope And Shell-State Boundary",
         "heading_level": 3,
-        "heading_line": 10948,
-        "line": 10950,
+        "heading_line": 10983,
+        "line": 10985,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92206,8 +92323,8 @@
       "source_location": {
         "heading": "CV-167 - Inspector Target Refinement Boundary",
         "heading_level": 3,
-        "heading_line": 11001,
-        "line": 11003,
+        "heading_line": 11036,
+        "line": 11038,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92223,8 +92340,8 @@
       "source_location": {
         "heading": "CV-168 - Route Open Normalization Anti-Fork",
         "heading_level": 3,
-        "heading_line": 11054,
-        "line": 11056,
+        "heading_line": 11089,
+        "line": 11091,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92240,8 +92357,8 @@
       "source_location": {
         "heading": "CV-169 - Route Resolver Fields And Alias Normalization",
         "heading_level": 3,
-        "heading_line": 11107,
-        "line": 11109,
+        "heading_line": 11142,
+        "line": 11144,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92257,8 +92374,8 @@
       "source_location": {
         "heading": "CV-170 - Route Validity InvalidRoute Reject Rules",
         "heading_level": 3,
-        "heading_line": 11158,
-        "line": 11160,
+        "heading_line": 11193,
+        "line": 11195,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92274,8 +92391,8 @@
       "source_location": {
         "heading": "CV-171 - Scoped Resolution Examples And Object Rules",
         "heading_level": 3,
-        "heading_line": 11207,
-        "line": 11209,
+        "heading_line": 11242,
+        "line": 11244,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92291,8 +92408,8 @@
       "source_location": {
         "heading": "CV-172 - Route Reuse And Extra Args Prohibition",
         "heading_level": 3,
-        "heading_line": 11258,
-        "line": 11260,
+        "heading_line": 11293,
+        "line": 11295,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92308,8 +92425,8 @@
       "source_location": {
         "heading": "CV-173 - Debug Target Kind Classification Enum",
         "heading_level": 3,
-        "heading_line": 11307,
-        "line": 11309,
+        "heading_line": 11342,
+        "line": 11344,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92325,8 +92442,8 @@
       "source_location": {
         "heading": "CV-174 - Debug Imported Bundle And Display Boundary",
         "heading_level": 3,
-        "heading_line": 11359,
-        "line": 11361,
+        "heading_line": 11394,
+        "line": 11396,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92342,8 +92459,8 @@
       "source_location": {
         "heading": "CV-175 - OpenSubject Required Fields And Intents",
         "heading_level": 3,
-        "heading_line": 11408,
-        "line": 11410,
+        "heading_line": 11443,
+        "line": 11445,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92359,8 +92476,8 @@
       "source_location": {
         "heading": "CV-176 - OpenSubject Resolution And Route Boundary",
         "heading_level": 3,
-        "heading_line": 11454,
-        "line": 11456,
+        "heading_line": 11489,
+        "line": 11491,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92376,8 +92493,8 @@
       "source_location": {
         "heading": "CV-177 - OpenSubject Subject Terms And Bounds",
         "heading_level": 3,
-        "heading_line": 11506,
-        "line": 11508,
+        "heading_line": 11541,
+        "line": 11543,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92393,8 +92510,8 @@
       "source_location": {
         "heading": "CV-178 - Durable Panel Settings Ownership",
         "heading_level": 3,
-        "heading_line": 11553,
-        "line": 11555,
+        "heading_line": 11588,
+        "line": 11590,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92410,8 +92527,8 @@
       "source_location": {
         "heading": "CV-179 - Live Panel State Is Not Settings Canon",
         "heading_level": 3,
-        "heading_line": 11606,
-        "line": 11608,
+        "heading_line": 11641,
+        "line": 11643,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92427,8 +92544,8 @@
       "source_location": {
         "heading": "CV-180 - Account-Sensitive UI Cache Partitioning",
         "heading_level": 3,
-        "heading_line": 11651,
-        "line": 11653,
+        "heading_line": 11686,
+        "line": 11688,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92444,8 +92561,8 @@
       "source_location": {
         "heading": "CV-181 - Requested Identity Binding For Blocked Hosted Work",
         "heading_level": 3,
-        "heading_line": 11701,
-        "line": 11703,
+        "heading_line": 11736,
+        "line": 11738,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92461,8 +92578,8 @@
       "source_location": {
         "heading": "CV-182 - Runtime Admin Capability Disclosure",
         "heading_level": 3,
-        "heading_line": 11749,
-        "line": 11751,
+        "heading_line": 11784,
+        "line": 11786,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92478,8 +92595,8 @@
       "source_location": {
         "heading": "CV-183 - Quota Pressure Evidence Semantics",
         "heading_level": 3,
-        "heading_line": 11795,
-        "line": 11797,
+        "heading_line": 11830,
+        "line": 11832,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92495,8 +92612,8 @@
       "source_location": {
         "heading": "CV-184 - Provider Recovery Labels And Entitlement Copy",
         "heading_level": 3,
-        "heading_line": 11843,
-        "line": 11845,
+        "heading_line": 11878,
+        "line": 11880,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92512,8 +92629,8 @@
       "source_location": {
         "heading": "CV-185 - Current Requested Effective Runtime Inspector Visibility",
         "heading_level": 3,
-        "heading_line": 11896,
-        "line": 11898,
+        "heading_line": 11931,
+        "line": 11933,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92529,8 +92646,8 @@
       "source_location": {
         "heading": "CV-186 - Canonical Vs Internal Audit Split",
         "heading_level": 3,
-        "heading_line": 11941,
-        "line": 11943,
+        "heading_line": 11976,
+        "line": 11978,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92546,8 +92663,8 @@
       "source_location": {
         "heading": "CV-187 - UI Scale Setting Field Contract",
         "heading_level": 3,
-        "heading_line": 11986,
-        "line": 11988,
+        "heading_line": 12021,
+        "line": 12023,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92563,8 +92680,8 @@
       "source_location": {
         "heading": "CV-188 - Slint Native Scale Mechanism And Iced Prohibition",
         "heading_level": 3,
-        "heading_line": 12036,
-        "line": 12038,
+        "heading_line": 12071,
+        "line": 12073,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92580,8 +92697,8 @@
       "source_location": {
         "heading": "CV-189 - Usage Cost Microdollars Persistence",
         "heading_level": 3,
-        "heading_line": 12083,
-        "line": 12085,
+        "heading_line": 12118,
+        "line": 12120,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92597,8 +92714,8 @@
       "source_location": {
         "heading": "CV-190 - Thread Usage Detail Surface Replacement",
         "heading_level": 3,
-        "heading_line": 12130,
-        "line": 12132,
+        "heading_line": 12165,
+        "line": 12167,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92614,8 +92731,8 @@
       "source_location": {
         "heading": "CV-191 - Compact Message Usage Row Schema",
         "heading_level": 3,
-        "heading_line": 12190,
-        "line": 12192,
+        "heading_line": 12225,
+        "line": 12227,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92631,8 +92748,8 @@
       "source_location": {
         "heading": "CV-192 - Context Detail Editor Tab Paths",
         "heading_level": 3,
-        "heading_line": 12243,
-        "line": 12245,
+        "heading_line": 12278,
+        "line": 12280,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92648,8 +92765,8 @@
       "source_location": {
         "heading": "CV-193 - Thread Estimated Cost Display",
         "heading_level": 3,
-        "heading_line": 12292,
-        "line": 12294,
+        "heading_line": 12327,
+        "line": 12329,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92665,8 +92782,8 @@
       "source_location": {
         "heading": "CV-194 - Provider Cost Raw Audit Preservation",
         "heading_level": 3,
-        "heading_line": 12338,
-        "line": 12340,
+        "heading_line": 12373,
+        "line": 12375,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92682,8 +92799,8 @@
       "source_location": {
         "heading": "CV-195 - Implementation Readiness Naming Boundary",
         "heading_level": 3,
-        "heading_line": 12384,
-        "line": 12386,
+        "heading_line": 12419,
+        "line": 12421,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92699,8 +92816,8 @@
       "source_location": {
         "heading": "CV-196 - Canonical Token Bucket Fields",
         "heading_level": 3,
-        "heading_line": 12428,
-        "line": 12430,
+        "heading_line": 12463,
+        "line": 12465,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92716,8 +92833,8 @@
       "source_location": {
         "heading": "CV-197 - Token Counting Adapter And Raw Metadata",
         "heading_level": 3,
-        "heading_line": 12475,
-        "line": 12477,
+        "heading_line": 12510,
+        "line": 12512,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92733,8 +92850,8 @@
       "source_location": {
         "heading": "CV-198 - Token Bucket Persistence And Total Tokens Limit",
         "heading_level": 3,
-        "heading_line": 12519,
-        "line": 12521,
+        "heading_line": 12554,
+        "line": 12556,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92750,8 +92867,8 @@
       "source_location": {
         "heading": "CV-199 - Usage Attribution Minimum Fields",
         "heading_level": 3,
-        "heading_line": 12570,
-        "line": 12572,
+        "heading_line": 12605,
+        "line": 12607,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92767,8 +92884,8 @@
       "source_location": {
         "heading": "CV-200 - Usage Source Window And Cache Metadata",
         "heading_level": 3,
-        "heading_line": 12625,
-        "line": 12627,
+        "heading_line": 12660,
+        "line": 12662,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92784,8 +92901,8 @@
       "source_location": {
         "heading": "CV-201 - Attribution Tuple And Consumer Coherence",
         "heading_level": 3,
-        "heading_line": 12677,
-        "line": 12679,
+        "heading_line": 12712,
+        "line": 12714,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92801,8 +92918,8 @@
       "source_location": {
         "heading": "CV-202 - Gemini OAuth API-Key Auth Surface Boundary",
         "heading_level": 3,
-        "heading_line": 12728,
-        "line": 12730,
+        "heading_line": 12763,
+        "line": 12765,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92818,8 +92935,8 @@
       "source_location": {
         "heading": "CV-203 - Usage Lineage And Bridge Enforcement Fields",
         "heading_level": 3,
-        "heading_line": 12777,
-        "line": 12779,
+        "heading_line": 12812,
+        "line": 12814,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92835,8 +92952,8 @@
       "source_location": {
         "heading": "CV-204 - Legacy Run Completed Usage Compatibility",
         "heading_level": 3,
-        "heading_line": 12828,
-        "line": 12830,
+        "heading_line": 12863,
+        "line": 12865,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92852,8 +92969,8 @@
       "source_location": {
         "heading": "CV-205 - Cost Accumulation Monotonic Adjustments",
         "heading_level": 3,
-        "heading_line": 12878,
-        "line": 12880,
+        "heading_line": 12913,
+        "line": 12915,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92869,8 +92986,8 @@
       "source_location": {
         "heading": "CV-206 - Cost USD Presentation Precision",
         "heading_level": 3,
-        "heading_line": 12925,
-        "line": 12927,
+        "heading_line": 12960,
+        "line": 12962,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92886,8 +93003,8 @@
       "source_location": {
         "heading": "CV-207 - Executor Consumer Anchors And Legacy Audit Closure",
         "heading_level": 3,
-        "heading_line": 12972,
-        "line": 12974,
+        "heading_line": 13007,
+        "line": 13009,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92903,8 +93020,8 @@
       "source_location": {
         "heading": "CV-208 - Budget Enforcement Events And Overrun Evidence",
         "heading_level": 3,
-        "heading_line": 13028,
-        "line": 13030,
+        "heading_line": 13063,
+        "line": 13065,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92920,8 +93037,8 @@
       "source_location": {
         "heading": "CV-209 - Usage Pipeline Rollups And Bridge Failure Classes",
         "heading_level": 3,
-        "heading_line": 13079,
-        "line": 13081,
+        "heading_line": 13114,
+        "line": 13116,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92937,8 +93054,8 @@
       "source_location": {
         "heading": "CV-210 - OpenRouter Cache Metadata And TTL Boundary",
         "heading_level": 3,
-        "heading_line": 13133,
-        "line": 13135,
+        "heading_line": 13168,
+        "line": 13170,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92954,8 +93071,8 @@
       "source_location": {
         "heading": "CV-211 - OpenRouter Cache Token Bucket Accounting",
         "heading_level": 3,
-        "heading_line": 13183,
-        "line": 13185,
+        "heading_line": 13218,
+        "line": 13220,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92971,8 +93088,8 @@
       "source_location": {
         "heading": "CV-212 - Billing Entity Conditional Fields",
         "heading_level": 3,
-        "heading_line": 13231,
-        "line": 13233,
+        "heading_line": 13266,
+        "line": 13268,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -92988,8 +93105,8 @@
       "source_location": {
         "heading": "CV-213 - Billing Entity Uniform Application And Tuple Sufficiency",
         "heading_level": 3,
-        "heading_line": 13276,
-        "line": 13278,
+        "heading_line": 13311,
+        "line": 13313,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93005,8 +93122,8 @@
       "source_location": {
         "heading": "CV-214 - UI Readiness Projection Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 13325,
-        "line": 13327,
+        "heading_line": 13360,
+        "line": 13362,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93022,8 +93139,8 @@
       "source_location": {
         "heading": "CV-215 - Scheduler Pass Wake Reasons And Legacy Alias",
         "heading_level": 3,
-        "heading_line": 13371,
-        "line": 13373,
+        "heading_line": 13406,
+        "line": 13408,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93039,8 +93156,8 @@
       "source_location": {
         "heading": "CV-216 - Scheduler Pass Minimum Payload",
         "heading_level": 3,
-        "heading_line": 13422,
-        "line": 13424,
+        "heading_line": 13457,
+        "line": 13459,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93056,8 +93173,8 @@
       "source_location": {
         "heading": "CV-217 - Run Node Ready Payload",
         "heading_level": 3,
-        "heading_line": 13472,
-        "line": 13474,
+        "heading_line": 13507,
+        "line": 13509,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93073,8 +93190,8 @@
       "source_location": {
         "heading": "CV-218 - Node Blocked Alias And Blocked Episode Identity",
         "heading_level": 3,
-        "heading_line": 13516,
-        "line": 13518,
+        "heading_line": 13551,
+        "line": 13553,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93090,8 +93207,8 @@
       "source_location": {
         "heading": "CV-219 - Node Blocked Minimum Payload",
         "heading_level": 3,
-        "heading_line": 13566,
-        "line": 13568,
+        "heading_line": 13601,
+        "line": 13603,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93107,8 +93224,8 @@
       "source_location": {
         "heading": "CV-220 - Node Unblocked Alias And Payload",
         "heading_level": 3,
-        "heading_line": 13616,
-        "line": 13618,
+        "heading_line": 13651,
+        "line": 13653,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93124,8 +93241,8 @@
       "source_location": {
         "heading": "CV-221 - Node Backoff Started Payload",
         "heading_level": 3,
-        "heading_line": 13665,
-        "line": 13667,
+        "heading_line": 13700,
+        "line": 13702,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93141,8 +93258,8 @@
       "source_location": {
         "heading": "CV-222 - Node Backoff Expired Payload",
         "heading_level": 3,
-        "heading_line": 13708,
-        "line": 13710,
+        "heading_line": 13743,
+        "line": 13745,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93158,8 +93275,8 @@
       "source_location": {
         "heading": "CV-223 - Node Retry Scheduled Payload",
         "heading_level": 3,
-        "heading_line": 13751,
-        "line": 13753,
+        "heading_line": 13786,
+        "line": 13788,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93175,8 +93292,8 @@
       "source_location": {
         "heading": "CV-224 - Safe Point Created Payload",
         "heading_level": 3,
-        "heading_line": 13795,
-        "line": 13797,
+        "heading_line": 13830,
+        "line": 13832,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93192,8 +93309,8 @@
       "source_location": {
         "heading": "CV-225 - Safe Point Worktree Context Restoration",
         "heading_level": 3,
-        "heading_line": 13843,
-        "line": 13845,
+        "heading_line": 13878,
+        "line": 13880,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93209,8 +93326,8 @@
       "source_location": {
         "heading": "CV-226 - Safe Point Restored Payload",
         "heading_level": 3,
-        "heading_line": 13891,
-        "line": 13893,
+        "heading_line": 13926,
+        "line": 13928,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93226,8 +93343,8 @@
       "source_location": {
         "heading": "CV-227 - Restore Outcome Enum",
         "heading_level": 3,
-        "heading_line": 13934,
-        "line": 13936,
+        "heading_line": 13969,
+        "line": 13971,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93243,8 +93360,8 @@
       "source_location": {
         "heading": "CV-228 - FileSafe Snapshot Event Compatibility",
         "heading_level": 3,
-        "heading_line": 13982,
-        "line": 13984,
+        "heading_line": 14017,
+        "line": 14019,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93260,8 +93377,8 @@
       "source_location": {
         "heading": "CV-229 - Remediation Spawned Alias And Payload",
         "heading_level": 3,
-        "heading_line": 14035,
-        "line": 14037,
+        "heading_line": 14070,
+        "line": 14072,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93277,8 +93394,8 @@
       "source_location": {
         "heading": "CV-230 - Remediation Resolved Alias And Payload",
         "heading_level": 3,
-        "heading_line": 14087,
-        "line": 14089,
+        "heading_line": 14122,
+        "line": 14124,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93294,8 +93411,8 @@
       "source_location": {
         "heading": "CV-231 - Plan Decomposition Degraded Payload",
         "heading_level": 3,
-        "heading_line": 14157,
-        "line": 14159,
+        "heading_line": 14192,
+        "line": 14194,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93311,8 +93428,8 @@
       "source_location": {
         "heading": "CV-232 - Graph Integrity Failed Payload",
         "heading_level": 3,
-        "heading_line": 14201,
-        "line": 14203,
+        "heading_line": 14236,
+        "line": 14238,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93328,8 +93445,8 @@
       "source_location": {
         "heading": "CV-233 - Wizard Blocked Routing Payload",
         "heading_level": 3,
-        "heading_line": 14242,
-        "line": 14244,
+        "heading_line": 14277,
+        "line": 14279,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93345,8 +93462,8 @@
       "source_location": {
         "heading": "CV-234 - Wizard Unblocked Payload",
         "heading_level": 3,
-        "heading_line": 14290,
-        "line": 14292,
+        "heading_line": 14325,
+        "line": 14327,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93362,8 +93479,8 @@
       "source_location": {
         "heading": "CV-235 - Canonical Event Projection Derivation",
         "heading_level": 3,
-        "heading_line": 14330,
-        "line": 14332,
+        "heading_line": 14365,
+        "line": 14367,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93379,8 +93496,8 @@
       "source_location": {
         "heading": "CV-236 - Safe-Point Recovery Boundary And Graph Lock",
         "heading_level": 3,
-        "heading_line": 14376,
-        "line": 14378,
+        "heading_line": 14411,
+        "line": 14413,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93396,8 +93513,8 @@
       "source_location": {
         "heading": "CV-237 - Scheduler Addendum Required Fields",
         "heading_level": 3,
-        "heading_line": 14421,
-        "line": 14423,
+        "heading_line": 14456,
+        "line": 14458,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93413,8 +93530,8 @@
       "source_location": {
         "heading": "CV-238 - Startup-Recovered Scheduler Pass",
         "heading_level": 3,
-        "heading_line": 14473,
-        "line": 14475,
+        "heading_line": 14508,
+        "line": 14510,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93430,8 +93547,8 @@
       "source_location": {
         "heading": "CV-239 - Attempt Started Payload",
         "heading_level": 3,
-        "heading_line": 14519,
-        "line": 14521,
+        "heading_line": 14554,
+        "line": 14556,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93447,8 +93564,8 @@
       "source_location": {
         "heading": "CV-240 - Attempt Completed Payload",
         "heading_level": 3,
-        "heading_line": 14570,
-        "line": 14572,
+        "heading_line": 14605,
+        "line": 14607,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93464,8 +93581,8 @@
       "source_location": {
         "heading": "CV-241 - Node Blocked Attempt-Lineage Payload",
         "heading_level": 3,
-        "heading_line": 14618,
-        "line": 14620,
+        "heading_line": 14653,
+        "line": 14655,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93481,8 +93598,8 @@
       "source_location": {
         "heading": "CV-242 - Safe Point Snapshot Guard",
         "heading_level": 3,
-        "heading_line": 14668,
-        "line": 14670,
+        "heading_line": 14703,
+        "line": 14705,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93498,8 +93615,8 @@
       "source_location": {
         "heading": "CV-243 - Remediation Addendum Payload",
         "heading_level": 3,
-        "heading_line": 14720,
-        "line": 14722,
+        "heading_line": 14755,
+        "line": 14757,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93515,8 +93632,8 @@
       "source_location": {
         "heading": "CV-244 - Tool Denied Runtime Mapping Fields",
         "heading_level": 3,
-        "heading_line": 14770,
-        "line": 14772,
+        "heading_line": 14805,
+        "line": 14807,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93532,8 +93649,8 @@
       "source_location": {
         "heading": "CV-245 - Runtime Taxonomy Compatibility Mirror",
         "heading_level": 3,
-        "heading_line": 14823,
-        "line": 14825,
+        "heading_line": 14858,
+        "line": 14860,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93549,8 +93666,8 @@
       "source_location": {
         "heading": "CV-246 - Event Name Precedence Alias Table",
         "heading_level": 3,
-        "heading_line": 14866,
-        "line": 14868,
+        "heading_line": 14901,
+        "line": 14903,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93566,8 +93683,8 @@
       "source_location": {
         "heading": "CV-247 - Failure Class Enum Family",
         "heading_level": 3,
-        "heading_line": 14918,
-        "line": 14920,
+        "heading_line": 14953,
+        "line": 14955,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93583,8 +93700,8 @@
       "source_location": {
         "heading": "CV-248 - Blocked Reason Code Enum Family",
         "heading_level": 3,
-        "heading_line": 14967,
-        "line": 14969,
+        "heading_line": 15002,
+        "line": 15004,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93600,8 +93717,8 @@
       "source_location": {
         "heading": "CV-249 - Offline Cached And Domain Payload Boundary",
         "heading_level": 3,
-        "heading_line": 15023,
-        "line": 15025,
+        "heading_line": 15058,
+        "line": 15060,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93617,8 +93734,8 @@
       "source_location": {
         "heading": "CV-250 - Allowed Action ID And Abort Shorthand",
         "heading_level": 3,
-        "heading_line": 15078,
-        "line": 15080,
+        "heading_line": 15113,
+        "line": 15115,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93634,8 +93751,8 @@
       "source_location": {
         "heading": "CV-251 - Timeout Class Recovery Semantics",
         "heading_level": 3,
-        "heading_line": 15132,
-        "line": 15134,
+        "heading_line": 15167,
+        "line": 15169,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93651,8 +93768,8 @@
       "source_location": {
         "heading": "CV-252 - Wait State And No-Inference Constraints",
         "heading_level": 3,
-        "heading_line": 15181,
-        "line": 15183,
+        "heading_line": 15216,
+        "line": 15218,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93668,8 +93785,8 @@
       "source_location": {
         "heading": "CV-253 - Timestamp Provenance And Display Rules",
         "heading_level": 3,
-        "heading_line": 15233,
-        "line": 15235,
+        "heading_line": 15268,
+        "line": 15270,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93685,8 +93802,8 @@
       "source_location": {
         "heading": "CV-254 - Clock Skew And Scheduled Projection Rules",
         "heading_level": 3,
-        "heading_line": 15283,
-        "line": 15285,
+        "heading_line": 15318,
+        "line": 15320,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93702,8 +93819,8 @@
       "source_location": {
         "heading": "CV-255 - Blocking Payload Required Field Rule",
         "heading_level": 3,
-        "heading_line": 15334,
-        "line": 15336,
+        "heading_line": 15369,
+        "line": 15371,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93719,8 +93836,8 @@
       "source_location": {
         "heading": "CV-256 - Child Crew Runtime Event Family Boundary",
         "heading_level": 3,
-        "heading_line": 15391,
-        "line": 15393,
+        "heading_line": 15426,
+        "line": 15428,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93736,8 +93853,8 @@
       "source_location": {
         "heading": "CV-257 - Child Run Unified Entity Boundary",
         "heading_level": 3,
-        "heading_line": 15436,
-        "line": 15438,
+        "heading_line": 15471,
+        "line": 15473,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93753,8 +93870,8 @@
       "source_location": {
         "heading": "CV-258 - Child Lifecycle State Enum",
         "heading_level": 3,
-        "heading_line": 15491,
-        "line": 15493,
+        "heading_line": 15526,
+        "line": 15528,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93770,8 +93887,8 @@
       "source_location": {
         "heading": "CV-259 - Child Run Record Fields",
         "heading_level": 3,
-        "heading_line": 15544,
-        "line": 15546,
+        "heading_line": 15579,
+        "line": 15581,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93787,8 +93904,8 @@
       "source_location": {
         "heading": "CV-260 - Child-To-Parent Signals And Legacy Labels",
         "heading_level": 3,
-        "heading_line": 15595,
-        "line": 15597,
+        "heading_line": 15630,
+        "line": 15632,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93804,8 +93921,8 @@
       "source_location": {
         "heading": "CV-261 - Child Projection Identity And Reversibility",
         "heading_level": 3,
-        "heading_line": 15653,
-        "line": 15655,
+        "heading_line": 15688,
+        "line": 15690,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93821,8 +93938,8 @@
       "source_location": {
         "heading": "CV-262 - Retry Reroute Replacement Resume Distinction",
         "heading_level": 3,
-        "heading_line": 15706,
-        "line": 15708,
+        "heading_line": 15741,
+        "line": 15743,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93838,8 +93955,8 @@
       "source_location": {
         "heading": "CV-263 - Crew Side-File Retirement Boundary",
         "heading_level": 3,
-        "heading_line": 15759,
-        "line": 15761,
+        "heading_line": 15794,
+        "line": 15796,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93855,8 +93972,8 @@
       "source_location": {
         "heading": "CV-264 - Crew Board Attribution",
         "heading_level": 3,
-        "heading_line": 15807,
-        "line": 15809,
+        "heading_line": 15842,
+        "line": 15844,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93872,8 +93989,8 @@
       "source_location": {
         "heading": "CV-265 - Crew Coordination Authority Envelope",
         "heading_level": 3,
-        "heading_line": 15858,
-        "line": 15860,
+        "heading_line": 15893,
+        "line": 15895,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93889,8 +94006,8 @@
       "source_location": {
         "heading": "CV-266 - Subagent Lineage Envelope And Alias Boundary",
         "heading_level": 3,
-        "heading_line": 15909,
-        "line": 15911,
+        "heading_line": 15944,
+        "line": 15946,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93906,8 +94023,8 @@
       "source_location": {
         "heading": "CV-267 - Subagent Lifecycle Events",
         "heading_level": 3,
-        "heading_line": 15972,
-        "line": 15974,
+        "heading_line": 16007,
+        "line": 16009,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93923,8 +94040,8 @@
       "source_location": {
         "heading": "CV-268 - Subagent Activity And Message Events",
         "heading_level": 3,
-        "heading_line": 16021,
-        "line": 16023,
+        "heading_line": 16056,
+        "line": 16058,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93940,8 +94057,8 @@
       "source_location": {
         "heading": "CV-269 - Subagent Retry Context Budget Escalation Events",
         "heading_level": 3,
-        "heading_line": 16069,
-        "line": 16071,
+        "heading_line": 16104,
+        "line": 16106,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93957,8 +94074,8 @@
       "source_location": {
         "heading": "CV-270 - Crew Lineage Envelope",
         "heading_level": 3,
-        "heading_line": 16115,
-        "line": 16117,
+        "heading_line": 16150,
+        "line": 16152,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93974,8 +94091,8 @@
       "source_location": {
         "heading": "CV-271 - Crew Event Family Table",
         "heading_level": 3,
-        "heading_line": 16163,
-        "line": 16165,
+        "heading_line": 16198,
+        "line": 16200,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -93991,8 +94108,8 @@
       "source_location": {
         "heading": "CV-272 - Dynamic Context Shrinking Effective-Context Boundary",
         "heading_level": 3,
-        "heading_line": 16213,
-        "line": 16215,
+        "heading_line": 16248,
+        "line": 16250,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94008,8 +94125,8 @@
       "source_location": {
         "heading": "CV-273 - Prompt Pipeline Shrinking Ownership Floor",
         "heading_level": 3,
-        "heading_line": 16265,
-        "line": 16267,
+        "heading_line": 16300,
+        "line": 16302,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94025,8 +94142,8 @@
       "source_location": {
         "heading": "CV-274 - Automatic Shrinking Scope And Protection",
         "heading_level": 3,
-        "heading_line": 16321,
-        "line": 16323,
+        "heading_line": 16356,
+        "line": 16358,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94042,8 +94159,8 @@
       "source_location": {
         "heading": "CV-275 - Context Shrinking Projection Events",
         "heading_level": 3,
-        "heading_line": 16368,
-        "line": 16370,
+        "heading_line": 16403,
+        "line": 16405,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94059,8 +94176,8 @@
       "source_location": {
         "heading": "CV-276 - Context Update Field Presence",
         "heading_level": 3,
-        "heading_line": 16415,
-        "line": 16417,
+        "heading_line": 16450,
+        "line": 16452,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94076,8 +94193,8 @@
       "source_location": {
         "heading": "CV-277 - Parent Mediation And Dependency Blocking",
         "heading_level": 3,
-        "heading_line": 16456,
-        "line": 16458,
+        "heading_line": 16491,
+        "line": 16493,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94093,8 +94210,8 @@
       "source_location": {
         "heading": "CV-278 - Blocked Awaiting Parent State Distinction",
         "heading_level": 3,
-        "heading_line": 16504,
-        "line": 16506,
+        "heading_line": 16539,
+        "line": 16541,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94110,8 +94227,8 @@
       "source_location": {
         "heading": "CV-279 - Concern And Approval Owner Section Recovery Compile Addendum",
         "heading_level": 3,
-        "heading_line": 16998,
-        "line": 17000,
+        "heading_line": 17033,
+        "line": 17035,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94127,8 +94244,8 @@
       "source_location": {
         "heading": "CV-280 - Concern Merge Split Supersession Future Scope",
         "heading_level": 3,
-        "heading_line": 17041,
-        "line": 17043,
+        "heading_line": 17076,
+        "line": 17078,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94144,8 +94261,8 @@
       "source_location": {
         "heading": "CV-281 - Runtime Identity Envelope And Domain Profiles",
         "heading_level": 3,
-        "heading_line": 17078,
-        "line": 17080,
+        "heading_line": 17113,
+        "line": 17115,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94161,8 +94278,8 @@
       "source_location": {
         "heading": "CV-282 - Runtime Continuity Event And Storage Contract",
         "heading_level": 3,
-        "heading_line": 17118,
-        "line": 17120,
+        "heading_line": 17153,
+        "line": 17155,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94178,8 +94295,8 @@
       "source_location": {
         "heading": "CV-283 - Shared Route Object Navigation Contract",
         "heading_level": 3,
-        "heading_line": 17157,
-        "line": 17159,
+        "heading_line": 17192,
+        "line": 17194,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94195,8 +94312,8 @@
       "source_location": {
         "heading": "CV-284 - Plan Graph Schema Identity Context",
         "heading_level": 3,
-        "heading_line": 17197,
-        "line": 17199,
+        "heading_line": 17232,
+        "line": 17234,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94212,8 +94329,8 @@
       "source_location": {
         "heading": "CV-285 - Intra-File Runtime Contract Precedence",
         "heading_level": 3,
-        "heading_line": 17242,
-        "line": 17244,
+        "heading_line": 17277,
+        "line": 17279,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94229,8 +94346,8 @@
       "source_location": {
         "heading": "CV-286 - Goal Runtime Shared Record Envelope",
         "heading_level": 3,
-        "heading_line": 17325,
-        "line": 17327,
+        "heading_line": 17360,
+        "line": 17362,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94246,8 +94363,8 @@
       "source_location": {
         "heading": "CV-287 - Goal Runtime Event Schema Registration",
         "heading_level": 3,
-        "heading_line": 17400,
-        "line": 17402,
+        "heading_line": 17435,
+        "line": 17437,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94263,8 +94380,8 @@
       "source_location": {
         "heading": "CV-288 - GoalRun Verification And Receipt Contract Envelope",
         "heading_level": 3,
-        "heading_line": 17456,
-        "line": 17458,
+        "heading_line": 17491,
+        "line": 17493,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94280,8 +94397,8 @@
       "source_location": {
         "heading": "CV-289 - Plans-To-Code Shared Contract Envelope",
         "heading_level": 3,
-        "heading_line": 17570,
-        "line": 17572,
+        "heading_line": 17605,
+        "line": 17607,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94297,8 +94414,8 @@
       "source_location": {
         "heading": "CV-290 - Planning Runtime Events, Packs, Records, And Exceptions",
         "heading_level": 3,
-        "heading_line": 17666,
-        "line": 17668,
+        "heading_line": 17701,
+        "line": 17703,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94314,8 +94431,8 @@
       "source_location": {
         "heading": "CV-291 - Discovery Schema, Enums, Events, And Receipt Payloads",
         "heading_level": 3,
-        "heading_line": 17898,
-        "line": 17900,
+        "heading_line": 17933,
+        "line": 17935,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94382,8 +94499,8 @@
       "source_location": {
         "heading": "CV-295 - History Identity Projection And Action Envelope",
         "heading_level": 3,
-        "heading_line": 18054,
-        "line": 18056,
+        "heading_line": 18089,
+        "line": 18091,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94399,8 +94516,8 @@
       "source_location": {
         "heading": "CV-296 - Vision Bridge Result Envelope",
         "heading_level": 3,
-        "heading_line": 18207,
-        "line": 18209,
+        "heading_line": 18242,
+        "line": 18244,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94416,8 +94533,8 @@
       "source_location": {
         "heading": "CV-297 - Teacher Guided Help Activity Envelope",
         "heading_level": 3,
-        "heading_line": 18365,
-        "line": 18367,
+        "heading_line": 18400,
+        "line": 18402,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94433,8 +94550,8 @@
       "source_location": {
         "heading": "CV-298 - Notification Delivery Envelope Destination Receipt And Predicate Contract",
         "heading_level": 3,
-        "heading_line": 18571,
-        "line": 18573,
+        "heading_line": 18606,
+        "line": 18608,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94450,8 +94567,8 @@
       "source_location": {
         "heading": "CV-299 - DRY Provenance And Effective State Contract",
         "heading_level": 3,
-        "heading_line": 18674,
-        "line": 18676,
+        "heading_line": 18709,
+        "line": 18711,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94467,8 +94584,8 @@
       "source_location": {
         "heading": "CV-300 - Inline Visualizer Bridge Registry And Native Host Boundary",
         "heading_level": 3,
-        "heading_line": 18741,
-        "line": 18743,
+        "heading_line": 18776,
+        "line": 18778,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94484,8 +94601,8 @@
       "source_location": {
         "heading": "CV-301 - Free Models Trusted Import Material And Adapter Receipt Contract",
         "heading_level": 3,
-        "heading_line": 18823,
-        "line": 18825,
+        "heading_line": 18858,
+        "line": 18860,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94501,8 +94618,8 @@
       "source_location": {
         "heading": "CV-302 - Free Models Wrapper Identity And Route Eligibility Contract",
         "heading_level": 3,
-        "heading_line": 18880,
-        "line": 18882,
+        "heading_line": 18915,
+        "line": 18917,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94518,8 +94635,8 @@
       "source_location": {
         "heading": "CV-303 - Host Capability Identity Receipt And Blocker Envelope",
         "heading_level": 3,
-        "heading_line": 18939,
-        "line": 18941,
+        "heading_line": 18974,
+        "line": 18976,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94535,8 +94652,8 @@
       "source_location": {
         "heading": "CV-304 - HostCapabilityCommand And HostOperationRequest Envelope",
         "heading_level": 3,
-        "heading_line": 19030,
-        "line": 19032,
+        "heading_line": 19065,
+        "line": 19067,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94552,8 +94669,8 @@
       "source_location": {
         "heading": "CV-305 - Onboarding Setup State And Health Summary Contract",
         "heading_level": 3,
-        "heading_line": 19125,
-        "line": 19127,
+        "heading_line": 19160,
+        "line": 19162,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94569,8 +94686,8 @@
       "source_location": {
         "heading": "CV-306 - P0-WEBSOCKET-SECURITY-BOUNDARIES",
         "heading_level": 3,
-        "heading_line": 19210,
-        "line": 19212,
+        "heading_line": 19245,
+        "line": 19247,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94586,8 +94703,8 @@
       "source_location": {
         "heading": "CV-307 - P0-RUNTIME-SURFACE-READINESS-PROBE",
         "heading_level": 3,
-        "heading_line": 19280,
-        "line": 19282,
+        "heading_line": 19315,
+        "line": 19317,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94603,8 +94720,8 @@
       "source_location": {
         "heading": "CV-308 - prompt_admission_execution",
         "heading_level": 3,
-        "heading_line": 19345,
-        "line": 19347,
+        "heading_line": 19380,
+        "line": 19382,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94620,8 +94737,8 @@
       "source_location": {
         "heading": "CV-309 - EventRecord Canonical Envelope",
         "heading_level": 3,
-        "heading_line": 19415,
-        "line": 19417,
+        "heading_line": 19450,
+        "line": 19452,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94637,8 +94754,8 @@
       "source_location": {
         "heading": "CV-310 - Active-Agent Coordination Event Family Contract",
         "heading_level": 3,
-        "heading_line": 19495,
-        "line": 19497,
+        "heading_line": 19530,
+        "line": 19532,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -94654,8 +94771,25 @@
       "source_location": {
         "heading": "CV-311 - Provider Model Capability Snapshot Reference Envelope",
         "heading_level": 3,
-        "heading_line": 19561,
-        "line": 19563,
+        "heading_line": 19596,
+        "line": 19598,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "filesafe_fail_closed_security_repair",
+      "gui_related": false,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-312",
+      "reasoning_tier": "high",
+      "risk_class": "filesafe_event_payload_drift",
+      "source_location": {
+        "heading": "CV-312 - FileSafe Fail Closed Security Event Payloads",
+        "heading_level": 3,
+        "heading_line": 19656,
+        "line": 19658,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -103171,8 +103305,8 @@
       "source_location": {
         "heading": "F2-001 - FileSafe Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 12919,
-        "line": 12921,
+        "heading_line": 13115,
+        "line": 13117,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103188,8 +103322,8 @@
       "source_location": {
         "heading": "F2-002 - FileSafe Document Authority And Status",
         "heading_level": 3,
-        "heading_line": 2720,
-        "line": 2722,
+        "heading_line": 2840,
+        "line": 2842,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103205,8 +103339,8 @@
       "source_location": {
         "heading": "F2-003 - DRY Implementation Compliance",
         "heading_level": 3,
-        "heading_line": 2773,
-        "line": 2775,
+        "heading_line": 2895,
+        "line": 2897,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103222,8 +103356,8 @@
       "source_location": {
         "heading": "F2-004 - Rewrite Era FileSafe Authority Boundary",
         "heading_level": 3,
-        "heading_line": 2825,
-        "line": 2827,
+        "heading_line": 2949,
+        "line": 2951,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103239,8 +103373,8 @@
       "source_location": {
         "heading": "F2-005 - Guard Ready Adjacent Inputs And Fail Closed Seams",
         "heading_level": 3,
-        "heading_line": 2879,
-        "line": 2881,
+        "heading_line": 3003,
+        "line": 3005,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103256,8 +103390,8 @@
       "source_location": {
         "heading": "F2-006 - Portable Rust And Slint Guard Boundary",
         "heading_level": 3,
-        "heading_line": 2944,
-        "line": 2946,
+        "heading_line": 3068,
+        "line": 3070,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103273,8 +103407,8 @@
       "source_location": {
         "heading": "F2-007 - Command And Route Input Normalization",
         "heading_level": 3,
-        "heading_line": 3002,
-        "line": 3004,
+        "heading_line": 3126,
+        "line": 3128,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103290,8 +103424,8 @@
       "source_location": {
         "heading": "F2-008 - Projection Trust And Hostability Context",
         "heading_level": 3,
-        "heading_line": 3059,
-        "line": 3061,
+        "heading_line": 3183,
+        "line": 3185,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103307,8 +103441,8 @@
       "source_location": {
         "heading": "F2-009 - Runtime Blocked Identity And Decision Authority",
         "heading_level": 3,
-        "heading_line": 3119,
-        "line": 3121,
+        "heading_line": 3243,
+        "line": 3245,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103324,8 +103458,8 @@
       "source_location": {
         "heading": "F2-010 - Ordered Open By Identity Reconciliation And Spec Integrity",
         "heading_level": 3,
-        "heading_line": 3177,
-        "line": 3179,
+        "heading_line": 3301,
+        "line": 3303,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103341,8 +103475,8 @@
       "source_location": {
         "heading": "F2-011 - Execution Transport Guard Boundary",
         "heading_level": 3,
-        "heading_line": 3235,
-        "line": 3237,
+        "heading_line": 3359,
+        "line": 3361,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103358,8 +103492,8 @@
       "source_location": {
         "heading": "F2-012 - Canonical Guardrail Summary And Prompt Boundary",
         "heading_level": 3,
-        "heading_line": 3299,
-        "line": 3301,
+        "heading_line": 3423,
+        "line": 3425,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103375,8 +103509,8 @@
       "source_location": {
         "heading": "F2-013 - Core FileSafe Function Set",
         "heading_level": 3,
-        "heading_line": 3359,
-        "line": 3361,
+        "heading_line": 3483,
+        "line": 3485,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103392,8 +103526,8 @@
       "source_location": {
         "heading": "F2-014 - Compiled Context Safety Boundary",
         "heading_level": 3,
-        "heading_line": 3410,
-        "line": 3412,
+        "heading_line": 3534,
+        "line": 3536,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103409,8 +103543,8 @@
       "source_location": {
         "heading": "F2-015 - Three Layer Defense And Pre Execution Primacy",
         "heading_level": 3,
-        "heading_line": 3465,
-        "line": 3467,
+        "heading_line": 3589,
+        "line": 3591,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103426,8 +103560,8 @@
       "source_location": {
         "heading": "F2-016 - Effective Runtime Configuration Rendering",
         "heading_level": 3,
-        "heading_line": 3516,
-        "line": 3518,
+        "heading_line": 3640,
+        "line": 3642,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103443,8 +103577,8 @@
       "source_location": {
         "heading": "F2-017 - Runtime Identity And Provider Account Normalization",
         "heading_level": 3,
-        "heading_line": 3571,
-        "line": 3573,
+        "heading_line": 3695,
+        "line": 3697,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103460,8 +103594,8 @@
       "source_location": {
         "heading": "F2-018 - Lane Aware Model And Worktree Isolation Inputs",
         "heading_level": 3,
-        "heading_line": 3624,
-        "line": 3626,
+        "heading_line": 3748,
+        "line": 3750,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103477,8 +103611,8 @@
       "source_location": {
         "heading": "F2-019 - Multi Node Role Specific Write Scope",
         "heading_level": 3,
-        "heading_line": 3679,
-        "line": 3681,
+        "heading_line": 3803,
+        "line": 3805,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103494,8 +103628,8 @@
       "source_location": {
         "heading": "F2-020 - Account Instruction Runtime Override Policy",
         "heading_level": 3,
-        "heading_line": 3732,
-        "line": 3734,
+        "heading_line": 3856,
+        "line": 3858,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103511,8 +103645,8 @@
       "source_location": {
         "heading": "F2-021 - BaseRunner Pre Spawn Guard Hook",
         "heading_level": 3,
-        "heading_line": 3786,
-        "line": 3788,
+        "heading_line": 3910,
+        "line": 3912,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103528,8 +103662,8 @@
       "source_location": {
         "heading": "F2-022 - Startup And Orchestrator Guard Initialization",
         "heading_level": 3,
-        "heading_line": 3839,
-        "line": 3841,
+        "heading_line": 3963,
+        "line": 3965,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103545,8 +103679,8 @@
       "source_location": {
         "heading": "F2-023 - Runtime Guard Construction And Request Binding",
         "heading_level": 3,
-        "heading_line": 3894,
-        "line": 3896,
+        "heading_line": 4018,
+        "line": 4020,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103562,8 +103696,8 @@
       "source_location": {
         "heading": "F2-024 - Fail Closed Config Scope And Pattern Handling",
         "heading_level": 3,
-        "heading_line": 3953,
-        "line": 3955,
+        "heading_line": 4077,
+        "line": 4079,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103579,8 +103713,8 @@
       "source_location": {
         "heading": "F2-025 - FileSafe Module Layout",
         "heading_level": 3,
-        "heading_line": 4011,
-        "line": 4013,
+        "heading_line": 4137,
+        "line": 4139,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103596,8 +103730,8 @@
       "source_location": {
         "heading": "F2-026 - Destructive Pattern Source Resolution And Exports",
         "heading_level": 3,
-        "heading_line": 4069,
-        "line": 4071,
+        "heading_line": 4195,
+        "line": 4197,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103613,8 +103747,8 @@
       "source_location": {
         "heading": "F2-027 - BashGuard State And GuardError Taxonomy",
         "heading_level": 3,
-        "heading_line": 4124,
-        "line": 4126,
+        "heading_line": 4250,
+        "line": 4252,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103630,8 +103764,8 @@
       "source_location": {
         "heading": "F2-028 - BashGuard Initialization And Fail Closed Baseline Selection",
         "heading_level": 3,
-        "heading_line": 4180,
-        "line": 4182,
+        "heading_line": 4310,
+        "line": 4312,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103647,8 +103781,8 @@
       "source_location": {
         "heading": "F2-029 - Bundled Pattern File Lookup Fallbacks",
         "heading_level": 3,
-        "heading_line": 4236,
-        "line": 4238,
+        "heading_line": 4370,
+        "line": 4372,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103664,8 +103798,8 @@
       "source_location": {
         "heading": "F2-030 - Deliberate Disabled Guard State",
         "heading_level": 3,
-        "heading_line": 4287,
-        "line": 4289,
+        "heading_line": 4421,
+        "line": 4423,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103681,8 +103815,8 @@
       "source_location": {
         "heading": "F2-031 - Command Blocklist Evaluation And Error Emission",
         "heading_level": 3,
-        "heading_line": 4339,
-        "line": 4341,
+        "heading_line": 4476,
+        "line": 4478,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103696,10 +103830,10 @@
       "reasoning_tier": "standard",
       "risk_class": "filesafe_drift",
       "source_location": {
-        "heading": "F2-032 - Approved Command Match Normalization Compatibility Boundary",
+        "heading": "F2-032 - Approved Command Exact Normalization Boundary",
         "heading_level": 3,
-        "heading_line": 4392,
-        "line": 4394,
+        "heading_line": 4532,
+        "line": 4534,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103715,8 +103849,8 @@
       "source_location": {
         "heading": "F2-033 - Pattern File Parsing And Fail Fast Regex Validation",
         "heading_level": 3,
-        "heading_line": 4447,
-        "line": 4449,
+        "heading_line": 4588,
+        "line": 4590,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103732,8 +103866,8 @@
       "source_location": {
         "heading": "F2-034 - Default And Local Pattern Merge Behavior",
         "heading_level": 3,
-        "heading_line": 4503,
-        "line": 4505,
+        "heading_line": 4644,
+        "line": 4646,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103749,8 +103883,8 @@
       "source_location": {
         "heading": "F2-035 - Backward Compatible FileSafe Config Keys And GUI Labels",
         "heading_level": 3,
-        "heading_line": 4557,
-        "line": 4559,
+        "heading_line": 4698,
+        "line": 4700,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103766,8 +103900,8 @@
       "source_location": {
         "heading": "F2-036 - FileSafe Config Defaults And Strict Guard Baselines",
         "heading_level": 3,
-        "heading_line": 4612,
-        "line": 4614,
+        "heading_line": 4753,
+        "line": 4755,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103783,8 +103917,8 @@
       "source_location": {
         "heading": "F2-037 - GuiConfig To PuppetMasterConfig Runtime Bridge",
         "heading_level": 3,
-        "heading_line": 4669,
-        "line": 4671,
+        "heading_line": 4812,
+        "line": 4814,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103800,8 +103934,8 @@
       "source_location": {
         "heading": "F2-038 - FileSafe YAML Keys And Additive Custom Patterns Path",
         "heading_level": 3,
-        "heading_line": 4724,
-        "line": 4726,
+        "heading_line": 4867,
+        "line": 4869,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103817,8 +103951,8 @@
       "source_location": {
         "heading": "F2-039 - BaseRunner Guard Attachment And Scope Placeholders",
         "heading_level": 3,
-        "heading_line": 4781,
-        "line": 4783,
+        "heading_line": 4924,
+        "line": 4926,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103834,8 +103968,8 @@
       "source_location": {
         "heading": "F2-040 - Initialization Failure Disabled Fallback Compatibility Boundary",
         "heading_level": 3,
-        "heading_line": 4832,
-        "line": 4834,
+        "heading_line": 4975,
+        "line": 4977,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103851,8 +103985,8 @@
       "source_location": {
         "heading": "F2-041 - BaseRunner Command String Check And Blocked Command Logging",
         "heading_level": 3,
-        "heading_line": 4884,
-        "line": 4886,
+        "heading_line": 5030,
+        "line": 5032,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103868,8 +104002,8 @@
       "source_location": {
         "heading": "F2-042 - Platform Runner Compiled Prompt Check And Verification Gate Exception",
         "heading_level": 3,
-        "heading_line": 4936,
-        "line": 4938,
+        "heading_line": 5084,
+        "line": 5086,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103885,8 +104019,8 @@
       "source_location": {
         "heading": "F2-043 - Security Filter Context File Check And Interview Exception",
         "heading_level": 3,
-        "heading_line": 4988,
-        "line": 4990,
+        "heading_line": 5136,
+        "line": 5138,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103902,8 +104036,8 @@
       "source_location": {
         "heading": "F2-044 - Platform Runner Early Failure And Double Check Ordering",
         "heading_level": 3,
-        "heading_line": 5039,
-        "line": 5041,
+        "heading_line": 5187,
+        "line": 5189,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103919,8 +104053,8 @@
       "source_location": {
         "heading": "F2-045 - Request Relative Canonical Write Scope Validation",
         "heading_level": 3,
-        "heading_line": 5090,
-        "line": 5092,
+        "heading_line": 5238,
+        "line": 5240,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103936,8 +104070,8 @@
       "source_location": {
         "heading": "F2-046 - Realpath Required Symlink Scope And Fallback Prohibition",
         "heading_level": 3,
-        "heading_line": 5145,
-        "line": 5147,
+        "heading_line": 5293,
+        "line": 5295,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103953,8 +104087,8 @@
       "source_location": {
         "heading": "F2-047 - Multi Provider Compiled Prompt Guard Coverage",
         "heading_level": 3,
-        "heading_line": 5198,
-        "line": 5200,
+        "heading_line": 5346,
+        "line": 5348,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103970,8 +104104,8 @@
       "source_location": {
         "heading": "F2-048 - Provider Metadata Is Not FileSafe Authorization",
         "heading_level": 3,
-        "heading_line": 5253,
-        "line": 5255,
+        "heading_line": 5401,
+        "line": 5403,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -103987,8 +104121,8 @@
       "source_location": {
         "heading": "F2-049 - Provider Agnostic Defense In Depth Check Order",
         "heading_level": 3,
-        "heading_line": 5308,
-        "line": 5310,
+        "heading_line": 5456,
+        "line": 5458,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104004,8 +104138,8 @@
       "source_location": {
         "heading": "F2-050 - Destructive Command Blocklist File Contract",
         "heading_level": 3,
-        "heading_line": 5360,
-        "line": 5362,
+        "heading_line": 5508,
+        "line": 5510,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104021,8 +104155,8 @@
       "source_location": {
         "heading": "F2-051 - Bundled Destructive Command Pattern Coverage",
         "heading_level": 3,
-        "heading_line": 5410,
-        "line": 5412,
+        "heading_line": 5558,
+        "line": 5560,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104038,8 +104172,8 @@
       "source_location": {
         "heading": "F2-052 - PUPPET MASTER ALLOW DESTRUCTIVE Env Override",
         "heading_level": 3,
-        "heading_line": 5478,
-        "line": 5480,
+        "heading_line": 5626,
+        "line": 5628,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104055,8 +104189,8 @@
       "source_location": {
         "heading": "F2-053 - Unified FileSafe YAML And GUI Toggle Surface",
         "heading_level": 3,
-        "heading_line": 5527,
-        "line": 5529,
+        "heading_line": 5678,
+        "line": 5680,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104072,8 +104206,8 @@
       "source_location": {
         "heading": "F2-054 - Project Specific Pattern Extension Loading",
         "heading_level": 3,
-        "heading_line": 5586,
-        "line": 5588,
+        "heading_line": 5737,
+        "line": 5739,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104089,8 +104223,8 @@
       "source_location": {
         "heading": "F2-055 - FileSafe Event Stream Authority",
         "heading_level": 3,
-        "heading_line": 5639,
-        "line": 5641,
+        "heading_line": 5790,
+        "line": 5792,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104106,8 +104240,8 @@
       "source_location": {
         "heading": "F2-056 - FileSafeEvent Minimum Payload",
         "heading_level": 3,
-        "heading_line": 5698,
-        "line": 5700,
+        "heading_line": 5849,
+        "line": 5851,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104123,8 +104257,8 @@
       "source_location": {
         "heading": "F2-057 - Logging Call Semantics And History Consumers",
         "heading_level": 3,
-        "heading_line": 5751,
-        "line": 5753,
+        "heading_line": 5902,
+        "line": 5904,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104140,8 +104274,8 @@
       "source_location": {
         "heading": "F2-058 - User Friendly Guard Error Message Templates",
         "heading_level": 3,
-        "heading_line": 5808,
-        "line": 5810,
+        "heading_line": 5959,
+        "line": 5961,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104157,8 +104291,8 @@
       "source_location": {
         "heading": "F2-059 - FileSafe Unit Test Coverage Matrix",
         "heading_level": 3,
-        "heading_line": 5862,
-        "line": 5864,
+        "heading_line": 6016,
+        "line": 6018,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104174,8 +104308,8 @@
       "source_location": {
         "heading": "F2-060 - Platform Runner Destructive Command Integration Test",
         "heading_level": 3,
-        "heading_line": 5925,
-        "line": 5927,
+        "heading_line": 6084,
+        "line": 6086,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104191,8 +104325,8 @@
       "source_location": {
         "heading": "F2-061 - Checklist Authority And Locked Fidelity Blockers",
         "heading_level": 3,
-        "heading_line": 5975,
-        "line": 5977,
+        "heading_line": 6134,
+        "line": 6136,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104208,8 +104342,8 @@
       "source_location": {
         "heading": "F2-062 - FileSafe Module Structure And OpenCode Baseline Port",
         "heading_level": 3,
-        "heading_line": 6035,
-        "line": 6037,
+        "heading_line": 6194,
+        "line": 6196,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104225,8 +104359,8 @@
       "source_location": {
         "heading": "F2-063 - BashGuard Implementation Checklist",
         "heading_level": 3,
-        "heading_line": 6090,
-        "line": 6092,
+        "heading_line": 6249,
+        "line": 6251,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104242,8 +104376,8 @@
       "source_location": {
         "heading": "F2-064 - BaseRunner Guard Integration And Helper Checklist",
         "heading_level": 3,
-        "heading_line": 6142,
-        "line": 6144,
+        "heading_line": 6301,
+        "line": 6303,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104259,8 +104393,8 @@
       "source_location": {
         "heading": "F2-065 - FileSafe Settings Configuration Checklist",
         "heading_level": 3,
-        "heading_line": 6213,
-        "line": 6215,
+        "heading_line": 6372,
+        "line": 6374,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104276,8 +104410,8 @@
       "source_location": {
         "heading": "F2-066 - FileSafe Event Logging Checklist And Safe Point Compatibility",
         "heading_level": 3,
-        "heading_line": 6265,
-        "line": 6267,
+        "heading_line": 6424,
+        "line": 6426,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104293,8 +104427,8 @@
       "source_location": {
         "heading": "F2-067 - FileSafe Verification Coverage Checklist",
         "heading_level": 3,
-        "heading_line": 6325,
-        "line": 6327,
+        "heading_line": 6484,
+        "line": 6486,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104310,8 +104444,8 @@
       "source_location": {
         "heading": "F2-068 - Core Consumer Plan Boundary Notes",
         "heading_level": 3,
-        "heading_line": 6380,
-        "line": 6382,
+        "heading_line": 6539,
+        "line": 6541,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104327,8 +104461,8 @@
       "source_location": {
         "heading": "F2-069 - Hooks FileSafe First Boundary",
         "heading_level": 3,
-        "heading_line": 6439,
-        "line": 6441,
+        "heading_line": 6598,
+        "line": 6600,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104344,8 +104478,8 @@
       "source_location": {
         "heading": "F2-070 - Tool Permission And FileSafe Invocation Boundary",
         "heading_level": 3,
-        "heading_line": 6495,
-        "line": 6497,
+        "heading_line": 6654,
+        "line": 6656,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104361,8 +104495,8 @@
       "source_location": {
         "heading": "F2-071 - Assistant YOLO Shared FileSafe Config And Guard Primacy",
         "heading_level": 3,
-        "heading_line": 6555,
-        "line": 6557,
+        "heading_line": 6714,
+        "line": 6716,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104378,8 +104512,8 @@
       "source_location": {
         "heading": "F2-072 - YOLO FileSafe Visible State And Explicit Override Surface",
         "heading_level": 3,
-        "heading_line": 6612,
-        "line": 6614,
+        "heading_line": 6771,
+        "line": 6773,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104395,8 +104529,8 @@
       "source_location": {
         "heading": "F2-073 - Dirty Layer Search Results Do Not Weaken Mutation Guards",
         "heading_level": 3,
-        "heading_line": 6668,
-        "line": 6670,
+        "heading_line": 6827,
+        "line": 6829,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104412,8 +104546,8 @@
       "source_location": {
         "heading": "F2-074 - Realpath Before Scope Check Owner Invariant",
         "heading_level": 3,
-        "heading_line": 6723,
-        "line": 6725,
+        "heading_line": 6882,
+        "line": 6884,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104429,8 +104563,8 @@
       "source_location": {
         "heading": "F2-075 - Atomic Replacement Write Pattern And Direct Write Prohibition",
         "heading_level": 3,
-        "heading_line": 6782,
-        "line": 6784,
+        "heading_line": 6946,
+        "line": 6948,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104446,8 +104580,8 @@
       "source_location": {
         "heading": "F2-076 - Managed Overwrite Backup Lineage And Fail Closed Metadata",
         "heading_level": 3,
-        "heading_line": 6833,
-        "line": 6835,
+        "heading_line": 6997,
+        "line": 6999,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104463,8 +104597,8 @@
       "source_location": {
         "heading": "F2-077 - Same Directory Temp Lifecycle And Janitor Boundaries",
         "heading_level": 3,
-        "heading_line": 6888,
-        "line": 6890,
+        "heading_line": 7052,
+        "line": 7054,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104480,8 +104614,8 @@
       "source_location": {
         "heading": "F2-078 - Mutable Rewrite CAS Owner Anchor And Read Revision Capture",
         "heading_level": 3,
-        "heading_line": 6948,
-        "line": 6950,
+        "heading_line": 7112,
+        "line": 7114,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104497,8 +104631,8 @@
       "source_location": {
         "heading": "F2-079 - Concurrent Edit Conflict Surface And Post Write State",
         "heading_level": 3,
-        "heading_line": 7007,
-        "line": 7009,
+        "heading_line": 7171,
+        "line": 7173,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104514,8 +104648,8 @@
       "source_location": {
         "heading": "F2-080 - Optimistic Concurrency Boundary For Rewrite Vs Append Durability",
         "heading_level": 3,
-        "heading_line": 7063,
-        "line": 7065,
+        "heading_line": 7227,
+        "line": 7229,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104531,8 +104665,8 @@
       "source_location": {
         "heading": "F2-081 - Snapshot And Undo Lineage Isolation",
         "heading_level": 3,
-        "heading_line": 7115,
-        "line": 7117,
+        "heading_line": 7279,
+        "line": 7281,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104548,8 +104682,8 @@
       "source_location": {
         "heading": "F2-082 - Git Snapshot Subprocess Integrity And Reversibility Claims",
         "heading_level": 3,
-        "heading_line": 7172,
-        "line": 7174,
+        "heading_line": 7336,
+        "line": 7338,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104565,8 +104699,8 @@
       "source_location": {
         "heading": "F2-083 - Filesystem Case Sensitivity Probe And Session Cache",
         "heading_level": 3,
-        "heading_line": 7232,
-        "line": 7234,
+        "heading_line": 7396,
+        "line": 7398,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104582,8 +104716,8 @@
       "source_location": {
         "heading": "F2-084 - Shared NFC Case Fold Path Comparison Contract",
         "heading_level": 3,
-        "heading_line": 7289,
-        "line": 7291,
+        "heading_line": 7453,
+        "line": 7455,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104599,8 +104733,8 @@
       "source_location": {
         "heading": "F2-085 - File Record LRU Cap And Event State Rebuild",
         "heading_level": 3,
-        "heading_line": 7344,
-        "line": 7346,
+        "heading_line": 7508,
+        "line": 7510,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104616,8 +104750,8 @@
       "source_location": {
         "heading": "F2-086 - FileSafe Mutation Owner Boundary And Checklist Anchor Authority",
         "heading_level": 3,
-        "heading_line": 7395,
-        "line": 7397,
+        "heading_line": 7559,
+        "line": 7561,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104633,8 +104767,8 @@
       "source_location": {
         "heading": "F2-087 - Packet Over Scope And Adjacent Owner Routing Dispositions",
         "heading_level": 3,
-        "heading_line": 7449,
-        "line": 7451,
+        "heading_line": 7613,
+        "line": 7615,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104650,8 +104784,8 @@
       "source_location": {
         "heading": "F2-088 - LFA 002 Drift Evidence And Under Targeted Packet Replacement",
         "heading_level": 3,
-        "heading_line": 7515,
-        "line": 7517,
+        "heading_line": 7679,
+        "line": 7681,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104667,8 +104801,8 @@
       "source_location": {
         "heading": "F2-089 - Dispatch Gating And Child Runtime Authority Consumption",
         "heading_level": 3,
-        "heading_line": 7574,
-        "line": 7576,
+        "heading_line": 7738,
+        "line": 7740,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104684,8 +104818,8 @@
       "source_location": {
         "heading": "F2-090 - Prompt Mode Compiled Context Safety Boundary",
         "heading_level": 3,
-        "heading_line": 7633,
-        "line": 7635,
+        "heading_line": 7797,
+        "line": 7799,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104701,8 +104835,8 @@
       "source_location": {
         "heading": "F2-091 - Assistant Chat Context Display Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 7691,
-        "line": 7693,
+        "heading_line": 7855,
+        "line": 7857,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104718,8 +104852,8 @@
       "source_location": {
         "heading": "F2-092 - Storage Usage Auth Billing Input Boundary",
         "heading_level": 3,
-        "heading_line": 7744,
-        "line": 7746,
+        "heading_line": 7908,
+        "line": 7910,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104735,8 +104869,8 @@
       "source_location": {
         "heading": "F2-093 - Subagent Scope Credential Cache And Executable Surface Gating",
         "heading_level": 3,
-        "heading_line": 7809,
-        "line": 7811,
+        "heading_line": 7973,
+        "line": 7975,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104752,8 +104886,8 @@
       "source_location": {
         "heading": "F2-094 - Atomic CAS Restatement And Legacy Audit Evidence Boundary",
         "heading_level": 3,
-        "heading_line": 7872,
-        "line": 7874,
+        "heading_line": 8036,
+        "line": 8038,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104769,8 +104903,8 @@
       "source_location": {
         "heading": "F2-095 - SecurityFilter Access Check And GuardError Emission",
         "heading_level": 3,
-        "heading_line": 7935,
-        "line": 7937,
+        "heading_line": 8099,
+        "line": 8101,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104786,8 +104920,8 @@
       "source_location": {
         "heading": "F2-096 - Default Sensitive Pattern Set And Case Insensitive Matching",
         "heading_level": 3,
-        "heading_line": 7990,
-        "line": 7992,
+        "heading_line": 8154,
+        "line": 8156,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104803,8 +104937,8 @@
       "source_location": {
         "heading": "F2-097 - Additive Security Filter Overrides And AGENTS Documentation Hook",
         "heading_level": 3,
-        "heading_line": 8049,
-        "line": 8051,
+        "heading_line": 8213,
+        "line": 8215,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104820,8 +104954,8 @@
       "source_location": {
         "heading": "F2-098 - Prompt And Context Compilation Safety Threat Model",
         "heading_level": 3,
-        "heading_line": 8099,
-        "line": 8101,
+        "heading_line": 8263,
+        "line": 8265,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104837,8 +104971,8 @@
       "source_location": {
         "heading": "F2-099 - Platform Attachment Token Format Contract",
         "heading_level": 3,
-        "heading_line": 8152,
-        "line": 8154,
+        "heading_line": 8316,
+        "line": 8318,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104854,8 +104988,8 @@
       "source_location": {
         "heading": "F2-100 - Compiled Prompt FileSafe Integration Point",
         "heading_level": 3,
-        "heading_line": 8213,
-        "line": 8215,
+        "heading_line": 8377,
+        "line": 8379,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104871,8 +105005,8 @@
       "source_location": {
         "heading": "F2-101 - Prompt Command Extraction And Deduplication",
         "heading_level": 3,
-        "heading_line": 8266,
-        "line": 8268,
+        "heading_line": 8430,
+        "line": 8432,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104888,8 +105022,8 @@
       "source_location": {
         "heading": "F2-102 - Effective Request Guard Ordering Example",
         "heading_level": 3,
-        "heading_line": 8325,
-        "line": 8327,
+        "heading_line": 8492,
+        "line": 8494,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104905,8 +105039,8 @@
       "source_location": {
         "heading": "F2-103 - Structured Attachment Pre Send FileSafe Gate",
         "heading_level": 3,
-        "heading_line": 8381,
-        "line": 8383,
+        "heading_line": 8548,
+        "line": 8550,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104922,8 +105056,8 @@
       "source_location": {
         "heading": "F2-104 - Structured Attachment Storage And Redaction Defaults",
         "heading_level": 3,
-        "heading_line": 8441,
-        "line": 8443,
+        "heading_line": 8608,
+        "line": 8610,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104939,8 +105073,8 @@
       "source_location": {
         "heading": "F2-105 - Verification Gate Operation Type Guard Exception",
         "heading_level": 3,
-        "heading_line": 8499,
-        "line": 8501,
+        "heading_line": 8666,
+        "line": 8668,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104956,8 +105090,8 @@
       "source_location": {
         "heading": "F2-106 - Attachment Gate Persistence And Visible Recovery",
         "heading_level": 3,
-        "heading_line": 8552,
-        "line": 8554,
+        "heading_line": 8719,
+        "line": 8721,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104973,8 +105107,8 @@
       "source_location": {
         "heading": "F2-107 - Blocked Command Event Logging Helper",
         "heading_level": 3,
-        "heading_line": 8614,
-        "line": 8616,
+        "heading_line": 8781,
+        "line": 8783,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -104990,8 +105124,8 @@
       "source_location": {
         "heading": "F2-108 - Pattern Matching Accuracy Risk",
         "heading_level": 3,
-        "heading_line": 8669,
-        "line": 8671,
+        "heading_line": 8836,
+        "line": 8838,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105007,8 +105141,8 @@
       "source_location": {
         "heading": "F2-109 - False Positive Review",
         "heading_level": 3,
-        "heading_line": 8723,
-        "line": 8725,
+        "heading_line": 8890,
+        "line": 8892,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105024,8 +105158,8 @@
       "source_location": {
         "heading": "F2-110 - Pattern Performance Mitigation",
         "heading_level": 3,
-        "heading_line": 8775,
-        "line": 8777,
+        "heading_line": 8942,
+        "line": 8944,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105041,8 +105175,8 @@
       "source_location": {
         "heading": "F2-111 - Multi Platform Prompt Parser Risk",
         "heading_level": 3,
-        "heading_line": 8825,
-        "line": 8827,
+        "heading_line": 8992,
+        "line": 8994,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105058,8 +105192,8 @@
       "source_location": {
         "heading": "F2-112 - Write Scope Plan Integration Risk",
         "heading_level": 3,
-        "heading_line": 8875,
-        "line": 8877,
+        "heading_line": 9042,
+        "line": 9044,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105075,8 +105209,8 @@
       "source_location": {
         "heading": "F2-113 - Execution Request Operation Metadata Boundary",
         "heading_level": 3,
-        "heading_line": 8925,
-        "line": 8927,
+        "heading_line": 9092,
+        "line": 9094,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105092,8 +105226,8 @@
       "source_location": {
         "heading": "F2-114 - Allowed Files Env Scope Derivation And Fail Closed Strictness",
         "heading_level": 3,
-        "heading_line": 8982,
-        "line": 8984,
+        "heading_line": 9149,
+        "line": 9151,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105109,8 +105243,8 @@
       "source_location": {
         "heading": "F2-115 - Pattern Source Fallback Does Not Disable FileSafe",
         "heading_level": 3,
-        "heading_line": 9043,
-        "line": 9045,
+        "heading_line": 9213,
+        "line": 9215,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105126,8 +105260,8 @@
       "source_location": {
         "heading": "F2-116 - Approved Commands Exact Normalized Match Boundary",
         "heading_level": 3,
-        "heading_line": 9096,
-        "line": 9098,
+        "heading_line": 9273,
+        "line": 9275,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105143,8 +105277,8 @@
       "source_location": {
         "heading": "F2-117 - Chained Command Segment Guard Evaluation",
         "heading_level": 3,
-        "heading_line": 9148,
-        "line": 9150,
+        "heading_line": 9330,
+        "line": 9332,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105160,8 +105294,8 @@
       "source_location": {
         "heading": "F2-118 - Git Destructive Command Pattern Enhancement",
         "heading_level": 3,
-        "heading_line": 9203,
-        "line": 9205,
+        "heading_line": 9385,
+        "line": 9387,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105177,8 +105311,8 @@
       "source_location": {
         "heading": "F2-119 - SQL Injection Prompt Pattern Enhancement",
         "heading_level": 3,
-        "heading_line": 9254,
-        "line": 9256,
+        "heading_line": 9436,
+        "line": 9438,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105194,8 +105328,8 @@
       "source_location": {
         "heading": "F2-120 - Guard Violation Rate Limiter Enhancement",
         "heading_level": 3,
-        "heading_line": 9303,
-        "line": 9305,
+        "heading_line": 9485,
+        "line": 9487,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105211,8 +105345,8 @@
       "source_location": {
         "heading": "F2-121 - FileSafe GUI Single Entry Toggle Surface",
         "heading_level": 3,
-        "heading_line": 9353,
-        "line": 9355,
+        "heading_line": 9535,
+        "line": 9537,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105228,8 +105362,8 @@
       "source_location": {
         "heading": "F2-122 - Assistant Approved Commands UX And Settings List",
         "heading_level": 3,
-        "heading_line": 9415,
-        "line": 9417,
+        "heading_line": 9600,
+        "line": 9602,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105245,8 +105379,8 @@
       "source_location": {
         "heading": "F2-123 - Prompt Pipeline Owns Moved Context Compilation Canon",
         "heading_level": 3,
-        "heading_line": 9476,
-        "line": 9478,
+        "heading_line": 9662,
+        "line": 9664,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105262,8 +105396,8 @@
       "source_location": {
         "heading": "F2-124 - BaseRunner Pre Spawn Guard Sequence",
         "heading_level": 3,
-        "heading_line": 9533,
-        "line": 9535,
+        "heading_line": 9719,
+        "line": 9721,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105279,8 +105413,8 @@
       "source_location": {
         "heading": "F2-125 - BaseRunner Guard Runtime Rules And Realpath Prohibition",
         "heading_level": 3,
-        "heading_line": 9591,
-        "line": 9593,
+        "heading_line": 9777,
+        "line": 9779,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105296,8 +105430,8 @@
       "source_location": {
         "heading": "F2-126 - Verification Gate Operation Env Tagging",
         "heading_level": 3,
-        "heading_line": 9650,
-        "line": 9652,
+        "heading_line": 9836,
+        "line": 9838,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105313,8 +105447,8 @@
       "source_location": {
         "heading": "F2-127 - ExecutionRequest Interview Detection And Path Extraction Helpers",
         "heading_level": 3,
-        "heading_line": 9706,
-        "line": 9708,
+        "heading_line": 9892,
+        "line": 9894,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105330,8 +105464,8 @@
       "source_location": {
         "heading": "F2-128 - Orchestrator Allowed Files Env Handoff",
         "heading_level": 3,
-        "heading_line": 9765,
-        "line": 9767,
+        "heading_line": 9951,
+        "line": 9953,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105347,8 +105481,8 @@
       "source_location": {
         "heading": "F2-129 - Interview FileSafe Relaxation Config Boundary",
         "heading_level": 3,
-        "heading_line": 9818,
-        "line": 9820,
+        "heading_line": 10004,
+        "line": 10006,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105364,8 +105498,8 @@
       "source_location": {
         "heading": "F2-130 - Worktree Aware Write Scope Canonicalization",
         "heading_level": 3,
-        "heading_line": 9874,
-        "line": 9876,
+        "heading_line": 10060,
+        "line": 10062,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105381,8 +105515,8 @@
       "source_location": {
         "heading": "F2-131 - Worktree Cleanup And Evidence Schema Coordination",
         "heading_level": 3,
-        "heading_line": 9928,
-        "line": 9930,
+        "heading_line": 10114,
+        "line": 10116,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105398,8 +105532,8 @@
       "source_location": {
         "heading": "F2-132 - FinalGUISpec Authority And Advanced Card Placement",
         "heading_level": 3,
-        "heading_line": 9984,
-        "line": 9986,
+        "heading_line": 10170,
+        "line": 10172,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105415,8 +105549,8 @@
       "source_location": {
         "heading": "F2-133 - FileSafe Advanced Card Controls And Tooltip Keys",
         "heading_level": 3,
-        "heading_line": 10044,
-        "line": 10046,
+        "heading_line": 10230,
+        "line": 10232,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105432,8 +105566,8 @@
       "source_location": {
         "heading": "F2-134 - FileSafe Config Struct Preservation",
         "heading_level": 3,
-        "heading_line": 10105,
-        "line": 10107,
+        "heading_line": 10293,
+        "line": 10295,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105449,8 +105583,8 @@
       "source_location": {
         "heading": "F2-135 - Assistant Chat YOLO Approval And Terminal Block Output",
         "heading_level": 3,
-        "heading_line": 10158,
-        "line": 10160,
+        "heading_line": 10346,
+        "line": 10348,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105466,8 +105600,8 @@
       "source_location": {
         "heading": "F2-136 - Dashboard Status And FileSafe Message Flow",
         "heading_level": 3,
-        "heading_line": 10214,
-        "line": 10216,
+        "heading_line": 10402,
+        "line": 10404,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105483,8 +105617,8 @@
       "source_location": {
         "heading": "F2-137 - GUI Config To PuppetMasterConfig Runtime Wiring",
         "heading_level": 3,
-        "heading_line": 10272,
-        "line": 10274,
+        "heading_line": 10460,
+        "line": 10462,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105500,8 +105634,8 @@
       "source_location": {
         "heading": "F2-138 - Verification Gate Tagging And Gate Override Config",
         "heading_level": 3,
-        "heading_line": 10327,
-        "line": 10329,
+        "heading_line": 10515,
+        "line": 10517,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105517,8 +105651,8 @@
       "source_location": {
         "heading": "F2-139 - Gate Evidence And GATE-010 FileSafe Detail Arrays",
         "heading_level": 3,
-        "heading_line": 10382,
-        "line": 10384,
+        "heading_line": 10575,
+        "line": 10577,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105534,8 +105668,8 @@
       "source_location": {
         "heading": "F2-140 - Seglog Canonical FileSafe State",
         "heading_level": 3,
-        "heading_line": 10439,
-        "line": 10441,
+        "heading_line": 10632,
+        "line": 10634,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105551,8 +105685,8 @@
       "source_location": {
         "heading": "F2-141 - Persistent Guard Config State And Safe Defaults",
         "heading_level": 3,
-        "heading_line": 10493,
-        "line": 10495,
+        "heading_line": 10686,
+        "line": 10688,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105568,8 +105702,8 @@
       "source_location": {
         "heading": "F2-142 - Write Scope Plan Metadata Request Context",
         "heading_level": 3,
-        "heading_line": 10543,
-        "line": 10545,
+        "heading_line": 10736,
+        "line": 10738,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105585,8 +105719,8 @@
       "source_location": {
         "heading": "F2-143 - Cleanup And Write Scope Allowlist Coordination",
         "heading_level": 3,
-        "heading_line": 10594,
-        "line": 10596,
+        "heading_line": 10787,
+        "line": 10789,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105602,8 +105736,8 @@
       "source_location": {
         "heading": "F2-144 - Cleanup Sensitive File Protection",
         "heading_level": 3,
-        "heading_line": 10646,
-        "line": 10648,
+        "heading_line": 10839,
+        "line": 10841,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105619,8 +105753,8 @@
       "source_location": {
         "heading": "F2-145 - ExecutionRequest Operation Metadata Gap Closure",
         "heading_level": 3,
-        "heading_line": 10697,
-        "line": 10699,
+        "heading_line": 10890,
+        "line": 10892,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105636,8 +105770,8 @@
       "source_location": {
         "heading": "F2-146 - Plan Metadata Access Gap Closure",
         "heading_level": 3,
-        "heading_line": 10748,
-        "line": 10750,
+        "heading_line": 10941,
+        "line": 10943,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105653,8 +105787,8 @@
       "source_location": {
         "heading": "F2-147 - Config Wiring Gap Closure",
         "heading_level": 3,
-        "heading_line": 10798,
-        "line": 10800,
+        "heading_line": 10991,
+        "line": 10993,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105670,8 +105804,8 @@
       "source_location": {
         "heading": "F2-148 - Worktree Path Resolution Resolved Contract",
         "heading_level": 3,
-        "heading_line": 10847,
-        "line": 10849,
+        "heading_line": 11040,
+        "line": 11042,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105687,8 +105821,8 @@
       "source_location": {
         "heading": "F2-149 - Interview Operation Detection Gap Closure",
         "heading_level": 3,
-        "heading_line": 10899,
-        "line": 10901,
+        "heading_line": 11092,
+        "line": 11094,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105704,8 +105838,8 @@
       "source_location": {
         "heading": "F2-150 - FileSafe Event Correlation Gap Closure",
         "heading_level": 3,
-        "heading_line": 10948,
-        "line": 10950,
+        "heading_line": 11141,
+        "line": 11143,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105721,8 +105855,8 @@
       "source_location": {
         "heading": "F2-151 - Documentation False Positive Mitigation",
         "heading_level": 3,
-        "heading_line": 10997,
-        "line": 10999,
+        "heading_line": 11190,
+        "line": 11192,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105738,8 +105872,8 @@
       "source_location": {
         "heading": "F2-152 - Guard Pattern Matching Performance Mitigation",
         "heading_level": 3,
-        "heading_line": 11047,
-        "line": 11049,
+        "heading_line": 11240,
+        "line": 11242,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105755,8 +105889,8 @@
       "source_location": {
         "heading": "F2-153 - Plan File List Completeness Mitigation",
         "heading_level": 3,
-        "heading_line": 11097,
-        "line": 11099,
+        "heading_line": 11290,
+        "line": 11292,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105772,8 +105906,8 @@
       "source_location": {
         "heading": "F2-154 - Multi Platform Prompt Parsing Risk",
         "heading_level": 3,
-        "heading_line": 11148,
-        "line": 11150,
+        "heading_line": 11344,
+        "line": 11346,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105789,8 +105923,8 @@
       "source_location": {
         "heading": "F2-155 - Guard Initialization Failure Compatibility Disposition",
         "heading_level": 3,
-        "heading_line": 11196,
-        "line": 11198,
+        "heading_line": 11392,
+        "line": 11394,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105806,8 +105940,8 @@
       "source_location": {
         "heading": "F2-156 - FileSafe Doctor Initialization Check",
         "heading_level": 3,
-        "heading_line": 11249,
-        "line": 11251,
+        "heading_line": 11445,
+        "line": 11447,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105823,8 +105957,8 @@
       "source_location": {
         "heading": "F2-157 - GateReport FileSafe Violations Payload",
         "heading_level": 3,
-        "heading_line": 11299,
-        "line": 11301,
+        "heading_line": 11495,
+        "line": 11497,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105840,8 +105974,8 @@
       "source_location": {
         "heading": "F2-158 - FileSafe Metrics Dashboard Projection",
         "heading_level": 3,
-        "heading_line": 11351,
-        "line": 11353,
+        "heading_line": 11547,
+        "line": 11549,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105857,8 +105991,8 @@
       "source_location": {
         "heading": "F2-159 - Plan Generation File List Validation",
         "heading_level": 3,
-        "heading_line": 11401,
-        "line": 11403,
+        "heading_line": 11597,
+        "line": 11599,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105874,8 +106008,8 @@
       "source_location": {
         "heading": "F2-160 - Runtime Profile FileSafe Config Profiles",
         "heading_level": 3,
-        "heading_line": 11450,
-        "line": 11452,
+        "heading_line": 11646,
+        "line": 11648,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105891,8 +106025,8 @@
       "source_location": {
         "heading": "F2-161 - Launch Path Env Var Checklist",
         "heading_level": 3,
-        "heading_line": 11509,
-        "line": 11511,
+        "heading_line": 11705,
+        "line": 11707,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105908,8 +106042,8 @@
       "source_location": {
         "heading": "F2-162 - BaseRunner Denial And Helper Checklist",
         "heading_level": 3,
-        "heading_line": 11561,
-        "line": 11563,
+        "heading_line": 11757,
+        "line": 11759,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105925,8 +106059,8 @@
       "source_location": {
         "heading": "F2-163 - Orchestrator Interview Integration Checklist",
         "heading_level": 3,
-        "heading_line": 11616,
-        "line": 11618,
+        "heading_line": 11812,
+        "line": 11814,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105942,8 +106076,8 @@
       "source_location": {
         "heading": "F2-164 - Worktree Guard Checklist TODO Retirement",
         "heading_level": 3,
-        "heading_line": 11668,
-        "line": 11670,
+        "heading_line": 11864,
+        "line": 11866,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105959,8 +106093,8 @@
       "source_location": {
         "heading": "F2-165 - GUI Config And Derived Event Projection Checklist",
         "heading_level": 3,
-        "heading_line": 11722,
-        "line": 11724,
+        "heading_line": 11918,
+        "line": 11920,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105976,8 +106110,8 @@
       "source_location": {
         "heading": "F2-166 - Phase 1 Core Guards Non Executable Sequence",
         "heading_level": 3,
-        "heading_line": 11775,
-        "line": 11777,
+        "heading_line": 11971,
+        "line": 11973,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -105993,8 +106127,8 @@
       "source_location": {
         "heading": "F2-167 - Phase 2 Config Wiring And Advanced GUI Sequence",
         "heading_level": 3,
-        "heading_line": 11833,
-        "line": 11835,
+        "heading_line": 12029,
+        "line": 12031,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106010,8 +106144,8 @@
       "source_location": {
         "heading": "F2-168 - Phase 3 Assistant Chat YOLO Recovery Sequence",
         "heading_level": 3,
-        "heading_line": 11888,
-        "line": 11890,
+        "heading_line": 12084,
+        "line": 12086,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106027,8 +106161,8 @@
       "source_location": {
         "heading": "F2-169 - Prompt Pipeline Context Follow Up Boundary",
         "heading_level": 3,
-        "heading_line": 11942,
-        "line": 11944,
+        "heading_line": 12138,
+        "line": 12140,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106044,8 +106178,8 @@
       "source_location": {
         "heading": "F2-170 - Implementation Risks Summary",
         "heading_level": 3,
-        "heading_line": 11996,
-        "line": 11998,
+        "heading_line": 12192,
+        "line": 12194,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106061,8 +106195,8 @@
       "source_location": {
         "heading": "F2-171 - FileSafe Blocked Outcome Taxonomy",
         "heading_level": 3,
-        "heading_line": 12049,
-        "line": 12051,
+        "heading_line": 12245,
+        "line": 12247,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106078,8 +106212,8 @@
       "source_location": {
         "heading": "F2-172 - Recovery Payload Field Canon",
         "heading_level": 3,
-        "heading_line": 12097,
-        "line": 12099,
+        "heading_line": 12293,
+        "line": 12295,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106095,8 +106229,8 @@
       "source_location": {
         "heading": "F2-173 - Recovery Command Normalization And UI Projection",
         "heading_level": 3,
-        "heading_line": 12152,
-        "line": 12154,
+        "heading_line": 12348,
+        "line": 12350,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106112,8 +106246,8 @@
       "source_location": {
         "heading": "F2-174 - Account Pressure Recovery State Preservation",
         "heading_level": 3,
-        "heading_line": 12206,
-        "line": 12208,
+        "heading_line": 12402,
+        "line": 12404,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106129,8 +106263,8 @@
       "source_location": {
         "heading": "F2-175 - Nonblocking Pressure And Bulk Recovery Preview Constraints",
         "heading_level": 3,
-        "heading_line": 12258,
-        "line": 12260,
+        "heading_line": 12454,
+        "line": 12456,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106146,8 +106280,8 @@
       "source_location": {
         "heading": "F2-176 - Runtime Recovery Event Analytics Payload",
         "heading_level": 3,
-        "heading_line": 12311,
-        "line": 12313,
+        "heading_line": 12507,
+        "line": 12509,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106163,8 +106297,8 @@
       "source_location": {
         "heading": "F2-177 - Pre Execution FileSafe Block Safe Point Non Consumption",
         "heading_level": 3,
-        "heading_line": 12364,
-        "line": 12366,
+        "heading_line": 12560,
+        "line": 12562,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106180,8 +106314,8 @@
       "source_location": {
         "heading": "F2-178 - Runtime Blocked Outcome Acceptance Criteria",
         "heading_level": 3,
-        "heading_line": 12412,
-        "line": 12414,
+        "heading_line": 12608,
+        "line": 12610,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106197,8 +106331,8 @@
       "source_location": {
         "heading": "F2-179 - FileSafe Denials As Blocked Outcomes",
         "heading_level": 3,
-        "heading_line": 12462,
-        "line": 12464,
+        "heading_line": 12658,
+        "line": 12660,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106214,8 +106348,8 @@
       "source_location": {
         "heading": "F2-180 - Policy Safe Point Restore Before Retry",
         "heading_level": 3,
-        "heading_line": 12516,
-        "line": 12518,
+        "heading_line": 12712,
+        "line": 12714,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106231,8 +106365,8 @@
       "source_location": {
         "heading": "F2-181 - Runtime Blocked Restore Override Mapping Scope",
         "heading_level": 3,
-        "heading_line": 12564,
-        "line": 12566,
+        "heading_line": 12760,
+        "line": 12762,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106248,8 +106382,8 @@
       "source_location": {
         "heading": "F2-182 - Canonical FileSafe Blocked Payload Fields",
         "heading_level": 3,
-        "heading_line": 12610,
-        "line": 12612,
+        "heading_line": 12806,
+        "line": 12808,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106265,8 +106399,8 @@
       "source_location": {
         "heading": "F2-183 - Shared Action IDs And Local Affordance Labels",
         "heading_level": 3,
-        "heading_line": 12662,
-        "line": 12664,
+        "heading_line": 12858,
+        "line": 12860,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106282,8 +106416,8 @@
       "source_location": {
         "heading": "F2-184 - FileSafe Blocked Action Mapping And Retired Field Names",
         "heading_level": 3,
-        "heading_line": 12714,
-        "line": 12716,
+        "heading_line": 12910,
+        "line": 12912,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106299,8 +106433,8 @@
       "source_location": {
         "heading": "F2-185 - Child Run And Rerun Identity Preservation",
         "heading_level": 3,
-        "heading_line": 12768,
-        "line": 12770,
+        "heading_line": 12964,
+        "line": 12966,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106316,8 +106450,8 @@
       "source_location": {
         "heading": "F2-186 - Restore Override Rerun Path",
         "heading_level": 3,
-        "heading_line": 12816,
-        "line": 12818,
+        "heading_line": 13012,
+        "line": 13014,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106333,8 +106467,8 @@
       "source_location": {
         "heading": "F2-187 - Persistent Runtime Episode And Handoff Reconstruction",
         "heading_level": 3,
-        "heading_line": 12867,
-        "line": 12869,
+        "heading_line": 13063,
+        "line": 13065,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106350,8 +106484,8 @@
       "source_location": {
         "heading": "F2-188 - Shared Mutation Session Guard Inputs",
         "heading_level": 3,
-        "heading_line": 12993,
-        "line": 12995,
+        "heading_line": 13189,
+        "line": 13191,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106367,8 +106501,8 @@
       "source_location": {
         "heading": "F2-189 - Safe Point And Rollback Policy For WorkNode Execution",
         "heading_level": 3,
-        "heading_line": 13037,
-        "line": 13039,
+        "heading_line": 13233,
+        "line": 13235,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106384,8 +106518,8 @@
       "source_location": {
         "heading": "F2-190 - Planning Source-Control Safety, Non-Git Coverage, And Dirty-State Preservation",
         "heading_level": 3,
-        "heading_line": 13090,
-        "line": 13092,
+        "heading_line": 13286,
+        "line": 13288,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106401,8 +106535,8 @@
       "source_location": {
         "heading": "F2-191 - Discovery FileSafe No-Leak Indexing And Result Guards",
         "heading_level": 3,
-        "heading_line": 13203,
-        "line": 13205,
+        "heading_line": 13399,
+        "line": 13401,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106418,8 +106552,8 @@
       "source_location": {
         "heading": "F2-192 - Vision Bridge Image Source Safety",
         "heading_level": 3,
-        "heading_line": 13251,
-        "line": 13253,
+        "heading_line": 13447,
+        "line": 13449,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106435,8 +106569,8 @@
       "source_location": {
         "heading": "F2-193 - Free Models Upstream Side Effect And Adapter Guard Boundary",
         "heading_level": 3,
-        "heading_line": 13359,
-        "line": 13361,
+        "heading_line": 13555,
+        "line": 13557,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106452,8 +106586,8 @@
       "source_location": {
         "heading": "F2-194 - Containerized Host FileSafe Mount Exec And Side-Effect Guards",
         "heading_level": 3,
-        "heading_line": 13421,
-        "line": 13423,
+        "heading_line": 13617,
+        "line": 13619,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106469,8 +106603,8 @@
       "source_location": {
         "heading": "F2-195 - P1-SECURITY-CREDENTIAL-LOGGING",
         "heading_level": 3,
-        "heading_line": 13510,
-        "line": 13512,
+        "heading_line": 13706,
+        "line": 13708,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106486,8 +106620,8 @@
       "source_location": {
         "heading": "F2-196 - P1-TRACE-REDACTION-BEFORE-WRITE",
         "heading_level": 3,
-        "heading_line": 13591,
-        "line": 13593,
+        "heading_line": 13787,
+        "line": 13789,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106503,8 +106637,8 @@
       "source_location": {
         "heading": "F2-197 - P0-LOG-REDACTION-BEFORE-WRITE",
         "heading_level": 3,
-        "heading_line": 13664,
-        "line": 13666,
+        "heading_line": 13860,
+        "line": 13862,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -106520,8 +106654,25 @@
       "source_location": {
         "heading": "F2-198 - filesystem_boundary_regressions",
         "heading_level": 3,
-        "heading_line": 13756,
-        "line": 13758,
+        "heading_line": 13952,
+        "line": 13954,
+        "path": "Plans/FileSafe.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "filesafe_fail_closed_security_repair",
+      "gui_related": false,
+      "owner_doc": "Plans/FileSafe.md",
+      "plan_unit_id": "F2-199",
+      "reasoning_tier": "high",
+      "risk_class": "filesafe_fail_closed_security_regression",
+      "source_location": {
+        "heading": "F2-199 - FileSafe Fail Closed Security Repair",
+        "heading_level": 3,
+        "heading_line": 14020,
+        "line": 14022,
         "path": "Plans/FileSafe.md"
       },
       "status": "accepted",
@@ -167054,12 +167205,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11599,
+    "depends_on_edge_count": 11615,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13640,
-    "node_count": 5491,
+    "edge_count": 13663,
+    "node_count": 5493,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2041,
+    "unblocks_edge_count": 2048,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

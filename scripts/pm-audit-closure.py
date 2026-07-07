@@ -200,6 +200,7 @@ DEFAULT_AUDIT_SOURCE_ARTIFACTS = [
     "gui_platform_currentness_findings.jsonl",
     "storage_coordination_canon_findings.jsonl",
     "platform_specs_authority_findings.jsonl",
+    "filesafe_fail_closed_security_findings.jsonl",
     "semantic_risks.jsonl",
     "atom_fidelity_matrix.jsonl",
     "planunit_source_claims.jsonl",

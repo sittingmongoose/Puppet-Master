@@ -14,7 +14,7 @@
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "sha256": "bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2"
+      "sha256": "9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2"
     },
     {
       "path": "Plans/Executor_Protocol.md",
@@ -26,35 +26,35 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "94df70bf57f629d4e91062d843285fcf956fe1477455e64b3c53a1bad4a1560b"
+      "sha256": "8457cc61697d2d99bf884f036097475761f47ceffe3cc1b9c58ff681f99e2c2b"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "8954cc9d7c7e692c1bbb005c601ecec2549b853c303387bfe9b1c9a619337193"
+      "sha256": "d9a8705d8834bed162a9d71dafcf2805137a30198c87d6176740956fb5a95f5c"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "74cf74c747c791873d6a1e9ad30aef2a03ca171f24cf7e4c67dd3a0f4b6a7d39"
+      "sha256": "729d77feb070a2d3be114405007d247cd5619f09d1e617a18bd62bd2e85e94b3"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "92766c684d7cb48a1c14a9b4b364ffbd86f500f5e778b12af27061eb7e12a300"
+      "sha256": "36cfd928219e3b8bab17788e2bbacc6de830f449ebe8bd726bd0124e36087e7a"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "4c2717f1bea4de1fa5d8fdf252aa88635686086522ca270d19e08e3a22ef5799"
+      "sha256": "bf944e6b4f524de54faaca6c0e931fc6d175764bc56e26b3b555ada56c740f61"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "43dd923100871de6a72153ddf5c2d8bb408bd8412dedced9203f6c561d68ac07"
+      "sha256": "3ac7d01e67557fb5d4f5bf1c2de31f9fc65a955bc2b4e497475aebe600bcd4e0"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
-      "sha256": "f161afabb0ee1f9c106e6b9b619154facb36efb2f939ebfc52d753b7fb371bb8"
+      "sha256": "09241c0bb5d65dec3353721863c915a4ba4e6de08ace4e145f46574561d6ae04"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
-      "sha256": "1b98593d4d5d19d9e17448378204b039cf412f13cca04771fc30561af528ec46"
+      "sha256": "fd43acd36eea1a7931c613e672585fee1e60aeae36d29d58be2b9f73c1c6674c"
     },
     {
       "path": "Plans/.plan_migration/pds-20260611-002-atomize-planunits/validation_report.json",
@@ -62,7 +62,7 @@
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "5493b8b3e13fcca6e8b80ce175108ef510e22ca3b876dcdf17f91296162492d6"
+      "sha256": "096a4ffa7805a95bc55f6d46df37aa5e07d3759a8b7d2512c2739bab1c7b3366"
     },
     {
       "path": "Plans/sharding_config.json",
@@ -70,7 +70,7 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "ae02d34550bce44f8f95048ba4b4ec8c8cddac702c6835e0894d25615ac2ec3f"
+      "sha256": "045fa27e555bc2dc18b9b300a3f0279413d516f27da88c891980613fd8d9a749"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -338,6 +338,16 @@
       "name": "storage-coordination-canon-repair-evidence-restamp",
       "result": "PASS",
       "details": "Evidence artifact hashes refreshed after the FABLE storage/coordination canon repair regenerated canonical docs, plan index, migration metadata, Spec Lock, and plan-sharding evidence."
+    },
+    {
+      "name": "validate-filesafe-security-policy",
+      "result": "PASS",
+      "details": "PASS after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "validate-evidence",
+      "result": "PASS",
+      "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
     }
   ],
   "commands_run": [
@@ -591,6 +601,10 @@
       "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
       "exit_code": 0,
       "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

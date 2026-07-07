@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "ae02d34550bce44f8f95048ba4b4ec8c8cddac702c6835e0894d25615ac2ec3f"
+      "sha256": "045fa27e555bc2dc18b9b300a3f0279413d516f27da88c891980613fd8d9a749"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -18,7 +18,7 @@
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "f9b56f64de6207653e17bd53431a4283808a43678f2dc7efa0413db500ae88be"
+      "sha256": "0002a1f3e7625b28093d4aa897de375673a80de2eae4445b9a9018e68e77d7ba"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -26,15 +26,15 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "e12bb3e81549ed6242e57c8923a6b533ed0a721ab15c5d30ada6ca1bc08e6bab"
+      "sha256": "0834b2f36fe2993e5ce2e94658e764bf6547c888808542625fe5f86651983647"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "1b47ad35559f657800a01a31364d1272ea0191c4f7a05139381829aee84fa42c"
+      "sha256": "54106a857f58c15f8c258193a410b66ea31bbb3b0bee58da5957da112ea4a1e0"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
-      "sha256": "154fc8c954d9ee44865ee06dd9fa08db341a6b0ffd601030c9f39dac5cd04030"
+      "sha256": "c70030ab306e0307eb94fbca5ad941f950ffc506ae3fd63efdf96f1fc6621f89"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/report.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "94df70bf57f629d4e91062d843285fcf956fe1477455e64b3c53a1bad4a1560b"
+      "sha256": "8457cc61697d2d99bf884f036097475761f47ceffe3cc1b9c58ff681f99e2c2b"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "8954cc9d7c7e692c1bbb005c601ecec2549b853c303387bfe9b1c9a619337193"
+      "sha256": "d9a8705d8834bed162a9d71dafcf2805137a30198c87d6176740956fb5a95f5c"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "74cf74c747c791873d6a1e9ad30aef2a03ca171f24cf7e4c67dd3a0f4b6a7d39"
+      "sha256": "729d77feb070a2d3be114405007d247cd5619f09d1e617a18bd62bd2e85e94b3"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "92766c684d7cb48a1c14a9b4b364ffbd86f500f5e778b12af27061eb7e12a300"
+      "sha256": "36cfd928219e3b8bab17788e2bbacc6de830f449ebe8bd726bd0124e36087e7a"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "4c2717f1bea4de1fa5d8fdf252aa88635686086522ca270d19e08e3a22ef5799"
+      "sha256": "bf944e6b4f524de54faaca6c0e931fc6d175764bc56e26b3b555ada56c740f61"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "43dd923100871de6a72153ddf5c2d8bb408bd8412dedced9203f6c561d68ac07"
+      "sha256": "3ac7d01e67557fb5d4f5bf1c2de31f9fc65a955bc2b4e497475aebe600bcd4e0"
     }
   ],
   "checks": [
@@ -278,6 +278,16 @@
       "name": "storage-coordination-canon-repair-evidence-restamp",
       "result": "PASS",
       "details": "Evidence artifact hashes refreshed after the FABLE storage/coordination canon repair regenerated canonical docs, plan index, migration metadata, Spec Lock, and plan-sharding evidence."
+    },
+    {
+      "name": "validate-filesafe-security-policy",
+      "result": "PASS",
+      "details": "PASS after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "validate-evidence",
+      "result": "PASS",
+      "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
     }
   ],
   "commands_run": [
@@ -519,6 +529,10 @@
       "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
       "exit_code": 0,
       "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

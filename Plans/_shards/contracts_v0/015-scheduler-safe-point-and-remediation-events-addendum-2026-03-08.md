@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2116-L2354
+Source lines: L2116-L2389
 
-Source SHA256: `bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2`
+Source SHA256: `9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2`
 
 ---
 
@@ -159,6 +159,41 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 #### FileSafe snapshot event compatibility
 
 FileSafe may emit compatibility producer event names `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` when it creates, detects a conflict for, or restores a mutation safe-point snapshot. These names are FileSafe-facing wrappers for the Contracts-owned safe-point event contract, not separate event-family owners: creation maps to `safe_point.created`, restore maps to `safe_point.restored`, and conflict reporting carries the same safe-point/snapshot identity with a `restore_outcome` or `conflict_reason_code` as applicable. Minimum payload fields are `snapshot_id`, `safe_point_id`, `run_id`, `node_id?`, `attempt_id?`, `target_path?`, `conflict_reason_code?`, `restore_outcome?`, and `ts`.
+
+#### FileSafe fail-closed security event payloads
+
+FileSafe fail-closed security events use the canonical `EventRecord` envelope (`schema_id = pm.event.v0`). These payload definitions cover the FileSafe P0 fail-closed repair only; they do not replace `tool.denied`, safe-point events, permission approvals, or adjacent runtime receipt contracts.
+
+Stable event types:
+
+| Event type | Minimum payload fields |
+|---|---|
+| `filesafe.guard_init_failed` | `guard_type`, `diagnostic_code`, `failure_stage`, `baseline_source?`, `project_id`, `run_id?`, `worktree_id?`, `blocked_capability`, `user_visible_message`, `redaction_profile`, `ts` |
+| `filesafe.command_denied` | `guard_type`, `denial_code`, `command_preview`, `normalized_command_identity`, `segment_index?`, `pattern_matched?`, `permission_snapshot_id?`, `filesafe_scope_ref?`, `project_id`, `run_id?`, `worktree_id?`, `allowed_action_ids[]?`, `ts` |
+| `filesafe.path_denied` | `guard_type`, `denial_code`, `path_preview`, `normalized_path?`, `canonical_parent?`, `path_kind`, `operation`, `filesafe_scope_ref?`, `permission_snapshot_id?`, `project_id`, `run_id?`, `worktree_id?`, `allowed_action_ids[]?`, `ts` |
+| `filesafe.destructive_override_requested` | `request_id`, `guard_type`, `command_preview`, `normalized_command_identity`, `requested_scope`, `requested_duration`, `reason`, `auth_realm`, `operator_identity_ref`, `project_id`, `run_id?`, `worktree_id?`, `ts` |
+| `filesafe.destructive_override_granted` | `request_id`, `receipt_id`, `guard_type`, `authorized_scope`, `reason`, `auth_realm`, `operator_identity_ref`, `issued_at`, `expires_at`, `project_id`, `run_id?`, `worktree_id?`, `ts` |
+| `filesafe.destructive_override_denied` | `request_id`, `guard_type`, `denial_code`, `denial_reason`, `auth_realm?`, `operator_identity_ref?`, `project_id`, `run_id?`, `worktree_id?`, `ts` |
+| `filesafe.policy_degraded` | `degraded_component`, `degradation_reason`, `authoritative_enforcement_intact`, `fallback_source?`, `project_id`, `run_id?`, `worktree_id?`, `ts` |
+
+Required denial codes include `guard_init_failed`, `destructive_pattern_match`, `approved_command_identity_mismatch`, `missing_allowlist`, `empty_allowlist`, `missing_baseline`, `canonicalization_failed`, `path_outside_scope`, `path_toc_tou_recheck_failed`, `override_auth_missing`, `override_scope_invalid`, and `override_expired`.
+
+Destructive override receipt fields:
+- `receipt_id`
+- `request_id`
+- `auth_realm`
+- `operator_identity_ref`
+- `reason`
+- `authorized_scope` with project, optional run, optional worktree, and optional command identity
+- `issued_at`
+- `expires_at`
+- `approver_ref` when different from the operator
+- `event_refs[]` linking requested/granted/denied events
+- `redaction_profile`
+
+`filesafe.policy_degraded` is valid only when enforcement remains fail-closed or an embedded fallback baseline remains authoritative enough to block known destructive operations. It must not stand in for missing/empty allowlists, missing roots, unresolved canonical paths, failed guard initialization, or destructive override denial.
+
+ContractRef: EventType:filesafe.guard_init_failed, EventType:filesafe.command_denied, EventType:filesafe.path_denied, EventType:filesafe.destructive_override_requested, EventType:filesafe.destructive_override_granted, EventType:filesafe.destructive_override_denied, EventType:filesafe.policy_degraded, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
 
 ### 4. Remediation lineage events
 

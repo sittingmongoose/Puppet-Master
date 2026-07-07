@@ -153,8 +153,44 @@
         "Plans/.audits/fable-20260706/PLATFORM_SPECS_CLOSURE_HARDENING.md",
         "Plans/.audits/fable-20260706/platform_specs_closure_hardening_report.json"
       ]
+    },
+    {
+      "finding_key": "fable-20260706-p0-filesafe-fail-open-and-allowlist-security",
+      "reason": "FileSafe active canon now fails closed on guard initialization, missing/empty allowlists, missing baselines, env-var-alone destructive override requests, prompt/free-text-only extraction, prefix approved-command bypasses, and path canonicalization ambiguity; Contracts_V0 now owns FileSafe event and override receipt payload minima; validate-filesafe-security-policy is wired into run-gates.",
+      "registry_closure_id": "closure-fable-20260706-filesafe-fail-closed-security-001",
+      "repair_required": false,
+      "status": "repaired_current",
+      "superseded_at_utc": "2026-07-07T20:26:31Z",
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md",
+        "Plans/.audits/fable-20260706/filesafe_fail_closed_security_repair_report.json",
+        "Plans/.audits/fable-20260706/filesafe_fail_closed_security_findings.jsonl"
+      ]
     }
   ],
+  "filesafe_fail_closed_security_repair": {
+    "closed_mechanical_buildability_rows": [
+      "fable-20260706-report-l0569-critical-l204-211-690-708-bashguard-new-unwrap-or-else-bashguard-disable-5ff59664",
+      "fable-20260706-report-l0570-critical-l2421-2427-11196-11247-graceful-degradation-mitigation-re-endor-ffdb0fee",
+      "fable-20260706-report-l0571-critical-l414-423-vs-l1828-1829-commands-match-implements-prefix-matchin-2dfbb7d9",
+      "fable-20260706-report-l0572-high-l1638-1646-prompt-based-command-path-extraction-regex-over-free-tex-b333dcf2",
+      "fable-20260706-report-l0573-high-l1819-1955-puppet-master-allowed-files-fail-closed-default-is-downg-64cadc8b",
+      "fable-20260706-report-l0574-high-l5478-5525-f2-052-puppet-master-allow-destructive-1-has-no-auth-aud-57f787e4",
+      "fable-20260706-report-l0575-high-l5145-5196-6723-6780-realpath-case-fold-symlink-comparison-algorith-acff7059",
+      "fable-20260706-report-l0576-high-l8317-8319-f2-101-doc-explicitly-flags-an-unresolved-prose-example-5b393f9e",
+      "fable-20260706-report-l0577-high-l11097-11146-f2-153-warn-only-mode-preserved-alongside-fail-closed-0732c0d7",
+      "fable-20260706-report-l0579-high-l9043-9053-f2-115-embedded-minimal-fallback-pattern-list-when-bundl-db15f547"
+    ],
+    "explicitly_out_of_scope_mechanical_rows": [
+      {
+        "finding_key": "fable-20260706-report-l0578-high-l13510-13589-13664-13754-f2-195-197-redactionsettlement-and-observa-10fc20d2",
+        "reason": "RedactionSettlement and Observability broad rows are outside this FileSafe fail-closed repair lane."
+      }
+    ],
+    "registry_closure_id": "closure-fable-20260706-filesafe-fail-closed-security-001",
+    "semantic_finding_key": "sfk-27ef857a0b0c7384b032ea5d",
+    "status": "repaired_current"
+  },
   "gate_change_recommendation_summary": [
     "Fail buildability when production wiring rows are still pre-implementation contracts or use placeholder *.command_applied events.",
     "Fail buildability when launch-chain commands lack render/control, dispatcher, receipt/event, state-selector, disabled-reason, and regression evidence.",
@@ -164,9 +200,22 @@
     "Require event catalogs to have per-event payload minima and schema refs, not just generic envelopes.",
     "Require behavioral acceptance and dependency graph quality for P0/gui_related PlanUnits instead of preservation-only acceptance criteria."
   ],
-  "generated_at_utc": "2026-07-07T19:36:27Z",
+  "generated_at_utc": "2026-07-07T20:26:31Z",
+  "gui_toolkit_stale_mechanical_row_hygiene": {
+    "decision": "Closed as stale mechanical overcapture by existing GUI platform hardening evidence; no new GUI product scope reopened.",
+    "mechanical_buildability_row": "fable-20260706-report-l1294-critical-spec-lock-json-locked-decisions-ui-toolkit-version-1-15-1-direc-1d056fc9",
+    "registry_closure_id": "closure-fable-20260706-gui-toolkit-stale-mechanical-row-hygiene-001",
+    "status": "repaired_superseded",
+    "superseded_by": [
+      "Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md",
+      "Plans/.audits/fable-20260706/gui_platform_hardening_repair_report.json"
+    ]
+  },
   "outputs": {
     "currentness_report": "Plans/.audits/fable-20260706/currentness_check_report.json",
+    "filesafe_fail_closed_security_findings": "Plans/.audits/fable-20260706/filesafe_fail_closed_security_findings.jsonl",
+    "filesafe_fail_closed_security_repair": "Plans/.audits/fable-20260706/FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md",
+    "filesafe_fail_closed_security_repair_report": "Plans/.audits/fable-20260706/filesafe_fail_closed_security_repair_report.json",
     "platform_specs_closure_hardening": "Plans/.audits/fable-20260706/PLATFORM_SPECS_CLOSURE_HARDENING.md",
     "platform_specs_closure_hardening_report": "Plans/.audits/fable-20260706/platform_specs_closure_hardening_report.json",
     "registry": "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
@@ -262,7 +311,9 @@
     },
     {
       "blocker_family": "security_boundary",
-      "classification": "partial_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T20:26:31Z",
+      "closure_status": "repair_validated",
       "dependency_order": 50,
       "finding_key": "fable-20260706-p0-filesafe-fail-open-and-allowlist-security",
       "owner_docs": [
@@ -271,9 +322,15 @@
         "Plans/Contracts_V0.md"
       ],
       "priority": "P0",
-      "repair_required": true,
+      "registry_closure_id": "closure-fable-20260706-filesafe-fail-closed-security-001",
+      "repair_required": false,
+      "repair_summary": "FileSafe active canon now fails closed on guard initialization, missing/empty allowlists, missing baselines, env-var-alone destructive override requests, prompt/free-text-only extraction, prefix approved-command bypasses, and path canonicalization ambiguity; Contracts_V0 now owns FileSafe event and override receipt payload minima; validate-filesafe-security-policy is wired into run-gates.",
       "source_severity": "Critical",
-      "title": "FileSafe still preserves fail-open and prefix-match source snippets while later rows attempt to demote them to source-lineage."
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md",
+        "Plans/.audits/fable-20260706/filesafe_fail_closed_security_repair_report.json"
+      ],
+      "title": "FileSafe fail-closed security canon closed by FileSafe security repair."
     },
     {
       "blocker_family": "gui_wiring",
@@ -511,12 +568,12 @@
       "already_fixed_in_latest_repo": 1,
       "confirmed_current": 5,
       "false_alarm_corrected": 5,
-      "needs_repair": 354,
-      "owner_decision_required": 9,
-      "partial_current": 5,
-      "repaired_current": 7,
-      "repaired_superseded": 1,
-      "source_lineage_only": 2
+      "needs_repair": 338,
+      "owner_decision_required": 8,
+      "partial_current": 4,
+      "repaired_current": 18,
+      "repaired_superseded": 9,
+      "source_lineage_only": 1
     },
     "mechanical_overcapture_removed_rows": 78,
     "priority_counts": {
@@ -571,66 +628,6 @@
       [
         "Plans/FileSafe.md",
         12
-      ],
-      [
-        "Plans/Executor_Protocol.md",
-        12
-      ],
-      [
-        "Plans/Models_System.md",
-        11
-      ],
-      [
-        "Plans/Tools.md",
-        11
-      ],
-      [
-        "Plans/newtools.md",
-        10
-      ],
-      [
-        "Plans/Media_Generation_and_Capabilities.md",
-        10
-      ],
-      [
-        "Plans/chain-wizard-flexibility.md",
-        9
-      ],
-      [
-        "Plans/Orchestrator_Page.md",
-        9
-      ],
-      [
-        "Plans/Skills_System.md",
-        8
-      ],
-      [
-        "Plans/MiscPlan.md",
-        8
-      ],
-      [
-        "Plans/Goal_Runtime_System.md",
-        7
-      ],
-      [
-        "Plans/Planning_Wizard.md",
-        6
-      ],
-      [
-        "Plans/Progression_Gates.md",
-        6
-      ],
-      [
-        "Plans/MCP_Integration.md",
-        5
-      ],
-      [
-        "Plans/Run_Graph_View.md",
-        5
-      ],
-      [
-        "Plans/Wiring_Matrix.md",
-        5
       ]
     ]
   },
@@ -638,10 +635,11 @@
   "requested_source_report_path": "Plans/.audits/fable-20260706/FINAL_REPORT.md",
   "schema_id": "pm.audit.currentness_check_report.v1",
   "scope": {
+    "filesafe_fail_closed_security_repaired": true,
     "mechanical_report_lines_preserved_for_non_p0_p1": true,
     "p0_p1_reverified_only": true,
-    "plans_repaired": false,
-    "triage_only": true
+    "plans_repaired": true,
+    "triage_only": false
   },
   "validator_invocation_errors": [
     {
@@ -705,6 +703,12 @@
       "stdout_tail": "{\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-07T11:58:19Z\",\n  \"status\": \"pass\"\n}\n",
       "wrapper_hang": false,
       "wrapper_timeout_seconds": 180
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_tail": "{\n  \"check\": \"validate-filesafe-security-policy\",\n  \"failures\": [],\n  \"generated_at_utc\": \"2026-07-07T20:32:26Z\",\n  \"status\": \"pass\"\n}"
     }
   ],
   "wrapper_hangs": []

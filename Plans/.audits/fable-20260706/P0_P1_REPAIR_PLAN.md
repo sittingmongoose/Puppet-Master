@@ -3,8 +3,9 @@
 Generated: 2026-07-07T11:56:40Z
 Updated: 2026-07-07T18:49:00Z for storage/coordination canon repair and platform_specs authority repair.
 Updated: 2026-07-07T19:36:27Z for platform_specs closure hardening and non-provider residue adjudication.
+Updated: 2026-07-07T20:26:31Z for FileSafe fail-closed security repair and stale GUI toolkit mechanical row closure hygiene.
 
-Scope: triage plus bounded storage/coordination canon repair and platform_specs authority repair. FileSafe, tier vocabulary, UI command catalog, wiring matrix, Goal Runtime, Executor Protocol, broad Contracts_V0 gaps, missing docs, and broad PlanUnit boilerplate remain out of scope.
+Scope: triage plus bounded storage/coordination canon repair, platform_specs authority repair, FileSafe fail-closed security repair, and stale GUI toolkit mechanical row closure hygiene. Tier vocabulary, UI command catalog, wiring matrix, Goal Runtime, Executor Protocol, broad Contracts_V0 gaps, missing docs, and broad PlanUnit boilerplate remain out of scope.
 
 ## Current Buildability Reality
 
@@ -18,7 +19,7 @@ Scope: triage plus bounded storage/coordination canon repair and platform_specs 
 20. `fable-20260706-p0-platform-specs-authority-drift` — **repaired_current** — Closed by `PLATFORM_SPECS_AUTHORITY_REPAIR.md` and `platform_specs_authority_repair_report.json`; Models_System now owns context-window, max-token, fallback-chain, provenance, and requested/effective capability fields, Contracts_V0 only carries snapshot refs, and Assistant Chat no longer uses legacy platform_specs functions as active authority.
 30. `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` — **repaired_superseded** — Closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; active canon now pins Slint 1.17.1, Slint/WASM canvas web bootstrap limits, native Rust + Slint `.slint` markup, and `validate-gui-asset-policy` governance coverage.
 40. `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` — **owner_decision_required** — Tier-era config and iteration wording remain live beside node/package/seam/lane canon.
-50. `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` — **partial_current** — FileSafe still preserves fail-open and prefix-match source snippets while later rows attempt to demote them to source-lineage.
+50. `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` — **repaired_current** — Closed by `FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md` and `filesafe_fail_closed_security_repair_report.json`; active canon now blocks guard initialization failure, requires exact normalized approved-command matching, fails closed on missing/empty allowlists and missing baselines regardless of `strict_mode`, treats `PUPPET_MASTER_ALLOW_DESTRUCTIVE=1` as a request signal only, requires authenticated scoped destructive override receipts, and fences fail-open/prefix snippets as noncanonical source-lineage.
 110. `fable-20260706-p1-ui-command-catalog-missing-families` — **confirmed_current** — Core UI command families remain absent, including cmd.chat.send and theme/persona/alert/concern/model command families.
 120. `fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events` — **confirmed_current** — Production wiring matrix still has 179 generic locations, 323 rows without events, 99 placeholder command_applied event rows, and 35/459 fully located+evented rows.
 125. `fable-20260706-p1-launch-approval-chain-preimplementation-proof` — **partial_current** — Launch/approval chain is partially current: PRD and Approve And Build rows now have real events/locations, but runtime.approve and plan_compile.open_build still use placeholder events/pre-implementation evidence while buildability gate is enabled.
@@ -47,8 +48,8 @@ Scope: triage plus bounded storage/coordination canon repair and platform_specs 
   - Repair target satisfied: `Plans/Spec_Lock.json` and active GUI owner docs use Slint 1.17.1; `FinalGUISpec.md` forbids React/Tauri/DOM-rendered product UI while allowing only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue for Slint/WASM; `scripts/pm-plans-verify.py validate-gui-asset-policy` is a run-gates and audit-governance check.
 
 ### Plans/FileSafe.md
-- `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` (P0, Critical, partial_current): FABLE P0 #5: replace disabled fallback, prefix allowlist, empty-allowlist warn-only, and destructive override with fail-closed/auth/audit semantics.
-  - Repair target: Readiness gate should reject fail-open code/prose patterns in security docs unless an adjacent current row explicitly marks them retired and no accepted unit uses them as final canon.; Add exact-match allowlist and destructive override auth/audit checks to implementation-readiness validation.
+- `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` (P0, Critical, repaired_current): FABLE P0 #5 is closed by `FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md`; FileSafe now requires blocking init failure, exact normalized approved-command identities, strict fail-closed allowlists/baselines, authenticated destructive override grants with receipt fields, advisory-only prompt/free-text extraction, non-existent-create and TOCTOU path checks, and retired fail-open snippet fencing.
+  - Repair target satisfied: `validate-filesafe-security-policy` rejects active fail-open guard snippets, prefix/`starts_with` approved-command semantics, env-var-alone destructive override semantics, missing FileSafe fail-closed event payloads, missing destructive override receipt fields, and prompt/free-text-only enforcement wording.
 
 ### Platform_specs Residue Boundary
 

@@ -13,17 +13,17 @@
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "14591e0f08cd47602562689441fcbd701b6003d2959e35a5f15ac96e1237fdb4"
+      "sha256": "5ae3823278c51feef6a4cb827d95914e0812b79f2827596577779b7c5eeab2d2"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "43dd923100871de6a72153ddf5c2d8bb408bd8412dedced9203f6c561d68ac07"
+      "sha256": "3ac7d01e67557fb5d4f5bf1c2de31f9fc65a955bc2b4e497475aebe600bcd4e0"
     },
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "ae02d34550bce44f8f95048ba4b4ec8c8cddac702c6835e0894d25615ac2ec3f"
+      "sha256": "045fa27e555bc2dc18b9b300a3f0279413d516f27da88c891980613fd8d9a749"
     }
   ],
   "checks": [
@@ -71,6 +71,16 @@
       "name": "storage-coordination-canon-repair-storage-registry-restamp",
       "result": "PASS",
       "details": "Storage value registry evidence hashes refreshed after adding coordination EventRecord, redb projection, and debug mirror export registry rows."
+    },
+    {
+      "name": "validate-filesafe-security-policy",
+      "result": "PASS",
+      "details": "PASS after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "validate-evidence",
+      "result": "PASS",
+      "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
     }
   ],
   "commands_run": [
@@ -122,6 +132,10 @@
       "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
       "exit_code": 0,
       "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [
