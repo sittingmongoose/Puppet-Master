@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L267-L513
+Source lines: L267-L570
 
-Source SHA256: `ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222`
+Source SHA256: `ec985cbe5ad6cff2f7a16ec09e01680021dc515df6155697f21cdfbbc2dc5f76`
 
 ---
 
@@ -61,6 +61,13 @@ Required notes:
 - no critical-path weighting term is part of MVP selection
 - queue analysis MUST expose the tuple breakdown so the user can see why a node was chosen
 - `ready_since_utc` is set when the node first enters the ready set after being non-ready; it is retained while the node stays continuously ready
+
+Selection algorithm:
+1. Normalize `scheduler_lane` to `scheduler_lane_rank` where `remediation = 3`, `unblocker = 2`, and `normal = 1`.
+2. Sort the ready set by `(scheduler_lane_rank DESC, manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, node_id ASC)`.
+3. Persist the complete score tuple on every selected and non-selected node in `scheduler.pass`.
+4. Preserve `non_selected_reason` for ready nodes that lose to capacity, lane, or policy bounds.
+
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 
 ### 4. Capacity-aware parallel dispatch
@@ -70,7 +77,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 `available_slots` is derived from:
 - run-level concurrency limit
-- any active phase/task/subtask concurrency constraints
+- any active package/lane/seam concurrency constraints; legacy phase/task/subtask labels may only normalize into those scopes
 - resource / provider saturation limits
 - remediation lane reservations when configured
 
@@ -83,6 +90,32 @@ Canonical wake-trigger values and coalescing behavior are defined in `### Wake r
 This section is a forward-reference only so the wake-trigger canon has a single owner section in this file.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+
+### Wake reasons and coalescing
+
+`wake_reason` is closed to:
+- `prerequisite_resolved`
+- `approval_resolved`
+- `clarification_resolved`
+- `auth_recovered`
+- `startup_recovered`
+- `backoff_expired`
+- `verification_completed`
+- `remediation_resolved`
+- `safe_point_restored`
+- `capacity_available`
+- `replan_applied`
+- `watchdog_recheck`
+
+Coalescing rules:
+- Runtime keeps one pending wake set per `{run_id, replan_generation}`.
+- The first wake recorded by `(recorded_at_utc, event_id)` becomes the primary `scheduler.pass.wake_reason`.
+- Additional wakes in the same pending set are persisted in `scheduler.pass.coalesced_wake_reasons[]` and `scheduler.pass.wake_event_refs[]`.
+- One pending wake set produces at most one `scheduler.pass`; no additional pass is created only to replay a coalesced reason.
+- `watchdog_recheck` is admitted only when no event-driven wake is pending for the same `{run_id, replan_generation}`.
+- `replan_applied` invalidates stale attempts from the prior `replan_generation` before ready-set scoring.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
 ### 6. Blocked-to-runnable cascade
 
@@ -131,6 +164,16 @@ ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestra
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Contracts_V0.md
 
+Closed mapping requirements:
+- provider/network 5xx or transient disconnects map to `failure_class = provider_transient`.
+- provider 429 or quota pressure that can retry later maps to `failure_class = rate_limited`; hard quota exhaustion maps to `failure_class = quota_exceeded`.
+- malformed model/provider structured output maps to `failure_class = structured_output_invalid`.
+- verifier failure and reviewer findings stay distinct as `verification_failed` and `reviewer_findings`.
+- missing or expired refreshable credentials map to `failure_class = auth_expired`; absent credentials, missing scopes, or required login before admission map to `blocked_reason_code = auth_required`.
+- operator permission denial maps to `blocked_reason_code = permission_denied`.
+- approval declined, headless approval denial, FileSafe denial, external side-effect approval, replan-required, validation blockers, worktree conflicts, and dirty worktrees remain blocked reason codes, not failure classes.
+- unknown values fail closed as `blocked_reason_code = validation_blocked` until the owning enum is extended through governance.
+
 Per-class (`per-class`) retry rules:
 - `provider_transient` uses exponential backoff with base `1s`, factor `2x`, and cap `4s`: `1s -> 2s -> 4s`
 - `rate_limited` remains distinct from `provider_transient`; executor policy MUST preserve that distinction when deciding backoff, surfacing state, or opening circuit breakers
@@ -169,6 +212,20 @@ Helper and background attempts remain first-class usage contributors: `/helper/b
 Lifecycle shutdown consumers treat shutdown as `/idempotent`: double shutdown is guarded with a Once/idempotent root and becomes a safe no-op rather than a second destructive lifecycle transition.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### 7.2B Stream coalescer, backpressure, and transport decision receipts
+
+Provider, CLI, SSE, WebSocket, stdout, unix-socket, and HTTP adapters settle streams through one stream coalescer. The coalescer admits `partial_delta`, `cumulative_snapshot`, `reasoning_delta`, `tool_call_fragment`, `provider_item_id`, `provider_error`, `final_assistant_turn`, and `durable_history_write` phases, but only `final_assistant_turn` plus the matching receipt may become durable assistant history.
+
+Transport defaults:
+- `stream_terminal_event_timeout_ms = 5000`.
+- Missing terminal event before timeout is a retryable transport failure with `failure_class = provider_transient` and `timeout_class = inactivity_timeout`; zero-usage aborted turns are not replay content.
+- Backpressure bound is `max_pending_stream_frames = 1024` or `max_pending_stream_bytes = 16777216`, whichever trips first.
+- Overflow returns a structured overload/blocking result with `blocked_reason_code = validation_blocked`, `transport_pressure = overloaded`, and no silent frame drop.
+
+Every adapter selection records `transport_decision_receipt` with `receipt_id`, `schema_version`, `run_id?`, `node_id?`, `attempt_id?`, `provider_id`, `adapter_kind`, `transport_kind`, `locality`, `auth_mode`, `replay_policy`, `backpressure_policy`, `fallback_policy`, `provider_support_ref`, `decision_reason`, `selected_at_utc`, and `event_refs[]`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 
 ### 7.3 Signal handling and process lifecycle
 

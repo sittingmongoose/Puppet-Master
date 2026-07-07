@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2485-L2597
+Source lines: L2582-L2695
 
-Source SHA256: `9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2`
+Source SHA256: `fe90fc80e248a7b95f53ff541653411553e3aa052e64c578e3a37aa62265cf53`
 
 ---
 
@@ -36,6 +36,7 @@ This section is an exact compatibility mirror of the later canonical runtime con
 
 `blocked_reason_code`:
 - `permission_denied`
+- `auth_required`
 - `user_declined`
 - `headless_ask_denied`
 - `filesafe_blocked`

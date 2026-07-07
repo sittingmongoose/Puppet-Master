@@ -1,14 +1,21 @@
-# Shard 008: Tier-Level Subagent Strategy
+# Shard 008: Compatibility Tier-Level Subagent Strategy
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L180-L194
+Source lines: L180-L201
 
-Source SHA256: `82df656d5d3c4926dfed2de494372a58ac426b46f18ba1c7b1885b135b20d241`
+Source SHA256: `af545965fa3150db48b829e91a13929d03f940b88f01f5cae8bccd2852ea1339`
 
 ---
 
-## Tier-Level Subagent Strategy
+## Compatibility Tier-Level Subagent Strategy
+
+This legacy section is retained for import/search compatibility. Live runtime
+subagent routing uses GoalRun, WorkGraph, WorkNode, package, seam, lane, phase,
+capability_lane, agent_role, SubagentWave, and SubagentPolicy vocabulary. Terms
+such as tier, phase/task/subtask/iteration tier, tier_overrides, and
+enable_tier_subagents are compatibility aliases only and must normalize through
+`SubagentPolicy` before runtime admission.
 Canonical worker strategy remains graph-owned rather than tier-owned, but provider/runtime selection for node workers must now use the reconciled runtime ontology.
 
 This heading is retained as a compatibility/search anchor. Canonical worker strategy is capability-lane and graph/package/seam/lane owned, with tier labels permitted only as legacy projection or migration vocabulary.

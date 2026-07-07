@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6645-L6946
+Source lines: L6702-L7078
 
-Source SHA256: `ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222`
+Source SHA256: `ec985cbe5ad6cff2f7a16ec09e01680021dc515df6155697f21cdfbbc2dc5f76`
 
 ---
 
@@ -309,4 +309,79 @@ pm_current_coverage: Prior pass recommended StreamHistoryCoalescer; storage-plan
 pm_gap_or_delta: Make settled history admission mandatory for all providers, not just context/cache pass.
 proposal_or_recommendation: Add StreamHistoryCoalescer with partial_delta, cumulative_snapshot, reasoning_delta, tool_call_fragment, provider_item_id, provider_error, final_assistant_turn, and durable_history_write phases.
 compile_disposition: create_new_planunit
+```
+
+### EP-114 - FABLE Wake Coalescing And Transport Receipt Closure
+
+```yaml
+plan_unit_id: EP-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Executor owns deterministic scheduler wake coalescing, ready-node score tuple
+  sorting, closed failure/blocked mapping, stream terminal timeout, backpressure
+  bounds, and transport decision receipts for the FABLE contract-runtime core
+  slice. Each {run_id, replan_generation} has at most one pending wake set; the
+  earliest wake becomes scheduler.pass.wake_reason, additional wakes become
+  coalesced_wake_reasons and wake_event_refs, and watchdog_recheck never outranks
+  an event-driven wake. Ready nodes sort by scheduler_lane_rank DESC,
+  manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, and
+  node_id ASC. Stream terminal timeout is 5000 ms, backpressure is bounded at
+  1024 frames or 16777216 bytes, and each adapter selection records a
+  transport_decision_receipt.
+gui_related: false
+gui_classification_reason: This unit defines runtime scheduling and transport behavior, not visual presentation.
+depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-098, EP-110, EP-111, EP-112, EP-113, CV-313]
+unblocks: []
+acceptance_criteria:
+  - "`scheduler.pass` uses the closed wake_reason set shared with Contracts_V0."
+  - Wake coalescing records primary wake, coalesced wake reasons, and event refs without creating duplicate scheduler passes.
+  - Queue analysis persists the complete score tuple and non-selected reason for ready-but-unselected nodes.
+  - Failure and blocked classifications map auth_required separately from auth_expired and fail closed on unknown classifier values.
+  - Missing terminal stream events time out after 5000 ms as retryable provider_transient inactivity_timeout rather than durable assistant content.
+  - Backpressure is bounded at 1024 frames or 16777216 bytes and overflow returns structured overload evidence.
+  - Transport decision receipts include locality, auth, replay, backpressure, fallback, provider support, decision reason, selected timestamp, and event refs.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: fable_executor_wake_coalescing_drift
+reasoning_tier: high
+context_scope: contract_runtime_core_repair
+implementation_surfaces:
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: executor_wake_coalescing_transport_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`wake_reason`"
+  - "`scheduler.pass`"
+  - "`coalesced_wake_reasons[]`"
+  - "`wake_event_refs[]`"
+  - "`scheduler_lane_rank`"
+  - "`failure_class`"
+  - "`blocked_reason_code`"
+  - "`auth_required`"
+  - "`auth_expired`"
+  - "`stream_terminal_event_timeout_ms = 5000`"
+  - "`max_pending_stream_frames = 1024`"
+  - "`max_pending_stream_bytes = 16777216`"
+  - "`transport_decision_receipt`"
+negative_constraints:
+  - Do not treat this runtime protocol closure as implementation-readiness proof or runtime certification harness completion.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+owner_hints:
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
 ```

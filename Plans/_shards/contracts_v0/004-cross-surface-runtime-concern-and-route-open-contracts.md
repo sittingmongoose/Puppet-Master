@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L312-L814
+Source lines: L312-L837
 
-Source SHA256: `9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2`
+Source SHA256: `fe90fc80e248a7b95f53ff541653411553e3aa052e64c578e3a37aa62265cf53`
 
 ---
 
@@ -236,7 +236,7 @@ Runtime identity carries role and operational identity beside provider account i
 
 The shared runtime snapshot is the explicit replacement for `TierContext`. Any execution-unit refs, lane/worktree refs, requested/effective runtime identity, execution role, governance lineage, remediation generation, or `/replan` generation formerly packed into tier context must resolve into the package/seam/lane/account runtime snapshot, with compatibility references to `TierContext`, `tier_id`, and tier-era execution kept only as historical trace.
 
-Recovery command and wake semantics stay keyed to blocked runtime state. `UI_Command_Catalog.md`, `UI_Command_Catalog`, `HITL`, `cmd.runtime`, `cmd.runtime.*`, and pre-attempt blocked episodes map canonical recovery from `allowed_action_ids[]` to runtime commands; pre-attempt blocks are keyed by `blocked_sequence` instead of fabricated `attempt_id`. The canonical blocked field family is `node.blocked`, `node.unblocked`, `blocked_reason_code`, `blocked_sequence`, ordered `allowed_action_ids`, `allowed_action_ids[]`, `node.prerequisite_resolved`, and `wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recovered | ...`; old HITL request examples are compatibility references only when they resolve into that family.
+Recovery command and wake semantics stay keyed to blocked runtime state. `UI_Command_Catalog.md`, `UI_Command_Catalog`, `HITL`, `cmd.runtime`, `cmd.runtime.*`, and pre-attempt blocked episodes map canonical recovery from `allowed_action_ids[]` to runtime commands; pre-attempt blocks are keyed by `blocked_sequence` instead of fabricated `attempt_id`. The canonical blocked field family is `node.blocked`, `node.unblocked`, `blocked_reason_code`, `blocked_sequence`, ordered `allowed_action_ids`, `allowed_action_ids[]`, `node.prerequisite_resolved`, and the closed `wake_reason` enum `prerequisite_resolved | approval_resolved | clarification_resolved | auth_recovered | startup_recovered | backoff_expired | verification_completed | remediation_resolved | safe_point_restored | capacity_available | replan_applied | watchdog_recheck`; old HITL request examples are compatibility references only when they resolve into that family.
 
 `blocked_sequence` is monotonic per `{ run_id, node_id }`, starts at `1`, and increments only when the node transitions from non-blocked to a new blocked episode.
 
@@ -488,6 +488,29 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 - Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`.
 - Treat `concern resolver` as distinct from owner/source roles.
 - Allow concern ownership reassignment without changing concern identity.
+
+`ConcernRecord` is the canonical typed concern object. Minimum fields are:
+
+| Field | Requirement |
+| --- | --- |
+| `schema_version` | Payload schema version for the concern record. |
+| `concern_id` | Stable concern identity that survives ownership reassignment. |
+| `project_id` | Project scope for the concern. |
+| `run_id?` | Runtime lineage when the concern is attached to a run. |
+| `scope_refs[]` | Node, package, seam, route/open, artifact, or external-resource refs affected by the concern. |
+| `owner_kind` / `owner_ref` | Current owner surface; distinct from creator and resolver. |
+| `created_by_kind` / `created_by_ref` | Actor or system that created the concern. |
+| `status` | Closed enum `active | acknowledged | resolved | dismissed`. |
+| `severity` | Impact severity, independent from `blocking_effect`. |
+| `category` | Stable concern category for dedupe and routing. |
+| `evidence_refs[]` / `source_refs[]` | Evidence and source-lineage refs supporting the concern. |
+| `lineage_refs[]` | Reopen, split, merge, supersession, or graph-patch lineage refs. |
+| `visibility_level` / `attention_level` / `chatworthy` | Projection controls for user attention without changing lifecycle state. |
+| `blocking_effect?` | Runtime/blocking impact, explicitly separate from severity. |
+| `resolution_kind?` | Closed enum `fixed | accepted_risk | superseded | merged | split | invalidated | obsoleted_by_patch | obsoleted_by_recovery`. |
+| `resolved_by_kind?` / `resolved_by_ref?` | Resolver identity when status is `resolved` or `dismissed`. |
+| `rationale?` / `confirmation_ref?` / `audit_refs[]?` | Required for acknowledged, dismissed, resolved, and structural lineage edits. |
+| `review_refs[]?` / `corroboration_refs[]?` / `graph_patch_refs[]?` / `recovery_refs[]?` / `blocked_episode_refs[]?` / `promotion_refs[]?` | Adjacent runtime and governance joins. |
 
 ### route_target, OpenSubject, and command normalization
 

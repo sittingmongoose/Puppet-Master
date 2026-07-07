@@ -4,8 +4,9 @@ Generated: 2026-07-07T11:56:40Z
 Updated: 2026-07-07T18:49:00Z for storage/coordination canon repair and platform_specs authority repair.
 Updated: 2026-07-07T19:36:27Z for platform_specs closure hardening and non-provider residue adjudication.
 Updated: 2026-07-07T20:26:31Z for FileSafe fail-closed security repair and stale GUI toolkit mechanical row closure hygiene.
+Updated: 2026-07-07T21:35:04Z for contract-runtime core repair.
 
-Scope: triage plus bounded storage/coordination canon repair, platform_specs authority repair, FileSafe fail-closed security repair, and stale GUI toolkit mechanical row closure hygiene. Tier vocabulary, UI command catalog, wiring matrix, Goal Runtime, Executor Protocol, broad Contracts_V0 gaps, missing docs, and broad PlanUnit boilerplate remain out of scope.
+Scope: triage plus bounded storage/coordination canon repair, platform_specs authority repair, FileSafe fail-closed security repair, stale GUI toolkit mechanical row closure hygiene, and contract-runtime core repair. UI command catalog, wiring matrix, launch-chain implementation proof, missing docs, progression-gate coverage, broad PlanUnit boilerplate, runtime certification harness, and buildability proof remain out of scope.
 
 ## Current Buildability Reality
 
@@ -18,14 +19,14 @@ Scope: triage plus bounded storage/coordination canon repair, platform_specs aut
 10. `fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb` — **repaired_current** — Closed by `STORAGE_COORDINATION_CANON_REPAIR.md` and `storage_coordination_canon_repair_report.json`; active canon now names coordination EventRecord families, redb projections, append/CAS semantics, and debug/export mirror-only `.puppet-master/state/*.json` disposition.
 20. `fable-20260706-p0-platform-specs-authority-drift` — **repaired_current** — Closed by `PLATFORM_SPECS_AUTHORITY_REPAIR.md` and `platform_specs_authority_repair_report.json`; Models_System now owns context-window, max-token, fallback-chain, provenance, and requested/effective capability fields, Contracts_V0 only carries snapshot refs, and Assistant Chat no longer uses legacy platform_specs functions as active authority.
 30. `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` — **repaired_superseded** — Closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; active canon now pins Slint 1.17.1, Slint/WASM canvas web bootstrap limits, native Rust + Slint `.slint` markup, and `validate-gui-asset-policy` governance coverage.
-40. `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` — **owner_decision_required** — Tier-era config and iteration wording remain live beside node/package/seam/lane canon.
+40. `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` — **repaired_current** — Closed by `CONTRACT_RUNTIME_CORE_REPAIR.md` and `contract_runtime_core_repair_report.json`; tier-era Phase/Task/Subtask/Iteration and subagent config labels are compatibility/search aliases, while `SubagentPolicy` owns runtime field names, units, defaults, limits, fanout, cost, retry, and alias normalization.
 50. `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` — **repaired_current** — Closed by `FILESAFE_FAIL_CLOSED_SECURITY_REPAIR.md` and `filesafe_fail_closed_security_repair_report.json`; active canon now blocks guard initialization failure, requires exact normalized approved-command matching, fails closed on missing/empty allowlists and missing baselines regardless of `strict_mode`, treats `PUPPET_MASTER_ALLOW_DESTRUCTIVE=1` as a request signal only, requires authenticated scoped destructive override receipts, and fences fail-open/prefix snippets as noncanonical source-lineage.
 110. `fable-20260706-p1-ui-command-catalog-missing-families` — **confirmed_current** — Core UI command families remain absent, including cmd.chat.send and theme/persona/alert/concern/model command families.
 120. `fable-20260706-p1-wiring-matrix-preimplementation-and-placeholder-events` — **confirmed_current** — Production wiring matrix still has 179 generic locations, 323 rows without events, 99 placeholder command_applied event rows, and 35/459 fully located+evented rows.
 125. `fable-20260706-p1-launch-approval-chain-preimplementation-proof` — **partial_current** — Launch/approval chain is partially current: PRD and Approve And Build rows now have real events/locations, but runtime.approve and plan_compile.open_build still use placeholder events/pre-implementation evidence while buildability gate is enabled.
-130. `fable-20260706-p1-contracts-v0-open-enums-field-drift` — **partial_current** — Contracts_V0 still has open wake_reason ellipsis and safe_point.created field drift; blocked_reason/auth handling remains suspect.
-140. `fable-20260706-p1-goal-runtime-event-payload-minima` — **partial_current** — Goal/GoalRun catalog now has a shared envelope and family-specific payload minima for only selected events; the remaining event names still lack per-event payload contracts.
-150. `fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section` — **confirmed_current** — Executor_Protocol still references a missing Wake reasons and coalescing section six times.
+130. `fable-20260706-p1-contracts-v0-open-enums-field-drift` — **repaired_current** — Closed by `CONTRACT_RUNTIME_CORE_REPAIR.md` and `contract_runtime_core_repair_report.json`; Contracts_V0 now closes runtime enums, safe-point fields, auth-required handling, UI command response, concern/AuthEvent minima, per-event payload schema_version, and package_id compatibility.
+140. `fable-20260706-p1-goal-runtime-event-payload-minima` — **repaired_current** — Closed by `CONTRACT_RUNTIME_CORE_REPAIR.md` and `contract_runtime_core_repair_report.json`; Goal Runtime now lists payload minima for all goal/goal_run events and defines the required runtime records.
+150. `fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section` — **repaired_current** — Closed by `CONTRACT_RUNTIME_CORE_REPAIR.md` and `contract_runtime_core_repair_report.json`; Executor Protocol now owns wake reasons/coalescing, score tuple sort, closed mapping, timeout, backpressure, and transport decision receipts.
 160. `fable-20260706-p1-missing-referenced-docs-and-openrefs` — **confirmed_current** — Several normative referenced docs remain absent; corrected false alarms are separately suppressed.
 170. `fable-20260706-p1-progression-gates-registry-and-run-gates-coverage` — **partial_current** — GATE-007 and GATE-008 still do not exist; run-gates is named-check based and does not prove every gate ID is wired or manually dispositioned.
 180. `fable-20260706-p1-planunit-layer-behavioral-acceptance-dependencies` — **confirmed_current** — PlanUnit layer still relies heavily on migration-preservation acceptance and sparse dependency/unblocks metadata.
@@ -35,8 +36,8 @@ Scope: triage plus bounded storage/coordination canon repair, platform_specs aut
 ### Plans/orchestrator-subagent-integration.md
 - `fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb` (P0, Critical, repaired_current): FABLE P0 #1 is closed by `STORAGE_COORDINATION_CANON_REPAIR.md`; OSI-271 and related coordination units now retire file-based canon, and `OSI-432` names the canonical event/projection/mirror contract.
   - Repair target satisfied: `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are compatibility/debug/export mirrors only; canonical coordination uses `coordination.*` EventRecords plus `coordination_*_projection.v1` redb projections with append/CAS and transactional checkpoint semantics.
-- `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` (P0, High, owner_decision_required): FABLE P0 #4: decide tier vocabulary; reconcile OSI-425/OSI-428/OSI-408 and define the fanout/parallel/cost/retry schema with exact fields/defaults.
-  - Repair target: Add a banned-live-vocabulary check for tier-era runtime/config labels unless the row is marked compatibility/source-lineage.; Require SubagentPolicy schema fields, units, and defaults before subagent runtime readiness can pass.
+- `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` (P0, High, repaired_current): FABLE P0 #4 is closed by `CONTRACT_RUNTIME_CORE_REPAIR.md`; OSI-408, OSI-425, and OSI-428 now fence tier-era labels as compatibility/search aliases and define canonical `SubagentPolicy` defaults.
+  - Repair target satisfied: live runtime prose uses GoalRun/WorkGraph/WorkNode/package/seam/lane/capability_lane/agent_role/SubagentWave/SubagentPolicy; `tier_overrides`, `enable_tier_subagents`, and Phase/Task/Subtask/Iteration normalize before runtime admission.
 
 ### Plans/assistant-chat-design.md
 - `fable-20260706-p0-platform-specs-authority-drift` (P0, High, repaired_current): FABLE P0 #2 is closed by `PLATFORM_SPECS_AUTHORITY_REPAIR.md`; Assistant Chat context repack and Auditor Validation dropdown/fallback units now consume Models_System capability snapshot and `fallback_chain[]` fields instead of legacy platform_specs functions.
@@ -71,16 +72,16 @@ Scope: triage plus bounded storage/coordination canon repair, platform_specs aut
   - Repair target: Buildability gate must require end-to-end launch-chain implementation evidence, not pre-implementation wiring contract rows.; Approve And Build must remain disabled if any launch-chain command effect is placeholder or evidence_required is pre-implementation only.
 
 ### Plans/Contracts_V0.md
-- `fable-20260706-p1-contracts-v0-open-enums-field-drift` (P1, High, partial_current): FABLE P1 #8: close open enums, pin safe_point.created fields, add UICommand response/error contract, typed concern/AuthEvent payloads, schema_version, and canonical package_id/work_package_id naming.
-  - Repair target: Contract lint should fail on ellipsis/open-ended enum syntax in persisted event fields.; Readiness should require a UICommand result/ack/error envelope before command wiring can count as implementation-ready.
+- `fable-20260706-p1-contracts-v0-open-enums-field-drift` (P1, High, repaired_current): FABLE P1 #8 is closed by `CONTRACT_RUNTIME_CORE_REPAIR.md`; CV-313 closes the runtime enum/schema drift and binds affected Contracts, Goal Runtime, and Executor dependencies.
+  - Repair target satisfied: closed enum families and field minima now cover wake/stop/attention/budget/unblock/conflict/auth/safe-point/UI command/concern/AuthEvent/package identity for this slice.
 
 ### Plans/Goal_Runtime_System.md
-- `fable-20260706-p1-goal-runtime-event-payload-minima` (P1, High, partial_current): FABLE P1 #9: enumerate event payload minima for all goal/goal_run events and define the new primitives before runtime buildability.
-  - Repair target: Readiness should compare event catalogs to per-event payload schemas and fail when named events only inherit a generic envelope.; Require schema refs for LoopBreakerRegistry, AgentControlEnvelope, CertificationReceipt, ChildAgentLease, WorkNodeRequests, AuditCycle/Finding/Closure.
+- `fable-20260706-p1-goal-runtime-event-payload-minima` (P1, High, repaired_current): FABLE P1 #9 is closed by `CONTRACT_RUNTIME_CORE_REPAIR.md`; GRS-041 enumerates all required event payload minima and runtime record primitives.
+  - Repair target satisfied: named goal/goal_run events no longer rely only on a generic envelope in Goal Runtime canon.
 
 ### Plans/Executor_Protocol.md
-- `fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section` (P1, High, confirmed_current): FABLE P1 #10: write the missing wake/coalescing owner section with score tuple, closed reasons, timeout, backpressure, and transport-decision receipt.
-  - Repair target: lint-contractrefs should support intra-doc heading-anchor validation for backticked owner-section references.; Readiness should fail on repeated references to a missing owner section.
+- `fable-20260706-p1-executor-wake-reasons-and-coalescing-missing-owner-section` (P1, High, repaired_current): FABLE P1 #10 is closed by `CONTRACT_RUNTIME_CORE_REPAIR.md`; EP-114 binds the wake/coalescing section, score tuple, closed reason mapping, timeout, backpressure, and transport receipt behavior.
+  - Repair target satisfied: `### Wake reasons and coalescing` now exists and owns the closed wake list plus coalescing algorithm.
 
 ### Plans/FinalGUISpec.md
 - `fable-20260706-p1-missing-referenced-docs-and-openrefs` (P1, High, confirmed_current): FABLE P1 #11: create or repoint WIDGETS_VISUAL_REFERENCE.md, WIDGETS_QUICK_REFERENCE.md, Release_Process.md, Terminal_Integration.md, Context_Management.md, and Skill_System.md typo refs as applicable.

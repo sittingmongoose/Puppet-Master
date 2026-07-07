@@ -317,6 +317,13 @@ Required notes:
 - no critical-path weighting term is part of MVP selection
 - queue analysis MUST expose the tuple breakdown so the user can see why a node was chosen
 - `ready_since_utc` is set when the node first enters the ready set after being non-ready; it is retained while the node stays continuously ready
+
+Selection algorithm:
+1. Normalize `scheduler_lane` to `scheduler_lane_rank` where `remediation = 3`, `unblocker = 2`, and `normal = 1`.
+2. Sort the ready set by `(scheduler_lane_rank DESC, manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, node_id ASC)`.
+3. Persist the complete score tuple on every selected and non-selected node in `scheduler.pass`.
+4. Preserve `non_selected_reason` for ready nodes that lose to capacity, lane, or policy bounds.
+
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
 
 ### 4. Capacity-aware parallel dispatch
@@ -326,7 +333,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 `available_slots` is derived from:
 - run-level concurrency limit
-- any active phase/task/subtask concurrency constraints
+- any active package/lane/seam concurrency constraints; legacy phase/task/subtask labels may only normalize into those scopes
 - resource / provider saturation limits
 - remediation lane reservations when configured
 
@@ -339,6 +346,32 @@ Canonical wake-trigger values and coalescing behavior are defined in `### Wake r
 This section is a forward-reference only so the wake-trigger canon has a single owner section in this file.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+
+### Wake reasons and coalescing
+
+`wake_reason` is closed to:
+- `prerequisite_resolved`
+- `approval_resolved`
+- `clarification_resolved`
+- `auth_recovered`
+- `startup_recovered`
+- `backoff_expired`
+- `verification_completed`
+- `remediation_resolved`
+- `safe_point_restored`
+- `capacity_available`
+- `replan_applied`
+- `watchdog_recheck`
+
+Coalescing rules:
+- Runtime keeps one pending wake set per `{run_id, replan_generation}`.
+- The first wake recorded by `(recorded_at_utc, event_id)` becomes the primary `scheduler.pass.wake_reason`.
+- Additional wakes in the same pending set are persisted in `scheduler.pass.coalesced_wake_reasons[]` and `scheduler.pass.wake_event_refs[]`.
+- One pending wake set produces at most one `scheduler.pass`; no additional pass is created only to replay a coalesced reason.
+- `watchdog_recheck` is admitted only when no event-driven wake is pending for the same `{run_id, replan_generation}`.
+- `replan_applied` invalidates stale attempts from the prior `replan_generation` before ready-set scoring.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
 ### 6. Blocked-to-runnable cascade
 
@@ -387,6 +420,16 @@ ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestra
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Contracts_V0.md
 
+Closed mapping requirements:
+- provider/network 5xx or transient disconnects map to `failure_class = provider_transient`.
+- provider 429 or quota pressure that can retry later maps to `failure_class = rate_limited`; hard quota exhaustion maps to `failure_class = quota_exceeded`.
+- malformed model/provider structured output maps to `failure_class = structured_output_invalid`.
+- verifier failure and reviewer findings stay distinct as `verification_failed` and `reviewer_findings`.
+- missing or expired refreshable credentials map to `failure_class = auth_expired`; absent credentials, missing scopes, or required login before admission map to `blocked_reason_code = auth_required`.
+- operator permission denial maps to `blocked_reason_code = permission_denied`.
+- approval declined, headless approval denial, FileSafe denial, external side-effect approval, replan-required, validation blockers, worktree conflicts, and dirty worktrees remain blocked reason codes, not failure classes.
+- unknown values fail closed as `blocked_reason_code = validation_blocked` until the owning enum is extended through governance.
+
 Per-class (`per-class`) retry rules:
 - `provider_transient` uses exponential backoff with base `1s`, factor `2x`, and cap `4s`: `1s -> 2s -> 4s`
 - `rate_limited` remains distinct from `provider_transient`; executor policy MUST preserve that distinction when deciding backoff, surfacing state, or opening circuit breakers
@@ -425,6 +468,20 @@ Helper and background attempts remain first-class usage contributors: `/helper/b
 Lifecycle shutdown consumers treat shutdown as `/idempotent`: double shutdown is guarded with a Once/idempotent root and becomes a safe no-op rather than a second destructive lifecycle transition.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### 7.2B Stream coalescer, backpressure, and transport decision receipts
+
+Provider, CLI, SSE, WebSocket, stdout, unix-socket, and HTTP adapters settle streams through one stream coalescer. The coalescer admits `partial_delta`, `cumulative_snapshot`, `reasoning_delta`, `tool_call_fragment`, `provider_item_id`, `provider_error`, `final_assistant_turn`, and `durable_history_write` phases, but only `final_assistant_turn` plus the matching receipt may become durable assistant history.
+
+Transport defaults:
+- `stream_terminal_event_timeout_ms = 5000`.
+- Missing terminal event before timeout is a retryable transport failure with `failure_class = provider_transient` and `timeout_class = inactivity_timeout`; zero-usage aborted turns are not replay content.
+- Backpressure bound is `max_pending_stream_frames = 1024` or `max_pending_stream_bytes = 16777216`, whichever trips first.
+- Overflow returns a structured overload/blocking result with `blocked_reason_code = validation_blocked`, `transport_pressure = overloaded`, and no silent frame drop.
+
+Every adapter selection records `transport_decision_receipt` with `receipt_id`, `schema_version`, `run_id?`, `node_id?`, `attempt_id?`, `provider_id`, `adapter_kind`, `transport_kind`, `locality`, `auth_mode`, `replay_policy`, `backpressure_policy`, `fallback_policy`, `provider_support_ref`, `decision_reason`, `selected_at_utc`, and `event_refs[]`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 
 ### 7.3 Signal handling and process lifecycle
 
@@ -6943,4 +7000,79 @@ pm_current_coverage: Prior pass recommended StreamHistoryCoalescer; storage-plan
 pm_gap_or_delta: Make settled history admission mandatory for all providers, not just context/cache pass.
 proposal_or_recommendation: Add StreamHistoryCoalescer with partial_delta, cumulative_snapshot, reasoning_delta, tool_call_fragment, provider_item_id, provider_error, final_assistant_turn, and durable_history_write phases.
 compile_disposition: create_new_planunit
+```
+
+### EP-114 - FABLE Wake Coalescing And Transport Receipt Closure
+
+```yaml
+plan_unit_id: EP-114
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Executor owns deterministic scheduler wake coalescing, ready-node score tuple
+  sorting, closed failure/blocked mapping, stream terminal timeout, backpressure
+  bounds, and transport decision receipts for the FABLE contract-runtime core
+  slice. Each {run_id, replan_generation} has at most one pending wake set; the
+  earliest wake becomes scheduler.pass.wake_reason, additional wakes become
+  coalesced_wake_reasons and wake_event_refs, and watchdog_recheck never outranks
+  an event-driven wake. Ready nodes sort by scheduler_lane_rank DESC,
+  manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, and
+  node_id ASC. Stream terminal timeout is 5000 ms, backpressure is bounded at
+  1024 frames or 16777216 bytes, and each adapter selection records a
+  transport_decision_receipt.
+gui_related: false
+gui_classification_reason: This unit defines runtime scheduling and transport behavior, not visual presentation.
+depends_on: [EP-026, EP-028, EP-030, EP-032, EP-085, EP-098, EP-110, EP-111, EP-112, EP-113, CV-313]
+unblocks: []
+acceptance_criteria:
+  - "`scheduler.pass` uses the closed wake_reason set shared with Contracts_V0."
+  - Wake coalescing records primary wake, coalesced wake reasons, and event refs without creating duplicate scheduler passes.
+  - Queue analysis persists the complete score tuple and non-selected reason for ready-but-unselected nodes.
+  - Failure and blocked classifications map auth_required separately from auth_expired and fail closed on unknown classifier values.
+  - Missing terminal stream events time out after 5000 ms as retryable provider_transient inactivity_timeout rather than durable assistant content.
+  - Backpressure is bounded at 1024 frames or 16777216 bytes and overflow returns structured overload evidence.
+  - Transport decision receipts include locality, auth, replay, backpressure, fallback, provider support, decision reason, selected timestamp, and event refs.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: fable_executor_wake_coalescing_drift
+reasoning_tier: high
+context_scope: contract_runtime_core_repair
+implementation_surfaces:
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: executor_wake_coalescing_transport_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`wake_reason`"
+  - "`scheduler.pass`"
+  - "`coalesced_wake_reasons[]`"
+  - "`wake_event_refs[]`"
+  - "`scheduler_lane_rank`"
+  - "`failure_class`"
+  - "`blocked_reason_code`"
+  - "`auth_required`"
+  - "`auth_expired`"
+  - "`stream_terminal_event_timeout_ms = 5000`"
+  - "`max_pending_stream_frames = 1024`"
+  - "`max_pending_stream_bytes = 16777216`"
+  - "`transport_decision_receipt`"
+negative_constraints:
+  - Do not treat this runtime protocol closure as implementation-readiness proof or runtime certification harness completion.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+owner_hints:
+  - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19241-L19721
+Source lines: L19339-L19893
 
-Source SHA256: `9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2`
+Source SHA256: `fe90fc80e248a7b95f53ff541653411553e3aa052e64c578e3a37aa62265cf53`
 
 ---
 
@@ -488,4 +488,78 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/FileSafe.md
   - Plans/Permissions_System.md
+```
+
+### CV-313 - FABLE Contract Runtime Core Schema Closure
+
+```yaml
+plan_unit_id: CV-313
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 closes the FABLE contract-runtime core schema drift for scheduler wake, stop, attention,
+  budget, blocked, unblocked, safe-point, conflict, command, concern, auth, and package identity records.
+  Runtime payloads carry per-event payload schema_version in addition to the EventRecord envelope
+  schema_version. wake_reason, stop_reason_code, attention_required_reason_code, budget_kind,
+  node.unblocked.resolution, conflict_reason_code, blocked_reason_code auth handling, UICommandResponse
+  error codes, ConcernRecord lifecycle fields, AuthEvent minima, and package_id/work_package_id alias
+  behavior are closed here and consumed by Executor and Goal Runtime. `package_id` is canonical;
+  `work_package_id`, `attention_reason_code`, and `worktree_branch` are compatibility aliases only.
+gui_related: false
+gui_classification_reason: This unit defines backend/runtime schema closure, not visual presentation.
+depends_on: [CV-215, CV-220, CV-224, CV-248, CV-287, CV-288, CV-309, GRS-035, GRS-036, GRS-037, GRS-038, EP-026, EP-028, EP-030, EP-032, EP-085, EP-098]
+unblocks: [GRS-041, EP-114]
+acceptance_criteria:
+  - "`wake_reason` is closed to prerequisite_resolved, approval_resolved, clarification_resolved, auth_recovered, startup_recovered, backoff_expired, verification_completed, remediation_resolved, safe_point_restored, capacity_available, replan_applied, and watchdog_recheck."
+  - "`stop_reason_code`, `attention_required_reason_code`, and `budget_kind` are machine-readable closed fields on stop, user-attention, and budget-affecting payloads."
+  - "`node.unblocked.resolution` and `conflict_reason_code` use closed value sets and do not preserve prose-only or ellipsis-based values."
+  - "`blocked_reason_code` includes `auth_required`; credential expiry remains `failure_class = auth_expired`."
+  - "`safe_point.created` captures schema_version, safe_point_id, run_id, node_id, attempt_id, baseline_ref, replan_generation, creation_reason, worktree_id?, worktree_path?, branch_name?, HEAD_sha?, and ts."
+  - UI command dispatch returns `UICommandResponse` with ack/result status, closed error code, reason, event refs, and receipt ref.
+  - Concern and AuthEvent records expose their required identity, lifecycle, evidence, redaction, and recovery fields without storing raw secrets.
+  - "`package_id` is canonical and `work_package_id` remains import/export compatibility only."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: fable_contract_runtime_core_schema_drift
+reasoning_tier: high
+context_scope: contract_runtime_core_repair
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: contract_runtime_core_schema_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`wake_reason`"
+  - "`stop_reason_code`"
+  - "`attention_required_reason_code`"
+  - "`budget_kind`"
+  - "`node.unblocked.resolution`"
+  - "`conflict_reason_code`"
+  - "`blocked_reason_code`"
+  - "`safe_point.created`"
+  - "`UICommandResponse`"
+  - "`ConcernRecord`"
+  - "`AuthEvent`"
+  - "`package_id`"
+  - "`work_package_id`"
+negative_constraints:
+  - Do not treat this schema closure as UI command catalog, wiring matrix, FileSafe, storage, platform, GUI, runtime certification, or implementation-readiness closure.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/orchestrator-subagent-integration.md
 ```

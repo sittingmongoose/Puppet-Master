@@ -537,7 +537,7 @@ Runtime identity carries role and operational identity beside provider account i
 
 The shared runtime snapshot is the explicit replacement for `TierContext`. Any execution-unit refs, lane/worktree refs, requested/effective runtime identity, execution role, governance lineage, remediation generation, or `/replan` generation formerly packed into tier context must resolve into the package/seam/lane/account runtime snapshot, with compatibility references to `TierContext`, `tier_id`, and tier-era execution kept only as historical trace.
 
-Recovery command and wake semantics stay keyed to blocked runtime state. `UI_Command_Catalog.md`, `UI_Command_Catalog`, `HITL`, `cmd.runtime`, `cmd.runtime.*`, and pre-attempt blocked episodes map canonical recovery from `allowed_action_ids[]` to runtime commands; pre-attempt blocks are keyed by `blocked_sequence` instead of fabricated `attempt_id`. The canonical blocked field family is `node.blocked`, `node.unblocked`, `blocked_reason_code`, `blocked_sequence`, ordered `allowed_action_ids`, `allowed_action_ids[]`, `node.prerequisite_resolved`, and `wake_reason = approval_resolved | clarification_resolved | auth_recovered | startup_recovered | ...`; old HITL request examples are compatibility references only when they resolve into that family.
+Recovery command and wake semantics stay keyed to blocked runtime state. `UI_Command_Catalog.md`, `UI_Command_Catalog`, `HITL`, `cmd.runtime`, `cmd.runtime.*`, and pre-attempt blocked episodes map canonical recovery from `allowed_action_ids[]` to runtime commands; pre-attempt blocks are keyed by `blocked_sequence` instead of fabricated `attempt_id`. The canonical blocked field family is `node.blocked`, `node.unblocked`, `blocked_reason_code`, `blocked_sequence`, ordered `allowed_action_ids`, `allowed_action_ids[]`, `node.prerequisite_resolved`, and the closed `wake_reason` enum `prerequisite_resolved | approval_resolved | clarification_resolved | auth_recovered | startup_recovered | backoff_expired | verification_completed | remediation_resolved | safe_point_restored | capacity_available | replan_applied | watchdog_recheck`; old HITL request examples are compatibility references only when they resolve into that family.
 
 `blocked_sequence` is monotonic per `{ run_id, node_id }`, starts at `1`, and increments only when the node transitions from non-blocked to a new blocked episode.
 
@@ -790,6 +790,29 @@ Runtime identity, handoff, and stewardship records preserve their concrete keys.
 - Treat `concern resolver` as distinct from owner/source roles.
 - Allow concern ownership reassignment without changing concern identity.
 
+`ConcernRecord` is the canonical typed concern object. Minimum fields are:
+
+| Field | Requirement |
+| --- | --- |
+| `schema_version` | Payload schema version for the concern record. |
+| `concern_id` | Stable concern identity that survives ownership reassignment. |
+| `project_id` | Project scope for the concern. |
+| `run_id?` | Runtime lineage when the concern is attached to a run. |
+| `scope_refs[]` | Node, package, seam, route/open, artifact, or external-resource refs affected by the concern. |
+| `owner_kind` / `owner_ref` | Current owner surface; distinct from creator and resolver. |
+| `created_by_kind` / `created_by_ref` | Actor or system that created the concern. |
+| `status` | Closed enum `active | acknowledged | resolved | dismissed`. |
+| `severity` | Impact severity, independent from `blocking_effect`. |
+| `category` | Stable concern category for dedupe and routing. |
+| `evidence_refs[]` / `source_refs[]` | Evidence and source-lineage refs supporting the concern. |
+| `lineage_refs[]` | Reopen, split, merge, supersession, or graph-patch lineage refs. |
+| `visibility_level` / `attention_level` / `chatworthy` | Projection controls for user attention without changing lifecycle state. |
+| `blocking_effect?` | Runtime/blocking impact, explicitly separate from severity. |
+| `resolution_kind?` | Closed enum `fixed | accepted_risk | superseded | merged | split | invalidated | obsoleted_by_patch | obsoleted_by_recovery`. |
+| `resolved_by_kind?` / `resolved_by_ref?` | Resolver identity when status is `resolved` or `dismissed`. |
+| `rationale?` / `confirmation_ref?` / `audit_refs[]?` | Required for acknowledged, dismissed, resolved, and structural lineage edits. |
+| `review_refs[]?` / `corroboration_refs[]?` / `graph_patch_refs[]?` / `recovery_refs[]?` / `blocked_episode_refs[]?` / `promotion_refs[]?` | Adjacent runtime and governance joins. |
+
 ### route_target, OpenSubject, and command normalization
 
 
@@ -824,6 +847,27 @@ Task lifecycle events persist in thread history and storage through the canonica
 The Seglog contract must continue to cover 10 event families; the live coverage includes tools, usage, HITL, plan/todo, subagent, rollback, persona, background, runtime lifecycle, and recovery/blocked-state events.
 
 Document annotation events reuse the existing `bundle-note` event family for durable annotation lifecycle and audit transitions. Ephemeral document-selection chat handoff is a separate event, `bundle.selection_sent_to_chat`, whose payload must include the requested chat target, effective resolved target, document provenance, and bounded selection excerpt; this event prepares visible chat context but does not mutate durable annotation state by itself.
+
+### Closed runtime enums and payload version contract
+
+Persisted `EventRecord.schema_version` identifies the event envelope. Runtime event payloads that participate in scheduling, wake, stop, attention, budget, safe-point, auth, command, or blocked-state behavior also carry their own `schema_version` inside the payload so payload schemas can evolve without changing the `EventRecord` envelope. Legacy payloads without per-event `schema_version` are compatibility inputs only and normalize before persistence.
+
+Closed runtime enum families:
+
+| Field | Closed values |
+| --- | --- |
+| `wake_reason` | `prerequisite_resolved`, `approval_resolved`, `clarification_resolved`, `auth_recovered`, `startup_recovered`, `backoff_expired`, `verification_completed`, `remediation_resolved`, `safe_point_restored`, `capacity_available`, `replan_applied`, `watchdog_recheck` |
+| `stop_reason_code` | `user_stopped`, `forbidden_action`, `missing_source_ledger`, `missing_plans_or_target`, `permission_or_filesystem_failure`, `unsafe_or_destructive_scope`, `contradictory_goal`, `infrastructure_blocker`, `budget_exhausted`, `verification_terminal_failure` |
+| `attention_required_reason_code` | `approval_required`, `clarification_required`, `auth_required`, `permission_required`, `budget_review_required`, `recovery_action_required`, `verification_review_required`, `conflict_resolution_required`, `external_resource_required`, `policy_decision_required` |
+| `budget_kind` | `wall_time`, `model_tokens`, `cost`, `attempt_count`, `retry_count`, `tool_call_count`, `parallel_agent_count`, `context_window` |
+| `node.unblocked.resolution` | `approval_granted`, `clarification_provided`, `auth_recovered`, `prerequisite_resolved`, `safe_point_restored`, `remediation_resolved`, `replan_applied`, `policy_or_permission_changed`, `capacity_available`, `manual_override_granted` |
+| `conflict_reason_code` | `worktree_path_mismatch`, `branch_mismatch`, `head_mismatch`, `baseline_stale`, `snapshot_missing`, `target_path_conflict`, `restore_conflict`, `canonicalization_failed`, `permission_denied` |
+
+Compatibility aliases:
+- `attention_reason_code` normalizes to `attention_required_reason_code` and is not a persisted canonical field.
+- `work_package_id` normalizes to `package_id`; new runtime payloads emit `package_id`.
+- `worktree_branch` normalizes to `branch_name` for safe-point payloads.
+- `working_directory` may remain an execution-unit context field, but it is not a substitute for `worktree_path` in `safe_point.created`.
 
 ### Runtime event catalog carry-through
 
@@ -1183,6 +1227,7 @@ Rules:
 - Analytics-thin tool events are no longer sufficient.
 - `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
 - Policy-driven tool events may carry requested identity in addition to effective identity: `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` preserve the request/actor envelope without replacing `effective_account_id` or `operational_identity`.
+- `package_id` is the canonical package identity field; `work_package_id` is accepted only as a compatibility alias and normalizes before persistence.
 **tool event contract** for `tool.denied`.
 
 ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
@@ -1209,6 +1254,7 @@ Rules:
 - `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
 - permission and denial surfaces must still expose effective actor and account identity.
 - Denial payloads that originate in requested account, permission, or policy routing preserve `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` so consumers can explain the rejected request without inventing local actor fields.
+- `package_id` is the canonical package identity field; `work_package_id` is accepted only as a compatibility alias and normalizes before persistence.
 Requirements-quality workflow state uses stable persisted event shapes anchored to the canonical Auditor cycle report plus legacy **validation pass report** compatibility artifact and launch handoff lineage.
 
 ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
@@ -1379,7 +1425,7 @@ Debug investigations use persisted `EventRecord` envelopes with the following st
 | Event type | Minimum payload |
 |---|---|
 | `debug.investigation.started` | `investigation_id`, `project_id`, `thread_id?`, `run_id?`, `initiator_surface`, `target_kind`, bounded `target_locator_summary`, `requested_mode_overlay`, `effective_mode_overlay`, `runtime_mode` |
-| `debug.investigation.state_changed` | `investigation_id`, `previous_phase?`, `phase`, `state`, `attention_reason_code?`, `blocked_reason_code?`, `verification_strength?` |
+| `debug.investigation.state_changed` | `schema_version`, `investigation_id`, `previous_phase?`, `phase`, `state`, `attention_required_reason_code?`, `stop_reason_code?`, `budget_kind?`, `blocked_reason_code?`, `verification_strength?` |
 | `debug.investigation.target_bound` | `investigation_id`, `target_kind`, `target_bindings`, `binding_state` |
 | `debug.investigation.context_item_added` | `investigation_id`, `item_id`, `item_kind`, `source_surface`, `state`, bounded `summary`, `artifact_ref?`, `redaction_state` |
 | `debug.investigation.context_item_state_changed` | `investigation_id`, `item_id`, `previous_state`, `state`, `reason_code?` |
@@ -1389,6 +1435,8 @@ Debug investigations use persisted `EventRecord` envelopes with the following st
 | `debug.investigation.imported` | `investigation_id`, `bundle_id`, `source_kind`, `schema_id`, `imported_target_kind` |
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
+`attention_reason_code?` is a compatibility alias only. New debug-state payloads emit `attention_required_reason_code?` and include `stop_reason_code?` or `budget_kind?` when the state change affects stop, retry, resume, or user attention.
 
 Event rules:
 - raw secrets, raw log dumps, raw trace blobs, and raw binary artifact bytes MUST NOT be duplicated inside these payloads
@@ -1492,6 +1540,29 @@ Example (GitHub):
 - `auth.github.authenticated`
 - `auth.github.failed`
 - `auth.github.disconnected`
+
+Auth events that can affect runtime admission, recovery, or account selection carry these payload minima:
+- `schema_version`
+- `auth_event_id`
+- `provider_id`
+- `account_ref?`
+- `auth_realm`
+- `auth_state` closed to `issued | polling | authenticated | failed | disconnected | refresh_started | refresh_succeeded | refresh_failed | scope_missing`
+- `run_id?`
+- `thread_id?`
+- `requested_account_ref?`
+- `effective_account_ref?`
+- `missing_scopes[]?`
+- `failure_class?`
+- `blocked_reason_code?`
+- `attention_required_reason_code?`
+- `credential_ref?` or `credential_store_ref?` when a secret-bearing value exists outside the event
+- `redaction_profile`
+- `correlation_id?`
+- `idempotency_key?`
+- `ts`
+
+Auth events never persist raw tokens, passwords, OAuth codes, API keys, refresh tokens, or local credential-store values. Runtime admission blocks for missing auth use `blocked_reason_code = auth_required`; expired or refreshable credentials remain `failure_class = auth_expired` until recovery resolves or escalates.
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Contracts_V0.md#EventRecord
 
@@ -1738,6 +1809,22 @@ Rules:
 - shell-facing commands may carry terminal-scoped identity args, but those identities still normalize through the canonical route and persistence model
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
+
+`UICommandResponse` is the canonical acknowledgement/error envelope for UI command dispatch. Minimum fields are:
+
+| Field | Requirement |
+| --- | --- |
+| `schema_version` | Response payload schema version. |
+| `dispatch_id` | Dispatch attempt identity. |
+| `command_id` | Canonical command ID after alias normalization. |
+| `ack_status` | Closed enum `accepted | rejected`. |
+| `result_status?` | Closed enum `pending | succeeded | failed | cancelled | no_op`. |
+| `error?` | Present when rejected or failed; shape below. |
+| `event_refs[]?` | Durable event refs emitted by the command. |
+| `receipt_ref?` | Runtime, approval, transport, or mutation receipt produced by the command. |
+| `ts` | Response timestamp. |
+
+`UICommandResponse.error` fields are `code`, `reason`, and optional `offending_field?`. Error `code` is closed to `invalid_route | unknown_command | invalid_args | permission_denied | blocked_state_required | stale_projection | handler_unavailable | internal_error`.
 
 ### 7.2 UICommand envelope rules
 
@@ -2122,7 +2209,7 @@ Add the following event families to the canonical contract set.
 
 #### `scheduler.pass`
 
-Canonical `wake_reason` values include prerequisite, approval, clarification, auth, startup, backoff, verification, and remediation wakes; `startup_recovered` is the scheduler-pass value used for the first pass after startup recovery, while `watchdog_recheck` is a defensive verification wake that may recheck readiness without becoming the primary correctness path.
+Canonical `wake_reason` is closed to `prerequisite_resolved | approval_resolved | clarification_resolved | auth_recovered | startup_recovered | backoff_expired | verification_completed | remediation_resolved | safe_point_restored | capacity_available | replan_applied | watchdog_recheck`. `startup_recovered` is the scheduler-pass value used for the first pass after startup recovery, while `watchdog_recheck` is a defensive verification wake that may recheck readiness without becoming the primary correctness path.
 
 
 > **Migration note:** `run.scheduler_analysis` is a deprecated legacy alias for this event. New producers MUST emit `scheduler.pass`. Consumers SHOULD accept both during migration.
@@ -2130,11 +2217,14 @@ Canonical `wake_reason` values include prerequisite, approval, clarification, au
 ContractRef: EventType:scheduler.pass, ContractName:Plans/Executor_Protocol.md
 
 Minimum payload:
+- `schema_version`
 - `scheduler_pass_id` (canonical identity -- `analysis_id` is a legacy alias)
 - `run_id`
 - `thread_id`
 - `replan_generation`
 - `wake_reason`
+- `coalesced_wake_reasons[]?`
+- `wake_event_refs[]?`
 - `available_slots`
 - `ready_nodes[]`
 - `selected_nodes[]` with per-node `{ node_id, score_tuple, lane }`
@@ -2145,6 +2235,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 
 #### `run.node_ready`
 Minimum payload:
+- `schema_version`
 - `run_id`
 - `node_id`
 - `ready_since_utc`
@@ -2160,6 +2251,7 @@ Approval scopes that still use tier boundaries normalize to `/node/blocked` runt
 ContractRef: EventType:node.blocked, ContractName:Plans/Executor_Protocol.md
 
 Minimum payload:
+- `schema_version`
 - `run_id`
 - `node_id`
 - `attempt_id?`
@@ -2180,12 +2272,15 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 > **Migration note:** `run.node_unblocked` is a deprecated legacy alias for this event. New producers MUST emit `node.unblocked`.
 
 Minimum payload:
+- `schema_version`
 - `run_id`
 - `node_id`
 - `attempt_id?`
 - `blocked_sequence`
 - `resolution` (the action that resolved the block)
 - `ts`
+
+`node.unblocked.resolution` is closed to `approval_granted | clarification_provided | auth_recovered | prerequisite_resolved | safe_point_restored | remediation_resolved | replan_applied | policy_or_permission_changed | capacity_available | manual_override_granted`.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
@@ -2225,19 +2320,21 @@ Minimum payload:
 
 
 Minimum payload:
+- `schema_version`
 - `safe_point_id`
 - `run_id`
 - `node_id`
 - `attempt_id`
 - `worktree_id?`
 - `worktree_path?`
-- `worktree_branch?`
-- `working_directory?`
+- `branch_name?`
+- `HEAD_sha?`
 - `baseline_ref`
 - `replan_generation`
+- `creation_reason`
 - `ts`
 
-When a safe point is created from a worktree-bound execution unit, `safe_point.created` carries the worktree snapshot fields (`worktree_id`, `worktree_path`, `worktree_branch`, and `working_directory`) so restore, retry, and UI history can return to the same worktree context instead of silently substituting the main project root.
+When a safe point is created from a worktree-bound execution unit, `safe_point.created` carries the worktree snapshot fields (`worktree_id`, `worktree_path`, `branch_name`, and `HEAD_sha`) so restore, retry, and UI history can return to the same worktree context instead of silently substituting the main project root. `worktree_branch` is a compatibility alias for `branch_name`; `working_directory` is not a substitute for `worktree_path`.
 
 #### `safe_point.restored`
 Minimum payload:
@@ -2263,7 +2360,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 
 #### FileSafe snapshot event compatibility
 
-FileSafe may emit compatibility producer event names `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` when it creates, detects a conflict for, or restores a mutation safe-point snapshot. These names are FileSafe-facing wrappers for the Contracts-owned safe-point event contract, not separate event-family owners: creation maps to `safe_point.created`, restore maps to `safe_point.restored`, and conflict reporting carries the same safe-point/snapshot identity with a `restore_outcome` or `conflict_reason_code` as applicable. Minimum payload fields are `snapshot_id`, `safe_point_id`, `run_id`, `node_id?`, `attempt_id?`, `target_path?`, `conflict_reason_code?`, `restore_outcome?`, and `ts`.
+FileSafe may emit compatibility producer event names `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` when it creates, detects a conflict for, or restores a mutation safe-point snapshot. These names are FileSafe-facing wrappers for the Contracts-owned safe-point event contract, not separate event-family owners: creation maps to `safe_point.created`, restore maps to `safe_point.restored`, and conflict reporting carries the same safe-point/snapshot identity with a `restore_outcome` or `conflict_reason_code` as applicable. Minimum payload fields are `snapshot_id`, `safe_point_id`, `run_id`, `node_id?`, `attempt_id?`, `target_path?`, `conflict_reason_code?`, `restore_outcome?`, and `ts`. `conflict_reason_code` is closed to `worktree_path_mismatch | branch_mismatch | head_mismatch | baseline_stale | snapshot_missing | target_path_conflict | restore_conflict | canonicalization_failed | permission_denied`.
 
 #### FileSafe fail-closed security event payloads
 
@@ -2510,6 +2607,7 @@ This section is an exact compatibility mirror of the later canonical runtime con
 
 `blocked_reason_code`:
 - `permission_denied`
+- `auth_required`
 - `user_declined`
 - `headless_ask_denied`
 - `filesafe_blocked`
@@ -19718,4 +19816,78 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/FileSafe.md
   - Plans/Permissions_System.md
+```
+
+### CV-313 - FABLE Contract Runtime Core Schema Closure
+
+```yaml
+plan_unit_id: CV-313
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 closes the FABLE contract-runtime core schema drift for scheduler wake, stop, attention,
+  budget, blocked, unblocked, safe-point, conflict, command, concern, auth, and package identity records.
+  Runtime payloads carry per-event payload schema_version in addition to the EventRecord envelope
+  schema_version. wake_reason, stop_reason_code, attention_required_reason_code, budget_kind,
+  node.unblocked.resolution, conflict_reason_code, blocked_reason_code auth handling, UICommandResponse
+  error codes, ConcernRecord lifecycle fields, AuthEvent minima, and package_id/work_package_id alias
+  behavior are closed here and consumed by Executor and Goal Runtime. `package_id` is canonical;
+  `work_package_id`, `attention_reason_code`, and `worktree_branch` are compatibility aliases only.
+gui_related: false
+gui_classification_reason: This unit defines backend/runtime schema closure, not visual presentation.
+depends_on: [CV-215, CV-220, CV-224, CV-248, CV-287, CV-288, CV-309, GRS-035, GRS-036, GRS-037, GRS-038, EP-026, EP-028, EP-030, EP-032, EP-085, EP-098]
+unblocks: [GRS-041, EP-114]
+acceptance_criteria:
+  - "`wake_reason` is closed to prerequisite_resolved, approval_resolved, clarification_resolved, auth_recovered, startup_recovered, backoff_expired, verification_completed, remediation_resolved, safe_point_restored, capacity_available, replan_applied, and watchdog_recheck."
+  - "`stop_reason_code`, `attention_required_reason_code`, and `budget_kind` are machine-readable closed fields on stop, user-attention, and budget-affecting payloads."
+  - "`node.unblocked.resolution` and `conflict_reason_code` use closed value sets and do not preserve prose-only or ellipsis-based values."
+  - "`blocked_reason_code` includes `auth_required`; credential expiry remains `failure_class = auth_expired`."
+  - "`safe_point.created` captures schema_version, safe_point_id, run_id, node_id, attempt_id, baseline_ref, replan_generation, creation_reason, worktree_id?, worktree_path?, branch_name?, HEAD_sha?, and ts."
+  - UI command dispatch returns `UICommandResponse` with ack/result status, closed error code, reason, event refs, and receipt ref.
+  - Concern and AuthEvent records expose their required identity, lifecycle, evidence, redaction, and recovery fields without storing raw secrets.
+  - "`package_id` is canonical and `work_package_id` remains import/export compatibility only."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: fable_contract_runtime_core_schema_drift
+reasoning_tier: high
+context_scope: contract_runtime_core_repair
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: contract_runtime_core_schema_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`wake_reason`"
+  - "`stop_reason_code`"
+  - "`attention_required_reason_code`"
+  - "`budget_kind`"
+  - "`node.unblocked.resolution`"
+  - "`conflict_reason_code`"
+  - "`blocked_reason_code`"
+  - "`safe_point.created`"
+  - "`UICommandResponse`"
+  - "`ConcernRecord`"
+  - "`AuthEvent`"
+  - "`package_id`"
+  - "`work_package_id`"
+negative_constraints:
+  - Do not treat this schema closure as UI command catalog, wiring matrix, FileSafe, storage, platform, GUI, runtime certification, or implementation-readiness closure.
+  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/orchestrator-subagent-integration.md
 ```

@@ -2823,10 +2823,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 247,
+        "False": 248,
         "True": 65
       },
-      "heading_count": 452,
+      "heading_count": 454,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -2896,9 +2896,9 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 19721,
+      "line_count": 19893,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 312,
+      "plan_unit_count": 313,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -3211,7 +3211,8 @@
         "CV-309",
         "CV-310",
         "CV-311",
-        "CV-312"
+        "CV-312",
+        "CV-313"
       ],
       "reasoning_tiers": [
         "high",
@@ -3320,6 +3321,7 @@
         "execution_boundary",
         "execution_unit_context_field_loss",
         "executor_usage_owner_boundary_drift",
+        "fable_contract_runtime_core_schema_drift",
         "failure_class_enum_drift",
         "filesafe_event_payload_drift",
         "filesafe_safe_point_owner_split",
@@ -3530,10 +3532,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2",
+      "sha256": "fe90fc80e248a7b95f53ff541653411553e3aa052e64c578e3a37aa62265cf53",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 312
+        "accepted": 313
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -3542,7 +3544,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "requirement": 220,
-        "schema_contract": 4,
+        "schema_contract": 5,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -4208,10 +4210,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 96,
+        "False": 97,
         "True": 17
       },
-      "heading_count": 193,
+      "heading_count": 196,
       "implementation_surfaces": [
         "Plans/Automated_Testing_System.md",
         "Plans/CLI_Bridged_Providers.md",
@@ -4244,9 +4246,9 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 6946,
+      "line_count": 7078,
       "path": "Plans/Executor_Protocol.md",
-      "plan_unit_count": 113,
+      "plan_unit_count": 114,
       "plan_unit_ids": [
         "EP-002",
         "EP-003",
@@ -4360,7 +4362,8 @@
         "EP-110",
         "EP-111",
         "EP-112",
-        "EP-113"
+        "EP-113",
+        "EP-114"
       ],
       "reasoning_tiers": [
         "high",
@@ -4373,6 +4376,7 @@
         "executor_evidence_drift",
         "executor_intake_bypass",
         "executor_protocol_drift",
+        "fable_executor_wake_coalescing_drift",
         "fallback_dispatch_drift",
         "false_completion",
         "host_executor_bypass",
@@ -4385,15 +4389,15 @@
         "unsafe_runtime_activation",
         "unverified_execution_completion"
       ],
-      "sha256": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
+      "sha256": "ec985cbe5ad6cff2f7a16ec09e01680021dc515df6155697f21cdfbbc2dc5f76",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 113
+        "accepted": 114
       },
       "title": "Overseer Protocol (Canonical)",
       "unit_type_counts": {
         "compatibility_disposition": 2,
-        "requirement": 111
+        "requirement": 112
       },
       "validation_surfaces": [
         "Cumulative snapshots are persisted once",
@@ -4426,6 +4430,7 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "zero-usage aborted turn is not model replay content."
       ]
@@ -5776,10 +5781,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 27,
+        "False": 28,
         "True": 13
       },
-      "heading_count": 55,
+      "heading_count": 57,
       "implementation_surfaces": [
         "Plans/.plan_index",
         "Plans/00-plans-index.md",
@@ -5821,9 +5826,9 @@
         "future verifier/adjudicator policy layer",
         "future worktree manager"
       ],
-      "line_count": 2983,
+      "line_count": 3113,
       "path": "Plans/Goal_Runtime_System.md",
-      "plan_unit_count": 40,
+      "plan_unit_count": 41,
       "plan_unit_ids": [
         "GRS-001",
         "GRS-032",
@@ -5864,7 +5869,8 @@
         "GRS-037",
         "GRS-038",
         "GRS-039",
-        "GRS-040"
+        "GRS-040",
+        "GRS-041"
       ],
       "reasoning_tiers": [
         "high",
@@ -5880,6 +5886,7 @@
         "evidence_reproducibility",
         "evidence_retention_drift",
         "external_reference_overreach",
+        "fable_goal_runtime_event_payload_drift",
         "false_completion",
         "goal_runtime_host_certification_drift",
         "goal_runtime_product_risk",
@@ -5907,10 +5914,10 @@
         "unsupported_completion_claim",
         "weak_worker_false_completion"
       ],
-      "sha256": "50159de77b54714b528deb77faf74dd1eb9725125f226d21e6e39e19a4357c4d",
+      "sha256": "6ae31015d29f6c61c2ae83a8c97dabe16bfce362fae59ec3e0eaa0d3ebfb3458",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 40
+        "accepted": 41
       },
       "title": "Goal Runtime System",
       "unit_type_counts": {
@@ -5918,6 +5925,7 @@
         "constraint": 5,
         "requirement": 30,
         "risk": 1,
+        "schema_contract": 1,
         "validation_criterion": 2
       },
       "validation_surfaces": [
@@ -5983,6 +5991,7 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-auto-decisions",
         "python3 scripts/pm-plans-verify.py validate-evidence",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "python3 scripts/pm-plans-verify.py verify-spec-lock",
         "python3 scripts/pm-shard-plans.py --check"
@@ -8144,7 +8153,7 @@
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 31294,
+      "line_count": 31405,
       "path": "Plans/orchestrator-subagent-integration.md",
       "plan_unit_count": 432,
       "plan_unit_ids": [
@@ -9019,7 +9028,7 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "82df656d5d3c4926dfed2de494372a58ac426b46f18ba1c7b1885b135b20d241",
+      "sha256": "af545965fa3150db48b829e91a13929d03f940b88f01f5cae8bccd2852ea1339",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 431,
@@ -13338,7 +13347,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-07T20:38:38Z",
+  "generated_at_utc": "2026-07-07T21:36:31Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13346,13 +13355,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3108,
+      "False": 3111,
       "True": 2385
     },
-    "plan_unit_count": 5493,
+    "plan_unit_count": 5496,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5315,
+      "accepted": 5318,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13393,12 +13402,12 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4564,
+      "requirement": 4565,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 12,
+      "schema_contract": 14,
       "schema_mirror": 1,
       "selection_contract": 1,
       "selection_policy": 2,

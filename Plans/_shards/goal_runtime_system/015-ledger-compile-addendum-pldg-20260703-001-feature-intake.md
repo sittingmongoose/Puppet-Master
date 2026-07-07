@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L2350-L2983
+Source lines: L2393-L3113
 
-Source SHA256: `50159de77b54714b528deb77faf74dd1eb9725125f226d21e6e39e19a4357c4d`
+Source SHA256: `6ae31015d29f6c61c2ae83a8c97dabe16bfce362fae59ec3e0eaa0d3ebfb3458`
 
 ---
 
@@ -641,4 +641,91 @@ preserved_exact_tokens:
 negative_constraints:
 - Do not let imported external sessions bypass Goal/Tool/Permission ownership.
 compile_disposition: create_new_planunit
+```
+
+### GRS-041 - FABLE Goal Runtime Event Payload Closure
+
+```yaml
+plan_unit_id: GRS-041
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime enumerates the shared envelope and event-specific payload minima for
+  all canonical goal and goal_run events, and defines the spec-level runtime
+  records LoopBreakerRegistry, AgentControlEnvelope, CertificationReceipt,
+  ChildAgentLease, WorkNodeRequests, AuditCycle, AuditFinding, and AuditClosure.
+  The closure preserves Goal Runtime as the semantic owner while consuming
+  Contracts_V0 for cross-surface field names, storage-plan for persistence and
+  replay, Executor for WorkNode scheduling and safe-point behavior, and
+  Permissions/Models/Multi-Account owners for authority and requested/effective
+  identity.
+gui_related: false
+gui_classification_reason: This unit defines backend Goal Runtime event payload and record semantics, not visual presentation.
+depends_on: [GRS-005, GRS-026, GRS-035, GRS-036, GRS-037, GRS-038, CV-287, CV-288, CV-313, EP-098, PNC-013]
+unblocks: []
+acceptance_criteria:
+  - The common payload envelope includes event_name, schema_version, occurred_at_utc, project/thread/goal identity, revisions, actor/execution role, requested/effective provider/model/account refs, correlation/causation/idempotency, evidence/artifact refs, approval refs, and block refs.
+  - All 15 goal events and all 6 goal_run events list event-specific payload minima.
+  - LoopBreakerRegistry includes the required loop families with fingerprint, max count, observation window, terminal action, and user-facing reason.
+  - AgentControlEnvelope, CertificationReceipt, ChildAgentLease, WorkNodeRequests, AuditCycle, AuditFinding, and AuditClosure define stable identities and required proof/authority fields.
+  - Goal Runtime does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this payload closure.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: fable_goal_runtime_event_payload_drift
+reasoning_tier: high
+context_scope: contract_runtime_core_repair
+implementation_surfaces:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: goal_runtime_event_payload_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`goal.created`"
+  - "`goal.scheduled`"
+  - "`goal.progressed`"
+  - "`goal.tool_check_recorded`"
+  - "`goal.updated`"
+  - "`goal.replanned`"
+  - "`goal.child_status_changed`"
+  - "`goal.evidence_captured`"
+  - "`goal.verification_decided`"
+  - "`goal.receipt_recorded`"
+  - "`goal.completed`"
+  - "`goal.degraded`"
+  - "`goal.stopped`"
+  - "`goal.blocked`"
+  - "`goal.cancelled`"
+  - "`goal_run.started`"
+  - "`goal_run.replanned`"
+  - "`goal_run.blocked`"
+  - "`goal_run.certified`"
+  - "`goal_run.cancelled`"
+  - "`goal_run.stopped`"
+  - "`LoopBreakerRegistry`"
+  - "`AgentControlEnvelope`"
+  - "`CertificationReceipt`"
+  - "`ChildAgentLease`"
+  - "`WorkNodeRequests`"
+  - "`AuditCycle`"
+  - "`AuditFinding`"
+  - "`AuditClosure`"
+negative_constraints:
+  - Do not treat event payload closure as runtime certification harness or implementation readiness proof.
+  - Do not re-own Executor scheduling, storage replay, permission enforcement, or provider/model/account resolution.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
 ```

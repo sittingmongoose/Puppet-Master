@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2116-L2389
+Source lines: L2203-L2486
 
-Source SHA256: `9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2`
+Source SHA256: `fe90fc80e248a7b95f53ff541653411553e3aa052e64c578e3a37aa62265cf53`
 
 ---
 
@@ -17,7 +17,7 @@ Add the following event families to the canonical contract set.
 
 #### `scheduler.pass`
 
-Canonical `wake_reason` values include prerequisite, approval, clarification, auth, startup, backoff, verification, and remediation wakes; `startup_recovered` is the scheduler-pass value used for the first pass after startup recovery, while `watchdog_recheck` is a defensive verification wake that may recheck readiness without becoming the primary correctness path.
+Canonical `wake_reason` is closed to `prerequisite_resolved | approval_resolved | clarification_resolved | auth_recovered | startup_recovered | backoff_expired | verification_completed | remediation_resolved | safe_point_restored | capacity_available | replan_applied | watchdog_recheck`. `startup_recovered` is the scheduler-pass value used for the first pass after startup recovery, while `watchdog_recheck` is a defensive verification wake that may recheck readiness without becoming the primary correctness path.
 
 
 > **Migration note:** `run.scheduler_analysis` is a deprecated legacy alias for this event. New producers MUST emit `scheduler.pass`. Consumers SHOULD accept both during migration.
@@ -25,11 +25,14 @@ Canonical `wake_reason` values include prerequisite, approval, clarification, au
 ContractRef: EventType:scheduler.pass, ContractName:Plans/Executor_Protocol.md
 
 Minimum payload:
+- `schema_version`
 - `scheduler_pass_id` (canonical identity -- `analysis_id` is a legacy alias)
 - `run_id`
 - `thread_id`
 - `replan_generation`
 - `wake_reason`
+- `coalesced_wake_reasons[]?`
+- `wake_event_refs[]?`
 - `available_slots`
 - `ready_nodes[]`
 - `selected_nodes[]` with per-node `{ node_id, score_tuple, lane }`
@@ -40,6 +43,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 
 #### `run.node_ready`
 Minimum payload:
+- `schema_version`
 - `run_id`
 - `node_id`
 - `ready_since_utc`
@@ -55,6 +59,7 @@ Approval scopes that still use tier boundaries normalize to `/node/blocked` runt
 ContractRef: EventType:node.blocked, ContractName:Plans/Executor_Protocol.md
 
 Minimum payload:
+- `schema_version`
 - `run_id`
 - `node_id`
 - `attempt_id?`
@@ -75,12 +80,15 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 > **Migration note:** `run.node_unblocked` is a deprecated legacy alias for this event. New producers MUST emit `node.unblocked`.
 
 Minimum payload:
+- `schema_version`
 - `run_id`
 - `node_id`
 - `attempt_id?`
 - `blocked_sequence`
 - `resolution` (the action that resolved the block)
 - `ts`
+
+`node.unblocked.resolution` is closed to `approval_granted | clarification_provided | auth_recovered | prerequisite_resolved | safe_point_restored | remediation_resolved | replan_applied | policy_or_permission_changed | capacity_available | manual_override_granted`.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
@@ -120,19 +128,21 @@ Minimum payload:
 
 
 Minimum payload:
+- `schema_version`
 - `safe_point_id`
 - `run_id`
 - `node_id`
 - `attempt_id`
 - `worktree_id?`
 - `worktree_path?`
-- `worktree_branch?`
-- `working_directory?`
+- `branch_name?`
+- `HEAD_sha?`
 - `baseline_ref`
 - `replan_generation`
+- `creation_reason`
 - `ts`
 
-When a safe point is created from a worktree-bound execution unit, `safe_point.created` carries the worktree snapshot fields (`worktree_id`, `worktree_path`, `worktree_branch`, and `working_directory`) so restore, retry, and UI history can return to the same worktree context instead of silently substituting the main project root.
+When a safe point is created from a worktree-bound execution unit, `safe_point.created` carries the worktree snapshot fields (`worktree_id`, `worktree_path`, `branch_name`, and `HEAD_sha`) so restore, retry, and UI history can return to the same worktree context instead of silently substituting the main project root. `worktree_branch` is a compatibility alias for `branch_name`; `working_directory` is not a substitute for `worktree_path`.
 
 #### `safe_point.restored`
 Minimum payload:
@@ -158,7 +168,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 
 #### FileSafe snapshot event compatibility
 
-FileSafe may emit compatibility producer event names `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` when it creates, detects a conflict for, or restores a mutation safe-point snapshot. These names are FileSafe-facing wrappers for the Contracts-owned safe-point event contract, not separate event-family owners: creation maps to `safe_point.created`, restore maps to `safe_point.restored`, and conflict reporting carries the same safe-point/snapshot identity with a `restore_outcome` or `conflict_reason_code` as applicable. Minimum payload fields are `snapshot_id`, `safe_point_id`, `run_id`, `node_id?`, `attempt_id?`, `target_path?`, `conflict_reason_code?`, `restore_outcome?`, and `ts`.
+FileSafe may emit compatibility producer event names `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` when it creates, detects a conflict for, or restores a mutation safe-point snapshot. These names are FileSafe-facing wrappers for the Contracts-owned safe-point event contract, not separate event-family owners: creation maps to `safe_point.created`, restore maps to `safe_point.restored`, and conflict reporting carries the same safe-point/snapshot identity with a `restore_outcome` or `conflict_reason_code` as applicable. Minimum payload fields are `snapshot_id`, `safe_point_id`, `run_id`, `node_id?`, `attempt_id?`, `target_path?`, `conflict_reason_code?`, `restore_outcome?`, and `ts`. `conflict_reason_code` is closed to `worktree_path_mismatch | branch_mismatch | head_mismatch | baseline_stale | snapshot_missing | target_path_conflict | restore_conflict | canonicalization_failed | permission_denied`.
 
 #### FileSafe fail-closed security event payloads
 
