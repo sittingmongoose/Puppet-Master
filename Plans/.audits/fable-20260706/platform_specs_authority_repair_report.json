@@ -1,0 +1,67 @@
+{
+  "active_platform_specs_authority_remaining": false,
+  "audit_id": "fable-20260706",
+  "closed_scope": [
+    "platform_specs authority",
+    "context_window authority",
+    "fallback_model_ids authority",
+    "Contracts_V0 dangling platform_specs reference"
+  ],
+  "decision": "Legacy platform_specs / platform_specs.rs is retired source-lineage only; Models_System owns active provider/model capability snapshot fields and fallback-chain semantics.",
+  "evidence": {
+    "assistant_chat": [
+      "Plans/assistant-chat-design.md:49",
+      "Plans/assistant-chat-design.md:1910",
+      "Plans/assistant-chat-design.md:2333",
+      "Plans/assistant-chat-design.md:12031",
+      "Plans/assistant-chat-design.md:15022"
+    ],
+    "contracts": [
+      "Plans/Contracts_V0.md:946",
+      "Plans/Contracts_V0.md:19561"
+    ],
+    "models_system": [
+      "Plans/Models_System.md:15",
+      "Plans/Models_System.md:267",
+      "Plans/Models_System.md:450",
+      "Plans/Models_System.md:9283"
+    ],
+    "plan_index": [
+      "Plans/.plan_index/plan_units.jsonl",
+      "Plans/.plan_index/node_readiness_report.json"
+    ],
+    "provider_opencode": [
+      "Plans/Provider_OpenCode.md:51",
+      "Plans/Provider_OpenCode.md:517"
+    ]
+  },
+  "finding_key": "fable-20260706-p0-platform-specs-authority-drift",
+  "generated_at_utc": "2026-07-07T18:49:00Z",
+  "out_of_scope_preserved_open": [
+    "FileSafe",
+    "tier vocabulary",
+    "broad Contracts_V0 gaps",
+    "Goal Runtime",
+    "Executor Protocol",
+    "UI command catalog",
+    "wiring matrix",
+    "missing docs",
+    "broad PlanUnit boilerplate"
+  ],
+  "repair_required": false,
+  "schema_id": "pm.audit.platform_specs_authority_repair_report.v1",
+  "semantic_finding_key": "sfk-cb2dfb3a4e797fdb4a876fdf",
+  "status": "PASS",
+  "validation_observed": [
+    {
+      "command": "python3 scripts/pm-plan-index.py generate",
+      "generated_at_utc": "2026-07-07T18:47:23Z",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "generated_at_utc": "2026-07-07T18:48:19Z",
+      "status": "pass"
+    }
+  ]
+}

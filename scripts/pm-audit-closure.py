@@ -29,6 +29,7 @@ OPEN_STATUSES = {"blocked_requires_user_decision", "reopened"}
 FINDING_LEVELS = {"blocker", "warning", "observation", "error", "info"}
 TERMINAL_CLASSIFICATIONS = {"exact_present", "equivalent_with_evidence", "previously_closed"}
 AUDIT_REF_FIELDS = ("audit_id", "ledger_id", "baseline_ref", "subject_ref", "observation_ref")
+ROW_SCOPED_REF_FIELDS = {"ledger_id", "subject_ref", "observation_ref"}
 AUDIT_SOURCE_FINDING_REQUIRED_FIELDS = {
     "finding_family",
     "ledger_id",
@@ -196,6 +197,9 @@ REGISTRY_LIST_FIELDS = {
     "reopen_conditions",
 }
 DEFAULT_AUDIT_SOURCE_ARTIFACTS = [
+    "gui_platform_currentness_findings.jsonl",
+    "storage_coordination_canon_findings.jsonl",
+    "platform_specs_authority_findings.jsonl",
     "semantic_risks.jsonl",
     "atom_fidelity_matrix.jsonl",
     "planunit_source_claims.jsonl",
@@ -633,6 +637,7 @@ def validate_ref_fields(
     errors: list[str],
     *,
     require: bool,
+    allow_row_scoped_refs: bool = False,
 ) -> None:
     for field, expected_value in expected.items():
         value = row.get(field)
@@ -642,6 +647,8 @@ def validate_ref_fields(
             continue
         if not isinstance(value, str) or not value.strip():
             errors.append(f"{path_label}: {field} must be a non-empty string")
+            continue
+        if allow_row_scoped_refs and field in ROW_SCOPED_REF_FIELDS:
             continue
         if expected_value and value != expected_value:
             errors.append(f"{path_label}: {field} {value!r} does not match audit_report {expected_value!r}")
@@ -688,7 +695,7 @@ def validate_source_finding_row(
     missing = sorted(AUDIT_SOURCE_FINDING_REQUIRED_FIELDS - set(row))
     if missing:
         errors.append(f"{path_label}: audit finding missing required fields {missing}")
-    validate_ref_fields(row, refs, path_label, errors, require=False)
+    validate_ref_fields(row, refs, path_label, errors, require=False, allow_row_scoped_refs=True)
     for field in AUDIT_SOURCE_FINDING_LIST_FIELDS:
         if field in row and not isinstance(row.get(field), list):
             errors.append(f"{path_label}: {field} must be a list")
@@ -712,7 +719,7 @@ def validate_source_jsonl_artifact(path: Path, artifact: str, refs: dict[str, st
     finding_count = 0
     for row in read_jsonl(path, errors, required=True):
         label = f"{rel(path)}:{row.get('_line_no')}"
-        validate_ref_fields(row, refs, label, errors, require=False)
+        validate_ref_fields(row, refs, label, errors, require=False, allow_row_scoped_refs=True)
         if is_finding_row(row, artifact):
             finding_count += 1
             validate_source_finding_row(row, artifact, label, refs, errors)
@@ -723,7 +730,7 @@ def validate_source_json_artifact(path: Path, artifact: str, refs: dict[str, str
     data = load_json_object(path, errors, required=False)
     if data is None:
         return 0
-    validate_ref_fields(data, refs, rel(path), errors, require=True)
+    validate_ref_fields(data, refs, rel(path), errors, require=True, allow_row_scoped_refs=True)
     finding_count = 0
     for field in ("warnings", "findings", "semantic_risks"):
         values = data.get(field)
@@ -733,7 +740,7 @@ def validate_source_json_artifact(path: Path, artifact: str, refs: dict[str, str
             if not isinstance(item, dict):
                 continue
             label = f"{rel(path)}:{field}[{index}]"
-            validate_ref_fields(item, refs, label, errors, require=False)
+            validate_ref_fields(item, refs, label, errors, require=False, allow_row_scoped_refs=True)
             if is_finding_row(item, artifact):
                 finding_count += 1
                 validate_source_finding_row(item, artifact, label, refs, errors)
@@ -790,7 +797,7 @@ def validate_scope_manifest(audit_dir: Path, refs: dict[str, str], errors: list[
         missing = sorted(SCOPE_REQUIRED_FIELDS - set(row))
         if missing:
             errors.append(f"{label}: missing required fields {missing}")
-        validate_ref_fields(row, refs, label, errors, require=True)
+        validate_ref_fields(row, refs, label, errors, require=True, allow_row_scoped_refs=True)
         check_id = row.get("check_id")
         if not isinstance(check_id, str) or not check_id.strip():
             errors.append(f"{label}: check_id must be a non-empty string")
@@ -885,7 +892,7 @@ def validate_repair_impact_matrix(
         missing = sorted(IMPACT_REQUIRED_FIELDS - set(row))
         if missing:
             errors.append(f"{label}: missing required fields {missing}")
-        validate_ref_fields(row, refs, label, errors, require=True)
+        validate_ref_fields(row, refs, label, errors, require=True, allow_row_scoped_refs=True)
         impact_id = row.get("impact_id")
         if not isinstance(impact_id, str) or not impact_id.strip():
             errors.append(f"{label}: impact_id must be a non-empty string")
@@ -1413,7 +1420,7 @@ def validate_audit_dir(
         missing = sorted(MATRIX_REQUIRED_FIELDS - set(row))
         if missing:
             errors.append(f"{label}: missing required fields {missing}")
-        validate_ref_fields(row, audit_refs, label, errors, require=True)
+        validate_ref_fields(row, audit_refs, label, errors, require=True, allow_row_scoped_refs=True)
         status = str(row.get("closure_status", ""))
         status_counts[status] = status_counts.get(status, 0) + 1
         if status not in ALLOWED_STATUSES:

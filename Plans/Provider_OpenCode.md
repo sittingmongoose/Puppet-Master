@@ -48,7 +48,7 @@ Rules:
 - **Provider facade contract:** `Plans/CLI_Bridged_Providers.md` (extended for server transport)
 - **Canonical contracts (events/tools/auth/UICommand):** `Plans/Contracts_V0.md`
 - **Locked decisions:** `Plans/Spec_Lock.json`
-- **Provider/model capability SSOT:** `Plans/Models_System.md`, `Plans/Contracts_V0.md`, `Plans/CLI_Bridged_Providers.md`, and `Plans/Media_Generation_and_Capabilities.md`. Legacy `puppet-master-rs/src/platforms/platform_specs.rs` references are source-lineage only.
+- **Provider/model capability SSOT:** `Plans/Models_System.md` owns context-window, max-token, fallback-chain, capability provenance, and requested/effective model capability fields; `Plans/Contracts_V0.md`, `Plans/CLI_Bridged_Providers.md`, and `Plans/Media_Generation_and_Capabilities.md` carry cross-surface refs and route-specific consumers. Legacy `puppet-master-rs/src/platforms/platform_specs.rs` references are source-lineage only.
 - **Deterministic defaults:** `Plans/Decision_Policy.md`
 - **DRY + ContractRef rules:** `Plans/DRY_Rules.md`
 - **Architecture invariants:** `Plans/Architecture_Invariants.md`
@@ -514,7 +514,7 @@ Unlike CLI-bridged providers, OpenCode does NOT require CLI path input for norma
 
 ## 11. Legacy platform_specs lineage and current metadata ownership
 
-Legacy OpenCode references to `puppet-master-rs/src/platforms/platform_specs.rs` are preserved only as source-lineage from the removed Rust/Iced implementation. Active OpenCode metadata ownership lives in the provider/model contracts and OpenCode server profile setup metadata.
+Legacy OpenCode references to `puppet-master-rs/src/platforms/platform_specs.rs` are preserved only as source-lineage from the removed Rust/Iced implementation. Active OpenCode metadata ownership lives in `Plans/Models_System.md` capability snapshots and the cross-surface refs in `Plans/Contracts_V0.md`; OpenCode server profile setup metadata is a consumer input, not the provider/model capability SSOT.
 
 Minimum active OpenCode constraints:
 - Transport: `http` (server-bridged)

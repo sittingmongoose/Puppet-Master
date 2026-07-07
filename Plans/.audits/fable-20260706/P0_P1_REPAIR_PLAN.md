@@ -1,20 +1,20 @@
 # P0/P1 Buildability Repair Plan — FABLE 20260706 Currentness Triage
 
 Generated: 2026-07-07T11:56:40Z
-Updated: 2026-07-07T17:54:01Z for storage/coordination canon repair.
+Updated: 2026-07-07T18:49:00Z for storage/coordination canon repair and platform_specs authority repair.
 
-Scope: triage plus bounded storage/coordination canon repair. Platform_specs, FileSafe, UI command catalog, wiring matrix, Goal Runtime, Executor Protocol, and broad PlanUnit boilerplate remain out of scope.
+Scope: triage plus bounded storage/coordination canon repair and platform_specs authority repair. FileSafe, tier vocabulary, UI command catalog, wiring matrix, Goal Runtime, Executor Protocol, broad Contracts_V0 gaps, missing docs, and broad PlanUnit boilerplate remain out of scope.
 
 ## Current Buildability Reality
 
-- `Plans/.implementation_readiness/buildability_gate_report.json` currently reports `buildability_gate_passed=True` and `Approve And Build` enabled=True.
+- `Plans/.implementation_readiness/buildability_gate_report.json` currently reports `buildability_gate_passed=False` and `Approve And Build` enabled=False while runtime lifecycle and clean-room harness blockers remain open.
 - Live wiring metrics still show `179` generic `Cataloged GUI surface` rows, `323` rows with no events, `99` placeholder `*.command_applied` rows, and `35/459` rows with both a real location and non-placeholder event.
-- Therefore this plan treats current green gates as insufficient buildability proof where the live P0/P1 evidence below remains unresolved.
+- Therefore this plan treats current governance validation as insufficient buildability proof where the live P0/P1 evidence below remains unresolved.
 
 ## Dependency Order
 
 10. `fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb` — **repaired_current** — Closed by `STORAGE_COORDINATION_CANON_REPAIR.md` and `storage_coordination_canon_repair_report.json`; active canon now names coordination EventRecord families, redb projections, append/CAS semantics, and debug/export mirror-only `.puppet-master/state/*.json` disposition.
-20. `fable-20260706-p0-platform-specs-authority-drift` — **confirmed_current** — platform_specs authority remains contradictory: assistant-chat still uses it live while Models_System has no replacement field contract.
+20. `fable-20260706-p0-platform-specs-authority-drift` — **repaired_current** — Closed by `PLATFORM_SPECS_AUTHORITY_REPAIR.md` and `platform_specs_authority_repair_report.json`; Models_System now owns context-window, max-token, fallback-chain, provenance, and requested/effective capability fields, Contracts_V0 only carries snapshot refs, and Assistant Chat no longer uses legacy platform_specs functions as active authority.
 30. `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` — **repaired_superseded** — Closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; active canon now pins Slint 1.17.1, Slint/WASM canvas web bootstrap limits, native Rust + Slint `.slint` markup, and `validate-gui-asset-policy` governance coverage.
 40. `fable-20260706-p0-tier-vocabulary-and-subagent-config-canon` — **owner_decision_required** — Tier-era config and iteration wording remain live beside node/package/seam/lane canon.
 50. `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` — **partial_current** — FileSafe still preserves fail-open and prefix-match source snippets while later rows attempt to demote them to source-lineage.
@@ -37,8 +37,8 @@ Scope: triage plus bounded storage/coordination canon repair. Platform_specs, Fi
   - Repair target: Add a banned-live-vocabulary check for tier-era runtime/config labels unless the row is marked compatibility/source-lineage.; Require SubagentPolicy schema fields, units, and defaults before subagent runtime readiness can pass.
 
 ### Plans/assistant-chat-design.md
-- `fable-20260706-p0-platform-specs-authority-drift` (P0, High, confirmed_current): FABLE P0 #2: decide retired lineage vs live source, then replace assistant-chat live context_window/fallback_model usages and dangling Contracts_V0 platform_specs reference.
-  - Repair target: Gate provider/model capability readiness on absence of live platform_specs references outside explicit source-lineage notes.; Require Models_System capability matrix to define context-window/fallback metadata before model-picker/context gates pass.
+- `fable-20260706-p0-platform-specs-authority-drift` (P0, High, repaired_current): FABLE P0 #2 is closed by `PLATFORM_SPECS_AUTHORITY_REPAIR.md`; Assistant Chat context repack and Auditor Validation dropdown/fallback units now consume Models_System capability snapshot and `fallback_chain[]` fields instead of legacy platform_specs functions.
+  - Repair target satisfied: active `platform_specs::context_window(provider)` and `platform_specs::fallback_model_ids(platform)` claims were replaced or fenced as retired source-lineage; Models_System defines context-window/fallback metadata; Contracts_V0 defines only the cross-surface capability snapshot ref envelope.
 
 ### Plans/Spec_Lock.json
 - `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` (P0, High, repaired_superseded): FABLE P0 #3 is closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; historical `currentness_check_report.json` and original registry rows remain source evidence only.

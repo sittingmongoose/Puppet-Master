@@ -3,14 +3,18 @@
   "baseline_ref": "7db016bca34ad0050b2c5ceafecb309de3cb3489",
   "closed_finding_keys": [
     "sfk-4332f4dc0daf756614caa8f3",
-    "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui"
+    "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+    "sfk-ae3fb5e70321020dfe0917b7",
+    "fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb",
+    "sfk-cb2dfb3a4e797fdb4a876fdf",
+    "fable-20260706-p0-platform-specs-authority-drift"
   ],
-  "evidence_summary": "Active owner docs and Spec_Lock now agree on Slint 1.17.1; renderer, web/WASM trusted-daemon, capability matrix, and SVG/no-emoji contracts are present; old Slint strings remain only in source-lineage/history notes.",
-  "generated_at_utc": "2026-07-07T14:19:18Z",
-  "ledger_id": "gui-platform-currentness-repair-20260707",
-  "observation_ref": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+  "evidence_summary": "GUI toolkit currentness, storage/coordination canon, and platform_specs authority local closure rows are repaired in the FABLE closure matrix. Broader FABLE rows remain out of this bounded repair.",
+  "generated_at_utc": "2026-07-07T18:49:00Z",
+  "ledger_id": "platform-specs-authority-repair-20260707",
+  "observation_ref": "fable-20260706-p0-platform-specs-authority-drift",
   "repair_required_count": 0,
   "schema_id": "pm.post_repair_audit_report.v1",
   "status": "PASS",
-  "subject_ref": "Plans/Spec_Lock.json::locked_decisions.ui.toolkit_version"
+  "subject_ref": "Plans/Models_System.md::provider_model_capability_snapshot_authority"
 }

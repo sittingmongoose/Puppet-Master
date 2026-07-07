@@ -2,20 +2,19 @@
   "audit_id": "fable-20260706",
   "effective_status": "PASS",
   "effective_terminal_report": "post_repair_audit_report.json",
-  "hardening_repair_report": "gui_platform_hardening_repair_report.json",
   "ledger_id": "gui-platform-currentness-repair-20260707",
   "notes": [
     "Historical status artifacts are preserved but superseded by this effective status projection.",
     "No open actionable repair is represented by this audit effective status.",
-    "The GUI toolkit currentness finding is closed by GUI_PLATFORM_CURRENTNESS_REPAIR.md and hardened by GUI_PLATFORM_HARDENING_REPAIR.md; broader FABLE P0/P1 backlog rows remain out of scope.",
-    "The storage/coordination canon finding is closed by STORAGE_COORDINATION_CANON_REPAIR.md and storage_coordination_canon_repair_report.json; broader FABLE P0/P1 backlog rows remain out of scope."
+    "The effective PASS projection covers the local repair_closure_matrix source rows: GUI toolkit currentness, storage/coordination canon, and platform_specs authority.",
+    "Broader FABLE P0/P1 rows remain represented in currentness_check_report.json and buildability_repair_registry.jsonl until separately repaired."
   ],
-  "original_repair_required_count": 1,
+  "original_repair_required_count": 3,
   "repair_required_count": 0,
   "repair_required_count_source": "closure_validation",
   "schema_id": "pm.audit_effective_status.v1",
   "status_sources": {
-    "audit_report_repair_required_count": 1,
+    "audit_report_repair_required_count": 3,
     "audit_report_status": "BLOCKED",
     "final_report_repair_required_count": null,
     "final_report_status": null,
@@ -25,27 +24,7 @@
   },
   "superseded_historical_reports": [
     "audit_report.json",
-    "terminal_state.json",
-    "currentness_check_report.json"
-  ],
-  "superseded_repaired_findings": [
-    {
-      "finding_key": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
-      "status": "repaired_superseded",
-      "superseded_by": [
-        "GUI_PLATFORM_CURRENTNESS_REPAIR.md",
-        "GUI_PLATFORM_HARDENING_REPAIR.md",
-        "gui_platform_hardening_repair_report.json"
-      ]
-    },
-    {
-      "finding_key": "fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb",
-      "status": "repaired_current",
-      "superseded_by": [
-        "STORAGE_COORDINATION_CANON_REPAIR.md",
-        "storage_coordination_canon_repair_report.json"
-      ]
-    }
+    "terminal_state.json"
   ],
   "terminal_repair_state": "repair_validated"
 }
