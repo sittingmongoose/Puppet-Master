@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "ae02d34550bce44f8f95048ba4b4ec8c8cddac702c6835e0894d25615ac2ec3f"
+      "sha256": "045fa27e555bc2dc18b9b300a3f0279413d516f27da88c891980613fd8d9a749"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "5493b8b3e13fcca6e8b80ce175108ef510e22ca3b876dcdf17f91296162492d6"
+      "sha256": "096a4ffa7805a95bc55f6d46df37aa5e07d3759a8b7d2512c2739bab1c7b3366"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "46d93496718ec43cbaf0fbdf25717c413abbffbc4dbad6f5468922e6958330fd"
+      "sha256": "30e7ff4c2b51ed57f0aadc83946718ca9047cc8380f2203e97aa55c99a623e0a"
     }
   ],
   "checks": [
@@ -402,6 +402,16 @@
       "name": "storage-coordination-canon-repair-evidence-restamp",
       "result": "PASS",
       "details": "Nested evidence artifact hash refreshed after dependent evidence bundle restamp."
+    },
+    {
+      "name": "validate-filesafe-security-policy",
+      "result": "PASS",
+      "details": "PASS after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "validate-evidence",
+      "result": "PASS",
+      "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
     }
   ],
   "commands_run": [
@@ -748,6 +758,10 @@
       "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
       "exit_code": 0,
       "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

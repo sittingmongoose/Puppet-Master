@@ -2265,6 +2265,41 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 
 FileSafe may emit compatibility producer event names `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` when it creates, detects a conflict for, or restores a mutation safe-point snapshot. These names are FileSafe-facing wrappers for the Contracts-owned safe-point event contract, not separate event-family owners: creation maps to `safe_point.created`, restore maps to `safe_point.restored`, and conflict reporting carries the same safe-point/snapshot identity with a `restore_outcome` or `conflict_reason_code` as applicable. Minimum payload fields are `snapshot_id`, `safe_point_id`, `run_id`, `node_id?`, `attempt_id?`, `target_path?`, `conflict_reason_code?`, `restore_outcome?`, and `ts`.
 
+#### FileSafe fail-closed security event payloads
+
+FileSafe fail-closed security events use the canonical `EventRecord` envelope (`schema_id = pm.event.v0`). These payload definitions cover the FileSafe P0 fail-closed repair only; they do not replace `tool.denied`, safe-point events, permission approvals, or adjacent runtime receipt contracts.
+
+Stable event types:
+
+| Event type | Minimum payload fields |
+|---|---|
+| `filesafe.guard_init_failed` | `guard_type`, `diagnostic_code`, `failure_stage`, `baseline_source?`, `project_id`, `run_id?`, `worktree_id?`, `blocked_capability`, `user_visible_message`, `redaction_profile`, `ts` |
+| `filesafe.command_denied` | `guard_type`, `denial_code`, `command_preview`, `normalized_command_identity`, `segment_index?`, `pattern_matched?`, `permission_snapshot_id?`, `filesafe_scope_ref?`, `project_id`, `run_id?`, `worktree_id?`, `allowed_action_ids[]?`, `ts` |
+| `filesafe.path_denied` | `guard_type`, `denial_code`, `path_preview`, `normalized_path?`, `canonical_parent?`, `path_kind`, `operation`, `filesafe_scope_ref?`, `permission_snapshot_id?`, `project_id`, `run_id?`, `worktree_id?`, `allowed_action_ids[]?`, `ts` |
+| `filesafe.destructive_override_requested` | `request_id`, `guard_type`, `command_preview`, `normalized_command_identity`, `requested_scope`, `requested_duration`, `reason`, `auth_realm`, `operator_identity_ref`, `project_id`, `run_id?`, `worktree_id?`, `ts` |
+| `filesafe.destructive_override_granted` | `request_id`, `receipt_id`, `guard_type`, `authorized_scope`, `reason`, `auth_realm`, `operator_identity_ref`, `issued_at`, `expires_at`, `project_id`, `run_id?`, `worktree_id?`, `ts` |
+| `filesafe.destructive_override_denied` | `request_id`, `guard_type`, `denial_code`, `denial_reason`, `auth_realm?`, `operator_identity_ref?`, `project_id`, `run_id?`, `worktree_id?`, `ts` |
+| `filesafe.policy_degraded` | `degraded_component`, `degradation_reason`, `authoritative_enforcement_intact`, `fallback_source?`, `project_id`, `run_id?`, `worktree_id?`, `ts` |
+
+Required denial codes include `guard_init_failed`, `destructive_pattern_match`, `approved_command_identity_mismatch`, `missing_allowlist`, `empty_allowlist`, `missing_baseline`, `canonicalization_failed`, `path_outside_scope`, `path_toc_tou_recheck_failed`, `override_auth_missing`, `override_scope_invalid`, and `override_expired`.
+
+Destructive override receipt fields:
+- `receipt_id`
+- `request_id`
+- `auth_realm`
+- `operator_identity_ref`
+- `reason`
+- `authorized_scope` with project, optional run, optional worktree, and optional command identity
+- `issued_at`
+- `expires_at`
+- `approver_ref` when different from the operator
+- `event_refs[]` linking requested/granted/denied events
+- `redaction_profile`
+
+`filesafe.policy_degraded` is valid only when enforcement remains fail-closed or an embedded fallback baseline remains authoritative enough to block known destructive operations. It must not stand in for missing/empty allowlists, missing roots, unresolved canonical paths, failed guard initialization, or destructive override denial.
+
+ContractRef: EventType:filesafe.guard_init_failed, EventType:filesafe.command_denied, EventType:filesafe.path_denied, EventType:filesafe.destructive_override_requested, EventType:filesafe.destructive_override_granted, EventType:filesafe.destructive_override_denied, EventType:filesafe.policy_degraded, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
 ### 4. Remediation lineage events
 
 
@@ -19616,4 +19651,71 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/Models_System.md
   - Plans/assistant-chat-design.md
+```
+
+### CV-312 - FileSafe Fail Closed Security Event Payloads
+
+```yaml
+plan_unit_id: CV-312
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for
+  filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied,
+  filesafe.destructive_override_requested, filesafe.destructive_override_granted,
+  filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve
+  guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe
+  scope refs, project/run/worktree scope, authenticated operator override request/grant/denial
+  fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to
+  non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement
+  remains intact.
+gui_related: false
+gui_classification_reason: This unit defines security event payload contracts, not visual presentation.
+depends_on: [CV-309, CV-081, F2-199]
+unblocks: [F2-024, F2-028, F2-031, F2-052, F2-114, F2-116]
+acceptance_criteria:
+  - FileSafe init failure emits filesafe.guard_init_failed and blocks affected guarded execution.
+  - Command denial emits filesafe.command_denied with normalized command identity and denial_code.
+  - Path denial emits filesafe.path_denied with path/canonicalization denial_code and scope refs.
+  - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, event refs, and receipt fields.
+  - policy_degraded is not used when authoritative allowlist, baseline, root, canonical path, or override authority is absent.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: filesafe_event_payload_drift
+reasoning_tier: high
+context_scope: filesafe_fail_closed_security_repair
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FileSafe.md
+  - scripts/pm-plans-verify.py
+node_compile_hint:
+  mode: filesafe_fail_closed_security_event_payloads
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:10
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`filesafe.guard_init_failed`"
+  - "`filesafe.command_denied`"
+  - "`filesafe.path_denied`"
+  - "`filesafe.destructive_override_requested`"
+  - "`filesafe.destructive_override_granted`"
+  - "`filesafe.destructive_override_denied`"
+  - "`filesafe.policy_degraded`"
+  - "`approved_command_identity_mismatch`"
+  - "`path_toc_tou_recheck_failed`"
+  - "`override_expired`"
+negative_constraints:
+  - Do not treat PUPPET_MASTER_ALLOW_DESTRUCTIVE as sufficient destructive override authority.
+  - Do not use policy_degraded as a success-shaped substitute for missing allowlists, baselines, roots, canonical paths, or authorization.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this contract unit.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FileSafe.md
+  - Plans/Permissions_System.md
 ```

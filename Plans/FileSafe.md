@@ -95,8 +95,26 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.
 - FileSafe checks the fully compiled prompt **after** Prompt Pipeline assembly and **before** provider dispatch.
 - FileSafe validates structured attachments, forwarded document selections, and file references against security and write-scope policy.
 - FileSafe emits structured allow/block outcomes for these checks into seglog.
+- Prompt/free-text command and path extraction is advisory defense-in-depth only; free-text extraction is advisory, not authoritative. Layer-1 enforcement is the structured tool/command invocation, normalized command identity, resolved path scope, and security-filter decision. A free-text extraction hit may block, warn, or ask for clarification, but a free-text extraction miss never authorizes command execution or file mutation.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+### P0 fail-closed security resolution (2026-07-07)
+
+This section is the active FileSafe security decision for FABLE `fable-20260706-p0-filesafe-fail-open-and-allowlist-security`. Earlier examples that appear to disable guards, match approved commands by prefix, treat empty allowlists as warn-only, or make `PUPPET_MASTER_ALLOW_DESTRUCTIVE=1` sufficient authority are retired source-lineage only unless this section explicitly restates them as live behavior.
+
+Canonical requirements:
+- FileSafe, BashGuard, FileGuard, and SecurityFilter initialization failures fail closed. The affected startup/runtime path blocks guarded command execution, file mutation, and sensitive-file access until the diagnostic is resolved.
+- Disabled guard states are valid only for explicit, authenticated, auditable operator configuration that narrows or intentionally suspends one named guard for a scoped run/project/worktree duration. Initialization failure must never create a disabled guard.
+- Approved command matching is exact after normalization. Normalization trims leading/trailing whitespace, collapses internal ASCII whitespace runs to one space, preserves token order and shell metacharacters, and does not split or concatenate authorization across command segments.
+- Command identity is the whole normalized segment that would be dispatched after policy expansion and before spawn. For multi-line or chained invocations using newline, `&&`, `;`, `||`, or `|`, each dispatch segment is normalized and checked independently; the invocation is allowed only if every segment is independently allowed and none is blocked. An approval for `git status` does not approve `git status && rm -rf /`.
+- Prefix, substring, `starts_with`, shell-fragment, fuzzy, prompt-expanded, and concatenated-command approval are forbidden. Mismatches emit `filesafe.command_denied` with `denial_code = approved_command_identity_mismatch`.
+- Missing or empty command/path allowlists fail closed whenever the corresponding guard is enabled. `strict_mode=false` can soften non-authoritative advisory reporting only after a safe enforcement baseline is present; it cannot permit writes, reads, or commands when the authoritative allowlist, baseline, root, or guard input is absent.
+- `PUPPET_MASTER_ALLOW_DESTRUCTIVE=1` is only a request signal. It is not sufficient authority by itself. A destructive override requires an authenticated operator grant with auth realm, operator identity, reason, scope, duration/expiry, project/run/worktree binding, and an emitted security event and receipt before any destructive command can run.
+- Prompt/free-text command or path extraction is never the sole enforcement boundary. Structured tool arguments, final command segments, and resolved path scopes remain mandatory checks.
+- Source-lineage snippets that preserve old fail-open, prefix-match, or disabled-fallback examples must be explicitly fenced as retired/noncanonical and must include a copy-prevention note saying they are not implementation guidance.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
 
 ---
 
@@ -258,19 +276,47 @@ use anyhow::{Result, Context};
 /// FileSafe command blocklist: blocks destructive CLI commands
 pub struct BashGuard {
     patterns: Vec<Regex>,
-    allow_destructive: bool,
     enabled: bool,
     approved_commands: Vec<String>,  // Whitelist from settings (Assistant chat approvals)
+    destructive_override: Option<DestructiveOverrideGrant>,
+}
+
+pub struct DestructiveOverrideGrant {
+    auth_realm: String,
+    operator_identity: String,
+    reason: String,
+    scope: DestructiveOverrideScope,
+    expires_at: DateTime<Utc>,
+    receipt_id: String,
+}
+
+pub struct DestructiveOverrideScope {
+    project_id: String,
+    run_id: Option<String>,
+    worktree_id: Option<String>,
 }
 
 #[derive(Debug, Clone)]
 pub enum GuardError {
+    GuardInitFailed {
+        guard_type: String,
+        diagnostic_code: String,
+        reason: String,
+    },
     DestructiveCommand {
         command: String,
         pattern: String,
     },
+    CommandDenied {
+        command_preview: String,
+        denial_code: String,
+    },
     FileNotInPlan {
         file: PathBuf,
+    },
+    PathDenied {
+        file: PathBuf,
+        denial_code: String,
     },
     SensitiveFileAccess {
         file: PathBuf,
@@ -296,10 +342,9 @@ impl BashGuard {
     /// 3. Check bundled: `puppet-master-rs/config/destructive-commands.txt` (relative to binary/exe)
     /// 4. If no trustworthy baseline exists: return initialization error (fail closed)
     pub fn new(config_path: Option<PathBuf>) -> Result<Self> {
-        // 1. Check environment variable override
-        let allow_destructive = std::env::var("PUPPET_MASTER_ALLOW_DESTRUCTIVE")
-            .map(|v| v == "1")
-            .unwrap_or(false);
+        // 1. Resolve destructive override request into an authenticated, scoped grant.
+        // PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is a request signal only; it is never sufficient authority.
+        let destructive_override = resolve_authenticated_destructive_override()?;
         
         // 2. Determine pattern file path
         let pattern_file = if let Some(custom_path) = config_path {
@@ -342,9 +387,9 @@ impl BashGuard {
         
         Ok(Self {
             patterns,
-            allow_destructive,
             enabled,
             approved_commands: Vec::new(),  // Populated from FileSafeConfig
+            destructive_override,
         })
     }
     
@@ -377,20 +422,27 @@ impl BashGuard {
         Ok(PathBuf::from("config/destructive-commands.txt"))
     }
     
-    // DRY:FN:disabled — Create a disabled guard instance
-    /// Create an explicitly disabled guard instance for deliberate config-off states, not init-failure fallback
-    pub fn disabled() -> Self {
+    // DRY:FN:explicit_config_off — Create an explicitly configured-off guard instance
+    /// Create an explicitly configured-off guard instance only from an authenticated operator grant.
+    /// This is never used for initialization failure.
+    pub fn explicit_config_off(grant: DestructiveOverrideGrant) -> Self {
         Self {
             patterns: Vec::new(),
-            allow_destructive: false,
             enabled: false,
             approved_commands: Vec::new(),
+            destructive_override: Some(grant),
         }
     }
     
     /// Check if a command should be blocked
     pub fn check_command(&self, command: &str) -> Result<(), GuardError> {
-        if !self.enabled || self.allow_destructive {
+        if !self.enabled {
+            // explicit config-off requires a current authenticated grant and emits an override receipt
+            self.require_current_override_receipt(command)?;
+            return Ok(());
+        }
+        if self.destructive_override.is_some() {
+            self.require_current_override_receipt(command)?;
             return Ok(());
         }
         // If command is in approved list (from settings / Assistant chat), allow it
@@ -411,15 +463,15 @@ impl BashGuard {
     }
 }
 
-// DRY:HELPER:commands_match — Compare approved (whitelist) entry to actual command
+// DRY:HELPER:commands_match — Compare approved (allowlist) entry to actual command
 /// Returns true if the approved pattern matches the command (normalized comparison).
-/// Handles: exact match, prefix match (approved is prefix of command), and normalized
-/// whitespace (collapse multiple spaces, trim).
+/// Handles exact command-identity match after trim + whitespace collapse.
+/// Prefix, substring, starts_with, shell-fragment, and chained-command expansion matching are forbidden.
 fn commands_match(approved: &str, command: &str) -> bool {
     let norm = |s: &str| s.trim().split_whitespace().collect::<Vec<_>>().join(" ");
     let a = norm(approved);
     let c = norm(command);
-    c == a || c.starts_with(a.as_str())
+    c == a
 }
 ```
 
@@ -568,7 +620,9 @@ pub struct BashGuardConfig {
     #[serde(default = "default_true")]
     pub enabled: bool,
     #[serde(default)]
-    pub allow_destructive: bool,
+    pub destructive_override_requested: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub destructive_override_receipt_ref: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub custom_patterns_path: Option<String>,
 }
@@ -578,7 +632,7 @@ pub struct FileGuardConfig {
     #[serde(default = "default_true")]
     pub enabled: bool,
     #[serde(default)]
-    pub strict_mode: bool,  // Block vs warn-only
+    pub strict_mode: bool,  // false softens advisory reporting only; missing allowlist still blocks
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -597,7 +651,8 @@ impl Default for BashGuardConfig {
     fn default() -> Self {
         Self {
             enabled: true,
-            allow_destructive: false,
+            destructive_override_requested: false,
+            destructive_override_receipt_ref: None,
             custom_patterns_path: None,
         }
     }
@@ -671,7 +726,7 @@ pub struct BaseRunner {
 }
 
 impl BaseRunner {
-    pub fn new(command: String, platform: Platform) -> Self {
+    pub fn new(command: String, platform: Platform) -> Result<Self> {
         // ... existing initialization ...
         
         // Initialize FileSafe guards
@@ -689,10 +744,7 @@ impl BaseRunner {
         
         let bash_guard = Arc::new(
             BashGuard::new(pattern_file)
-                .unwrap_or_else(|e| {
-                    warn!("Failed to initialize bash guard: {}. Guard disabled.", e);
-                    BashGuard::disabled()
-                })
+                .map_err(|e| StartupDiagnostic::filesafe_guard_init_failed("bash_guard", e))?
         );
         
         // Initialize write scope (needs plan metadata, will be populated per-request)
@@ -701,16 +753,13 @@ impl BaseRunner {
         // Initialize security filter
         let security_filter = Arc::new(
             SecurityFilter::new()
-                .unwrap_or_else(|e| {
-                    warn!("Failed to initialize security filter: {}. Filter disabled.", e);
-                    SecurityFilter::disabled()
-                })
+                .map_err(|e| StartupDiagnostic::filesafe_guard_init_failed("security_filter", e))?
         );
         
-        Self {
+        Ok(Self {
             // ... existing fields ...
             bash_guard,
-        }
+        })
     }
     
     pub async fn execute_command(
@@ -734,8 +783,8 @@ impl BaseRunner {
             
             return Err(anyhow!(
                 "Destructive command blocked: {}. \
-                Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override, \
-                or run the command manually outside Puppet Master.",
+                A destructive override requires an authenticated, scoped operator grant \
+                with reason, expiry, audit event, and receipt before Puppet Master can proceed.",
                 e
             ));
         }
@@ -775,7 +824,8 @@ async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
             
             return Err(anyhow!(
                 "Destructive command in prompt blocked: {}. \
-                Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override.",
+                Destructive override requires an authenticated, scoped operator grant \
+                and a recorded FileSafe override receipt.",
                 e
             ));
         }
@@ -952,17 +1002,48 @@ rm\s+(-rf?\s+)?\S*\.db\b
 rm\s+(-rf?\s+)?/var/lib/(mysql|postgresql|mongodb)
 ```
 
+### 4.1 Embedded Minimal Fallback Baseline
+
+The embedded fallback baseline is a compiled-in emergency baseline used only when custom/project-specific patterns are absent and the bundled pattern file cannot be loaded. It is not a disabled guard state and it is not a weaker runtime mode. PM emits `filesafe.policy_degraded` with `degraded_component = destructive_pattern_source` and `authoritative_enforcement_intact = true` when this baseline is used.
+
+Minimum fallback patterns:
+
+```text
+rm\s+-r?f\s+/
+rm\s+-r?f\s+\.
+rm\s+-r?f\s+\*
+git\s+reset\s+--hard
+git\s+clean\s+-f[dDxX]*
+git\s+push\s+.*--force
+(mysql|psql|sqlite3)\s+.*DROP\s+(DATABASE|TABLE|SCHEMA)
+redis-cli\s+FLUSH(ALL|DB)
+docker\s+(system|volume)\s+prune
+docker\s+compose\s+down\s+.*-v
+```
+
+If PM cannot load either the bundled baseline or this embedded fallback, BashGuard initialization fails closed and emits `filesafe.guard_init_failed`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
+
 ---
 
 ## 5. Configuration Options
 
 ### 5.1 Environment Variable Override
 
+`PUPPET_MASTER_ALLOW_DESTRUCTIVE=1` is an override request signal only. It cannot bypass FileSafe by itself. PM may consider the request only when it is paired with an authenticated operator authorization grant that names the auth realm, operator identity, reason, scoped project/run/worktree boundary, expiry, and emitted audit receipt.
+
 ```rust
-// Check environment variable
-let allow_destructive = std::env::var("PUPPET_MASTER_ALLOW_DESTRUCTIVE")
+// Check environment variable as a request signal only.
+let destructive_override_requested = std::env::var("PUPPET_MASTER_ALLOW_DESTRUCTIVE")
     .map(|v| v == "1")
     .unwrap_or(false);
+
+let destructive_override = if destructive_override_requested {
+    resolve_authenticated_destructive_override_grant()?
+} else {
+    None
+};
 ```
 
 ### 5.2 Config File Toggle
@@ -1022,8 +1103,20 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture
 pub struct FileSafeEvent {
     pub event_type: String,
     pub guard_type: String,
-    pub pattern_matched: String,
-    pub command_preview: String,
+    pub decision: String,
+    pub denial_code: Option<String>,
+    pub pattern_matched: Option<String>,
+    pub command_preview: Option<String>,
+    pub path_preview: Option<String>,
+    pub normalized_command_identity: Option<String>,
+    pub filesafe_scope_ref: Option<String>,
+    pub permission_snapshot_id: Option<String>,
+    pub override_receipt_id: Option<String>,
+    pub operator_identity_ref: Option<String>,
+    pub auth_realm: Option<String>,
+    pub override_reason: Option<String>,
+    pub override_scope: Option<DestructiveOverrideScope>,
+    pub override_expires_at: Option<DateTime<Utc>>,
     pub agent: Option<String>,
     pub timestamp: DateTime<Utc>,
     pub allowed: bool,
@@ -1031,6 +1124,19 @@ pub struct FileSafeEvent {
 ```
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+FileSafe uses these stable `EventRecord.event_type` values for this security boundary:
+- `filesafe.guard_init_failed`
+- `filesafe.command_denied`
+- `filesafe.path_denied`
+- `filesafe.destructive_override_requested`
+- `filesafe.destructive_override_granted`
+- `filesafe.destructive_override_denied`
+- `filesafe.policy_degraded` only for non-authoritative advisory degradation after fail-closed enforcement remains intact
+
+`filesafe.policy_degraded` must not be emitted as a success-shaped substitute for missing baseline/allowlist enforcement. Missing or empty authoritative allowlists, missing destructive baselines, unresolved roots, and stale guard-visible inputs block through `filesafe.guard_init_failed`, `filesafe.command_denied`, or `filesafe.path_denied`.
+
+ContractRef: EventType:filesafe.guard_init_failed, EventType:filesafe.command_denied, EventType:filesafe.path_denied, EventType:filesafe.destructive_override_requested, EventType:filesafe.destructive_override_granted, EventType:filesafe.destructive_override_denied, EventType:filesafe.policy_degraded, ContractName:Plans/Contracts_V0.md
 
 Logging call semantics:
 - guard blocks and approved overrides are emitted on the main execution path before the user-facing result is returned
@@ -1048,8 +1154,8 @@ match error {
         format!(
             "Blocked: destructive command detected ({})\n\
              Command: {}\n\
-             Hint: Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override, \
-             or run the command manually outside Puppet Master.\n\
+             Hint: request an authenticated, scoped destructive override with reason, \
+             expiry, audit event, and receipt, or run the command manually outside Puppet Master.\n\
              See: config/destructive-commands.txt for the full blocklist.",
             pattern,
             command.chars().take(100).collect::<String>()
@@ -1087,11 +1193,11 @@ mod tests {
     }
     
     #[test]
-    fn test_respects_override() {
+    fn test_env_var_alone_does_not_override() {
         std::env::set_var("PUPPET_MASTER_ALLOW_DESTRUCTIVE", "1");
         let guard = BashGuard::new(None).unwrap();
         let cmd = "php artisan migrate:fresh";
-        assert!(guard.check_command(cmd).is_ok());
+        assert!(guard.check_command(cmd).is_err());
         std::env::remove_var("PUPPET_MASTER_ALLOW_DESTRUCTIVE");
     }
     
@@ -1139,8 +1245,9 @@ mod tests {
     }
     
     #[test]
-    fn test_disabled_guard_allows_all() {
-        let guard = BashGuard::disabled();
+    fn test_explicit_config_off_requires_current_override_receipt() {
+        let grant = test_destructive_override_grant();
+        let guard = BashGuard::explicit_config_off(grant);
         assert!(guard.check_command("php artisan migrate:fresh").is_ok());
     }
 }
@@ -1305,7 +1412,9 @@ Required behavior:
 - normalize relative paths against `working_directory`
 - resolve symlinks through `realpath()`
 - if resolution fails for any reason, deny access (fail-closed)
+- non-existent target paths for create operations resolve by canonicalizing the nearest existing parent directory with `realpath()`, then appending exactly one normalized final path segment; if the parent is missing, crosses a symlink boundary, fails permission checks, or case/collision checks are ambiguous, deny access
 - never fall back to comparing the unresolved path against `allowed_files`
+- re-run canonicalization and scope/security comparison immediately before mutation, open, spawn, or promote; any drift between initial check and pre-dispatch/pre-rename recheck is a TOCTOU failure and emits `filesafe.path_denied` with `denial_code = path_toc_tou_recheck_failed`
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
 
@@ -1388,6 +1497,9 @@ Normalization rules:
 - On case-insensitive filesystems: apply Unicode NFC normalization followed by locale-independent lowercasing before path comparison.
 - On case-sensitive filesystems: compare paths byte-for-byte after NFC normalization only.
 - The normalization method MUST be identical in FileSafe write-scope checks and Permissions_System path-pattern matching. Divergence between the two is a security defect.
+- Symlink handling always compares the final canonical real path and the canonical real allowed root, never the lexical alias used in the request.
+- Non-existent create targets compare the canonical existing parent path plus the normalized final segment and must be rechecked after temp-file creation and immediately before rename/promote.
+- Case-fold behavior must reject ambiguous sibling collisions, including two directory entries that normalize to the same comparison key on a case-insensitive or Unicode-normalized filesystem.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
 
@@ -1526,12 +1638,15 @@ FileSafe must check the **compiled prompt** (after context compilation), not jus
 
 **Solution:** Check prompt content for destructive patterns **after** context compilation, before sending to platform CLI.
 
+This check is defense-in-depth. It can block suspicious compiled prompt content, but prompt/free-text extraction is not authoritative command identity. The final structured tool invocation, normalized command segment, permission snapshot, and resolved path scope must still be checked before dispatch. A parser miss or ambiguous prose extraction never authorizes execution.
+
 ```rust
 impl BashGuard {
     // DRY:FN:check_prompt — Check prompt content for destructive commands
     pub fn check_prompt(&self, prompt: &str) -> Result<(), GuardError> {
-        // Extract potential commands from prompt
-        // Common patterns: code blocks, shell commands, SQL statements
+        // Extract potential advisory commands from prompt.
+        // Common patterns: code blocks, shell commands, SQL statements.
+        // This is not the sole Layer-1 enforcement boundary.
         let command_patterns = extract_commands_from_prompt(prompt);
 
         for cmd in command_patterns {
@@ -1696,7 +1811,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt
 
 **Problem:** FileSafe operates independently of verification gates, potentially blocking valid operations.
 
-**Solution:** Coordinate guards with verification gates to allow legitimate operations.
+**Solution:** Coordinate guards with verification gates through scoped gate override grants. Verification-gate context can request a narrower baseline or test-fixture allowance, but it does not bypass FileSafe. Destructive commands still require an authenticated operator grant, bounded gate/run scope, reason, expiry, and FileSafe override event/receipt.
 
 Attachment gating remains active even when verification gates run: `/sensitive-storage` boundaries apply before any `send-to-chat` chip or structured-revision prompt is persisted, and heuristic `secret-ish` redaction stays OFF by default unless a concrete FileSafe signal blocks forwarding with a visible reason.
 
@@ -1707,10 +1822,10 @@ Pending selection chips that cannot be restored safely because the source is mis
 // Check guards BEFORE verification gates
 if let Err(e) = self.bash_guard.check_command(&full_command) {
     // Check if this is a verification gate operation
-    if self.is_verification_gate_operation(&request) {
-        // Allow destructive commands during verification gates
-        // (e.g., test database resets during QA)
-        warn!("Destructive command allowed during verification gate: {}", e);
+    if self.is_verification_gate_operation(&request)
+        && self.has_current_gate_override_receipt(&request, &full_command) {
+        // Gate override is scoped and auditable; env vars or operation type alone are insufficient.
+        self.log_destructive_override_granted(&request, &full_command).await?;
     } else {
         return Err(anyhow!("Destructive command blocked: {}", e));
     }
@@ -1737,14 +1852,19 @@ impl BashGuard {
         event_logger: &EventLogger,
     ) {
         let event = FileSafeEvent {
-            event_type: "bash_guard_block".to_string(),
-            command_preview: command.chars().take(40).collect(),
+            event_type: "filesafe.command_denied".to_string(),
+            guard_type: "bash_guard".to_string(),
+            decision: "denied".to_string(),
+            denial_code: Some("destructive_pattern_match".to_string()),
+            command_preview: Some(command.chars().take(100).collect()),
+            normalized_command_identity: Some(normalize_command_identity(command)),
             pattern_matched: match error {
-                GuardError::DestructiveCommand { pattern, .. } => pattern.clone(),
-                _ => "unknown".to_string(),
+                GuardError::DestructiveCommand { pattern, .. } => Some(pattern.clone()),
+                _ => None,
             },
             agent: None, // Will be populated from ExecutionRequest if available
             timestamp: Utc::now(),
+            allowed: false,
         };
         
         event_logger.log_filesafe_event(event).await;
@@ -1813,10 +1933,10 @@ impl BashGuard {
 AutoDecision: Request metadata uses `ExecutionRequest.env_vars` only; do not add a `tags` field.  
 ContractRef: CodePath:puppet-master-rs/src/types/execution.rs, EnvVar:PUPPET_MASTER_OPERATION_TYPE, EnvVar:PUPPET_MASTER_ALLOWED_FILES
 
-AutoDecision: `PUPPET_MASTER_OPERATION_TYPE` values are fixed: `normal` (default), `verification_gate`, `interview`. Guards MAY loosen only for `verification_gate` (never for `normal`).  
+AutoDecision: `PUPPET_MASTER_OPERATION_TYPE` values are fixed: `normal` (default), `verification_gate`, `interview`. Guards MAY loosen only for `verification_gate` (never for `normal`).
 ContractRef: EnvVar:PUPPET_MASTER_OPERATION_TYPE
 
-AutoDecision: Allowed write scope is supplied via `PUPPET_MASTER_ALLOWED_FILES` (JSON array of repo-relative paths and/or explicit directories). If missing or empty and `file_guard.enabled == true`: treat as empty allowlist (fail closed); enforcement is `strict_mode`-dependent (block vs warn-only).  
+AutoDecision: Allowed write scope is supplied via `PUPPET_MASTER_ALLOWED_FILES` (JSON array of repo-relative paths and/or explicit directories). If missing or empty and `file_guard.enabled == true`: treat as empty allowlist and block fail-closed regardless of `strict_mode`. `strict_mode=false` may soften only non-authoritative advisory findings after a valid baseline/allowlist already exists; it cannot permit writes when the authoritative allowlist is absent.
 ContractRef: EnvVar:PUPPET_MASTER_ALLOWED_FILES, ConfigKey:filesafe.fileGuard.strictMode
 
 AutoDecision: Owner for allowed-files derivation is `puppet-master-rs/src/core/orchestrator.rs`; orchestrator builds `PUPPET_MASTER_ALLOWED_FILES` when constructing each `ExecutionRequest` (primary source: current subtask's declared file list; context files are implicitly allowed via `request.context_files`).  
@@ -1875,16 +1995,16 @@ pub struct GuardRateLimiter {
 
 ### 13.4 GUI Integration (configurable, easy on/off)
 
-FileSafe settings must be **configurable in the GUI** and **easy to turn on or off**. All FileSafe controls live in one place (dedicated FileSafe tab or clearly grouped section).
+FileSafe settings must be **configurable in the GUI** and centrally inspectable. All FileSafe controls live in one place (dedicated FileSafe tab or clearly grouped section). Any control that reduces enforcement must route through explicit authenticated operator authorization, scoped duration/reason, and audit receipt.
 
 **Required:**
 - **Single entry point:** One FileSafe section or tab in Config. User can open it and see all FileSafe toggles at a glance.
-- **Granular controls:** Separate on/off per feature so the user can enable only what they need:
-  - **Command blocklist** -- "Block destructive commands" (on/off). When off, destructive CLI commands are not blocked.
-  - **Write scope** -- "Restrict writes to plan" (on/off). When off, writes are not restricted to plan-declared files.
-  - **Security filter** -- "Block sensitive files" (on/off). When off, access to `.env`/credentials is not blocked.
+- **Granular controls:** Separate visible state per feature so the user can inspect active enforcement and request scoped overrides where policy permits:
+  - **Command blocklist** -- "Block destructive commands" (enforced/request scoped override). Override requires authenticated grant and audit receipt.
+  - **Write scope** -- "Restrict writes to plan" (enforced/request scoped override). Missing or empty allowlist still blocks.
+  - **Security filter** -- "Block sensitive files" (enforced/request scoped override). Missing baseline still blocks.
   Each feature can be toggled independently; optional sub-options (e.g. strict mode for Write scope, allow-during-interview for Security filter) stay under that feature's subsection.
-- **Override:** "Allow destructive commands" (with prominent warning) for Command blocklist.
+- **Override:** "Request destructive override" (with prominent warning) for Command blocklist. It never succeeds from UI state alone; it requires auth realm, operator identity, reason, scope, expiry, audit event, and receipt.
 - **Optional:** Pattern path override, "Allow sensitive files during interview" for Security filter.
 - **Optional:** Pattern management (view/edit), event log viewer (browse blocked commands).
 
@@ -2217,11 +2337,11 @@ impl FileGuard {
 
 **1. FileSafe collapsible card (Advanced tab)**
 
-- **Three independent toggles** (product labels; internal keys remain `bash_guard` / `file_guard` / `security_filter`):
-  - **"Block destructive commands"** (on/off) -- Command blocklist; when off, destructive CLI commands are not blocked.
-  - **"Restrict writes to plan"** (on/off) -- Write scope; when off, writes are not restricted to plan-declared files.
-  - **"Block sensitive files"** (on/off) -- Security filter; when off, access to `.env`/credentials is not blocked.
-- **Override:** "Allow destructive commands" toggle with **prominent warning styling** (e.g. danger/warning variant per widget catalog).
+- **Three independent enforcement controls** (product labels; internal keys remain `bash_guard` / `file_guard` / `security_filter`):
+  - **"Block destructive commands"** -- Command blocklist state and scoped override request.
+  - **"Restrict writes to plan"** -- Write scope state and scoped override request; empty/missing allowlist remains blocked.
+  - **"Block sensitive files"** -- Security filter state and scoped override request; missing baseline remains blocked.
+- **Override:** "Request destructive override" control with **prominent warning styling** (e.g. danger/warning variant per widget catalog).
 - **Approved commands:** Scrollable list; per-row **Remove** button; optional **"Add command manually"**; persisted in `filesafe.approvedCommands` (e.g. `puppet-master.yaml`).
 - **Optional:** Custom pattern path, "Allow sensitive files during interview" (Security filter), pattern management (view/edit), **Event log viewer** (browse recent blocked commands; link to FileSafe event log).
 - **Widget reuse:** Use existing widgets from `src/widgets/` per DRY Method (e.g. `toggler`, `help_tooltip(tooltip_key, tooltip_variant, theme, scaled)`, `styled_button`). See `docs/gui-widget-catalog.md`. **Tooltip keys** (for localization and help system): `filesafe.bash_guard`, `filesafe.file_guard`, `filesafe.security_filter` (three toggles); optionally `filesafe.override`, `filesafe.approved_commands` for override toggle and approved list. Document in widget catalog or central tooltip doc.
@@ -2278,8 +2398,8 @@ pub struct FileSafeConfig {
 }
 
 pub struct GateOverrideConfig {
-    pub allow_destructive_during_qa: bool,      // Default: true
-    pub allow_sensitive_during_security_audit: bool,  // Default: true
+    pub qa_destructive_override_policy: ScopedOverridePolicy,
+    pub security_audit_sensitive_access_policy: ScopedOverridePolicy,
 }
 ```
 
@@ -2407,7 +2527,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Worktr
 - Support wildcard patterns in plan file lists
 - Allow directory-level permissions
 - Provide clear error messages with override instructions
-- Warn-only mode option (log but don't block)
+- Optional advisory mode may reduce non-authoritative warning severity only after a valid allowlist exists; missing or empty authoritative allowlists still block fail-closed.
 
 #### Issue 4: Multi-Platform Prompt Parsing
 **Problem:** Different platforms format prompts differently
@@ -2422,8 +2542,8 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Worktr
 **Problem:** If guard initialization fails, execution may be blocked entirely
 **Risk:** System unusable if pattern file corrupted or missing
 **Mitigation:**
-- Graceful degradation: disable guard on init failure, log warning
-- Provide `BashGuard::disabled()` fallback
+- Surface a typed startup/runtime diagnostic with `filesafe.guard_init_failed`
+- Block the affected guarded execution path until an authenticated operator repairs the guard inputs or chooses an explicit scoped config-off state with audit receipt
 - Doctor check validates guard initialization
 
 ### 15.11 Enhancements for Existing Systems
@@ -2738,6 +2858,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Guard initialization failure emits a typed startup/runtime diagnostic and blocks affected command/file execution instead of disabling the guard."
+- "Missing or empty command/path allowlists and missing destructive baselines fail closed regardless of strict_mode."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -2791,6 +2913,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Approving git status does not approve git status && rm -rf /."
+- "Approved-command UI stores exact normalized command identities rather than prefixes or shell fragments."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -3973,6 +4097,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Guard initialization failure emits filesafe.guard_init_failed and blocks affected command/file execution instead of disabling the guard."
+- "Missing or empty command/path allowlists and missing destructive baselines fail closed regardless of strict_mode."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -4129,9 +4255,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  BashGuard models the command blocklist state, including regex patterns, destructive override,
-  enabled state, approved command list, and GuardError variants for destructive commands,
-  out-of-plan files, sensitive file access, and parse errors.
+  BashGuard models the command blocklist state, including regex patterns, authenticated destructive
+  override receipts, enabled state, exact approved command list, and GuardError variants for guard
+  init failure, destructive commands, command denial, out-of-plan files, path denial, sensitive file
+  access, and parse errors.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend guard data and error taxonomy rather than GUI behavior.
@@ -4160,12 +4287,15 @@ preserved_exact_tokens:
 - "DRY:DATA:BashGuard"
 - "BashGuard"
 - "patterns: Vec<Regex>"
-- "allow_destructive"
+- "destructive_override"
 - "enabled"
 - "approved_commands: Vec<String>"
 - "GuardError"
+- "GuardInitFailed"
 - "DestructiveCommand"
+- "CommandDenied"
 - "FileNotInPlan"
+- "PathDenied"
 - "SensitiveFileAccess"
 - "ParseError"
 negative_constraints: []
@@ -4186,9 +4316,10 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   BashGuard initialization creates the guard from an optional config path,
-  PUPPET_MASTER_ALLOW_DESTRUCTIVE, project-specific or bundled destructive-command patterns,
-  loaded patterns, and FileSafeConfig-approved commands, and it fails closed when no trustworthy
-  pattern baseline is available.
+  project-specific or bundled destructive-command patterns, loaded patterns,
+  FileSafeConfig-approved commands, and an optional authenticated destructive-override grant;
+  PUPPET_MASTER_ALLOW_DESTRUCTIVE is only a request signal, and initialization fails closed when
+  no trustworthy pattern baseline is available.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend guard initialization and baseline selection.
@@ -4199,6 +4330,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 alone never authorizes destructive execution."
+- "A destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, audit event, and receipt."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -4226,6 +4359,7 @@ preserved_exact_tokens:
 - "Populated from FileSafeConfig"
 negative_constraints:
 - "No trustworthy destructive-command baseline means initialization error and fail-closed behavior."
+- "Environment variables must not be treated as sufficient destructive override authority."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -4292,9 +4426,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  A disabled BashGuard instance is only for deliberate config-off states, initializes with empty
-  patterns and approved commands, keeps allow_destructive false, and must not be used as an
-  initialization-failure fallback.
+  An explicitly configured-off BashGuard state is only for authenticated, auditable, scoped
+  operator grants, initializes with empty patterns and approved commands, carries the current
+  override receipt, and must not be used as an initialization-failure fallback.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend disabled guard state.
@@ -4305,6 +4439,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Explicit config-off state cannot be constructed without a current override receipt."
+- "Initialization failure does not construct a config-off guard state."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -4320,15 +4456,16 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0015"
 preserved_exact_tokens:
-- "DRY:FN:disabled"
-- "explicitly disabled guard instance"
+- "DRY:FN:explicit_config_off"
+- "explicitly configured-off guard instance"
 - "deliberate config-off states"
 - "not init-failure fallback"
 - "enabled: false"
 - "patterns: Vec::new()"
-- "allow_destructive: false"
+- "destructive_override"
 negative_constraints:
 - "Disabled guard state must not be used as fallback for initialization failure."
+- "Config-off guard state must not exist without authenticated operator scope and receipt."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -4344,9 +4481,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  check_command allows execution only when the guard is disabled, destructive override is enabled,
-  or an approved command match succeeds before blocklist matching; otherwise matching a
-  destructive pattern emits GuardError::DestructiveCommand with the command and pattern.
+  check_command allows execution only when an explicit config-off or destructive override receipt
+  is current, or an exact approved-command match succeeds before blocklist matching; otherwise
+  matching a destructive pattern emits GuardError::DestructiveCommand with the command and pattern
+  and records filesafe.command_denied.
 gui_related: false
 gui_classification_reason: >-
   This unit defines command-evaluation behavior and error emission.
@@ -4357,6 +4495,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "A prefix bypass such as approving git status must reject git status && rm -rf /."
+- "Destructive override emits requested/granted/denied audit events and a receipt before execution."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -4373,7 +4513,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0015"
 preserved_exact_tokens:
 - "check_command"
-- "allow_destructive"
+- "destructive_override"
 - "approved_commands"
 - "commands_match"
 - "pattern.is_match(command)"
@@ -4381,7 +4521,7 @@ preserved_exact_tokens:
 - "command"
 - "pattern"
 negative_constraints:
-- "Commands are allowed only through disabled guard state, destructive override, or approved-command match before blocklist evaluation succeeds."
+- "Commands are allowed only through current override receipt or exact approved-command match before blocklist evaluation succeeds."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -4389,7 +4529,7 @@ owner_hints:
 - "Plans/FileSafe.md"
 ```
 
-### F2-032 - Approved Command Match Normalization Compatibility Boundary
+### F2-032 - Approved Command Exact Normalization Boundary
 
 ```yaml
 plan_unit_id: F2-032
@@ -4397,10 +4537,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  The source helper commands_match normalizes approved and actual commands with trim and
-  whitespace collapsing and historically allowed exact or prefix matching; that prefix behavior is
-  preserved as source-lineage text only and must not be promoted over later exact-match FileSafe
-  canon.
+  commands_match normalizes approved and actual commands with trim and whitespace collapsing, then
+  permits only exact command-identity equality; prefix, substring, starts_with, shell-fragment, and
+  chained-command expansion matching are retired source-lineage only and forbidden in active canon.
 gui_related: false
 gui_classification_reason: >-
   This unit records backend command-normalization source lineage and compatibility constraints.
@@ -4411,6 +4550,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Approved command git status does not approve git status && rm -rf /."
+- "Retired prefix-match snippets cannot be copied as implementation guidance."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -4421,7 +4562,7 @@ context_scope: filesafe_standardization
 implementation_surfaces:
 - "Plans/FileSafe.md"
 node_compile_hint:
-  mode: approved_command_match_normalization_compatibility_boundary
+  mode: approved_command_exact_normalization_boundary
   create_worknodes: false
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0015"
@@ -4432,11 +4573,11 @@ preserved_exact_tokens:
 - "normalized whitespace"
 - "trim"
 - "split_whitespace"
-- "c == a || c.starts_with(a.as_str())"
+- "c == a"
 negative_constraints:
-- "Do not promote prefix matching as final implementation canon when later FileSafe text requires exact approved_commands matching after normalization."
+- "Do not use prefix, substring, starts_with, shell-fragment, or chained-command expansion matching for approved_commands."
 compatibility_only_notes:
-- "Prefix matching is preserved as source-lineage text only because later live FileSafe canon requires approved_commands matching to be exact after normalization."
+- "The historical starts_with implementation is retired source-lineage only because live FileSafe canon requires exact approved_commands matching after normalization."
 stale_retired_dispositions:
 - "Prefix/substring approved-command matching is stale relative to later FileSafe exact-match canon."
 owner_boundary_notes: []
@@ -4618,8 +4759,9 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   FileSafeConfig contains BashGuardConfig, FileGuardConfig, SecurityFilterConfig, and
-  approved_commands; defaults keep guards enabled, allow_destructive false, file guard strict_mode
-  true, and security filter allow_during_interview false.
+  approved_commands; defaults keep guards enabled, destructive_override_requested false,
+  destructive_override_receipt_ref absent, file guard strict_mode true, and security filter
+  allow_during_interview false.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend configuration defaults and strict guard baselines.
@@ -4650,7 +4792,8 @@ preserved_exact_tokens:
 - "FileGuardConfig"
 - "SecurityFilterConfig"
 - "enabled: true"
-- "allow_destructive: false"
+- "destructive_override_requested: false"
+- "destructive_override_receipt_ref: None"
 - "strict_mode: true"
 - "allow_during_interview: false"
 - "default_true"
@@ -4850,6 +4993,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Any preserved BashGuard::disabled() or SecurityFilter::disabled() snippet is fenced as retired source-lineage and cannot be copied as implementation guidance."
+- "Active initialization failure paths emit filesafe.guard_init_failed and block guarded execution."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -4873,7 +5018,8 @@ preserved_exact_tokens:
 - "SecurityFilter::disabled()"
 negative_constraints:
 - "Do not use disabled guard fallback for initialization failure in conflict with fail-closed FileSafe canon."
-compatibility_only_notes: []
+compatibility_only_notes:
+- "The disabled-fallback code identifiers are preserved only as retired source-lineage evidence and are not active implementation guidance."
 stale_retired_dispositions:
 - "Disabled-on-initialization-failure is source-lineage only and must not override F2-024 fail-closed canon or F2-030 deliberate config-off-only disabled state."
 owner_boundary_notes: []
@@ -4890,8 +5036,8 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   BaseRunner builds the full command string, checks BashGuard before spawning, logs blocked
-  destructive commands, records blocked-command events when available, and returns a
-  destructive-command-blocked error with override/manual-run guidance.
+  destructive commands, records filesafe.command_denied before returning, and returns a
+  destructive-command-blocked error that points to authenticated scoped override receipt flow.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend command string guard checks and blocked-command logging.
@@ -4902,6 +5048,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Blocked destructive commands emit filesafe.command_denied with normalized command identity and denial_code."
+- "Error guidance must not present PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 as sufficient authority."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -4923,7 +5071,7 @@ preserved_exact_tokens:
 - "log_blocked_command"
 - "Destructive command blocked"
 - "PUPPET_MASTER_ALLOW_DESTRUCTIVE=1"
-- "run the command manually outside Puppet Master"
+- "authenticated, scoped destructive override"
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
@@ -5483,8 +5631,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  PUPPET_MASTER_ALLOW_DESTRUCTIVE enables destructive-command override only when the environment
-  variable value is exactly 1, with missing or other values defaulting to false.
+  PUPPET_MASTER_ALLOW_DESTRUCTIVE is a destructive-override request signal only; the value 1
+  requests evaluation of an authenticated operator grant, while missing or other values request no
+  override, and the environment variable alone never authorizes destructive execution.
 gui_related: false
 gui_classification_reason: >-
   This unit defines environment-variable runtime behavior rather than GUI presentation.
@@ -5495,6 +5644,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Override grant contains auth_realm, operator identity, reason, duration/expiry, project/run/worktree scope, security event, and receipt fields."
+- "Denial emits filesafe.destructive_override_denied and leaves the guarded command blocked."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -5514,9 +5665,9 @@ preserved_exact_tokens:
 - "std::env::var"
 - "v == \"1\""
 - "unwrap_or(false)"
-- "allow_destructive"
+- "destructive_override_requested"
 negative_constraints:
-- "Missing PUPPET_MASTER_ALLOW_DESTRUCTIVE must default to false."
+- "PUPPET_MASTER_ALLOW_DESTRUCTIVE must not be sufficient authority by itself."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -5814,8 +5965,8 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   FileSafe guard errors produce user-friendly blocked-command and parse-error messages,
-  including destructive-command pattern, command preview capped at 100 characters, override
-  guidance, manual-run guidance, and the blocklist reference.
+  including destructive-command pattern, command preview capped at 100 characters, authenticated
+  scoped override request guidance, manual-run guidance, and the blocklist reference.
 gui_related: false
 gui_classification_reason: >-
   This unit defines user-facing error text templates, not visual layout or GUI controls.
@@ -5826,6 +5977,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "User-facing hint text must not say PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is sufficient authority."
+- "Override guidance points to authenticated operator grant, reason, scope, expiry, event, and receipt."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -5846,12 +5999,13 @@ preserved_exact_tokens:
 - "GuardError::ParseError"
 - "Blocked: destructive command detected"
 - "Command:"
-- "Hint: Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override"
-- "run the command manually outside Puppet Master"
+- "authenticated, scoped destructive override"
+- "override receipt"
 - "config/destructive-commands.txt"
 - "command.chars().take(100)"
 - "Blocked: cannot validate command"
-negative_constraints: []
+negative_constraints:
+- "Do not present environment variable presence as a sufficient destructive override."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []
@@ -5868,8 +6022,8 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   FileSafe unit tests cover destructive command blocking, safe migrate and safe command
-  allowance, destructive override behavior, diverse destructive framework patterns, prompt
-  extraction, and disabled-guard behavior.
+  allowance, env-var-alone override rejection, scoped override receipt behavior, diverse
+  destructive framework patterns, prompt extraction, and exact approved-command matching.
 gui_related: false
 gui_classification_reason: >-
   This unit defines unit-test coverage for guard behavior.
@@ -5880,6 +6034,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Tests reject PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 without an authenticated override grant."
+- "Tests reject approved-command prefix/chained bypasses."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -5897,11 +6053,12 @@ source_lineage:
 preserved_exact_tokens:
 - "test_blocks_migrate_fresh"
 - "test_allows_safe_migrate"
-- "test_respects_override"
+- "test_env_var_alone_does_not_override"
+- "test_explicit_config_off_requires_current_override_receipt"
+- "test_approved_command_rejects_prefix_bypass"
 - "test_allows_safe_commands"
 - "test_blocks_various_destructive_patterns"
 - "test_prompt_extraction"
-- "test_disabled_guard_allows_all"
 - "php artisan migrate:fresh --seed"
 - "php artisan migrate"
 - "npm install"
@@ -5913,9 +6070,11 @@ preserved_exact_tokens:
 - "prisma migrate reset"
 - "diesel database reset"
 - "mix ecto.drop"
-- "BashGuard::disabled()"
-negative_constraints: []
-compatibility_only_notes: []
+- "BashGuard::explicit_config_off"
+negative_constraints:
+- "Do not preserve disabled-guard-allows-all as an active test expectation."
+compatibility_only_notes:
+- "The old test_disabled_guard_allows_all expectation is retired source-lineage only."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -6730,8 +6889,9 @@ owner_doc: Plans/FileSafe.md
 canonical_text: >-
   All file paths submitted to FileSafe write-scope or security-filter checks resolve through
   realpath before scope comparison, normalize relative paths against working_directory, resolve
-  symlinks, fail closed on resolution failure, and never compare unresolved paths against
-  allowed_files.
+  symlinks, fail closed on resolution failure, compare non-existent create targets through the
+  canonical nearest existing parent plus normalized final segment, recheck before dispatch/promote
+  to close TOCTOU gaps, and never compare unresolved paths against allowed_files.
 gui_related: false
 gui_classification_reason: >-
   This unit is the owner-anchor PlanUnit for backend realpath-before-scope behavior.
@@ -6742,6 +6902,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Non-existent create targets deny if the nearest existing parent cannot be canonicalized or introduces ambiguous case/symlink behavior."
+- "Pre-dispatch and pre-rename path rechecks emit filesafe.path_denied on TOCTOU drift."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -6762,6 +6924,8 @@ preserved_exact_tokens:
 - "resolve symlinks"
 - "fail-closed"
 - "allowed_files"
+- "TOCTOU"
+- "filesafe.path_denied"
 - "canonicalize().unwrap_or_else(|_| original_path)"
 - "prohibited"
 - "11.1.1 Realpath-before-scope-check invariant"
@@ -8271,9 +8435,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  BashGuard.check_prompt extracts candidate commands from bash, sh, shell, and SQL code blocks,
-  shell prompt lines, SQL statements, and common destructive mentions in prose, then sorts and
-  deduplicates commands before checking each against destructive patterns.
+  BashGuard.check_prompt extracts advisory candidate commands from bash, sh, shell, and SQL code
+  blocks, shell prompt lines, SQL statements, and common destructive mentions in prose, then sorts
+  and deduplicates commands before checking each against destructive patterns; this prompt/free-text
+  extraction is defense-in-depth and never replaces final structured command/path enforcement.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend prompt command extraction logic.
@@ -8284,6 +8449,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Free-text extraction misses or ambiguity never authorize command execution or file mutation."
+- "The DELETE without WHERE prose/example mismatch is resolved by treating free-text SQL extraction as advisory and structured dispatch checks as authoritative."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -8315,7 +8482,7 @@ preserved_exact_tokens:
 - "Extract potential shell commands from prompt content"
 negative_constraints: []
 compatibility_only_notes:
-- "Preserve the source example/prose mismatch around DELETE without WHERE without resolving it in this standardization batch."
+- "Historical prompt extraction mismatch is preserved only as source-lineage; active canon treats prompt extraction as advisory."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -8989,9 +9156,9 @@ owner_doc: Plans/FileSafe.md
 canonical_text: >-
   Allowed write scope is supplied via PUPPET_MASTER_ALLOWED_FILES as a JSON array of repo-
   relative paths and explicit directories; if missing or empty while file_guard.enabled is true,
-  FileSafe treats it as an empty allowlist with strict_mode-dependent enforcement, while
-  orchestrator derives the env value from current subtask declared files and implicit
-  context_files.
+  FileSafe treats it as an empty allowlist and blocks fail-closed regardless of strict_mode, while
+  orchestrator derives the env value from current subtask declared files and implicit context_files.
+  strict_mode=false may soften advisory reporting only after authoritative enforcement input exists.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend allowed-file scope derivation and fail-closed behavior.
@@ -9002,6 +9169,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Missing or empty PUPPET_MASTER_ALLOWED_FILES blocks writes regardless of strict_mode."
+- "strict_mode=false cannot permit writes when the allowlist, baseline, root, or guard input is absent."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -9030,6 +9199,7 @@ preserved_exact_tokens:
 - "context files are implicitly allowed"
 negative_constraints:
 - "Missing or empty PUPPET_MASTER_ALLOWED_FILES must be treated as an empty allowlist when file_guard.enabled is true."
+- "strict_mode=false must not turn an empty authoritative allowlist into warn-only execution."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -9050,7 +9220,8 @@ owner_doc: Plans/FileSafe.md
 canonical_text: >-
   A missing or unreadable custom pattern file is ignored while bundled patterns still apply; if
   bundled patterns are unavailable at runtime, FileSafe falls back to an embedded minimal
-  default list, logs a warning, and does not disable FileSafe.
+  default list covering root deletion, git hard reset/clean/force-push, database drop/flush, and
+  Docker volume/system prune families, logs filesafe.policy_degraded, and does not disable FileSafe.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend pattern-source fallback behavior.
@@ -9061,6 +9232,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Embedded fallback baseline includes the minimum pattern list in Section 4.1."
+- "If bundled and embedded fallback baselines are unavailable, BashGuard emits filesafe.guard_init_failed and blocks."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -9080,7 +9253,11 @@ preserved_exact_tokens:
 - "missing/unreadable custom pattern file"
 - "bundled patterns still apply"
 - "embedded minimal default list"
-- "log a warning"
+- "filesafe.policy_degraded"
+- "rm\\s+-r?f\\s+/"
+- "git\\s+reset\\s+--hard"
+- "git\\s+push\\s+.*--force"
+- "redis-cli\\s+FLUSH(ALL|DB)"
 - "do not disable FileSafe"
 negative_constraints:
 - "Missing custom patterns or unavailable bundled patterns must not disable FileSafe."
@@ -9102,7 +9279,8 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   approved_commands matching is exact after trim and whitespace-collapse normalization, and
-  FileSafe must not use prefix or substring matching.
+  FileSafe must not use prefix, substring, starts_with, shell-fragment, or concatenated/chained
+  command matching.
 gui_related: false
 gui_classification_reason: >-
   This unit defines backend approved command matching behavior.
@@ -9113,6 +9291,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Approving git status rejects git status && rm -rf /."
+- "Mismatch emits filesafe.command_denied with denial_code approved_command_identity_mismatch."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -9133,9 +9313,11 @@ preserved_exact_tokens:
 - "trim"
 - "collapse whitespace"
 - "prefix/substring"
+- "starts_with"
+- "shell-fragment"
 - "filesafe.approvedCommands"
 negative_constraints:
-- "Do not use prefix or substring matching for approved_commands."
+- "Do not use prefix, substring, starts_with, shell-fragment, or chained-command expansion matching for approved_commands."
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
@@ -9358,9 +9540,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  FileSafe controls are configurable in the GUI, easy to turn on or off, visible from a single
-  Config entry point, and expose independent toggles for Command blocklist, Write scope,
-  Security filter, destructive override, optional pattern and event-log controls, and shared
+  FileSafe controls are configurable in the GUI from a single Config entry point and expose
+  independent enforcement-state controls for Command blocklist, Write scope, Security filter,
+  authenticated destructive override requests, optional pattern and event-log controls, and shared
   widget reuse.
 gui_related: true
 gui_classification_reason: >-
@@ -9372,6 +9554,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Controls that reduce enforcement require scoped authenticated operator grant and audit receipt."
+- "Missing allowlist/baseline/root inputs remain blocked even when advisory strictness is reduced."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -9396,16 +9580,17 @@ preserved_exact_tokens:
 - ".env`/credentials"
 - "strict mode"
 - "allow-during-interview"
-- "\"Allow destructive commands\""
+- "\"Request destructive override\""
 - "Pattern management"
 - "event log viewer"
 - "src/widgets/"
 - "DRY Method"
 - "13.4 GUI Integration (configurable, easy on/off)"
 negative_constraints:
-- "When a FileSafe feature is toggled off, that guard does not block, restrict, or filter for that feature."
+- "GUI controls must not present enforcement reduction as a sufficient unauthenticated toggle."
 compatibility_only_notes:
 - "The earlier dedicated FileSafe tab wording is compatibility-only; F2-132 and FinalGUISpec place FileSafe under Settings > Advanced as a collapsible card."
+- "The phrase easy to turn on or off is retained as source-lineage UI wording only; active canon uses enforcement-state controls and scoped override requests."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -9467,6 +9652,7 @@ negative_constraints:
 - "Do not weaken F2-116 exact normalized approved-command matching into prefix or substring matching."
 compatibility_only_notes:
 - "Any dedicated approved-command file is a projection or implementation detail, not a competing settings authority."
+- "The phrase whitelist overrides blocklist is source-lineage shorthand only; active canon allows only exact normalized approved command identities."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -10049,10 +10235,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  The FileSafe Advanced card presents three independent product toggles, destructive override
-  with warning styling, approved command list controls, optional pattern and event-log controls,
-  existing widget reuse, and stable tooltip keys for bash_guard, file_guard, security_filter,
-  override, and approved commands.
+  The FileSafe Advanced card presents three independent enforcement controls, destructive override
+  request flow with warning styling and auth/audit receipt fields, approved command list controls,
+  optional pattern and event-log controls, existing widget reuse, and stable tooltip keys for
+  bash_guard, file_guard, security_filter, override, and approved commands.
 gui_related: true
 gui_classification_reason: >-
   This unit defines GUI controls, widget reuse, and tooltip keys.
@@ -10063,6 +10249,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "The GUI cannot present destructive override as a simple sufficient toggle."
+- "Override UI collects or references auth realm, operator identity, reason, scope, expiry, audit event, and receipt."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -10081,7 +10269,7 @@ preserved_exact_tokens:
 - "bash_guard"
 - "file_guard"
 - "security_filter"
-- "\"Allow destructive commands\""
+- "\"Request destructive override\""
 - "filesafe.approvedCommands"
 - "toggler"
 - "help_tooltip(tooltip_key, tooltip_variant, theme, scaled)"
@@ -10333,8 +10521,9 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   Verification-gate operations must be tagged before BaseRunner guard checks so gate-specific
-  FileSafe allowances can be applied for legitimate QA and security-audit work without weakening
-  normal execution.
+  ScopedOverridePolicy grants can be evaluated for legitimate QA and security-audit work without
+  weakening normal execution or bypassing FileSafe auth, scope, expiry, event, and receipt
+  requirements.
 gui_related: false
 gui_classification_reason: >-
   This unit defines runtime, policy, integration, or governance behavior rather than visual
@@ -10346,6 +10535,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Verification_gate operation type alone never authorizes destructive or sensitive access."
+- "Gate overrides emit filesafe.destructive_override_requested, granted or denied, and carry receipt refs."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -10365,13 +10556,15 @@ preserved_exact_tokens:
 - "ExecutionRequest"
 - "BaseRunner"
 - "GateOverrideConfig"
-- "allow_destructive_during_qa: bool"
-- "allow_sensitive_during_security_audit: bool"
-- "Default: true"
+- "ScopedOverridePolicy"
+- "qa_destructive_override_policy"
+- "security_audit_sensitive_access_policy"
 - "migrate:fresh"
 - ".env"
-negative_constraints: []
-compatibility_only_notes: []
+negative_constraints:
+- "Do not model gate overrides as default-true booleans."
+compatibility_only_notes:
+- "The old allow_destructive_during_qa and allow_sensitive_during_security_audit boolean names are retired source-lineage only."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "Operation metadata aligns with the env-var tagging model standardized in earlier FileSafe PlanUnits."
@@ -11103,8 +11296,8 @@ status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
   Write-scope enforcement must account for incomplete plan file lists through bounded wildcard or
-  directory permissions, clear error messages with override instructions, and a compatibility note
-  for warn-only mode.
+  directory permissions, clear error messages with scoped override instructions, and advisory-mode
+  reporting that never permits writes when the authoritative allowlist is missing or empty.
 gui_related: false
 gui_classification_reason: >-
   This unit defines runtime, policy, integration, or governance behavior rather than visual
@@ -11116,6 +11309,8 @@ acceptance_criteria:
 - "The covered source span remains losslessly available for exact-text audit."
 - "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
 - "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Warn-only/advisory behavior applies only after a non-empty authoritative allowlist exists."
+- "Missing or empty allowlists block writes regardless of strict_mode."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -11135,10 +11330,11 @@ preserved_exact_tokens:
 - "directory-level permissions"
 - "clear error messages"
 - "override instructions"
-- "Warn-only mode option"
-negative_constraints: []
+- "advisory mode"
+negative_constraints:
+- "Warn-only mode must not permit writes when the authoritative allowlist is missing or empty."
 compatibility_only_notes:
-- "Warn-only mode is preserved as source-lineage and must be reconciled with fail-closed/FileSafe blocking policy before implementation."
+- "Warn-only mode wording is preserved as source-lineage only; active canon uses advisory reporting after safe enforcement input exists."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:
@@ -13819,4 +14015,75 @@ pm_current_coverage: Path normalization/symlink fail-closed/external_directory g
 pm_gap_or_delta: Need exhaustive fixtures across read/bash/grep/glob/edit and child contexts
 proposal_or_recommendation: Add external path/symlink regression suite
 compile_disposition: create_new_planunit
+```
+
+### F2-199 - FileSafe Fail Closed Security Repair
+
+```yaml
+plan_unit_id: F2-199
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe fail-closed security canon requires BashGuard, FileGuard, and SecurityFilter
+  initialization failures to block guarded execution with typed diagnostics; approved commands to
+  match only exact normalized command identities; missing or empty command/path allowlists and
+  missing destructive baselines to block regardless of strict_mode; destructive override requests
+  to require authenticated operator grant, auth realm, identity, reason, scope, expiry, audit
+  events, and receipt; prompt/free-text extraction to remain advisory only; realpath/case-fold/
+  symlink checks to cover non-existent create targets and TOCTOU rechecks; and retired
+  fail-open/prefix snippets to be fenced as noncanonical source-lineage.
+gui_related: false
+gui_classification_reason: This unit defines FileSafe security behavior and validator coverage rather than visual presentation.
+depends_on: [F2-024, F2-028, F2-030, F2-031, F2-032, F2-040, F2-041, F2-052, F2-074, F2-101, F2-114, F2-115, F2-116]
+unblocks: [CV-312]
+acceptance_criteria:
+  - Guard initialization failure emits filesafe.guard_init_failed and blocks command/file execution.
+  - Missing or empty allowlists and missing baselines block regardless of strict_mode.
+  - Approved command git status rejects git status && rm -rf /.
+  - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, audit event, and receipt.
+  - Retired BashGuard::disabled(), SecurityFilter::disabled(), prefix-match, and starts_with snippets cannot be copied as implementation guidance.
+  - Prompt/free-text command and path extraction is advisory and never the sole Layer-1 enforcement boundary.
+  - Non-existent create targets and pre-dispatch/pre-rename rechecks enforce realpath/case-fold/symlink scope and emit filesafe.path_denied on TOCTOU drift.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: filesafe_fail_closed_security_regression
+reasoning_tier: high
+context_scope: filesafe_fail_closed_security_repair
+implementation_surfaces:
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
+  - Plans/Tools.md
+  - scripts/pm-plans-verify.py
+node_compile_hint:
+  mode: filesafe_fail_closed_security_repair
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:10
+source_atom_ids: []
+priority: P0
+finding_family: filesafe_fail_open_and_allowlist_security
+preserved_exact_tokens:
+  - "fable-20260706-p0-filesafe-fail-open-and-allowlist-security"
+  - "`filesafe.guard_init_failed`"
+  - "`filesafe.command_denied`"
+  - "`filesafe.path_denied`"
+  - "`PUPPET_MASTER_ALLOW_DESTRUCTIVE`"
+  - "`approved_command_identity_mismatch`"
+  - "`path_toc_tou_recheck_failed`"
+negative_constraints:
+  - Do not use disabled guard fallback for initialization failure.
+  - Do not use prefix, substring, starts_with, shell-fragment, or chained-command expansion matching for approved_commands.
+  - Do not let strict_mode=false permit writes when the authoritative allowlist is missing or empty.
+  - Do not treat PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 as sufficient destructive override authority.
+  - Do not use prompt/free-text extraction as the sole Layer-1 enforcement boundary.
+owner_hints:
+  - Plans/FileSafe.md
+  - Plans/Contracts_V0.md
+  - Plans/Permissions_System.md
 ```

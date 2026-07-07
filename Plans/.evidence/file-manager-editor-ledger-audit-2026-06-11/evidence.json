@@ -13,12 +13,12 @@
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "f9b56f64de6207653e17bd53431a4283808a43678f2dc7efa0413db500ae88be"
+      "sha256": "0002a1f3e7625b28093d4aa897de375673a80de2eae4445b9a9018e68e77d7ba"
     },
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "ae02d34550bce44f8f95048ba4b4ec8c8cddac702c6835e0894d25615ac2ec3f"
+      "sha256": "045fa27e555bc2dc18b9b300a3f0279413d516f27da88c891980613fd8d9a749"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "5493b8b3e13fcca6e8b80ce175108ef510e22ca3b876dcdf17f91296162492d6"
+      "sha256": "096a4ffa7805a95bc55f6d46df37aa5e07d3759a8b7d2512c2739bab1c7b3366"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -250,6 +250,16 @@
       "name": "storage-coordination-canon-repair-evidence-restamp",
       "result": "PASS",
       "details": "Evidence artifact hashes refreshed after the FABLE storage/coordination canon repair regenerated canonical docs, plan index, migration metadata, Spec Lock, and plan-sharding evidence."
+    },
+    {
+      "name": "validate-filesafe-security-policy",
+      "result": "PASS",
+      "details": "PASS after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "validate-evidence",
+      "result": "PASS",
+      "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
     }
   ],
   "commands_run": [
@@ -533,6 +543,10 @@
       "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
       "exit_code": 0,
       "stdout_excerpt": "status pass; raw pm-gui-asset-policy status not_applicable while no GUI source exists"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

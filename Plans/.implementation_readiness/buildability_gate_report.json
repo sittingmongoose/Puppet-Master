@@ -164,7 +164,7 @@
       "status": "blocked"
     }
   ],
-  "generated_at_utc": "2026-07-07T18:53:55Z",
+  "generated_at_utc": "2026-07-07T20:39:38Z",
   "node_readiness": {
     "available": true,
     "bootstrap_authority_ref": "PNC-022",
@@ -300,10 +300,10 @@
     "Plans/.implementation_readiness/pnc019_certification_receipt.schema.json": "060eccb4993dd9185abdf8b567f893322fd2e0ef6dc2e1fa4c29268e6422ba62",
     "Plans/.implementation_readiness/readiness_blockers.jsonl": "4dc79c3dd9cc62a5efb0f71c5a04bd94dac7f4e3ed2d0f0312140d72ca1d320d",
     "Plans/.implementation_readiness/readiness_matrix.json": "9e11e8eb128c1f6e53743bffac1fcee242be2bb43ae276ff61352c4316df7897",
-    "Plans/.plan_index/node_readiness_report.json": "43dd923100871de6a72153ddf5c2d8bb408bd8412dedced9203f6c561d68ac07",
+    "Plans/.plan_index/node_readiness_report.json": "3ac7d01e67557fb5d4f5bf1c2de31f9fc65a955bc2b4e497475aebe600bcd4e0",
     "Plans/00-plans-index.md": "0ae73a65d17ec6a4616c9b671c80e7bc8cbd0445104a6f08f60f3f1978e35549",
     "Plans/CLI_Bridged_Providers.md": "f378e678d5026f04ed7692d91e16bddcfecee234cc66a7af465f15b8ec2ad415",
-    "Plans/Contracts_V0.md": "bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2",
+    "Plans/Contracts_V0.md": "9bf2cbf4dd99ae8b0386691b74617f21ed67eeb01a060a9c1eddf71310ab2ee2",
     "Plans/Executor_Protocol.md": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
     "Plans/Multi-Account.md": "bbbb3f95b27e904ffc3172fe6d2bcaf876fe0d6c888961f8f11319923d1b762d",
     "Plans/Permissions_System.md": "97ed251bf22bfe1db126a705f2e1042a4463a0f5cb4e033f72bec21f30a532f6",
@@ -326,7 +326,7 @@
     "Plans/storage_value_registry.schema.json": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
     "scripts/pm-implementation-readiness.py": "30bb480efbabfce3cca936a83c9e5a1dec39877b00ea8cd05a47810a24ae5b9e",
     "scripts/pm-plan-index.py": "f2af618bd35d1d347550d03f2f04e52f65b56e757da39e46e8ad2fe40023674c",
-    "scripts/pm-plans-verify.py": "f9b56f64de6207653e17bd53431a4283808a43678f2dc7efa0413db500ae88be",
+    "scripts/pm-plans-verify.py": "0002a1f3e7625b28093d4aa897de375673a80de2eae4445b9a9018e68e77d7ba",
     "scripts/pm-pnc019-certification-harness.py": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896"
   },
   "validation_status_semantics": "The validator passes when this report is current and truthful; buildability_gate_passed is the product gate used by Planning Wizard."

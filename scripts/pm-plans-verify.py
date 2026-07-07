@@ -2177,6 +2177,121 @@ def cmd_validate_gui_asset_policy(args: argparse.Namespace) -> dict[str, Any]:
     return report
 
 
+FILES_SAFE_FENCE_MARKERS = (
+    "source-lineage",
+    "source lineage",
+    "compatibility",
+    "retired",
+    "noncanonical",
+    "preserved_exact_tokens",
+    "stale_retired_dispositions",
+    "cannot be copied",
+    "not active implementation guidance",
+)
+
+
+def window_has_filesafe_fence(lines: list[str], index: int, radius: int = 12) -> bool:
+    start = max(0, index - radius)
+    end = min(len(lines), index + radius + 1)
+    window = "\n".join(lines[start:end]).lower()
+    return any(marker in window for marker in FILES_SAFE_FENCE_MARKERS)
+
+
+def cmd_validate_filesafe_security_policy(args: argparse.Namespace) -> dict[str, Any]:
+    filesafe_path = PLANS / "FileSafe.md"
+    contracts_path = PLANS / "Contracts_V0.md"
+    failures: list[dict[str, Any]] = []
+
+    filesafe_text = filesafe_path.read_text(encoding="utf-8")
+    contracts_text = contracts_path.read_text(encoding="utf-8")
+    filesafe_lines = filesafe_text.splitlines()
+
+    for index, line in enumerate(filesafe_lines):
+        for token in ("BashGuard::disabled()", "SecurityFilter::disabled()"):
+            if token in line and not window_has_filesafe_fence(filesafe_lines, index):
+                failures.append(
+                    {
+                        "path": rel(filesafe_path),
+                        "line": index + 1,
+                        "token": token,
+                        "error": "active_disabled_guard_fallback_not_fenced",
+                    }
+                )
+
+        lowered = line.lower()
+        prefix_sensitive = (
+            "commands_match" in lowered
+            or "approved_command" in lowered
+            or "approved commands" in lowered
+            or "allowlist" in lowered
+            or "whitelist" in lowered
+        )
+        has_prefix_semantic = "c.starts_with" in line or (
+            "prefix match" in lowered and not any(word in lowered for word in ("forbid", "forbidden", "retired", "stale"))
+        )
+        if prefix_sensitive and has_prefix_semantic and not window_has_filesafe_fence(filesafe_lines, index):
+            failures.append(
+                {
+                    "path": rel(filesafe_path),
+                    "line": index + 1,
+                    "error": "active_prefix_approved_command_semantics",
+                    "line_excerpt": line.strip()[:180],
+                }
+            )
+
+    required_filesafe_tokens = {
+        "filesafe.guard_init_failed": "missing_guard_init_failed_event",
+        "filesafe.command_denied": "missing_command_denied_event",
+        "filesafe.path_denied": "missing_path_denied_event",
+        "filesafe.destructive_override_requested": "missing_override_requested_event",
+        "filesafe.destructive_override_granted": "missing_override_granted_event",
+        "filesafe.destructive_override_denied": "missing_override_denied_event",
+        "filesafe.policy_degraded": "missing_policy_degraded_event",
+        "auth_realm": "missing_override_auth_realm",
+        "operator_identity": "missing_operator_identity",
+        "reason": "missing_override_reason",
+        "expires_at": "missing_override_expiry",
+        "project_id": "missing_project_scope",
+        "run_id": "missing_run_scope",
+        "worktree_id": "missing_worktree_scope",
+        "receipt": "missing_override_receipt",
+        "git status && rm -rf /": "missing_prefix_bypass_acceptance",
+        "strict_mode=false": "missing_strict_mode_false_boundary",
+        "free-text extraction is advisory": "missing_prompt_extraction_advisory_boundary",
+    }
+    combined = filesafe_text + "\n" + contracts_text
+    combined_lower = combined.lower()
+    for token, error in required_filesafe_tokens.items():
+        haystack = combined_lower if token == token.lower() else combined
+        needle = token.lower() if token == token.lower() else token
+        if needle not in haystack:
+            failures.append({"path": f"{rel(filesafe_path)}+{rel(contracts_path)}", "token": token, "error": error})
+
+    required_contract_tokens = {
+        "filesafe.guard_init_failed": "missing_contract_guard_init_failed",
+        "filesafe.command_denied": "missing_contract_command_denied",
+        "filesafe.path_denied": "missing_contract_path_denied",
+        "filesafe.destructive_override_requested": "missing_contract_override_requested",
+        "filesafe.destructive_override_granted": "missing_contract_override_granted",
+        "filesafe.destructive_override_denied": "missing_contract_override_denied",
+        "filesafe.policy_degraded": "missing_contract_policy_degraded",
+        "receipt_id": "missing_contract_receipt_id",
+        "event_refs[]": "missing_contract_event_refs",
+        "override_expired": "missing_contract_override_expired_denial_code",
+        "approved_command_identity_mismatch": "missing_contract_identity_mismatch_denial_code",
+        "path_toc_tou_recheck_failed": "missing_contract_toc_tou_denial_code",
+    }
+    for token, error in required_contract_tokens.items():
+        if token not in contracts_text:
+            failures.append({"path": rel(contracts_path), "token": token, "error": error})
+
+    return report_status(
+        "validate-filesafe-security-policy",
+        failures,
+        checked_files=[rel(filesafe_path), rel(contracts_path)],
+    )
+
+
 def cmd_validate_bootstrap_ledgers(args: argparse.Namespace) -> dict[str, Any]:
     ledger_root = PLANS / "ledgers/v2"
     requested_ids = getattr(args, "ledger_id", []) or []
@@ -2594,6 +2709,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("validate_gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
+        ("validate_filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
         ("validate_audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("validate_audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -2636,6 +2752,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
+        ("filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
         ("audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
         ("audit_status_index", cmd_validate_audit_status_index, argparse.Namespace(subcheck_timeout_seconds=timeout_seconds)),
@@ -2667,6 +2784,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
         gui_asset_policy=compact_gate_report(check_map["gui_asset_policy"]),
+        filesafe_security_policy=compact_gate_report(check_map["filesafe_security_policy"]),
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
         audit_status_index=compact_gate_report(check_map["audit_status_index"]),
@@ -2693,6 +2811,7 @@ COMMANDS = {
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
     "validate-gui-asset-policy": cmd_validate_gui_asset_policy,
+    "validate-filesafe-security-policy": cmd_validate_filesafe_security_policy,
     "validate-wiring-matrix": cmd_validate_wiring_matrix,
     "validate-bootstrap-ledgers": cmd_validate_bootstrap_ledgers,
     "validate-audit-closure": cmd_validate_audit_closure,
