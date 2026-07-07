@@ -938,6 +938,26 @@ ContractRef: ContractName:Plans/storage-plan.md, SchemaID:pm.event.v0, ContractN
 }
 ```
 
+## Provider/Model Capability Snapshot Reference Envelope
+
+Contracts_V0 owns only the cross-surface reference envelope for provider/model capability snapshots. `Plans/Models_System.md` owns the capability field semantics, fallback-chain eligibility, context-window and max-token limits, provenance, and requested/effective model resolution.
+
+Cross-surface payloads that need provider/model capability evidence MUST reference the shared snapshot instead of copying provider capability tables. The minimal envelope fields are:
+- `capability_snapshot_ref`
+- `requested_effective_snapshot_ref`
+- `provider_entry_id`
+- `model_id`
+- `effective_model_id?`
+- `context_budget_ref?`
+- `fallback_chain_ref?`
+- `capability_provenance_refs[]`
+- `capability_state`
+- `capability_state_reason?`
+
+Allowed `capability_state` values are `supported`, `unsupported`, `capability_gated`, `clamped`, `inferred`, `opaque`, `stale`, and `unverified`. `fallback_chain_ref?` points to the Models_System `fallback_chain[]` snapshot shape; `context_budget_ref?` points to the same snapshot's context-window and max-token fields. Legacy `platform_specs` / `platform_specs.rs` references are not valid capability snapshot refs and may appear only in explicit source-lineage or compatibility notes.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md
+
 ## Ledger Compile Addendum - pldg-20260624-001-provider-updates
 
 This addendum compiles accepted provider-update ledger atoms into canonical shared contracts. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
@@ -19536,4 +19556,64 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
   - Plans/orchestrator-subagent-integration.md
+```
+
+### CV-311 - Provider Model Capability Snapshot Reference Envelope
+
+```yaml
+plan_unit_id: CV-311
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 owns the cross-surface provider/model capability snapshot reference
+  envelope with capability_snapshot_ref, requested_effective_snapshot_ref,
+  provider_entry_id, model_id, optional effective_model_id, context_budget_ref,
+  fallback_chain_ref, capability_provenance_refs, capability_state, and
+  capability_state_reason. Models_System owns the capability field semantics,
+  context-window and max-token limits, fallback-chain shape, provenance, and
+  requested/effective model resolution. Legacy `platform_specs` and
+  `platform_specs.rs` are not valid capability snapshot refs.
+gui_related: false
+gui_classification_reason: This unit defines a cross-surface reference envelope and owner boundary, not visual presentation.
+depends_on: [CV-293, MS-134]
+unblocks: [ACD-009, ACD-184, ACD-220, ACD-255, ACD-257, MS-134]
+acceptance_criteria:
+  - Cross-surface provider/model payloads reference `capability_snapshot_ref` instead of copying provider capability tables.
+  - "`fallback_chain_ref?` and `context_budget_ref?` point to Models_System snapshot fields."
+  - Capability states use the closed state set supported, unsupported, capability_gated, clamped, inferred, opaque, stale, and unverified.
+  - Legacy `platform_specs` and `platform_specs.rs` are invalid as capability snapshot refs.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+risk_class: provider_model_capability_ref_drift
+reasoning_tier: high
+context_scope: provider_model_capability_ref_envelope
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Models_System.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: provider_model_capability_snapshot_ref_envelope
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:7
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`capability_snapshot_ref`"
+  - "`requested_effective_snapshot_ref`"
+  - "`context_budget_ref?`"
+  - "`fallback_chain_ref?`"
+  - "`capability_provenance_refs[]`"
+  - "`capability_state`"
+  - "`platform_specs`"
+negative_constraints:
+  - Do not define `platform_specs` or `platform_specs.rs` as active provider/model capability contracts.
+  - Do not copy Models_System capability tables into feature-local payloads.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Models_System.md
+  - Plans/assistant-chat-design.md
 ```

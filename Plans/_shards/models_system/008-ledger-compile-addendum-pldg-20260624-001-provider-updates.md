@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L283-L520
+Source lines: L287-L531
 
-Source SHA256: `90daa3edae3561ea8a38226d25133642290e9286103ed6ddd375bf8c9e7c316e`
+Source SHA256: `1cb6c90beff8f25fe7a4e73492591a6633aa0604bb00de41849855bcbee3887a`
 
 ---
 
@@ -171,6 +171,11 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Con
 | `system_role_name` | string | Role name used for system-level instructions (`system` or `developer`) |
 | `streaming` | bool | Provider supports incremental stream delivery |
 | `tool_use` | bool | Provider/runtime surface supports tool calls |
+| `context_window_tokens` | integer | Provider/model advertised total context window for the concrete runtime surface |
+| `max_input_tokens` | integer? | Maximum input budget when the provider distinguishes input from total context |
+| `max_output_tokens` | integer? | Maximum output/generation budget for the concrete provider/model entry |
+| `effective_context_window_tokens` | integer | Runtime-safe context limit after route, account, model variant, and policy clamps |
+| `fallback_chain[]` | array | Ordered fallback candidates with rank, provider/model identity, eligibility, capability deltas, rejection reason, and selected marker |
 | `thinking_blocks` | bool | Provider can emit or replay reasoning/thinking blocks |
 | `cache_control` | enum/string | Cache strategy family supported by the provider surface |
 | `cache_with_oauth` | bool | Cache markers remain valid when this surface is authenticated with OAuth |
@@ -188,6 +193,8 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipe
 Capability checks are data-driven and must not devolve into scattered `if-else` branches. Gemini Direct and Antigravity CLI keep distinct active capability entries; retired Gemini CLI capability tokens remain compatibility/source-lineage only. Gemini `disableCache` compatibility evidence maps through `cache_control` / `cache_with_oauth` rather than a hidden provider flag.
 
 Provider/catalog discovery remains dynamic and model-scoped. OpenCode `models.dev` and provider `/catalog` evidence may supply model-level capability metadata such as reasoning, `/tool/temperature` support, limits, modalities, and pricing; PM records this as capability data rather than hardcoding provider defaults. Selectable-unit snapshots preserve `requested_default` and `effective_capabilities` so UI defaults and runtime routing can explain which provider/model entry was requested and what capability block was actually discovered. `cursor-agent models` is live catalog evidence whose returned IDs may encode reasoning variants directly, so PM must discover those IDs instead of inferring variants from vendor name alone.
+
+Capability snapshot provenance is mandatory for context-window, max-token, and fallback fields. Each snapshot records `capability_snapshot_id`, `provider_entry_id`, `model_id`, `runtime_surface_id`, `source_refs[]`, `source_kind`, `observed_at_utc`, `verification_state`, and `staleness_state`. Unknown, opaque, stale, inferred, clamped, and unsupported states must remain visible rather than silently substituting a legacy default.
 
 #### 3.3.2 `system_role_name` values
 

@@ -12,6 +12,8 @@ These requirements are canonical live specification text for this owner document
 
 This document is the **single canonical source of truth** for the Puppet Master model selection, configuration, and variant system — how models are identified, selected, overridden per Persona, and cycled via variants. All other plan documents MUST reference this document by anchor (e.g., `Plans/Models_System.md#MODEL-ID`) rather than restating model selection rules or variant definitions.
 
+Models_System also owns live provider/model capability snapshot fields used by chat, prompt assembly, runtime routing, and settings surfaces, including context-window and max-token limits, fallback-chain eligibility, capability provenance, and requested/effective model disclosure. Legacy `platform_specs` / `platform_specs.rs` references from the removed Rust/Iced implementation are source-lineage only; they are not an active provider/model capability SSOT and must not be called as `platform_specs::context_window(provider)` or `platform_specs::fallback_model_ids(platform)`.
+
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ### SSOT references (DRY)
@@ -262,6 +264,8 @@ Selection rules:
 - model availability and capability checks must consider the concrete runtime surface, not just the vendor model namespace.
 - Retired Gemini CLI deterministic selection precedence (`--model`, `GEMINI_MODEL`, `settings.json` `model.name`, local model router, provider default, and `general.plan.modelRouting`) is retained only as source-lineage. Active CLI-runtime selection in this lane belongs to Antigravity CLI (`agy`, `agy models`, `--model`) and must record requested/effective model evidence without treating Gemini CLI as an active provider.
 
+Fallback resolution emits a `fallback_chain[]` in the requested/effective model snapshot. Each entry carries `rank`, `provider_entry_id`, `model_id`, `candidate_source`, `eligibility_state`, `capability_delta_refs[]`, `rejection_reason?`, and `selected`. `fallback_model_ids[]` may appear only as a compatibility projection over `fallback_chain[]` for historical consumers; it is not an owner source and must not be populated from legacy `platform_specs`.
+
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 ## 3. Model options configuration
 
@@ -443,6 +447,11 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Con
 | `system_role_name` | string | Role name used for system-level instructions (`system` or `developer`) |
 | `streaming` | bool | Provider supports incremental stream delivery |
 | `tool_use` | bool | Provider/runtime surface supports tool calls |
+| `context_window_tokens` | integer | Provider/model advertised total context window for the concrete runtime surface |
+| `max_input_tokens` | integer? | Maximum input budget when the provider distinguishes input from total context |
+| `max_output_tokens` | integer? | Maximum output/generation budget for the concrete provider/model entry |
+| `effective_context_window_tokens` | integer | Runtime-safe context limit after route, account, model variant, and policy clamps |
+| `fallback_chain[]` | array | Ordered fallback candidates with rank, provider/model identity, eligibility, capability deltas, rejection reason, and selected marker |
 | `thinking_blocks` | bool | Provider can emit or replay reasoning/thinking blocks |
 | `cache_control` | enum/string | Cache strategy family supported by the provider surface |
 | `cache_with_oauth` | bool | Cache markers remain valid when this surface is authenticated with OAuth |
@@ -460,6 +469,8 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipe
 Capability checks are data-driven and must not devolve into scattered `if-else` branches. Gemini Direct and Antigravity CLI keep distinct active capability entries; retired Gemini CLI capability tokens remain compatibility/source-lineage only. Gemini `disableCache` compatibility evidence maps through `cache_control` / `cache_with_oauth` rather than a hidden provider flag.
 
 Provider/catalog discovery remains dynamic and model-scoped. OpenCode `models.dev` and provider `/catalog` evidence may supply model-level capability metadata such as reasoning, `/tool/temperature` support, limits, modalities, and pricing; PM records this as capability data rather than hardcoding provider defaults. Selectable-unit snapshots preserve `requested_default` and `effective_capabilities` so UI defaults and runtime routing can explain which provider/model entry was requested and what capability block was actually discovered. `cursor-agent models` is live catalog evidence whose returned IDs may encode reasoning variants directly, so PM must discover those IDs instead of inferring variants from vendor name alone.
+
+Capability snapshot provenance is mandatory for context-window, max-token, and fallback fields. Each snapshot records `capability_snapshot_id`, `provider_entry_id`, `model_id`, `runtime_surface_id`, `source_refs[]`, `source_kind`, `observed_at_utc`, `verification_state`, and `staleness_state`. Unknown, opaque, stale, inferred, clamped, and unsupported states must remain visible rather than silently substituting a legacy default.
 
 #### 3.3.2 `system_role_name` values
 
@@ -1118,6 +1129,21 @@ Canonical snapshot shape:
   "transport": "CliBridge",
   "model_id": "anthropic/claude-sonnet-4",
   "variant": null,
+  "context_window_tokens": 200000,
+  "max_input_tokens": 180000,
+  "max_output_tokens": 64000,
+  "effective_context_window_tokens": 180000,
+  "fallback_chain": [
+    {
+      "rank": 1,
+      "provider_entry_id": "cursor",
+      "model_id": "anthropic/claude-sonnet-4",
+      "candidate_source": "persona_preference",
+      "eligibility_state": "eligible",
+      "capability_delta_refs": [],
+      "selected": true
+    }
+  ],
   "controls": {
     "persona_prompt_body": {
       "state": "supported",
@@ -2229,9 +2255,10 @@ plan_unit_id: MS-017
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Capability metadata covers transport, tool, cache, payload, pricing, billing, and source fields. Checks are
-  data-driven, Gemini Direct and Antigravity CLI remain distinct active entries, retired Gemini CLI capability tokens remain
-  source-lineage only, and disableCache maps through cache capability fields.
+canonical_text: Capability metadata covers transport, tool, context-window, max-token, fallback-chain, cache, payload,
+  pricing, billing, provenance, and source fields. Checks are data-driven, Gemini Direct and Antigravity CLI remain
+  distinct active entries, retired Gemini CLI and platform_specs capability tokens remain source-lineage only, and
+  disableCache maps through cache capability fields.
 gui_related: false
 gui_classification_reason: The unit covers capability metadata and runtime checks rather than direct GUI presentation.
 split_recommended: false
@@ -2239,9 +2266,9 @@ depends_on:
 - MS-016
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
-- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- Capability matrix rows include `context_window_tokens`, `max_input_tokens`, `max_output_tokens`, `effective_context_window_tokens`, and `fallback_chain[]` where applicable.
+- Context-window and max-token fields carry provenance and verification/staleness state.
+- Fallback chains are ordered, eligibility-gated, and explain selected/rejected candidates.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2260,6 +2287,11 @@ preserved_exact_tokens:
 - system_role_name
 - streaming
 - tool_use
+- context_window_tokens
+- max_input_tokens
+- max_output_tokens
+- effective_context_window_tokens
+- fallback_chain[]
 - cache_control
 - billing_entity
 - billing_source
@@ -2267,9 +2299,12 @@ preserved_exact_tokens:
 - Gemini Direct and Gemini CLI remain distinct
 negative_constraints:
 - Capability checks must not devolve into scattered if-else branches.
+- Do not use legacy platform_specs or platform_specs.rs as the active capability source.
+- Do not populate fallback chains from platform_specs::fallback_model_ids(platform).
 compatibility_only_notes:
 - Gemini disableCache compatibility evidence maps through cache_control or cache_with_oauth rather than a hidden provider
   flag.
+- platform_specs and platform_specs.rs are retired source-lineage only.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
@@ -5934,8 +5969,9 @@ plan_unit_id: MS-083
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: GUI disclosure and runtime filtering resolve support state from one canonical machine-readable capability
-  snapshot produced by the shared capability resolver and provider/model metadata inputs.
+canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token limits,
+  fallback-chain eligibility, provenance, and requested/effective model identity from one canonical machine-readable
+  capability snapshot produced by the shared capability resolver and provider/model metadata inputs.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -5944,9 +5980,9 @@ depends_on:
 - MS-079
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
-- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and staleness state.
+- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc UI-only logic.
+- Requested/effective model identity and fallback/clamp state remain visible to runtime and GUI consumers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5968,6 +6004,15 @@ preserved_exact_tokens:
 - model_id
 - variant
 - controls
+- context_window_tokens
+- max_input_tokens
+- max_output_tokens
+- effective_context_window_tokens
+- fallback_chain
+- capability_snapshot_id
+- source_refs[]
+- verification_state
+- staleness_state
 - persona_prompt_body
 - persona_reasoning_effort
 - documented
@@ -5980,7 +6025,10 @@ preserved_exact_tokens:
 - no ad hoc UI-only logic
 negative_constraints:
 - Every control disclosure shown to the user must be derivable from the snapshot without ad hoc UI-only logic.
-compatibility_only_notes: []
+- Do not source snapshot fields from legacy platform_specs or platform_specs.rs.
+- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque capability states.
+compatibility_only_notes:
+- platform_specs and platform_specs.rs are retired source-lineage only.
 stale_retired_dispositions:
 - Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at, and selectable_unit_ids
   so boot-time refresh and stale catalog state remain inspectable.
@@ -9230,4 +9278,69 @@ pm_current_coverage: Bridge preserves errors/truncation/usage/correlation IDs
 pm_gap_or_delta: Need provider error detail minimums per endpoint type
 proposal_or_recommendation: 'Add ProviderErrorEnvelope fields: HTTP/status/body-class/request-id/retryability'
 compile_disposition: create_new_planunit
+```
+
+### MS-134 - Platform Specs Retirement And Capability Snapshot Authority
+
+```yaml
+plan_unit_id: MS-134
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Models_System owns the active provider/model capability snapshot authority for
+  context-window and max-token limits, fallback-chain eligibility, capability
+  provenance, and requested/effective model disclosure. Legacy `platform_specs`
+  and `platform_specs.rs` are retired source-lineage only and must not be called
+  as active capability functions such as `platform_specs::context_window(provider)`
+  or `platform_specs::fallback_model_ids(platform)`.
+gui_related: false
+gui_classification_reason: This unit defines provider/model capability authority and runtime data contracts, not visual presentation.
+depends_on: [MS-017, MS-083]
+unblocks: [ACD-009, ACD-184, ACD-220, ACD-255, ACD-257, ACD-262, ACD-268]
+acceptance_criteria:
+  - Active context-window and max-token consumers use Models_System capability snapshot fields.
+  - Active fallback consumers use `fallback_chain[]`; `fallback_model_ids[]` is compatibility projection only.
+  - Capability snapshots carry provider/model/source provenance, verification state, and staleness state.
+  - Requested/effective model identity, fallback, clamp, unsupported, opaque, inferred, and stale states remain visible to consumers.
+  - Legacy `platform_specs` and `platform_specs.rs` are present only in explicit source-lineage or compatibility notes.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+risk_class: platform_specs_authority_regression
+reasoning_tier: high
+context_scope: provider_model_capability_authority
+implementation_surfaces:
+  - Plans/Models_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Provider_OpenCode.md
+node_compile_hint:
+  mode: platform_specs_retirement_capability_snapshot_authority
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:7
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`platform_specs`"
+  - "`platform_specs.rs`"
+  - "`context_window_tokens`"
+  - "`max_input_tokens`"
+  - "`max_output_tokens`"
+  - "`effective_context_window_tokens`"
+  - "`fallback_chain[]`"
+  - "`fallback_model_ids[]`"
+negative_constraints:
+  - Do not call `platform_specs::context_window(provider)` as active context-window authority.
+  - Do not call `platform_specs::fallback_model_ids(platform)` as active fallback authority.
+  - Do not treat Provider_OpenCode, Assistant Chat, Contracts_V0, or CLI bridge docs as replacement owners for provider/model capability snapshot fields.
+compatibility_only_notes:
+  - Legacy platform_specs tokens remain traceable only as source-lineage from the removed Rust/Iced implementation.
+owner_hints:
+  - Plans/Models_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Provider_OpenCode.md
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1389-L7399
+Source lines: L1415-L7447
 
-Source SHA256: `90daa3edae3561ea8a38226d25133642290e9286103ed6ddd375bf8c9e7c316e`
+Source SHA256: `1cb6c90beff8f25fe7a4e73492591a6633aa0604bb00de41849855bcbee3887a`
 
 ---
 
@@ -851,9 +851,10 @@ plan_unit_id: MS-017
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Capability metadata covers transport, tool, cache, payload, pricing, billing, and source fields. Checks are
-  data-driven, Gemini Direct and Antigravity CLI remain distinct active entries, retired Gemini CLI capability tokens remain
-  source-lineage only, and disableCache maps through cache capability fields.
+canonical_text: Capability metadata covers transport, tool, context-window, max-token, fallback-chain, cache, payload,
+  pricing, billing, provenance, and source fields. Checks are data-driven, Gemini Direct and Antigravity CLI remain
+  distinct active entries, retired Gemini CLI and platform_specs capability tokens remain source-lineage only, and
+  disableCache maps through cache capability fields.
 gui_related: false
 gui_classification_reason: The unit covers capability metadata and runtime checks rather than direct GUI presentation.
 split_recommended: false
@@ -861,9 +862,9 @@ depends_on:
 - MS-016
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
-- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- Capability matrix rows include `context_window_tokens`, `max_input_tokens`, `max_output_tokens`, `effective_context_window_tokens`, and `fallback_chain[]` where applicable.
+- Context-window and max-token fields carry provenance and verification/staleness state.
+- Fallback chains are ordered, eligibility-gated, and explain selected/rejected candidates.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -882,6 +883,11 @@ preserved_exact_tokens:
 - system_role_name
 - streaming
 - tool_use
+- context_window_tokens
+- max_input_tokens
+- max_output_tokens
+- effective_context_window_tokens
+- fallback_chain[]
 - cache_control
 - billing_entity
 - billing_source
@@ -889,9 +895,12 @@ preserved_exact_tokens:
 - Gemini Direct and Gemini CLI remain distinct
 negative_constraints:
 - Capability checks must not devolve into scattered if-else branches.
+- Do not use legacy platform_specs or platform_specs.rs as the active capability source.
+- Do not populate fallback chains from platform_specs::fallback_model_ids(platform).
 compatibility_only_notes:
 - Gemini disableCache compatibility evidence maps through cache_control or cache_with_oauth rather than a hidden provider
   flag.
+- platform_specs and platform_specs.rs are retired source-lineage only.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Plans/Models_System.md remains the provider/model selection owner while adjacent docs consume the referenced contract.
@@ -4556,8 +4565,9 @@ plan_unit_id: MS-083
 unit_type: data_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: GUI disclosure and runtime filtering resolve support state from one canonical machine-readable capability
-  snapshot produced by the shared capability resolver and provider/model metadata inputs.
+canonical_text: GUI disclosure and runtime filtering resolve support state, context-window limits, max-token limits,
+  fallback-chain eligibility, provenance, and requested/effective model identity from one canonical machine-readable
+  capability snapshot produced by the shared capability resolver and provider/model metadata inputs.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, provider compatibility, data contracts, or backend execution
   semantics rather than direct GUI presentation.
@@ -4566,9 +4576,9 @@ depends_on:
 - MS-079
 unblocks: []
 acceptance_criteria:
-- Covered source spans remain losslessly available for exact-text audit.
-- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
-- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- Snapshot rows expose context/max-token fields, fallback-chain entries, source refs, verification state, and staleness state.
+- Every control and context-window disclosure shown to the user is derivable from the snapshot without ad hoc UI-only logic.
+- Requested/effective model identity and fallback/clamp state remain visible to runtime and GUI consumers.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -4590,6 +4600,15 @@ preserved_exact_tokens:
 - model_id
 - variant
 - controls
+- context_window_tokens
+- max_input_tokens
+- max_output_tokens
+- effective_context_window_tokens
+- fallback_chain
+- capability_snapshot_id
+- source_refs[]
+- verification_state
+- staleness_state
 - persona_prompt_body
 - persona_reasoning_effort
 - documented
@@ -4602,7 +4621,10 @@ preserved_exact_tokens:
 - no ad hoc UI-only logic
 negative_constraints:
 - Every control disclosure shown to the user must be derivable from the snapshot without ad hoc UI-only logic.
-compatibility_only_notes: []
+- Do not source snapshot fields from legacy platform_specs or platform_specs.rs.
+- Do not hide requested/effective model differences, fallback, clamp, unsupported, inferred, stale, or opaque capability states.
+compatibility_only_notes:
+- platform_specs and platform_specs.rs are retired source-lineage only.
 stale_retired_dispositions:
 - Provider/model catalog snapshots carry boot_refresh_enabled, model_catalog_status, last_model_refresh_at, and selectable_unit_ids
   so boot-time refresh and stale catalog state remain inspectable.

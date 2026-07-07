@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L8374-L9233
+Source lines: L8422-L9346
 
-Source SHA256: `90daa3edae3561ea8a38226d25133642290e9286103ed6ddd375bf8c9e7c316e`
+Source SHA256: `1cb6c90beff8f25fe7a4e73492591a6633aa0604bb00de41849855bcbee3887a`
 
 ---
 
@@ -867,4 +867,69 @@ pm_current_coverage: Bridge preserves errors/truncation/usage/correlation IDs
 pm_gap_or_delta: Need provider error detail minimums per endpoint type
 proposal_or_recommendation: 'Add ProviderErrorEnvelope fields: HTTP/status/body-class/request-id/retryability'
 compile_disposition: create_new_planunit
+```
+
+### MS-134 - Platform Specs Retirement And Capability Snapshot Authority
+
+```yaml
+plan_unit_id: MS-134
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Models_System owns the active provider/model capability snapshot authority for
+  context-window and max-token limits, fallback-chain eligibility, capability
+  provenance, and requested/effective model disclosure. Legacy `platform_specs`
+  and `platform_specs.rs` are retired source-lineage only and must not be called
+  as active capability functions such as `platform_specs::context_window(provider)`
+  or `platform_specs::fallback_model_ids(platform)`.
+gui_related: false
+gui_classification_reason: This unit defines provider/model capability authority and runtime data contracts, not visual presentation.
+depends_on: [MS-017, MS-083]
+unblocks: [ACD-009, ACD-184, ACD-220, ACD-255, ACD-257, ACD-262, ACD-268]
+acceptance_criteria:
+  - Active context-window and max-token consumers use Models_System capability snapshot fields.
+  - Active fallback consumers use `fallback_chain[]`; `fallback_model_ids[]` is compatibility projection only.
+  - Capability snapshots carry provider/model/source provenance, verification state, and staleness state.
+  - Requested/effective model identity, fallback, clamp, unsupported, opaque, inferred, and stale states remain visible to consumers.
+  - Legacy `platform_specs` and `platform_specs.rs` are present only in explicit source-lineage or compatibility notes.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+risk_class: platform_specs_authority_regression
+reasoning_tier: high
+context_scope: provider_model_capability_authority
+implementation_surfaces:
+  - Plans/Models_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Provider_OpenCode.md
+node_compile_hint:
+  mode: platform_specs_retirement_capability_snapshot_authority
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:7
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`platform_specs`"
+  - "`platform_specs.rs`"
+  - "`context_window_tokens`"
+  - "`max_input_tokens`"
+  - "`max_output_tokens`"
+  - "`effective_context_window_tokens`"
+  - "`fallback_chain[]`"
+  - "`fallback_model_ids[]`"
+negative_constraints:
+  - Do not call `platform_specs::context_window(provider)` as active context-window authority.
+  - Do not call `platform_specs::fallback_model_ids(platform)` as active fallback authority.
+  - Do not treat Provider_OpenCode, Assistant Chat, Contracts_V0, or CLI bridge docs as replacement owners for provider/model capability snapshot fields.
+compatibility_only_notes:
+  - Legacy platform_specs tokens remain traceable only as source-lineage from the removed Rust/Iced implementation.
+owner_hints:
+  - Plans/Models_System.md
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Provider_OpenCode.md
 ```

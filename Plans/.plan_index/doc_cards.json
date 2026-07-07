@@ -59,7 +59,7 @@
         "Plans/usage-feature.md",
         "scripts/pm-audit-closure.py"
       ],
-      "line_count": 5264,
+      "line_count": 5265,
       "path": "Plans/00-plans-index.md",
       "plan_unit_count": 66,
       "plan_unit_ids": [
@@ -196,7 +196,7 @@
         "visible_source_control_surface_routing",
         "web_firecrawl_owner_set"
       ],
-      "sha256": "8d8fcd113d95e62f8848e4d6228d81f5c7461196bd4caa578c4f5b6de74565ae",
+      "sha256": "0ae73a65d17ec6a4616c9b671c80e7bc8cbd0445104a6f08f60f3f1978e35549",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 66
@@ -575,7 +575,7 @@
         "future composer",
         "future run status UI"
       ],
-      "line_count": 23355,
+      "line_count": 23380,
       "path": "Plans/assistant-chat-design.md",
       "plan_unit_count": 432,
       "plan_unit_ids": [
@@ -1320,7 +1320,7 @@
         "worktree_identity",
         "worktree_storage"
       ],
-      "sha256": "db0b94c750c7b812ceaa0c9bafd22d6e571af57eae0b7e4ecd0a3a8b7442f385",
+      "sha256": "c5f64a9608b35cad74fcbc27576b671f798b00c5e7599115dd6e9f50ead14283",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 432
@@ -2823,10 +2823,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 245,
+        "False": 246,
         "True": 65
       },
-      "heading_count": 448,
+      "heading_count": 450,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -2895,9 +2895,9 @@
         "future vision_bridge result records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 19539,
+      "line_count": 19619,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 310,
+      "plan_unit_count": 311,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -3208,7 +3208,8 @@
         "CV-307",
         "CV-308",
         "CV-309",
-        "CV-310"
+        "CV-310",
+        "CV-311"
       ],
       "reasoning_tiers": [
         "high",
@@ -3396,6 +3397,7 @@
         "provider_fallback_audit_obscured",
         "provider_identity_collapse",
         "provider_lifecycle_child_state_confusion",
+        "provider_model_capability_ref_drift",
         "provider_operational_blocker_import_boundary_drift",
         "provider_platform_vocabulary_rewrite",
         "provider_recovery_label_drift",
@@ -3525,10 +3527,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "7ea4f791ed4f3033a35e469c5d6337a9b562daeaf7ad5339541e7259c0fc7075",
+      "sha256": "bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 310
+        "accepted": 311
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -3537,7 +3539,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "requirement": 220,
-        "schema_contract": 2,
+        "schema_contract": 3,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -3569,6 +3571,7 @@
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
@@ -6848,10 +6851,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 85,
+        "False": 86,
         "True": 48
       },
-      "heading_count": 223,
+      "heading_count": 224,
       "implementation_surfaces": [
         "Plans/CLI_Bridged_Providers.md",
         "Plans/Contracts_V0.md",
@@ -6872,6 +6875,7 @@
         "Plans/Provider_OpenCode.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
         "Plans/orchestrator-subagent-integration.md",
         "Plans/plans_to_code_handoff.schema.json",
         "Plans/storage-plan.md",
@@ -6880,9 +6884,9 @@
         "future Teacher thread model chips",
         "future model route resolver"
       ],
-      "line_count": 9233,
+      "line_count": 9346,
       "path": "Plans/Models_System.md",
-      "plan_unit_count": 133,
+      "plan_unit_count": 134,
       "plan_unit_ids": [
         "MS-113",
         "MS-114",
@@ -7016,7 +7020,8 @@
         "MS-130",
         "MS-131",
         "MS-132",
-        "MS-133"
+        "MS-133",
+        "MS-134"
       ],
       "reasoning_tiers": [
         "high",
@@ -7100,6 +7105,7 @@
         "persona_runtime_request_set",
         "persona_variant_preselection",
         "picker_selection_requested_override",
+        "platform_specs_authority_regression",
         "pricing_metadata_versioning",
         "provider_capability_matrix_application_gate",
         "provider_capability_multi_account_selection_gate",
@@ -7149,10 +7155,10 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "90daa3edae3561ea8a38226d25133642290e9286103ed6ddd375bf8c9e7c316e",
+      "sha256": "1cb6c90beff8f25fe7a4e73492591a6633aa0604bb00de41849855bcbee3887a",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 133
+        "accepted": 134
       },
       "title": "Models System (Canonical SSOT)",
       "unit_type_counts": {
@@ -7164,7 +7170,7 @@
         "baseline_reference": 1,
         "capability_matrix": 1,
         "compatibility_disposition": 2,
-        "constraint": 2,
+        "constraint": 3,
         "consumer_alignment": 1,
         "data_contract": 5,
         "delta_contract": 1,
@@ -7246,6 +7252,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py lint-contractrefs",
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "repo cannot re-enable user deny"
@@ -10827,7 +10834,7 @@
         "provider_identity_correlation_drift",
         "residual_bridge_overreach"
       ],
-      "sha256": "a12b718a45753bcde5cdc746dc48c75778ab92be98949edde5a9adb07c9849c9",
+      "sha256": "0d10caa7a05a9bdbf4423fb401b048c27f60f27b803fdc57523d3fc157cdd467",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 50,
@@ -13323,7 +13330,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-07T17:58:10Z",
+  "generated_at_utc": "2026-07-07T18:47:38Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13331,13 +13338,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3104,
+      "False": 3106,
       "True": 2385
     },
-    "plan_unit_count": 5489,
+    "plan_unit_count": 5491,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5311,
+      "accepted": 5313,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13352,7 +13359,7 @@
       "capability_matrix": 1,
       "compatibility_disposition": 131,
       "compatibility_note": 2,
-      "constraint": 586,
+      "constraint": 587,
       "consumer_alignment": 1,
       "consumer_requirement": 1,
       "data_contract": 6,
@@ -13383,7 +13390,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 10,
+      "schema_contract": 11,
       "schema_mirror": 1,
       "selection_contract": 1,
       "selection_policy": 2,

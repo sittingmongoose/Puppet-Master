@@ -1,10 +1,10 @@
-# Shard 021: Ledger Compile Addendum - pldg-20260614-001
+# Shard 022: Ledger Compile Addendum - pldg-20260614-001
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L16976-L17054
+Source lines: L16996-L17074
 
-Source SHA256: `7ea4f791ed4f3033a35e469c5d6337a9b562daeaf7ad5339541e7259c0fc7075`
+Source SHA256: `bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2`
 
 ---
 

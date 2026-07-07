@@ -1,10 +1,10 @@
-# Shard 014: Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)
+# Shard 015: Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2096-L2334
+Source lines: L2116-L2354
 
-Source SHA256: `7ea4f791ed4f3033a35e469c5d6337a9b562daeaf7ad5339541e7259c0fc7075`
+Source SHA256: `bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2`
 
 ---
 

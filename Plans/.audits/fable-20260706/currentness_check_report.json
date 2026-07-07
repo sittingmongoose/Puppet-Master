@@ -140,6 +140,17 @@
         "Plans/.audits/fable-20260706/STORAGE_COORDINATION_CANON_REPAIR.md",
         "Plans/.audits/fable-20260706/storage_coordination_canon_repair_report.json"
       ]
+    },
+    {
+      "finding_key": "fable-20260706-p0-platform-specs-authority-drift",
+      "reason": "Models_System now owns active context-window, max-token, fallback-chain, capability provenance, and requested/effective capability fields; Assistant Chat live platform_specs function references were replaced or fenced as retired source-lineage; Contracts_V0 carries only capability snapshot refs.",
+      "repair_required": false,
+      "status": "repaired_current",
+      "superseded_at_utc": "2026-07-07T18:49:00Z",
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/PLATFORM_SPECS_AUTHORITY_REPAIR.md",
+        "Plans/.audits/fable-20260706/platform_specs_authority_repair_report.json"
+      ]
     }
   ],
   "gate_change_recommendation_summary": [
@@ -151,7 +162,7 @@
     "Require event catalogs to have per-event payload minima and schema refs, not just generic envelopes.",
     "Require behavioral acceptance and dependency graph quality for P0/gui_related PlanUnits instead of preservation-only acceptance criteria."
   ],
-  "generated_at_utc": "2026-07-07T17:56:52Z",
+  "generated_at_utc": "2026-07-07T18:49:00Z",
   "outputs": {
     "currentness_report": "Plans/.audits/fable-20260706/currentness_check_report.json",
     "registry": "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
@@ -183,9 +194,12 @@
     },
     {
       "blocker_family": "contract_materialization",
-      "classification": "confirmed_current",
+      "classification": "repaired_current",
+      "closed_at_utc": "2026-07-07T18:49:00Z",
+      "closure_status": "repair_validated",
       "dependency_order": 20,
       "finding_key": "fable-20260706-p0-platform-specs-authority-drift",
+      "notes": "Closed by PLATFORM_SPECS_AUTHORITY_REPAIR.md; active context-window/fallback authority is Models_System capability snapshot and fallback_chain[], with Contracts_V0 snapshot refs only.",
       "owner_docs": [
         "Plans/assistant-chat-design.md",
         "Plans/Models_System.md",
@@ -193,9 +207,14 @@
         "Plans/Contracts_V0.md"
       ],
       "priority": "P0",
-      "repair_required": true,
+      "repair_required": false,
+      "semantic_finding_key": "sfk-cb2dfb3a4e797fdb4a876fdf",
       "source_severity": "High",
-      "title": "platform_specs authority remains contradictory: assistant-chat still uses it live while Models_System has no replacement field contract."
+      "superseded_by": [
+        "Plans/.audits/fable-20260706/PLATFORM_SPECS_AUTHORITY_REPAIR.md",
+        "Plans/.audits/fable-20260706/platform_specs_authority_repair_report.json"
+      ],
+      "title": "platform_specs authority closed: Models_System capability snapshots replace live legacy platform_specs functions."
     },
     {
       "blocker_family": "currentness",
@@ -392,12 +411,13 @@
   "registry_summary": {
     "classification_counts": {
       "already_fixed_in_latest_repo": 1,
-      "confirmed_current": 6,
+      "confirmed_current": 5,
       "false_alarm_corrected": 5,
-      "needs_repair": 359,
-      "owner_decision_required": 10,
+      "needs_repair": 354,
+      "owner_decision_required": 9,
       "partial_current": 5,
-      "repaired_current": 1,
+      "repaired_current": 7,
+      "repaired_superseded": 1,
       "source_lineage_only": 2
     },
     "mechanical_overcapture_removed_rows": 78,

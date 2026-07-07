@@ -1,10 +1,10 @@
-# Shard 034: Ledger Compile Addendum - pldg-20260703-001-feature-intake
+# Shard 035: Ledger Compile Addendum - pldg-20260703-001-feature-intake
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19186-L19539
+Source lines: L19206-L19619
 
-Source SHA256: `7ea4f791ed4f3033a35e469c5d6337a9b562daeaf7ad5339541e7259c0fc7075`
+Source SHA256: `bec13c36aec096a51ec22bac1dce068a61b92f92e302540810b219b1df50a3c2`
 
 ---
 
@@ -361,4 +361,64 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
   - Plans/orchestrator-subagent-integration.md
+```
+
+### CV-311 - Provider Model Capability Snapshot Reference Envelope
+
+```yaml
+plan_unit_id: CV-311
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 owns the cross-surface provider/model capability snapshot reference
+  envelope with capability_snapshot_ref, requested_effective_snapshot_ref,
+  provider_entry_id, model_id, optional effective_model_id, context_budget_ref,
+  fallback_chain_ref, capability_provenance_refs, capability_state, and
+  capability_state_reason. Models_System owns the capability field semantics,
+  context-window and max-token limits, fallback-chain shape, provenance, and
+  requested/effective model resolution. Legacy `platform_specs` and
+  `platform_specs.rs` are not valid capability snapshot refs.
+gui_related: false
+gui_classification_reason: This unit defines a cross-surface reference envelope and owner boundary, not visual presentation.
+depends_on: [CV-293, MS-134]
+unblocks: [ACD-009, ACD-184, ACD-220, ACD-255, ACD-257, MS-134]
+acceptance_criteria:
+  - Cross-surface provider/model payloads reference `capability_snapshot_ref` instead of copying provider capability tables.
+  - "`fallback_chain_ref?` and `context_budget_ref?` point to Models_System snapshot fields."
+  - Capability states use the closed state set supported, unsupported, capability_gated, clamped, inferred, opaque, stale, and unverified.
+  - Legacy `platform_specs` and `platform_specs.rs` are invalid as capability snapshot refs.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+risk_class: provider_model_capability_ref_drift
+reasoning_tier: high
+context_scope: provider_model_capability_ref_envelope
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Models_System.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: provider_model_capability_snapshot_ref_envelope
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:7
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`capability_snapshot_ref`"
+  - "`requested_effective_snapshot_ref`"
+  - "`context_budget_ref?`"
+  - "`fallback_chain_ref?`"
+  - "`capability_provenance_refs[]`"
+  - "`capability_state`"
+  - "`platform_specs`"
+negative_constraints:
+  - Do not define `platform_specs` or `platform_specs.rs` as active provider/model capability contracts.
+  - Do not copy Models_System capability tables into feature-local payloads.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Models_System.md
+  - Plans/assistant-chat-design.md
 ```

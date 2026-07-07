@@ -46,7 +46,7 @@ Any references in this plan to current UI widget implementation details should b
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
 ## Executive Summary
 
-The **Assistant** is the third major surface alongside **Interview** and **Orchestrator**: a flexible chat for ask/plan/execute, teaching, **addressing dashboard warnings and Calls to Action (CtAs)** -- including HITL approval prompts -- and continuing work after the orchestrator completes. Chat UI is shared between Assistant and Interview with mode-specific presentation (Interview: phase-centric with thought stream and message strip; Assistant: message history, plan panel, thought stream). This plan defines modes, permissions, attachments, File Manager integration, Plan/Crew/BrainStorm behavior, and interview-phase UX. All design follows DRY: single source of truth for platform data (`platform_specs`), subagent names (`subagent_registry`), and reusable widgets per `docs/gui-widget-catalog.md`.
+The **Assistant** is the third major surface alongside **Interview** and **Orchestrator**: a flexible chat for ask/plan/execute, teaching, **addressing dashboard warnings and Calls to Action (CtAs)** -- including HITL approval prompts -- and continuing work after the orchestrator completes. Chat UI is shared between Assistant and Interview with mode-specific presentation (Interview: phase-centric with thought stream and message strip; Assistant: message history, plan panel, thought stream). This plan defines modes, permissions, attachments, File Manager integration, Plan/Crew/BrainStorm behavior, and interview-phase UX. All design follows DRY: live provider/model capability data comes from `Plans/Models_System.md` capability snapshots and the shared resolver, subagent names come from `subagent_registry`, and reusable widgets come from the GUI/widget owner docs. Legacy `platform_specs` / `platform_specs.rs` references are source-lineage only and are never active Assistant data sources.
 
 ---
 
@@ -1901,13 +1901,13 @@ When the model changes mid-thread, the context pipeline re-packs the conversatio
 
 1. **Preserve unconditionally:** System prompt, Instruction Bundle (`AGENTS.md` chain where enabled), active file references, last 6 turns verbatim (config: `context.repack.verbatim_turns`, default `6`).
 2. **Summarize:** All turns older than the last 6 are condensed into a single "Conversation Summary" block (key decisions, file paths mentioned, outcomes).
-3. **Truncate:** If the preserved + summarized content exceeds the new model's context window (from `platform_specs`), truncate the summary first, then drop oldest preserved turns until it fits. Never truncate the system prompt or the Work Bundle acceptance criteria.
+3. **Truncate:** If the preserved + summarized content exceeds the new model's effective context window from the Models_System capability snapshot, truncate the summary first, then drop oldest preserved turns until it fits. Never truncate the system prompt or the Work Bundle acceptance criteria.
 4. **Normalize:** Provider-specific formatting (e.g., tool call syntax) is normalized to the new provider's expected format.
 5. **Timing:** Re-pack runs synchronously before the next turn is sent. The user sees a brief "Repacking context…" indicator.
 
-ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
+ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement, ContractName:Plans/Models_System.md
 
-Config: `context.repack.verbatim_turns` (default `6`). Max tokens sourced from `platform_specs::context_window(provider)`.
+Config: `context.repack.verbatim_turns` (default `6`). Max tokens are sourced from the selected provider/model capability snapshot fields owned by `Plans/Models_System.md`, including `context_window_tokens`, `max_input_tokens`, and `effective_context_window_tokens`.
 
 Rule: Any UI affordance that offers “Promote to `AGENTS.md`” (or similar) MUST enforce Promotion rules and `AGENTS.md` lightness enforcement (including budgets) before applying changes.
 
@@ -2008,7 +2008,7 @@ References inventory.
 Reference lists must defer to live owner docs instead of stale section-number citations.
 
 
-- **AGENTS.md:** DRY Method, platform_specs, subagent_registry, Pre-Completion Verification Checklist.
+- **AGENTS.md:** DRY Method, provider/model capability resolver ownership, subagent_registry, Pre-Completion Verification Checklist.
 - **Plans/interview-subagent-integration.md:** Interview phases, document generation, AGENTS.md/DRY for target projects, §5.2 AI-Overseer and wiring/completeness.
 - **Plans/orchestrator-subagent-integration.md:** Subagent selection, crews, execution engine, Plan/Crew execution.
 - **Plans/human-in-the-loop.md:** HITL mode (blocked-runtime, package-complete, seam-complete, and mandatory side-effect approval gates), GUI settings, Dashboard CtAs; phase/task/subtask approval wording is compatibility lineage.
@@ -2105,7 +2105,7 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.
 | Risk | Description | Mitigation |
 |------|-------------|------------|
 | **Steer/queue ordering** | If multiple messages are queued and user "Send now" on the second, do we send only that one or reorder the queue? Codex issues report "queued messages execute sequentially" and earlier work can be undone by later steps. | Define queue semantics: FIFO vs. "Send now" = promote to front; and whether we batch queued messages (execute together) or one-by-one; **Resolved:** §4 specifies queue is **FIFO** and max 2 messages; "Send now" sends that message immediately (steer). |
-| **Context re-pack on model switch** | "Context is passed along" when switching model--different platforms have different context limits and formats. Re-pack logic (summarize, truncate, normalize) must be specified so we do not overflow or lose critical context. | **Resolved in §17:** Preserve system prompt + AGENTS.md + active file refs + last 6 turns verbatim; summarize older turns; truncate summary first if over limit; normalize Provider-specific formatting. Config: `context.repack.verbatim_turns` (default `6`). Max tokens from `platform_specs::context_window(provider)`. |
+| **Context re-pack on model switch** | "Context is passed along" when switching model--different platforms have different context limits and formats. Re-pack logic (summarize, truncate, normalize) must be specified so we do not overflow or lose critical context. | **Resolved in §17:** Preserve system prompt + AGENTS.md + active file refs + last 6 turns verbatim; summarize older turns; truncate summary first if over limit; normalize Provider-specific formatting. Config: `context.repack.verbatim_turns` (default `6`). Max tokens from the Models_System capability snapshot for the selected provider/model entry. |
 | **Interview thought stream vs. Assistant thought stream** | §16 (Interview) and exec summary mention "thought stream"; §13 (activity transparency) defines thought stream and thinking toggle for both. Whether Assistant also shows a continuous thought stream or only "what it searched/changed." | Unify: define "thought stream" as reasoning/thinking from the model when available; same UX component for both Interview and Assistant when in a run. |
 | **HITL and chat** | User can "approve and continue" via Assistant for HITL; if the user is in a different thread or the Assistant is busy, the CtA might be missed or delayed. | **Mitigation:** §21 requires the Dashboard to show the HITL CtA **and** a notification in the message thread (chat) so the user sees it both on the Dashboard and in the thread. |
 | **Plan + Crew execution path** | §15 says plan output must be consumable by single-agent and crew. If plan format or todo list is platform-specific, crew execution might need a translation layer. | **Plan/Todo Format for Crew Execution (Resolved):** Crew execution uses the same plan/todo JSON format as single-agent execution. No translation layer is needed — the Provider abstraction normalizes all output formats. If a Provider returns non-standard plan format, the Provider's output parser (see orchestrator-subagent-integration.md §10) handles normalization into the canonical plan schema before it reaches the orchestrator. |
@@ -2330,7 +2330,7 @@ ContractRef: PolicyRule:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md, 
 | 3 | Auditor validation provider/model settings are preserved across app restarts. |
 | 4 | Pass 1, Pass 2, and Pass 3 are not independently configurable model settings or active process stages; any legacy pass reports mirror the same Auditor loop provider/model. |
 | 5 | The "(Default)" indicator (§26.6) is visible whenever no explicit Auditor loop selection has been saved, and disappears once the user saves an explicit choice. |
-| 6 | Provider and model dropdowns draw from the same `platform_specs` data source as the §1.1 chat controls — no divergence. |
+| 6 | Provider and model dropdowns draw from the same Provider -> models registry and Models_System capability resolver as the §1.1 chat controls -- no divergence. |
 | 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |
 
 ### 26.9 References (Section 26)
@@ -2341,7 +2341,7 @@ ContractRef: PolicyRule:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md, 
 - `Plans/Models_System.md` — Auditor Model role ownership for audit/repair/audit verification loops
 - `Plans/Decision_Policy.md §2` — deterministic default policy
 - `Plans/DRY_Rules.md` — DRY/SSOT rules
-- `Plans/Contracts_V0.md` — platform_specs contract
+- `Plans/Contracts_V0.md` -- requested/effective provider/model snapshot refs and cross-surface capability-ref envelopes
 - Section 1.1 of this document — chat platform + model controls (shared widget source)
 
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md§12, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Models_System.md, PolicyRule:Decision_Policy.md§2
@@ -3845,7 +3845,7 @@ gui_classification_reason: Header dropdowns, icons, and worktree visual states a
 depends_on: []
 unblocks: []
 acceptance_criteria:
-  - Platform and model lists come from platform_specs and dynamic discovery rather than hardcoded UI lists.
+  - Provider and model lists come from the account-bound Provider -> models registry plus the Models_System capability resolver rather than hardcoded UI lists.
   - Platform, model, effort, and worktree changes apply to the next turn while an in-flight response completes with its prior selection.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -3863,15 +3863,17 @@ node_compile_hint:
 source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0014
 preserved_exact_tokens:
-  - "platform_specs"
-  - "fallback_model_ids(platform)"
+  - "Provider -> models"
+  - "fallback_chain"
   - "Reasoning / effort"
   - "Worktree"
   - "bound-dirty"
   - "bound-conflict"
   - "turn"
 negative_constraints:
-  - "Data comes from `platform_specs`; no hardcoding."
+  - "Do not use legacy `platform_specs` or `platform_specs.rs` as the active provider/model capability source."
+compatibility_only_notes:
+  - "Legacy `platform_specs` and `fallback_model_ids(platform)` tokens are retired source-lineage only."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Models_System.md
@@ -12018,15 +12020,16 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Repack configuration preserves `context.repack.verbatim_turns` with default
-  `6`, and model-window limits come from
-  `platform_specs::context_window(provider)`.
+  `6`, and model-window limits come from the Models_System capability snapshot
+  for the selected provider/model entry.
 gui_related: false
 gui_classification_reason: Repack configuration source is runtime/config behavior.
 depends_on: [ACD-183]
 unblocks: []
 acceptance_criteria:
   - context.repack.verbatim_turns default remains 6.
-  - Model context limits come from platform_specs::context_window(provider).
+  - Model context limits come from `context_window_tokens`, `max_input_tokens`, and `effective_context_window_tokens` on the Models_System capability snapshot.
+  - Legacy `platform_specs::context_window(provider)` is not an active context-window source.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -12036,6 +12039,7 @@ context_scope: context_truncation
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+  - Plans/Models_System.md
 node_compile_hint:
   mode: repack_model_window_config_source
   create_worknodes: false
@@ -12044,11 +12048,15 @@ source_lineage:
 preserved_exact_tokens:
   - "context.repack.verbatim_turns"
   - "6"
-  - "platform_specs::context_window(provider)"
-negative_constraints: []
+  - "effective_context_window_tokens"
+negative_constraints:
+  - "Do not source context-window limits from legacy `platform_specs::context_window(provider)`."
+compatibility_only_notes:
+  - "`platform_specs::context_window(provider)` is a retired source-lineage token."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+  - Plans/Models_System.md
 ```
 
 ### ACD-185 - AGENTS Promotion UI Enforcement
@@ -13576,7 +13584,8 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Model-switch context repack preserves prompt, rules, file refs, and last 6
   turns, summarizes older turns, truncates summary first, normalizes Provider
-  formatting, and uses `platform_specs::context_window(provider)`.
+  formatting, and uses the effective context-window fields from the
+  Models_System capability snapshot.
 gui_related: false
 gui_classification_reason: Model-switch repack is context pipeline behavior.
 depends_on: [ACD-183]
@@ -13584,7 +13593,7 @@ unblocks: []
 acceptance_criteria:
   - Model-switch repack follows the resolved preserve/summarize/truncate/normalize order.
   - Repack uses context.repack.verbatim_turns default 6.
-  - Context window comes from platform_specs::context_window(provider).
+  - Context window comes from the selected provider/model capability snapshot, not legacy `platform_specs`.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -13594,6 +13603,7 @@ context_scope: context
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+  - Plans/Models_System.md
   - Plans/Prompt_Pipeline.md
 node_compile_hint:
   mode: model_switch_repack_resolution
@@ -13603,11 +13613,15 @@ source_lineage:
 preserved_exact_tokens:
   - "context.repack.verbatim_turns"
   - "6"
-  - "platform_specs::context_window(provider)"
-negative_constraints: []
+  - "effective_context_window_tokens"
+negative_constraints:
+  - "Do not use `platform_specs::context_window(provider)` as an active context-window authority."
+compatibility_only_notes:
+  - "`platform_specs::context_window(provider)` is preserved only as retired source-lineage evidence."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+  - Plans/Models_System.md
 ```
 
 ### ACD-221 - Thought Stream Unification
@@ -14996,15 +15010,17 @@ owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Auditor Validation settings expose one row for the Auditor validation loop
   with label, default provider, default model, and Provider and Model dropdowns
-  sourced from platform specs.
+  sourced from the Provider -> models registry and Models_System capability
+  resolver.
 gui_related: true
 gui_classification_reason: Auditor validation loop row and provider/model dropdowns are visible Settings UI.
 depends_on: [ACD-254]
 unblocks: [ACD-256, ACD-262]
 acceptance_criteria:
   - Auditor Validation has one settings row for the whole validation loop.
-  - Provider dropdown lists enabled platforms from platform_specs.
-  - Model dropdown lists provider models and falls back through platform_specs::fallback_model_ids(platform).
+  - Provider dropdown lists enabled provider entries from the account-bound Provider -> models registry.
+  - Model dropdown lists provider models and falls back through the Models_System `fallback_chain[]` contract.
+  - Legacy `platform_specs::fallback_model_ids(platform)` is not an active fallback source.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -15015,6 +15031,7 @@ implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
   - Plans/FinalGUISpec.md
+  - Plans/Models_System.md
 node_compile_hint:
   mode: auditor_validation_controls
   create_worknodes: false
@@ -15027,12 +15044,16 @@ preserved_exact_tokens:
   - "Auditor Validation"
   - "Provider"
   - "Model"
-  - "platform_specs::fallback_model_ids(platform)"
+  - "fallback_chain[]"
 negative_constraints:
   - "Do not expose independent Pass 1 / Pass 2 / Pass 3 provider/model rows."
+  - "Do not use legacy `platform_specs` or `platform_specs::fallback_model_ids(platform)` as the active Auditor Validation dropdown source."
+compatibility_only_notes:
+  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+  - Plans/Models_System.md
 ```
 
 ### ACD-256 - No Effort Control Widget Tag
@@ -15081,7 +15102,7 @@ plan_unit_id: ACD-257
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Default provider/model resolution uses the explicit Auditor loop stored value, then Auditor Model role default, then primary chat platform/model, then first available platform plus first fallback model.
+canonical_text: Default provider/model resolution uses the explicit Auditor loop stored value, then Auditor Model role default, then primary chat provider/model, then first available provider entry plus the first eligible Models_System fallback-chain entry.
 gui_related: false
 gui_classification_reason: Default resolution priority is settings/config behavior.
 depends_on: [ACD-253]
@@ -15090,7 +15111,7 @@ acceptance_criteria:
   - Stored model_roles.auditor provider/model values take priority.
   - Auditor Model role default is second priority.
   - Primary chat platform/model is third priority.
-  - First available platform plus first fallback model is final fallback.
+  - First available provider entry plus the first eligible fallback-chain entry is final fallback.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -15108,11 +15129,15 @@ source_lineage:
 preserved_exact_tokens:
   - "model_roles.auditor.provider"
   - "model_roles.auditor.model"
-  - "platform_specs::fallback_model_ids(platform)"
-negative_constraints: []
+  - "fallback_chain"
+negative_constraints:
+  - "Do not resolve Auditor defaults through legacy `platform_specs::fallback_model_ids(platform)`."
+compatibility_only_notes:
+  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
 owner_hints:
   - Plans/assistant-chat-design.md
   - Plans/Contracts_V0.md
+  - Plans/Models_System.md
 ```
 
 ### ACD-258 - Validation Default Invariants
@@ -15323,7 +15348,7 @@ preserved_exact_tokens:
   - "platform_specs"
   - "No hardcoded provider names or model lists"
 negative_constraints:
-  - "Provider and model lists MUST NOT be sourced exclusively from legacy platform_specs."
+  - "Provider and model lists MUST NOT be sourced from legacy platform_specs."
   - "No hardcoded provider names or model lists anywhere in this feature."
 compatibility_only_notes:
   - "platform_specs is preserved only as a retired source-lineage token."
@@ -15600,7 +15625,7 @@ depends_on: [ACD-253]
 unblocks: []
 acceptance_criteria:
   - Section 26 references preserve the linked owner documents.
-  - Assistant chat does not re-own the validation workflow, output artifact, decision policy, DRY, or platform_specs contracts.
+  - Assistant chat does not re-own the validation workflow, output artifact, decision policy, DRY, or provider/model capability contracts.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
