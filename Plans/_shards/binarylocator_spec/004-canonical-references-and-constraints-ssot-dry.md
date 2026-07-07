@@ -4,7 +4,7 @@ Source: `Plans/BinaryLocator_Spec.md`
 
 Source lines: L22-L63
 
-Source SHA256: `ae7127e09074fe0d4383792df0817c4128098326649e2f7f2050b6eab08f450c`
+Source SHA256: `a2b350a3da524f29522dba499e7e5b9914164e36e4f5944ff462f05780abf208`
 
 ---
 
@@ -14,7 +14,7 @@ Source SHA256: `ae7127e09074fe0d4383792df0817c4128098326649e2f7f2050b6eab08f450c
 
 
 - Platform name is **Puppet Master** only. (ContractRef: Invariant:INV-010)
-- UI toolkit is **Slint 1.17.0 on Rust stable 1.96.1** as verified on 2026-07-02; Iced is legacy. (ContractRef: SchemaID:spec_lock)
+- UI toolkit is **Slint 1.17.1 on Rust stable 1.96.1** by 2026-07-07 owner decision; Iced is legacy. (ContractRef: SchemaID:spec_lock)
 - Storage is **seglog + redb + Tantivy**; SQLite is forbidden. (ContractRef: SchemaID:spec_lock)
 
 ### Canonical sources (reference, don't duplicate)

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-06T21:12:33Z",
+  "generated_at_utc": "2026-07-07T14:27:50Z",
   "index_path": "Plans/_shards/binarylocator_spec/00-index.md",
-  "index_sha256": "92cd8019f69ae37d9b65723e7db5614306df3d3d71c64f483898a5203f8037e0",
+  "index_sha256": "0efdcadeca0adc772fbbb5a6b4946ced972e424b9665af6b9abbf97d8f8663bc",
   "manifest_path": "Plans/_shards/binarylocator_spec/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/binarylocator_spec/001-preamble.md",
-      "sha256": "d3ebaebe20a73306db0e9e4b7d5fa9fa7346b51aad824ce70b82dd4c49027361",
+      "sha256": "0fd0410fa76e3bf740e9f44ce239cf028c9ff1835b48ffaa25166595a395e5c9",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Purpose",
       "path": "Plans/_shards/binarylocator_spec/002-purpose.md",
-      "sha256": "3a1a29a5571b6dcebc882999e28c8c55bcb833b8a5a4822d5fb240922474d9dd",
+      "sha256": "f65c7421de8222907d9dfe40b91c4d70f1ab0fdf21cc2a2420fcd37c8ef0cea3",
       "shard_id": "002",
       "source_line_end": 8,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "Non-goals",
       "path": "Plans/_shards/binarylocator_spec/003-non-goals.md",
-      "sha256": "03175424879f20dd1ebf7be8a1f34b1bf909ecc071ef59a42b2c882546258e1a",
+      "sha256": "fafdff59767562ae58d061ca854b36945f3bfdbe39333a41b28ad0cb91cd3e63",
       "shard_id": "003",
       "source_line_end": 20,
       "source_line_start": 10,
@@ -35,7 +35,7 @@
     {
       "heading": "Canonical references and constraints (SSOT; DRY)",
       "path": "Plans/_shards/binarylocator_spec/004-canonical-references-and-constraints-ssot-dry.md",
-      "sha256": "ac80730fd4091640d23441a1d195ea929cc60ca30abea99427a3660056df0fce",
+      "sha256": "73e539efe110594fc5b14874068c6508f1dfbf35f64ecd10b8b47f6eead5ae45",
       "shard_id": "004",
       "source_line_end": 63,
       "source_line_start": 22,
@@ -44,7 +44,7 @@
     {
       "heading": "Terminology (index only)",
       "path": "Plans/_shards/binarylocator_spec/005-terminology-index-only.md",
-      "sha256": "359c2ecfaef091ea9861a6b9b2d7a9b4db5424f0b27051c454abb734725fbb2a",
+      "sha256": "c01757d70cc82c169ca7a779805c2f2b6e865767aa7a71d1c977d4bfdd75e7c7",
       "shard_id": "005",
       "source_line_end": 70,
       "source_line_start": 65,
@@ -53,7 +53,7 @@
     {
       "heading": "BinaryLocator boundary",
       "path": "Plans/_shards/binarylocator_spec/006-binarylocator-boundary.md",
-      "sha256": "ef78a2305a8bdb79d76b48f03c188453e6a3a27c9fd0ec37795fa676102cbea6",
+      "sha256": "286a4c5a11aa4c10d99dcba290f6eb289bf19a0532e2d624ef75ce9cae70f6a5",
       "shard_id": "006",
       "source_line_end": 110,
       "source_line_start": 72,
@@ -62,7 +62,7 @@
     {
       "heading": "Deterministic discovery algorithm",
       "path": "Plans/_shards/binarylocator_spec/007-deterministic-discovery-algorithm.md",
-      "sha256": "a7d2cfea70cacf48d0410220019691e12672186bcdee12c85baf458151357fb6",
+      "sha256": "3029c2cde1924c2250ad1055381b9f959284b7e84a3cc8d0305e9bea02f3f6e1",
       "shard_id": "007",
       "source_line_end": 209,
       "source_line_start": 112,
@@ -71,7 +71,7 @@
     {
       "heading": "Deterministic discovery algorithm",
       "path": "Plans/_shards/binarylocator_spec/008-deterministic-discovery-algorithm.md",
-      "sha256": "8de979a259aa4352f18c5d9f7b0b0de59d56736184337b8bfa174507eb06be1e",
+      "sha256": "ded62cd0a6d6ce5f1898ab79bb88aea7cc19a95d582e570acdb100b4a523f9fa",
       "shard_id": "008",
       "source_line_end": 236,
       "source_line_start": 211,
@@ -80,7 +80,7 @@
     {
       "heading": "Validation contract (commands, version parsing, permission checks)",
       "path": "Plans/_shards/binarylocator_spec/009-validation-contract-commands-version-parsing-permission-checks.md",
-      "sha256": "f8b694549681746b55c57507ee418f5a6d64b285caef74e7ee6541c76929a171",
+      "sha256": "46d216fe6e68deebe6328b918eb42e869e236559c9d409dfaae783445e2411f0",
       "shard_id": "009",
       "source_line_end": 278,
       "source_line_start": 238,
@@ -89,7 +89,7 @@
     {
       "heading": "Caching and invalidation",
       "path": "Plans/_shards/binarylocator_spec/010-caching-and-invalidation.md",
-      "sha256": "be8e070c6bb4d1ebf38b272471b49474f86e8544554925d1e193ce2270ae218c",
+      "sha256": "58f62ee1dbf4397f1bd1a076825b406984aa4e0aed5dc1d10799eb4c04b95405",
       "shard_id": "010",
       "source_line_end": 298,
       "source_line_start": 280,
@@ -98,7 +98,7 @@
     {
       "heading": "Error taxonomy (stable codes)",
       "path": "Plans/_shards/binarylocator_spec/011-error-taxonomy-stable-codes.md",
-      "sha256": "d8585e7695150a0fe1e67f3e991890e2b4dd3e44d02e963087b278839a42d196",
+      "sha256": "828bddf9ecf7f45a1d8fe8bb3ae3458b3a18423cdac4a73b6d1c76b210754b9f",
       "shard_id": "011",
       "source_line_end": 320,
       "source_line_start": 300,
@@ -107,7 +107,7 @@
     {
       "heading": "Acceptance criteria (testable)",
       "path": "Plans/_shards/binarylocator_spec/012-acceptance-criteria-testable.md",
-      "sha256": "82e8c5ebd8d81dee7958b78fa00904881e16c681448c71e3ed868e27daabb4ab",
+      "sha256": "83acba56e0e1d73987b3b2744c0b3777df76a4ceb96eb55c805924dae6f09ea0",
       "shard_id": "012",
       "source_line_end": 355,
       "source_line_start": 322,
@@ -116,7 +116,7 @@
     {
       "heading": "References",
       "path": "Plans/_shards/binarylocator_spec/013-references.md",
-      "sha256": "563616f6d7c3c52248c6b4b1cc91791277d6301e1ea0b277d7cf56dc7c2200a2",
+      "sha256": "a8e44c04d8ad91fbda976df5e30d1aff8e588f49642819908568dc66f1b64d00",
       "shard_id": "013",
       "source_line_end": 369,
       "source_line_start": 357,
@@ -125,7 +125,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/binarylocator_spec/014-owner-consumer-map.md",
-      "sha256": "4f99020c9e133efb8453f641ab1e616186a3109bea7ef424fd28fc499c6bd31a",
+      "sha256": "bb9dd200aea8d621d6246b77e5b18f902e6fe9d131c65e7d097c2521904143de",
       "shard_id": "014",
       "source_line_end": 375,
       "source_line_start": 371,
@@ -134,7 +134,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/binarylocator_spec/015-planunits.md",
-      "sha256": "76201fef162ae9f8a655887349af2c452af646516bb0f6ac438805776a20c3b4",
+      "sha256": "cc33712c7ea50923fee593615ea9c2611fab76e7a98230a1052d1d3d4baa47a8",
       "shard_id": "015",
       "source_line_end": 427,
       "source_line_start": 377,
@@ -143,7 +143,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/binarylocator_spec/016-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "181c9101a1e03ad580caf65dee0a04c8320f999c2ac436c248514e878344d5c9",
+      "sha256": "606616deaef768c86975cbd0fa6035845992532d68d613f83b6182f99c430c88",
       "shard_id": "016",
       "source_line_end": 1696,
       "source_line_start": 429,
@@ -152,7 +152,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/binarylocator_spec/017-migration-coverage.md",
-      "sha256": "debf3b63f0c9c81c5d1977f3caeda9b3b88af2453fb5cf5b1ee233c5622e9af2",
+      "sha256": "9d194d07b588012c79892cb015480667daef830e443274da277f7c55705eb991",
       "shard_id": "017",
       "source_line_end": 1713,
       "source_line_start": 1698,
@@ -161,7 +161,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260614-001",
       "path": "Plans/_shards/binarylocator_spec/018-ledger-compile-addendum-pldg-20260614-001.md",
-      "sha256": "1aacfcafc3222a44648c1eb999c0b257aee2f78d6044e7c0dda290e1bb1de9c1",
+      "sha256": "73c2891dbcf6e5b32ad65f979300e52b0114c53ad4343c09a7cc7773f4ca164c",
       "shard_id": "018",
       "source_line_end": 1749,
       "source_line_start": 1715,
@@ -170,7 +170,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/binarylocator_spec/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "6ca6b1168300381658e06613ec3e275ad72e6f47ecf3eef23045741a87e0717f",
+      "sha256": "260e4f72eb665e4158b9b9ed3c6546e2bd90874a60a20b3e36bf7836d1f5b00f",
       "shard_id": "019",
       "source_line_end": 1823,
       "source_line_start": 1751,
@@ -180,6 +180,6 @@
   "source": {
     "line_count": 1823,
     "path": "Plans/BinaryLocator_Spec.md",
-    "sha256": "ae7127e09074fe0d4383792df0817c4128098326649e2f7f2050b6eab08f450c"
+    "sha256": "a2b350a3da524f29522dba499e7e5b9914164e36e4f5944ff462f05780abf208"
   }
 }

@@ -4,7 +4,7 @@ Source: `Plans/BinaryLocator_Spec.md`
 
 Source lines: L429-L1696
 
-Source SHA256: `ae7127e09074fe0d4383792df0817c4128098326649e2f7f2050b6eab08f450c`
+Source SHA256: `a2b350a3da524f29522dba499e7e5b9914164e36e4f5944ff462f05780abf208`
 
 ---
 
@@ -127,15 +127,15 @@ plan_unit_id: BS-003
 unit_type: constraint
 status: accepted
 owner_doc: Plans/BinaryLocator_Spec.md
-canonical_text: BinaryLocator inherits the locked Puppet Master platform name, Slint 1.17.0 on Rust stable 1.96.1 UI toolkit decision, and seglog/redb/Tantivy storage stack while preserving the SQLite prohibition.
+canonical_text: BinaryLocator inherits the locked Puppet Master platform name, Slint 1.17.1 on Rust stable 1.96.1 UI toolkit decision, and seglog/redb/Tantivy storage stack while preserving the SQLite prohibition.
 gui_related: true
-gui_classification_reason: The locked decision span includes the user-interface toolkit requirement Slint 1.17.0 on Rust stable 1.96.1 and the legacy Iced prohibition.
+gui_classification_reason: The locked decision span includes the user-interface toolkit requirement Slint 1.17.1 on Rust stable 1.96.1 and the legacy Iced prohibition.
 split_recommended: false
 depends_on: [BS-002]
 unblocks: [BS-005, BS-019]
 acceptance_criteria:
   - The platform name remains Puppet Master only.
-  - UI toolkit references use Slint 1.17.0 on Rust stable 1.96.1, reverified before implementation, and treat Iced as legacy.
+  - UI toolkit references use Slint 1.17.1 on Rust stable 1.96.1, reverified before implementation, and treat Iced as legacy.
   - Storage references use seglog, redb, and Tantivy.
   - SQLite remains forbidden.
 validation_surfaces:
@@ -156,7 +156,7 @@ preserved_exact_tokens:
   - "Canonical references and constraints (SSOT; DRY)"
   - "Puppet Master"
   - "Rust stable 1.96.1"
-  - "Slint 1.17.0"
+  - "Slint 1.17.1"
   - "Iced is legacy"
   - "seglog + redb + Tantivy"
   - "SQLite is forbidden"

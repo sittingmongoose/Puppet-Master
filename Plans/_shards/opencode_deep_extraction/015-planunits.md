@@ -2,9 +2,9 @@
 
 Source: `Plans/OpenCode_Deep_Extraction.md`
 
-Source lines: L786-L4592
+Source lines: L786-L4595
 
-Source SHA256: `94d90e1b96e4279245b315d43a1d76e793ad806e933f30d16a15e2dc82442b8b`
+Source SHA256: `11ff28461d0e978bd0fbfe78635ff56196598ae411741273fc54fa8aa60cc834`
 
 ---
 
@@ -3136,7 +3136,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/OpenCode_Deep_Extraction.md
 canonical_text: >-
-  Puppet Master approval-flow delta preserves the requirement to wire OpenCode ask/reply semantics through a Tauri GUI or CLI interface.
+  Puppet Master approval-flow delta preserves the requirement to wire adopted OpenCode ask/reply semantics through PM-native Slint approval surfaces or CLI fallback, while older Tauri GUI wording is retired source-lineage only.
 gui_related: true
 gui_classification_reason: The unit covers user-visible GUI/CLI approval interaction.
 split_recommended: true
@@ -3162,11 +3162,12 @@ source_lineage:
 - 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0057'
 preserved_exact_tokens:
 - 'GUI approval flow'
-- 'Tauri GUI'
+- 'Slint approval surfaces'
 - 'CLI interface'
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Older Tauri GUI wording is source-lineage only; current GUI owner docs use Rust + Slint.'
 owner_boundary_notes:
 - 'Permissions_System and human-in-the-loop own adopted PM approval behavior.'
 owner_hints:
@@ -3667,7 +3668,7 @@ owner_hints:
 preserved_contractrefs: []
 ```
 
-### ODE-072 - Server Routes Tauri Mapping Boundary
+### ODE-072 - Server Routes Rust Mapping Boundary
 
 ```yaml
 plan_unit_id: ODE-072
@@ -3675,7 +3676,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/OpenCode_Deep_Extraction.md
 canonical_text: >-
-  Server route notes preserve OpenCode Hono HTTP server, SSE, CORS, basic auth, WebSocket support, route modules, and the exact delta that Puppet Master maps API surface to Tauri commands or internal Rust function calls.
+  Server route notes preserve OpenCode Hono HTTP server, SSE, CORS, basic auth, WebSocket support, route modules, and the exact delta that Puppet Master maps adopted API surface to internal Rust function calls, UICommand dispatch, and permission routes under the current owner docs.
 gui_related: false
 gui_classification_reason: The unit records backend API mapping, not GUI behavior.
 split_recommended: false
@@ -3689,13 +3690,13 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: server_routes_tauri_mapping_boundary
+risk_class: server_routes_rust_mapping_boundary
 reasoning_tier: standard
 context_scope: opencode_deep_extraction_standardization
 implementation_surfaces:
 - Plans/OpenCode_Deep_Extraction.md
 node_compile_hint:
-  mode: server_routes_tauri_mapping_boundary
+  mode: server_routes_rust_mapping_boundary
   create_worknodes: false
 source_lineage:
 - 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Deep_Extraction-S0068'
@@ -3707,11 +3708,13 @@ preserved_exact_tokens:
 - 'WebSocket'
 - 'routes/session.ts'
 - 'routes/permission.ts'
-- 'Tauri commands'
 - 'internal Rust function calls'
+- 'UICommand dispatch'
+- 'permission routes'
 negative_constraints: []
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Tauri commands wording is source-lineage only; active routing maps through Rust services, UICommand dispatch, and permission routes.'
 owner_boundary_notes: []
 owner_hints:
 - Plans/OpenCode_Deep_Extraction.md

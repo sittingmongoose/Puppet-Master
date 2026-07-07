@@ -1,10 +1,10 @@
-# Shard 014: Ledger Compile Addendum - pldg-20260626-001-feature-name
+# Shard 015: Ledger Compile Addendum - pldg-20260626-001-feature-name
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L806-L1154
+Source lines: L870-L1218
 
-Source SHA256: `3cbee3116b7e62dfdc7fcd5912218c33044fab8b1f1dde709d2b19fd56ce8b39`
+Source SHA256: `567dbf2107e47a32484038605a1443291b7f409543e8f8ae78350afa4db15397`
 
 ---
 

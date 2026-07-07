@@ -34211,10 +34211,10 @@
       "provider_runtime_claims": "Provider, quota, Gemini CLI, Docker, GitHub Actions, browser automation, and media capability claims are concept fixtures; owner docs and production wiring are authoritative."
     },
     "toolchain_currentness": {
-      "verified_at_utc": "2026-07-02T20:20:00Z",
+      "verified_at_utc": "2026-07-07T00:00:00Z",
       "rust_stable": "1.96.1",
-      "slint_stable": "1.17.0",
-      "slint_msrv": "1.92",
+      "slint_stable": "1.17.1",
+      "slint_msrv": "not_canonical_here",
       "disposition": "Current toolchain target is owned by Plans/FinalGUISpec.md, Plans/BinaryLocator_Spec.md, and current owner docs; PMConcept.html is not toolchain evidence."
     }
   }

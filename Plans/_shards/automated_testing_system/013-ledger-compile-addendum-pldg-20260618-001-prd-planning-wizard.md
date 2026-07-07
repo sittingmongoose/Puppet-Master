@@ -1,10 +1,10 @@
-# Shard 012: Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+# Shard 013: Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L314-L729
+Source lines: L378-L793
 
-Source SHA256: `3cbee3116b7e62dfdc7fcd5912218c33044fab8b1f1dde709d2b19fd56ce8b39`
+Source SHA256: `567dbf2107e47a32484038605a1443291b7f409543e8f8ae78350afa4db15397`
 
 ---
 

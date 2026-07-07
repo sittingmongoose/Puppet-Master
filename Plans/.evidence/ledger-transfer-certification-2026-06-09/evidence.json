@@ -145,6 +145,11 @@
       "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded.",
       "name": "wiring-matrix-reverse-catalog-coverage",
       "result": "PASS"
+    },
+    {
+      "name": "gui-platform-currentness-repair",
+      "result": "PASS",
+      "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
     }
   ],
   "commands_run": [

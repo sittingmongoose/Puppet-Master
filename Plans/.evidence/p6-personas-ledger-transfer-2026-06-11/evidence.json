@@ -28,7 +28,7 @@
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "f099986e87f10a19b4224f856687f21a2890a61463cb226ea40cc5b6c13ca30d"
+      "sha256": "8d8fcd113d95e62f8848e4d6228d81f5c7461196bd4caa578c4f5b6de74565ae"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "319a21fb877b353c5dc46fd163f2bd7c4e7fb67ecb0d7c100aeccd3d6810470e"
+      "sha256": "a35d683b62cae6e9405475986e55c15bc6af59165d1bd5ab775e35d7d6e1d253"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "51c89874c12cc1f8cc3968c6f6f30c69851aca89d4eb89aff0b9cd72b9cd1d11"
+      "sha256": "1dacab1dff377f0cd047967244311edfb1ea86857ebb8c18ed019fa00947a758"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "82631a64487eb77d21d77f35bb0c656c69094e284a384361776476a1c22572b9"
+      "sha256": "98a76b26fb7dd78ab0c89aac1c54db8e47410bb6dccb3947a8442e9348c0a751"
     }
   ],
   "checks": [
@@ -387,6 +387,11 @@
       "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded.",
       "name": "wiring-matrix-reverse-catalog-coverage",
       "result": "PASS"
+    },
+    {
+      "name": "gui-platform-currentness-repair",
+      "result": "PASS",
+      "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
     }
   ],
   "commands_run": [

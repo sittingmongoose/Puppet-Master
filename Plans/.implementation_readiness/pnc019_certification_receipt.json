@@ -39,14 +39,14 @@
       "worktree_id": null
     },
     "approved_plan_pack": {
-      "acceptance_unit_index_hash": "sha256:f1d176688e490ebd41fd544fc4161fbede9bb1eacb29002ee2ac6d2a318c91c8",
+      "acceptance_unit_index_hash": "sha256:a474f12fa65a37fc8a0d060bc9076719b14bea2af8d34cae1cf7d115ca447de2",
       "approved_plan_pack_id": "app-pnc019-0001",
       "created_at_utc": "2026-07-06T00:00:00Z",
       "created_by_actor_ref": "actor:pnc019-certifier",
       "final_audit_closure_hash": "sha256:final-audit-pnc019",
       "pack_hash": "sha256:04d7fdbe74084dad0e309e7b0b76255b4123fd928e90b5b2f03b585210760eb4",
       "pack_version": 1,
-      "plan_unit_index_hash": "sha256:03f9c3e13b9e7a3868fad53dc7e645adeda3d550c3ffb7eb78d3fb6af45563fd",
+      "plan_unit_index_hash": "sha256:58def150f4d7050b1867dc92bec9a3c3c94e32f87e92c2a87f888fbd42e0ebbd",
       "planning_run_id": "planning-run-pnc019",
       "planning_run_revision": 7,
       "project_context_snapshot_hash": "sha256:project-context-pnc019",
@@ -243,7 +243,7 @@
       "thread_id": "thread-pnc019"
     },
     "plan_compile_run": {
-      "acceptance_unit_index_hash": "sha256:f1d176688e490ebd41fd544fc4161fbede9bb1eacb29002ee2ac6d2a318c91c8",
+      "acceptance_unit_index_hash": "sha256:a474f12fa65a37fc8a0d060bc9076719b14bea2af8d34cae1cf7d115ca447de2",
       "approved_plan_pack_id": "app-pnc019-0001",
       "artifacts": [
         "Plans/.implementation_readiness/pnc019_certification_receipt.json"
@@ -276,10 +276,10 @@
       "schema_id": "pm.storage_value.plan_compile_run.v1",
       "schema_version": "1.0.0",
       "source_hashes": {
-        "acceptance_units": "sha256:f1d176688e490ebd41fd544fc4161fbede9bb1eacb29002ee2ac6d2a318c91c8",
-        "plan_units": "sha256:03f9c3e13b9e7a3868fad53dc7e645adeda3d550c3ffb7eb78d3fb6af45563fd"
+        "acceptance_units": "sha256:a474f12fa65a37fc8a0d060bc9076719b14bea2af8d34cae1cf7d115ca447de2",
+        "plan_units": "sha256:58def150f4d7050b1867dc92bec9a3c3c94e32f87e92c2a87f888fbd42e0ebbd"
       },
-      "source_plan_index_hash": "sha256:03f9c3e13b9e7a3868fad53dc7e645adeda3d550c3ffb7eb78d3fb6af45563fd",
+      "source_plan_index_hash": "sha256:58def150f4d7050b1867dc92bec9a3c3c94e32f87e92c2a87f888fbd42e0ebbd",
       "status": "ready_for_bootstrap_validation",
       "updated_at_utc": "2026-07-06T00:00:00Z"
     },
@@ -1012,7 +1012,7 @@
     "ordinary_product_worknodes_allowed_by_harness": false
   },
   "source_hashes": {
-    "Plans/Automated_Testing_System.md": "3cbee3116b7e62dfdc7fcd5912218c33044fab8b1f1dde709d2b19fd56ce8b39",
+    "Plans/Automated_Testing_System.md": "567dbf2107e47a32484038605a1443291b7f409543e8f8ae78350afa4db15397",
     "Plans/Executor_Protocol.md": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
     "Plans/Goal_Runtime_System.md": "50159de77b54714b528deb77faf74dd1eb9725125f226d21e6e39e19a4357c4d",
     "Plans/Orchestrator_Page.md": "1cd9f3b8bbd02e7f5efa00d917914479f3f73acba3ceea7122857d17ba3a75bb",

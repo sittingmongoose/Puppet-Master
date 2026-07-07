@@ -4,7 +4,7 @@ Source: `Plans/FileSafe.md`
 
 Source lines: L2718-L12977
 
-Source SHA256: `147a712b665ff7bfe29a2998c948ef99e5dbce6d20babb34ab1a2a1d17f13b46`
+Source SHA256: `11ec6ad7f04086cecbf3c52435e7b04f55d7a83599ae35d3723c2109120547b9`
 
 ---
 
@@ -1309,7 +1309,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  The FileSafe module layout is under src-tauri/src/filesafe with mod.rs, types.rs, scope.rs,
+  The FileSafe module layout is under crates/puppet-master-core/src/filesafe with mod.rs, types.rs, scope.rs,
   bash_guard.rs, snapshot.rs, and validator.rs, and scope.rs owns scope and canonical-path
   enforcement.
 gui_related: false
@@ -1337,7 +1337,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0014"
 preserved_exact_tokens:
-- "src-tauri/src/filesafe/"
+- "crates/puppet-master-core/src/filesafe/"
 - "mod.rs"
 - "types.rs"
 - "scope.rs"
@@ -3333,7 +3333,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FileSafe.md
 canonical_text: >-
-  FileSafe implementation checklist lineage includes the src-tauri filesafe module structure and
+  FileSafe implementation checklist lineage includes the Rust workspace filesafe module structure and
   a port from OpenCode backend/src/security/bash.ts pinned to upstream dev checkout baseline
   9330bc5339b3ca82975f768200450d4c9aabcd35, requiring an external-reference currentness refresh
   before changing FileSafe canon for later OpenCode changes.
@@ -3362,12 +3362,12 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0033"
 preserved_exact_tokens:
-- "src-tauri/src/filesafe/mod.rs"
-- "src-tauri/src/filesafe/types.rs"
-- "src-tauri/src/filesafe/scope.rs"
-- "src-tauri/src/filesafe/bash_guard.rs"
-- "src-tauri/src/filesafe/snapshot.rs"
-- "src-tauri/src/filesafe/validator.rs"
+- "crates/puppet-master-core/src/filesafe/mod.rs"
+- "crates/puppet-master-core/src/filesafe/types.rs"
+- "crates/puppet-master-core/src/filesafe/scope.rs"
+- "crates/puppet-master-core/src/filesafe/bash_guard.rs"
+- "crates/puppet-master-core/src/filesafe/snapshot.rs"
+- "crates/puppet-master-core/src/filesafe/validator.rs"
 - "backend/src/security/bash.ts"
 - "9330bc5339b3ca82975f768200450d4c9aabcd35"
 - "external-reference currentness refresh"

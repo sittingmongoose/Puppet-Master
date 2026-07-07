@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "319a21fb877b353c5dc46fd163f2bd7c4e7fb67ecb0d7c100aeccd3d6810470e"
+      "sha256": "a35d683b62cae6e9405475986e55c15bc6af59165d1bd5ab775e35d7d6e1d253"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -272,6 +272,11 @@
       "details": "PASS: production wiring command IDs must be present in UI_Command_Catalog.md unless explicitly excluded.",
       "name": "wiring-matrix-reverse-catalog-coverage",
       "result": "PASS"
+    },
+    {
+      "name": "gui-platform-currentness-repair",
+      "result": "PASS",
+      "details": "All governed evidence hashes refreshed after Slint 1.17.1 GUI platform repair, current PNC-019 readiness receipt, ready_for_node_compile plan index, shard, migration, and audit-closure updates."
     }
   ],
   "commands_run": [

@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L26670-L27040
+Source lines: L26709-L27166
 
-Source SHA256: `67b3c6cb82e58c33ef67ce42dd87f942dab8bdf6d25937075799cb105ed0f0eb`
+Source SHA256: `b788c81e168d096c1ad7ae242f8539734f138f439804ca862fa26ac3b4576b89`
 
 ---
 
@@ -378,4 +378,91 @@ negative_constraints: []
 observed_signal: Huge history/state freezes and compaction/resource issues show projections and durable history must be separate.
 pm_gap_or_delta: GUI thread projection, model replay history, terminal scrollback, media thumbnails, and debug logs need separate caps and eviction receipts.
 compile_disposition: create_new_planunit
+```
+
+### F3-417 - GUI Platform Currentness Renderer Web And Icon Contract
+
+```yaml
+plan_unit_id: F3-417
+unit_type: decision
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Puppet Master targets Slint 1.17.1 for the active GUI platform. Native desktop uses Slint Winit with Skia compiled
+  in and selected by default on Windows, Linux, and macOS; fallback order is explicit SLINT_BACKEND override, persisted
+  preference, Winit + Skia, Winit + FemtoVG-wgpu, then Winit software emergency mode. The first GUI build includes
+  native desktop plus a Rust Slint/WASM canvas web GUI compiled as cdylib through wasm-bindgen, wasm-pack, or an
+  approved equivalent and loaded through minimal HTML/canvas bootstrap rather than React, Tauri, or DOM product UI.
+  Browser-only WASM cannot claim PTY, filesystem, process/container, CEF, tray, native-window, or raw OS drag/drop
+  authority; those OS-owned capabilities route through the trusted local daemon with authenticated local origin or
+  pairing, origin/CSRF protection, capability probe, permission request, receipt/audit event, redaction, degraded
+  reason, and deterministic agent-test hooks. Web capability state values are native_full, web_supported_direct,
+  web_supported_via_trusted_local_daemon, web_simulated_or_degraded, and web_disabled. Production GUI source uses
+  bundled SVGs through stable icon_id entries and must not use emoji, emoji-like pictographs, Unicode pseudo-icons,
+  network/CDN icons, or icon-only controls without accessible labels and non-icon state text.
+gui_related: true
+gui_classification_reason: This unit locks GUI platform, renderer, web GUI, visible capability, and icon policy decisions.
+split_recommended: false
+depends_on:
+- F3-026
+- F3-029
+- F3-030
+- F3-033
+- ATS-023
+unblocks: []
+acceptance_criteria:
+- Active Slint toolkit references in live owner docs and Spec_Lock use Slint 1.17.1, while old versions remain only in audit/source-lineage history.
+- Native renderer fallback order is explicit and preserves SLINT_BACKEND override authority before persisted preference and compiled defaults.
+- Web GUI capability claims use the approved capability states and route OS-owned capabilities through the trusted local daemon.
+- Production icons use bundled SVG icon_id manifest entries, accessible labels, fallback text, and non-icon state text; emoji/pictographic pseudo-icons and remote icon sources are forbidden.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this decision.
+validation_surfaces:
+- python3 scripts/pm-gui-asset-policy.py
+- python3 scripts/pm-plans-verify.py verify-spec-lock
+- python3 scripts/pm-plan-index.py validate
+risk_class: gui_platform_currentness_drift
+reasoning_tier: high
+context_scope: fable_20260706_gui_platform_currentness_repair
+implementation_surfaces:
+- Plans/FinalGUISpec.md
+- Plans/00-plans-index.md
+- Plans/BinaryLocator_Spec.md
+- Plans/MiscPlan.md
+- Plans/LSPSupport.md
+- Plans/PMConcept_Control_Reconciliation.json
+- Plans/Spec_Lock.json
+- scripts/pm-gui-asset-policy.py
+node_compile_hint:
+  mode: gui_platform_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- fablereport.md:103-112
+- Plans/.audits/fable-20260706/currentness_check_report.json
+- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:8
+source_atom_ids: []
+preserved_exact_tokens:
+- "Slint 1.17.1"
+- "Winit + Skia"
+- "Winit + FemtoVG-wgpu"
+- "Winit software renderer"
+- "SLINT_BACKEND"
+- "Slint/WASM canvas"
+- "trusted local daemon"
+- "native_full"
+- "web_supported_direct"
+- "web_supported_via_trusted_local_daemon"
+- "web_simulated_or_degraded"
+- "web_disabled"
+- "icon_id"
+- "no emoji"
+negative_constraints:
+- "Do not create WorkNodes, NodeSeeds, queues, implementation files, runtime launches, or production build artifacts."
+- "Do not allow browser-only WASM to pretend it directly owns OS capabilities."
+- "Do not use React, Tauri, or DOM-rendered product UI for the Slint web GUI."
+- "Do not use emoji, emoji-like pictographs, Unicode pseudo-icons, network/CDN icons, or icon-only state carriers in production GUI source."
+compatibility_only_notes:
+- "Slint 1.17.0, Slint 1.15.1, PMConcept terminal transcripts, and FABLE pre-repair wording are source-lineage/history only after this repair."
+owner_boundary_notes:
+- "FinalGUISpec owns GUI platform and visible capability policy; Automated_Testing_System owns web GUI dev/test workflow; UI_Command_Catalog owns only development-preview command IDs."
 ```

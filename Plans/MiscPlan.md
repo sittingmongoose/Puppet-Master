@@ -1133,7 +1133,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 **Before implementation plan**
 
-- Confirm Slint key-event API against Slint 1.17.0 or the current stable release reverified before implementation: where key events are captured (window vs focused widget, via `FocusScope`) and how KeyMap is applied.
+- Confirm Slint key-event API against Slint 1.17.1 or the current stable release reverified before implementation: where key events are captured (window vs focused widget, via `FocusScope`) and how KeyMap is applied.
 - Confirm platform_specs (or equivalent) documents skill injection for each platform so the implementation plan can wire `list_skills_for_agent` per runner.
 
 ---
@@ -5372,7 +5372,7 @@ plan_unit_id: M-068
 unit_type: requirement
 status: accepted
 owner_doc: Plans/MiscPlan.md
-canonical_text: Shortcuts and Skills implementation planning must explicitly confirm Slint 1.17.0 or current-stable key-event integration, Windows path-case behavior for skill discovery, and platform_specs skill injection per provider.
+canonical_text: Shortcuts and Skills implementation planning must explicitly confirm Slint 1.17.1 or current-stable key-event integration, Windows path-case behavior for skill discovery, and platform_specs skill injection per provider.
 gui_related: true
 gui_classification_reason: The unit affects GUI key handling, Skills list behavior, and provider-visible skill integration.
 split_recommended: true
@@ -5381,7 +5381,7 @@ depends_on:
 - M-048
 unblocks: []
 acceptance_criteria:
-- Slint key-event capture location and KeyMap application are confirmed against Slint 1.17.0 or current stable docs before implementation.
+- Slint key-event capture location and KeyMap application are confirmed against Slint 1.17.1 or current stable docs before implementation.
 - Skill discovery handles Windows path case and separators as needed.
 - platform_specs or equivalent documents how each provider receives skill list, paths, content, environment, prompt injection, or tools.
 - list_skills_for_agent remains stubbed until platform-specific delivery is defined.
@@ -5400,7 +5400,7 @@ node_compile_hint:
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0084
 preserved_exact_tokens:
-- Slint 1.17.0
+- Slint 1.17.1
 - FocusScope
 - KeyEvent
 - Windows path case

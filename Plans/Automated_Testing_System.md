@@ -94,6 +94,70 @@ Screenshots, videos, logs, console output, network traces, and artifact previews
 
 Acceptance coverage must prove effective-policy receipts, visible-session receipts, TestRunReceipt linkage, Open/Watch fallback behavior, background continuation, disabled reason projection, and redaction-before-display/persistence. PMConcept browser/terminal/testing demos are `concept_fixture_only` until those receipts and wiring rows exist.
 
+## GUI web development and smoke-test workflow addendum (2026-07-07)
+
+The Slint/WASM web GUI development workflow uses a trusted local daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. The test harness must prove daemon capability probes, pairing/origin/CSRF protections, degraded reasons when the daemon is absent or narrowed, screenshot and state-capture evidence, and reload behavior for the static web route. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless explicit configuration enables the capability and records permission/audit receipts.
+
+### ATS-023 - Slint WASM Web GUI Dev Preview And Smoke Tests
+
+```yaml
+plan_unit_id: ATS-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Automated_Testing_System.md
+canonical_text: >-
+  Slint/WASM web GUI development uses a trusted local daemon plus static web route, fixture mode, browser automation
+  smoke test, screenshots/state-capture, deterministic state hooks, and fast rebuild/reload. Production builds must not
+  enable dev/test, MCP, live-preview, fixture, or browser automation features unless explicit configuration enables the
+  capability and records permission/audit receipts.
+gui_related: true
+gui_classification_reason: This unit defines user-visible web GUI development preview controls, screenshots, and smoke-test evidence.
+depends_on:
+- ATS-001
+- ATS-003
+- ATS-004
+unblocks:
+- F3-417
+acceptance_criteria:
+- The local daemon plus static web route workflow has fixture mode, browser automation smoke test, screenshots/state-capture, state hooks, and fast reload coverage.
+- Smoke tests prove authenticated local origin or pairing, origin/CSRF protection, capability probe, degraded reason, and permission/audit receipt projection.
+- Production builds keep dev/test, MCP, live-preview, fixture, and browser automation controls disabled unless explicit configuration enables the capability.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created by this spec.
+validation_surfaces:
+- python3 scripts/pm-gui-asset-policy.py
+- python3 scripts/pm-plans-verify.py validate-implementation-readiness
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: web_gui_dev_test_authority_leak
+reasoning_tier: high
+context_scope: gui_platform_currentness_repair
+implementation_surfaces:
+- Plans/Automated_Testing_System.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: web_gui_dev_preview_smoke_tests
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/.audits/fable-20260706/currentness_check_report.json
+- Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:8
+preserved_exact_tokens:
+- "trusted local daemon"
+- "static web route"
+- "fixture mode"
+- "browser automation smoke test"
+- "screenshots/state-capture"
+- "state hooks"
+- "fast rebuild/reload"
+negative_constraints:
+- "Production builds must not enable dev/test/MCP/live-preview features unless explicitly configured."
+- "Browser-only WASM must not claim direct OS authority."
+owner_hints:
+- Plans/Automated_Testing_System.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+```
+
 ### ATS-002 - Test Capability Discovery And Harness Probe
 
 ```yaml

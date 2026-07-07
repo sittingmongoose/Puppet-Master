@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L3720-L24562
+Source lines: L3759-L24601
 
-Source SHA256: `67b3c6cb82e58c33ef67ce42dd87f942dab8bdf6d25937075799cb105ed0f0eb`
+Source SHA256: `b788c81e168d096c1ad7ae242f8539734f138f439804ca862fa26ac3b4576b89`
 
 ---
 
@@ -1254,7 +1254,7 @@ status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
   FinalGUISpec follows DRY_Rules and Contracts_V0, uses Puppet Master naming and deterministic
-  defaults, and establishes Rust stable 1.96.1 plus Slint 1.17.0 with slint_build and renderer choices as the
+  defaults, and establishes Rust stable 1.96.1 plus Slint 1.17.1 with slint_build and renderer choices as the
   authoritative implementation baseline.
 gui_related: true
 gui_classification_reason: >-
@@ -1285,7 +1285,7 @@ preserved_exact_tokens:
 - "Plans/Contracts_V0.md"
 - "Puppet Master"
 - "Rust stable 1.96.1"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "slint_build"
 - "winit + Skia"
 - "FemtoVG-wgpu"
@@ -1336,7 +1336,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0022"
 preserved_exact_tokens:
 - "Iced-based GUI"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "IDE-shell layout"
 - "Activity Bar"
 - "Primary Content"
@@ -1448,7 +1448,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0024"
 preserved_exact_tokens:
 - "Rust"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "slint_build"
 - "winit + Skia"
 - "winit + FemtoVG-wgpu"
@@ -10665,7 +10665,7 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0138"
 preserved_exact_tokens:
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "accessible-role"
 - "accessible-label"
 - "docked/floating"
@@ -12736,7 +12736,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
 preserved_exact_tokens:
 - "ImageFit.repeat"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "SharedPixelBuffer"
 - "GridLayout"
 negative_constraints: []
@@ -14372,7 +14372,7 @@ unit_type: decision
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Implementation decisions are final for Slint 1.17.0 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
+  Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
   no React/JS/TS/HTML/CSS shell, IDE shell layout, three theme families, Settings restructure,
   event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
   product name Puppet Master.
@@ -14402,7 +14402,7 @@ source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0158"
 preserved_exact_tokens:
 - "Rust stable 1.96.1"
-- "Slint 1.17.0"
+- "Slint 1.17.1"
 - "winit + Skia"
 - "winit + FemtoVG-wgpu"
 - "No React/JS/TS/HTML/CSS"

@@ -1,0 +1,18 @@
+{
+  "audit_id": "fable-20260706",
+  "baseline_ref": "7db016bca34ad0050b2c5ceafecb309de3cb3489",
+  "finding_count": 1,
+  "generated_at_utc": "2026-07-07T14:19:18Z",
+  "ledger_id": "gui-platform-currentness-repair-20260707",
+  "notes": [
+    "Bounded audit_report for the GUI platform currentness finding only; broader FABLE backlog remains represented by currentness_check_report.json and buildability_repair_registry.jsonl."
+  ],
+  "observation_ref": "fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui",
+  "repair_required_count": 1,
+  "schema_id": "pm.audit_report.v1",
+  "source_artifacts": [
+    "gui_platform_currentness_findings.jsonl"
+  ],
+  "status": "BLOCKED",
+  "subject_ref": "Plans/Spec_Lock.json::locked_decisions.ui.toolkit_version"
+}

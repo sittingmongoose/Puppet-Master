@@ -86,6 +86,19 @@ Rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
+### 2.0C Development-preview GUI controls
+
+The following command IDs are development-preview and automated-test controls only. They are not production runtime commands, do not grant OS-owned capability by themselves, and must be compiled out or disabled in production builds unless an explicit production configuration enables the corresponding dev/test surface with permission and audit receipts.
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|------------|-------|-------------|----------------|--------------|
+| `cmd.gui_dev_preview.reload` | Reload GUI preview | Reloads the local static web route or native preview surface after a configured dev/test rebuild. | `dev_preview_enabled && explicit_dev_or_test_build` | `domain_action` |
+| `cmd.gui_dev_preview.fixture_mode.set` | Set GUI fixture mode | Selects an approved deterministic fixture state for GUI smoke tests, screenshots, state hooks, or replay. | `dev_preview_enabled && fixture_mode_available && explicit_dev_or_test_build` | `domain_action` |
+| `cmd.gui_dev_preview.capture_state` | Capture GUI state | Captures screenshot, visible state, and deterministic state-hook output for browser/native GUI smoke evidence. | `dev_preview_enabled && state_capture_available && explicit_dev_or_test_build` | `domain_action` |
+| `cmd.gui_dev_preview.daemon_capabilities.inspect` | Inspect daemon capabilities | Shows trusted local daemon capability probe results, degraded reasons, and test-hook availability without enabling a capability. | `dev_preview_enabled && trusted_local_daemon_probe_available && explicit_dev_or_test_build` | `shell_view` |
+
+These commands normalize through the dev-preview test harness and capability-probe receipts. They must not be reused as production `cmd.runtime.*`, terminal, filesystem, browser automation, CEF, tray, native-window, or process/container operation commands.
+
 ### Canonical route payload and route/open tail rules
 
 UI commands that route or open MUST preserve:
@@ -7812,6 +7825,60 @@ owner_hints:
   - Plans/Executor_Protocol.md
   - Plans/Permissions_System.md
   - Plans/FileSafe.md
+```
+
+### UCC-107 - GUI Dev Preview Command Controls
+
+```yaml
+plan_unit_id: UCC-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  GUI development-preview command controls are limited to cmd.gui_dev_preview.reload,
+  cmd.gui_dev_preview.fixture_mode.set, cmd.gui_dev_preview.capture_state, and
+  cmd.gui_dev_preview.daemon_capabilities.inspect. They are development-preview and automated-test controls only,
+  are compiled out or disabled in production unless explicitly configured, and must not be reused as production
+  runtime, terminal, filesystem, browser automation, CEF, tray, native-window, or process/container commands.
+gui_related: true
+gui_classification_reason: This unit defines user-visible development-preview GUI controls and command IDs.
+depends_on:
+- ATS-023
+- F3-417
+unblocks: []
+acceptance_criteria:
+- Dev-preview controls remain scoped to reload, fixture mode, screenshot/state capture, and daemon capability inspection.
+- Production builds disable or omit these controls unless explicit configuration enables the matching dev/test surface.
+- The commands do not grant OS-owned capabilities and do not replace production runtime command families.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-wiring-matrix
+- python3 scripts/pm-plan-index.py validate
+risk_class: dev_preview_command_authority_leak
+reasoning_tier: high
+context_scope: gui_platform_currentness_repair
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: gui_dev_preview_commands_only
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/.audits/fable-20260706/currentness_check_report.json
+preserved_exact_tokens:
+- cmd.gui_dev_preview.reload
+- cmd.gui_dev_preview.fixture_mode.set
+- cmd.gui_dev_preview.capture_state
+- cmd.gui_dev_preview.daemon_capabilities.inspect
+negative_constraints:
+- "Do not invent production runtime commands for dev-preview workflow."
+- "Do not let dev-preview commands grant PTY, filesystem, process/container, CEF, tray, native-window, or browser automation authority."
+owner_hints:
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Automated_Testing_System.md
 ```
 
 ## GUI / PMConcept implementation-readiness repair addendum (2026-07-02)
