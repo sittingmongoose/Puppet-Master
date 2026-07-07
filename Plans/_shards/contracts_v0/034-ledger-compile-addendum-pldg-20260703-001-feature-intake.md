@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L19145-L19432
+Source lines: L19186-L19539
 
-Source SHA256: `64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530`
+Source SHA256: `7ea4f791ed4f3033a35e469c5d6337a9b562daeaf7ad5339541e7259c0fc7075`
 
 ---
 
@@ -295,4 +295,70 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/event_record.schema.json
   - Plans/storage-plan.md
+```
+
+### CV-310 - Active-Agent Coordination Event Family Contract
+
+```yaml
+plan_unit_id: CV-310
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 names the stable active-agent coordination EventRecord families consumed by Orchestrator and storage:
+  `coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`,
+  `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`,
+  `coordination.agent_aborted`, and `coordination.debug_mirror_exported`. These events feed redb coordination projections;
+  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are compatibility/debug/export
+  mirrors only and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash,
+  abort, receipt, or validation decisions.
+gui_related: false
+gui_classification_reason: This unit defines runtime event contracts and storage authority, not GUI presentation.
+depends_on: [CV-309, SP-230, SP-232, OSI-432]
+unblocks: []
+acceptance_criteria:
+  - Stable `coordination.*` event rows list payload minima for registration, status, operation, file-activity, unregister, crash, abort, and debug mirror export.
+  - Coordination payloads preserve project/run/thread/agent lineage, platform, revision/checkpoint/idempotency fields, and relevant operation/file/mirror metadata.
+  - File-activity events are coordination claims only and do not create FileSafe locks or durable exclusive leases.
+  - Coordination consumers use redb projections and `projector.checkpoint.coordination:{project_id}` for authority.
+  - JSON side files remain compatibility/debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: coordination_contract_file_canon_regression
+reasoning_tier: high
+context_scope: storage_coordination_canon
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage_value_registry.json
+node_compile_hint:
+  mode: storage_coordination_canon_repair
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`coordination.agent_registered`"
+  - "`coordination.agent_status_updated`"
+  - "`coordination.agent_operation_updated`"
+  - "`coordination.agent_file_ownership_updated`"
+  - "`coordination.agent_unregistered`"
+  - "`coordination.agent_crashed`"
+  - "`coordination.agent_aborted`"
+  - "`coordination.debug_mirror_exported`"
+  - "`active-agents.json`"
+  - "`.puppet-master/state/*.json`"
+negative_constraints:
+  - Do not define loose JSON files as active-agent coordination canon.
+  - Do not let coordination events bypass the EventRecord envelope.
+  - Do not treat coordination file-activity claims as FileSafe locks or leases.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/orchestrator-subagent-integration.md
 ```

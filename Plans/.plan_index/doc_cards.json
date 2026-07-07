@@ -2823,10 +2823,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 244,
+        "False": 245,
         "True": 65
       },
-      "heading_count": 446,
+      "heading_count": 448,
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md",
         "Plans/Automated_Testing_System.md",
@@ -2882,6 +2882,7 @@
         "Plans/project_plan_node.schema.json",
         "Plans/rewrite-tie-in-memo.md",
         "Plans/storage-plan.md",
+        "Plans/storage_value_registry.json",
         "Plans/usage-feature.md",
         "future Teacher activity and guided action records",
         "future discovery receipt schemas",
@@ -2894,9 +2895,9 @@
         "future vision_bridge result records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 19432,
+      "line_count": 19539,
       "path": "Plans/Contracts_V0.md",
-      "plan_unit_count": 309,
+      "plan_unit_count": 310,
       "plan_unit_ids": [
         "CV-292",
         "CV-293",
@@ -3206,7 +3207,8 @@
         "CV-306",
         "CV-307",
         "CV-308",
-        "CV-309"
+        "CV-309",
+        "CV-310"
       ],
       "reasoning_tiers": [
         "high",
@@ -3287,6 +3289,7 @@
         "contract_schema_drift",
         "contract_ssot_drift",
         "contracts_precedence_drift",
+        "coordination_contract_file_canon_regression",
         "core_runtime_event_minima_loss",
         "cost_display_precision_drift",
         "cost_monotonicity_violation",
@@ -3522,10 +3525,10 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530",
+      "sha256": "7ea4f791ed4f3033a35e469c5d6337a9b562daeaf7ad5339541e7259c0fc7075",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 309
+        "accepted": 310
       },
       "title": "Contracts V0 (Canonical)",
       "unit_type_counts": {
@@ -3534,7 +3537,7 @@
         "consumer_requirement": 1,
         "future_scope_decision": 1,
         "requirement": 220,
-        "schema_contract": 1,
+        "schema_contract": 2,
         "source_lineage_residual_disposition": 1
       },
       "validation_surfaces": [
@@ -3569,6 +3572,7 @@
         "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
         "python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema",
         "security receipts are visible and redacted.",
         "seglog replay tests",
@@ -8102,10 +8106,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 368,
+        "False": 369,
         "True": 63
       },
-      "heading_count": 50,
+      "heading_count": 48,
       "implementation_surfaces": [
         "Plans/Commands_System.md",
         "Plans/Contracts_V0.md",
@@ -8118,14 +8122,16 @@
         "Plans/Tools.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/orchestrator-subagent-integration.md",
+        "Plans/path_reference_registry.json",
         "Plans/storage-plan.md",
+        "Plans/storage_value_registry.json",
         "future Orchestrator discovery routing",
         "future Orchestrator prompt routes",
         "future subagent handoff and child-run receipt records"
       ],
-      "line_count": 31394,
+      "line_count": 31294,
       "path": "Plans/orchestrator-subagent-integration.md",
-      "plan_unit_count": 431,
+      "plan_unit_count": 432,
       "plan_unit_ids": [
         "OSI-431",
         "OSI-001",
@@ -8557,7 +8563,8 @@
         "OSI-427",
         "OSI-428",
         "OSI-429",
-        "OSI-430"
+        "OSI-430",
+        "OSI-432"
       ],
       "reasoning_tiers": [
         "high",
@@ -8641,6 +8648,7 @@
         "coordination_context_active_agent_prompt_block",
         "coordination_effectiveness_analytics",
         "coordination_event_ingestion_fallback",
+        "coordination_file_canon_regression",
         "coordination_gui_monitoring_consumer",
         "coordination_lifecycle_status_projection",
         "coordination_mechanisms_canonical_projection",
@@ -8996,16 +9004,17 @@
         "wake_reason_cascade_semantics",
         "worktree_native_conflict_control_observability"
       ],
-      "sha256": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4",
+      "sha256": "82df656d5d3c4926dfed2de494372a58ac426b46f18ba1c7b1885b135b20d241",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 430,
+        "accepted": 431,
         "retired": 1
       },
       "title": "Orchestrator Subagent Integration -- Implementation Plan",
       "unit_type_counts": {
         "compatibility_disposition": 3,
-        "requirement": 428
+        "requirement": 428,
+        "schema_contract": 1
       },
       "validation_surfaces": [
         "Future SSH-backed project context discovery test.",
@@ -9018,7 +9027,9 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-001-part-2-cleanup-fable-audit",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-implementation-readiness"
       ]
     },
     {
@@ -11877,10 +11888,10 @@
     {
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
-        "False": 144,
+        "False": 145,
         "True": 87
       },
-      "heading_count": 372,
+      "heading_count": 374,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -11901,6 +11912,8 @@
         "Plans/assistant-chat-design.md",
         "Plans/event_record.schema.json",
         "Plans/goal_runtime_events.schema.json",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/path_reference_registry.json",
         "Plans/storage-plan.md",
         "Plans/storage_value_registry.json",
         "Plans/storage_value_registry.schema.json",
@@ -11916,9 +11929,9 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 16481,
+      "line_count": 16589,
       "path": "Plans/storage-plan.md",
-      "plan_unit_count": 231,
+      "plan_unit_count": 232,
       "plan_unit_ids": [
         "SP-002",
         "SP-003",
@@ -12150,7 +12163,8 @@
         "SP-228",
         "SP-229",
         "SP-230",
-        "SP-231"
+        "SP-231",
+        "SP-232"
       ],
       "reasoning_tiers": [
         "high",
@@ -12173,22 +12187,23 @@
         "remote_identity_drift",
         "residual_bridge_overreach",
         "rollback_diagnostics_storage_drift",
+        "storage_coordination_canon_regression",
         "storage_owner_stub_loss",
         "storage_plan_drift",
         "storage_value_schema_registry_drift",
         "teach_memory_persistence_drift"
       ],
-      "sha256": "ad3f512795f628259dafc4e81b402f15adbfde16434e9548ea3b0101c41fb283",
+      "sha256": "72d0e14753484f2b33e234a83e25ab7390c785bd9c146197b550409996450058",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 230,
+        "accepted": 231,
         "retired": 1
       },
       "title": "Storage plan (seglog, redb, Tantivy, projectors)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
         "requirement": 228,
-        "schema_contract": 2
+        "schema_contract": 3
       },
       "validation_surfaces": [
         "127MB metadata fixture is rejected/segmented before UI or model context load.",
@@ -12222,6 +12237,7 @@
         "python3 scripts/pm-implementation-readiness.py validate",
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py run-gates",
         "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 120",
         "python3 scripts/pm-plans-verify.py validate-goal-runtime-event-fixtures",
         "python3 scripts/pm-plans-verify.py validate-implementation-readiness"
@@ -13307,7 +13323,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-07T16:56:04Z",
+  "generated_at_utc": "2026-07-07T17:58:10Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13315,13 +13331,13 @@
     "docs_with_plan_units": 72,
     "docs_without_plan_units": 0,
     "gui_related_counts": {
-      "False": 3101,
+      "False": 3104,
       "True": 2385
     },
-    "plan_unit_count": 5486,
+    "plan_unit_count": 5489,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5308,
+      "accepted": 5311,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13367,7 +13383,7 @@
       "runtime_contract": 22,
       "runtime_disclosure": 2,
       "runtime_policy": 5,
-      "schema_contract": 7,
+      "schema_contract": 10,
       "schema_mirror": 1,
       "selection_contract": 1,
       "selection_policy": 2,

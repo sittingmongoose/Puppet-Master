@@ -23,7 +23,7 @@
     {
       "note": "Stale document-writer fallback cleanup.",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "942cf815f2a832d29fafd5e4742b9c5510b33a009d3f44160784db2e7a713fb4"
+      "sha256": "82df656d5d3c4926dfed2de494372a58ac426b46f18ba1c7b1885b135b20d241"
     },
     {
       "note": "Index protected core summary repair.",
@@ -73,7 +73,7 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "5899047505683d85b21d8f9dc60a9e319eb4aefc056ac5fe91b7b0ef00ac4606"
+      "sha256": "4290fca530556d2b9c7548372d6b090f64f372410adf5395643ffba64628f83f"
     },
     {
       "note": "Shard regeneration report.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "f053315035e72f62c97cef447cab5a9760027e43735deaf05215a27631b902e5"
+      "sha256": "5020f01bf4881ebcb695ccaf6129de647cd500000780369a4c898c259479ffbe"
     }
   ],
   "checks": [
@@ -397,6 +397,11 @@
       "name": "gui-platform-hardening-repair",
       "result": "PASS",
       "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
+    },
+    {
+      "name": "storage-coordination-canon-repair-evidence-restamp",
+      "result": "PASS",
+      "details": "Nested evidence artifact hash refreshed after dependent evidence bundle restamp."
     }
   ],
   "commands_run": [

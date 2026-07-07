@@ -7,7 +7,8 @@
   "notes": [
     "Historical status artifacts are preserved but superseded by this effective status projection.",
     "No open actionable repair is represented by this audit effective status.",
-    "The GUI toolkit currentness finding is closed by GUI_PLATFORM_CURRENTNESS_REPAIR.md and hardened by GUI_PLATFORM_HARDENING_REPAIR.md; broader FABLE P0/P1 backlog rows remain out of scope."
+    "The GUI toolkit currentness finding is closed by GUI_PLATFORM_CURRENTNESS_REPAIR.md and hardened by GUI_PLATFORM_HARDENING_REPAIR.md; broader FABLE P0/P1 backlog rows remain out of scope.",
+    "The storage/coordination canon finding is closed by STORAGE_COORDINATION_CANON_REPAIR.md and storage_coordination_canon_repair_report.json; broader FABLE P0/P1 backlog rows remain out of scope."
   ],
   "original_repair_required_count": 1,
   "repair_required_count": 0,
@@ -35,6 +36,14 @@
         "GUI_PLATFORM_CURRENTNESS_REPAIR.md",
         "GUI_PLATFORM_HARDENING_REPAIR.md",
         "gui_platform_hardening_repair_report.json"
+      ]
+    },
+    {
+      "finding_key": "fable-20260706-p0-storage-coordination-canon-file-vs-seglog-redb",
+      "status": "repaired_current",
+      "superseded_by": [
+        "STORAGE_COORDINATION_CANON_REPAIR.md",
+        "storage_coordination_canon_repair_report.json"
       ]
     }
   ],

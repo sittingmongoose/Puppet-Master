@@ -8,22 +8,22 @@
     {
       "note": "Materialized/deferred storage value registry.",
       "path": "Plans/storage_value_registry.json",
-      "sha256": "7fea3458141c04f2a7f4a03596afebda2f14a0b70b142a93c7d8907258c959b7"
+      "sha256": "8f14f852f06592f91bb1cac2f2b6223a50a9127380f01a9642e7ef0fa0b94ee5"
     },
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "f68ec590863704cc33fa637e2f1d9ece326ebab8ad568076965612cb4097dc95"
+      "sha256": "f1982d3ad34755e1a2ec35e9bac3353109a9fdcc036c382fecec17e1b9433bd9"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "a21a540bbcbe452cc59e2174c81d90eebf55ab5eee62f080a9f9ecc622a1412f"
+      "sha256": "8fd24137874cafaaf9b3cdbb851fb9f923d1846d8e211299d0b700bdf9d9c2ac"
     },
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "5899047505683d85b21d8f9dc60a9e319eb4aefc056ac5fe91b7b0ef00ac4606"
+      "sha256": "4290fca530556d2b9c7548372d6b090f64f372410adf5395643ffba64628f83f"
     }
   ],
   "checks": [
@@ -66,6 +66,11 @@
       "name": "gui-platform-hardening-repair",
       "result": "PASS",
       "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
+    },
+    {
+      "name": "storage-coordination-canon-repair-storage-registry-restamp",
+      "result": "PASS",
+      "details": "Storage value registry evidence hashes refreshed after adding coordination EventRecord, redb projection, and debug mirror export registry rows."
     }
   ],
   "commands_run": [

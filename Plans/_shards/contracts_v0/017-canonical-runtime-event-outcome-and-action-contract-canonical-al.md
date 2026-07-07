@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2543-L2686
+Source lines: L2543-L2727
 
-Source SHA256: `64090de749aa3872e1f99968c6ff7e08d0fd24b2c3c579f757f4983eb879b530`
+Source SHA256: `7ea4f791ed4f3033a35e469c5d6337a9b562daeaf7ad5339541e7259c0fc7075`
 
 ---
 
@@ -107,6 +107,44 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
 
+#### Stable active-agent coordination event families
+
+Active-agent coordination uses the canonical `EventRecord` envelope (`schema_id = pm.event.v0`) plus the coordination payload schemas registered by storage. These events feed redb coordination projections; side files such as `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are compatibility/debug/export mirrors only and do not stand beside the EventRecord/projection model as runtime truth.
+
+For every `coordination.*` event below, the payload MUST preserve the PM lineage envelope:
+- `project_id`
+- `run_id`
+- `thread_id?`
+- `agent_id`
+- `agent_type?`
+- `parent_run_id?`
+- `child_run_id?`
+- `node_id?`
+- `lane_id?`
+- `worktree_id?`
+- `platform`
+- `agent_revision?`
+- `expected_previous_revision?`
+- `last_applied_event_id?`
+- `idempotency_key`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md, SchemaID:pm.event.v0
+
+| event_type | payload_fields | description |
+|---|---|---|
+| `coordination.agent_registered` | `project_id`, `run_id`, `thread_id?`, `agent_id`, `agent_type`, `parent_run_id?`, `child_run_id?`, `node_id?`, `lane_id?`, `worktree_id?`, `platform`, `model_id?`, `started_at_utc`, `agent_revision`, `idempotency_key` | Agent registration before execution. |
+| `coordination.agent_status_updated` | lineage envelope, `status`, `status_reason?`, `observed_at_utc`, `agent_revision`, `expected_previous_revision?` | Agent lifecycle/status update. |
+| `coordination.agent_operation_updated` | lineage envelope, `operation_id`, `operation_summary`, `progress_pct?`, `operation_refs[]?`, `observed_at_utc` | Current operation and progress update. |
+| `coordination.agent_file_ownership_updated` | lineage envelope, `path_ref`, `path_hash`, `claim_kind`, `claim_confidence`, `operation_id?`, `observed_at_utc` | File-activity claim for coordination warnings; not a FileSafe lock or exclusive lease. |
+| `coordination.agent_unregistered` | lineage envelope, `terminal_status`, `finished_at_utc`, `result_ref?` | Normal terminal unregister/completion. |
+| `coordination.agent_crashed` | lineage envelope, `crash_reason`, `detected_at_utc`, `heartbeat_age_ms?`, `process_ref?`, `worktree_ref?` | Crash, heartbeat-expiry, process-loss, or worktree-loss resolution. |
+| `coordination.agent_aborted` | lineage envelope, `abort_reason`, `aborted_by_ref`, `aborted_at_utc` | Parent/user/runtime abort resolution. |
+| `coordination.debug_mirror_exported` | `project_id`, `mirror_path`, `mirror_kind`, `source_checkpoint`, `source_sequence_id`, `export_status`, `exported_at_utc`, `error_code?`, `quarantine_ref?` | Optional debug/export mirror write or recovery result. |
+
+Coordination consumers use `coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}` for authority. Scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, and validation decisions MUST NOT read `.puppet-master/state/*.json` mirrors as authority.
+
+ContractRef: ContractName:Plans/storage-plan.md#Coordination-record-projection-and-mirror-export-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections
+
 For every `crew.*` event below, the payload MUST preserve crew and child lineage together:
 - `run_id`
 - `thread_id`
@@ -123,6 +161,9 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orc
 | `crew.member_added` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `role` | Member joined. |
 | `crew.member_removed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `reason` | Member left. |
 | `crew.coordination` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `coordination_type`, `details` | Inter-agent coordination. |
+| `crew.board_message_posted` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `message_id`, `from_agent_id`, `to_agent_id?`, `to_agent_type?`, `subject`, `priority` | Attributable crew-board message posted. |
+| `crew.board_message_read` | `run_id`, `thread_id`, `crew_id`, `message_id`, `agent_id`, `read_at_utc` | Crew-board message read receipt. |
+| `crew.board_messages_archived` | `run_id`, `thread_id`, `crew_id`, `archived_before_utc`, `message_ids[]?`, `archive_reason` | Crew-board messages archived by retention policy. |
 | `crew.completed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `result_summary`, `duration_ms` | Crew finished. |
 | `crew.disbanded` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `reason` | Crew dissolved. |
 

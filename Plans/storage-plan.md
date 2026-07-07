@@ -128,7 +128,7 @@ Runtime ownership references Plans/Provider_Stream_Mapping_External_Reference_A2
 
 The worktree/lane family is first-class. Storage records durable worktree_id and lane_id identities, source_control.project_state.{project_id}, source_control projections, package-lane lineage, lane-pool membership, /delegation/worktree metadata, /worktree/baseline/artifact refs, baseline, active, retained, suspect, restoring, cleanup_eligible, archived, historical, removed, /removed, /baseline, /history/audit, /split/supersession, /superseded, /predecessor, reverse-merge, lineage-changing, lineage-aware, commit-range, and multi-identity SCM audit. Source Control uses a concrete worktree-first row posture: `live`, `dirty`, `conflict`, `orphaned`, `recovering`, `retained`, `archived`, and `removed`. The compact lifecycle vocabulary `baseline/active/suspect/restoring/retained/cleanup_eligible/archived/removed/historical` is a migration alias for those individually queryable states, not a collapsed generic worktree state. `WorktreeGitImprovement.md` owns operational behavior, cleanup/archive/remove rules including `/archive/remove`, and UI expectations for Source Control and Orchestrator; storage owns persisted lifecycle/history state and projection joins.
 
-Project registry state stays narrow. `projects:v1` is a registry, while `project_state:v1:{project_id}`, `orchestrator.project_state`, and `orchestrator.project_state.{project_id}` persist shell/UI state such as focused_run_id, per-tab state, active-agents, active-agents.json, project-state, /project, /state, /queue, /refresh, active-run, and focused run context. Project summary and attention projections are separate: `project_summary.v1`, `project_attention_item.v1`, project_summary, project_attention_item, thread_blocked_notice, activity, attention, health, health status, and under-defined rollups must not turn the registry into an operational junk drawer. The canonical project-summary/project-attention projection owner is this storage family, and its `/record` reconciliation plan must resolve contradictory event/record families already identified in SSOTs instead of overloading `projects:v1` or `project_state:v1:{project_id}`. `resume_url` may remain one serialized route form, but project attention aligns with the shared internal route payload model rather than inventing a separate routing identity.
+Project registry state stays narrow. `projects:v1` is a registry, while `project_state:v1:{project_id}`, `orchestrator.project_state`, and `orchestrator.project_state.{project_id}` persist shell/UI state such as focused_run_id, per-tab state, project-state, /project, /state, /queue, /refresh, active-run, focused run context, and optional coordination mirror-export metadata such as last exported sequence/checkpoint. Active-agent runtime truth, file-activity claims, operation state, crash/abort/unregister state, and coordination snapshots are owned by the `coordination.*` EventRecord families and `coordination_*_projection.v1` redb projections, not by `project_state` or `active-agents.json`. Project summary and attention projections are separate: `project_summary.v1`, `project_attention_item.v1`, project_summary, project_attention_item, thread_blocked_notice, activity, attention, health, health status, and under-defined rollups must not turn the registry into an operational junk drawer. The canonical project-summary/project-attention projection owner is this storage family, and its `/record` reconciliation plan must resolve contradictory event/record families already identified in SSOTs instead of overloading `projects:v1` or `project_state:v1:{project_id}`. `resume_url` may remain one serialized route form, but project attention aligns with the shared internal route payload model rather than inventing a separate routing identity.
 
 Consumer docs that must not own storage include Run_Graph_View, Plans/Widget_System.md, /Widget_System.md, Crosswalk.md, Decision_Log, and Decision_Log.md; they consume storage records through route/open, projection, and history views.
 
@@ -503,13 +503,49 @@ Tier 0 launch-critical registry rows are fully materialized for:
 - `blocked_projection`
 - `goal_receipt`
 
-Later GUI, analytics, provider, terminal, browser, worktree/lane, project-state, permission/safe-point, and feature projection families remain inventoried with `status = deferred_not_build_blocking`, an owner, a reason, and a reopen condition. They are not allowed to rely on prose-only key templates as implementation authority; their rows must be promoted to materialized value schemas before a buildability claim can depend on them.
+Later GUI, analytics, provider, terminal, browser, worktree/lane, project-state, coordination debug mirror export, permission/safe-point, and feature projection families remain inventoried with `status = deferred_not_build_blocking` or `status = compatibility_alias`, an owner, a reason, and a reopen condition. They are not allowed to rely on prose-only key templates as implementation authority; their rows must be promoted to materialized value schemas before a buildability claim can depend on them.
 
 All persisted values require `schema_version`. Stored values must not contain raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets. Secret-bearing or sensitive data is represented only by redacted refs, masked metadata, hashes, evidence refs, or external custody refs. Replay must reject unsupported schema ids/versions rather than inferring value shape from a key template.
 
 This Tier 0C-2 registry is partial persistence-materialization progress only. It does not close provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundary, behavioral acceptance, or broad redb-family blockers; it does not create WorkNodes, NodeSeeds, candidates, executable queues, manifests, implementation files, runtime launches, or product build tasks; and `buildability_gate_passed` remains false.
 
 ContractRef: SchemaID:pm.storage_value_registry.v1, ContractName:Plans/storage_value_registry.json, ContractName:Plans/storage_value_registry.schema.json, ContractName:Plans/storage-plan.md
+
+#### 2.3.2 Coordination record, projection, and mirror export families
+
+Storage owns the durable coordination record/projection boundary used by Orchestrator and crew surfaces. Canonical coordination state is not a JSON file family. It is the `EventRecord` seglog coordination family folded into redb read models with explicit projector checkpoints.
+
+Canonical seglog record families:
+- `coordination.agent_registered` records registration before execution.
+- `coordination.agent_status_updated` records status/lifecycle changes.
+- `coordination.agent_operation_updated` records current operation/progress state.
+- `coordination.agent_file_ownership_updated` records file-activity claims for warnings and scheduling inputs; it is not a FileSafe lock or exclusive lease.
+- `coordination.agent_unregistered` records normal terminal/unregister behavior.
+- `coordination.agent_crashed` records crash, heartbeat-expiry, process-loss, or worktree-loss resolution.
+- `coordination.agent_aborted` records parent/user/runtime abort resolution.
+- `coordination.debug_mirror_exported` records optional mirror export attempts, source checkpoint, result, and corruption/recovery metadata.
+
+Authoritative redb projections and checkpoints:
+- `coordination_agent_projection.v1:{project_id}:{agent_id}` carries latest lifecycle/status, runtime/platform identity, worktree binding, current operation ref, active file claims, `agent_revision`, and `last_applied_event_id`.
+- `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}` carries file-activity claims used for conflict warnings.
+- `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}` carries current operation text/progress, source refs, and operation timing.
+- `coordination_snapshot_projection.v1:{project_id}:{projection_scope}` carries the scheduler/prompt-injection read model for a run, lane, node, worktree, or full project scope.
+- `projector.checkpoint.coordination:{project_id}` proves the seglog sequence consumed by coordination projections.
+
+Concurrency and atomicity rules:
+- The supported v1 concurrency envelope is up to 32 active agents across multiple worktrees. Above that bound, schedulers must queue, throttle, or require an explicit higher-capacity contract.
+- A coordination mutation is admitted only through the PM-owned append API. Writers provide an idempotency key plus expected `agent_revision` or `last_applied_event_id`; the append and projection result are one logical append/CAS boundary.
+- The projector advances `coordination_*_projection.v1` rows and `projector.checkpoint.coordination:{project_id}` in one redb transaction. Readers that require authority must verify checkpoint coverage for the needed seglog sequence.
+- Lost updates are prohibited: a stale expected revision returns a coordination conflict diagnostic, and the caller reloads projections before appending a successor event.
+- Read-modify-write of `.puppet-master/state/*.json` is prohibited for canonical coordination state. Whole-file writes are allowed only in the debug/export mirror writer after a projection commit.
+
+Mirror contract:
+- PM-owned projection/export code is the only writer for `.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` when those files exist.
+- Mirrors may lag canonical storage, be absent in headless/clean-room runs, and expose source sequence/checkpoint metadata when present.
+- Invalid JSON, partial writes, stale checkpoints, missing mirrors, and disk-full failures are mirror failures. PM quarantines or overwrites the mirror from seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata.
+- Mirrors cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions. Authoritative consumers use `coordination_snapshot_projection.v1` or the narrower agent/file/operation projections.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#Stable-active-agent-coordination-event-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections, SchemaID:pm.storage_value.coordination_event_records.v1
 
 #### Canonical records baseline
 
@@ -2508,6 +2544,7 @@ unblocks: []
 acceptance_criteria:
 - "SP-005 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "Runtime coordination/audit uses event-sourced seglog/redb records and projections as primary authority; file-based canon remains export/inspection mirror material only."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -2763,6 +2800,7 @@ unblocks: []
 acceptance_criteria:
 - "SP-009 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "active-agents.json is preserved only as compatibility/debug mirror vocabulary and is not part of project_state canonical runtime truth."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -2804,8 +2842,10 @@ negative_constraints:
 - "Project registry state stays narrow."
 - "Consumer docs must not own storage records."
 preserved_contractrefs: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "active-agents.json is compatibility/debug mirror vocabulary when it appears in project-state source spans."
+stale_retired_dispositions:
+- "Project-state ownership of active-agent runtime truth is retired; coordination records/projections own it."
 owner_hints:
 - "Plans/storage-plan.md"
 - "Plans/WorktreeGitImprovement.md"
@@ -16415,7 +16455,7 @@ canonical_text: >-
   PlanCompileRun, compiler wave contract, WorkGraph draft, WorkNodeRequest,
   Executor intake report, attempt receipt, EventRecord index, blocked
   projection, and goal receipt. Later GUI, provider, analytics, terminal,
-  browser, project-state, worktree/lane, permission/safe-point, and feature
+  browser, project-state, coordination mirror export, worktree/lane, permission/safe-point, and feature
   projection families are inventoried as deferred_not_build_blocking with an
   owner, reason, and reopen condition. Persisted values require schema_version,
   name key shape and value owner, specify replay, migration, retention and
@@ -16431,6 +16471,7 @@ acceptance_criteria:
   - Launch-critical rows are materialized for approved_plan_pack, plan_approved_outbox, plan_compile_run, compiler_wave_contract, workgraph_draft, worknode_request, executor_intake_report, attempt_receipt, event_record_index, blocked_projection, and goal_receipt.
   - Every persisted value requires schema_version and materialized schemas carry matching schema_id and schema_version constants.
   - Non-critical families are not prose-only authority; deferred rows include owner, reason, and reopen condition.
+  - Coordination event, read-model, and debug mirror export families are registered as non-launch-critical storage families; mirrors remain compatibility/debug surfaces only.
   - scripts/pm-implementation-readiness.py validate rejects missing schema_version, missing owners, missing materialized launch-critical families, and unredacted secret-bearing fields.
   - This is partial storage-value progress only; IRB-002 remains open until all required persistence families and replay/migration behavior are executable and proven.
 validation_surfaces:
@@ -16465,6 +16506,8 @@ preserved_exact_tokens:
   - "`event_record_index.v1:{project_id}:{sequence_id}:{event_id}`"
   - "`blocked_projection.v1:{project_id}:{node_id}`"
   - "`goal_receipt.v1:{project_id}:{receipt_id}`"
+  - "`coordination.agent_registered`"
+  - "`coordination_snapshot_projection.v1:{project_id}:{projection_scope}`"
   - "`schema_version`"
   - "`deferred_not_build_blocking`"
 negative_constraints:
@@ -16472,10 +16515,75 @@ negative_constraints:
   - Do not close provider_stream, runtime_lifecycle, clean_room_harness, GUI, security, behavioral_acceptance, or broad redb-family blockers from this registry.
   - Do not create WorkNodes, NodeSeeds, candidates, queues, manifests, implementation files, runtime launches, product build tasks, or executable PlanCompile artifacts.
   - Do not rely on prose-only redb key templates as implementation authority after this registry exists.
+  - Do not treat coordination debug mirrors or project_state fields as canonical runtime coordination truth.
   - Do not store raw secrets, tokens, passwords, credentials, API keys, OAuth values, local credential paths, or local machine secrets in persisted values.
 owner_hints:
   - Plans/storage-plan.md
   - Plans/storage_value_registry.json
   - Plans/storage_value_registry.schema.json
   - scripts/pm-implementation-readiness.py
+```
+
+### SP-232 - Coordination Record Projection And Mirror Storage Contract
+
+```yaml
+plan_unit_id: SP-232
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  storage-plan owns the storage boundary for active-agent coordination canon: coordination EventRecords in seglog,
+  authoritative redb projections for agent/file/operation/snapshot read models, a coordination projector checkpoint, and
+  optional debug/export mirror metadata. `project_state`, `active-agents.json`, `agent-messages.json`, and
+  `.puppet-master/state/*.json` paths are compatibility/debug/export surfaces only and must not own runtime coordination
+  truth.
+gui_related: false
+gui_classification_reason: This unit defines backend storage records and mirror/export boundaries, not GUI presentation.
+depends_on: [SP-230, SP-231, CV-309, OSI-432]
+unblocks: []
+acceptance_criteria:
+  - The canonical coordination event families are named for agent registration, status update, operation update, file-activity update, unregister, crash, abort, and debug mirror export.
+  - The authoritative projection families are `coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}`.
+  - Up to 32 active agents across multiple worktrees update state only through the PM-owned append API with idempotency, expected revision/last-applied event id, and a redb projection/checkpoint transaction.
+  - Stale writes fail with coordination conflict diagnostics rather than overwriting canonical state.
+  - "`.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are registered or retired as debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions."
+  - Mirror corruption, absence, lag, stale checkpoint, or disk-full failure is recovered by quarantine or regeneration from seglog/redb and recorded with `coordination.debug_mirror_exported`.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: storage_coordination_canon_regression
+reasoning_tier: high
+context_scope: storage_coordination_canon
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/path_reference_registry.json
+  - Plans/Contracts_V0.md
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: storage_coordination_canon_repair
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+source_atom_ids: []
+preserved_exact_tokens:
+  - "active-agents.json"
+  - "agent-messages.json"
+  - ".puppet-master/state/verification-{node_id}-end.json"
+  - ".puppet-master/state/handoff-validation-{node_id}.json"
+  - "coordination.agent_registered"
+  - "coordination.debug_mirror_exported"
+  - "coordination_snapshot_projection.v1:{project_id}:{projection_scope}"
+negative_constraints:
+  - Do not store active-agent runtime truth in project_state or loose JSON files.
+  - Do not use read-modify-write JSON files as the canonical coordination transaction boundary.
+  - Do not allow mirror lag, corruption, or absence to change authoritative scheduling or execution decisions.
+  - Do not declare broad runtime/storage buildability from these deferred coordination registry rows alone.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/storage_value_registry.json
+  - Plans/path_reference_registry.json
 ```

@@ -2639,6 +2639,44 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
 
+#### Stable active-agent coordination event families
+
+Active-agent coordination uses the canonical `EventRecord` envelope (`schema_id = pm.event.v0`) plus the coordination payload schemas registered by storage. These events feed redb coordination projections; side files such as `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` are compatibility/debug/export mirrors only and do not stand beside the EventRecord/projection model as runtime truth.
+
+For every `coordination.*` event below, the payload MUST preserve the PM lineage envelope:
+- `project_id`
+- `run_id`
+- `thread_id?`
+- `agent_id`
+- `agent_type?`
+- `parent_run_id?`
+- `child_run_id?`
+- `node_id?`
+- `lane_id?`
+- `worktree_id?`
+- `platform`
+- `agent_revision?`
+- `expected_previous_revision?`
+- `last_applied_event_id?`
+- `idempotency_key`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md, SchemaID:pm.event.v0
+
+| event_type | payload_fields | description |
+|---|---|---|
+| `coordination.agent_registered` | `project_id`, `run_id`, `thread_id?`, `agent_id`, `agent_type`, `parent_run_id?`, `child_run_id?`, `node_id?`, `lane_id?`, `worktree_id?`, `platform`, `model_id?`, `started_at_utc`, `agent_revision`, `idempotency_key` | Agent registration before execution. |
+| `coordination.agent_status_updated` | lineage envelope, `status`, `status_reason?`, `observed_at_utc`, `agent_revision`, `expected_previous_revision?` | Agent lifecycle/status update. |
+| `coordination.agent_operation_updated` | lineage envelope, `operation_id`, `operation_summary`, `progress_pct?`, `operation_refs[]?`, `observed_at_utc` | Current operation and progress update. |
+| `coordination.agent_file_ownership_updated` | lineage envelope, `path_ref`, `path_hash`, `claim_kind`, `claim_confidence`, `operation_id?`, `observed_at_utc` | File-activity claim for coordination warnings; not a FileSafe lock or exclusive lease. |
+| `coordination.agent_unregistered` | lineage envelope, `terminal_status`, `finished_at_utc`, `result_ref?` | Normal terminal unregister/completion. |
+| `coordination.agent_crashed` | lineage envelope, `crash_reason`, `detected_at_utc`, `heartbeat_age_ms?`, `process_ref?`, `worktree_ref?` | Crash, heartbeat-expiry, process-loss, or worktree-loss resolution. |
+| `coordination.agent_aborted` | lineage envelope, `abort_reason`, `aborted_by_ref`, `aborted_at_utc` | Parent/user/runtime abort resolution. |
+| `coordination.debug_mirror_exported` | `project_id`, `mirror_path`, `mirror_kind`, `source_checkpoint`, `source_sequence_id`, `export_status`, `exported_at_utc`, `error_code?`, `quarantine_ref?` | Optional debug/export mirror write or recovery result. |
+
+Coordination consumers use `coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}` for authority. Scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, and validation decisions MUST NOT read `.puppet-master/state/*.json` mirrors as authority.
+
+ContractRef: ContractName:Plans/storage-plan.md#Coordination-record-projection-and-mirror-export-families, ContractName:Plans/orchestrator-subagent-integration.md#Canonical-active-agent-coordination-records-and-projections
+
 For every `crew.*` event below, the payload MUST preserve crew and child lineage together:
 - `run_id`
 - `thread_id`
@@ -2655,6 +2693,9 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orc
 | `crew.member_added` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `role` | Member joined. |
 | `crew.member_removed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `reason` | Member left. |
 | `crew.coordination` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `coordination_type`, `details` | Inter-agent coordination. |
+| `crew.board_message_posted` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `message_id`, `from_agent_id`, `to_agent_id?`, `to_agent_type?`, `subject`, `priority` | Attributable crew-board message posted. |
+| `crew.board_message_read` | `run_id`, `thread_id`, `crew_id`, `message_id`, `agent_id`, `read_at_utc` | Crew-board message read receipt. |
+| `crew.board_messages_archived` | `run_id`, `thread_id`, `crew_id`, `archived_before_utc`, `message_ids[]?`, `archive_reason` | Crew-board messages archived by retention policy. |
 | `crew.completed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `result_summary`, `duration_ms` | Crew finished. |
 | `crew.disbanded` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `reason` | Crew dissolved. |
 
@@ -19429,4 +19470,70 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/event_record.schema.json
   - Plans/storage-plan.md
+```
+
+### CV-310 - Active-Agent Coordination Event Family Contract
+
+```yaml
+plan_unit_id: CV-310
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 names the stable active-agent coordination EventRecord families consumed by Orchestrator and storage:
+  `coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`,
+  `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`,
+  `coordination.agent_aborted`, and `coordination.debug_mirror_exported`. These events feed redb coordination projections;
+  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are compatibility/debug/export
+  mirrors only and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash,
+  abort, receipt, or validation decisions.
+gui_related: false
+gui_classification_reason: This unit defines runtime event contracts and storage authority, not GUI presentation.
+depends_on: [CV-309, SP-230, SP-232, OSI-432]
+unblocks: []
+acceptance_criteria:
+  - Stable `coordination.*` event rows list payload minima for registration, status, operation, file-activity, unregister, crash, abort, and debug mirror export.
+  - Coordination payloads preserve project/run/thread/agent lineage, platform, revision/checkpoint/idempotency fields, and relevant operation/file/mirror metadata.
+  - File-activity events are coordination claims only and do not create FileSafe locks or durable exclusive leases.
+  - Coordination consumers use redb projections and `projector.checkpoint.coordination:{project_id}` for authority.
+  - JSON side files remain compatibility/debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: coordination_contract_file_canon_regression
+reasoning_tier: high
+context_scope: storage_coordination_canon
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage_value_registry.json
+node_compile_hint:
+  mode: storage_coordination_canon_repair
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+source_atom_ids: []
+preserved_exact_tokens:
+  - "`coordination.agent_registered`"
+  - "`coordination.agent_status_updated`"
+  - "`coordination.agent_operation_updated`"
+  - "`coordination.agent_file_ownership_updated`"
+  - "`coordination.agent_unregistered`"
+  - "`coordination.agent_crashed`"
+  - "`coordination.agent_aborted`"
+  - "`coordination.debug_mirror_exported`"
+  - "`active-agents.json`"
+  - "`.puppet-master/state/*.json`"
+negative_constraints:
+  - Do not define loose JSON files as active-agent coordination canon.
+  - Do not let coordination events bypass the EventRecord envelope.
+  - Do not treat coordination file-activity claims as FileSafe locks or leases.
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/orchestrator-subagent-integration.md
 ```

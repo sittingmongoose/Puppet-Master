@@ -18,7 +18,7 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "5899047505683d85b21d8f9dc60a9e319eb4aefc056ac5fe91b7b0ef00ac4606"
+      "sha256": "4290fca530556d2b9c7548372d6b090f64f372410adf5395643ffba64628f83f"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -245,6 +245,11 @@
       "name": "gui-platform-hardening-repair",
       "result": "PASS",
       "details": "Slint 1.17.1 web-WASM/no-emoji hardening is documented in Plans/.audits/fable-20260706/GUI_PLATFORM_HARDENING_REPAIR.md; no WorkNodes, NodeSeeds, runtime artifacts, implementation files, or production build tasks were created."
+    },
+    {
+      "name": "storage-coordination-canon-repair-evidence-restamp",
+      "result": "PASS",
+      "details": "Evidence artifact hashes refreshed after the FABLE storage/coordination canon repair regenerated canonical docs, plan index, migration metadata, Spec Lock, and plan-sharding evidence."
     }
   ],
   "commands_run": [

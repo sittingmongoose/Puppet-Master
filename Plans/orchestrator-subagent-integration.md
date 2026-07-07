@@ -1776,7 +1776,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 
 **AfterTierEnd verification responsibilities:**
 
-- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{node_id}-end.json`
+- **Persist verification results:** Append the verification result to the canonical runtime verification/receipt event family and project it into redb-backed verification read models. The legacy `.puppet-master/state/verification-{node_id}-end.json` path is retired source-lineage and may exist only as an explicit debug/export mirror generated from canonical storage.
 - **Update tier status:** Update tier status in PRD/state based on verification results
 - **Generate feedback:** If verification failed, generate feedback for agent/user (what failed, which file/criterion, suggested fix)
 - **Handle failures:** If quality fails, either mark tier as "incomplete" (rework) or "complete with warnings" (log and proceed) per policy
@@ -2364,7 +2364,7 @@ where F: FnOnce() -> Result<T>,
 
 **AfterHandoffValidation responsibilities:**
 
-- **Persist validation results:** Save validation results to `.puppet-master/state/handoff-validation-{node_id}.json`
+- **Persist validation results:** Append the handoff-validation result to the canonical runtime verification/receipt event family and project it into redb-backed handoff validation read models. The legacy `.puppet-master/state/handoff-validation-{node_id}.json` path is retired source-lineage and may exist only as an explicit debug/export mirror generated from canonical storage.
 - **Update tier context:** Update tier context with validated `SubagentOutput` (task_report, downstream_context, findings)
 - **Handle validation failures:** If validation fails after retry, proceed with partial output but mark tier as "complete with warnings"
 
@@ -3481,7 +3481,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Phase 3: Orchestrator Integration
 
 - **Where:** `src/core/orchestrator.rs`. The orchestrator already has `tier_config_for(tier_type) -> &TierConfig` (platform, model, plan_mode, etc.); use it for subagent runs.
-- **What to add:** (1) Read `enable_tier_subagents` and subagent config from the same config source as tier config (e.g. from run config or GuiConfig). (2) When executing a tier, if subagents enabled: call `SubagentSelector::select_for_tier`, apply `tier_overrides` (replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) **Register agent in coordination state** before execution (see "Agent Coordination and Communication"). (4) **Get coordination context** and inject into prompt (warns agent about active files/operations). (5) For each subagent name, build an `ExecutionRequest` (prompt with coordination context, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). (6) **Update coordination state** during execution (files being edited, current operation). (7) **Unregister agent** after execution completes. (8) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
+- **What to add:** (1) Read `enable_tier_subagents` and subagent config from the same config source as tier config (e.g. from run config or GuiConfig). (2) When executing a tier, if subagents enabled: call `SubagentSelector::select_for_tier`, apply `tier_overrides` (replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) **Append agent registration** before execution (see "Agent Coordination and Communication"). (4) **Read coordination context from the projection** and inject it into the prompt (warns agent about active files/operations). (5) For each subagent name, build an `ExecutionRequest` (prompt with coordination context, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). (6) **Append status/operation/file-activity updates** during execution. (7) **Append unregister/crash/abort resolution** after execution completes. (8) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
 
 ### Phase 4: Error Pattern Detection
 
@@ -3668,6 +3668,48 @@ This owner section defines both the canonical live coordination projection and t
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
+#### Canonical active-agent coordination records and projections
+
+Canonical durable coordination truth is the `EventRecord` stream plus redb projections owned by `Plans/storage-plan.md` and registered in `Plans/Contracts_V0.md`. `AgentCoordinator` is an append/projection consumer, not a JSON file store.
+
+Canonical seglog record families:
+- `coordination.agent_registered` records agent registration before execution.
+- `coordination.agent_status_updated` records lifecycle/status changes such as queued, running, awaiting_parent, blocked, complete, failed, or cancelled.
+- `coordination.agent_operation_updated` records the current operation summary, progress note, and operation refs.
+- `coordination.agent_file_ownership_updated` records file activity claims for coordination warnings; it is not a FileSafe lock or durable exclusive lease.
+- `coordination.agent_unregistered` records normal completion or explicit unregister.
+- `coordination.agent_crashed` records crash/heartbeat expiry resolution.
+- `coordination.agent_aborted` records parent/user/runtime abort resolution.
+- `coordination.debug_mirror_exported` records optional mirror export attempts and outcomes.
+
+Canonical redb projections:
+- `coordination_agent_projection.v1:{project_id}:{agent_id}` for the latest agent lifecycle, status, runtime/platform identity, worktree binding, operation ref, and last applied coordination sequence.
+- `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}` for current file-activity claims and conflict-warning inputs.
+- `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}` for operation progress, current operation text, and related source refs.
+- `coordination_snapshot_projection.v1:{project_id}:{projection_scope}` for the prompt-injection/read-model snapshot consumed by schedulers and agents.
+- `projector.checkpoint.coordination:{project_id}` for the projector checkpoint that proves which seglog range the read model has consumed.
+
+Concurrency and atomicity rules:
+- Up to 32 active agents across multiple worktrees update coordination by calling the PM-owned coordination append API; they do not read-modify-write canonical state files.
+- A coordination mutation is admitted only as one append/CAS boundary: the writer checks the current `agent_revision` or `last_applied_event_id`, appends one EventRecord with an idempotency key, and the projector advances the redb projection plus checkpoint in one redb transaction.
+- Lost updates are prevented by CAS on `agent_revision`/`last_applied_event_id`. A stale update returns a coordination conflict diagnostic; the caller reloads the projection and emits a new event instead of overwriting the old projection.
+- Canonical scheduling, conflict prevention, prompt injection, and execution decisions read only the redb projections whose checkpoint covers the required seglog sequence. They never read `active-agents.json`, `agent-messages.json`, verification JSON, or handoff JSON as authority.
+- Mirror writers run after canonical projection commits. If a mirror write fails, lags, or is corrupt, PM emits diagnostics and regenerates the mirror from seglog/redb; canonical scheduling and execution continue from projections only.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.event.v0
+
+#### Compatibility and debug mirror contract
+
+`.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are compatibility/debug/export artifacts only. They are written by PM-owned projection or export code after redb commits, may lag canonical storage, and may be absent in headless or clean-room runs.
+
+Mirror contract:
+- **Writer:** only PM projector/exporter code writes mirrors; child agents, provider adapters, and platform hooks do not write them directly.
+- **Lag:** mirrors may lag until the next projector/export tick and must expose source sequence/checkpoint metadata when present.
+- **Corruption:** invalid JSON, partial writes, missing files, stale sequence ids, or disk-full failures are mirror failures. PM quarantines or overwrites the mirror from canonical seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata.
+- **Authority:** mirrors cannot drive scheduling, conflict prevention, execution admission, unregister/crash cleanup, or prompt-injection decisions. Consumers that need authority must read `coordination_snapshot_projection.v1` or the more specific redb projections.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
+
 #### Canonical crew message-board contract
 
 PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for attributable cross-agent coordination that cannot be reduced to live status projection alone. `.puppet-master/state/agent-messages.json` may exist as an optional debug or interoperability mirror, but it is not the canonical persistence store.
@@ -3736,11 +3778,11 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 - **Context awareness:** Agents understand what other agents are working on, reducing confusion when seeing changes
 - **Efficient collaboration:** Agents can build on each other's work, reference shared decisions, and avoid duplicate effort
 - **Reduced errors:** Agents don't overwrite each other's changes or create conflicting implementations
-- **Cross-platform coordination:** Agents from different platforms (Codex, Claude, Cursor, Gemini, Copilot) can coordinate with each other through shared state files
+- **Cross-platform coordination:** Agents from different platforms (Codex, Claude, Cursor, Gemini, Copilot) coordinate through the shared seglog/redb coordination projection; optional state files are debug/export mirrors only.
 
 **Coordination mechanisms:**
 
-1. **Shared state files (existing):** All agents read `progress.txt`, `AGENTS.md`, `prd.json` -- these provide **asynchronous** coordination (agents see what others have done, not what they're doing now).
+1. **Source-lineage shared files (existing):** `progress.txt`, `AGENTS.md`, and `prd.json` may remain source-lineage or project-context inputs where a run explicitly imports them, but they do not provide canonical live coordination truth.
 
 2. **Real-time coordination state (new, cross-platform):** Add a canonical coordination projection, optionally mirrored to `.puppet-master/state/active-agents.json` for debugging, that tracks:
    - Which agents/subagents are currently active (including platform: "codex", "claude", "cursor", "gemini", "copilot")
@@ -3760,10 +3802,10 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
    - Cross-platform and same-platform coordination both use canonical coordination state + prompt injection.
 
 5. **Cross-worktree awareness:** Even when agents run in separate worktrees, they can:
-   - Read shared state files from main repo (progress.txt, prd.json)
-   - Read the projected active-agent state to see what others are doing (regardless of platform)
-   - Write their own status through the same projected coordination path before starting work
-   - Update status as they work (file being edited, operation in progress)
+   - Read source-lineage/project-context inputs when a run imports them.
+   - Read the projected active-agent state to see what others are doing (regardless of platform).
+   - Append registration/status/operation/file-activity events before and during work.
+   - Update coordination by appending events that the redb projector folds into the read model.
 
 6. **Prompt injection:** Inject coordination context into each agent's prompt:
    ```
@@ -3784,7 +3826,7 @@ When a Codex agent and a Claude Code agent work simultaneously:
 
 ```
 1. Codex agent (rust-engineer) starts Subtask A:
-   - Registers in active-agents.json:
+   - Appends `coordination.agent_registered`:
      {
        "agent_id": "rust-engineer-1.1.1",
        "platform": "codex",
@@ -3794,9 +3836,9 @@ When a Codex agent and a Claude Code agent work simultaneously:
      }
 
 2. Claude Code agent (test-automator) starts Subtask B (parallel):
-   - Reads active-agents.json before starting
+   - Reads `coordination_snapshot_projection.v1` before starting
    - Sees: "rust-engineer (Codex) is working on Subtask A"
-   - Registers itself:
+   - Appends `coordination.agent_registered` for itself:
      {
        "agent_id": "test-automator-1.1.2",
        "platform": "claude",
@@ -3806,7 +3848,7 @@ When a Codex agent and a Claude Code agent work simultaneously:
      }
 
 3. Codex agent begins editing src/api.rs:
-   - Updates coordination projection:
+   - Appends `coordination.agent_file_ownership_updated` and `coordination.agent_operation_updated`:
      {
        "agent_id": "rust-engineer-1.1.1",
        "platform": "codex",
@@ -3814,13 +3856,13 @@ When a Codex agent and a Claude Code agent work simultaneously:
        "current_operation": "Editing src/api.rs to add POST /users endpoint"
      }
 
-4. Claude Code agent reads coordination state (periodic check):
+4. Claude Code agent reads `coordination_snapshot_projection.v1` (periodic check):
    - Sees: "rust-engineer (Codex) is editing src/api.rs"
    - Prompt includes: "**Active Agents:** rust-engineer (Codex) is editing src/api.rs. **Your Task:** Add tests for POST /users endpoint. Wait for rust-engineer to finish src/api.rs before adding tests."
    - Agent understands context and avoids editing src/api.rs
 
 5. Codex agent completes:
-   - Unregisters from coordination projection
+   - Appends `coordination.agent_unregistered`
    - Claude Code agent can now safely edit src/api.rs for tests
 ```
 
@@ -3858,173 +3900,43 @@ The coordination projection includes a `platform` field so agents know which pla
 
 This allows agents to see not just what others are doing, but also which platform they're using, which can be useful context (e.g., "Codex agent is working on this, Claude agent is working on that").
 
-**Implementation:**
+**Canonical implementation shape:**
 
 ```rust
 // src/core/agent_coordination.rs (new module)
 
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
-use std::path::PathBuf;
-use chrono::{DateTime, Utc};
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-// DRY:DATA:ActiveAgent — Active agent coordination state
-pub struct ActiveAgent {
-    pub agent_id: String, // e.g., "rust-engineer", "test-automator"
-    pub agent_type: String, // subagent type/role
-    pub platform: Platform, // "codex", "claude", "cursor", "gemini", "copilot" - enables cross-platform coordination
-    pub node_id: String,
-    pub lane_id: Option<String>,
-    pub run_id: String,
-    pub worktree_path: Option<PathBuf>, // None if main repo
-    pub files_being_edited: Vec<PathBuf>,
-    pub current_operation: String, // e.g., "editing src/api.rs", "running tests"
-    pub started_at: DateTime<Utc>,
-    pub last_update: DateTime<Utc>,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct AgentCoordinationState {
-    pub active_agents: HashMap<String, ActiveAgent>, // keyed by agent_id
-    pub last_updated: DateTime<Utc>,
-}
-
-// DRY:DATA:AgentCoordinator — Agent coordination state manager
 pub struct AgentCoordinator {
-    state_file: PathBuf,
+    store: CoordinationStore,
 }
 
 impl AgentCoordinator {
-    // DRY:FN:new — Create agent coordinator
-    pub fn new(project_root: &Path) -> Self {
-        Self {
-            state_file: project_root.join(".puppet-master").join("state").join("active-agents.json"),
-        }
+    pub async fn register_agent(&self, input: RegisterAgent) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("coordination.agent_registered", input).await
     }
 
-    // DRY:FN:register_agent — Register an agent as active
-    // DRY REQUIREMENT: Agent platform field MUST be from node_config.platform — NEVER hardcode platform
-    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
-    /// Register an agent as active
-    pub async fn register_agent(&self, agent: ActiveAgent) -> Result<()> {
-        // DRY: Validate agent_id format if needed — use subagent_registry::is_valid_subagent_name() for subagent names
-        let mut state = self.load_state().await?;
-        state.active_agents.insert(agent.agent_id.clone(), agent);
-        state.last_updated = Utc::now();
-        self.save_state(&state).await
+    pub async fn update_status(&self, input: AgentStatusUpdate) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("coordination.agent_status_updated", input).await
     }
 
-    /// Update agent status (files being edited, current operation)
-    pub async fn update_agent_status(
-        &self,
-        agent_id: &str,
-        files_being_edited: Vec<PathBuf>,
-        current_operation: String,
-    ) -> Result<()> {
-        let mut state = self.load_state().await?;
-        if let Some(agent) = state.active_agents.get_mut(agent_id) {
-            agent.files_being_edited = files_being_edited;
-            agent.current_operation = current_operation;
-            agent.last_update = Utc::now();
-            state.last_updated = Utc::now();
-            self.save_state(&state).await
-        } else {
-            Err(anyhow!("Agent {} not found", agent_id))
-        }
+    pub async fn update_operation(&self, input: AgentOperationUpdate) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("coordination.agent_operation_updated", input).await
     }
 
-    /// Unregister an agent (when it completes)
-    pub async fn unregister_agent(&self, agent_id: &str) -> Result<()> {
-        let mut state = self.load_state().await?;
-        state.active_agents.remove(agent_id);
-        state.last_updated = Utc::now();
-        self.save_state(&state).await
+    pub async fn update_file_ownership(&self, input: AgentFileOwnershipUpdate) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("coordination.agent_file_ownership_updated", input).await
     }
 
-    // DRY:FN:get_coordination_context — Get coordination context for prompt injection
-    /// Get coordination context for prompt injection
-    pub async fn get_coordination_context(&self) -> Result<String> {
-        let state = self.load_state().await?;
-        let mut context = String::new();
-
-        if !state.active_agents.is_empty() {
-            context.push_str("**Active Agents:**\n");
-            for agent in state.active_agents.values() {
-                let age = Utc::now().signed_duration_since(agent.started_at);
-                // DRY REQUIREMENT: Platform display name MUST use platform_specs::display_name_for() — NEVER hardcode platform names
-                ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
-                let platform_display = platform_specs::display_name_for(agent.platform);
-                context.push_str(&format!(
-                    "- {} ({}) is {} (started {} ago, node: {})\n",
-                    agent.agent_id,
-                    platform_display, // Use platform_specs for display name
-                    agent.current_operation,
-                    format_duration(age),
-                    agent.node_id
-                ));
-            }
-
-            context.push_str("\n**Files Being Modified:**\n");
-            let mut all_files: Vec<_> = state.active_agents.values()
-                .flat_map(|a| &a.files_being_edited)
-                .collect();
-            all_files.sort();
-            all_files.dedup();
-            for file in all_files {
-                let agents: Vec<_> = state.active_agents.values()
-                    .filter(|a| a.files_being_edited.contains(file))
-                    .map(|a| &a.agent_id)
-                    .collect();
-                context.push_str(&format!(
-                    "- {} (by {})\n",
-                    file.display(),
-                    agents.join(", ")
-                ));
-            }
-        }
-
-        Ok(context)
+    pub async fn unregister_agent(&self, input: AgentTerminalUpdate) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("coordination.agent_unregistered", input).await
     }
 
-    async fn load_state(&self) -> Result<AgentCoordinationState> {
-        if self.state_file.exists() {
-            let json = std::fs::read_to_string(&self.state_file)?;
-            let state: AgentCoordinationState = serde_json::from_str(&json)?;
-            // Prune stale agents (no update in last hour)
-            let mut pruned = state.clone();
-            let cutoff = Utc::now() - chrono::Duration::hours(1);
-            pruned.active_agents.retain(|_, agent| agent.last_update > cutoff);
-            if pruned.active_agents.len() != state.active_agents.len() {
-                self.save_state(&pruned).await?;
-            }
-            Ok(pruned)
-        } else {
-            Ok(AgentCoordinationState {
-                active_agents: HashMap::new(),
-                last_updated: Utc::now(),
-            })
-        }
-    }
-
-    async fn save_state(&self, state: &AgentCoordinationState) -> Result<()> {
-        std::fs::create_dir_all(self.state_file.parent().unwrap())?;
-        let json = serde_json::to_string_pretty(state)?;
-        std::fs::write(&self.state_file, json)?;
-        Ok(())
-    }
-}
-
-fn format_duration(d: chrono::Duration) -> String {
-    if d.num_minutes() < 1 {
-        format!("{}s", d.num_seconds())
-    } else if d.num_hours() < 1 {
-        format!("{}m", d.num_minutes())
-    } else {
-        format!("{}h {}m", d.num_hours(), d.num_minutes() % 60)
+    pub async fn get_coordination_context(&self, scope: CoordinationScope) -> Result<CoordinationSnapshot> {
+        self.store.read_coordination_snapshot(scope).await
     }
 }
 ```
+
+The legacy `state_file: .puppet-master/state/active-agents.json` sketch is source-lineage only. Implementations must not use it as the canonical mutation path.
 
 **Integration with orchestrator:**
 
@@ -4032,10 +3944,10 @@ In `src/core/orchestrator.rs`, before executing a node:
 
 ```rust
 // Before node execution
-let coordinator = AgentCoordinator::new(&self.config.project.working_directory);
+let coordinator = AgentCoordinator::new(self.coordination_store.clone());
 
 // Register this agent/subagent as active (includes platform for cross-platform coordination)
-coordinator.register_agent(ActiveAgent {
+coordinator.register_agent(RegisterAgent {
     agent_id: format!("{}-{}", subagent_name, node_id),
     agent_type: subagent_name.to_string(),
     platform: node_config.platform, // Include platform so other agents know which platform this agent uses
@@ -4047,6 +3959,8 @@ coordinator.register_agent(ActiveAgent {
     current_operation: format!("Starting node {}", node_id),
     started_at: Utc::now(),
     last_update: Utc::now(),
+    expected_agent_revision: None,
+    idempotency_key: coordination_idempotency_key,
 }).await?;
 
 // Get coordination context and inject into prompt
@@ -4068,14 +3982,15 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 **Provider coordination model (Codex/Copilot included):**
 
 - **Canonical mode:** Coordination projection for all platforms, optionally mirrored to `active-agents.json` for debugging.
-- **Scope:** Works for same-platform and cross-platform crews using the same state schema.
+- **Scope:** Works for same-platform and cross-platform crews using the same coordination event/projection schema.
 - **Runtime path:** Direct-provider invocation via direct provider calls (no local CLI bridge); no SDK threads/sessions.
-- **Prompt contract:** Every subagent receives coordination context built from shared state.
+- **Prompt contract:** Every subagent receives coordination context built from the canonical coordination snapshot projection.
 
 **When to use coordination modes:**
 
-- **File-based coordination (canonical):** Always on for orchestrator-managed runs. All platforms (Codex, Claude, Cursor, Gemini, Copilot) read/write the same coordination file.
-- **Platform-native hooks (optional enrichments):** Use hook events where available to improve update fidelity, but keep the file-based state as the single source of coordination truth.
+- **Seglog/redb coordination (canonical):** Always on for orchestrator-managed runs. All platforms (Codex, Claude, Cursor, Gemini, Copilot) append coordination events and read the same redb coordination projections.
+- **Debug/export mirrors (optional):** `active-agents.json` and related `.puppet-master/state/*.json` files may be emitted after projection commits for debugging or interoperability, but they are not read by schedulers or agents as authority.
+- **Platform-native hooks (optional enrichments):** Use hook events where available to improve update fidelity, but keep hooks as producers of normalized coordination events rather than a replacement for canonical seglog/redb state.
 
 **Benefits:**
 
@@ -4085,14 +4000,14 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 - **No "freaking out":** Agents see coordination context explaining why code is changing, who is changing it, and what they're doing. Reduces false alarms and confusion.
 - **Platform-neutral:** one coordination contract across providers keeps behavior deterministic and replayable.
 
-**Coordination state updates:**
+**Coordination event updates:**
 
-- **Before execution:** Agent registers in coordination state with initial operation description.
-- **During execution:** Agent updates coordination state periodically (e.g., every 30 seconds or when file operations occur):
+- **Before execution:** Agent appends `coordination.agent_registered` with initial operation description.
+- **During execution:** Agent appends status, operation, and file-activity events periodically (e.g., every 30 seconds or when file operations occur):
   - Files being edited (extracted from agent output or platform hooks)
   - Current operation (e.g., "editing src/api.rs", "running cargo test")
   - Progress updates
-- **After execution:** Agent unregisters from coordination state.
+- **After execution:** Agent appends `coordination.agent_unregistered`, `coordination.agent_crashed`, or `coordination.agent_aborted`.
 
 **Extracting file operations from agent output:**
 
@@ -4109,18 +4024,18 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
    - current_operation: "Starting implementation of API endpoint"
    - files_being_edited: []
 
-2. Agent A begins editing: updates coordination state
+2. Agent A begins editing: appends coordination events
    - files_being_edited: ["src/api.rs"]
    - current_operation: "Editing src/api.rs to add POST /users endpoint"
 
-3. Agent B (test-automator, Claude Code) starts Subtask B (parallel): reads coordination state
+3. Agent B (test-automator, Claude Code) starts Subtask B (parallel): reads `coordination_snapshot_projection.v1`
    - Sees: "rust-engineer (Codex) is editing src/api.rs"
    - Prompt includes: "**Active Agents:** rust-engineer (Codex) is editing src/api.rs (started 1 minute ago). **Your Task:** Add tests for POST /users endpoint. Wait for rust-engineer to finish src/api.rs before adding tests."
 
 4. Agent B (Claude Code) waits or works on other files, then proceeds when Agent A (Codex) finishes
    - Cross-platform coordination: Claude agent sees Codex agent's status via the shared coordination projection
 
-5. Agent A (Codex) completes: unregisters from coordination state
+5. Agent A (Codex) completes: appends `coordination.agent_unregistered`
    - Agent B (Claude Code) can now safely edit src/api.rs for tests
 ```
 
@@ -4128,12 +4043,12 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 
 **Provider-bridge runner integration (canonical):**
 
-- **All platform runners (Cursor, Codex, Claude, Gemini, Copilot):** read/update canonical coordination state and consume the same prompt injection contract.
+- **All platform runners (Cursor, Codex, Claude, Gemini, Copilot):** read canonical coordination projections, append coordination events, and consume the same prompt injection contract.
 - **No shared provider sessions/threads:** orchestrator keeps fresh-process isolation per iteration and uses canonical projections plus events for coordination.
 
 **Implementation notes:**
 
-- **Where:** New module `src/core/agent_coordination.rs` for canonical coordination projection; platform runners read/write coordination state and consume injected context.
+- **Where:** New module `src/core/agent_coordination.rs` for canonical coordination projection; platform runners append coordination events, read projections, and consume injected context.
 - **What:** Implement `AgentCoordinator`, inject coordination context into prompts, and keep status updates provider-agnostic.
 - **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution.
 
@@ -4363,17 +4278,17 @@ When interview generates PRD (`prd.json`), add crew metadata to tasks/subtasks:
 | Cross-platform | ❌ Claude only | ❌ Copilot only | ✅ All supported providers |
 | Orchestrator visibility | Limited | Limited | ✅ Full visibility |
 | Agent-to-agent messaging | ✅ Native | ❌ Not supported | ✅ Supported |
-| File-based (no API) | ❌ Uses API | ❌ Uses API | ✅ File-based |
-| Works with CLI-only | ❌ Requires Teams API | ❌ Requires Fleets API | ✅ Pure file-based |
+| Debug/export mirror available | ❌ Uses API | ❌ Uses API | ✅ Optional non-canonical mirror |
+| Works with CLI-only | ❌ Requires Teams API | ❌ Requires Fleets API | ✅ Seglog/redb coordination plus optional mirror export |
 
 **Architecture:**
 
-The communication system extends the existing coordination state with a message board/queue:
+The communication system extends the canonical coordination event stream and redb read models with a crew board. The file tree below is a debug/export mirror shape only:
 
 ```
 .puppet-master/state/
-├── active-agents.json          # Optional debug mirror of agent status tracking
-└── agent-messages.json         # New: agent-to-agent messages
+├── active-agents.json          # Optional debug mirror of agent status projection
+└── agent-messages.json         # Optional debug/interoperability mirror of crew-board records
 ```
 
 **Message structure:**
@@ -4571,37 +4486,23 @@ Messages can be threaded (conversations):
 - **Resolved:** Message marked as resolved (e.g., question answered, request fulfilled)
 - **Expired:** Old messages (>24 hours) are archived or deleted
 
-**Implementation:**
+**Canonical implementation shape:**
 
 ```rust
 // src/core/agent_communication.rs
 
 // DRY:DATA:AgentCommunicator — Agent-to-agent message communication
 pub struct AgentCommunicator {
-    message_board_file: PathBuf,
-    coordinator: AgentCoordinator, // Reuse coordination state
+    store: CoordinationStore,
+    coordinator: AgentCoordinator,
 }
 
 impl AgentCommunicator {
-    // DRY:FN:new — Create agent communicator
-    pub fn new(project_root: &Path) -> Self {
-        Self {
-            message_board_file: project_root.join(".puppet-master").join("state").join("agent-messages.json"),
-            coordinator: AgentCoordinator::new(project_root),
-        }
-    }
-
     // DRY:FN:post_message — Post a message to the message board
     // DRY REQUIREMENT: Validate agent_id using subagent_registry::is_valid_subagent_name() if it's a subagent name
     /// Post a message to the message board
-    pub async fn post_message(&self, message: AgentMessage) -> Result<()> {
-        // DRY: Validate message.from_agent_id if it's a subagent name (not a tier-specific ID)
-        // Implementation note: Extract subagent name from agent_id if format is "subagent-node_id"
-        // and validate using subagent_registry::is_valid_subagent_name()
-        let mut board = self.load_message_board().await?;
-        board.messages.push(message);
-        board.last_updated = Utc::now();
-        self.save_message_board(&board).await
+    pub async fn post_message(&self, message: AgentMessage) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("crew.board_message_posted", message).await
     }
 
     /// Get messages relevant to an agent
@@ -4611,53 +4512,7 @@ impl AgentCommunicator {
         node_id: &str,
         agent_type: Option<&str>,
     ) -> Result<Vec<AgentMessage>> {
-        let board = self.load_message_board().await?;
-        let active_agents = self.coordinator.load_state().await?;
-
-        // Filter messages relevant to this agent
-        let relevant: Vec<_> = board.messages.iter()
-            .filter(|msg| {
-                // Direct message
-                if let Some(ref to_id) = msg.to_agent_id {
-                    if to_id == agent_id {
-                        return true;
-                    }
-                }
-
-                // Message to agent type
-                if let Some(ref to_type) = msg.to_agent_type {
-                    if agent_type.map(|t| t == to_type).unwrap_or(false) {
-                        return true;
-                    }
-                }
-
-                // Message to node
-                if let Some(ref to_node) = msg.to_node_id {
-                    if to_node == node_id {
-                        return true;
-                    }
-                }
-
-                // Broadcast (no specific recipient)
-                if msg.to_agent_id.is_none() && msg.to_agent_type.is_none() && msg.to_node_id.is_none() {
-                    return true;
-                }
-
-                // Message mentions files agent is working on
-                if let Some(agent) = active_agents.active_agents.get(agent_id) {
-                    for file in &agent.files_being_edited {
-                        if msg.context.files_mentioned.contains(file) {
-                            return true;
-                        }
-                    }
-                }
-
-                false
-            })
-            .cloned()
-            .collect();
-
-        Ok(relevant)
+        self.store.read_crew_board_projection(agent_id, node_id, agent_type).await
     }
 
     /// Format messages for prompt injection
@@ -4707,50 +4562,21 @@ impl AgentCommunicator {
     }
 
     /// Mark message as read
-    pub async fn mark_message_read(&self, message_id: &str, agent_id: &str) -> Result<()> {
-        let mut board = self.load_message_board().await?;
-        if let Some(msg) = board.messages.iter_mut().find(|m| m.message_id == message_id) {
-            if !msg.read_by.contains(&agent_id.to_string()) {
-                msg.read_by.push(agent_id.to_string());
-                self.save_message_board(&board).await?;
-            }
-        }
-        Ok(())
+    pub async fn mark_message_read(&self, message_id: &str, agent_id: &str) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("crew.board_message_read", BoardMessageRead {
+            message_id: message_id.to_string(),
+            agent_id: agent_id.to_string(),
+        }).await
     }
 
     /// Archive old messages (>24 hours)
-    pub async fn archive_old_messages(&self) -> Result<()> {
-        let mut board = self.load_message_board().await?;
-        let cutoff = Utc::now() - chrono::Duration::hours(24);
-
-        let (active, archived): (Vec<_>, Vec<_>) = board.messages
-            .into_iter()
-            .partition(|msg| msg.created_at > cutoff || !msg.resolved);
-
-        board.messages = active;
-        self.save_message_board(&board).await?;
-
-        // Save archived messages to separate file
-        if !archived.is_empty() {
-            let archive_file = self.message_board_file.with_extension("archive.json");
-            // Append to archive file
-            // ...
-        }
-
-        Ok(())
-    }
-
-    async fn load_message_board(&self) -> Result<AgentMessageBoard> {
-        // Similar to AgentCoordinator::load_state
-        // ...
-    }
-
-    async fn save_message_board(&self, board: &AgentMessageBoard) -> Result<()> {
-        // Similar to AgentCoordinator::save_state (with locking)
-        // ...
+    pub async fn archive_old_messages(&self, scope: CrewBoardArchiveScope) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("crew.board_messages_archived", scope).await
     }
 }
 ```
+
+The legacy `message_board_file` / `agent-messages.json` sketch is source-lineage only. PM may export that mirror from the canonical crew-board projection, but agents and schedulers must not use it as the durable board store.
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
@@ -4825,15 +4651,16 @@ impl OrchestratorInsights {
 
 **Gap #28: File locking and concurrent writes**
 
-**Issue:** Multiple agents may write to `active-agents.json` simultaneously, causing race conditions, file corruption, or lost updates. The current implementation reads the entire file, modifies it, and writes it back -- this is not atomic.
+**Issue:** Legacy/source-lineage mirror writers that directly update `active-agents.json` can race, corrupt JSON, or lose updates. Canonical coordination avoids this class by prohibiting read-modify-write on files and admitting updates only through seglog append plus redb projection CAS.
 
 **Mitigation:**
-- **File locking:** Use advisory file locks (e.g., `flock` on Unix, `File::lock` in Rust) to ensure exclusive access during writes. Implement retry logic with exponential backoff if lock acquisition fails.
-- **Atomic writes:** Write to a temporary file (`active-agents.json.tmp`), then atomically rename to `active-agents.json` (rename is atomic on most filesystems).
-- **Read-modify-write with retry:** If file changes between read and write, reload and retry (up to 3 attempts).
-- **Lock timeout:** If lock cannot be acquired within 5 seconds, log warning and proceed (coordination may be stale but execution continues).
+- **Canonical append/CAS:** Each update appends one coordination EventRecord with an idempotency key and expected agent revision; stale expected revisions fail with a conflict diagnostic.
+- **Projection transaction:** The coordination projector writes all affected redb rows and the checkpoint in one transaction. It does not advance the checkpoint on partial failure.
+- **Mirror-only atomic writes:** Optional mirrors use same-directory temp files, fsync, and rename. Mirror failure is a debug/export failure, not a canonical coordination failure.
+- **No fail-open scheduling:** Lock timeout, mirror write failure, or mirror corruption must never authorize scheduling or execution from stale mirror data.
 
 ```rust
+// Legacy mirror-only source-lineage sketch. Do not use for canonical coordination mutation.
 // src/core/agent_coordination.rs (enhanced)
 
 use std::fs::File;
@@ -4932,15 +4759,16 @@ impl AgentCoordinator {
 
 **Gap #29: Error handling and file corruption recovery**
 
-**Issue:** If `active-agents.json` becomes corrupted (invalid JSON, partial write, disk full), coordination breaks. Agents may not be able to register or read coordination state.
+**Issue:** If the optional `active-agents.json` mirror becomes corrupted (invalid JSON, partial write, disk full), debug/interoperability views can be stale or unreadable.
 
 **Mitigation:**
-- **JSON validation:** Validate JSON structure after reading. If invalid, try to parse what we can (best-effort recovery).
-- **Backup before write:** Create backup (`active-agents.json.bak`) before each write. If write fails, restore from backup.
-- **Fallback to empty state:** If file is corrupted and cannot be recovered, start with empty state (all agents unregistered). Log warning.
-- **Corruption detection:** Check file size, JSON validity, and schema compliance. If corrupted, attempt recovery or reset.
+- **Authority fallback:** Read canonical `coordination_snapshot_projection.v1` and specific redb projections; do not parse a corrupt mirror for authority.
+- **Mirror regeneration:** Quarantine or overwrite the mirror by replaying seglog/redb projection state from the last valid coordination checkpoint.
+- **Diagnostic event:** Emit `coordination.debug_mirror_exported` with failure metadata when mirror recovery is needed.
+- **No empty canonical state fallback:** A corrupt mirror must not create an empty canonical active-agent set or unregister agents by implication.
 
 ```rust
+// Legacy mirror-only source-lineage sketch. Do not use for canonical coordination reads.
 async fn load_state(&self) -> Result<AgentCoordinationState> {
     if self.state_file.exists() {
         let json = match std::fs::read_to_string(&self.state_file) {
@@ -5006,15 +4834,16 @@ fn validate_state(&self, state: &AgentCoordinationState) -> Result<()> {
 
 **Gap #30: Stale agent cleanup and crash recovery**
 
-**Issue:** If an agent crashes or is killed without unregistering, it remains in `active-agents.json` indefinitely, causing false conflicts and stale coordination state.
+**Issue:** If an agent crashes or is killed without normal unregister, the canonical projection needs a terminal resolution rather than side-file cleanup.
 
 **Mitigation:**
 - **Heartbeat mechanism:** Agents update `last_update` timestamp periodically (every 30 seconds). Prune agents with `last_update` older than threshold (e.g., 5 minutes).
 - **Process existence check:** When loading state, check if agent's process still exists (via PID if stored, or by checking worktree activity). Remove stale entries.
-- **Automatic cleanup:** Before each coordination read/write, prune stale agents (no update in last 5 minutes).
-- **Crash detection:** Detect agent crashes (process exit, worktree deletion) and automatically unregister.
+- **Automatic cleanup:** The scheduler or crash detector appends `coordination.agent_crashed`, `coordination.agent_aborted`, or `coordination.agent_unregistered`; projectors derive terminal state from those events.
+- **Crash detection:** Detect agent crashes (process exit, worktree deletion, heartbeat expiry) and append terminal coordination events rather than deleting a JSON entry.
 
 ```rust
+// Legacy mirror-only source-lineage sketch. Do not use for canonical crash cleanup.
 async fn load_state(&self) -> Result<AgentCoordinationState> {
     // ... existing load logic ...
 
@@ -5124,7 +4953,7 @@ impl FileOperationExtractor {
 
 **Gap #32: Coordination state size limits and performance**
 
-**Issue:** If many agents run simultaneously (50+), `active-agents.json` becomes large, causing slow reads/writes and prompt token bloat. Coordination context injected into prompts may exceed token limits.
+**Issue:** If many agents run simultaneously, coordination projections and prompt-injection snapshots can become large. The supported v1 bound is up to 32 active agents across worktrees; above that, admission policy must queue or throttle new child runs.
 
 **Mitigation:**
 - **Size limits:** Limit coordination state to max 100 active agents. If exceeded, prune oldest agents (by `started_at`).
@@ -5198,17 +5027,18 @@ pub struct CoordinationFilter {
 
 **Mitigation:**
 - **Conflict detection:** Before agent starts, check coordination state for file conflicts. If conflict detected, either (1) delay agent start, (2) select alternative files, or (3) escalate to orchestrator.
-- **File-level locking:** Extend coordination state to include file locks (which agent has "locked" a file for editing). Agents must acquire lock before editing.
-- **Lock timeout:** File locks expire after 30 minutes (agent should finish editing by then). Stale locks are automatically released.
-- **Orchestrator intervention:** If conflict persists, orchestrator can serialize execution (run agents sequentially instead of parallel) or reassign files.
+- **File-activity claims:** Extend coordination projections to include file-activity claims (which agent intends to edit or is currently editing a file). These claims warn and sequence agents; they are not FileSafe locks or durable exclusive leases.
+- **Claim expiry:** Claims expire from the projection only after terminal coordination events, heartbeat expiry policy, or explicit supersession events. Timeout constants belong in runtime/storage policy, not in a debug mirror.
+- **Orchestrator intervention:** If conflict persists, orchestrator can serialize execution (run agents sequentially instead of parallel), reassign files, or append a blocked/awaiting-parent coordination event.
 
 ```rust
+// Canonical projection sketch; no JSON file read-modify-write is allowed.
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct FileLock {
+pub struct FileActivityClaim {
     pub file_path: PathBuf,
-    pub locked_by: String, // agent_id
-    pub locked_at: DateTime<Utc>,
-    pub expires_at: DateTime<Utc>,
+    pub claimed_by: String, // agent_id
+    pub claim_kind: FileClaimKind, // editing, reviewing, generated_output, read_dependency
+    pub last_event_id: String,
 }
 
 impl AgentCoordinator {
@@ -5218,49 +5048,15 @@ impl AgentCoordinator {
         agent_id: &str,
         files_to_edit: &[PathBuf],
     ) -> Result<Vec<FileConflict>> {
-        let state = self.load_state().await?;
-        let mut conflicts = Vec::new();
-
-        for file in files_to_edit {
-            // Check if any other agent is editing this file
-            for (other_agent_id, other_agent) in &state.active_agents {
-                if *other_agent_id != agent_id && other_agent.files_being_edited.contains(file) {
-                    conflicts.push(FileConflict {
-                        file: file.clone(),
-                        conflicting_agent: other_agent_id.clone(),
-                        conflicting_platform: other_agent.platform.clone(),
-                    });
-                }
-            }
-        }
-
-        Ok(conflicts)
+        self.store.read_file_conflict_projection(agent_id, files_to_edit).await
     }
 
-    /// Acquire file lock (if available)
-    pub async fn acquire_file_lock(
+    /// Record a file-activity claim for coordination warnings
+    pub async fn update_file_activity_claim(
         &self,
-        agent_id: &str,
-        file: &Path,
-        duration_minutes: u64,
-    ) -> Result<bool> {
-        let mut state = self.load_state().await?;
-
-        // Check if file is already locked
-        // (This would require extending AgentCoordinationState with file_locks field)
-        // For now, check files_being_edited
-
-        // If not locked, add to agent's files_being_edited
-        if let Some(agent) = state.active_agents.get_mut(agent_id) {
-            if !agent.files_being_edited.contains(file) {
-                agent.files_being_edited.push(file.to_path_buf());
-                agent.last_update = Utc::now();
-                self.save_state(&state).await?;
-                return Ok(true);
-            }
-        }
-
-        Ok(false) // File already locked
+        claim: FileActivityClaim,
+    ) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("coordination.agent_file_ownership_updated", claim).await
     }
 }
 
@@ -5332,27 +5128,15 @@ Add methods to query coordination state by platform, tier, file path, or agent I
 ```rust
 impl AgentCoordinator {
     pub async fn get_agents_by_platform(&self, platform: Platform) -> Result<Vec<ActiveAgent>> {
-        let state = self.load_state().await?;
-        Ok(state.active_agents.values()
-            .filter(|a| a.platform == platform)
-            .cloned()
-            .collect())
+        self.store.read_coordination_agents_by_platform(platform).await
     }
 
     pub async fn get_agents_by_node(&self, node_id: &str) -> Result<Vec<ActiveAgent>> {
-        let state = self.load_state().await?;
-        Ok(state.active_agents.values()
-            .filter(|a| a.node_id == node_id)
-            .cloned()
-            .collect())
+        self.store.read_coordination_agents_by_node(node_id).await
     }
 
     pub async fn get_agents_editing_file(&self, file: &Path) -> Result<Vec<ActiveAgent>> {
-        let state = self.load_state().await?;
-        Ok(state.active_agents.values()
-            .filter(|a| a.files_being_edited.contains(file))
-            .cloned()
-            .collect())
+        self.store.read_coordination_agents_by_file(file).await
     }
 }
 ```
@@ -5362,6 +5146,7 @@ impl AgentCoordinator {
 Automatically backup coordination state before each write, with retention policy:
 
 ```rust
+// Legacy mirror-only source-lineage sketch. Canonical recovery is seglog/redb replay plus mirror export.
 impl AgentCoordinator {
     async fn save_state(&self, state: &AgentCoordinationState) -> Result<()> {
         // Backup current state
@@ -5389,6 +5174,7 @@ impl AgentCoordinator {
 Add schema versioning to coordination state to handle format changes:
 
 ```rust
+// Legacy mirror-only source-lineage sketch. Canonical schema versions live in EventRecord payload schemas and registry rows.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AgentCoordinationState {
     pub schema_version: u32, // Current version: 1
@@ -5426,7 +5212,7 @@ When multiple subagents run in parallel:
 2. **Independent Selection**: Each subtask selects subagents independently based on its own context
 3. **Resource Management**: Platform runners handle concurrent invocations
 4. **Context Sharing**: Completed subtasks share results via dependency chain, not direct subagent communication
-5. **Coordination**: Agents coordinate through shared state files and real-time coordination state (see "Agent Coordination and Communication" above)
+5. **Coordination**: Agents coordinate through canonical seglog/redb coordination records and projections; optional shared state files are debug/export mirrors only (see "Agent Coordination and Communication" above)
 
 **Example:**
 ```rust
@@ -5450,8 +5236,8 @@ Level 0:
 **Mitigation Strategies:**
 
 **Coordination-based prevention (primary):** Use agent coordination (see "Agent Coordination and Communication" above) to prevent conflicts:
-- Agents register files they're editing in `active-agents.json`
-- Before starting work, agents check coordination state for file conflicts
+- Agents append `coordination.agent_file_ownership_updated` for files they are editing or claiming for coordination.
+- Before starting work, agents check `coordination_file_projection.v1` and `coordination_snapshot_projection.v1` for file conflicts.
 - If conflict detected, agent waits or selects alternative files
 - Coordination context injected into prompts warns agents about active files
 
@@ -5471,32 +5257,20 @@ impl SubagentConflictDetector {
         coordinator: &AgentCoordinator,
     ) -> Vec<Conflict> {
         let mut conflicts = Vec::new();
-        let coordination_state = coordinator.load_state().await.ok();
+        let projection = coordinator.read_coordination_snapshot(CoordinationScope::current_run()).await.ok();
 
-        // Check for overlapping file modifications using coordination state
+        // Check for overlapping file modifications using the redb coordination projection
         for (i, context_a) in contexts.iter().enumerate() {
             for (j, context_b) in contexts.iter().enumerate().skip(i + 1) {
-                if let Some(state) = &coordination_state {
-                    // Check if any active agents are editing overlapping files
-                    let files_a: Vec<_> = state.active_agents.values()
-                        .filter(|a| a.node_id == context_a.node_id)
-                        .flat_map(|a| &a.files_being_edited)
-                        .collect();
-                    let files_b: Vec<_> = state.active_agents.values()
-                        .filter(|a| a.node_id == context_b.node_id)
-                        .flat_map(|a| &a.files_being_edited)
-                        .collect();
-
-                    let overlapping: Vec<_> = files_a.iter()
-                        .filter(|f| files_b.contains(f))
-                        .collect();
+                if let Some(snapshot) = &projection {
+                    let overlapping = snapshot.overlapping_file_claims(&context_a.node_id, &context_b.node_id);
 
                     if !overlapping.is_empty() {
                         conflicts.push(Conflict {
                             type_: ConflictType::FileOverlap,
                             subtask_a: i,
                             subtask_b: j,
-                            files: overlapping.iter().map(|f| (*f).clone()).collect(),
+                            files: overlapping,
                         });
                     }
                 }
@@ -21716,8 +21490,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  ActiveAgent, AgentCoordinationState, and AgentCoordinator preserve active-agent identity, role/type, platform, node/lane/run
-  identity, worktree path, files being edited, current operation, start time, and last-update timestamp.
+  ActiveAgent, AgentCoordinationState, and AgentCoordinator are source-lineage data-model names for active-agent identity,
+  role/type, platform, node/lane/run identity, worktree path, files being edited, current operation, start time, and
+  last-update timestamp. Canonical implementations persist those fields through coordination EventRecords and redb
+  projections rather than a JSON state file.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend coordination data model fields rather than GUI presentation.
@@ -21729,6 +21505,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Data-model examples remain aligned with canonical coordination and runtime identity ownership.
+- Canonical runtime state is represented by coordination records/projections; `AgentCoordinationState` is not a file-backed source-of-truth contract.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
 validation_surfaces:
 - >-
@@ -21756,7 +21533,8 @@ negative_constraints: []
 compatibility_only_notes:
 - Rust data model block is plan evidence and must reconcile with canonical storage/runtime owners before implementation.
 - Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- File-backed `AgentCoordinationState` persistence is retired source-lineage unless registered as a debug/export mirror.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -21771,9 +21549,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  AgentCoordinator construction derives the active-agent debug/state path under .puppet-master/state/active-agents.json, and
-  register_agent loads state, inserts by agent_id, updates last_updated with Utc::now(), and saves state while requiring the
-  agent platform field to come from node_config.platform rather than a hardcoded platform.
+  AgentCoordinator construction may preserve the `.puppet-master/state/active-agents.json` path only as a debug/export
+  mirror location, while canonical `register_agent` behavior appends `coordination.agent_registered`, projects by
+  agent_id, updates the agent revision/checkpoint, and requires the agent platform field to come from node_config.platform
+  rather than a hardcoded platform.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend coordinator construction and registration API behavior rather than GUI presentation.
@@ -21784,6 +21563,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - Registration preserves platform sourcing through node_config.platform and does not hardcode platforms.
+- Registration enters canonical state only through the coordination append API; loading or saving `active-agents.json` is mirror export behavior.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
 validation_surfaces:
 - >-
@@ -21809,10 +21589,12 @@ preserved_exact_tokens:
 - .puppet-master/state/active-agents.json
 negative_constraints:
 - Agent platform must not be hardcoded in registration.
+- "`active-agents.json` must not be used as the canonical registration store."
 compatibility_only_notes:
 - active-agents.json path remains a projection/debug-path token and must not override canonical storage ownership.
 - Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Register-by-load/save JSON behavior is retired source-lineage and may exist only as mirror export reconstruction.
 owner_boundary_notes: []
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
@@ -21828,9 +21610,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Batch 131 preserves only the opening signature and first state-load line for update_agent_status, including agent_id,
-  files_being_edited, current_operation, and let mut state = self.load_state().await?; complete status-update behavior remains
-  residual until the next bounded window covers line 3829 onward.
+  Batch 131 preserves only the opening signature and first legacy state-load token for update_agent_status, including
+  agent_id, files_being_edited, current_operation, and `let mut state = self.load_state().await?`; canonical status
+  updates append `coordination.agent_status_updated`, `coordination.agent_operation_updated`, and
+  `coordination.agent_file_ownership_updated` instead of loading a canonical file.
 gui_related: false
 gui_classification_reason: >-
   This unit covers a backend coordination API opening rather than GUI presentation.
@@ -21841,6 +21624,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
 - This unit does not claim complete update_agent_status behavior before source line 3829 is atomized.
+- The preserved `load_state` token is source-lineage only and cannot drive canonical status mutation.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
 validation_surfaces:
 - >-
@@ -21864,9 +21648,11 @@ preserved_exact_tokens:
 - "let mut state = self.load_state().await?"
 negative_constraints:
 - Do not treat this partial opening as complete update_agent_status behavior.
+- Do not implement canonical status updates through read-modify-write of `.puppet-master/state/*.json`.
 compatibility_only_notes:
 - Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual from line 3829.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "`let mut state = self.load_state().await?` is retained as exact-token lineage only."
 owner_boundary_notes:
 - Residual cursor remains inside orchestrator-subagent-integration-S0142 at source line 3829.
 owner_hints:
@@ -21882,8 +21668,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  update_agent_status completes mutation of the active agent record by updating files_being_edited, current_operation,
-  last_update, state.last_updated, saving state, and returning an error when the agent_id is absent.
+  update_agent_status completes mutation of the active agent projection by appending status, operation, and file-activity
+  events with CAS on agent revision/last-applied event id, then projecting files_being_edited, current_operation, and
+  last_update; it returns an error when the agent_id is absent from the authoritative projection.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend coordination state mutation rather than GUI presentation.
@@ -21894,6 +21681,8 @@ unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
 - Missing agent_id is not treated as a successful status update.
+- Status updates cannot overwrite a concurrent update; stale expected revisions return a coordination conflict diagnostic.
+- Saving a JSON mirror is optional exporter behavior after projection commit, not the mutation boundary.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
 validation_surfaces:
 - >-
@@ -21916,9 +21705,11 @@ preserved_exact_tokens:
 - Err(anyhow!("Agent {} not found", agent_id))
 negative_constraints:
 - Do not treat a missing agent as successful.
+- Do not mutate active-agent canon by saving a whole JSON state object.
 compatibility_only_notes:
 - Rust snippet is plan evidence only.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Whole-file `save_state` mutation is retired as canonical behavior and remains mirror/source-lineage only.
 owner_boundary_notes:
 - Orchestration owns behavior; storage owns persistence details.
 owner_hints:
@@ -21934,8 +21725,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Completed agents are unregistered by removing agent_id from active_agents, refreshing last_updated with Utc::now(), and
-  saving coordination state.
+  Completed agents are unregistered by appending `coordination.agent_unregistered`; crashes and aborts append
+  `coordination.agent_crashed` or `coordination.agent_aborted`. The projection removes or terminally resolves the agent
+  after applying the event and checkpoint in one transaction.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend agent lifecycle cleanup rather than GUI presentation.
@@ -21947,6 +21739,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
 - Completed agents do not remain active.
+- Terminal agent cleanup is event-sourced; side-file cleanup cannot be the source of lifecycle truth.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
 validation_surfaces:
 - >-
@@ -21969,9 +21762,11 @@ preserved_exact_tokens:
 - Utc::now()
 negative_constraints:
 - Completed agents must not remain active.
+- Do not unregister by mutating `active-agents.json` as canonical state.
 compatibility_only_notes:
 - Rust snippet is plan evidence only.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Remove-from-HashMap-and-save behavior is retained only as source-lineage/mirror evidence.
 owner_boundary_notes:
 - Orchestration lifecycle owns unregister timing.
 owner_hints:
@@ -22097,8 +21892,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  load_state reads and deserializes coordination state when present, prunes active-agent projection entries whose last_update
-  is older than one hour, saves pruned state, or returns an empty state when no state file exists.
+  The preserved `load_state` pruning example is source-lineage for optional debug/export mirrors. Canonical stale-agent
+  handling reads redb coordination projections, appends terminal resolution events for expired/crashed agents, and never
+  treats a missing JSON file as empty canonical state.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend projection loading and stale active-agent cleanup rather than GUI presentation.
@@ -22109,6 +21905,8 @@ unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
 - Active-agent projection pruning must not retire unresolved blocker or message-board threads.
+- Missing or corrupted mirrors trigger regeneration/quarantine; they do not clear canonical active-agent state.
+- Crash/expiry cleanup is represented by `coordination.agent_crashed`, `coordination.agent_aborted`, or `coordination.agent_unregistered`.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
 validation_surfaces:
 - >-
@@ -22133,10 +21931,12 @@ preserved_exact_tokens:
 - Prune stale agents (no update in last hour)
 negative_constraints:
 - Pruning active-agent projection must not retire unresolved blocker or message-board threads.
+- Do not return an empty canonical coordination state because a mirror file is absent.
 compatibility_only_notes:
-- Projection cleanup is not durable-message retention policy.
+- Projection cleanup is not durable-message retention policy; JSON pruning examples are mirror/source-lineage only.
 stale_retired_dispositions:
 - Stale active-agent pruning is projection cleanup only.
+- "`load_state` fallback-empty behavior is retired for canonical state."
 owner_boundary_notes:
 - Storage owns canonical persistence semantics.
 owner_hints:
@@ -22152,8 +21952,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  save_state creates the state directory, pretty-serializes coordination state, writes the state file, and completes the
-  coordinator implementation example.
+  The preserved `save_state` example creates a state directory, pretty-serializes coordination state, and writes a state
+  file only as optional debug/export mirror evidence. Canonical coordination persistence is the EventRecord append plus
+  redb projection/checkpoint transaction.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend serialization evidence rather than GUI presentation.
@@ -22163,7 +21964,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
-- Serialization/path details remain evidence until reconciled with storage ownership.
+- Serialization/path details are mirror/export evidence and must not be used for scheduling, execution admission, conflict prevention, or prompt authority.
+- Mirror writes occur after projection commit and are recoverable by regenerating from seglog/redb.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
 validation_surfaces:
 - >-
@@ -22184,10 +21986,12 @@ preserved_exact_tokens:
 - std::fs::create_dir_all
 - serde_json::to_string_pretty
 - std::fs::write
-negative_constraints: []
+negative_constraints:
+- Do not use `save_state` whole-file serialization as canonical coordination persistence.
 compatibility_only_notes:
-- Implementation example only; storage path ownership remains external.
-stale_retired_dispositions: []
+- Implementation example only; storage path ownership remains external and mirror-only.
+stale_retired_dispositions:
+- Whole-file state serialization is retired as canonical coordination storage.
 owner_boundary_notes:
 - Storage path ownership remains external to this placement example.
 owner_hints:
@@ -22474,8 +22278,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  File-based coordination is always on for orchestrator-managed runs, while platform-native hooks are optional enrichments
-  that improve update fidelity without replacing file-based coordination state as the source of truth.
+  Seglog/redb coordination is always on for orchestrator-managed runs, while platform-native hooks are optional enrichments
+  that improve update fidelity by emitting normalized coordination events without replacing canonical coordination records or
+  projections.
 gui_related: false
 gui_classification_reason: >-
   This unit covers backend coordination mode and hook adapter boundaries rather than GUI presentation.
@@ -22485,7 +22290,9 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered source lines remain losslessly available for exact-text audit.
-- Platform-native hooks do not replace canonical file/projection state.
+- Platform-native hooks emit or enrich normalized coordination events; they do not become a second coordination source.
+- active-agents.json and `.puppet-master/state/*.json` files remain compatibility/debug/export mirrors only and cannot drive scheduling, conflict prevention, execution admission, or prompt injection.
+- Agent registration, status, operation, file-activity, unregister, crash, abort, and snapshot behavior is represented by named seglog record families plus redb projections.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
 validation_surfaces:
 - >-
@@ -22508,11 +22315,14 @@ preserved_exact_tokens:
 - Platform-native hooks
 - single source of coordination truth
 negative_constraints:
-- Hooks must not replace canonical file/projection state.
-compatibility_only_notes: []
-stale_retired_dispositions: []
+- Hooks must not replace canonical seglog/redb coordination state.
+- File-based coordination must not be read as canonical runtime truth.
+compatibility_only_notes:
+- The preserved token "File-based coordination (canonical)" is retired source-lineage from the original span and now means only optional debug/export mirror availability.
+stale_retired_dispositions:
+- active-agents.json and `.puppet-master/state/*.json` coordination files are non-canonical mirrors.
 owner_boundary_notes:
-- Orchestration and platform adapters share enrichment boundaries.
+- Orchestration and platform adapters share enrichment boundaries; storage owns durable coordination record/projection semantics.
 owner_hints:
 - Plans/orchestrator-subagent-integration.md
 preserved_contractrefs: []
@@ -25253,9 +25063,10 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Gap #28 preserves the concurrent-write risk that multiple agents writing `active-agents.json` can cause race conditions,
-  file corruption, or lost updates; mitigation evidence includes advisory locks, exponential backoff, atomic temp-file rename,
-  and read-modify-write retry for debug/projection mirrors rather than canonical persistence.
+  Gap #28 preserves the legacy concurrent-write risk that multiple agents writing `active-agents.json` can cause race
+  conditions, file corruption, or lost updates. Canonical mitigation is the coordination append/CAS boundary plus one
+  redb projection/checkpoint transaction; advisory locks, exponential backoff, atomic temp-file rename, and
+  read-modify-write retry remain debug/export mirror recovery evidence only.
 gui_related: false
 gui_classification_reason: This unit covers coordination storage safety rather than GUI presentation.
 split_recommended: false
@@ -25266,7 +25077,8 @@ unblocks: []
 acceptance_criteria:
 - Covered Gap #28 opening and mitigation bullets remain losslessly available for exact-text audit.
 - '`active-agents.json` remains projection/debug compatibility, not canonical runtime truth.'
-- Concurrent-write mitigation evidence does not convert side files into canonical persistence.
+- Concurrent-write mitigation prevents lost canonical updates through EventRecord append, idempotency, expected revision, and transactional projection advancement.
+- Read-modify-write of canonical `.puppet-master/state/*.json` is prohibited; any mirror RMW is exporter-only and recoverable from seglog/redb.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -25295,8 +25107,9 @@ preserved_exact_tokens:
 negative_constraints:
 - '`active-agents.json` remains projection/debug compatibility, not canonical runtime truth.'
 compatibility_only_notes:
-- Mitigation applies only through canonical coordination projection/storage owner alignment.
-stale_retired_dispositions: []
+- File-lock/RMW snippets apply only to optional mirror export recovery. Canonical mitigation applies through coordination records/projections and storage-owner alignment.
+stale_retired_dispositions:
+- File-lock-based coordination is retired as canonical persistence and retained only as debug/export mirror source-lineage.
 owner_boundary_notes:
 - Storage and coordination contracts own canonical locking and atomicity semantics.
 owner_hints:
@@ -25366,7 +25179,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Preserve `save_state_with_lock` example tokens including `MAX_ATTEMPTS: u32 = 3`, lock file, retry sleep, temp file,
-  `serde_json::to_string_pretty`, atomic rename, and release lock.
+  `serde_json::to_string_pretty`, atomic rename, and release lock as optional mirror-export source evidence.
 gui_related: false
 gui_classification_reason: This unit covers backend locking example code rather than GUI presentation.
 split_recommended: false
@@ -25377,6 +25190,7 @@ unblocks: []
 acceptance_criteria:
 - Covered Rust locking example remains losslessly available for exact-text audit.
 - The Rust snippet is not treated as implementation code.
+- The snippet cannot be used as canonical lost-update prevention; canonical lost-update prevention is append/CAS plus redb transaction.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -25402,10 +25216,12 @@ preserved_exact_tokens:
 - remove_file
 negative_constraints:
 - Rust snippet is not implementation code.
+- Do not promote lock-file coordination to canonical storage semantics.
 compatibility_only_notes:
 - Fail-open lines inside the snippet inherit OSI-323 stale disposition.
 stale_retired_dispositions:
 - Proceeding without lock remains stale compatibility evidence.
+- File-lock coordination remains mirror/source-lineage only.
 owner_boundary_notes:
 - Coordination/storage owners retain actual locking algorithm authority.
 owner_hints:
@@ -25530,7 +25346,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Preserve the opening of Gap #29: corrupted `active-agents.json` from invalid JSON, partial write, or disk full can break
-  registration or coordination-state reads.
+  debug/interoperability mirror reads, but cannot break canonical registration or coordination projection reads.
 gui_related: false
 gui_classification_reason: This unit covers coordination file corruption risk rather than GUI presentation.
 split_recommended: true
@@ -25541,6 +25357,7 @@ unblocks: []
 acceptance_criteria:
 - Covered Gap #29 opening remains losslessly available for exact-text audit.
 - This partial unit does not claim mitigation or recovery coverage after source line 4836.
+- Corrupt mirrors cannot drive scheduler, prompt, execution-admission, conflict-prevention, unregister, crash, or abort decisions.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -25566,9 +25383,11 @@ preserved_exact_tokens:
 - register or read coordination state
 negative_constraints:
 - Do not claim mitigation or recovery coverage after source line 4836 in this unit.
+- Do not treat `active-agents.json` corruption as canonical coordination-state loss.
 compatibility_only_notes:
 - Partial S0154 coverage only; recovery mitigation starts after this window.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Registration/coordination reads from `active-agents.json` are retired for canonical behavior.
 owner_boundary_notes:
 - Storage/coordination owners retain recovery semantics for corrupted coordination projections.
 owner_hints:
@@ -25585,7 +25404,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Preserve JSON validation, backup-before-write, fallback-empty-state, and corruption-detection mitigations for corrupted
-  coordination projection reads.
+  coordination mirror reads.
 gui_related: false
 gui_classification_reason: This unit covers coordination projection recovery rather than GUI presentation.
 split_recommended: false
@@ -25596,6 +25415,7 @@ unblocks: []
 acceptance_criteria:
 - Covered file-corruption mitigation bullets remain losslessly available for exact-text audit.
 - Recovery applies to projection/debug state and does not make `active-agents.json` canonical runtime truth.
+- Fallback-empty-state can only apply to mirror export views; authoritative readers regenerate from seglog/redb or surface projection-unavailable diagnostics.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -25619,9 +25439,9 @@ preserved_exact_tokens:
 - Fallback to empty state
 - Corruption detection
 negative_constraints:
-- Recovery applies to projection/debug state, not canonical runtime truth.
+- Recovery applies to projection/debug mirror state, not canonical runtime truth.
 compatibility_only_notes:
-- Corruption recovery is source-lineage evidence for coordination projections.
+- Corruption recovery is source-lineage evidence for coordination mirror exports.
 stale_retired_dispositions: []
 owner_boundary_notes:
 - Storage and coordination owners retain canonical recovery semantics.
@@ -25639,7 +25459,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Preserve the `load_state` Rust example that reads `state_file`, parses `AgentCoordinationState`, validates schema, tries
-  `.bak`, and falls back to `AgentCoordinationState::default()`.
+  `.bak`, and falls back to `AgentCoordinationState::default()` as mirror recovery evidence only.
 gui_related: false
 gui_classification_reason: This unit covers backend recovery example code rather than GUI presentation.
 split_recommended: false
@@ -25650,6 +25470,8 @@ unblocks: []
 acceptance_criteria:
 - Covered Rust recovery example remains losslessly available for exact-text audit.
 - The snippet remains evidence only and does not create implementation code.
+- Backup recovery cannot provide canonical truth; canonical readers use redb projections or rebuild them from seglog.
+- Default empty state is forbidden as a canonical recovery result for missing/corrupt mirrors.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -25675,9 +25497,11 @@ preserved_exact_tokens:
 - AgentCoordinationState::default()
 negative_constraints:
 - Rust snippet is evidence only.
+- Do not use `AgentCoordinationState::default()` as canonical fallback after mirror corruption.
 compatibility_only_notes:
 - Backup recovery applies to projection/debug coordination state evidence.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- Backup-file recovery of active-agent state is mirror/source-lineage only.
 owner_boundary_notes:
 - Storage owners retain durable recovery implementation authority.
 owner_hints:
@@ -26619,7 +26443,8 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Preserve the AgentCoordinator query-method snippet as source evidence for filtering active agent projections by platform,
-  node ID, and edited file path.
+  node ID, and edited file path; canonical implementations query redb projections and do not call `load_state` for
+  authoritative scheduling or prompt context.
 gui_related: false
 gui_classification_reason: This unit covers backend coordination example code, not GUI presentation.
 split_recommended: false
@@ -26630,6 +26455,7 @@ unblocks: []
 acceptance_criteria:
 - Covered query-method Rust snippet remains losslessly available for exact-text audit.
 - The snippet is preserved as plan evidence and does not by itself create implementation work.
+- Query behavior reads `coordination_agent_projection.v1`, `coordination_file_projection.v1`, or `coordination_snapshot_projection.v1` for authority.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -26655,9 +26481,11 @@ preserved_exact_tokens:
 - files_being_edited
 negative_constraints:
 - Example code does not override canonical runtime/storage ownership.
+- Do not use `load_state` as the authority path for active-agent queries.
 compatibility_only_notes:
 - Rust snippet is source-lineage evidence only until implementation owners accept it.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "`load_state` query methods are mirror/source-lineage only."
 owner_boundary_notes:
 - Storage/runtime own durable coordination state; orchestrator consumes and filters the projection.
 owner_hints:
@@ -26673,8 +26501,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
-  Coordination projection writes should preserve backup-before-write and retention-policy evidence for recovery of the
-  compatibility state file.
+  Optional coordination mirror writes should preserve backup-before-write and retention-policy evidence for recovery of the
+  compatibility state file, while canonical projection writes are redb transactions rebuildable from seglog.
 gui_related: false
 gui_classification_reason: This unit covers backend coordination recovery behavior, not GUI presentation.
 split_recommended: false
@@ -26684,7 +26512,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Covered backup-before-write and retention-policy prose remains losslessly available for exact-text audit.
-- Backup behavior remains scoped to coordination projection/debug state unless a storage owner adopts it.
+- Backup behavior remains scoped to coordination debug/export mirrors unless a storage owner explicitly adopts it.
+- Canonical projection recovery is replay/rebuild from seglog plus checkpoint, not timestamped JSON backups.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -26707,8 +26536,9 @@ preserved_exact_tokens:
 negative_constraints:
 - Projection backups must not become canonical storage durability rules by implication.
 compatibility_only_notes:
-- Backup behavior applies to projection/debug state evidence.
-stale_retired_dispositions: []
+- Backup behavior applies to mirror/debug state evidence.
+stale_retired_dispositions:
+- Backup-before-write of JSON files is retired as canonical coordination durability.
 owner_boundary_notes:
 - Storage owner adjudicates durable backup and retention semantics.
 owner_hints:
@@ -26725,7 +26555,7 @@ status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
 canonical_text: >-
   Preserve the save_state backup and cleanup example, including timestamped .bak files and the "keep last 10" cleanup
-  note, as coordination projection recovery evidence.
+  note, as optional coordination mirror recovery evidence.
 gui_related: false
 gui_classification_reason: This unit covers backend coordination example code, not GUI presentation.
 split_recommended: false
@@ -26735,6 +26565,7 @@ unblocks: []
 acceptance_criteria:
 - Covered save_state backup snippet remains losslessly available for exact-text audit.
 - The cleanup threshold is compatibility evidence and not promoted to a durable storage retention contract.
+- Timestamped `.bak` files are not canonical coordination history and cannot override seglog/redb state.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - >-
@@ -26760,7 +26591,8 @@ negative_constraints:
 - Timestamped backup snippet does not own canonical storage retention.
 compatibility_only_notes:
 - Cleanup threshold is source-lineage compatibility evidence only.
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- "`save_state` backup cleanup is mirror/source-lineage only."
 owner_boundary_notes:
 - Storage owner adjudicates cleanup policy if the example is promoted.
 owner_hints:
@@ -31391,4 +31223,72 @@ owner_hints:
   - Plans/orchestrator-subagent-integration.md
   - Plans/Prompt_Pipeline.md
   - Plans/agent-rules-context.md
+```
+
+## FABLE Repair Addendum - storage coordination canon
+
+This addendum applies the FABLE storage/coordination canon repair decision. It does not repair platform_specs, FileSafe, UI command catalog, wiring matrix, Goal Runtime, Executor Protocol, broad boilerplate, WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, or generated governance artifacts outside the derived refresh phase.
+
+### OSI-432 - Coordination Canon Record Projection And Mirror Contract
+
+```yaml
+plan_unit_id: OSI-432
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Active-agent coordination canonical truth is the EventRecord seglog coordination family plus redb projections for agent
+  registration, status, operation, file-activity, unregister/crash/abort, snapshots, and optional debug mirror export.
+  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` files are compatibility/debug/export
+  mirrors or retired source-lineage only; they cannot drive scheduling, execution admission, conflict prevention, prompt
+  injection, unregister, crash, or abort decisions.
+gui_related: false
+gui_classification_reason: This unit defines backend coordination storage and projection authority, not GUI presentation.
+depends_on: [OSI-225, OSI-270, OSI-271, CV-309, SP-230]
+unblocks: []
+acceptance_criteria:
+  - "`coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`, `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`, `coordination.agent_aborted`, and `coordination.debug_mirror_exported` are the named coordination event families consumed by Orchestrator."
+  - "`coordination_agent_projection.v1:{project_id}:{agent_id}`, `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}`, `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}`, `coordination_snapshot_projection.v1:{project_id}:{projection_scope}`, and `projector.checkpoint.coordination:{project_id}` are the authoritative coordination read models."
+  - Up to 32 active agents across multiple worktrees update coordination through append/CAS boundaries with idempotency keys, expected agent revision or last applied event id, and one redb projection/checkpoint transaction.
+  - Lost updates return coordination conflict diagnostics; writers reload projections and append successor events instead of overwriting canonical state.
+  - Canonical coordination forbids read-modify-write of `.puppet-master/state/*.json`; mirror writes occur only after projection commit and are recoverable by regenerating from seglog/redb.
+  - Corrupted, missing, stale, or lagging mirrors are quarantined or overwritten by PM-owned projection/export code and cannot decide scheduling, execution, conflict prevention, prompt injection, unregister, crash, or abort behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: coordination_file_canon_regression
+reasoning_tier: high
+context_scope: storage_coordination_canon
+implementation_surfaces:
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/storage_value_registry.json
+  - Plans/path_reference_registry.json
+node_compile_hint:
+  mode: storage_coordination_canon_repair
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+source_atom_ids: []
+preserved_exact_tokens:
+  - "active-agents.json"
+  - ".puppet-master/state/*.json"
+  - "File-based coordination (canonical)"
+  - "single source of coordination truth"
+  - "seglog/redb projections"
+  - "coordination.agent_registered"
+  - "coordination_snapshot_projection.v1"
+negative_constraints:
+  - Do not read file-based coordination state as canonical runtime truth.
+  - Do not allow debug/export mirrors to drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, or abort decisions.
+  - Do not use read-modify-write of `.puppet-master/state/*.json` for canonical coordination updates.
+  - Do not reinterpret file-activity coordination claims as FileSafe locks or durable exclusive leases.
+owner_hints:
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
 ```

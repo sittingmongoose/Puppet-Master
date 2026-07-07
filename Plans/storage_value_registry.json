@@ -2,7 +2,7 @@
   "$schema": "https://puppetmaster.local/schemas/storage_value_registry.schema.json",
   "schema_id": "pm.storage_value_registry.v1",
   "schema_version": "1.0.0",
-  "generated_at_utc": "2026-07-06T00:00:00Z",
+  "generated_at_utc": "2026-07-07T17:54:01Z",
   "owner_doc": "Plans/storage-plan.md",
   "buildability_gate_policy": {
     "buildability_gate_passed_must_remain_false": true,
@@ -103,30 +103,112 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.approved_plan_pack.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "approved_plan_pack_id": {"type": "string", "minLength": 1},
-          "pack_version": {"type": "integer", "minimum": 1},
-          "pack_hash": {"type": "string", "minLength": 1},
-          "planning_run_id": {"type": "string", "minLength": 1},
-          "planning_run_revision": {"type": "integer", "minimum": 1},
-          "topic_map_version": {"type": "integer", "minimum": 1},
-          "plan_unit_index_hash": {"type": "string", "minLength": 1},
-          "acceptance_unit_index_hash": {"type": "string", "minLength": 1},
-          "project_context_snapshot_hash": {"type": "string", "minLength": 1},
-          "testing_policy_hash": {"type": "string", "minLength": 1},
-          "final_audit_closure_hash": {"type": "string", "minLength": 1},
-          "created_at_utc": {"type": "string", "format": "date-time"},
-          "created_by_actor_ref": {"type": "string", "minLength": 1},
-          "source_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "prd_pack_ref": {"type": "string"},
-          "amendment_refs": {"type": "array", "items": {"type": "string"}},
-          "closure_record_refs": {"type": "array", "items": {"type": "string"}},
-          "readiness_report_ref": {"type": "string"},
-          "ledger_lineage_refs": {"type": "array", "items": {"type": "string"}},
-          "supersedes_pack_id": {"type": ["string", "null"]}
+          "schema_id": {
+            "const": "pm.storage_value.approved_plan_pack.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approved_plan_pack_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pack_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pack_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "planning_run_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "planning_run_revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "topic_map_version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "plan_unit_index_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "acceptance_unit_index_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "project_context_snapshot_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "testing_policy_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "final_audit_closure_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_by_actor_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "prd_pack_ref": {
+            "type": "string"
+          },
+          "amendment_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "closure_record_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "readiness_report_ref": {
+            "type": "string"
+          },
+          "ledger_lineage_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "supersedes_pack_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -195,21 +277,79 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.plan_approved_outbox.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "approval_cas_receipt_id": {"type": "string", "minLength": 1},
-          "approved_plan_pack_id": {"type": "string", "minLength": 1},
-          "idempotency_key": {"type": "string", "minLength": 1},
-          "plan_compile_run_id": {"type": "string", "minLength": 1},
-          "outbox_status": {"type": "string", "enum": ["pending", "published", "acked", "failed"]},
-          "outbox_sequence": {"type": "integer", "minimum": 1},
-          "created_at_utc": {"type": "string", "format": "date-time"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "published_event_id": {"type": ["string", "null"]},
-          "published_sequence_id": {"type": ["integer", "null"], "minimum": 1},
-          "retry_count": {"type": "integer", "minimum": 0},
-          "last_error_ref": {"type": ["string", "null"]}
+          "schema_id": {
+            "const": "pm.storage_value.plan_approved_outbox.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approval_cas_receipt_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approved_plan_pack_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "plan_compile_run_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "outbox_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "published",
+              "acked",
+              "failed"
+            ]
+          },
+          "outbox_sequence": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "published_event_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "published_sequence_id": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "retry_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "last_error_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -299,33 +439,137 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.plan_compile_run.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "plan_compile_run_id": {"type": "string", "minLength": 1},
-          "approved_plan_pack_id": {"type": "string", "minLength": 1},
-          "source_plan_index_hash": {"type": "string", "minLength": 1},
-          "acceptance_unit_index_hash": {"type": "string", "minLength": 1},
-          "launch_source": {"type": "string", "enum": ["planning_wizard_approve_and_build"]},
-          "contract_mode": {"type": "string", "enum": ["bootstrap_authority_only", "runtime_disabled"]},
-          "runtime_adapter": {"type": "string", "enum": ["disabled_until_pnc019"]},
-          "status": {"type": "string", "enum": ["draft", "blocked", "ready_for_bootstrap_validation", "superseded", "cancelled"]},
-          "current_stage": {"type": "string", "minLength": 1},
-          "cursor": {"type": "object"},
-          "currentness_status": {"type": "object"},
-          "blockers": {"type": "array", "items": {"type": "string"}},
-          "receipts": {"type": "array", "items": {"type": "string"}},
-          "created_at_utc": {"type": "string", "format": "date-time"},
-          "updated_at_utc": {"type": "string", "format": "date-time"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "last_green_stage": {"type": ["string", "null"]},
-          "next_required_stage": {"type": ["string", "null"]},
-          "source_hashes": {"type": "object"},
-          "artifacts": {"type": "array", "items": {"type": "string"}},
-          "cancellation": {"type": "object"},
-          "supersession": {"type": "object"},
-          "runtime_enablement_ref": {"type": ["string", "null"]},
-          "runtime_policy_snapshot_ref": {"type": ["string", "null"]}
+          "schema_id": {
+            "const": "pm.storage_value.plan_compile_run.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "plan_compile_run_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approved_plan_pack_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_plan_index_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "acceptance_unit_index_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "launch_source": {
+            "type": "string",
+            "enum": [
+              "planning_wizard_approve_and_build"
+            ]
+          },
+          "contract_mode": {
+            "type": "string",
+            "enum": [
+              "bootstrap_authority_only",
+              "runtime_disabled"
+            ]
+          },
+          "runtime_adapter": {
+            "type": "string",
+            "enum": [
+              "disabled_until_pnc019"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "blocked",
+              "ready_for_bootstrap_validation",
+              "superseded",
+              "cancelled"
+            ]
+          },
+          "current_stage": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cursor": {
+            "type": "object"
+          },
+          "currentness_status": {
+            "type": "object"
+          },
+          "blockers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "receipts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "last_green_stage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "next_required_stage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_hashes": {
+            "type": "object"
+          },
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cancellation": {
+            "type": "object"
+          },
+          "supersession": {
+            "type": "object"
+          },
+          "runtime_enablement_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "runtime_policy_snapshot_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -404,25 +648,104 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.compiler_wave_contract.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "plan_compile_run_id": {"type": "string", "minLength": 1},
-          "assignment_id": {"type": "string", "minLength": 1},
-          "assigned_agent_role": {"type": "string", "minLength": 1},
-          "source_item_refs": {"type": "array", "items": {"type": "string"}},
-          "read_set": {"type": "array", "items": {"type": "string"}},
-          "write_set": {"type": "array", "items": {"type": "string"}},
-          "forbidden_writes": {"type": "array", "items": {"type": "string"}},
-          "parent_only_writes": {"type": "array", "items": {"type": "string"}},
-          "result_status": {"type": "string", "enum": ["pending", "completed", "blocked", "failed", "superseded"]},
-          "retry_route": {"type": "string", "minLength": 1},
-          "resume_ref": {"type": ["string", "null"]},
-          "durable_evidence_refs": {"type": "array", "items": {"type": "string"}},
-          "assignment_receipt": {"type": "string", "minLength": 1},
-          "completion_receipt": {"type": ["string", "null"]},
-          "parent_writeback_required": {"type": "boolean"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]}
+          "schema_id": {
+            "const": "pm.storage_value.compiler_wave_contract.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "plan_compile_run_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assignment_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assigned_agent_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_item_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "read_set": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "write_set": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "forbidden_writes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parent_only_writes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "result_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "completed",
+              "blocked",
+              "failed",
+              "superseded"
+            ]
+          },
+          "retry_route": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resume_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "durable_evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "assignment_receipt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "completion_receipt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "parent_writeback_required": {
+            "type": "boolean"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          }
         }
       }
     },
@@ -496,23 +819,82 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.workgraph_draft.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "plan_compile_run_id": {"type": "string", "minLength": 1},
-          "workgraph_id": {"type": "string", "minLength": 1},
-          "revision": {"type": "integer", "minimum": 1},
-          "nodes": {"type": "array", "items": {"type": "object"}},
-          "entrypoints": {"type": "array", "items": {"type": "string"}},
-          "dependency_edges": {"type": "array", "items": {"type": "object"}},
-          "scheduler_policy": {"type": "object"},
-          "graph_integrity": {"type": "object"},
-          "authority": {"type": "object"},
-          "evidence": {"type": "array", "items": {"type": "string"}},
-          "validation_state": {"type": "object"},
-          "created_at_utc": {"type": "string", "format": "date-time"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "supersedes_revision": {"type": ["integer", "null"], "minimum": 1}
+          "schema_id": {
+            "const": "pm.storage_value.workgraph_draft.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "plan_compile_run_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workgraph_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "entrypoints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dependency_edges": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "scheduler_policy": {
+            "type": "object"
+          },
+          "graph_integrity": {
+            "type": "object"
+          },
+          "authority": {
+            "type": "object"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "validation_state": {
+            "type": "object"
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "supersedes_revision": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          }
         }
       }
     },
@@ -606,34 +988,133 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.worknode_request.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "workgraph_id": {"type": "string", "minLength": 1},
-          "request_id": {"type": "string", "minLength": 1},
-          "source_plan_unit_refs": {"type": "array", "items": {"type": "string"}},
-          "objective": {"type": "string", "minLength": 1},
-          "implementation_surfaces": {"type": "array", "items": {"type": "string"}},
-          "read_set_candidates": {"type": "array", "items": {"type": "string"}},
-          "write_set_candidates": {"type": "array", "items": {"type": "string"}},
-          "acceptance_criteria": {"type": "array", "items": {"type": "string"}},
-          "validator_candidates": {"type": "array", "items": {"type": "string"}},
-          "dependency_refs": {"type": "array", "items": {"type": "string"}},
-          "work_type": {"type": "string", "minLength": 1},
-          "gui_related": {"type": "boolean"},
-          "frontend_related": {"type": "boolean"},
-          "effort_class": {"type": "string", "minLength": 1},
-          "reasoning_tier": {"type": "string", "enum": ["standard", "high"]},
-          "capability_lane": {"type": "string", "minLength": 1},
-          "capability_requirements": {"type": "array", "items": {"type": "string"}},
-          "test_binding": {"type": "object"},
-          "model_routing": {"type": "object"},
-          "ordering_metadata": {"type": "object"},
-          "authority": {"type": "object"},
-          "idempotency_key": {"type": "string", "minLength": 1},
-          "cancellation_policy": {"type": "object"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "blocked_reason_refs": {"type": "array", "items": {"type": "string"}}
+          "schema_id": {
+            "const": "pm.storage_value.worknode_request.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "workgraph_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_plan_unit_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "objective": {
+            "type": "string",
+            "minLength": 1
+          },
+          "implementation_surfaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "read_set_candidates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "write_set_candidates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "acceptance_criteria": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "validator_candidates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dependency_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "work_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "gui_related": {
+            "type": "boolean"
+          },
+          "frontend_related": {
+            "type": "boolean"
+          },
+          "effort_class": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reasoning_tier": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "high"
+            ]
+          },
+          "capability_lane": {
+            "type": "string",
+            "minLength": 1
+          },
+          "capability_requirements": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "test_binding": {
+            "type": "object"
+          },
+          "model_routing": {
+            "type": "object"
+          },
+          "ordering_metadata": {
+            "type": "object"
+          },
+          "authority": {
+            "type": "object"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cancellation_policy": {
+            "type": "object"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "blocked_reason_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -711,25 +1192,89 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.executor_intake_report.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "request_id": {"type": "string", "minLength": 1},
-          "intake_id": {"type": "string", "minLength": 1},
-          "intake_status": {"type": "string", "enum": ["accepted", "rejected", "blocked"]},
-          "graph_integrity_result": {"type": "object"},
-          "source_control_result": {"type": "object"},
-          "test_binding_result": {"type": "object"},
-          "model_routing_result": {"type": "object"},
-          "authority_result": {"type": "object"},
-          "readiness_result": {"type": "object"},
-          "scheduler_metadata_result": {"type": "object"},
-          "created_at_utc": {"type": "string", "format": "date-time"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "blocked_reason_code": {"type": ["string", "null"]},
-          "rejected_reason_code": {"type": ["string", "null"]},
-          "accepted_at_utc": {"type": ["string", "null"], "format": "date-time"},
-          "execution_unit_context_ref": {"type": ["string", "null"]}
+          "schema_id": {
+            "const": "pm.storage_value.executor_intake_report.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "intake_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "intake_status": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "rejected",
+              "blocked"
+            ]
+          },
+          "graph_integrity_result": {
+            "type": "object"
+          },
+          "source_control_result": {
+            "type": "object"
+          },
+          "test_binding_result": {
+            "type": "object"
+          },
+          "model_routing_result": {
+            "type": "object"
+          },
+          "authority_result": {
+            "type": "object"
+          },
+          "readiness_result": {
+            "type": "object"
+          },
+          "scheduler_metadata_result": {
+            "type": "object"
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "blocked_reason_code": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "rejected_reason_code": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accepted_at_utc": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "execution_unit_context_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -816,30 +1361,126 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.attempt_receipt.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "receipt_id": {"type": "string", "minLength": 1},
-          "run_id": {"type": "string", "minLength": 1},
-          "node_id": {"type": "string", "minLength": 1},
-          "attempt_id": {"type": "string", "minLength": 1},
-          "receipt_kind": {"type": "string", "minLength": 1},
-          "result_summary": {"type": "object"},
-          "status": {"type": "string", "enum": ["completed", "failed", "blocked", "cancelled", "superseded"]},
-          "execution_unit_context_ref": {"type": "string", "minLength": 1},
-          "source_artifact_refs": {"type": "array", "items": {"type": "string"}},
-          "destination_artifact_refs": {"type": "array", "items": {"type": "string"}},
-          "retry_route": {"type": "string", "minLength": 1},
-          "rollback_route": {"type": "string", "minLength": 1},
-          "evidence_refs": {"type": "array", "items": {"type": "string"}},
-          "validator_refs": {"type": "array", "items": {"type": "string"}},
-          "created_at_utc": {"type": "string", "format": "date-time"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "provider_attempt_ref": {"type": ["string", "null"]},
-          "usage_event_ref": {"type": ["string", "null"]},
-          "worktree_id": {"type": ["string", "null"]},
-          "safe_point_id": {"type": ["string", "null"]},
-          "unresolved_risks": {"type": "array", "items": {"type": "string"}}
+          "schema_id": {
+            "const": "pm.storage_value.attempt_receipt.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "receipt_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "run_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "attempt_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "receipt_kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "result_summary": {
+            "type": "object"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "failed",
+              "blocked",
+              "cancelled",
+              "superseded"
+            ]
+          },
+          "execution_unit_context_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_artifact_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "destination_artifact_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "retry_route": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rollback_route": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "validator_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "provider_attempt_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "usage_event_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "worktree_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "safe_point_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "unresolved_risks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -907,20 +1548,65 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.event_record_index.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "sequence_id": {"type": "integer", "minimum": 1},
-          "event_id": {"type": "string", "minLength": 1},
-          "event_type": {"type": "string", "minLength": 1},
-          "segment_ref": {"type": "string", "minLength": 1},
-          "byte_offset": {"type": "integer", "minimum": 0},
-          "payload_sha256": {"type": "string", "minLength": 1},
-          "idempotency_key": {"type": "string", "minLength": 1},
-          "correlation_id": {"type": "string", "minLength": 1},
-          "persisted_at_utc": {"type": "string", "format": "date-time"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "causation_event_id": {"type": ["string", "null"]}
+          "schema_id": {
+            "const": "pm.storage_value.event_record_index.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sequence_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "event_type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "segment_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "byte_offset": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "payload_sha256": {
+            "type": "string",
+            "minLength": 1
+          },
+          "idempotency_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "correlation_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "persisted_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "causation_event_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -991,23 +1677,96 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.blocked_projection.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "node_id": {"type": "string", "minLength": 1},
-          "blocked_reason_code": {"type": "string", "minLength": 1},
-          "blocked_at_utc": {"type": "string", "format": "date-time"},
-          "blocked_family": {"type": "string", "minLength": 1},
-          "source_event_ids": {"type": "array", "items": {"type": "string"}},
-          "projection_freshness": {"type": "string", "enum": ["current", "stale", "rebuilding", "unavailable"]},
-          "projection_health": {"type": "string", "enum": ["healthy", "degraded", "unavailable"]},
-          "last_projected_at_utc": {"type": "string", "format": "date-time"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "approval_scope_key": {"type": ["string", "null"]},
-          "allowed_action_ids": {"type": "array", "items": {"type": "string"}},
-          "dirty_file_paths": {"type": "array", "items": {"type": "string"}},
-          "conflict_file_paths": {"type": "array", "items": {"type": "string"}},
-          "recovery_target_ref": {"type": ["string", "null"]}
+          "schema_id": {
+            "const": "pm.storage_value.blocked_projection.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "blocked_reason_code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "blocked_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "blocked_family": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_event_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "projection_freshness": {
+            "type": "string",
+            "enum": [
+              "current",
+              "stale",
+              "rebuilding",
+              "unavailable"
+            ]
+          },
+          "projection_health": {
+            "type": "string",
+            "enum": [
+              "healthy",
+              "degraded",
+              "unavailable"
+            ]
+          },
+          "last_projected_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "approval_scope_key": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "allowed_action_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dirty_file_paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "conflict_file_paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "recovery_target_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -1085,25 +1844,105 @@
           "redaction_profile"
         ],
         "properties": {
-          "schema_id": {"const": "pm.storage_value.goal_receipt.v1"},
-          "schema_version": {"const": "1.0.0"},
-          "project_id": {"type": "string", "minLength": 1},
-          "receipt_id": {"type": "string", "minLength": 1},
-          "goal_id": {"type": "string", "minLength": 1},
-          "receipt_kind": {"type": "string", "minLength": 1},
-          "certification_tier": {"type": "string", "minLength": 1},
-          "validator_outputs": {"type": "array", "items": {"type": "string"}},
-          "child_receipt_refs": {"type": "array", "items": {"type": "string"}},
-          "worknode_receipt_refs": {"type": "array", "items": {"type": "string"}},
-          "unresolved_risks": {"type": "array", "items": {"type": "string"}},
-          "final_certifier_decision": {"type": "string", "enum": ["accepted", "rejected", "blocked"]},
-          "evidence_refs": {"type": "array", "items": {"type": "string"}},
-          "created_at_utc": {"type": "string", "format": "date-time"},
-          "redaction_profile": {"type": "string", "enum": ["no_secrets", "redacted_refs_only"]},
-          "goal_run_id": {"type": ["string", "null"]},
-          "workgraph_ref": {"type": ["string", "null"]},
-          "requested_runtime_ref": {"type": ["string", "null"]},
-          "effective_runtime_ref": {"type": ["string", "null"]}
+          "schema_id": {
+            "const": "pm.storage_value.goal_receipt.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "receipt_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "goal_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "receipt_kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "certification_tier": {
+            "type": "string",
+            "minLength": 1
+          },
+          "validator_outputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "child_receipt_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "worknode_receipt_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unresolved_risks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "final_certifier_decision": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "rejected",
+              "blocked"
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "goal_run_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "workgraph_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "requested_runtime_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "effective_runtime_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -1116,12 +1955,21 @@
       "value_schema_id": "pm.storage_value.run_record_legacy_baseline.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/run_record_legacy_baseline",
       "owner_doc": "Plans/storage-plan.md#required-redb-keys-baseline",
-      "producer": ["legacy runtime baseline"],
-      "consumers": ["migration readers"],
+      "producer": [
+        "legacy runtime baseline"
+      ],
+      "consumers": [
+        "migration readers"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["created_at_utc", "updated_at_utc"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "created_at_utc",
+        "updated_at_utc"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Migration-read only until a current run-record owner materializes a v1 value schema.",
       "migration": "Must crosswalk into versioned runtime/receipt families before implementation authority.",
@@ -1141,12 +1989,21 @@
       "value_schema_id": "pm.storage_value.node_record_legacy_baseline.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/node_record_legacy_baseline",
       "owner_doc": "Plans/storage-plan.md#required-redb-keys-baseline",
-      "producer": ["legacy runtime baseline"],
-      "consumers": ["migration readers"],
+      "producer": [
+        "legacy runtime baseline"
+      ],
+      "consumers": [
+        "migration readers"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["created_at_utc", "updated_at_utc"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "created_at_utc",
+        "updated_at_utc"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Migration-read only; current launch-critical node requests use worknode_request.",
       "migration": "Must crosswalk into WorkNodeRequest/WorkNodeRecord contracts before implementation authority.",
@@ -1166,12 +2023,21 @@
       "value_schema_id": "pm.execution_unit_context",
       "value_schema_ref": "Plans/execution_unit_context.schema.json",
       "owner_doc": "Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract",
-      "producer": ["Executor"],
-      "consumers": ["Prompt Pipeline", "receipt projectors"],
+      "producer": [
+        "Executor"
+      ],
+      "consumers": [
+        "Prompt Pipeline",
+        "receipt projectors"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["execution_unit_context_ref"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "execution_unit_context_ref"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Use the canonical execution_unit_context schema by ref; storage does not redefine the packet here.",
       "migration": "Any embedded packet missing schema_version is invalid.",
@@ -1191,12 +2057,21 @@
       "value_schema_id": "pm.storage_value.receipt_record_baseline.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/receipt_record_baseline",
       "owner_doc": "Plans/storage-plan.md#cross-surface-receipt-record-baseline",
-      "producer": ["legacy receipt writer"],
-      "consumers": ["receipt migration readers"],
+      "producer": [
+        "legacy receipt writer"
+      ],
+      "consumers": [
+        "receipt migration readers"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["attempt_receipt_ref", "goal_receipt_ref"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "attempt_receipt_ref",
+        "goal_receipt_ref"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Migration-read only; launch-critical receipts use attempt_receipt and goal_receipt.",
       "migration": "Crosswalk to attempt_receipt or goal_receipt before implementation authority.",
@@ -1216,13 +2091,29 @@
       "value_schema_id": "pm.storage_value.attempt_record.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/attempt_record",
       "owner_doc": "Plans/storage-plan.md#canonical-record-field-level-minima",
-      "producer": ["Executor attempt writer"],
-      "consumers": ["Runtime Artifacts panel", "receipt joins"],
+      "producer": [
+        "Executor attempt writer"
+      ],
+      "consumers": [
+        "Runtime Artifacts panel",
+        "receipt joins"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "node_id", "attempt_number", "run_id", "attempt_id", "execution_unit_context_ref"],
-      "nullable_fields": ["execution_unit_context_ref"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "node_id",
+        "attempt_number",
+        "run_id",
+        "attempt_id",
+        "execution_unit_context_ref"
+      ],
+      "nullable_fields": [
+        "execution_unit_context_ref"
+      ],
       "replay_behavior": "Deferred because launch-critical receipts are materialized separately; attempts need runtime lifecycle fixtures before closure.",
       "migration": "Current aliases must map to the project/node/attempt_number key with schema_version.",
       "retention_compaction": "Retain attempt lineage while receipts/evidence reference it.",
@@ -1241,12 +2132,23 @@
       "value_schema_id": "pm.storage_value.concern_record.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/concern_record",
       "owner_doc": "Plans/storage-plan.md#concern-record-and-lifecycle-canon",
-      "producer": ["review and attention projectors"],
-      "consumers": ["Orchestrator", "Runtime Artifacts panel"],
+      "producer": [
+        "review and attention projectors"
+      ],
+      "consumers": [
+        "Orchestrator",
+        "Runtime Artifacts panel"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["concern_id", "project_id", "status"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "concern_id",
+        "project_id",
+        "status"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Deferred lifecycle record; not on launch-critical Approve And Build path.",
       "migration": "Must preserve active/acknowledged/resolved/dismissed semantics.",
@@ -1266,12 +2168,23 @@
       "value_schema_id": "pm.storage_value.runtime_artifact_projector_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/runtime_artifact_projector_families",
       "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
-      "producer": ["Runtime artifact projector"],
-      "consumers": ["Runtime Artifacts panel", "usage/dashboard"],
+      "producer": [
+        "Runtime artifact projector"
+      ],
+      "consumers": [
+        "Runtime Artifacts panel",
+        "usage/dashboard"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["artifact_id", "project_id", "checkpoint_cursor"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "artifact_id",
+        "project_id",
+        "checkpoint_cursor"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Rebuildable from canonical events and receipts.",
       "migration": "Family-specific schemas required before implementation authority.",
@@ -1291,12 +2204,25 @@
       "value_schema_id": "pm.storage_value.worktree_lane_thread_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/worktree_lane_thread_families",
       "owner_doc": "Plans/WorktreeGitImprovement.md",
-      "producer": ["Source Control and assistant-thread projectors"],
-      "consumers": ["Assistant chat", "Source Control", "Orchestrator"],
+      "producer": [
+        "Source Control and assistant-thread projectors"
+      ],
+      "consumers": [
+        "Assistant chat",
+        "Source Control",
+        "Orchestrator"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "thread_id", "worktree_id", "lane_id"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "thread_id",
+        "worktree_id",
+        "lane_id"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Thread/worktree bindings rebuild from chat.thread_worktree_* events; lane/worktree records retain lifecycle lineage.",
       "migration": "Legacy thread/worktree aliases must write the canonical project/thread/worktree/lane keys.",
@@ -1316,12 +2242,25 @@
       "value_schema_id": "pm.storage_value.project_attention_account_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/project_attention_account_families",
       "owner_doc": "Plans/Multi-Account.md",
-      "producer": ["attention and account projectors"],
-      "consumers": ["Dashboard", "Orchestrator", "usage views"],
+      "producer": [
+        "attention and account projectors"
+      ],
+      "consumers": [
+        "Dashboard",
+        "Orchestrator",
+        "usage views"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "provider_id", "account_id", "source_event_ids"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "provider_id",
+        "account_id",
+        "source_event_ids"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Rebuild account/attention projections from events and runtime attribution records.",
       "migration": "Requires owner-specific schemas before build authority.",
@@ -1341,12 +2280,25 @@
       "value_schema_id": "pm.storage_value.provider_runtime_identity_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/provider_runtime_identity_families",
       "owner_doc": "Plans/Multi-Account.md",
-      "producer": ["provider discovery and account manager"],
-      "consumers": ["Prompt Pipeline", "PlanCompile provider routing", "usage views"],
+      "producer": [
+        "provider discovery and account manager"
+      ],
+      "consumers": [
+        "Prompt Pipeline",
+        "PlanCompile provider routing",
+        "usage views"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["provider_id", "account_id", "billing_entity_id", "connection_profile_id"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "provider_id",
+        "account_id",
+        "billing_entity_id",
+        "connection_profile_id"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Deferred; provider stream readiness must prove discovery/currentness before launch.",
       "migration": "Must split account-backed and server-profile-backed runtime identity.",
@@ -1366,12 +2318,24 @@
       "value_schema_id": "pm.storage_value.terminal_workspace_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/terminal_workspace_families",
       "owner_doc": "Plans/FinalGUISpec.md",
-      "producer": ["terminal and editor projectors"],
-      "consumers": ["terminal GUI", "Runtime Artifacts panel"],
+      "producer": [
+        "terminal and editor projectors"
+      ],
+      "consumers": [
+        "terminal GUI",
+        "Runtime Artifacts panel"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "workspace_tab_id", "terminal_session_id", "command_block_id"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "workspace_tab_id",
+        "terminal_session_id",
+        "command_block_id"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Restore terminal layout and historical command metadata without treating transcript buffers as runtime authority.",
       "migration": "Terminal bottom-panel blobs must split into the decomposed key families before implementation authority.",
@@ -1391,12 +2355,25 @@
       "value_schema_id": "pm.storage_value.tooling_skill_debug_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/tooling_skill_debug_families",
       "owner_doc": "Plans/Skills_System.md",
-      "producer": ["tooling, MCP, skill, and debug projectors"],
-      "consumers": ["tool palettes", "debug overlay", "runtime artifacts"],
+      "producer": [
+        "tooling, MCP, skill, and debug projectors"
+      ],
+      "consumers": [
+        "tool palettes",
+        "debug overlay",
+        "runtime artifacts"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "skill_id", "mcp_server_id", "investigation_id"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "skill_id",
+        "mcp_server_id",
+        "investigation_id"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Deferred GUI/tooling projections remain inspectable but are not launch-critical.",
       "migration": "Requires family-specific schemas and runtime availability fixtures.",
@@ -1416,12 +2393,25 @@
       "value_schema_id": "pm.storage_value.github_bundle_note_preview_browser_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/github_bundle_note_preview_browser_families",
       "owner_doc": "Plans/GitHub_Integration.md",
-      "producer": ["GitHub, bundle, note, preview, and browser projectors"],
-      "consumers": ["GitHub Actions panel", "browser/preview GUI", "assistant composer"],
+      "producer": [
+        "GitHub, bundle, note, preview, and browser projectors"
+      ],
+      "consumers": [
+        "GitHub Actions panel",
+        "browser/preview GUI",
+        "assistant composer"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "thread_id", "bundle_id", "browser_session_id"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "thread_id",
+        "bundle_id",
+        "browser_session_id"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Deferred GUI projections restore panel/browser/preview state without launch authority.",
       "migration": "Family-specific schemas required before mutating actions rely on these projections.",
@@ -1441,12 +2431,25 @@
       "value_schema_id": "pm.storage_value.goal_projection_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/goal_projection_families",
       "owner_doc": "Plans/Goal_Runtime_System.md",
-      "producer": ["Goal Runtime projector"],
-      "consumers": ["Orchestrator", "Goal Runtime views", "certification readers"],
+      "producer": [
+        "Goal Runtime projector"
+      ],
+      "consumers": [
+        "Orchestrator",
+        "Goal Runtime views",
+        "certification readers"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "goal_id", "goal_run_id", "source_event_ids"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "goal_id",
+        "goal_run_id",
+        "source_event_ids"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Append-only goal events and materialized goal_receipt rows are authoritative; projections rebuild and cannot certify stale completion.",
       "migration": "Goal projection schemas must align with Goal Runtime event schemas before lifecycle closure.",
@@ -1466,12 +2469,23 @@
       "value_schema_id": "pm.storage_value.analytics_rollup_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/analytics_rollup_families",
       "owner_doc": "Plans/usage-feature.md",
-      "producer": ["analytics scan job"],
-      "consumers": ["Usage dashboard", "tool usage widget"],
+      "producer": [
+        "analytics scan job"
+      ],
+      "consumers": [
+        "Usage dashboard",
+        "tool usage widget"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["window", "platform", "last_scanned_sequence_id"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "window",
+        "platform",
+        "last_scanned_sequence_id"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Rollups rebuild from usage.event, run.completed, and tool.invoked EventRecords.",
       "migration": "Window-specific schemas required before dashboard implementation.",
@@ -1491,12 +2505,25 @@
       "value_schema_id": "pm.storage_value.storage_project_state_and_config_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/storage_project_state_and_config_families",
       "owner_doc": "Plans/Orchestrator_Page.md",
-      "producer": ["project state and GUI settings writers"],
-      "consumers": ["Dashboard", "Orchestrator", "Source Control", "notifications"],
+      "producer": [
+        "project state and GUI settings writers"
+      ],
+      "consumers": [
+        "Dashboard",
+        "Orchestrator",
+        "Source Control",
+        "notifications"
+      ],
       "schema_version": "1.0.0",
       "encoding": "json_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "settings_version", "source_event_ids"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "settings_version",
+        "source_event_ids"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Project/UI state restores from versioned settings and source events where applicable; stale projections remain inspectable only.",
       "migration": "Unversioned settings keys require forward-only migration before implementation authority.",
@@ -1516,12 +2543,25 @@
       "value_schema_id": "pm.storage_value.permission_safe_point_restore_families.v1",
       "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/permission_safe_point_restore_families",
       "owner_doc": "Plans/Permissions_System.md",
-      "producer": ["permission and recovery boundary"],
-      "consumers": ["Executor", "Source Control", "restore flows"],
+      "producer": [
+        "permission and recovery boundary"
+      ],
+      "consumers": [
+        "Executor",
+        "Source Control",
+        "restore flows"
+      ],
       "schema_version": "1.0.0",
       "encoding": "messagepack_canonical",
-      "required_fields": ["schema_version"],
-      "optional_fields": ["project_id", "snapshot_id", "safe_point_id", "restore_point_id"],
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "snapshot_id",
+        "safe_point_id",
+        "restore_point_id"
+      ],
       "nullable_fields": [],
       "replay_behavior": "Recovery resume uses checkpoint marker events plus safe-point/restore records; projector checkpoints alone are insufficient.",
       "migration": "Safe-point and restore-point namespaces remain separate; aliases need explicit migration records.",
@@ -1531,6 +2571,150 @@
       "deferred_owner": "Plans/Permissions_System.md",
       "deferred_reason": "Security boundary fixtures are explicitly out of Tier 0C-2 scope.",
       "reopen_condition": "Reopen in security_boundary/runtime_lifecycle tier."
+    },
+    {
+      "family_id": "coordination_event_records",
+      "storage_kind": "seglog",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "coordination.agent_registered | coordination.agent_status_updated | coordination.agent_operation_updated | coordination.agent_file_ownership_updated | coordination.agent_unregistered | coordination.agent_crashed | coordination.agent_aborted | coordination.debug_mirror_exported",
+      "value_schema_id": "pm.storage_value.coordination_event_records.v1",
+      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_event_records",
+      "owner_doc": "Plans/Contracts_V0.md#stable-active-agent-coordination-event-families",
+      "producer": [
+        "AgentCoordinator",
+        "platform hook/event adapters",
+        "coordination mirror exporter"
+      ],
+      "consumers": [
+        "coordination projector",
+        "Orchestrator scheduler",
+        "prompt context assembler",
+        "debug mirror exporter"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "seglog_messagepack",
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "run_id",
+        "thread_id",
+        "agent_id",
+        "agent_type",
+        "parent_run_id",
+        "child_run_id",
+        "node_id",
+        "lane_id",
+        "worktree_id",
+        "platform",
+        "agent_revision",
+        "expected_previous_revision",
+        "last_applied_event_id",
+        "idempotency_key",
+        "operation_id",
+        "path_ref",
+        "path_hash",
+        "mirror_path",
+        "source_checkpoint"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "Coordination events replay in seglog order into coordination redb projections; idempotency keys and expected revisions prevent duplicate or stale updates.",
+      "migration": "Legacy active-agents.json and .puppet-master/state/*.json coordination paths migrate only as compatibility/debug mirror inputs; new writers emit EventRecord values.",
+      "retention_compaction": "Coordination EventRecords retain under runtime audit policy; projections and mirrors are rebuildable from seglog plus checkpoints.",
+      "redaction_no_secret_rule": "Store refs, hashes, ids, paths under normal path-redaction policy, and status metadata only; no raw credentials, provider tokens, OAuth values, local credential paths, or machine secrets.",
+      "legacy_canonical_crosswalk_status": "canonical_event_family_deferred_payload_schema",
+      "deferred_owner": "Plans/Contracts_V0.md",
+      "deferred_reason": "Coordination event families are named for FABLE canon repair; executable runtime fixtures and full payload schemas remain outside this bounded repair.",
+      "reopen_condition": "Reopen when runtime lifecycle implementation or buildability claims depend on concrete coordination event payload schemas."
+    },
+    {
+      "family_id": "coordination_read_model_projections",
+      "storage_kind": "redb_projection",
+      "status": "deferred_not_build_blocking",
+      "tier": "later_gui_or_feature_projection",
+      "key_shape": "coordination_agent_projection.v1:{project_id}:{agent_id} | coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id} | coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id} | coordination_snapshot_projection.v1:{project_id}:{projection_scope} | projector.checkpoint.coordination:{project_id}",
+      "value_schema_id": "pm.storage_value.coordination_read_model_projections.v1",
+      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_read_model_projections",
+      "owner_doc": "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families",
+      "producer": [
+        "coordination projector"
+      ],
+      "consumers": [
+        "Orchestrator scheduler",
+        "AgentCoordinator",
+        "prompt context assembler",
+        "debug mirror exporter",
+        "inspection views"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "agent_id",
+        "path_hash",
+        "operation_id",
+        "projection_scope",
+        "agent_revision",
+        "last_applied_event_id",
+        "source_sequence_id",
+        "checkpoint"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "Projection rows rebuild from coordination EventRecords; authoritative readers verify projector checkpoint coverage before scheduling or prompt use.",
+      "migration": "File-backed coordination state is not migration authority. Projections rebuild from seglog and may optionally export debug mirrors.",
+      "retention_compaction": "Projection rows are disposable and compactable by scope; canonical coordination history remains in seglog EventRecords.",
+      "redaction_no_secret_rule": "Projection values contain coordination metadata, refs, and redacted path hashes only; no raw provider secret or credential data persists.",
+      "legacy_canonical_crosswalk_status": "canonical_projection_deferred_value_schema",
+      "deferred_owner": "Plans/storage-plan.md",
+      "deferred_reason": "Read-model key families are named for canon repair; materialized projection schemas remain part of later runtime implementation.",
+      "reopen_condition": "Reopen when scheduler, prompt injection, or runtime lifecycle implementation depends on concrete coordination projection schemas."
+    },
+    {
+      "family_id": "coordination_debug_mirror_exports",
+      "storage_kind": "redb_projection",
+      "status": "compatibility_alias",
+      "tier": "migration_only",
+      "key_shape": ".puppet-master/state/active-agents.json | .puppet-master/state/agent-messages.json | .puppet-master/state/verification-{node_id}-end.json | .puppet-master/state/handoff-validation-{node_id}.json | coordination_mirror_export.v1:{project_id}:{mirror_kind}",
+      "value_schema_id": "pm.storage_value.coordination_debug_mirror_exports.v1",
+      "value_schema_ref": "deferred:Plans/storage_value_registry.json#/families/coordination_debug_mirror_exports",
+      "owner_doc": "Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families",
+      "producer": [
+        "PM coordination projection/export code"
+      ],
+      "consumers": [
+        "debug/export readers",
+        "interoperability views"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "json_canonical",
+      "required_fields": [
+        "schema_version"
+      ],
+      "optional_fields": [
+        "project_id",
+        "mirror_kind",
+        "mirror_path",
+        "source_sequence_id",
+        "source_checkpoint",
+        "export_status",
+        "exported_at_utc",
+        "error_code",
+        "quarantine_ref"
+      ],
+      "nullable_fields": [],
+      "replay_behavior": "Mirrors are regenerated from seglog/redb after projection commit and are never replay authority.",
+      "migration": "Existing .puppet-master/state coordination JSON paths are retired source-lineage or compatibility/debug exports only.",
+      "retention_compaction": "Mirror files may be overwritten, quarantined, or deleted; canonical coordination state remains recoverable from seglog/redb.",
+      "redaction_no_secret_rule": "Mirror exports must obey normal export redaction; no secrets, tokens, credentials, OAuth values, local credential paths, or machine secrets.",
+      "legacy_canonical_crosswalk_status": "compatibility_debug_export_only",
+      "deferred_owner": "Plans/storage-plan.md",
+      "deferred_reason": "This compatibility alias records mirror-only disposition; it is intentionally non-canonical and not build-blocking.",
+      "reopen_condition": "Reopen if a consumer reads a coordination mirror for scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation authority."
     }
   ]
 }

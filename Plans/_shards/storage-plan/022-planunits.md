@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2285-L14883
+Source lines: L2321-L14923
 
-Source SHA256: `ad3f512795f628259dafc4e81b402f15adbfde16434e9548ea3b0101c41fb283`
+Source SHA256: `72d0e14753484f2b33e234a83e25ab7390c785bd9c146197b550409996450058`
 
 ---
 
@@ -234,6 +234,7 @@ unblocks: []
 acceptance_criteria:
 - "SP-005 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "Runtime coordination/audit uses event-sourced seglog/redb records and projections as primary authority; file-based canon remains export/inspection mirror material only."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -489,6 +490,7 @@ unblocks: []
 acceptance_criteria:
 - "SP-009 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
 - "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "active-agents.json is preserved only as compatibility/debug mirror vocabulary and is not part of project_state canonical runtime truth."
 - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
 - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
@@ -530,8 +532,10 @@ negative_constraints:
 - "Project registry state stays narrow."
 - "Consumer docs must not own storage records."
 preserved_contractrefs: []
-compatibility_only_notes: []
-stale_retired_dispositions: []
+compatibility_only_notes:
+- "active-agents.json is compatibility/debug mirror vocabulary when it appears in project-state source spans."
+stale_retired_dispositions:
+- "Project-state ownership of active-agent runtime truth is retired; coordination records/projections own it."
 owner_hints:
 - "Plans/storage-plan.md"
 - "Plans/WorktreeGitImprovement.md"
