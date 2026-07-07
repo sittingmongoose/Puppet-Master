@@ -143,13 +143,15 @@
     },
     {
       "finding_key": "fable-20260706-p0-platform-specs-authority-drift",
-      "reason": "Models_System now owns active context-window, max-token, fallback-chain, capability provenance, and requested/effective capability fields; Assistant Chat live platform_specs function references were replaced or fenced as retired source-lineage; Contracts_V0 carries only capability snapshot refs.",
+      "reason": "Models_System now owns active context-window, max-token, fallback-chain, capability provenance, and requested/effective capability fields; Assistant Chat live platform_specs function references were replaced or fenced as retired source-lineage; Contracts_V0 carries only capability snapshot refs. Closure hardening confirms this is provider/model scoped only; non-provider platform-adapter uses remain separately adjudicated.",
       "repair_required": false,
       "status": "repaired_current",
       "superseded_at_utc": "2026-07-07T18:49:00Z",
       "superseded_by": [
         "Plans/.audits/fable-20260706/PLATFORM_SPECS_AUTHORITY_REPAIR.md",
-        "Plans/.audits/fable-20260706/platform_specs_authority_repair_report.json"
+        "Plans/.audits/fable-20260706/platform_specs_authority_repair_report.json",
+        "Plans/.audits/fable-20260706/PLATFORM_SPECS_CLOSURE_HARDENING.md",
+        "Plans/.audits/fable-20260706/platform_specs_closure_hardening_report.json"
       ]
     }
   ],
@@ -162,9 +164,11 @@
     "Require event catalogs to have per-event payload minima and schema refs, not just generic envelopes.",
     "Require behavioral acceptance and dependency graph quality for P0/gui_related PlanUnits instead of preservation-only acceptance criteria."
   ],
-  "generated_at_utc": "2026-07-07T18:49:00Z",
+  "generated_at_utc": "2026-07-07T19:36:27Z",
   "outputs": {
     "currentness_report": "Plans/.audits/fable-20260706/currentness_check_report.json",
+    "platform_specs_closure_hardening": "Plans/.audits/fable-20260706/PLATFORM_SPECS_CLOSURE_HARDENING.md",
+    "platform_specs_closure_hardening_report": "Plans/.audits/fable-20260706/platform_specs_closure_hardening_report.json",
     "registry": "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
     "repair_plan": "Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md"
   },
@@ -199,7 +203,7 @@
       "closure_status": "repair_validated",
       "dependency_order": 20,
       "finding_key": "fable-20260706-p0-platform-specs-authority-drift",
-      "notes": "Closed by PLATFORM_SPECS_AUTHORITY_REPAIR.md; active context-window/fallback authority is Models_System capability snapshot and fallback_chain[], with Contracts_V0 snapshot refs only.",
+      "notes": "Closed by PLATFORM_SPECS_AUTHORITY_REPAIR.md; active context-window/fallback authority is Models_System capability snapshot and fallback_chain[], with Contracts_V0 snapshot refs only. Closure hardening supersedes stale provider/model mechanical rows and leaves M-083 skill-injection residue open separately.",
       "owner_docs": [
         "Plans/assistant-chat-design.md",
         "Plans/Models_System.md",
@@ -212,7 +216,9 @@
       "source_severity": "High",
       "superseded_by": [
         "Plans/.audits/fable-20260706/PLATFORM_SPECS_AUTHORITY_REPAIR.md",
-        "Plans/.audits/fable-20260706/platform_specs_authority_repair_report.json"
+        "Plans/.audits/fable-20260706/platform_specs_authority_repair_report.json",
+        "Plans/.audits/fable-20260706/PLATFORM_SPECS_CLOSURE_HARDENING.md",
+        "Plans/.audits/fable-20260706/platform_specs_closure_hardening_report.json"
       ],
       "title": "platform_specs authority closed: Models_System capability snapshots replace live legacy platform_specs functions."
     },
@@ -408,6 +414,98 @@
       "title": "PlanUnit layer still relies heavily on migration-preservation acceptance and sparse dependency/unblocks metadata."
     }
   ],
+  "platform_specs_closure_hardening": {
+    "decision": "Only provider/model platform_specs authority is retired by this closure; non-provider platform-adapter uses remain separately adjudicated.",
+    "global_platform_specs_retired": false,
+    "provider_model_platform_specs_retired": true,
+    "registry_closure_id": "closure-fable-20260706-platform-specs-closure-hardening-001",
+    "remaining_residue_adjudication": [
+      {
+        "classification": "separately_adjudicated_non_provider_platform_adapter_residue",
+        "decision": "Broad platform-data DRY wording is not provider/model capability authority and is not closed by the provider/model repair.",
+        "doc": "Plans/FileSafe.md",
+        "evidence": [
+          "Plans/FileSafe.md:18"
+        ],
+        "repair_required": true
+      },
+      {
+        "classification": "separately_adjudicated_tool_policy_to_cli_mapping",
+        "decision": "Tool-policy-to-CLI mapping is a platform-adapter concern; it remains outside the provider/model closure.",
+        "doc": "Plans/Tools.md",
+        "evidence": [
+          "Plans/Tools.md:233",
+          "Plans/Tools.md:1181",
+          "Plans/Tools.md:1187"
+        ],
+        "repair_required": true
+      },
+      {
+        "classification": "separately_adjudicated_non_provider_platform_adapter_residue",
+        "decision": "Git/worktree platform-data DRY wording is not provider/model capability authority.",
+        "doc": "Plans/WorktreeGitImprovement.md",
+        "evidence": [
+          "Plans/WorktreeGitImprovement.md:617",
+          "Plans/WorktreeGitImprovement.md:647"
+        ],
+        "repair_required": true
+      },
+      {
+        "classification": "out_of_scope_still_open_mixed_platform_dry_wording",
+        "decision": "Broad DRY wording includes model/auth/capability words, but provider/model authority is owned by Models_System; this broader wording is separate cleanup.",
+        "doc": "Plans/newtools.md",
+        "evidence": [
+          "Plans/newtools.md:41",
+          "Plans/newtools.md:43"
+        ],
+        "repair_required": true
+      },
+      {
+        "classification": "separately_adjudicated_runner_platform_adapter_residue",
+        "decision": "Invocation formatting, parser selection, display names, and provider-native package routing are runner/platform-adapter concerns, not provider/model authority.",
+        "doc": "Plans/orchestrator-subagent-integration.md",
+        "evidence": [
+          "Plans/orchestrator-subagent-integration.md:8877",
+          "Plans/orchestrator-subagent-integration.md:11369",
+          "Plans/orchestrator-subagent-integration.md:21786",
+          "Plans/orchestrator-subagent-integration.md:27658"
+        ],
+        "repair_required": true
+      },
+      {
+        "classification": "needs_repair",
+        "decision": "M-083 remains open because the versioned skill-injection contract lacks a proven canonical schema/owner and Skills_System rejects provider-private skill injection as canonical runtime path.",
+        "doc": "Plans/MiscPlan.md",
+        "evidence": [
+          "Plans/MiscPlan.md:6352",
+          "Plans/MiscPlan.md:6379",
+          "Plans/Skills_System.md:163"
+        ],
+        "repair_required": true
+      },
+      {
+        "classification": "source_lineage_only",
+        "decision": "The Plans index retires chain-wizard-flexibility from active product canon; its platform_specs mentions are compatibility/source-lineage only.",
+        "doc": "Plans/chain-wizard-flexibility.md",
+        "evidence": [
+          "Plans/00-plans-index.md:32",
+          "Plans/chain-wizard-flexibility.md:80",
+          "Plans/chain-wizard-flexibility.md:1413"
+        ],
+        "repair_required": false
+      }
+    ],
+    "semantic_finding_key": "sfk-4a6be1019aed64a9b679239e",
+    "superseded_mechanical_buildability_rows": [
+      "fable-20260706-report-l0091-verdict-real-contradiction-high-inconsistent-openref-mostly-internal-to-03c9f709",
+      "fable-20260706-report-l0473-high-l1904-1910-vs-l194-195-2319-3874-17-3-context-repack-sources-max-to-df7240c0",
+      "fable-20260706-report-l0474-high-l3865-3874-acd-009-the-planunit-meant-to-restate-1-1-instead-assert-20b32d01",
+      "fable-20260706-report-l0475-high-l11973-13606-vs-l15007-15577-acd-255-257-260-262-268-the-contradict-62f185d3",
+      "fable-20260706-report-l0639-critical-l435-462-capability-matrix-has-no-context-window-max-context-to-c18124c7",
+      "fable-20260706-report-l0641-critical-l13-295-306-doc-claims-sole-ssot-for-model-config-but-never-men-9fc4271a",
+      "fable-20260706-report-l0648-high-platform-specs-term-does-not-appear-anywhere-in-models-system-md-de-24ff7df0"
+    ]
+  },
   "registry_summary": {
     "classification_counts": {
       "already_fixed_in_latest_repo": 1,

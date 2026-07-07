@@ -2,6 +2,7 @@
 
 Generated: 2026-07-07T11:56:40Z
 Updated: 2026-07-07T18:49:00Z for storage/coordination canon repair and platform_specs authority repair.
+Updated: 2026-07-07T19:36:27Z for platform_specs closure hardening and non-provider residue adjudication.
 
 Scope: triage plus bounded storage/coordination canon repair and platform_specs authority repair. FileSafe, tier vocabulary, UI command catalog, wiring matrix, Goal Runtime, Executor Protocol, broad Contracts_V0 gaps, missing docs, and broad PlanUnit boilerplate remain out of scope.
 
@@ -39,6 +40,7 @@ Scope: triage plus bounded storage/coordination canon repair and platform_specs 
 ### Plans/assistant-chat-design.md
 - `fable-20260706-p0-platform-specs-authority-drift` (P0, High, repaired_current): FABLE P0 #2 is closed by `PLATFORM_SPECS_AUTHORITY_REPAIR.md`; Assistant Chat context repack and Auditor Validation dropdown/fallback units now consume Models_System capability snapshot and `fallback_chain[]` fields instead of legacy platform_specs functions.
   - Repair target satisfied: active `platform_specs::context_window(provider)` and `platform_specs::fallback_model_ids(platform)` claims were replaced or fenced as retired source-lineage; Models_System defines context-window/fallback metadata; Contracts_V0 defines only the cross-surface capability snapshot ref envelope.
+  - Closure hardening: `PLATFORM_SPECS_CLOSURE_HARDENING.md` supersedes stale mechanical report rows for the original Assistant Chat contradiction, context-window sourcing, ACD-009, deeper ACD fallback/context rows, and Models_System missing-source/absent-term rows. This is provider/model scoped only; it is not global retirement of every `platform_specs` token.
 
 ### Plans/Spec_Lock.json
 - `fable-20260706-p0-gui-toolkit-truth-spec-lock-vs-final-gui` (P0, High, repaired_superseded): FABLE P0 #3 is closed by `GUI_PLATFORM_CURRENTNESS_REPAIR.md` and hardened by `GUI_PLATFORM_HARDENING_REPAIR.md`; historical `currentness_check_report.json` and original registry rows remain source evidence only.
@@ -47,6 +49,13 @@ Scope: triage plus bounded storage/coordination canon repair and platform_specs 
 ### Plans/FileSafe.md
 - `fable-20260706-p0-filesafe-fail-open-and-allowlist-security` (P0, Critical, partial_current): FABLE P0 #5: replace disabled fallback, prefix allowlist, empty-allowlist warn-only, and destructive override with fail-closed/auth/audit semantics.
   - Repair target: Readiness gate should reject fail-open code/prose patterns in security docs unless an adjacent current row explicitly marks them retired and no accepted unit uses them as final canon.; Add exact-match allowlist and destructive override auth/audit checks to implementation-readiness validation.
+
+### Platform_specs Residue Boundary
+
+- Provider/model capability uses of `platform_specs` are retired and closed by the repaired Models_System/Contracts/Assistant Chat/Provider OpenCode authority lane.
+- Non-provider uses remain separately adjudicated: binary discovery, CLI invocation formatting, platform display names, tool-policy-to-CLI mapping, and skills injection are platform-adapter or runner concerns, not provider/model capability authority.
+- `Plans/MiscPlan.md` M-083 remains **needs_repair** under the skill-injection owner/schema gap; it must not be marked closed merely because it contains `platform_specs`.
+- `Plans/chain-wizard-flexibility.md` is compatibility/source-lineage only; its `platform_specs` mentions are not active product canon.
 
 ### Plans/UI_Command_Catalog.md
 - `fable-20260706-p1-ui-command-catalog-missing-families` (P1, High, confirmed_current): FABLE P1 #6: add missing command families and field-level payload/response schemas; map recovery allowed_action_ids.
