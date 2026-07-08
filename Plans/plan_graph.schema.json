@@ -12,6 +12,32 @@
     "execution_ordering",
     "nodes"
   ],
+  "$defs": {
+    "change_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "allowed_paths",
+        "forbidden_paths",
+        "forbidden_files",
+        "max_files_changed",
+        "max_lines_added",
+        "max_lines_deleted"
+      ],
+      "properties": {
+        "schema_id": {"type": "string", "const": "pm.change_budget.schema.v1"},
+        "allowed_paths": {"type": "array", "items": {"type": "string"}},
+        "forbidden_paths": {"type": "array", "items": {"type": "string"}},
+        "forbidden_files": {"type": "array", "items": {"type": "string"}},
+        "max_files_changed": {"type": "integer", "minimum": 0},
+        "max_lines_added": {"type": "integer", "minimum": 0},
+        "max_lines_deleted": {"type": "integer", "minimum": 0},
+        "max_total_loc_delta": {"type": "integer", "minimum": 0},
+        "notes": {"type": "string"}
+      }
+    }
+  },
   "properties": {
     "schema_id": {"type": "string", "const": "pm.plan_graph.schema.v1"},
     "graph_scope": {
@@ -164,7 +190,7 @@
               }
             }
           },
-          "change_budget": {"type": "object"},
+          "change_budget": {"$ref": "#/$defs/change_budget"},
           "evidence_required": {
             "type": "object",
             "additionalProperties": false,

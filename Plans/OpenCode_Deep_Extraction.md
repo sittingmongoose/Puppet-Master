@@ -4613,4 +4613,4 @@ Original spans `OpenCode_Deep_Extraction-S0001` through `OpenCode_Deep_Extractio
 This addendum repairs non-runtime OpenCode extraction rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-7183d3e1a2341af0a3d114e6`: OpenCode Plan mode, permission resolution, and wildcard matching content is source-lineage unless restated here or in owner docs. PM wildcard matching fields are `pattern`, `scope`, `case_sensitive`, `allow_subpaths`, and `owner_doc_ref`; result states are `matched`, `not_matched`, and `ambiguous`.
-- Keeps `sfk-4da31b138448d57593acde8d` explicitly deferred: plugin runtime language/API choice needs plugin owner decision before closure.
+- Repairs `sfk-4da31b138448d57593acde8d`: plugin runtime strategy is owned by `Plans/Plugins_System.md`; Puppet Master uses plugin.json entries for WASM modules, subprocess-based entries, or dynamic libraries, and must not require JavaScript/TypeScript/Bun runtime dependency. OpenCode JS/TS/import behavior remains source-lineage only.

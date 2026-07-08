@@ -4,7 +4,7 @@ Source: `Plans/OpenCode_Deep_Extraction.md`
 
 Source lines: L4611-L4616
 
-Source SHA256: `ce5ef845ef33f5e94499a41f3a92007360b822339b65f92544c51a5039e04014`
+Source SHA256: `f1e61125d0fea62ee6dc85a0c67a875c0e6feff6f42ffafa1ca0b9eb18e48b7c`
 
 ---
 
@@ -13,4 +13,4 @@ Source SHA256: `ce5ef845ef33f5e94499a41f3a92007360b822339b65f92544c51a5039e04014
 This addendum repairs non-runtime OpenCode extraction rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-7183d3e1a2341af0a3d114e6`: OpenCode Plan mode, permission resolution, and wildcard matching content is source-lineage unless restated here or in owner docs. PM wildcard matching fields are `pattern`, `scope`, `case_sensitive`, `allow_subpaths`, and `owner_doc_ref`; result states are `matched`, `not_matched`, and `ambiguous`.
-- Keeps `sfk-4da31b138448d57593acde8d` explicitly deferred: plugin runtime language/API choice needs plugin owner decision before closure.
+- Repairs `sfk-4da31b138448d57593acde8d`: plugin runtime strategy is owned by `Plans/Plugins_System.md`; Puppet Master uses plugin.json entries for WASM modules, subprocess-based entries, or dynamic libraries, and must not require JavaScript/TypeScript/Bun runtime dependency. OpenCode JS/TS/import behavior remains source-lineage only.

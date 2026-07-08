@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-08T14:49:04Z",
+  "generated_at_utc": "2026-07-08T15:38:16Z",
   "index_path": "Plans/_shards/prompt_pipeline/00-index.md",
-  "index_sha256": "2fdc4199f7cbde4eb39d72af2fad8e53f8fde64336cbda3a9e77a560e01ff0cc",
+  "index_sha256": "1a4e1a24bb7beaa04dd7ad5dbb595eb36a656e5a860dfacd78172834c98e124b",
   "manifest_path": "Plans/_shards/prompt_pipeline/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/prompt_pipeline/001-preamble.md",
-      "sha256": "bf8a6ca8364c8bfd74a752570a72493163c9153608d27d9746f03272c7c30ef2",
+      "sha256": "6e39ef2691d7fcca49481687bff0442462306b6578a2aaad8ce042c72b729820",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/prompt_pipeline/002-canonical-owner-section-requirements.md",
-      "sha256": "780fd92d37e38917851a09d55930d600e93a9ea88d6c8f4c00f81fee648310f5",
+      "sha256": "90315a91d4b07bdffca9ec981c8c1279798ff6ac8c7c7016eccd19136188d674",
       "shard_id": "002",
       "source_line_end": 12,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/prompt_pipeline/003-0.-scope-and-ssot-status.md",
-      "sha256": "39589e31e154bfd63a713c993129476ce94114d1a4140ed28529e78da4bb85b5",
+      "sha256": "a680f6e9996282e99572f730dc2ed3fcd408b5afcb95568ed1fa03b0dd521b89",
       "shard_id": "003",
       "source_line_end": 44,
       "source_line_start": 14,
@@ -35,151 +35,151 @@
     {
       "heading": "1. Prompt assembly pipeline",
       "path": "Plans/_shards/prompt_pipeline/004-1.-prompt-assembly-pipeline.md",
-      "sha256": "d679f096fea6102290051a42d140da067c434f38bbc9929d7129411257588e17",
+      "sha256": "7604899e23faa39b1190032d849ab42e24c8b1104aa9d5a3bd97290f440d6218",
       "shard_id": "004",
-      "source_line_end": 226,
+      "source_line_end": 228,
       "source_line_start": 46,
       "split_rule": "heading-##"
     },
     {
       "heading": "2. Compaction and pruning",
       "path": "Plans/_shards/prompt_pipeline/005-2.-compaction-and-pruning.md",
-      "sha256": "2877b0440065b70b0cff8f3dd84c3c87948f2cfece3c9394eb22858288cdbe4c",
+      "sha256": "0ff09175b46f447bd3e84b26df6881fdb9c3e06587647238a7cbc3b9a068e775",
       "shard_id": "005",
-      "source_line_end": 380,
-      "source_line_start": 228,
+      "source_line_end": 386,
+      "source_line_start": 230,
       "split_rule": "heading-##"
     },
     {
       "heading": "3. Rotation (follow-up run spawning)",
       "path": "Plans/_shards/prompt_pipeline/006-3.-rotation-follow-up-run-spawning.md",
-      "sha256": "cb06c8c8c2a1c6db8ace8a27cd1f898aafa8a1c65c1b51d61ae6bb700c9e4f71",
+      "sha256": "37ebbc5e776b1584c4ea41f1f32da63d87882f859b022a370ca8c88a91386406",
       "shard_id": "006",
-      "source_line_end": 397,
-      "source_line_start": 381,
+      "source_line_end": 403,
+      "source_line_start": 387,
       "split_rule": "heading-##"
     },
     {
       "heading": "4. GUI integration",
       "path": "Plans/_shards/prompt_pipeline/007-4.-gui-integration.md",
-      "sha256": "88dc53d56c45206aabd49c9eaf7a106756cc23cff5d1497088fc5f6eeb069dd1",
+      "sha256": "7aabd9b17e8e6a3983c97e99f2cb969be6597980f8cd4a0b708df9057355ceed",
       "shard_id": "007",
-      "source_line_end": 409,
-      "source_line_start": 399,
+      "source_line_end": 415,
+      "source_line_start": 405,
       "split_rule": "heading-##"
     },
     {
       "heading": "5. Acceptance criteria",
       "path": "Plans/_shards/prompt_pipeline/008-5.-acceptance-criteria.md",
-      "sha256": "650e810d88c125df556e88c490f6ca45a2ad32ff0a82f326a56951b23eb61bc5",
+      "sha256": "3b00f3234d630afd83eb6859717a397fefde500d9a97d49807c0c69fb0d36edd",
       "shard_id": "008",
-      "source_line_end": 423,
-      "source_line_start": 411,
+      "source_line_end": 429,
+      "source_line_start": 417,
       "split_rule": "heading-##"
     },
     {
       "heading": "6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)",
       "path": "Plans/_shards/prompt_pipeline/009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md",
-      "sha256": "51033768f24751edd6f09be667d8658fa2276c787e4e2098f6fd55ef948c2c2c",
+      "sha256": "76a06eb043b6e166376de7e6931d37ee9415b8c23f0bba693298bdaa6ffbccef",
       "shard_id": "009",
-      "source_line_end": 639,
-      "source_line_start": 424,
+      "source_line_end": 645,
+      "source_line_start": 430,
       "split_rule": "heading-##"
     },
     {
       "heading": "Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)",
       "path": "Plans/_shards/prompt_pipeline/010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md",
-      "sha256": "11dd6f9c2f65df87d50c003a3548178e0686be8a6001e3a615ace189d9b80b16",
+      "sha256": "92cd49a28f919f2c02090b563ba8a21b24bfeaa62a2f315b8e890fc8d8bf1e3e",
       "shard_id": "010",
-      "source_line_end": 647,
-      "source_line_start": 641,
+      "source_line_end": 653,
+      "source_line_start": 647,
       "split_rule": "heading-##"
     },
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/prompt_pipeline/011-owner-consumer-map.md",
-      "sha256": "32701039955532ba387c0d396a7725ad4d7888d358e4161cbde0b31d16a80901",
+      "sha256": "580d3df751e37d979c8a3d02b395e539e47a8e7388592c2b01021a8a2b46c6e8",
       "shard_id": "011",
-      "source_line_end": 653,
-      "source_line_start": 649,
+      "source_line_end": 659,
+      "source_line_start": 655,
       "split_rule": "heading-##"
     },
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/prompt_pipeline/012-planunits.md",
-      "sha256": "16b69222e456a45c846307cd4c7facddcfddc422a4c3d72c071036ef318446f7",
+      "sha256": "e56398e0e5635e3fe43bc0c8756ff0fbd186fb369cad9973443af205cb25d46b",
       "shard_id": "012",
-      "source_line_end": 3465,
-      "source_line_start": 655,
+      "source_line_end": 3471,
+      "source_line_start": 661,
       "split_rule": "heading-##"
     },
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/prompt_pipeline/013-migration-coverage.md",
-      "sha256": "f4b2612d0f34cf2aeaf197103d78014527ba264134fdaecbf2843d666f3b51b0",
+      "sha256": "40e72a293f9b67b0aa9b4e0371c4597fa6549d6066848a22cefa6a088d2e6ff9",
       "shard_id": "013",
-      "source_line_end": 3477,
-      "source_line_start": 3467,
+      "source_line_end": 3483,
+      "source_line_start": 3473,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/prompt_pipeline/014-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "e376ebcf0c704bb94a1b2490b9af6b9923109166911167e36f1cbac45451372b",
+      "sha256": "15d8002a333b367ac83f1011c8a7cf448eab27020007592c6c51ab7f69eb0bf4",
       "shard_id": "014",
-      "source_line_end": 3520,
-      "source_line_start": 3479,
+      "source_line_end": 3526,
+      "source_line_start": 3485,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/prompt_pipeline/015-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "804cc69149798bebe148cbca2a03f5341cc31df1b6ce37bf653bea52e02f3e9b",
+      "sha256": "a1bd4be4cb55ed5fde28af3b1b3a36873e15ac5740dc54fe85dc77e69ed6703c",
       "shard_id": "015",
-      "source_line_end": 3884,
-      "source_line_start": 3523,
+      "source_line_end": 3890,
+      "source_line_start": 3529,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/prompt_pipeline/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "d05b17f98f6a6786b58f1a0099f3d302d317f95abd193feed595e455daf363d8",
+      "sha256": "390047fc3cee3da8f99bbe5997d65278a3feebfdbf7f6ad4b8e2babca6510359",
       "shard_id": "016",
-      "source_line_end": 3952,
-      "source_line_start": 3886,
+      "source_line_end": 3958,
+      "source_line_start": 3892,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260629-001-feature-name",
       "path": "Plans/_shards/prompt_pipeline/017-ledger-compile-addendum-pldg-20260629-001-feature-name.md",
-      "sha256": "45e3c53d698010aef34857012214649427a2d33b8a8340a3dd038db8601ee6af",
+      "sha256": "3a134a32b57c365215be0926deaae791eb2d281006f77b68765759ccce5f09ad",
       "shard_id": "017",
-      "source_line_end": 4012,
-      "source_line_start": 3954,
+      "source_line_end": 4018,
+      "source_line_start": 3960,
       "split_rule": "heading-##"
     },
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/prompt_pipeline/018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "17a48083374d490c6713e4aee6776ade15d35d2665f0203eea7e7b2539b1ed71",
+      "sha256": "d1549c3336f73e102354abd865a17a4f607ef48b1a45befa2e018abd830a7071",
       "shard_id": "018",
-      "source_line_end": 4097,
-      "source_line_start": 4014,
+      "source_line_end": 4103,
+      "source_line_start": 4020,
       "split_rule": "heading-##"
     },
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/prompt_pipeline/019-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "c808aeef9b9dfab554732e9cddaa9d49cbbe89d8307add5540728026f24f90d0",
+      "sha256": "65c16a5a26b9bd356cab9672aafe3589dc6946aefd94c36f37d2f1553735ce18",
       "shard_id": "019",
-      "source_line_end": 5025,
-      "source_line_start": 4099,
+      "source_line_end": 5031,
+      "source_line_start": 4105,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 5025,
+    "line_count": 5031,
     "path": "Plans/Prompt_Pipeline.md",
-    "sha256": "2e1661c82ebe32a6b00bc8891fc7f2388253e0fc4bd18faf890fa1968b90dda6"
+    "sha256": "7ef67cd99fd8c34ab0a2f7caad8b290e42a71514cab46cbfc5c78b4f8cf830b6"
   }
 }

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-08T14:49:04Z",
+  "generated_at_utc": "2026-07-08T15:38:16Z",
   "index_path": "Plans/_shards/release_supply_chain/00-index.md",
-  "index_sha256": "f71370dc7abd100d0ff818256d458befe6ff46ddddd68d77d32d4e5298257325",
+  "index_sha256": "6f771116a55f09f7961186c1defd1a20e5b802f79b9d53fca6f8c15c601e78c0",
   "manifest_path": "Plans/_shards/release_supply_chain/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/release_supply_chain/001-preamble.md",
-      "sha256": "b163f9cdb42af005b5c62be6710c51d96a50d57cf42bc1f03474792a9b0fab57",
+      "sha256": "19539bbb3f07c145686673c06c04488427a05a78f472c78455dc00153a651db7",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/release_supply_chain/002-0.-scope.md",
-      "sha256": "75c792979d8a1244340f9d1492852c3cf598499171c4a3ec0b105a0fc3c09e6c",
+      "sha256": "cc76c19b6390179d5512fc7fdde76c4747dd5476a2ec18c0be43a5884a8cdf92",
       "shard_id": "002",
       "source_line_end": 10,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/release_supply_chain/003-1.-ownership-and-consumers.md",
-      "sha256": "ac49b66539b7de39e9ecd574715f6b8e70c89c2ea0681b48af6e602b92ffff33",
+      "sha256": "4bf3d9b56eb744c2e28329bf3586c09ea526bfe27090185966f344ff68443ef1",
       "shard_id": "003",
       "source_line_end": 22,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/release_supply_chain/004-2.-canonical-planunits.md",
-      "sha256": "1eb5b34e1791d056a09e16386d2e674776994fff4e5c42845d9764af4791ed1f",
+      "sha256": "0c4498324dd316ce221f50d5a6562259ef4535531ade462001fba0d5270cf24b",
       "shard_id": "004",
       "source_line_end": 561,
       "source_line_start": 24,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/release_supply_chain/005-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "c88e8245a34d5f9966de1e8ce11dbbf2f421f0813fb1e4c5acf9f365dfc2c8c0",
+      "sha256": "94a319468b0dc5fac776367c46fb02bd2d3b57265fd02b635f4af8f2451cd651",
       "shard_id": "005",
       "source_line_end": 565,
       "source_line_start": 563,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/release_supply_chain/006-4.-integration-surfaces.md",
-      "sha256": "8c4dcb1979c340d71422c67490b981b6f35b868433a6f1992115bd5e6587e8c5",
+      "sha256": "52ef9b573d045f936726be9cc970262a1e3b979301f31af1e4a4f5b7e6830945",
       "shard_id": "006",
       "source_line_end": 569,
       "source_line_start": 567,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/release_supply_chain/007-5.-validation-and-acceptance.md",
-      "sha256": "c0d8c169bc77a2a7a5f014118769cc1ea49796b07ecb60212af8a8118d350cc5",
+      "sha256": "fa03433564a1bb2db6ee912f387df101fe2f252e8dace976100301e5a66d8689",
       "shard_id": "007",
       "source_line_end": 573,
       "source_line_start": 571,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/release_supply_chain/008-6.-plan-to-node-readiness.md",
-      "sha256": "c06c7860dfaa5eff1884c9b12cb6ce83593513da2e7716cb68b263fac26adc1d",
+      "sha256": "930dddb14949b288abbdc636f376b81521be2e31a05c4065d9fa2dec061c07e0",
       "shard_id": "008",
       "source_line_end": 577,
       "source_line_start": 575,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/release_supply_chain/009-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "ef3c8c08cc86e47c2b068bd3377cf3ed0a9ebbb3b355506e4af12c46608b2bf3",
+      "sha256": "360d02c3e64de14acf6cada25bc3125b9fc7ff28fea2ca3846903507c4809585",
       "shard_id": "009",
       "source_line_end": 581,
       "source_line_start": 579,
@@ -89,7 +89,7 @@
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/release_supply_chain/010-8.-source-lineage-and-governance.md",
-      "sha256": "3ff9c90915d1e7c3b872b8e6e6598faad0292ac948dbc4c2dc24b1c2a80f806d",
+      "sha256": "96b152cd3381297b06b29c812eef9aea7b4d26367bfebf085a602adafad96c57",
       "shard_id": "010",
       "source_line_end": 587,
       "source_line_start": 583,
@@ -98,7 +98,7 @@
     {
       "heading": "FABLE Residual Release Supply Chain Cleanup Addendum - 2026-07-07",
       "path": "Plans/_shards/release_supply_chain/011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md",
-      "sha256": "e8de5a374f36770dfe845b9905fd0c8b5205dd660a2a9d21c05b30c2b2f78736",
+      "sha256": "7faa06736e4abb050a8a73cd5e8881a082033b548306e0e3d5e3d7a705d4b917",
       "shard_id": "011",
       "source_line_end": 648,
       "source_line_start": 589,
@@ -107,7 +107,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/release_supply_chain/012-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "8ed31b51d77040637c213b2a053f0e2ba5660ba58adfb7e013071e2355e2db80",
+      "sha256": "0766247fedc12f1fe6a18c55867bb11ec98b7f47cb1acea3b4d14fe2f1a6ec69",
       "shard_id": "012",
       "source_line_end": 659,
       "source_line_start": 650,
@@ -116,7 +116,7 @@
     {
       "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
       "path": "Plans/_shards/release_supply_chain/013-fable-remaining-action-plan-repair-notes-2026-07-08.md",
-      "sha256": "d069c1f74219840b1042dc07777cf56ac58743896c5e6b38a5a56d5688f6e145",
+      "sha256": "e74b54ff31faf73d3f892ee136ce5ad19c2e1f09494c2cb8e08736b0caf3f72f",
       "shard_id": "013",
       "source_line_end": 669,
       "source_line_start": 660,
@@ -126,6 +126,6 @@
   "source": {
     "line_count": 669,
     "path": "Plans/Release_Supply_Chain.md",
-    "sha256": "2f435c22a3df5b5db45df514a0dfcd9646733e01f7dfc50b12e48fe9b1081def"
+    "sha256": "3e8f401ff7121b92b978b959b089e5c28d58f783034ced413fc27953336e628c"
   }
 }

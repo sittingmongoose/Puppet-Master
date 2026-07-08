@@ -11,6 +11,26 @@
     "source_lineage_only": 5,
     "stale_retired": 1
   },
+  "final_deferred_lane_registry_sync": {
+    "pnc_registry_sync_repaired": [
+      "sfk-7fa7bf6b7fafb60002d66d35",
+      "sfk-e5bfc8881f0a5180870744e3"
+    ],
+    "preserved_explicitly_deferred": [
+      "sfk-ddc264cdea296caf349adecd",
+      "sfk-bbe24dbaee588f11b4a55c4d",
+      "sfk-e98bc6a59c457b5cf85d8d99",
+      "sfk-382a8aaadd071809899261b5",
+      "sfk-d180028c03fc70fb93e6bfb8",
+      "sfk-d62d739e27a728d8ad210435"
+    ],
+    "processed_original_explicitly_deferred_rows": 8,
+    "repaired_from_original_deferred": [
+      "sfk-4da31b138448d57593acde8d",
+      "sfk-aebb6fb13c915a60c1a5be40"
+    ],
+    "report": "Plans/.audits/fable-20260706/final_deferred_lane_and_registry_sync_report.json"
+  },
   "final_deferred_slice": {
     "input_explicitly_deferred_count": 13,
     "preserved_explicitly_deferred_count": 8,
@@ -123,7 +143,7 @@
     "production build tasks"
   ],
   "forbidden_outputs_created": false,
-  "generated_at_utc": "2026-07-08T14:42:27Z",
+  "generated_at_utc": "2026-07-08T15:34:51Z",
   "governance_refresh_note": "Final governance refresh completed: shards, sharding evidence, Spec Lock, evidence bundles, audit closure hashes, audit status index, plan migration hashes, plan index, and implementation-readiness reports were refreshed after the final convergence writes.",
   "main_agent_writer_only": true,
   "pnc019_certification": {
