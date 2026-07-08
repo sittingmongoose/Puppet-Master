@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "c89c5425a771b6bf616afea52e1c0085471d2476a06885b2bf085c446bb8fde6"
+      "sha256": "f10e0724528946721042df6415a6ed8f69889be46ea137e641e39c6984e8eb52"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -301,7 +301,7 @@
     {
       "name": "final-fable-convergence-pnc019",
       "result": "PASS",
-      "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
+      "details": "PASS: final FABLE convergence now records 13 original deferred rows, 7 repaired across convergence/final sync, and 6 intentionally explicitly deferred rows with owner, reason, reopen condition, and non-buildability-blocking rationale; PNC-019 certification receipt, node readiness, and buildability reports were refreshed; no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks were created."
     }
   ],
   "commands_run": [

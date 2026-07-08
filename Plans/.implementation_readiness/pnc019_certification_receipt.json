@@ -39,14 +39,14 @@
       "worktree_id": null
     },
     "approved_plan_pack": {
-      "acceptance_unit_index_hash": "sha256:b8deffd93dd460658730e1b8ae0347f9d99879e7b56f4819c9ccfaa8b0506cbe",
+      "acceptance_unit_index_hash": "sha256:1e94e3487343403c1ee3eb90c462f44a4a3be8b325a427b5d8024c51ebe7da0e",
       "approved_plan_pack_id": "app-pnc019-0001",
       "created_at_utc": "2026-07-06T00:00:00Z",
       "created_by_actor_ref": "actor:pnc019-certifier",
       "final_audit_closure_hash": "sha256:final-audit-pnc019",
       "pack_hash": "sha256:04d7fdbe74084dad0e309e7b0b76255b4123fd928e90b5b2f03b585210760eb4",
       "pack_version": 1,
-      "plan_unit_index_hash": "sha256:68a3bd184c648eb77ccce9e96bb71f84e73bc0f66939571ebaeb48e967bffc28",
+      "plan_unit_index_hash": "sha256:426da94dcea43398224779d4ea276c10de2b14f4335c1f4e2ddf621ad20b3490",
       "planning_run_id": "planning-run-pnc019",
       "planning_run_revision": 7,
       "project_context_snapshot_hash": "sha256:project-context-pnc019",
@@ -243,7 +243,7 @@
       "thread_id": "thread-pnc019"
     },
     "plan_compile_run": {
-      "acceptance_unit_index_hash": "sha256:b8deffd93dd460658730e1b8ae0347f9d99879e7b56f4819c9ccfaa8b0506cbe",
+      "acceptance_unit_index_hash": "sha256:1e94e3487343403c1ee3eb90c462f44a4a3be8b325a427b5d8024c51ebe7da0e",
       "approved_plan_pack_id": "app-pnc019-0001",
       "artifacts": [
         "Plans/.implementation_readiness/pnc019_certification_receipt.json"
@@ -276,10 +276,10 @@
       "schema_id": "pm.storage_value.plan_compile_run.v1",
       "schema_version": "1.0.0",
       "source_hashes": {
-        "acceptance_units": "sha256:b8deffd93dd460658730e1b8ae0347f9d99879e7b56f4819c9ccfaa8b0506cbe",
-        "plan_units": "sha256:68a3bd184c648eb77ccce9e96bb71f84e73bc0f66939571ebaeb48e967bffc28"
+        "acceptance_units": "sha256:1e94e3487343403c1ee3eb90c462f44a4a3be8b325a427b5d8024c51ebe7da0e",
+        "plan_units": "sha256:426da94dcea43398224779d4ea276c10de2b14f4335c1f4e2ddf621ad20b3490"
       },
-      "source_plan_index_hash": "sha256:68a3bd184c648eb77ccce9e96bb71f84e73bc0f66939571ebaeb48e967bffc28",
+      "source_plan_index_hash": "sha256:426da94dcea43398224779d4ea276c10de2b14f4335c1f4e2ddf621ad20b3490",
       "status": "ready_for_bootstrap_validation",
       "updated_at_utc": "2026-07-06T00:00:00Z"
     },

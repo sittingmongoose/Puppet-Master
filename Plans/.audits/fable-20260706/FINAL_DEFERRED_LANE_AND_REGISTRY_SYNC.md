@@ -4,7 +4,7 @@ Generated: `2026-07-08T15:34:51Z`
 
 ## Result
 
-Processed the 8 final FABLE rows that were still marked `explicitly_deferred` and synchronized the stale PNC-019 closure-registry projections. The main lane was the only writer; subagents were read-only.
+Processed the 8 rows that had entered this final sync as `explicitly_deferred`, repaired 2 of them, and left 6 rows intentionally `explicitly_deferred` in the current final action state. The stale PNC-019 closure-registry projections were synchronized. The main lane was the only writer; subagents were read-only.
 
 No ordinary product WorkNodes, NodeSeeds, queues, runtime launches, final manifests, implementation files, or production build tasks were created.
 

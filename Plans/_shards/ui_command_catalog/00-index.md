@@ -1,28 +1,28 @@
 # Shard Index: Plans/UI_Command_Catalog.md
 
-Generated: 2026-07-08T15:38:16Z
+Generated: 2026-07-08T16:32:36Z
 
-Source SHA256: `39eecb4e39b34e0d07567087fd1f79c5a0d1758d76c96beb5db24edb4c9bc696`
+Source SHA256: `cd92e6ba41cc46f892b6227f3005e54595e0a724782ceb903b3108ca219c6e41`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `41e0ea6f5e66f46601b33a732f31ea74fb9b57c88d207b213cbeb8bab5f49d88`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `c7e721c3f4539efeb392f5fb720cf72f467ae8ea85670845fd64490f47da5443`
-- [003 - 0. Scope](003-0.-scope.md) L23-L30 `8ac8d643aeed4c2d62b05b522c2dc3b6d085c17038d4f035270e8a145abe8bea`
-- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `32748d153fcc6268446ae2a71a2446c069ab6647b8b47c588978ccaacf6890ac`
-- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L1144 `be9f48efca91971e092a02a590c8cb1f74ca1559a82345610ad00ebe29a659dc`
-- [006 - References](006-references.md) L1145-L1238 `1101e31e0b598d923ff590af6486f6cd589b5c3edd1052866d0ab37d9ac55e8d`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L1240-L1244 `c43571ff0ebe502bfcbf42ca5c713478b29292ed778d0188d8d3a3f03f9c3b91`
-- [008 - PlanUnits](008-planunits.md) L1246-L6859 `25c10af945c6e177756e32b4bcde0ca40bd79c07cbaf8d8abedade0eb424a847`
-- [009 - Migration Coverage](009-migration-coverage.md) L6861-L6871 `f24787d69d0ab0680196d3b84b3f73dafe7209c02c6eb7af5882cd7191ae449e`
-- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6874-L7017 `91569b50ba9405fac57fb8564af1746416e9021ec3ccd0fc817c57832a7cc7c5`
-- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L7019-L7062 `9c97ae1db95f54272db7b5c07e79b1bfc61f824286d85536514204b8ec7c89c9`
-- [012 - Ledger Compile Addendum - pldg-20260626-001-feature-name](012-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L7065-L7504 `edd934f7726a32938a73abf8542bab54c5f414aefde61796ce322889dc5c85a6`
-- [013 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](013-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L7506-L7639 `7c243b592f09caa501c1e480ff21a6f8bce3ee4c94e0999d6cb6f9f8f05cc509`
-- [014 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](014-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L7641-L7733 `c1bd0eeb6b6f0f0b7af148ecd5cfd693fb36a2a3c5dbfbdd505fc512df447b86`
-- [015 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](015-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L7735-L7884 `59e038a344c6d217851e80532f52c28055ef5dd4dc6dfd1e2b2f854de47fc66d`
-- [016 - GUI / PMConcept implementation-readiness repair addendum (2026-07-02)](016-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md) L7886-L7949 `8d7a4e7d121a170525eeb09c604f5992db5edc6764f72098a89c114c46ca0313`
-- [017 - FABLE GUI command contract closure addendum (2026-07-07)](017-fable-gui-command-contract-closure-addendum-2026-07-07.md) L7951-L8079 `5d7de0d58293e246de42c21a184f0add03213b3e6273112a06369e9afa135886`
-- [018 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L8081-L8086 `063b751011bd2b1cd9ab9e9e46f4c8929ffc9f36583022852eecb25df63f6c87`
+- [001 - Preamble](001-preamble.md) L1-L1 `b86bacd04676e60727ed0c40515762c90c719a2a637a9d5270f73ca037646bef`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `9998d6c54762e33b411d0c89fa2b77e3ad5167fa716acefe3ce4abaa23be96a1`
+- [003 - 0. Scope](003-0.-scope.md) L23-L30 `16964f6e533bb7b13c04247277da65be67f9657acae2780bdfb58539f3de3015`
+- [004 - 1. Naming rules](004-1.-naming-rules.md) L32-L40 `f463045bf88422e860ba96099d170ba84bac9cd69ed7fce59aee3d31d498be3f`
+- [005 - 2. Canonical command IDs](005-2.-canonical-command-ids.md) L42-L1144 `2642d5606d6c33a264b11a541c91ba597c097d17199e0406ea24d600846ad57a`
+- [006 - References](006-references.md) L1145-L1238 `97f9aaabf4aef6c01da42ab101eb6eec0cfd25ec2a289f5c3ba8ce7c0de8d0bf`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L1240-L1244 `5da0b61e0b9940e6a5b0c547134d8da1e0b171dcc4edabed1e3757b555fa8ee1`
+- [008 - PlanUnits](008-planunits.md) L1246-L6859 `417759291796d9569e054955ec4469036dd0488f1eee1393d8fba6ea8e0353ce`
+- [009 - Migration Coverage](009-migration-coverage.md) L6861-L6871 `e3432a7b03655345973f32a4a3af85b44fbe0332b605c3fbab1dd3cf07dcaa6b`
+- [010 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](010-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L6874-L7017 `ed128ca7c62561007c5469686c8e33d0b0d50b2547b217b1213ad9fa0a30784c`
+- [011 - Ledger Compile Addendum - pldg-20260622-001-fff](011-ledger-compile-addendum-pldg-20260622-001-fff.md) L7019-L7062 `4c5c90c223785294a460055a3055b3ec8909a5c2f3fae593fd40b541bcf61563`
+- [012 - Ledger Compile Addendum - pldg-20260626-001-feature-name](012-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L7065-L7504 `36eee3ebfa78197187f4f90380c797f4d3b32c76db517cb174e7cf17f946809c`
+- [013 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](013-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L7506-L7639 `18416d62103fce7cf970933e2b34a7efc6c4af0cea84c6cfb68f2a259cf38ea6`
+- [014 - Ledger Compile Addendum - pldg-20260701-001-feature-intake](014-ledger-compile-addendum-pldg-20260701-001-feature-intake.md) L7641-L7733 `0450a19209ec7b8468c07fa7ab1b08b0969a083c9db42238b09dbde11b015ab8`
+- [015 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](015-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L7735-L7884 `dd246fc74d44b61d60f39387fe4e8f78a2a7af8148aa6c684ac2945d006bca88`
+- [016 - GUI / PMConcept implementation-readiness repair addendum (2026-07-02)](016-gui-pmconcept-implementation-readiness-repair-addendum-2026-07-0.md) L7886-L7949 `40749ee1025185bdcc2b933b5966920429be29a23496e067311924b62505faa0`
+- [017 - FABLE GUI command contract closure addendum (2026-07-07)](017-fable-gui-command-contract-closure-addendum-2026-07-07.md) L7951-L8079 `42adcfc6c2aeccbd15cd5803f5136b8f470ceac58ccc4b25f1404ccc32fef487`
+- [018 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](018-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L8081-L8086 `c7b562b9cdc87edd5be676835cd11489fb0552749ca8a4db4f391aea979afc30`
