@@ -1061,4 +1061,12 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 - `registry_line 367` (explicitly_deferred; source line 1234; `sfk-381230f21baee92304ac31b8`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: every requirement is YAML metadata (owner/tokens/acceptance criteria referencing other units) rather than an implementable spec no request/response payload examples, no error codes, no retry values anywhere.
 - `registry_line 369` (explicitly_deferred; source line 1236; `sfk-9d06c1271836fdaa1923df72`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] confirmed via grep: `scope_probe`/`max_questions` also never appear anywhere in this file the interview question-count limit is entirely unresolved here too.
 
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime interview rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-969d105f50df34b7f72f242c` and `sfk-9d06c1271836fdaa1923df72`: canonical config key `interview.scope_probe.max_questions` limits scope-probe clarification questions. Default is `4`, minimum `0`, maximum `8`. GUI-inventory elicitation asks for surface name, owner doc, visible control, command id if known, and missing evidence reason.
+- Repairs `sfk-973c4b99a2e3f9e5ad705e53`: canonical config key `interview.max_subagents_spawn` limits interview-time helper agents. Default is `3`, maximum `6`, and value `0` disables subagent spawning for interview probing.
+- Repairs `sfk-381230f21baee92304ac31b8`: `InterviewRequest` fields are `request_id`, `topic_id`, `question_text`, `context_refs[]`, `max_questions`, `max_subagents_spawn`, and `created_at_utc`. `InterviewResponse` fields are `response_id`, `request_id`, `answer_text`, `accepted`, `followup_required`, `error_code?`, and `created_at_utc`. Error codes are `out_of_scope`, `needs_user_decision`, `budget_exhausted`, `redacted`, and `unavailable`.
+
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

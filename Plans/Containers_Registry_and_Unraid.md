@@ -5974,6 +5974,14 @@ Run-scoped proof artifacts:
 
 All original spans from `Containers_Registry_and_Unraid-S0001` through `Containers_Registry_and_Unraid-S0082` remain preserved in place. Phase 2B batch 028 atomized `Containers_Registry_and_Unraid-S0001` through `Containers_Registry_and_Unraid-S0027` into fine-grained PlanUnits `CRAU-002` through `CRAU-031` or explicit structural dispositions. Phase 2B batch 029 atomized `Containers_Registry_and_Unraid-S0028` through `Containers_Registry_and_Unraid-S0062` into fine-grained PlanUnits `CRAU-032` through `CRAU-063` or explicit structural dispositions. Phase 2B batch 030 atomized `Containers_Registry_and_Unraid-S0063` through `Containers_Registry_and_Unraid-S0082` into fine-grained PlanUnits `CRAU-064` through `CRAU-084`. Phase 2B batch 031 dispositioned structural spans `Containers_Registry_and_Unraid-S0083`, `Containers_Registry_and_Unraid-S0084`, and `Containers_Registry_and_Unraid-S0086` as structural no-unit coverage and retired `CRAU-001` as migration lineage for `Containers_Registry_and_Unraid-S0085`. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
 
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime container rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-7b9d615ae9afdde05c7a903e`: container reason-code aliases normalize to the canonical set `runtime_context_missing`, `compose_file_missing`, `container_unreachable`, `port_unbound`, `auth_expired`, `permission_denied`, and `unknown`.
+- Repairs `sfk-cf0cd10a899404f5be291961`: template repo state transitions are `unknown -> clean -> dirty -> committed -> ready_to_push -> pushed`; failure states are `conflict`, `auth_required`, and `remote_rejected`. UI labels map `dirty` to `dirty`, `committed` to `committed`, and `ready-to-push` to `ready_to_push`.
+- Repairs `sfk-30416f5cbd6db8016051db19`: Docker Manager cockpit controls are enabled only when target runtime is reachable, permission snapshot allows the operation, no conflicting operation is active, and required auth is valid. Disabled reason codes are `runtime_unreachable`, `permission_denied`, `operation_in_progress`, `auth_required`, and `unsupported_runtime`.
+
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
 ## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
 

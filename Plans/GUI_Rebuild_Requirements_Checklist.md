@@ -1831,3 +1831,10 @@ negative_constraints:
   - Do not make the checklist the implementation owner for concern lifecycle or blocked-state fields.
 owner_hints: [Plans/GUI_Rebuild_Requirements_Checklist.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Orchestrator_Page.md]
 ```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime GUI checklist rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-42b8d395baf8155efb2d98bc`: unchecked checklist rows are not PASS evidence. The checklist is an auditable summary only after each row references a validator, screenshot, or owner-doc evidence record and has status `pass`, `fail`, `blocked`, or `not_applicable`.
+- Repairs `sfk-8bbca61cb9960d94f08e192a`: automatable checklist rows must carry `test_id`, `validator_command?`, `evidence_ref?`, and `owner_doc_ref`. Prose-only assertions remain source-lineage until converted.

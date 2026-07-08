@@ -8266,6 +8266,86 @@ proposal_or_recommendation: Add PlanUnits under Section15 or a new Built_In_Term
 compile_disposition: create_new_planunit
 ```
 
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum is canonical promoted-feature/browser-terminal spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+### Browser Action Table And Timeouts
+
+Repairs rows `sfk-756cb4154b9e486d8a6d74db`, `sfk-0a996093252d3d35aa59e6f2`, `sfk-ed92df2325332306b2463b50`, and `sfk-47f354a1222d2abb62b4a9a9`.
+
+| action_id | bucket | default_timeout_ms | output fields |
+| --- | --- | ---: | --- |
+| `cmd.browser.share_with_agent` | user-mediated-share | 30000 | `share_receipt_id`, `target_agent_id`, `artifact_refs[]` |
+| `cmd.browser.run_code` | page-evaluation | 5000 | `evaluation_id`, `stdout?`, `result_ref?`, `error_code?` |
+| `cmd.browser.evaluate` | page-evaluation | 5000 | `evaluation_id`, `json_result_ref?`, `dom_scope_ref?`, `error_code?` |
+| `cmd.browser.open_devtools` | diagnostic | 30000 | `devtools_session_id`, `boundary_ref`, `opened_at_utc` |
+| `cmd.browser.capture_artifact` | artifact | 30000 | `artifact_manifest_id`, `artifact_refs[]`, `retention_until_utc` |
+
+The former `browser_run_code` and `browser_evaluate` tokens are compatibility aliases for `cmd.browser.run_code` and `cmd.browser.evaluate`. Timeout constants are disambiguated as follows: `5000ms` applies to page-evaluation commands; `30000ms` applies to user-mediated share, diagnostic, artifact, and open/wait actions; `30s` is display copy for `30000ms`.
+
+`BrowserArtifactManifest` fields are `artifact_manifest_id`, `browser_session_id`, `action_id`, `artifact_refs[]`, `retention_class`, `created_at_utc`, `redaction_profile_id`, and `schema_version`.
+
+### Tab-Cap Policy And Restore Identity
+
+Repairs rows `sfk-2fe1c569e11d92dd4dbc7c76` and `sfk-7a6ddaeaa377096558537bb1`.
+
+- Default tab cap per project is `32` attached browser tabs. Warning threshold is `24`.
+- Outcomes: `prompt` at threshold crossing, `block` when creating tab 33 without override, `close_oldest_detached` when the user chooses cleanup, and `detach_without_agent_access` when a tab is kept only for human inspection.
+- Dialog copy at cap: `This project already has 32 browser tabs. Close an older detached tab, detach this tab without agent access, or cancel.`
+- Restore identity ordering is `browser_session_id`, then `project_id + origin + normalized_url_hash`, then `last_visible_title_hash`.
+- If two tabs claim the same `project_id` and normalized URL hash, PM keeps the tab with the newest `last_user_interaction_at_utc` as attached and marks the other `restore_conflict_detached`.
+
+### Pane Layout Family Transform
+
+Repairs row `sfk-821a87baaf08f064a2b71c15`.
+
+`nearest_valid_family` is deterministic:
+
+1. Preserve the active pane if its current size is at least 160px by 120px.
+2. Prefer same orientation (`row` or `column`) when the target family supports it.
+3. Collapse the smallest non-active pane first.
+4. If two panes have equal area, collapse the one with older `last_focus_at_utc`.
+5. If still tied, collapse lexical `pane_id`.
+
+The transform result records `from_family`, `to_family`, `collapsed_pane_ids[]`, `active_pane_id`, and `reason_code`.
+
+### Streaming Usage Payload
+
+Repairs row `sfk-d8a758adf1c768de6e1410a9`.
+
+Event name: `browser.streaming_usage_reported`.
+
+Fields: `event_id`, `browser_session_id`, `project_id`, `provider_id?`, `model_id?`, `input_tokens?`, `output_tokens?`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars?`, `usage_source`, `created_at_utc`, and `schema_version`.
+
+`usage_source` values are `provider_reported`, `estimated`, `corrected`, and `unavailable`.
+
+### Terminal Fixture Matrix And Record Minima
+
+Repairs rows `sfk-c5ad7b33fa51846ef1c86c49` and `sfk-e9cc3bc253470d324d189932`.
+
+Terminal VT/xterm/OSC fixtures are grouped by `fixture_id`, `protocol_family`, `input_bytes_ref`, `expected_screen_hash`, `expected_event_refs[]`, and `negative_case`.
+
+Required record minima:
+
+- `TerminalIngestionReceipt`: `receipt_id`, `terminal_session_id`, `byte_count`, `protocol_family`, `accepted`, `rejected_reason_code?`, `created_at_utc`.
+- `TerminalBackpressureState`: `terminal_session_id`, `queue_depth`, `dropped_frame_count`, `throttle_state`, `last_transition_at_utc`.
+- `TerminalRenderFrame`: `frame_id`, `terminal_session_id`, `dirty_region_refs[]`, `screen_hash`, `rendered_at_utc`.
+- `TerminalInputEvent`: `event_id`, `terminal_session_id`, `input_kind`, `payload_ref`, `permission_snapshot_id?`, `created_at_utc`.
+- `TerminalPasteReceipt`: `receipt_id`, `terminal_session_id`, `paste_kind`, `byte_count`, `sanitized`, `created_at_utc`.
+- `TerminalOscEvent`: `event_id`, `terminal_session_id`, `osc_code`, `payload_ref`, `allowed`, `blocked_reason_code?`.
+- `TerminalScrollbackAnchor`: `anchor_id`, `terminal_session_id`, `line_offset`, `screen_hash`, `created_at_utc`.
+- `TerminalProfileResolution`: `resolution_id`, `profile_id`, `shell_path`, `cwd`, `env_summary_ref`, `created_at_utc`.
+- `TerminalSessionRestoreDecision`: `decision_id`, `terminal_session_id`, `restore_state`, `reason_code`, `created_at_utc`.
+- `TerminalAccessibilitySnapshot`: `snapshot_id`, `terminal_session_id`, `screen_reader_text_ref`, `focus_cell`, `created_at_utc`.
+- `TerminalDiagnosticsEnvelope`: `diagnostic_id`, `terminal_session_id`, `category`, `severity`, `message_ref`, `created_at_utc`.
+
+### Browser Runtime Packaging Boundary
+
+Repairs row `sfk-72b2ee82fedf09de17854db0`.
+
+CEF via `wef/cargo-wef` is a candidate packaging strategy, not a locked runtime dependency. The canonical packaging decision fields are `browser_runtime_id`, `crate_or_bundle_ref`, `supported_platforms[]`, `install_source`, `license_ref`, `sandbox_profile_ref`, `update_policy`, and `fallback_runtime_id?`. A release may enable browser runtime only after these fields are filled for the target platform.
+
 ### SMPFS-125 - P0-TERMINAL-OUTPUT-BACKPRESSURE
 
 ```yaml

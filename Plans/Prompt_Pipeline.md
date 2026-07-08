@@ -4096,6 +4096,12 @@ proposal_or_recommendation: Add ContextCatalogBudget for skills, MCP tools, prov
 compile_disposition: create_new_planunit
 ```
 
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime prompt-pipeline rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-ccad8553537b0e17aeb5671b`: each named pipeline stage has `stage_id`, `input_refs[]`, `output_refs[]`, `algorithm_summary`, `error_codes[]`, `cache_policy`, `side_effect_policy`, and `owner_doc_ref`. Stage order is stable; stages may narrow context but must not widen authority beyond the incoming permission and instruction snapshots.
+
 ### PP-060 - P0-HISTORY-ADMISSION-SANITIZATION
 
 ```yaml

@@ -1202,3 +1202,9 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 108 atomized source spans `OpenCode_Coverage_Matrix-S0001` through `OpenCode_Coverage_Matrix-S0022` into fine-grained PlanUnits `OCM-002` through `OCM-017`. `OpenCode_Coverage_Matrix-S0023` and `OpenCode_Coverage_Matrix-S0025` are structural metadata dispositions, and `OpenCode_Coverage_Matrix-S0024` is the retired `OCM-001` bridge disposition. `OCM-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime OpenCode coverage rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Keeps `sfk-d180028c03fc70fb93e6bfb8` explicitly deferred: stable-anchor gaps require owner-doc anchor work. This matrix records coverage pressure and must not be used as closure proof until the owner docs publish stable anchors.

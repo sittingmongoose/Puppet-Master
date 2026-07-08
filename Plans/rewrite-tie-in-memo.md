@@ -844,3 +844,9 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 161 atomized `rewrite-tie-in-memo-S0001` through `rewrite-tie-in-memo-S0038` into fine-grained PlanUnits `RTIM-002` through `RTIM-039` or explicit structural dispositions. Phase 2B batch 162 structurally dispositioned generated tail spans `rewrite-tie-in-memo-S0039`, `rewrite-tie-in-memo-S0040`, and `rewrite-tie-in-memo-S0042`, and retired `rewrite-tie-in-memo-S0041` as the `RTIM-001` bridge lineage. `RTIM-001` is migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime rewrite memo rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-fa77b0b241094242f6dcfb70`: this file is an active routing and migration-lineage memo, not fresh standalone product specification. "No open questions" applies only to the memo's routing role; owner docs remain authoritative for unresolved product details.
