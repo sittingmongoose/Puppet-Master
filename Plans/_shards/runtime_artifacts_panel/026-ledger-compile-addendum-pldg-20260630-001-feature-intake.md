@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L1725-L1822
+Source lines: L1725-L1820
 
-Source SHA256: `04cc8cbf0e860686c92b2b93bbd745be90b7336fdb6ccc55d28d2fc0bbec1753`
+Source SHA256: `13f855b3eefae978205e676db0fdd7c0e7e7fbeb239df31a5023bdb805be3c72`
 
 ---
 
@@ -104,5 +104,3 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

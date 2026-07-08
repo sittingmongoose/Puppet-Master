@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L16115-L16591
+Source lines: L16115-L16589
 
-Source SHA256: `054a1b0ada712f317e9f0aef6574e4e1a3f969e5c2c72be181a75b7dcded8530`
+Source SHA256: `54bb7fb3dd28d8a3e6ae11d76d14b8b29bb1501dbc5b093655910cf29f413cf9`
 
 ---
 
@@ -483,5 +483,3 @@ owner_hints:
   - Plans/storage_value_registry.json
   - Plans/path_reference_registry.json
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

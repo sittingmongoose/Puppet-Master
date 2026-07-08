@@ -1,35 +1,36 @@
 # Shard Index: Plans/FileManager.md
 
-Generated: 2026-07-08T02:09:09Z
+Generated: 2026-07-08T13:17:20Z
 
-Source SHA256: `4ea1e4cb9c50c00f7ecb6570db41f7e583199c5c0c655d72d0a2995c7d1b0998`
+Source SHA256: `eba865c52fd3ce123ed9ec45af477b915c42c6acafd17b83da4c7e8725b0bf80`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `5c5616837f6df7d0e33b0e8155dc2d0974cfc35fb98845b121da532059def776`
-- [002 - Change Summary](002-change-summary.md) L7-L18 `28a3d65c316cc3d35ba65aa2c872edabb688043e0429a70a63ba2ed6f34a801d`
-- [003 - Summary](003-summary.md) L20-L120 `1ca78378bd4e3e57961f3c11abd67a36c5ab88a396c7503e4235f4e41d501d6e`
-- [004 - Table of Contents](004-table-of-contents.md) L122-L151 `8d93e2aec1141e33b1592a8951fa37b5a52ffcd5ba4624d194af4edca36cedce`
-- [005 - 1. File Manager panel](005-1.-file-manager-panel.md) L153-L246 `59f9f5bb1b64ccced927bc33afbc7cbb9dfafd0e66a839d39312ecbec3cc2e97`
-- [006 - 2. In-app IDE-style editor (MVP)](006-2.-in-app-ide-style-editor-mvp.md) L248-L380 `71f226974454c1f277d85305dac2827deed99ab8eb80851689db03859dcb08e3`
-- [007 - 3. @ mention in chat](007-3.-mention-in-chat.md) L382-L392 `9340a18e177db45057ad21d376f49ed1ce5b31d597835925477e85c727b8a71d`
-- [008 - 4. Integration: File Manager, editor, and chat](008-4.-integration-file-manager-editor-and-chat.md) L393-L434 `dc0b14980238ac42b2b042e1d6ae44689203cd566ec7385f1c4bfad5e0527b4c`
-- [009 - 5. Open targets and chooser behavior](009-5.-open-targets-and-chooser-behavior.md) L436-L438 `d199c62076ed525bfacfc803ac3b734ac8cdf5c2060446416f62ca95971d90e2`
-- [010 - 6. Preview subjects and rendered document modes](010-6.-preview-subjects-and-rendered-document-modes.md) L440-L442 `eba1e84c26dc7c59ef8bad9b27c90444104ad1d238a78b42f77b593fc5dba0a2`
-- [011 - 7. Browser and terminal handoff boundaries](011-7.-browser-and-terminal-handoff-boundaries.md) L444-L446 `8884194696518c3e56d410cb735a4f5a322268e93e7b84d0f61ed43153fa297c`
-- [012 - 8. Image viewer and HTML preview](012-8.-image-viewer-and-html-preview.md) L448-L458 `12fd4c9917eaacb6b658ceaa4db3eb0c49555245ad20212504713a89a5aba742`
-- [013 - 9. Tabs: Editor, Terminal, Browser](013-9.-tabs-editor-terminal-browser.md) L460-L464 `5c9c13e913d12dd5d87bdc489f0cbfd445de666708e7f3eb9a2c7e2771bc3df5`
-- [014 - 10. Editor navigation and semantic affordances](014-10.-editor-navigation-and-semantic-affordances.md) L466-L490 `d9cf318c13cd143fa0872b6c33cb35f4abc644eadf58a351b67c793e994d31da`
-- [015 - 11. File tree actions, local filter, and chat handoff](015-11.-file-tree-actions-local-filter-and-chat-handoff.md) L492-L520 `4d8fb2233783f08e82faa72eec8e9ccf259fdd5365c910c739fe0ac30e7f8954`
-- [016 - 12. Source Control handoff, compare, and review](016-12.-source-control-handoff-compare-and-review.md) L522-L556 `5a5aa2f4f218654dae04560c9ddd721a50a20f6e3ba4150979f7e9d99d561197`
-- [017 - 13. Preview refresh and hot reload controls](017-13.-preview-refresh-and-hot-reload-controls.md) L558-L560 `ee8ace739779308d08bae1f5e2739ab8309b1901cb90aad9b1757a21b9909d30`
-- [018 - 14. Rendering, browser preview, and detached preview compatibility](018-14.-rendering-browser-preview-and-detached-preview-compatibility.md) L562-L568 `c946f83603a213a53f9e6c6a4ffb50e7d590f563e57186c87a5942366176b2bb`
-- [019 - Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)](019-runtime-artifact-open-by-identity-consolidation-addendum-2026-03.md) L570-L576 `6a393acea32434fcc23c38148be30de61f33bf9f70b71a5cc02d160bd823f4d0`
-- [020 - Owner / Consumer Map](020-owner-consumer-map.md) L578-L582 `a7497480b38823585e15c5d1bb905044fd6ccb4729f96318f61be77131bd7f1f`
-- [021 - PlanUnits](021-planunits.md) L584-L4212 `d6e3dbf9f64ba5aa08825bde40d02011f03196aeaa3fcfc5a85720d917d9bd9a`
-- [022 - Migration Coverage](022-migration-coverage.md) L4213-L4223 `c7a70cc6768017c11487ec32edc2b36dbc309184c1d348f4ba2735481a04de73`
-- [023 - Ledger Compile Addendum - pldg-20260614-001](023-ledger-compile-addendum-pldg-20260614-001.md) L4225-L4265 `4b26c1b331818ea32527bb9439ae2606babb623d39e94b6a7c69cc7b1f83aba9`
-- [024 - Ledger Compile Addendum - pldg-20260614-002](024-ledger-compile-addendum-pldg-20260614-002.md) L4267-L4438 `13e9a33037c447e9a0b23dfbdd2cb2aa21593be05332342e2655d8a8f0d1f72f`
-- [025 - Ledger Compile Addendum - pldg-20260622-001-fff](025-ledger-compile-addendum-pldg-20260622-001-fff.md) L4440-L4482 `5500ba5592a152990d07f63eccf89e2c49c416ba6ab63bb9676cf66191f28061`
+- [001 - Preamble](001-preamble.md) L1-L4 `3717c22067d8b30300897027b030f603f0cfb7e8faf480ba4492ec781dc01530`
+- [002 - Change Summary](002-change-summary.md) L7-L18 `9ed4b2b04eac737719d8030d30b35c48f710ab8ca39d82d36649b145f2887701`
+- [003 - Summary](003-summary.md) L20-L120 `147d9aad0af326c58e7bb6631b4d32f50be9935a43770537417a033e41a28add`
+- [004 - Table of Contents](004-table-of-contents.md) L122-L151 `fe869b8570d91803a3e7e234d033c532edfd643927b5658837452372bc087974`
+- [005 - 1. File Manager panel](005-1.-file-manager-panel.md) L153-L246 `2e8f9d58af46b8a3ebb5f94c71972419228cef462ba9f3541bdfb5c1c0edfce6`
+- [006 - 2. In-app IDE-style editor (MVP)](006-2.-in-app-ide-style-editor-mvp.md) L248-L380 `3ce067145110f2db7f397fcaa6b979a452b334889daca1fab31cb1facb376bba`
+- [007 - 3. @ mention in chat](007-3.-mention-in-chat.md) L382-L392 `27287f2bb22ff36260239ec241cfebca4201292c1b1b5b84204ce22c41ac86e3`
+- [008 - 4. Integration: File Manager, editor, and chat](008-4.-integration-file-manager-editor-and-chat.md) L393-L434 `391619d39e93bba0660baa1e7e82678916c72cc05d65722a8230c470e584b884`
+- [009 - 5. Open targets and chooser behavior](009-5.-open-targets-and-chooser-behavior.md) L436-L438 `2047d44e61c228d7c7629d53146308d2c687079a2109c0438c1d3e61bf7aa16e`
+- [010 - 6. Preview subjects and rendered document modes](010-6.-preview-subjects-and-rendered-document-modes.md) L440-L442 `7f7def770c51bc024de5591be8f49b2d33e719fc1c70a22425b98b36bd41afb1`
+- [011 - 7. Browser and terminal handoff boundaries](011-7.-browser-and-terminal-handoff-boundaries.md) L444-L446 `4dd0fcbfd10b29f8d56eec2cd3bd18e758a2951d9667e8129445382181d5b6ec`
+- [012 - 8. Image viewer and HTML preview](012-8.-image-viewer-and-html-preview.md) L448-L458 `0b5020f187d9ddf017d114e532fcb2965dd76039fc0ccb6b3333c3fdc139105e`
+- [013 - 9. Tabs: Editor, Terminal, Browser](013-9.-tabs-editor-terminal-browser.md) L460-L464 `5b7f2e2521dffdfcbeea709df3abeebac19b56697f43a3b8a393e220f3ef47b1`
+- [014 - 10. Editor navigation and semantic affordances](014-10.-editor-navigation-and-semantic-affordances.md) L466-L490 `09bf2cbb2515d6679c5320d0b777d971fe467b1be66e6c26f90daef24713f986`
+- [015 - 11. File tree actions, local filter, and chat handoff](015-11.-file-tree-actions-local-filter-and-chat-handoff.md) L492-L520 `57ab15bc88b09f6cd1c75a3ade162ad41ef3eaa5cbc3146a521b169a50f8287b`
+- [016 - 12. Source Control handoff, compare, and review](016-12.-source-control-handoff-compare-and-review.md) L522-L556 `df11ab50c2e92c99fcb0dfbc8f2835960d6d53570fa57304fb8100d18bbdd1ce`
+- [017 - 13. Preview refresh and hot reload controls](017-13.-preview-refresh-and-hot-reload-controls.md) L558-L560 `5b78f192772f8856911957b52f6aea28d3445e096b6f7e0382b5df65eead6384`
+- [018 - 14. Rendering, browser preview, and detached preview compatibility](018-14.-rendering-browser-preview-and-detached-preview-compatibility.md) L562-L568 `c0b28e879681c384280db7aaa53c80672e0128bcfe69c7b158460c0152588b7e`
+- [019 - Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)](019-runtime-artifact-open-by-identity-consolidation-addendum-2026-03.md) L570-L576 `53c3d3c1ed6bf801e5c2a6bc96b49b185e05bc2d8ecc31d5cce6ec86e32d3cf1`
+- [020 - Owner / Consumer Map](020-owner-consumer-map.md) L578-L582 `b599336b83769f9e630d107e9048944dae000829f6d1324843b3817d1a88d51a`
+- [021 - PlanUnits](021-planunits.md) L584-L4212 `dba8d002c9798df201e0809b2c529945245d08e8dd916f5acc93e4ababf08029`
+- [022 - Migration Coverage](022-migration-coverage.md) L4213-L4223 `eb9ffa893b7a766c5209127fcf591a0f7d0260d4656ae97d6f57dca47a1dbf93`
+- [023 - Ledger Compile Addendum - pldg-20260614-001](023-ledger-compile-addendum-pldg-20260614-001.md) L4225-L4265 `f45e44d25982e1c9a7b7c2d4dc8769856fe0a991bfac9ecf977229a3acedb932`
+- [024 - Ledger Compile Addendum - pldg-20260614-002](024-ledger-compile-addendum-pldg-20260614-002.md) L4267-L4438 `99d7ed894138f5d31172e08c081948892639ab25d339de42cec6fc95c2ed2604`
+- [025 - Ledger Compile Addendum - pldg-20260622-001-fff](025-ledger-compile-addendum-pldg-20260622-001-fff.md) L4440-L4482 `d0ce4dcdac511664522039aa76e9a686688952ed486c01b7915c0a5642ee2e8d`
+- [026 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](026-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L4484-L4491 `6d79eeb03ee981c2d7cd1e9ba8968e7aa8e9c040fe7c850c710bfe2c9240e9dd`

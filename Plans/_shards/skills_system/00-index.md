@@ -1,24 +1,25 @@
 # Shard Index: Plans/Skills_System.md
 
-Generated: 2026-07-08T02:09:09Z
+Generated: 2026-07-08T13:17:20Z
 
-Source SHA256: `22c154c6e7258dcfcd07fdfcd2e76e72d563bbe5d69c5b5c41d5fe61e08943c2`
+Source SHA256: `4d1d964cb3d747ad352576c4d1d59b240d230a5c16326a2ec5cdb1b52c5e1b53`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `bb50cf262b666663d3f4885560aaf3574e7da631dac6ec39154aa3ad49254354`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L27 `b7b33b5eb609f107f8d81dbcb168877e984afb1d9ed663400b58823717710c08`
-- [003 - 1. Definitions](003-1.-definitions.md) L29-L48 `1dfe23cb27fda7cbcd26e718a054c71548df3adfb1989bcbb3aaa20f6f2fc260`
-- [004 - 2. On-disk format (SKILL.md)](004-2.-on-disk-format-skill.md.md) L50-L88 `668c0f7c4e9d49c91bc5eb7455dac6d0a2d03f4b0b0bfb8164b76aba0018da50`
-- [005 - 3. Storage layout and discovery](005-3.-storage-layout-and-discovery.md) L90-L144 `09782e0ca05e42268ac4de0675e90d956de28e081dd9d612495c07ac1e09705e`
-- [006 - 4. Runtime surface](006-4.-runtime-surface.md) L146-L242 `a2e7a24d1dfde20cd4319daabb1098c77d8df8d4e26f82bf60bba4c4d986c26c`
-- [007 - 5. Permissions integration](007-5.-permissions-integration.md) L243-L278 `6251972fe609269ac33dfa6cb22c100b8a42eafa3266e98d554f2e88521089d4`
-- [008 - 6. GUI requirements](008-6.-gui-requirements.md) L280-L377 `eb7190221bcab9185c3f21b9b68cff2264a68291af2444b768c051429eea5ccd`
-- [009 - 7. Baseline alignment (OpenCode)](009-7.-baseline-alignment-opencode.md) L378-L392 `cc406d8a7d50fa533f508aa246365072608d5a35dd6a7f78e5e93ba22ca77153`
-- [010 - 8. Acceptance criteria](010-8.-acceptance-criteria.md) L394-L411 `72898cdfcf41c6fc0f975b1e72ffa09db0e9567b607cdf414ea23168868750cf`
-- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L413-L417 `b9d29422f5a241d9333338d9a0386291f11ea65741e717f2d64ca2a95ee57702`
-- [012 - PlanUnits](012-planunits.md) L419-L2474 `c2c93308405afbd913f01bc1472e36de97c190bf07730d4f09b10901cb46ae54`
-- [013 - Migration Coverage](013-migration-coverage.md) L2476-L2486 `159a82a6989c1450f5d9bcea691371ab97d1fcdf71db5cc6324e96eae59ac9c1`
-- [014 - FABLE Residual Skills Invocation Cleanup Addendum - 2026-07-07](014-fable-residual-skills-invocation-cleanup-addendum-2026-07-07.md) L2488-L2554 `b1eac01c5f9bc44782ac3cf37118214028c2fbb321aa5c1b9ef697b56a74dacd`
+- [001 - Preamble](001-preamble.md) L1-L4 `b875275a380d57808b2b50ff67180eed8e3ce61d77dfbdb951c8d58357994268`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L27 `aa723d889ddcf38176928834f8f9f89208f9e11af11678fe8f16d6ada1132954`
+- [003 - 1. Definitions](003-1.-definitions.md) L29-L48 `51922a42725f60555ef0daa7b4691b6b767e8231e464119fb2914ce752ffc4bd`
+- [004 - 2. On-disk format (SKILL.md)](004-2.-on-disk-format-skill.md.md) L50-L88 `87f4284c6dcd3559da301fbd9398058147736321998036049859bca1ccaf1b4d`
+- [005 - 3. Storage layout and discovery](005-3.-storage-layout-and-discovery.md) L90-L144 `b43d9d1ebe6f6e15348976e5488bb7072d88c162211a91fecc6430bb0642ed2c`
+- [006 - 4. Runtime surface](006-4.-runtime-surface.md) L146-L242 `08e51328ca34db1ed483b77eb639707f195698ac0aebe6b1747b489bd6ed59e8`
+- [007 - 5. Permissions integration](007-5.-permissions-integration.md) L243-L278 `c64df44ca94c87cccea17e5f08fed55faa334291cd6bd6635add950a23c86496`
+- [008 - 6. GUI requirements](008-6.-gui-requirements.md) L280-L377 `c0e6b899312acb9e1476dca1b801d47617115772ce072be6b70798bda37b8108`
+- [009 - 7. Baseline alignment (OpenCode)](009-7.-baseline-alignment-opencode.md) L378-L392 `fb9fc346939f16265d8abe6006e62795f4596eeba7358ce75e437c716972fccd`
+- [010 - 8. Acceptance criteria](010-8.-acceptance-criteria.md) L394-L411 `a29b3d03163f67241bdf4677352e559500d01d6d301f09a772b69b0fd7f050b4`
+- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L413-L417 `fc1a59747696461920ddc1fa710b43f4896b1379f8f0bdc47f9ff427041358a7`
+- [012 - PlanUnits](012-planunits.md) L419-L2474 `a453dde87f66c23925ee73e494a60fbb5c53af95e8c8dd3e07bad19bfe0e1afd`
+- [013 - Migration Coverage](013-migration-coverage.md) L2476-L2486 `ca5c98eb06406f50d5e45265611e83634d0094e12492103555d65e0e617ae41a`
+- [014 - FABLE Residual Skills Invocation Cleanup Addendum - 2026-07-07](014-fable-residual-skills-invocation-cleanup-addendum-2026-07-07.md) L2488-L2554 `0ebee46b56d3ce81fbd4282ab3ce2f1ec63789151f75461d9adbfaaca02a01fd`
+- [015 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](015-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2556-L2560 `07bf047aed644fd494fac14c6b397741c8a64d79f229ee04ad5d6eee1f7d9e9d`

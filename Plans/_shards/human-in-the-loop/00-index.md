@@ -1,30 +1,31 @@
 # Shard Index: Plans/human-in-the-loop.md
 
-Generated: 2026-07-08T02:09:09Z
+Generated: 2026-07-08T13:17:20Z
 
-Source SHA256: `7aaa04e47769b1e276e701736ff33f9200125da8385a05d5fe9c5eb0be5c87f6`
+Source SHA256: `67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `966357e91d035d7ec826a25c9ac302702517d8c913234fe6c633ac0ab4403015`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L17 `5da7a816144e9e455253cc2a9a4281ee7426b32fc0c9bf10425ade6b11f55b65`
-- [003 - Plan Document Status](003-plan-document-status.md) L20-L26 `cf96597b1fefd099f0ee70335c3afce3a6884025ccfb36daac830f9d47c3d31f`
-- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L28-L125 `2f0dbb987fc2895cc6a9f77ead2cdb8d8f2702348be9d64351709cdbf9a420da`
-- [005 - Executive Summary](005-executive-summary.md) L127-L134 `3f2545c73a326076049d5b502add420486883b6e15c302f659184cec1290c8ce`
-- [006 - Relationship to Other Plans](006-relationship-to-other-plans.md) L136-L143 `1620c89224a4faa18cd9201db818fbaa2f939fe1c1cc2f8b629810863c26ab0b`
-- [007 - Derived Grouping Boundaries (DRY)](007-derived-grouping-boundaries-dry.md) L145-L155 `b23f2732a751e6b7dd3b59defd10ce44ed92b54c7cdefc61b70417c82c6630eb`
-- [008 - Package and Seam Completion Gates](008-package-and-seam-completion-gates.md) L157-L167 `a2c3fdc9763f02058c5c4a5b8918bc45fa02b0f39a856020882c1c4789a55580`
-- [009 - Settings Model](009-settings-model.md) L168-L254 `787961435f8f074d2f7f780b305f5312f0b3bbae25969d923fb8fdefd47ad957`
-- [010 - DRY Summary](010-dry-summary.md) L256-L260 `d56bcd830722988f4e1cf850c198e161e24ae14b4f43e5d7d87a188e3c53d837`
-- [011 - Implementation Hooks (Planning Only)](011-implementation-hooks-planning-only.md) L262-L294 `6e5df57079f5f786ab3392868522e8676f72148f266bf164c80f48c8a86fb935`
-- [012 - HITL Retry and Safe-Point Clarification Addendum (2026-03-08)](012-hitl-retry-and-safe-point-clarification-addendum-2026-03-08.md) L296-L343 `97b947f6e8d4102d281878b6996a22a01730cd88a1b6fa692e455daa06cf4f00`
-- [013 - Canonical HITL Recovery Action Alignment Addendum (2026-03-09)](013-canonical-hitl-recovery-action-alignment-addendum-2026-03-09.md) L344-L399 `04f79ae5d6ef6c89c8fd96fbefec86988d2393783174700638a4761433ee5d72`
-- [014 - Shared approval-ladder alignment (2026-04-04)](014-shared-approval-ladder-alignment-2026-04-04.md) L401-L413 `13524ef672dfa6e478fc1de2fda2490641536e1b50c11a61da41b6273aee3617`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L415-L419 `32214676c06d173c7145c9c5ae213ab8e88aa876225fc5b32d0ae7318939d078`
-- [016 - PlanUnits](016-planunits.md) L421-L2401 `675d8e0f99bb5e8d71e7226504cba38183220d80465f4f1037f1bcbb5adc25c9`
-- [017 - Migration Coverage](017-migration-coverage.md) L2403-L2413 `48834732a1270a30ce8c38069834225bef01282c5c71e1c96ab0f465ed07ba73`
-- [018 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](018-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L2415-L2461 `e7a6cddd42acc4a18845f8d1841c89a8239bca11a44baa8b1d58be323a3a73ee`
-- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L2464-L2557 `3a5eca7fa6635bfad4db5f5321afde71d9d27899afd75f341a7a42eb2682254e`
-- [020 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](020-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L2558-L2564 `ecb852b17137f580d5495c0885e6b9465162a43cb78c62b421b8d347b9ee4f7c`
+- [001 - Preamble](001-preamble.md) L1-L1 `a7848e3ebb35e62722bfb949ef90fcd6842d997e4c9fa4209c3bb43166b70bec`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L17 `a8f8bd19d4d40c30db0daacded8d3417fd253de330e2270a6e7807e13d9cfdba`
+- [003 - Plan Document Status](003-plan-document-status.md) L20-L26 `62ff303a9a5f0b550f10156962b578e48c02bd635cc32ac04078155b5a0632bf`
+- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L28-L125 `891c3ea7afc211f5bfc97fee6d6f5312a3cef1f71ef8a314918bda3ea5f00c0f`
+- [005 - Executive Summary](005-executive-summary.md) L127-L134 `0d12069b71361bb25630beb6fdf8b87c5eda698a4996206e735ac57d0654b3cd`
+- [006 - Relationship to Other Plans](006-relationship-to-other-plans.md) L136-L143 `327c84d13ac8a0e3f1820b62ef188e0587f1658d175f7ecda8639ff940346aaf`
+- [007 - Derived Grouping Boundaries (DRY)](007-derived-grouping-boundaries-dry.md) L145-L155 `466100576d6ef179474923849b4aca6e9d2c028b8275755fc4ad9e8e9d0e3dd0`
+- [008 - Package and Seam Completion Gates](008-package-and-seam-completion-gates.md) L157-L167 `d20a96e075bd1eabff5e4deaf5ab2c08b4309561b2cea62bad51465e71749bec`
+- [009 - Settings Model](009-settings-model.md) L168-L254 `d0433bde89cdb12ba0797a50a1da7fccdd146120df8b609891691e7bdb45d265`
+- [010 - DRY Summary](010-dry-summary.md) L256-L260 `0abdb28a785350c54d46c32deb6119b2de6ac33d511e69cc104e47a21cd26daf`
+- [011 - Implementation Hooks (Planning Only)](011-implementation-hooks-planning-only.md) L262-L294 `6475e29b36de3607171b9dcc10e0f5a69335b668ce076852ecf4d3a8b7845be0`
+- [012 - HITL Retry and Safe-Point Clarification Addendum (2026-03-08)](012-hitl-retry-and-safe-point-clarification-addendum-2026-03-08.md) L296-L343 `807386644945bf838770e57ceb10c0e468654936874abd0ae995ae73e5859b78`
+- [013 - Canonical HITL Recovery Action Alignment Addendum (2026-03-09)](013-canonical-hitl-recovery-action-alignment-addendum-2026-03-09.md) L344-L399 `6743fcadb4a731d5d7ab636da8e011a6eb950aefa894d97bc0a71b3a0af7114c`
+- [014 - Shared approval-ladder alignment (2026-04-04)](014-shared-approval-ladder-alignment-2026-04-04.md) L401-L413 `2153a93337549d032ea5fb5c537031cb7bea38b73018471ccea9836736a78334`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L415-L419 `64c81955dea7be974e6e80127559d8238edfd31a60ff8d3d35d54e95da469d20`
+- [016 - PlanUnits](016-planunits.md) L421-L2401 `a7f3fef5ad94f6214d4d4970cf3f8c3a704c90fef8a83545cfb60c2e7580bb9d`
+- [017 - Migration Coverage](017-migration-coverage.md) L2403-L2413 `59d75978bc07956fed941c0b756d127cf566247d56c98701f22c5c8794f8496c`
+- [018 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](018-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L2415-L2461 `51cf8c4884b34f6cf999002f39c131f85f03ab2aa12f82143205e6cfba79879d`
+- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L2464-L2555 `53f4c5b0ff2cb3681881eb7086638128fa71f9e64902f5a438f4c49a36234af4`
+- [020 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2557-L2593 `3c21dc9812908c7ab71ca61e187c513f757abd23ee92f2d75c98a020dcc7b666`
+- [021 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](021-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L2594-L2600 `3048ae982985bbf66ed4d2f57cc01359c7bb9f89b47a50805bc5f927749bd7d0`

@@ -1741,3 +1741,10 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
 
 Phase 2B batch 047 atomized `Document_Packaging_Policy-S0001` through `Document_Packaging_Policy-S0023` into `DPP-002` through `DPP-029`, with structural parent spans `Document_Packaging_Policy-S0007` and `Document_Packaging_Policy-S0017` mapped to their child units while preserving anchor alias `7`. Phase 2B batch 048 structurally dispositioned `Document_Packaging_Policy-S0024`, `S0025`, `S0026`, and `S0028`, and retired `DPP-001` as migration-lineage compatibility coverage for `Document_Packaging_Policy-S0027`. `Plans/Document_Packaging_Policy.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime packaging-policy rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-803c53af977a001393cd07fc`: SSOT naming contradictions are not permanent policy. Each contradiction row must name `resolution_owner_doc`, `resolution_due_phase`, and `current_status`. Until resolved, consumers must use owner-doc names from `Plans/00-plans-index.md` over examples in packaging prose.
+- Repairs `sfk-2ebbc3349354d2a57460398b`: packaging validation failure uses exit code `42`, error shape `{error_code, message, failed_rule_id, document_path, partial_outputs[]}`, and rollback rule "delete temp outputs; never overwrite previous packaged output until all checks pass."

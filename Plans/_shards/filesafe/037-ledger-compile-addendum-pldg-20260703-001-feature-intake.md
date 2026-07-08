@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L13702-L14091
+Source lines: L13702-L14089
 
-Source SHA256: `6d3a95c633375320c254cf79fdb02f5f8ac5d955fe3275e97b3e28f031767e71`
+Source SHA256: `a7b6a7430d1b95fb4cf3a3896953797dcf2ffee60752c3b7b566446934cb2fd4`
 
 ---
 
@@ -396,5 +396,3 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/Permissions_System.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

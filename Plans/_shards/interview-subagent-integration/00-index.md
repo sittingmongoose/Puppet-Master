@@ -1,19 +1,20 @@
 # Shard Index: Plans/interview-subagent-integration.md
 
-Generated: 2026-07-08T02:09:09Z
+Generated: 2026-07-08T13:17:20Z
 
-Source SHA256: `7a64ee5aecf82e446dae6d376e41bf173e17acc356727b5add666147cee6d64e`
+Source SHA256: `4710bbe6b870afdf54d816fa9d13f83fe92722e1a2840ea8412de9d44f85966e`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `5ba60324405ef62e418e427625e595be4806326801bcf6be92f9375f63f3d12d`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `573c5505de81e7bf5dd83838c4d3e67d7bb15f5eacc293a434eeb90d76b9654d`
-- [003 - Change Summary](003-change-summary.md) L12-L18 `81b86e01679e64a46ef66286b659a269d9563a5b514ced1a17e5b447d7536b7b`
-- [004 - Interview runtime boundary and handoff lineage](004-interview-runtime-boundary-and-handoff-lineage.md) L20-L54 `48c6774ae9817641cb32322b5792b30a47bd18b1cc4afdba851360273e0deb23`
-- [005 - Owner / Consumer Map](005-owner-consumer-map.md) L56-L60 `88f47eba3bbed7419901e44f7a7cfcfc62d509afdaff8f116c1a4dde7af97160`
-- [006 - PlanUnits](006-planunits.md) L62-L983 `ca1b0673e038dfe6bb755a36055c478cb72c8b941765ea0ad0f4eff12344c95f`
-- [007 - Migration Coverage](007-migration-coverage.md) L985-L995 `e4d0844175e9c0fcede10d774303fe0851d8df1337d158ced470d33eaf2189e1`
-- [008 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](008-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L997-L1055 `539eae426706894a8367ec1b07b5c3b4f004404d4a2df25171e0e85d4665fd39`
-- [009 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](009-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L1056-L1064 `956d0fe17ff8fe1829d6d3db743da7362285231f3f454c21a2eee7122efb83be`
+- [001 - Preamble](001-preamble.md) L1-L1 `727a8a9205875729aa1dfd914d61908b4972774ccb7e03943f3ca1b8824b42c1`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `52747a6220cad68906463d2ab6d86bb3e1714f540b0d8485a2a4317893df94f2`
+- [003 - Change Summary](003-change-summary.md) L12-L18 `0ae323033bc4d516923b38f89aa14d762aad16d17d282780bb4a6940f497d44d`
+- [004 - Interview runtime boundary and handoff lineage](004-interview-runtime-boundary-and-handoff-lineage.md) L20-L54 `4776ccfd04c4abb78c51381d6f544caae4352007791fb512a0a5e8365816eaa8`
+- [005 - Owner / Consumer Map](005-owner-consumer-map.md) L56-L60 `8488cea6d540f59f63694104d969e96c1f34500b0a10b84ce27a2acdaa99e053`
+- [006 - PlanUnits](006-planunits.md) L62-L983 `b00eecd1038a96da7ee3b40287cea3ebaeb2aedeba285809ceefb91f5352eba9`
+- [007 - Migration Coverage](007-migration-coverage.md) L985-L995 `923e7554fd28b5ba2b53096dbe78f73d8f7d6caeebfd0dabee49d245a5d10f05`
+- [008 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](008-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L997-L1055 `72644f317904679a73d873fc7a5a5b412ebf790b77fd0a286656f804b8f4e034`
+- [009 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](009-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L1056-L1062 `d7953410f0bacdb001965a8c761e0954cbf290761b733519dd5be0cf07bd9581`
+- [010 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](010-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1064-L1072 `78c068f0bc93940904d180900438e20bcde3d20c2c9f011363905bcc5057ca36`

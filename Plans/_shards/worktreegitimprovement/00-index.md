@@ -1,39 +1,40 @@
 # Shard Index: Plans/WorktreeGitImprovement.md
 
-Generated: 2026-07-08T02:09:09Z
+Generated: 2026-07-08T13:17:20Z
 
-Source SHA256: `ed28e37cd4fdc153d224be4a7740b66b79d838a838120fdafb15b46ee1e11fe2`
+Source SHA256: `28600deb3d08b7819b5a00c3a525fb5ff837eda1ef914ca98518d4687e039309`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `07f5f03ae77e2c2a62e29721bd7ea7a822f44ae374384110c6fb0aeb907fd87e`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `109b850db47cd93f291636dbfd476518829d4f9f7254f613025aa03e8be538d4`
-- [003 - Plan Document Status](003-plan-document-status.md) L24-L33 `416ea11fc41182d6634db07ca7bc90bc2fddec7f8fac10a562d0edf31ee8cba7`
-- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L35-L41 `ad3a82602f279d277e0de97e1672bc0a4bfd11864a7b11809b797e32db73ca88`
-- [005 - SSOT references (DRY)](005-ssot-references-dry.md) L43-L55 `6547c2e5c859c2b2de291501cbc28f21f957650ee688c1d6c212cecbfe3249a6`
-- [006 - Table of Contents](006-table-of-contents.md) L57-L68 `cf8dd32073594b4ba39172a6334ff99491a673fb1ac3935a6c2ca9c9ef62dbdf`
-- [007 - 1. Executive Summary](007-1.-executive-summary.md) L70-L95 `f2ee2270be542a0ca617490cf6354659f6dd036dac84fde76ef24c1687a591b6`
-- [008 - 2. Worktree Improvements](008-2.-worktree-improvements.md) L97-L268 `4c7f483f728031b337c3ba6f84e9ce24caa245c7d788b6d0cb7cec69cb9875b9`
-- [009 - 3. Git Improvements](009-3.-git-improvements.md) L270-L369 `133640f18deddf5625c6bfe10b63694e210618f0e7cbc051ea20ad68ee019cf7`
-- [010 - 4. GUI for Git & Worktrees](010-4.-gui-for-git-worktrees.md) L371-L399 `0a824eb0d22a2635572175a8082800e72e7f11ea45a0b05c8797df6f40209d27`
-- [011 - 5. Config Wiring (Prerequisite)](011-5.-config-wiring-prerequisite.md) L401-L438 `5cf8f6fd6ecc3d7e7586eee3add8bac9341cce85d538729dfe4de65d2d54e806`
-- [012 - 6. Implementation Checklist](012-6.-implementation-checklist.md) L440-L529 `d06457e710928d52f14aa0caf874d905cecef944c9add454466c862b337fd95f`
-- [013 - 7. Gaps, Risks, and Implementation Notes](013-7.-gaps-risks-and-implementation-notes.md) L531-L609 `389b0b9b412eec2c2bd753b0a398e580e3c0a9a634d0928a3469dfbbeb444ded`
-- [014 - DRY Method Compliance](014-dry-method-compliance.md) L611-L650 `fad641505b0073e5d922443cd4671bc52d4b7c96ef72122963c80749d8c184d6`
-- [015 - 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations](015-7.12-crews-and-subagent-communication-enhancements-for-git-workt.md) L652-L669 `f59b26ed8ded1d1c3a0cd3cbf0350f1216f8c8fc2634c7224740dd8744158810`
-- [016 - 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations](016-7.13-lifecycle-and-quality-enhancements-for-git-worktree-operati.md) L670-L684 `c85206c67857f52e53451c6c716c55bc34452d3b4b6516b5e17ca70ed972b518`
-- [017 - 8. References](017-8.-references.md) L685-L691 `2afc7daecade43a67f9c734395db15c927188d5c14e32acd69059f9bba1f903e`
-- [018 - Safe-Point and Retry Integration Addendum (2026-03-08)](018-safe-point-and-retry-integration-addendum-2026-03-08.md) L693-L716 `fa47aab9043fbb7fbadcabea4d48321cae64ed16e7f9d5dbd1dcdd1aeb0e4138`
-- [019 - Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)](019-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md) L717-L726 `b53db374e01e375ffd3aff39ad6d7fdf4864167de25a0d16d412064c7c3fa0d0`
-- [020 - Runtime Worktree Conflict Canonical Alignment (2026-03-09)](020-runtime-worktree-conflict-canonical-alignment-2026-03-09.md) L727-L763 `90a949cd6a7256a16348c1ce5093f045aec70127f4eb6755e9a3e8c0ed3a897a`
-- [021 - Worktree Lane Allocation and Source Control Reconciliation](021-worktree-lane-allocation-and-source-control-reconciliation.md) L765-L795 `cc2a4cd8be40591bfb49c91247191c96321101b7e669db7e250749aec3e6e4c4`
-- [022 - Owner / Consumer Map](022-owner-consumer-map.md) L797-L801 `109c204d11633a6428a96d4542e9cae68089f731118878c4fdad71b0a36e29af`
-- [023 - PlanUnits](023-planunits.md) L803-L4784 `9e2b5e5244748a04f26df7e2a2dc72e9233613edc4c11ada521bcb2f0597b272`
-- [024 - Migration Coverage](024-migration-coverage.md) L4785-L4799 `db288e056939dcf9e3e6d16f5b66d70713e31fefb56531bd3817efad793287a7`
-- [025 - Ledger Compile Addendum - pldg-20260614-001](025-ledger-compile-addendum-pldg-20260614-001.md) L4801-L4838 `d7a3b8327d7e83d8b14d9a491a56dbf25421b3691dd0ed41093b5cdc5cc29995`
-- [026 - Ledger Compile Addendum - pldg-20260616-002](026-ledger-compile-addendum-pldg-20260616-002.md) L4840-L4904 `dfb126c4f17f5c60f64ee7b833af73276ea6f6faa9a2d9caccff684f670f1e3a`
-- [027 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](027-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L4906-L4959 `5ba8d5e0fa95b3d1a7f077c857ae60defc811e2c9d69495cebb414ab64443731`
-- [028 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](028-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4962-L5057 `09bb36898c81793dc37d3647594263163ace278355d4a1289e4f44f7e8f6d872`
-- [029 - Ledger Compile Addendum - pldg-20260622-001-fff](029-ledger-compile-addendum-pldg-20260622-001-fff.md) L5059-L5103 `827f9258b7852cf1bec4f02dfb7d923a94362981c4046984dd71292832834ace`
+- [001 - Preamble](001-preamble.md) L1-L1 `9fa7e0b6f3e73dc1399afbcfde641a5e3df6ba6cbd6341d942ed32b57c66c681`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L21 `b47b667637e80e32b92aa624f0183b4b04bddb9015387a33e3f632cc352d32a9`
+- [003 - Plan Document Status](003-plan-document-status.md) L24-L33 `85eda15a7ae7b58e57ae59fc0ec70b9ead9ea6e294a6f95749e6bf709c6a3372`
+- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L35-L41 `ef8dc988c0f3aec841f80f0126ff15c73cb70a5efcf0dabe4ddaa0158f030512`
+- [005 - SSOT references (DRY)](005-ssot-references-dry.md) L43-L55 `83f99df9c51c26d32ad848ffd79e8e14bd4561dfe46fe12d23302b8b78ca4a30`
+- [006 - Table of Contents](006-table-of-contents.md) L57-L68 `7b4d64639553fb4b0e71f671214eb921f88189f015046f870b5e18a7e1e2b066`
+- [007 - 1. Executive Summary](007-1.-executive-summary.md) L70-L95 `c4d54f98b983c46d5029acd7690336f0dd08f39f7e7379a0db4705202e8b8e43`
+- [008 - 2. Worktree Improvements](008-2.-worktree-improvements.md) L97-L268 `773ea8ebaad948dc05584e0667a183cd68201be47929223905fd0e7535cd7356`
+- [009 - 3. Git Improvements](009-3.-git-improvements.md) L270-L369 `444988f7bdfb30871b3599c97a58c6d0a77f6b22ed1acd5acd6cc8aa4682f478`
+- [010 - 4. GUI for Git & Worktrees](010-4.-gui-for-git-worktrees.md) L371-L399 `f7d048a25fb5bd6108b4b87af9d05876f785ec3e07baddce27972e11aed60fd7`
+- [011 - 5. Config Wiring (Prerequisite)](011-5.-config-wiring-prerequisite.md) L401-L438 `3866c32d7b2b6a3f4f75d693c84440c196c1ef1106694e7993bc08c49c375f37`
+- [012 - 6. Implementation Checklist](012-6.-implementation-checklist.md) L440-L529 `5790916baa775bd4c4683342cca663f3fadfa8365720da9b4141d41c92deffc9`
+- [013 - 7. Gaps, Risks, and Implementation Notes](013-7.-gaps-risks-and-implementation-notes.md) L531-L609 `db00c88ce375b2797270f9eb848f0e0c3835cf8063f4f01420a1ad5775b810af`
+- [014 - DRY Method Compliance](014-dry-method-compliance.md) L611-L650 `eeb91b8fda3de519ba2a31d31888d652d7d21bf66dee82c58ed94b8428b3640a`
+- [015 - 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations](015-7.12-crews-and-subagent-communication-enhancements-for-git-workt.md) L652-L669 `569d8810fe50c749cb9c83a59592a286c4a0dd770b09c8538d2d15d442c650dd`
+- [016 - 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations](016-7.13-lifecycle-and-quality-enhancements-for-git-worktree-operati.md) L670-L684 `db48917f5489ef465b174ed6bea846ea19b2dd57ddfe896586c4952a70578040`
+- [017 - 8. References](017-8.-references.md) L685-L691 `7124ae4e430984c4afed2316cd7b6545f4b70cbf426efbd1ff7fe4fe831d9685`
+- [018 - Safe-Point and Retry Integration Addendum (2026-03-08)](018-safe-point-and-retry-integration-addendum-2026-03-08.md) L693-L716 `2288418403d1d722a38356e38788b770ce115ff5a34ddeb52eb964484e25f4a7`
+- [019 - Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)](019-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md) L717-L726 `9ee8340ebdf43414d4dff7f9fbc901d5672f2265411329e8f4f133ac31f22da6`
+- [020 - Runtime Worktree Conflict Canonical Alignment (2026-03-09)](020-runtime-worktree-conflict-canonical-alignment-2026-03-09.md) L727-L763 `fc9f283a82d496b348f4fb1b903873f131070347e941f5c45241c9613c8fc95e`
+- [021 - Worktree Lane Allocation and Source Control Reconciliation](021-worktree-lane-allocation-and-source-control-reconciliation.md) L765-L795 `d42a9a9440b45e16c709f30dfa1692806cdb127939b5394670a6fef443e10778`
+- [022 - Owner / Consumer Map](022-owner-consumer-map.md) L797-L801 `e26de623ec0ec0a7ebf2c12d480cf1fe1e68c868570e4ba4f7a54757741ac2cb`
+- [023 - PlanUnits](023-planunits.md) L803-L4784 `932eb041914d715d07b1646354e7e993e14d3145d8091c0d3e83e9b68b25e869`
+- [024 - Migration Coverage](024-migration-coverage.md) L4785-L4799 `0c2103b606e6462d6b4c529a1a4597e70ae3abbff2800456588df7439984cadf`
+- [025 - Ledger Compile Addendum - pldg-20260614-001](025-ledger-compile-addendum-pldg-20260614-001.md) L4801-L4838 `77858957c06f0c4d06e9349f0646b08d8875cb034f272cbd76d2632a30461902`
+- [026 - Ledger Compile Addendum - pldg-20260616-002](026-ledger-compile-addendum-pldg-20260616-002.md) L4840-L4904 `9af92055afe94a832658fe4bdd39ebe286d1ae98a24a9b7a5964ed45496be59f`
+- [027 - Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff](027-ledger-compile-addendum-pldg-20260617-001-plans-to-code-handoff.md) L4906-L4959 `115440927d46e688ac86ea25495019afa56373809d980d6f72fac050a9af91f4`
+- [028 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](028-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L4962-L5057 `5a5b9f1ac1e20fb1f1467642fc5f8b891b45d36d99a94e715565a0d755945908`
+- [029 - Ledger Compile Addendum - pldg-20260622-001-fff](029-ledger-compile-addendum-pldg-20260622-001-fff.md) L5059-L5103 `775ad8abcb65b7cf103c725eb5ad7c353f207b527bbafc0a51a29766b68b650a`
+- [030 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L5105-L5111 `fa29d8622a47c735fec620818673e197fcefabd72f305826251d45d9f2292a96`

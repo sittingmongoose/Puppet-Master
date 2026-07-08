@@ -2,9 +2,9 @@
 
 Source: `Plans/Personas.md`
 
-Source lines: L3310-L3446
+Source lines: L3310-L3444
 
-Source SHA256: `aad24d2d1027b60f8a00834429ecfb575a1b1002e3f6e5d269489ce2af2e2abb`
+Source SHA256: `be34262ec620936b9b92e011d201c2e09780ddbaeff24ddea1490891b9b97493`
 
 ---
 
@@ -143,5 +143,3 @@ owner_hints:
 - Plans/Automated_Testing_System.md
 - Plans/Glossary.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

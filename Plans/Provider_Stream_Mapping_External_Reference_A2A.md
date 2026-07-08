@@ -2161,3 +2161,11 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Original spans from `Provider_Stream_Mapping_External_Reference_A2A-S0001` through `Provider_Stream_Mapping_External_Reference_A2A-S0042` are preserved in place and atomized into fine-grained PlanUnits `PSMERA-002` through `PSMERA-025` or explicit structural/reference/deferred dispositions. Generated tail spans `Provider_Stream_Mapping_External_Reference_A2A-S0043` through `Provider_Stream_Mapping_External_Reference_A2A-S0046` are structurally dispositioned, and `PSMERA-001` is retired to migration-lineage-only compatibility disposition with `node_compile_hint.mode=retired_source_preserving_bridge`. No residual source-preserving product bridge remains for `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime provider-stream rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Keeps `sfk-bbe24dbaee588f11b4a55c4d` explicitly deferred: provider diagnostic category schemas need a versioned schema-owner slice before closure.
+- Keeps `sfk-e98bc6a59c457b5cf85d8d99` explicitly deferred: raw P5 continuity/recovery audit prose must be converted into schema text in a provider-stream lane before closure.
+- Repairs `sfk-f343634c482c449df4c8d04f`: `approval_scope_key` format is `approval:{project_id}:{policy_axis}:{target_hash}:{operation_class}`. `target_hash` is lowercase hex SHA-256 over the normalized target identity. Keys are recomputed when project, policy axis, target, or operation class changes.

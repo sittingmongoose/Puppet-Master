@@ -1,16 +1,16 @@
 # Shard Index: Plans/Media_Generation_and_Capabilities.md
 
-Generated: 2026-07-08T02:09:09Z
+Generated: 2026-07-08T13:17:20Z
 
-Source SHA256: `f5a1d574049d5f97861a8ec0488edbc1a2c9118e310ba37519201f1d0931f248`
+Source SHA256: `2263d6305f1a2ba7753a0379d4c95ae6bb939bff0239bac56da2ad72c5544589`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L18 `9f4689e4e56e03f6dc51e84f45bba77ab6ed04bde7cd6c34b9892444088a8a6f`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L20-L51 `153b003a1f217035b36224c6e2970a6654a816c7be5c07b04b043e8858384223`
-- [003 - 1. Capability system](003-1.-capability-system.md) L52-L81 `488145f605bb3d28fd9dfef3eb907fa9ba0cf78d70d5664aada708f74c90805c`
-- [004 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L83-L374 `b48a4a3c0ee0ccb4dbe324a27a427f6e6896287ab79ddc1978a85ec7cb00c409`
-- [005 - 2. Media generation contract](005-2.-media-generation-contract.md) L375-L614 `dce4e47b0aee51c6682749f0183ab273b48fa2fc2768529a3e3cedc69fb94881`
-- [006 - 3. Natural-language slot extraction grammar](006-3.-natural-language-slot-extraction-grammar.md) L615-L6576 `1c5b8f63cb17e6ab6d7f96edbed1c7cf80469b6f8c5c09ade94d750bdcdcb549`
+- [001 - Preamble](001-preamble.md) L1-L18 `87b1a27cbddf10a30ef2e45503569d05873e5e230e96620f17754742c4f5ba12`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L20-L51 `5457496378ec8ed7dcb9a727177bd9eb7e42be33668cbacfe4e0528692e0c3cc`
+- [003 - 1. Capability system](003-1.-capability-system.md) L52-L81 `783ecabc3c627a301415f6368543176bd1419d10627f3abf32db2b03d4817e63`
+- [004 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L83-L374 `62c8fea28731a90ac11791be2224132c01711dfd034ccdde42777768aa571b31`
+- [005 - 2. Media generation contract](005-2.-media-generation-contract.md) L375-L614 `59cbefcddca7dfbdb86af16b91bb48f12e2e07bf99dea24691ef5205ff679048`
+- [006 - 3. Natural-language slot extraction grammar](006-3.-natural-language-slot-extraction-grammar.md) L615-L6658 `713fed86658df058305261818f061bd449ad3c6f86eea136feca35908a30fb4d`

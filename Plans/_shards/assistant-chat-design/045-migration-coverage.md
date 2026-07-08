@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L21920-L21950
 
-Source SHA256: `b322ef7e272004fa5b90acbdd24df5f9b75f2a65ce81cd5833b9b9f17ad35cb4`
+Source SHA256: `4fd3675adb0a6362669302310d9685d8c8392f3da3904c38c29dfa47e953ba79`
 
 ---
 

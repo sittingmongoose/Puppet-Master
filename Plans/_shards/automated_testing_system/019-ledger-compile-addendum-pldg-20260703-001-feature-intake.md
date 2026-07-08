@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L1716-L1850
+Source lines: L1716-L1848
 
-Source SHA256: `4977ec88f897791ee7dc741e5f59a7d9ea0b8b148c57770b134e40c674445f1a`
+Source SHA256: `f04df3e9ebe1d0854c2bdb49a538bbadb635502f6ad395be3c0d058f2025e84f`
 
 ---
 
@@ -141,5 +141,3 @@ pm_gap_or_delta: Terminal Protocol Matrix covers cases to support, but needs a p
 relationship_to_prior_reports: Adds test strategy to prior terminal requirements.
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

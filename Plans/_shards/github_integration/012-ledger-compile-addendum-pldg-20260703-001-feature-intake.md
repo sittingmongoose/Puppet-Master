@@ -2,9 +2,9 @@
 
 Source: `Plans/GitHub_Integration.md`
 
-Source lines: L1991-L2065
+Source lines: L1991-L2063
 
-Source SHA256: `e357a371e977ceb9d69036408fe9f06fc917e7326d501a1981f3da9f8c50140a`
+Source SHA256: `4a94261aec0d756e5d6bf7d0c1cddfd3ad73d13a8b19d4ef1ee41cc2675cffd8`
 
 ---
 
@@ -81,5 +81,3 @@ pm_gap_or_delta: Need rate-limit-safe updater and release/action tag currentness
 proposal_or_recommendation: Add GitHubUpdateCurrentness and ReleaseTagVerifier
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

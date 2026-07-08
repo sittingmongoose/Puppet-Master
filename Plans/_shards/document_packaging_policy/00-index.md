@@ -1,23 +1,24 @@
 # Shard Index: Plans/Document_Packaging_Policy.md
 
-Generated: 2026-07-08T02:09:09Z
+Generated: 2026-07-08T13:17:20Z
 
-Source SHA256: `7c555d8159c75c51128ca3ef90555d4bfc70961f959ff7aae895f184f14bf3bc`
+Source SHA256: `c70b4b215f421cf69ac503698088fb46278c038f80df19f94d50ae87d6bd77bd`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `f309a4e401e88809b4d76dc11e627133c694073224e3033ac03791675bbe2745`
-- [002 - 0. Scope and alignment](002-0.-scope-and-alignment.md) L6-L16 `5ff5fd47e25dba1324479a22c6bbc8657e015b2773eddef93699bdb43a2b259f`
-- [003 - 1. Document Set contract](003-1.-document-set-contract.md) L18-L72 `3d747e15de251fb86974631c8acda66e64d1d1a3142ba281e41793de52e84e7e`
-- [004 - 2. Deterministic split rules](004-2.-deterministic-split-rules.md) L74-L135 `46c4f6cabeec394e08c5de78c341643bf55c168964ae6f483b9c591cd3e973c0`
-- [005 - 3. Trigger budgets and deterministic defaults](005-3.-trigger-budgets-and-deterministic-defaults.md) L137-L148 `73f19d3bf93a6871c662e7c33028264c7390ddd6b98bd51b41ae44f254c6a6eb`
-- [006 - 4. Losslessness proof (hard requirement)](006-4.-losslessness-proof-hard-requirement.md) L150-L164 `54dfcf3ff0549b36fd3381f0034bbcf82d8df650a6c81c12d47df43cbac66c74`
-- [007 - 5. Three independent audits (full coverage, no sampling)](007-5.-three-independent-audits-full-coverage-no-sampling.md) L166-L196 `754abec9f2f77e5de2dc791b68c5302c21057c26ae48248bf55c4eb6f7f2d4f0`
-- [008 - 6. Enforcement coverage and run failure rule](008-6.-enforcement-coverage-and-run-failure-rule.md) L198-L215 `b686387801a9027d41611f6ac68f47fed2b2fd831607a5a47926ca47aed72f32`
-- [009 - 7. On-disk path convention and pointer stub contract](009-7.-on-disk-path-convention-and-pointer-stub-contract.md) L217-L338 `fc6995b9209eb49d788eaac08146e40619c839d429c6501e48d4f388df9927e7`
-- [010 - References](010-references.md) L340-L344 `d7d2e8528d4716dbaca4aadd9e078c8fd95cbe23215fbe6352257debe65723b4`
-- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L346-L350 `563fbe20061181f97c2430058f676c4efcbc2b066b2d682c3db6ba4a2e69ecde`
-- [012 - PlanUnits](012-planunits.md) L352-L1729 `3da50e7bbbc7c4871dac11bd6b82352240c181307996c4d41ffbc6c36569097e`
-- [013 - Migration Coverage](013-migration-coverage.md) L1731-L1743 `dbdb92221ce16293ea1f4ea8d60813a2cc645812908b7c301436198d880a9f37`
+- [001 - Preamble](001-preamble.md) L1-L4 `a6e3d285c400d793d82c44b507a5cdce3ef0107c94fddec2e0ea055c41812b4a`
+- [002 - 0. Scope and alignment](002-0.-scope-and-alignment.md) L6-L16 `56cd96c8afb8a97cc6f15f21ef019f4d5c924e76291cdb1dc2110e9baa5c0705`
+- [003 - 1. Document Set contract](003-1.-document-set-contract.md) L18-L72 `e5ce0f8cfadfa21cb431a088353f19ec4141bd2b2a16b8534d2f8849e95732d0`
+- [004 - 2. Deterministic split rules](004-2.-deterministic-split-rules.md) L74-L135 `9df04c3a2db80e392521309a3867f7b3e979333e68c337904bb99af35ca1a9f7`
+- [005 - 3. Trigger budgets and deterministic defaults](005-3.-trigger-budgets-and-deterministic-defaults.md) L137-L148 `e1579cf6a61297acf4210a17ce573bb4c47c4d554bdef9165dfa0c079e04158a`
+- [006 - 4. Losslessness proof (hard requirement)](006-4.-losslessness-proof-hard-requirement.md) L150-L164 `b62fada088878ad53d6969a81d85eb1c8888ccddb76914a8aa2d72aeb43c470f`
+- [007 - 5. Three independent audits (full coverage, no sampling)](007-5.-three-independent-audits-full-coverage-no-sampling.md) L166-L196 `1bdedfb800a95fedfe4f70c53646cf8df5eafc14dfc9ecf9100a9bff698a348a`
+- [008 - 6. Enforcement coverage and run failure rule](008-6.-enforcement-coverage-and-run-failure-rule.md) L198-L215 `b075df1f03bcbebe4bdbed17e4ca4708faeec84b511ec108e587945417ef6a7b`
+- [009 - 7. On-disk path convention and pointer stub contract](009-7.-on-disk-path-convention-and-pointer-stub-contract.md) L217-L338 `23c656f81b9415e039fb06d162a517122891624f8497a8e0010287aef91f9db2`
+- [010 - References](010-references.md) L340-L344 `6429e1d89ec5ba8efae59cb94bed042553e4cc2361d714751d9dc43304a6490d`
+- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L346-L350 `115845af11b3427220483d7f78b38e4b8b754eb48e24f97a1a9a0dfb0ed1c304`
+- [012 - PlanUnits](012-planunits.md) L352-L1729 `54d36e77e9c312487f37e0e7eacf5c62d5b53c52cf5679d569ecdc8d7d111224`
+- [013 - Migration Coverage](013-migration-coverage.md) L1731-L1743 `68d00a2f85d6e13744c9ac251a24173f770d92e3cedf655632964cedfb02ce22`
+- [014 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](014-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1745-L1750 `757c0b0dd8e400ef08995b8160385efacc182b94ed3a547ebabafb75ae243f47`

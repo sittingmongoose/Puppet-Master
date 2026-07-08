@@ -4,7 +4,7 @@ Source: `Plans/newfeatures.md`
 
 Source lines: L4-L6
 
-Source SHA256: `9e3c271c76bc89d6c5cf3abf0fac10931330ba61a42a63c821e966ec649efffa`
+Source SHA256: `ea117c0a477a28605fb0b14c4c7c32646f871153efefa922bcd5051d5ce4e3b0`
 
 ---
 

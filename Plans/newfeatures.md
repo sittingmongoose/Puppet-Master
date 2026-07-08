@@ -1219,4 +1219,11 @@ This owner note closes or dispositions non-runtime rows from `Plans/.audits/fabl
 - `registry_line 350` (explicitly_deferred; source line 1178; `sfk-a842ba71d3915b955e7ddd63`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: pure PlanUnit YAML with no data models/algorithms/GUI wiring mislabeled "Implementation Plan" in its own H1 despite every unit having `create_worknodes: false`.
 - `registry_line 351` (explicitly_deferred; source line 1179; `sfk-382a8aaadd071809899261b5`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] N-006: names required feature families (corroboration/promotion/graph-patch, trust state) with zero schema or state machine.
 
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime newfeatures rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-a842ba71d3915b955e7ddd63`: this document is a feature summary/source-lineage compilation, not an implementation plan. Its PlanUnits preserve intent and route ownership while `create_worknodes` remains false.
+- Keeps `sfk-382a8aaadd071809899261b5` explicitly deferred: N-006 feature families need schemas/state machines in their owner docs before this summary can be closed as implementation-ready evidence.
+
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

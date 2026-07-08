@@ -2,9 +2,9 @@
 
 Source: `Plans/Bootstrap_Planning_Migration.md`
 
-Source lines: L301-L383
+Source lines: L301-L381
 
-Source SHA256: `6235e725364c160c6631a255d83e57dc7dc641ed8ec61033f7fff89201ae6c5b`
+Source SHA256: `d8fb28074b82828d9c400f66cc85c303aea28448e4bb556bcba6bb566008eea1`
 
 ---
 
@@ -89,5 +89,3 @@ owner_hints:
 - Plans/Planning_Ledger_System.md
 - Plans/Plan_To_Node_Compilation.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

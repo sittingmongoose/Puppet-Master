@@ -2,9 +2,9 @@
 
 Source: `Plans/human-in-the-loop.md`
 
-Source lines: L2464-L2557
+Source lines: L2464-L2555
 
-Source SHA256: `7aaa04e47769b1e276e701736ff33f9200125da8385a05d5fe9c5eb0be5c87f6`
+Source SHA256: `67c98fa13cd8e2aaf485c8441d2da07bfd1349927930ecc7e3675e2a43028237`
 
 ---
 
@@ -100,5 +100,3 @@ owner_hints:
 - Plans/Progression_Gates.md
 - Plans/Goal_Runtime_System.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

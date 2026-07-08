@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L11412-L12100
+Source lines: L11412-L12098
 
-Source SHA256: `c6082033d812eef81f0d266ac9c7293ad39526dd3379d735583ed90c5d7a279b`
+Source SHA256: `772174635baa735ba6ce627d3b3766e88cfe51b1b45778e641a93516d1655fdb`
 
 ---
 
@@ -695,5 +695,3 @@ pm_gap_or_delta: Need uniform ProgressHeartbeat, max silent interval, visible st
 proposal_or_recommendation: Add ToolProgressHeartbeat contract
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

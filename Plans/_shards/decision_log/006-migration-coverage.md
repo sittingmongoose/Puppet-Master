@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L1502-L1514
+Source lines: L1502-L1512
 
-Source SHA256: `5ea90ef3490b008deca65b25023f5f4f45026df26b08155963217497e04e029a`
+Source SHA256: `9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d`
 
 ---
 
@@ -19,5 +19,3 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 All original spans from `Decision_Log-S0001` through `Decision_Log-S0026` are preserved in place. Phase 2B batch 043 atomized or structurally dispositioned those spans into `DL-002` through `DL-026`, the retired `DL-001` bridge, and explicit structural coverage_map dispositions. `DL-001` is retained only as migration-lineage compatibility coverage and must not re-own atomized source coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

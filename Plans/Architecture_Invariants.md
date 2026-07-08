@@ -4434,3 +4434,11 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batches 115 and 116 atomized `Architecture_Invariants-S0001` through `Architecture_Invariants-S0040` into fine-grained PlanUnits `AI-002` through `AI-067`. `Architecture_Invariants-S0041` is the PlanUnits heading/container, `Architecture_Invariants-S0042` is the retired `AI-001` source-preserving bridge, and `Architecture_Invariants-S0043` is Migration Coverage metadata. `AI-001` is now migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime architecture-invariant rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-60e840c059b6db237485d48c`: raw reconciliation fragments preceding INV-001 are audit-lineage only. The canonical invariant is that correlation, usage, permission, route, and artifact identity must be represented by named owner fields and must not be reintroduced as anonymous prose aliases.
+- Keeps `sfk-ddd4dece078c664fd31f6de5` explicitly deferred: correlation_id trace-through and usage_event_ref special-case removal need a dedicated architecture/gate-owner slice before closure.
+- Keeps `sfk-937c36d705a22bf16645cca2` explicitly deferred: GATE-001/GATE-003/GATE-010 authority needs gate registry owner reconciliation before closure.

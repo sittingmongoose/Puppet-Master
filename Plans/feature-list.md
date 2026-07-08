@@ -1580,6 +1580,12 @@ Run-scoped proof artifacts:
 
 Phase 2B batch 053 atomized `feature-list-S0001` through `feature-list-S0018` into `FL-002` through `FL-025`, structurally dispositioned `feature-list-S0019`, `feature-list-S0020`, and `feature-list-S0022`, and retired `FL-001` as migration lineage for `feature-list-S0021`. No residual source-preserving feature-list PlanUnit remains. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
 
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime feature-list rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Reclassifies `sfk-e04efb06a95454f9dd8c233d` as `source_lineage_only`: this file is a reference inventory. Capability bullets without mechanism are routing/source-lineage until an owner doc supplies fields, commands, algorithms, or schemas.
+
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
 ## FABLE Remaining Action Plan Repair Notes (2026-07-08)
 

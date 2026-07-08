@@ -1,0 +1,390 @@
+{
+  "audit_id": "fable-20260706",
+  "changed_audit_artifacts": [
+    "Plans/.audits/fable-20260706/DEFERRED_FABLE_ACTION_REPAIR.md",
+    "Plans/.audits/fable-20260706/deferred_fable_action_repair_report.json",
+    "Plans/.audits/fable-20260706/deferred_fable_action_after.jsonl",
+    "Plans/.audits/fable-20260706/remaining_action_plan_after_repair.jsonl",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
+    "Plans/.audits/_semantic_closure_registry.jsonl"
+  ],
+  "changed_owner_docs": [
+    "Plans/Architecture_Invariants.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/Bootstrap_Planning_Migration.md",
+    "Plans/Commands_System.md",
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/DRY_Rules.md",
+    "Plans/Decision_Log.md",
+    "Plans/Decision_Policy.md",
+    "Plans/Document_Packaging_Policy.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Formatters_System.md",
+    "Plans/GUI_Rebuild_Requirements_Checklist.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/Glossary.md",
+    "Plans/LSPSupport.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/MiscPlan.md",
+    "Plans/Multi-Account.md",
+    "Plans/OpenCode_Deep_Extraction.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Personas.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Skills_System.md",
+    "Plans/Tools.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Widget_System.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/agent-rules-context.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/feature-list.md",
+    "Plans/human-in-the-loop.md",
+    "Plans/interview-subagent-integration.md",
+    "Plans/newfeatures.md",
+    "Plans/newtools.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/rewrite-tie-in-memo.md",
+    "Plans/storage-plan.md",
+    "Plans/usage-feature.md"
+  ],
+  "classification_counts": {
+    "explicitly_deferred": 13,
+    "repaired": 154,
+    "source_lineage_only": 3
+  },
+  "deferred_rows": [
+    {
+      "next_lane_prompt": "Promote terminal_* families from required product contracts to materialized storage-value registry schemas with retention and positive/negative validators.",
+      "owner_docs": [
+        "Plans/storage-plan.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/storage-plan.md. Reason: closing this row requires the broader Terminal storage materialization lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Promote terminal_* families from required product contracts to materialized storage-value registry schemas with retention and positive/negative validators.",
+      "reopen_hash": "d1998e2c152765ce48aed48e3cecb1bc195e7c10739a7446af1424a4a213b2ba",
+      "source_registry_finding_key": "fable-20260706-report-l0551-high-l952-1004-terminal-v1-record-families-listed-as-required-but-regist-fa7f642d",
+      "stable_finding_key": "sfk-6e2bf4e4dd077d9ae2743668"
+    },
+    {
+      "next_lane_prompt": "Expand UCC-049 through UCC-106 into full payload/result/error/disabled reason schemas; the current owner rule is a guard, not full row closure.",
+      "owner_docs": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/UI_Command_Catalog.md. Reason: closing this row requires the broader UI command schema completion lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Expand UCC-049 through UCC-106 into full payload/result/error/disabled reason schemas; the current owner rule is a guard, not full row closure.",
+      "reopen_hash": "3aee0a11b9719218ace21fcc61d87a31e53a3e2982bb52f782d736ee1ac4f075",
+      "source_registry_finding_key": "fable-20260706-report-l0739-critical-l3891-7880-whole-second-half-every-command-row-ucc-049-through-2966bd7a",
+      "stable_finding_key": "sfk-ddc264cdea296caf349adecd"
+    },
+    {
+      "next_lane_prompt": "Choose JS/TS, WASM, subprocess, or dylib plugin runtime strategy in the plugin owner docs; do not infer it from OpenCode source lineage.",
+      "owner_docs": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/OpenCode_Deep_Extraction.md. Reason: closing this row requires the broader Plugin runtime owner decision lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Choose JS/TS, WASM, subprocess, or dylib plugin runtime strategy in the plugin owner docs; do not infer it from OpenCode source lineage.",
+      "reopen_hash": "25c23e652f47bfd6ecafdd96c36a984cf9dfb4f26123225e1cc60b24eb611b4a",
+      "source_registry_finding_key": "fable-20260706-report-l0913-high-l4102-4150-ode-065-plugin-runtime-language-choice-js-ts-wasm-subpro-d13a0ed9",
+      "stable_finding_key": "sfk-4da31b138448d57593acde8d"
+    },
+    {
+      "next_lane_prompt": "Resolve correlation_id trace-through and usage_event_ref special-case rules in owner fields, then remove unresolved gap prose.",
+      "owner_docs": [
+        "Plans/Architecture_Invariants.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/Architecture_Invariants.md. Reason: closing this row requires the broader Architecture invariant owner slice and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Resolve correlation_id trace-through and usage_event_ref special-case rules in owner fields, then remove unresolved gap prose.",
+      "reopen_hash": "5d63a44f6df6242b4d9dae98ff47de749ba7e7ebd28a5b2c43fa55e2362a2a1b",
+      "source_registry_finding_key": "fable-20260706-report-l0929-critical-l44-54-57-invariants-describe-their-own-unresolved-gaps-correla-5fcc328d",
+      "stable_finding_key": "sfk-ddd4dece078c664fd31f6de5"
+    },
+    {
+      "next_lane_prompt": "Publish or route GATE-001/GATE-003/GATE-010 enforcement authorities before using them as closure evidence.",
+      "owner_docs": [
+        "Plans/Architecture_Invariants.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/Architecture_Invariants.md. Reason: closing this row requires the broader Gate registry owner slice and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Publish or route GATE-001/GATE-003/GATE-010 enforcement authorities before using them as closure evidence.",
+      "reopen_hash": "785e4b740d2fd10b1106ec5c5e714aacd31662f6c8525fa83e4ee79573b1162f",
+      "source_registry_finding_key": "fable-20260706-report-l0930-high-l271-275-283-gate-003-001-010-cited-repeatedly-as-enforcement-autho-ac468e74",
+      "stable_finding_key": "sfk-937c36d705a22bf16645cca2"
+    },
+    {
+      "next_lane_prompt": "Add attempt_id-bearing diagnostic category schemas and validate provider-stream continuity fields.",
+      "owner_docs": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/Provider_Stream_Mapping_External_Reference_A2A.md. Reason: closing this row requires the broader Provider stream schema-versioning lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Add attempt_id-bearing diagnostic category schemas and validate provider-stream continuity fields.",
+      "reopen_hash": "91550ee748592d25c2a89ee07a79b2c30cde792b72011ec3de81e8574d74bc11",
+      "source_registry_finding_key": "fable-20260706-report-l1074-critical-l370-doc-explicitly-admits-none-of-the-reserved-diagnostic-cate-9c605459",
+      "stable_finding_key": "sfk-bbe24dbaee588f11b4a55c4d"
+    },
+    {
+      "next_lane_prompt": "Convert raw P5 continuity/recovery audit prose into integrated versioned provider-stream requirements.",
+      "owner_docs": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/Provider_Stream_Mapping_External_Reference_A2A.md. Reason: closing this row requires the broader Provider stream schema-versioning lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Convert raw P5 continuity/recovery audit prose into integrated versioned provider-stream requirements.",
+      "reopen_hash": "040d70edf7f7dc444e554470c14b527ef3e5b808bf0c62a0ea331f8d298803bf",
+      "source_registry_finding_key": "fable-20260706-report-l1075-high-l362-379-p5-provider-stream-continuity-recovery-requirements-sectio-c5d625b3",
+      "stable_finding_key": "sfk-e98bc6a59c457b5cf85d8d99"
+    },
+    {
+      "next_lane_prompt": "Land corroboration, promotion, graph-patch, and trust-state schemas/state machines in owner docs before closing the summary row.",
+      "owner_docs": [
+        "Plans/newfeatures.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/newfeatures.md. Reason: closing this row requires the broader Feature-family owner schema lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Land corroboration, promotion, graph-patch, and trust-state schemas/state machines in owner docs before closing the summary row.",
+      "reopen_hash": "2a00c87b9c5a67e3b1b4c2595d05874884134d57adb3bc04963837d0dc3a947e",
+      "source_registry_finding_key": "fable-20260706-report-l1179-high-n-006-names-required-feature-families-corroboration-promotion-graph-6236a911",
+      "stable_finding_key": "sfk-382a8aaadd071809899261b5"
+    },
+    {
+      "next_lane_prompt": "Add stable anchors in the five owner docs named by OCM before treating the matrix as repaired.",
+      "owner_docs": [
+        "Plans/OpenCode_Coverage_Matrix.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/OpenCode_Coverage_Matrix.md. Reason: closing this row requires the broader Stable-anchor owner lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Add stable anchors in the five owner docs named by OCM before treating the matrix as repaired.",
+      "reopen_hash": "be9fbc1f0d391e173c2ca6485ab6c43a01533f930275de12c61f14cb9f579c7d",
+      "source_registry_finding_key": "fable-20260706-report-l1184-high-3-2-5-2-five-ssot-docs-listed-as-missing-stable-anchors-with-the-ga-2cb5a57f",
+      "stable_finding_key": "sfk-d180028c03fc70fb93e6bfb8"
+    },
+    {
+      "next_lane_prompt": "Migrate requirements_quality_report.schema.json to Draft 2020-12 and validate the schema set.",
+      "owner_docs": [
+        "Plans/Release_Supply_Chain.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/Release_Supply_Chain.md. Reason: closing this row requires the broader Schema artifact correction lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Migrate requirements_quality_report.schema.json to Draft 2020-12 and validate the schema set.",
+      "reopen_hash": "b45ff46dc9fd666c4547526dd56036142a91dc747d13572b9eb7ab66b254a1d8",
+      "source_registry_finding_key": "fable-20260706-report-l1286-critical-requirements-quality-report-schema-json-declares-schema-draft-0-1b80ab46",
+      "stable_finding_key": "sfk-1c95c03aec7949b6ad8641a7"
+    },
+    {
+      "next_lane_prompt": "Wire plan_graph.change_budget to the typed change_budget schema instead of a bare object.",
+      "owner_docs": [
+        "Plans/Release_Supply_Chain.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/Release_Supply_Chain.md. Reason: closing this row requires the broader Schema artifact correction lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Wire plan_graph.change_budget to the typed change_budget schema instead of a bare object.",
+      "reopen_hash": "e0be98d7a5e2167e8681a13ff28655c7bb3387b4f8cb49d632d9f59282a51892",
+      "source_registry_finding_key": "fable-20260706-report-l1287-high-plan-graph-schema-json-s-change-budget-property-is-a-bare-unconstra-3696cb9e",
+      "stable_finding_key": "sfk-aebb6fb13c915a60c1a5be40"
+    },
+    {
+      "next_lane_prompt": "Define nested shapes for non_executable_closure_evidence required object fields.",
+      "owner_docs": [
+        "Plans/Release_Supply_Chain.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/Release_Supply_Chain.md. Reason: closing this row requires the broader Schema artifact correction lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Define nested shapes for non_executable_closure_evidence required object fields.",
+      "reopen_hash": "e8f77598ed39c72dbaa6431b04c6e59fbaf40da1e72dd44ef2243d70b09da5e4",
+      "source_registry_finding_key": "fable-20260706-report-l1288-high-non-executable-closure-evidence-schema-json-7-fields-are-required-a-2fadeee0",
+      "stable_finding_key": "sfk-c347a44e26b08efce550bdfd"
+    },
+    {
+      "next_lane_prompt": "Enforce unique future decision_id values or migrate historical duplicates to composite-key semantics with validator coverage.",
+      "owner_docs": [
+        "Plans/Release_Supply_Chain.md"
+      ],
+      "reason": "Explicitly deferred after inspection. Owner: Plans/Release_Supply_Chain.md. Reason: closing this row requires the broader Auto-decisions identity lane and would be unsafe to fake in this product/spec hygiene slice. Reopen condition: Enforce unique future decision_id values or migrate historical duplicates to composite-key semantics with validator coverage.",
+      "reopen_hash": "e4a23111913602ab66cbf31b18e5afa639dffa8a9c26aa85c638710c3e63b1a2",
+      "source_registry_finding_key": "fable-20260706-report-l1295-high-auto-decisions-jsonl-19-distinct-decision-id-values-are-reused-acro-67e0ebf4",
+      "stable_finding_key": "sfk-d62d739e27a728d8ad210435"
+    }
+  ],
+  "generated_at_utc": "2026-07-08T12:00:00Z",
+  "generated_governance_refresh": {
+    "buildability_gate_passed": false,
+    "node_readiness_status": "blocked_runtime_certification_incomplete",
+    "refreshed": [
+      "Plans/.plan_index/**",
+      "Plans/.implementation_readiness/buildability_gate_report.json",
+      "Plans/_shards/**",
+      "Plans/.evidence/**/evidence.json",
+      "Plans/Spec_Lock.json",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/batch_report.jsonl",
+      "Plans/.plan_migration/pds-20260611-002-atomize-planunits/final_validation_summary.json",
+      "Plans/.audits/_audit_status_index.json",
+      "Plans/.audits/CURRENT_AUDIT_STATUS.md",
+      "Plans/.audits/_semantic_closure_registry.jsonl"
+    ],
+    "runtime_blockers_kept_open": [
+      "PNC-019",
+      "IRB-005",
+      "IRB-011"
+    ],
+    "schema_id": "pm.audit.fable_deferred_action.generated_refresh.v1"
+  },
+  "owner_doc_counts": {
+    "Plans/.": 1,
+    "Plans/Architecture_Invariants.md": 3,
+    "Plans/Automated_Testing_System.md": 3,
+    "Plans/Bootstrap_Planning_Migration.md": 1,
+    "Plans/Commands_System.md": 3,
+    "Plans/Containers_Registry_and_Unraid.md": 3,
+    "Plans/Contracts_V0.md": 5,
+    "Plans/Crosswalk.md": 2,
+    "Plans/DRY_Rules.md": 1,
+    "Plans/Decision_Log.md": 2,
+    "Plans/Decision_Policy.md": 3,
+    "Plans/Document_Packaging_Policy.md": 2,
+    "Plans/Executor_Protocol.md": 3,
+    "Plans/FileManager.md": 4,
+    "Plans/FileSafe.md": 1,
+    "Plans/FinalGUISpec.md": 7,
+    "Plans/Formatters_System.md": 1,
+    "Plans/GUI_Rebuild_Requirements_Checklist.md": 2,
+    "Plans/GitHub_Integration.md": 4,
+    "Plans/Glossary.md": 1,
+    "Plans/LSPSupport.md": 4,
+    "Plans/Media_Generation_and_Capabilities.md": 10,
+    "Plans/MiscPlan.md": 7,
+    "Plans/Multi-Account.md": 1,
+    "Plans/OpenCode_Coverage_Matrix.md": 1,
+    "Plans/OpenCode_Deep_Extraction.md": 2,
+    "Plans/Orchestrator_Page.md": 3,
+    "Plans/Permissions_System.md": 10,
+    "Plans/Personas.md": 3,
+    "Plans/Planning_Wizard.md": 4,
+    "Plans/Prompt_Pipeline.md": 1,
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md": 3,
+    "Plans/Release_Supply_Chain.md": 4,
+    "Plans/Run_Graph_View.md": 1,
+    "Plans/Run_Modes.md": 2,
+    "Plans/Runtime_Artifacts_Panel.md": 3,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 11,
+    "Plans/Skills_System.md": 2,
+    "Plans/Tools.md": 8,
+    "Plans/UI_Command_Catalog.md": 1,
+    "Plans/UI_Wiring_Rules.md": 1,
+    "Plans/Widget_System.md": 4,
+    "Plans/WorktreeGitImprovement.md": 3,
+    "Plans/agent-rules-context.md": 2,
+    "Plans/assistant-chat-design.md": 3,
+    "Plans/chain-wizard-flexibility.md": 1,
+    "Plans/feature-list.md": 1,
+    "Plans/human-in-the-loop.md": 4,
+    "Plans/interview-subagent-integration.md": 5,
+    "Plans/newfeatures.md": 2,
+    "Plans/newtools.md": 10,
+    "Plans/orchestrator-subagent-integration.md": 7,
+    "Plans/rewrite-tie-in-memo.md": 1,
+    "Plans/storage-plan.md": 4,
+    "Plans/usage-feature.md": 5
+  },
+  "pnc019_boundary": {
+    "buildability_gate_passed_must_remain_false": true,
+    "pnc019_irb005_irb011_left_open": true,
+    "runtime_scope_excluded": true
+  },
+  "schema_id": "pm.audit.deferred_fable_action_repair.report.v1",
+  "selected_rows": 170,
+  "selection_rule": "remaining_action_plan_repair.final_disposition == explicitly_deferred excluding PNC-019/out_of_scope_runtime_certification",
+  "source_lineage_only_rows": [
+    "sfk-e04efb06a95454f9dd8c233d",
+    "sfk-dfcc395f84654bcabdfbe6aa",
+    "sfk-a842ba71d3915b955e7ddd63"
+  ],
+  "subagent_lanes_completed": true,
+  "subagent_lanes_required": [
+    "GUI/design",
+    "contracts/schema",
+    "orchestration/runtime-doc",
+    "storage/provider/security",
+    "packaging/release/docs",
+    "closure/validator"
+  ],
+  "validator_results": {
+    "all_required_commands_passed": true,
+    "commands": [
+      {
+        "exit_code": 0,
+        "name": "pm-audit-closure validate",
+        "seconds": 2.102,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-audit-closure validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
+        "seconds": 2.078,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plans-verify verify-spec-lock",
+        "seconds": 0.069,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plan-index validate",
+        "seconds": 16.003,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plan-migration validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "seconds": 15.274,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plans-verify validate-implementation-readiness",
+        "seconds": 0.351,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plans-verify validate-wiring-matrix",
+        "seconds": 0.1,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plans-verify lint-contractrefs",
+        "seconds": 4.136,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plans-verify validate-auto-decisions",
+        "seconds": 0.06,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plans-verify validate-evidence",
+        "seconds": 0.868,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-shard-plans.py --check",
+        "seconds": 0.716,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "pm-plans-verify run-gates --subcheck-timeout-seconds 60",
+        "seconds": 25.851,
+        "status": "passed"
+      },
+      {
+        "exit_code": 0,
+        "name": "git diff --check",
+        "seconds": 0.461,
+        "status": "passed"
+      }
+    ],
+    "post_embed_note": "After this summary was embedded, pm-audit-closure refresh-hashes was rerun because this report is closure evidence; final no-edit verification was run after that refresh.",
+    "recorded_at_utc": "2026-07-08T13:25:42Z",
+    "schema_id": "pm.audit.fable_deferred_action.validator_results.v1",
+    "source": "/tmp/deferred_fable_validator_results_clean_for_report.json"
+  }
+}

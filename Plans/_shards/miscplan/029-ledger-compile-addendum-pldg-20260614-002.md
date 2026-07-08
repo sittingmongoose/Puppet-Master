@@ -2,9 +2,9 @@
 
 Source: `Plans/MiscPlan.md`
 
-Source lines: L6342-L6384
+Source lines: L6342-L6382
 
-Source SHA256: `71467a40702dea2f70a6695eaf30b42736c5f5b65f7468516d21dd2f71cdef88`
+Source SHA256: `d6df972ed7015b1942e58814db32c487fa2c65a26341c2d814e0d08b0f0707a6`
 
 ---
 
@@ -49,5 +49,3 @@ negative_constraints:
   - Do not let skill injection bypass capability/permission, environment/secret, compatibility, fallback, audit/evidence, override, or owner approval boundaries.
 owner_hints: [Plans/MiscPlan.md, Plans/orchestrator-subagent-integration.md, Plans/Skills_System.md]
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

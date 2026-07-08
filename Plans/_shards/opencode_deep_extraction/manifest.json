@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-08T02:09:09Z",
+  "generated_at_utc": "2026-07-08T13:17:20Z",
   "index_path": "Plans/_shards/opencode_deep_extraction/00-index.md",
-  "index_sha256": "ddd23ea6a21e46a28a9a08dbab2ca5026f019c7f00e14e93c01ae131fa61ccdd",
+  "index_sha256": "db20e31e33b6eca80328b7bf3c9517f5a0c27d9aabd75d07627bef6a86ed2492",
   "manifest_path": "Plans/_shards/opencode_deep_extraction/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/opencode_deep_extraction/001-preamble.md",
-      "sha256": "731f8a838436c2ddfa1c0e6243311117c3ffad46be0d13f77d5be7247e6ea9a2",
+      "sha256": "f9b7913a540565de12a79a96b8f896978a71990812d6e3c8ca9f98513d13addf",
       "shard_id": "001",
       "source_line_end": 17,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Baseline Reference",
       "path": "Plans/_shards/opencode_deep_extraction/002-baseline-reference.md",
-      "sha256": "cac11581fbf25c9d3bb92c86b0c317a5393c8a120b7eff8d646597415af43c9c",
+      "sha256": "5101a2456be00a492215f98ee88f26caf4bb03c4b5b67d01a9091fc0a7cc7f77",
       "shard_id": "002",
       "source_line_end": 27,
       "source_line_start": 19,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Goal",
       "path": "Plans/_shards/opencode_deep_extraction/003-1.-goal.md",
-      "sha256": "b13027850b81c85a15ff36965894161887b3f2677c441197068af21509064b46",
+      "sha256": "e017c64f0f7e815ff3fe5e6d91a513ee34a47b8259e28eb4a4d261bdd3e79fec",
       "shard_id": "003",
       "source_line_end": 30,
       "source_line_start": 29,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Hard constraints",
       "path": "Plans/_shards/opencode_deep_extraction/004-2.-hard-constraints.md",
-      "sha256": "48caa46c5ff6eae033948c5dbfe38d4d91b1e4eeeb72f1a7fc54098b7a2e316b",
+      "sha256": "0fe607d3e80bd5b3cecaba98cb0547ca96efce6d8de4fdfc53dc610bacbffd9c",
       "shard_id": "004",
       "source_line_end": 38,
       "source_line_start": 32,
@@ -44,7 +44,7 @@
     {
       "heading": "2A. Transfer Fidelity Notes",
       "path": "Plans/_shards/opencode_deep_extraction/005-2a.-transfer-fidelity-notes.md",
-      "sha256": "bb4b7f5fc3f0646b12e0b21063566c356d79e6147331a9be0aedcc40b0c172ee",
+      "sha256": "52d4fcca0306a5f0aee8325da77728d995015520203f28bf9d026c243982708d",
       "shard_id": "005",
       "source_line_end": 86,
       "source_line_start": 40,
@@ -53,7 +53,7 @@
     {
       "heading": "3. Inputs",
       "path": "Plans/_shards/opencode_deep_extraction/006-3.-inputs.md",
-      "sha256": "02d067283dc0cc2384212c16d8adc60ba517f51c6a6454938ba2a88ed455aa46",
+      "sha256": "57e61f7a300d7258184d04c68343b17c486b0e2784a5a5c5486f9548b5816bb7",
       "shard_id": "006",
       "source_line_end": 90,
       "source_line_start": 88,
@@ -62,7 +62,7 @@
     {
       "heading": "4. Deterministic extraction procedure",
       "path": "Plans/_shards/opencode_deep_extraction/007-4.-deterministic-extraction-procedure.md",
-      "sha256": "ba941e1221076f149855e54477658d3fd6fa0746c0513fcc49dc500d8314647d",
+      "sha256": "d5fb12972aca5b58df2901b191041d19ba872b5ce38e225bca3f83bb4c7f2c5a",
       "shard_id": "007",
       "source_line_end": 109,
       "source_line_start": 92,
@@ -71,7 +71,7 @@
     {
       "heading": "5. Output format (for downstream agents)",
       "path": "Plans/_shards/opencode_deep_extraction/008-5.-output-format-for-downstream-agents.md",
-      "sha256": "518188743ff13c03c0e538b401f76e9b9d607d70276b3cc352cbbd27fec1480d",
+      "sha256": "07abbdd48230e4fe5dfd8e9909b07af1bd27c3cb093d9124dabee93e3dc1a9c1",
       "shard_id": "008",
       "source_line_end": 120,
       "source_line_start": 111,
@@ -80,7 +80,7 @@
     {
       "heading": "6. Acceptance criteria",
       "path": "Plans/_shards/opencode_deep_extraction/009-6.-acceptance-criteria.md",
-      "sha256": "fd3b08921637a369c7d89e5c918fb3052d7f8468463cbd6a8469396ba7ed980e",
+      "sha256": "a32571a24b9e04458acd16745123921ce3747bc5dedea6c15b0effb101972f08",
       "shard_id": "009",
       "source_line_end": 127,
       "source_line_start": 122,
@@ -89,7 +89,7 @@
     {
       "heading": "7. Expanded Extraction Coverage",
       "path": "Plans/_shards/opencode_deep_extraction/010-7.-expanded-extraction-coverage.md",
-      "sha256": "3e3bd559987f112635a3939cff41debc02285c016242aa7ed342ed4208a6898d",
+      "sha256": "db55e39bb9eb853cc1039700566253b3203db5ca4b62a28176f1f5b92def3577",
       "shard_id": "010",
       "source_line_end": 634,
       "source_line_start": 129,
@@ -98,7 +98,7 @@
     {
       "heading": "8. Contract Mapping to Puppet Master SSOT (DRY)",
       "path": "Plans/_shards/opencode_deep_extraction/011-8.-contract-mapping-to-puppet-master-ssot-dry.md",
-      "sha256": "f5faaa83a064189c572c75dc94fc371f923c55ba77b058e435799916b5eb6840",
+      "sha256": "512b5518ab9f60b6473d1d0e23aa0a444fb579d82eba12dbdd405b8090b42899",
       "shard_id": "011",
       "source_line_end": 685,
       "source_line_start": 636,
@@ -107,7 +107,7 @@
     {
       "heading": "9. Baseline -> Puppet Master Delta Hooks",
       "path": "Plans/_shards/opencode_deep_extraction/012-9.-baseline-puppet-master-delta-hooks.md",
-      "sha256": "4900a67a56ae54d4fe362508a7f7447b93588ed95e96c6f8d0e11cfb923d80c7",
+      "sha256": "7292181f15052dad16b254328fc6702958b0309e709c9ff2b640cea0b4c6a776",
       "shard_id": "012",
       "source_line_end": 738,
       "source_line_start": 687,
@@ -116,7 +116,7 @@
     {
       "heading": "10. Upstream Notes Worth Capturing (DRY; file pointers + deltas)",
       "path": "Plans/_shards/opencode_deep_extraction/013-10.-upstream-notes-worth-capturing-dry-file-pointers-deltas.md",
-      "sha256": "a252ded6027bcb7f8d2413b471b01c1d7fb1a45b7b14328bed12068d17a44fc2",
+      "sha256": "6a83ebb48c970c3ad9c5b5645582bec835b32a0f3cb70dd4c48fae1e2b26ed1d",
       "shard_id": "013",
       "source_line_end": 778,
       "source_line_start": 740,
@@ -125,7 +125,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/opencode_deep_extraction/014-owner-consumer-map.md",
-      "sha256": "59802fb6c0706f8d2e9974d79aee034961d8ed9a6d829c19b78341e2878763db",
+      "sha256": "c4150b870ca74e0d9ca07ca6840ca656fc23de90e08d5f3cc552ebb51282ba76",
       "shard_id": "014",
       "source_line_end": 784,
       "source_line_start": 780,
@@ -134,7 +134,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/opencode_deep_extraction/015-planunits.md",
-      "sha256": "1bd18eab0db5513ea9e04e6771a806e5ac86cdb7b5c0293ae67c7e328d4b0fd7",
+      "sha256": "606c9088019cf9b8e09b1a7152b71b6614b357d3daf53aa73bde0ccbfcaaeee6",
       "shard_id": "015",
       "source_line_end": 4595,
       "source_line_start": 786,
@@ -143,16 +143,25 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/opencode_deep_extraction/016-migration-coverage.md",
-      "sha256": "49d7fa3cef41df4fac6ceff1bf93c5c4926a929d48bf4e04272bd1f81efe90fe",
+      "sha256": "33c4a04f2c3fc75dc43cda67a3686e4197d50f3237716087925e23dbb721f3b6",
       "shard_id": "016",
       "source_line_end": 4609,
       "source_line_start": 4599,
       "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/opencode_deep_extraction/017-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "a3f08f8acfef07ecfa850c6f0154db8a3eb2f7e4624928240179b297ddca7131",
+      "shard_id": "017",
+      "source_line_end": 4616,
+      "source_line_start": 4611,
+      "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 4609,
+    "line_count": 4616,
     "path": "Plans/OpenCode_Deep_Extraction.md",
-    "sha256": "11ff28461d0e978bd0fbfe78635ff56196598ae411741273fc54fa8aa60cc834"
+    "sha256": "ce5ef845ef33f5e94499a41f3a92007360b822339b65f92544c51a5039e04014"
   }
 }

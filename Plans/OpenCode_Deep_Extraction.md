@@ -4607,3 +4607,10 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Original spans `OpenCode_Deep_Extraction-S0001` through `OpenCode_Deep_Extraction-S0070` are atomized or structurally dispositioned in the active coverage map. `ODE-001` is retired to migration-lineage-only compatibility disposition and no longer carries source-preserving product coverage. The Owner / Consumer Map, PlanUnits, and Migration Coverage metadata spans are structurally dispositioned. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime OpenCode extraction rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-7183d3e1a2341af0a3d114e6`: OpenCode Plan mode, permission resolution, and wildcard matching content is source-lineage unless restated here or in owner docs. PM wildcard matching fields are `pattern`, `scope`, `case_sensitive`, `allow_subpaths`, and `owner_doc_ref`; result states are `matched`, `not_matched`, and `ambiguous`.
+- Keeps `sfk-4da31b138448d57593acde8d` explicitly deferred: plugin runtime language/API choice needs plugin owner decision before closure.

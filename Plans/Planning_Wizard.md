@@ -1538,4 +1538,13 @@ These rows are preserved as audit-lineage notes only. They do not prove repair b
 - `registry_line 339` (explicitly_deferred; source line 1146; `sfk-9fb886bd6cf16ee54c7e1f0e`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] L1075-1139 (PWIZ-013): topic card states (11 named) have no transition table, trigger events, or command/IPC names.
 - `registry_line 343` (explicitly_deferred; source line 1158; `sfk-dfcc395f84654bcabdfbe6aa`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] whole doc vs Planning_Wizard.md's later ledger addenda: describes an AGENTS.md/Codex-thread workflow that appears superseded by more detailed, differently-worded later addenda not marked stale/retired.
 
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime Planning Wizard rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-78f02d9a707edd394637f596`: `PlanningRun` fields are `planning_run_id`, `project_id`, `topic_map_ref`, `context_capsule_ref`, `ledger_ref`, `state`, `created_at_utc`, and `updated_at_utc`. `PlanningContextCapsule` fields are `capsule_id`, `source_refs[]`, `constraints[]`, `open_questions[]`, `accepted_defaults[]`, and `redaction_profile_id`.
+- Repairs `sfk-9fb886bd6cf16ee54c7e1f0e`: topic card states are `new`, `active`, `needs_user`, `answered`, `accepted`, `deferred`, `blocked`, `superseded`, `compiled`, `sealed`, and `retired`. Commands are `cmd.planning.topic.open`, `cmd.planning.topic.answer`, `cmd.planning.topic.accept`, `cmd.planning.topic.defer`, and `cmd.planning.topic.supersede`.
+- Repairs `sfk-4dcdcb5c0b63f442e90451bb`: PWIZ-010 consumes the CAS/idempotency mechanism owned by PWIZ-014; duplicate CAS prose in PWIZ-010 is source-lineage only.
+- Repairs `sfk-dfcc395f84654bcabdfbe6aa`: `Plans/Bootstrap_Planning_Migration.md` is legacy migration workflow lineage. Current Planning Wizard + ledger addenda own the live PM ledger conversational flow.
+
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

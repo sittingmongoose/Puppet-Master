@@ -4,7 +4,7 @@ Source: `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`
 
 Source lines: L319-L331
 
-Source SHA256: `dd39be33bb75ade2f1a0a6c352ec2b9a02cace2077e5d5e5e09f2e189553c0b4`
+Source SHA256: `a497a4740f6579a773ecc70aced0ba62b3da2bd91e4afd75b33b83340508eee4`
 
 ---
 

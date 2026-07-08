@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-08T02:09:09Z",
+  "generated_at_utc": "2026-07-08T13:17:20Z",
   "index_path": "Plans/_shards/bootstrap_planning_migration/00-index.md",
-  "index_sha256": "82707c424bbe331ba03aa133dfe81924a334d8065b45d7ec35d8faa979556a77",
+  "index_sha256": "a8e359db739a44cabe3578caafd69503989492fc3a710805a7e5cd41a8a8e43f",
   "manifest_path": "Plans/_shards/bootstrap_planning_migration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/bootstrap_planning_migration/001-preamble.md",
-      "sha256": "e56bf98aa976543f6fb10bb8adb01688f1faf4ad859ea416b351e9311fcb3632",
+      "sha256": "6f0c158a378c6442274b69882f0a79bc52eb2e6be10ab488b12b9b1bffdfbd1d",
       "shard_id": "001",
       "source_line_end": 3,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/bootstrap_planning_migration/002-0.-scope.md",
-      "sha256": "dac0580a021f5380e22a23d8e6cbf8f58cfdd13a2bb48df0bf158c4e7b29f8c6",
+      "sha256": "9c2ff91027ba41c68ec68916b7106dfa49ff6c697857c34aa780ae50e33bedc2",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 5,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Migration Principles",
       "path": "Plans/_shards/bootstrap_planning_migration/003-1.-migration-principles.md",
-      "sha256": "8a92ad14f6bd828151f0571447e60d215443fc39d09838235b82a3b25fb31fc4",
+      "sha256": "57a63154b97385a8b798076179ae639663cbbaffc24a24f79c6f4be7b0dd6016",
       "shard_id": "003",
       "source_line_end": 19,
       "source_line_start": 11,
@@ -35,7 +35,7 @@
     {
       "heading": "2. PlanUnits",
       "path": "Plans/_shards/bootstrap_planning_migration/004-2.-planunits.md",
-      "sha256": "0540d72a7e363863c400ddf7885393cf97856fd6ab9a30de45b9f533e4d1932c",
+      "sha256": "b52b37333fc477cab28ce62943916fece548b74b9d03e0d86b8e8cb0f2813892",
       "shard_id": "004",
       "source_line_end": 280,
       "source_line_start": 21,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Compilation Coverage",
       "path": "Plans/_shards/bootstrap_planning_migration/005-3.-compilation-coverage.md",
-      "sha256": "5ce09cb32870d94ca8abeb0d7cbf609c8cc4090255844cb2396ac61a64f4bf4f",
+      "sha256": "0408e437fcbdd437275b1559ab93b9f15d2db561e647b82b41930db923a53de4",
       "shard_id": "005",
       "source_line_end": 298,
       "source_line_start": 282,
@@ -53,25 +53,34 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/bootstrap_planning_migration/006-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "c657b015e6c7ec15da80591091cdc421bf95b8c6e1bbdb6fb0be50ef45ed6475",
+      "sha256": "fe629a47c8492f5438a7bd5175beb31cf8579038e05c93574e24f43f9c005ae3",
       "shard_id": "006",
-      "source_line_end": 383,
+      "source_line_end": 381,
       "source_line_start": 301,
       "split_rule": "heading-##"
     },
     {
-      "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
-      "path": "Plans/_shards/bootstrap_planning_migration/007-fable-remaining-action-plan-repair-notes-2026-07-08.md",
-      "sha256": "3752fffba0c524935cf624a2c43038e9de43537126a21e9b09afb425150c1ccf",
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/bootstrap_planning_migration/007-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "ea6c4c905b0792886bd9ce20f68439946f324b4f604612bb80ef2e822a11bf55",
       "shard_id": "007",
-      "source_line_end": 390,
-      "source_line_start": 384,
+      "source_line_end": 389,
+      "source_line_start": 383,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
+      "path": "Plans/_shards/bootstrap_planning_migration/008-fable-remaining-action-plan-repair-notes-2026-07-08.md",
+      "sha256": "0f2d584ef3b3ea86e0d6282d12975ea56a9d5ae67c88e944b68a986c6bf931ac",
+      "shard_id": "008",
+      "source_line_end": 396,
+      "source_line_start": 390,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 390,
+    "line_count": 396,
     "path": "Plans/Bootstrap_Planning_Migration.md",
-    "sha256": "6235e725364c160c6631a255d83e57dc7dc641ed8ec61033f7fff89201ae6c5b"
+    "sha256": "d8fb28074b82828d9c400f66cc85c303aea28448e4bb556bcba6bb566008eea1"
   }
 }

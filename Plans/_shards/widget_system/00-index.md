@@ -1,19 +1,20 @@
 # Shard Index: Plans/Widget_System.md
 
-Generated: 2026-07-08T02:09:09Z
+Generated: 2026-07-08T13:17:20Z
 
-Source SHA256: `7c20cb1ee539092df99bc16c4aa6285d0f959816ddd732556bdd9dfae2d5e525`
+Source SHA256: `a22f2b60d2cba7c1305b2e7c9240a92b54e71a79bcd00fdd9aada7e5ef3ca7ed`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `590cd576f610f2ca15057c096a57a73fb5c4572c2e5a612c2fdcda661a011891`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `f11d824744b28f80039185589b2e223976e2803ee3dd72c29847c45da9d5f03c`
-- [003 - 1. Scope and non-scope](003-1.-scope-and-non-scope.md) L12-L29 `a3cdfe568006b1c00e43bda3c4eff5c26ab540c51ff3fb5760a729f876738378`
-- [004 - 2. Hostability and data contracts](004-2.-hostability-and-data-contracts.md) L30-L72 `ca16c5fe4407ab1db9f4fc7b5c3c1ef15e913c15d65e224dcaab1d187b42d09c`
-- [005 - 3. Layout persistence](005-3.-layout-persistence.md) L74-L83 `68abfde38e14196d3c3ecea5eef9d3a51406982280a3892c689fa8cd3fa572f2`
-- [006 - 4. Orchestrator Progress widget scope and catalog linkage](006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md) L85-L124 `8b0da17ecb22ff856ea23a5c2b54e5132a3f2509016df17ec9169d9b4a423750`
-- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L126-L130 `0c287e961f0b5c43155593cf282bda72add76e6b40495fe7ef51a7a46348ea3f`
-- [008 - PlanUnits](008-planunits.md) L132-L1015 `6ef4fcc005d33e86f23f9010906a65277431a76a25991a39e5b4a4ad0eec158a`
-- [009 - Migration Coverage](009-migration-coverage.md) L1017-L1027 `3e9a173f7ab0e74941b0ff19d8189b34b39764630815ac074c2f2dfa34c0973a`
+- [001 - Preamble](001-preamble.md) L1-L1 `229a2e0f26d22aec93990ef421bb0a409bc07e408a9a04397a331b6253a6af0c`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `f5c17728e05053d2ae4e7a3a23d622806079573153cdacf585f65841b6c21204`
+- [003 - 1. Scope and non-scope](003-1.-scope-and-non-scope.md) L12-L29 `9a10c665c79a00d9e67a8987dba94ff5a2f2bb7ca409c2f8c5dd547ff51cca97`
+- [004 - 2. Hostability and data contracts](004-2.-hostability-and-data-contracts.md) L30-L72 `e2063cc3ab64aed580b8bd932285a959b1c0aa81ef90ae96bac8c27a17b1bfc7`
+- [005 - 3. Layout persistence](005-3.-layout-persistence.md) L74-L83 `cd23026c22d805d7b774439f85149419d12e2e73be5a575d4c214541e2319c89`
+- [006 - 4. Orchestrator Progress widget scope and catalog linkage](006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md) L85-L124 `9a438de41c2806d0966d07fa6b189fcc6a1dbd75f2d7dfe5694a0d8a3204a9d5`
+- [007 - Owner / Consumer Map](007-owner-consumer-map.md) L126-L130 `dcd287fafc43936282de9663f71a1518289e951b84feb1b73514636cfd3e26c1`
+- [008 - PlanUnits](008-planunits.md) L132-L1015 `b0595c05e62bd30fd3030993a2e7d1a0d06d24f550eac0a48a92ecff5cce2498`
+- [009 - Migration Coverage](009-migration-coverage.md) L1017-L1027 `0f1f01f5fb2f12f480c7c7aa61d736192ae37be2d660076a152ab03767f5fd70`
+- [010 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](010-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L1029-L1036 `5486783a86b69a6dccbb48a95fcb76d4cd7574c2be4fc5e715f9d68a9c169c89`
