@@ -16606,9 +16606,10 @@ Repairs row `sfk-047b362fce3b487a9bce5d6b`.
 
 Repairs row `sfk-6e2bf4e4dd077d9ae2743668`.
 
-- The terminal key families listed as required for promoted terminal behavior are required product contracts, but remain `deferred_not_build_blocking` for implementation-readiness until their storage-value registry rows are promoted to materialized schemas.
+- The terminal key families listed as required for promoted terminal behavior are materialized in `Plans/storage_value_registry.json` as later GUI/feature projection storage contracts, not as launch-critical buildability evidence.
 - Minimum canonical family names are `terminal_workspace_state.v1`, `terminal_section_record.v1`, `terminal_tab_record.v1`, `terminal_pane_record.v1`, `terminal_leaf_pane_record.v1`, `terminal_workgroup_record.v1`, `editor_terminal_panel_state.v1`, `terminal_session_record.v1`, and `terminal_command_block.v1`.
-- A buildability claim may depend on these families only after each row has a registry `status = materialized`, a schema ref, a retention class, and positive/negative validation coverage.
+- Each family has a materialized registry row, an inline closed value schema, a schema ref, retention/compaction text, and a no-secret redaction rule.
+- These rows restore layout, session identity refs, and historical command-block metadata only. They do not prove terminal process liveness, do not authorize runtime reuse without revalidation, and do not close PNC-019 or any buildability gate by themselves.
 
 ### Retired Unversioned Baseline Keys
 

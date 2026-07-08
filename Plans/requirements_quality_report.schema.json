@@ -1,6 +1,6 @@
 {
   "$id": "pm.requirements_quality_report.schema.v1",
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Puppet Master Requirements Quality Report",
   "description": "Schema for the output of the Puppet Master requirements quality analysis pass. Captures verdict, detected issues, auto-applied fixes, and questions requiring user clarification. Verdict is PASS when no blocking issues remain after autofixes; FAIL when any blocking issue is unresolved (not covered by auto_fixes_applied and has a corresponding entry in needs_user_clarification). Clarification question choices use canonical object-array options: Array<{id, label, description?}>; legacy string[] choices are auto-expanded at ingestion before persistence or rendering.",
   "type": "object",

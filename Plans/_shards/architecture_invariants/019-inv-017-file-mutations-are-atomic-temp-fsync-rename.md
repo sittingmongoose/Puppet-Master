@@ -2,9 +2,9 @@
 
 Source: `Plans/Architecture_Invariants.md`
 
-Source lines: L235-L243
+Source lines: L202-L210
 
-Source SHA256: `6f883fb60e510b7c00faba9208e8a0702690c2df24d96a4294dc6f33d861634b`
+Source SHA256: `3f3e3b9f42434b65cdfcdfd03597ce25926979886fe66d28c06cd0f8d23a3cc3`
 
 ---
 

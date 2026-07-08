@@ -2,14 +2,14 @@
 
 Source: `Plans/Architecture_Invariants.md`
 
-Source lines: L270-L285
+Source lines: L237-L252
 
-Source SHA256: `6f883fb60e510b7c00faba9208e8a0702690c2df24d96a4294dc6f33d861634b`
+Source SHA256: `3f3e3b9f42434b65cdfcdfd03597ce25926979886fe66d28c06cd0f8d23a3cc3`
 
 ---
 
 ## Validation (gated; autonomous)
-Invariants are validated by progression gate `GATE-003`.
+Invariants are governed by progression gate `GATE-003`. Current `run-gates` coverage is intentionally partial for architecture invariants until a dedicated invariant verifier materializes; a green gate run is not by itself proof that every invariant row has executable enforcement.
 
 **Minimum automated checks (scriptable):**
 - Validate schemas (plan graph, evidence, change budget, auto decisions).  

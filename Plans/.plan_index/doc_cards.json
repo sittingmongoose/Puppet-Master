@@ -343,7 +343,7 @@
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md"
       ],
-      "line_count": 4444,
+      "line_count": 4411,
       "path": "Plans/Architecture_Invariants.md",
       "plan_unit_count": 67,
       "plan_unit_ids": [
@@ -487,7 +487,7 @@
         "wiring_matrix_rule_two_coverage",
         "worktree_source_control_runtime_visibility"
       ],
-      "sha256": "6f883fb60e510b7c00faba9208e8a0702690c2df24d96a4294dc6f33d861634b",
+      "sha256": "3f3e3b9f42434b65cdfcdfd03597ce25926979886fe66d28c06cd0f8d23a3cc3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 67
@@ -11052,7 +11052,7 @@
         "p2_security_release_supply_chain_coverage",
         "p2_transport_websocket_streaming_coverage"
       ],
-      "sha256": "b59fb5bef77954bcd7b2734a9c28896b992798094dda0218d26bb31559b76216",
+      "sha256": "2f435c22a3df5b5db45df514a0dfcd9646733e01f7dfc50b12e48fe9b1081def",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 8
@@ -12024,7 +12024,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 16637,
+      "line_count": 16638,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 232,
       "plan_unit_ids": [
@@ -12288,7 +12288,7 @@
         "storage_value_schema_registry_drift",
         "teach_memory_persistence_drift"
       ],
-      "sha256": "54bb7fb3dd28d8a3e6ae11d76d14b8b29bb1501dbc5b093655910cf29f413cf9",
+      "sha256": "a645e8224b4789cbd20523dbedd0b040ec38f595c191784dbc2de4944e931a81",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 231,
@@ -13430,7 +13430,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-08T13:17:19Z",
+  "generated_at_utc": "2026-07-08T14:41:51Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -2,9 +2,9 @@
 
 Source: `Plans/Architecture_Invariants.md`
 
-Source lines: L4438-L4444
+Source lines: L4405-L4411
 
-Source SHA256: `6f883fb60e510b7c00faba9208e8a0702690c2df24d96a4294dc6f33d861634b`
+Source SHA256: `3f3e3b9f42434b65cdfcdfd03597ce25926979886fe66d28c06cd0f8d23a3cc3`
 
 ---
 
@@ -13,5 +13,5 @@ Source SHA256: `6f883fb60e510b7c00faba9208e8a0702690c2df24d96a4294dc6f33d861634b
 This addendum repairs non-runtime architecture-invariant rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-60e840c059b6db237485d48c`: raw reconciliation fragments preceding INV-001 are audit-lineage only. The canonical invariant is that correlation, usage, permission, route, and artifact identity must be represented by named owner fields and must not be reintroduced as anonymous prose aliases.
-- Keeps `sfk-ddd4dece078c664fd31f6de5` explicitly deferred: correlation_id trace-through and usage_event_ref special-case removal need a dedicated architecture/gate-owner slice before closure.
-- Keeps `sfk-937c36d705a22bf16645cca2` explicitly deferred: GATE-001/GATE-003/GATE-010 authority needs gate registry owner reconciliation before closure.
+- Repairs `sfk-ddd4dece078c664fd31f6de5`: INV-001 now requires `correlation_id` trace-through across provider/runtime dispatch, persisted EventRecord/domain events, artifacts, receipts, and route/open payloads; `usage_event_ref` is normalized to `object_kind = usage_event` plus `object_id` before routing and is not a top-level route special case. Evidence: this section, `AI-004`, and `Plans/Contracts_V0.md` route/runtime identity contracts.
+- Repairs `sfk-937c36d705a22bf16645cca2`: `GATE-001`, `GATE-003`, and `GATE-010` are routed through `Plans/Progression_Gates.md`; this section now states that `GATE-003` owns invariant governance while current `run-gates` enforcement remains partial until a dedicated invariant verifier exists.

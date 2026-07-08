@@ -12,7 +12,7 @@
     "unblocks_edge_count": 2054,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-08T13:17:19Z",
+  "generated_at_utc": "2026-07-08T14:41:51Z",
   "gui_related_units": {
     "count": 2394,
     "units": [
@@ -3146,8 +3146,8 @@
         "source_location": {
           "heading": "AI-007 - UI SSOT Behavior Boundary",
           "heading_level": 3,
-          "heading_line": 865,
-          "line": 867,
+          "heading_line": 832,
+          "line": 834,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3157,8 +3157,8 @@
         "source_location": {
           "heading": "AI-008 - UI Command Business Logic Boundary",
           "heading_level": 3,
-          "heading_line": 919,
-          "line": 921,
+          "heading_line": 886,
+          "line": 888,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3168,8 +3168,8 @@
         "source_location": {
           "heading": "AI-015 - UI Command Dispatch Rule One",
           "heading_level": 3,
-          "heading_line": 1283,
-          "line": 1285,
+          "heading_line": 1250,
+          "line": 1252,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3179,8 +3179,8 @@
         "source_location": {
           "heading": "AI-016 - Wiring Matrix Rule Two Coverage",
           "heading_level": 3,
-          "heading_line": 1340,
-          "line": 1342,
+          "heading_line": 1307,
+          "line": 1309,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3190,8 +3190,8 @@
         "source_location": {
           "heading": "AI-023 - Interactive Element Command Mapping",
           "heading_level": 3,
-          "heading_line": 1736,
-          "line": 1738,
+          "heading_line": 1703,
+          "line": 1705,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3201,8 +3201,8 @@
         "source_location": {
           "heading": "AI-026 - GATE 003 UI Invariant Checks",
           "heading_level": 3,
-          "heading_line": 1904,
-          "line": 1906,
+          "heading_line": 1871,
+          "line": 1873,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3212,8 +3212,8 @@
         "source_location": {
           "heading": "AI-027 - Debug Overlay Is Not Runtime Mode",
           "heading_level": 3,
-          "heading_line": 1962,
-          "line": 1964,
+          "heading_line": 1929,
+          "line": 1931,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3223,8 +3223,8 @@
         "source_location": {
           "heading": "AI-031 - Frozen Runtime State Summary Consumers",
           "heading_level": 3,
-          "heading_line": 2179,
-          "line": 2181,
+          "heading_line": 2146,
+          "line": 2148,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3234,8 +3234,8 @@
         "source_location": {
           "heading": "AI-034 - Route Consuming Command Wrappers",
           "heading_level": 3,
-          "heading_line": 2359,
-          "line": 2361,
+          "heading_line": 2326,
+          "line": 2328,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3245,8 +3245,8 @@
         "source_location": {
           "heading": "AI-035 - Graph Artifact Stale Consumer Reconciliation",
           "heading_level": 3,
-          "heading_line": 2415,
-          "line": 2417,
+          "heading_line": 2382,
+          "line": 2384,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3256,8 +3256,8 @@
         "source_location": {
           "heading": "AI-036 - Route Transport And Object Kind Identity",
           "heading_level": 3,
-          "heading_line": 2475,
-          "line": 2477,
+          "heading_line": 2442,
+          "line": 2444,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3267,8 +3267,8 @@
         "source_location": {
           "heading": "AI-038 - Worktree Source Control Runtime Visibility",
           "heading_level": 3,
-          "heading_line": 2591,
-          "line": 2593,
+          "heading_line": 2558,
+          "line": 2560,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3278,8 +3278,8 @@
         "source_location": {
           "heading": "AI-039 - Legacy Tier Event And Usage Evidence Demotion",
           "heading_level": 3,
-          "heading_line": 2650,
-          "line": 2652,
+          "heading_line": 2617,
+          "line": 2619,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3289,8 +3289,8 @@
         "source_location": {
           "heading": "AI-041 - Project Activation Import And Visible Ambiguity",
           "heading_level": 3,
-          "heading_line": 2774,
-          "line": 2776,
+          "heading_line": 2741,
+          "line": 2743,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3300,8 +3300,8 @@
         "source_location": {
           "heading": "AI-042 - Index Sync Degraded State And Shared Shell Workflow",
           "heading_level": 3,
-          "heading_line": 2833,
-          "line": 2835,
+          "heading_line": 2800,
+          "line": 2802,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3311,8 +3311,8 @@
         "source_location": {
           "heading": "AI-045 - Native Workbench Service Bound Evidence",
           "heading_level": 3,
-          "heading_line": 3017,
-          "line": 3019,
+          "heading_line": 2984,
+          "line": 2986,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3322,8 +3322,8 @@
         "source_location": {
           "heading": "AI-046 - UI Responsiveness And Background Service Projections",
           "heading_level": 3,
-          "heading_line": 3085,
-          "line": 3087,
+          "heading_line": 3052,
+          "line": 3054,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3333,8 +3333,8 @@
         "source_location": {
           "heading": "AI-047 - Platform Adapter Seam",
           "heading_level": 3,
-          "heading_line": 3150,
-          "line": 3152,
+          "heading_line": 3117,
+          "line": 3119,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3344,8 +3344,8 @@
         "source_location": {
           "heading": "AI-055 - Debug And Deep Plan Overlay Boundaries",
           "heading_level": 3,
-          "heading_line": 3665,
-          "line": 3667,
+          "heading_line": 3632,
+          "line": 3634,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3355,8 +3355,8 @@
         "source_location": {
           "heading": "AI-057 - Visible Browser Evidence Attachment",
           "heading_level": 3,
-          "heading_line": 3785,
-          "line": 3787,
+          "heading_line": 3752,
+          "line": 3754,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3366,8 +3366,8 @@
         "source_location": {
           "heading": "AI-061 - File Browser Recovery Consumer Routing",
           "heading_level": 3,
-          "heading_line": 4019,
-          "line": 4021,
+          "heading_line": 3986,
+          "line": 3988,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3377,8 +3377,8 @@
         "source_location": {
           "heading": "AI-062 - Firecrawl Billing And Audit UI Ownership",
           "heading_level": 3,
-          "heading_line": 4078,
-          "line": 4080,
+          "heading_line": 4045,
+          "line": 4047,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3388,8 +3388,8 @@
         "source_location": {
           "heading": "AI-064 - HITL And Widget Recovery Consumers",
           "heading_level": 3,
-          "heading_line": 4204,
-          "line": 4206,
+          "heading_line": 4171,
+          "line": 4173,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3399,8 +3399,8 @@
         "source_location": {
           "heading": "AI-066 - Log Audit GUI Drift Blocking",
           "heading_level": 3,
-          "heading_line": 4319,
-          "line": 4321,
+          "heading_line": 4286,
+          "line": 4288,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -29355,76 +29355,31 @@
     }
   },
   "runtime_enablement_status": {
-    "artifact_generation_policy": "PlanUnit indexing never emits NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts.",
+    "artifact_generation_policy": "PlanUnit indexing still emits no NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts; ordinary PlanCompile output may start only through the certified runtime compiler, Executor intake, activation, and Goal Runtime certification contracts.",
     "bootstrap_authority_ref": "PNC-022",
     "bootstrap_authority_refs": [
       "PNC-022"
     ],
     "bootstrap_authorized": true,
     "bootstrap_scope": "pnc019_certification_harness_only",
-    "certification_authority": "Goal Runtime completion receipt after Executor activation and receipt verification.",
+    "certification_authority": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
     "certification_harness_specified": true,
     "compiler_contract_complete": true,
-    "disabled_guards": [
-      {
-        "evidence": "PNC-019 states that static contract fixtures are only preconditions; enabled runtime readiness requires an executable lifecycle certification harness proving Approve And Build through PlanCompile, Executor intake, activation, queued entrypoint, Orchestrator projection, restarts, cancellation, testing evidence, and negative-case rejection.",
-        "guard": "executable_lifecycle_certification_required",
-        "plan_unit_id": "PNC-019",
-        "source_location": {
-          "heading": "PNC-019 - Static Scenario Boundary And Executable Certification Requirement",
-          "heading_level": 3,
-          "heading_line": 1388,
-          "line": 1390,
-          "path": "Plans/Plan_To_Node_Compilation.md"
-        }
-      }
-    ],
-    "executable_lifecycle_certification_complete": false,
-    "executable_lifecycle_certification_failures": [
-      {
-        "error": "pnc019_source_hash_stale_or_missing",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "pnc019_source_hash_stale_or_missing",
-        "source_path": "Plans/Plan_To_Node_Compilation.md"
-      },
-      {
-        "error": "pnc019_source_hash_stale_or_missing",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "pnc019_source_hash_stale_or_missing",
-        "source_path": "Plans/Executor_Protocol.md"
-      },
-      {
-        "error": "pnc019_source_hash_stale_or_missing",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "pnc019_source_hash_stale_or_missing",
-        "source_path": "Plans/Orchestrator_Page.md"
-      },
-      {
-        "error": "pnc019_source_hash_stale_or_missing",
-        "source_path": "Plans/Automated_Testing_System.md"
-      },
-      {
-        "error": "pnc019_source_hash_stale_or_missing",
-        "source_path": "Plans/Progression_Gates.md"
-      }
-    ],
+    "disabled_guards": [],
+    "executable_lifecycle_certification_complete": true,
     "executable_lifecycle_certification_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
-    "ordinary_product_worknodes_allowed": false,
+    "ordinary_product_worknodes_allowed": true,
     "owner_doc": "Plans/Plan_To_Node_Compilation.md",
-    "runtime_blocked_by_ref": "PNC-019",
-    "runtime_enabled": false,
+    "pnc019_negative_case_count": 10,
+    "pnc019_positive_case_count": 9,
+    "runtime_blocked_by_ref": null,
+    "runtime_enabled": true,
     "runtime_enablement_ref": "PNC-007",
     "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
-    "status": "blocked_runtime_certification_incomplete"
+    "status": "runtime_certified_ready_for_plancompile"
   },
   "schema_id": "pm.plan_index.node_readiness_report.v1",
   "source_plan_unit_index": "Plans/.plan_index/plan_units.jsonl",
-  "status": "blocked_runtime_certification_incomplete",
-  "status_reason": "Plans are indexed with required PlanUnit metadata and the PlanCompile compiler contract is accepted, but native runtime readiness remains blocked by PNC-019 until an executable lifecycle certification harness passes and records evidence for the enabled runtime boundary."
+  "status": "ready_for_node_compile",
+  "status_reason": "Plans are indexed with required PlanUnit metadata and an accepted PlanCompile compiler contract; the PlanUnit index remains non-emitting and native runtime implementation must materialize artifacts only through the compiler, Executor intake, activation, and Goal Runtime certification contracts."
 }

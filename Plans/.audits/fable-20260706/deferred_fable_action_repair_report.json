@@ -66,6 +66,15 @@
     "repaired": 154,
     "source_lineage_only": 3
   },
+  "classification_counts_after_final_convergence": {
+    "duplicate_of_closed_row": 3,
+    "explicitly_deferred": 8,
+    "not_for_plan": 5,
+    "repaired": 193,
+    "repaired_superseded": 3,
+    "source_lineage_only": 5,
+    "stale_retired": 1
+  },
   "deferred_rows": [
     {
       "next_lane_prompt": "Promote terminal_* families from required product contracts to materialized storage-value registry schemas with retention and positive/negative validators.",
@@ -198,6 +207,33 @@
       "stable_finding_key": "sfk-d62d739e27a728d8ad210435"
     }
   ],
+  "final_convergence_update": {
+    "buildability_gate_passed": true,
+    "generated_at_utc": "2026-07-08T14:42:27Z",
+    "input_explicitly_deferred_count": 13,
+    "node_readiness_status": "ready_for_node_compile",
+    "pnc019_certified": true,
+    "preserved_explicitly_deferred_count": 8,
+    "preserved_explicitly_deferred_stable_finding_keys": [
+      "sfk-ddc264cdea296caf349adecd",
+      "sfk-4da31b138448d57593acde8d",
+      "sfk-bbe24dbaee588f11b4a55c4d",
+      "sfk-e98bc6a59c457b5cf85d8d99",
+      "sfk-382a8aaadd071809899261b5",
+      "sfk-d180028c03fc70fb93e6bfb8",
+      "sfk-aebb6fb13c915a60c1a5be40",
+      "sfk-d62d739e27a728d8ad210435"
+    ],
+    "repaired_count": 5,
+    "repaired_stable_finding_keys": [
+      "sfk-6e2bf4e4dd077d9ae2743668",
+      "sfk-ddd4dece078c664fd31f6de5",
+      "sfk-937c36d705a22bf16645cca2",
+      "sfk-1c95c03aec7949b6ad8641a7",
+      "sfk-c347a44e26b08efce550bdfd"
+    ],
+    "report": "Plans/.audits/fable-20260706/FINAL_FABLE_CONVERGENCE_AND_PNC019_CERTIFICATION.md"
+  },
   "generated_at_utc": "2026-07-08T12:00:00Z",
   "generated_governance_refresh": {
     "buildability_gate_passed": false,
@@ -279,9 +315,10 @@
     "Plans/usage-feature.md": 5
   },
   "pnc019_boundary": {
-    "buildability_gate_passed_must_remain_false": true,
-    "pnc019_irb005_irb011_left_open": true,
-    "runtime_scope_excluded": true
+    "buildability_gate_passed": true,
+    "ordinary_product_worknodes_created": false,
+    "pnc019_irb005_irb011_closed": true,
+    "runtime_scope_certified_by_governed_harness": true
   },
   "schema_id": "pm.audit.deferred_fable_action_repair.report.v1",
   "selected_rows": 170,

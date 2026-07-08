@@ -8,22 +8,22 @@
     {
       "note": "Materialized/deferred storage value registry.",
       "path": "Plans/storage_value_registry.json",
-      "sha256": "8f14f852f06592f91bb1cac2f2b6223a50a9127380f01a9642e7ef0fa0b94ee5"
+      "sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
     },
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "f42778c1567a9653ce9e73d786c18f7fb9fa9ff49e1722a8b1a2db9c0798ee10"
+      "sha256": "e1fdcb1f133f416cddcf76d0d044717ec228dbbb04101fdf8e6d147bc59e11b8"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "419c53770afab799fef6155b1bcd336ebad1f53af8f49dc1fab98fdfe6807b3e"
+      "sha256": "d8d93a159e91894e42d6b92ae612d8cdd0b88b99e9ce59042c9a084847146495"
     },
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "7397880c384ea90b3ff5e44167a12f7f9e68ae565b483e45c7bdb1a92be38320"
+      "sha256": "c350d0800fb019c51106ee11cddbf492dcadb509932d85384af231aed65a2a8e"
     }
   ],
   "checks": [
@@ -81,6 +81,11 @@
       "name": "validate-evidence",
       "result": "PASS",
       "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "final-fable-convergence-pnc019",
+      "result": "PASS",
+      "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
     }
   ],
   "commands_run": [
@@ -135,6 +140,18 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-pnc019-certification-harness.py run",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py generate",
       "exit_code": 0
     }
   ],
