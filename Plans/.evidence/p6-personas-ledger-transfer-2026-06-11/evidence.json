@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "7397880c384ea90b3ff5e44167a12f7f9e68ae565b483e45c7bdb1a92be38320"
+      "sha256": "c350d0800fb019c51106ee11cddbf492dcadb509932d85384af231aed65a2a8e"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "b70c3a7d00a68d453b69fea044c68ffb1dac3b7a5041f76e8689de30843988db"
+      "sha256": "514c6be9095138caf546bb695fb151622cf6355dde55e54beaae28166dd3585f"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "aad66fd44031b25fce8c7325a4b592815af72ca697bdf3f01c887e89785a81ac"
+      "sha256": "a2bee717e6f4a17fe3aff7ff70306856b8f2c9d4b0f5229f92cb23c80714631b"
     }
   ],
   "checks": [
@@ -412,6 +412,11 @@
       "name": "validate-evidence",
       "result": "PASS",
       "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "final-fable-convergence-pnc019",
+      "result": "PASS",
+      "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
     }
   ],
   "commands_run": [
@@ -761,6 +766,18 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-pnc019-certification-harness.py run",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py generate",
       "exit_code": 0
     }
   ],

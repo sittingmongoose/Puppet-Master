@@ -8,7 +8,7 @@
     {
       "note": "Small INV-022 repair for watcher reconciliation and SCM hot-path avoidance.",
       "path": "Plans/Architecture_Invariants.md",
-      "sha256": "6f883fb60e510b7c00faba9208e8a0702690c2df24d96a4294dc6f33d861634b"
+      "sha256": "3f3e3b9f42434b65cdfcdfd03597ce25926979886fe66d28c06cd0f8d23a3cc3"
     },
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
@@ -18,7 +18,7 @@
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "7397880c384ea90b3ff5e44167a12f7f9e68ae565b483e45c7bdb1a92be38320"
+      "sha256": "c350d0800fb019c51106ee11cddbf492dcadb509932d85384af231aed65a2a8e"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "b70c3a7d00a68d453b69fea044c68ffb1dac3b7a5041f76e8689de30843988db"
+      "sha256": "514c6be9095138caf546bb695fb151622cf6355dde55e54beaae28166dd3585f"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -260,6 +260,11 @@
       "name": "validate-evidence",
       "result": "PASS",
       "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "final-fable-convergence-pnc019",
+      "result": "PASS",
+      "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
     }
   ],
   "commands_run": [
@@ -546,6 +551,18 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-pnc019-certification-harness.py run",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py generate",
       "exit_code": 0
     }
   ],

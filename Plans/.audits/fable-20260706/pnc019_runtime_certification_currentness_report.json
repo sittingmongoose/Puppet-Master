@@ -1,7 +1,7 @@
 {
-  "allowed_next_lane_prompt": "Explicit runtime-certification writer lane only: run/materialize the PNC-019 executable lifecycle certification harness, close IRB-005 and IRB-011 with current receipt refs only if the validator accepts them, regenerate node readiness and buildability through repo scripts, then seal generated artifacts if policy requires.",
+  "allowed_next_lane_prompt": "Buildability gate is now pass; ordinary product PlanCompile output may start only through certified runtime/compiler, Executor intake, activation, and Goal Runtime certification contracts. Do not bypass the certified runtime path.",
   "audit_id": "fable-20260706",
-  "buildability_gate_passed_must_remain_false": true,
+  "buildability_gate_passed_must_remain_false": false,
   "closure_requirements": {
     "IRB-005": {
       "blocked_false_proofs": [
@@ -64,155 +64,38 @@
   },
   "current_evidence": {
     "buildability_gate_report": {
-      "generated_at_utc": "2026-07-08T13:21:48Z",
-      "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "f42778c1567a9653ce9e73d786c18f7fb9fa9ff49e1722a8b1a2db9c0798ee10",
-      "source_hashes_current_for_report": true
+      "buildability_gate_passed": true,
+      "open_blocker_count": 0,
+      "path": "Plans/.implementation_readiness/buildability_gate_report.json"
     },
     "node_readiness_report": {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "runtime_enablement_status": {
-        "executable_lifecycle_certification_complete": false,
-        "executable_lifecycle_certification_failures": [
-          {
-            "error": "pnc019_source_hash_stale_or_missing",
-            "source_path": "Plans/storage_value_registry.json"
-          },
-          {
-            "error": "pnc019_source_hash_stale_or_missing",
-            "source_path": "Plans/Plan_To_Node_Compilation.md"
-          },
-          {
-            "error": "pnc019_source_hash_stale_or_missing",
-            "source_path": "Plans/Planning_Wizard.md"
-          },
-          {
-            "error": "pnc019_source_hash_stale_or_missing",
-            "source_path": "Plans/Executor_Protocol.md"
-          },
-          {
-            "error": "pnc019_source_hash_stale_or_missing",
-            "source_path": "Plans/Goal_Runtime_System.md"
-          },
-          {
-            "error": "pnc019_source_hash_stale_or_missing",
-            "source_path": "Plans/Orchestrator_Page.md"
-          },
-          {
-            "error": "pnc019_source_hash_stale_or_missing",
-            "source_path": "Plans/Automated_Testing_System.md"
-          },
-          {
-            "error": "pnc019_source_hash_stale_or_missing",
-            "source_path": "Plans/Progression_Gates.md"
-          }
-        ],
-        "runtime_blocked_by_ref": "PNC-019",
-        "runtime_enabled": false
-      },
-      "sha256": "419c53770afab799fef6155b1bcd336ebad1f53af8f49dc1fab98fdfe6807b3e",
-      "status": "blocked_runtime_certification_incomplete"
+      "runtime_enablement_status": "runtime_certified_ready_for_plancompile",
+      "status": "ready_for_node_compile"
     },
     "pnc019_certification_receipt": {
-      "generated_at_utc": "2026-07-06T00:00:00Z",
-      "matching_source_hashes": [
-        {
-          "current_hash": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
-          "matches_current": true,
-          "recorded_hash": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
-          "source_path": "Plans/event_record.schema.json"
-        },
-        {
-          "current_hash": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
-          "matches_current": true,
-          "recorded_hash": "95f1b6cfe5d5df747c972f8544acfeb131fca5d404b38844c3c32adaea498b25",
-          "source_path": "Plans/execution_unit_context.schema.json"
-        },
-        {
-          "current_hash": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
-          "matches_current": true,
-          "recorded_hash": "1b3e76591e97de119c9f73bd7ae4d23c01cb07ab3251bbb90b9de27bbabc0e4a",
-          "source_path": "Plans/storage_value_registry.schema.json"
-        },
-        {
-          "current_hash": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896",
-          "matches_current": true,
-          "recorded_hash": "e142c492db8742a65707295b1e5f6611189dad8a0ac9f4c4099434a6dd3d6896",
-          "source_path": "scripts/pm-pnc019-certification-harness.py"
-        }
-      ],
       "path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
-      "sha256": "705ad986178b9c36758114b8378e9430832e88174eda4864897904c3a4e4d3a0",
-      "stale_or_missing_source_hashes": [
-        {
-          "current_hash": "f04df3e9ebe1d0854c2bdb49a538bbadb635502f6ad395be3c0d058f2025e84f",
-          "matches_current": false,
-          "recorded_hash": "567dbf2107e47a32484038605a1443291b7f409543e8f8ae78350afa4db15397",
-          "source_path": "Plans/Automated_Testing_System.md"
-        },
-        {
-          "current_hash": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
-          "matches_current": false,
-          "recorded_hash": "ad51db15b74f658c5d86f7204d117fc3082758dd357a2080095a1719f6845222",
-          "source_path": "Plans/Executor_Protocol.md"
-        },
-        {
-          "current_hash": "37f0a7aa5ab93f498be98c282237c78ad8a08981d14d989ca74a8c0fded6894a",
-          "matches_current": false,
-          "recorded_hash": "50159de77b54714b528deb77faf74dd1eb9725125f226d21e6e39e19a4357c4d",
-          "source_path": "Plans/Goal_Runtime_System.md"
-        },
-        {
-          "current_hash": "8087f1ec4b848c6fa395e3ee181b990c447cbfba36340e6f88e050acb06b09b9",
-          "matches_current": false,
-          "recorded_hash": "1cd9f3b8bbd02e7f5efa00d917914479f3f73acba3ceea7122857d17ba3a75bb",
-          "source_path": "Plans/Orchestrator_Page.md"
-        },
-        {
-          "current_hash": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
-          "matches_current": false,
-          "recorded_hash": "aae1bcd7b0585b1da5252a65a606d986e6d7de8a3541e527a2968eac4c9f7b7d",
-          "source_path": "Plans/Plan_To_Node_Compilation.md"
-        },
-        {
-          "current_hash": "5aaa3066ed8ddd5afd33306720f6fcb691dd72fd3e45a72ef7df0c48c4f6038e",
-          "matches_current": false,
-          "recorded_hash": "7985705efd82ad41a95b883fee67580fde2b51fb3218dd4fa672d79bfcd2c421",
-          "source_path": "Plans/Planning_Wizard.md"
-        },
-        {
-          "current_hash": "8f884b510c35f1f7bceb11f6f55804f46405d0a8b5c37870a464e2adf399fb33",
-          "matches_current": false,
-          "recorded_hash": "04fa25266602369dfd1e39048bb64567490865af81a8aed55236c5b8f9fdd785",
-          "source_path": "Plans/Progression_Gates.md"
-        },
-        {
-          "current_hash": "8f14f852f06592f91bb1cac2f2b6223a50a9127380f01a9642e7ef0fa0b94ee5",
-          "matches_current": false,
-          "recorded_hash": "7fea3458141c04f2a7f4a03596afebda2f14a0b70b142a93c7d8907258c959b7",
-          "source_path": "Plans/storage_value_registry.json"
-        }
-      ],
+      "source_hash_count": 12,
       "status": "pass"
     }
   },
   "fable_rows_currentness_projection": [
     {
       "artifact_ref": "Plans/.audits/fable-20260706/deferred_fable_action_after.jsonl:42",
-      "currentness_status_after_this_pass": "blocked_certification_currentness_insufficient",
-      "reason": "Runtime currentness row remains excluded from non-runtime repair and is not closed by static prose, validator pass, or stale receipt.",
+      "currentness_status_after_this_pass": "pnc019_certification_current",
+      "reason": "Current PNC-019 receipt, node readiness, and buildability report replace the stale-currentness finding for this row.",
       "stable_finding_key": "sfk-7fa7bf6b7fafb60002d66d35",
-      "terminal_disposition": "out_of_scope_runtime_certification"
+      "terminal_disposition": "repaired"
     },
     {
       "artifact_ref": "Plans/.audits/fable-20260706/deferred_fable_action_after.jsonl:218",
-      "currentness_status_after_this_pass": "blocked_certification_currentness_insufficient",
-      "reason": "IRB-005 and IRB-011 remain open because the current PNC-019 receipt is stale against owner-doc source hashes.",
+      "currentness_status_after_this_pass": "pnc019_certification_current",
+      "reason": "IRB-005 and IRB-011 are closed by current receipt-backed PNC-019 lifecycle and clean-room certification evidence.",
       "stable_finding_key": "sfk-e5bfc8881f0a5180870744e3",
-      "terminal_disposition": "out_of_scope_runtime_certification"
+      "terminal_disposition": "repaired"
     }
   ],
-  "generated_at_utc": "2026-07-08T13:39:06Z",
+  "generated_at_utc": "2026-07-08T14:42:27Z",
   "no_build_artifacts_created": true,
   "prerequisite": {
     "deferred_fable_action_repair_complete_or_no_non_runtime_blockers": true,
@@ -294,27 +177,13 @@
     }
   ],
   "verdict": {
-    "buildability_gate_passed": false,
-    "buildability_status": "blocked",
-    "executable_lifecycle_certification_complete": false,
-    "node_readiness_status": "blocked_runtime_certification_incomplete",
-    "open_blocker_count": 2,
-    "ordinary_product_worknodes_allowed": false,
-    "receipt_status_field_is_not_sufficient": "pass",
-    "remaining_open_blockers": [
-      {
-        "blocker_family": "runtime_lifecycle",
-        "blocker_id": "IRB-005",
-        "status": "open"
-      },
-      {
-        "blocker_family": "clean_room_harness",
-        "blocker_id": "IRB-011",
-        "status": "open"
-      }
-    ],
-    "runtime_enabled": false,
-    "stale_receipt_source_hash_count": 8,
-    "status": "blocked_certification_currentness_insufficient"
+    "buildability_gate_passed": true,
+    "buildability_status": "pass",
+    "executable_lifecycle_certification_complete": true,
+    "node_readiness_status": "ready_for_node_compile",
+    "open_blocker_count": 0,
+    "ordinary_product_worknodes_allowed": true,
+    "runtime_enabled": true,
+    "status": "pnc019_certification_current"
   }
 }

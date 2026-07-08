@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "7397880c384ea90b3ff5e44167a12f7f9e68ae565b483e45c7bdb1a92be38320"
+      "sha256": "c350d0800fb019c51106ee11cddbf492dcadb509932d85384af231aed65a2a8e"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -26,11 +26,11 @@
     },
     {
       "path": "Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json",
-      "sha256": "fd7f63ca72144f348240fd79dd07cec8930230114aa5e1a5dbd74f752fd38d26"
+      "sha256": "e23008be51985d6afa940823eda4fd7497cf80d04c3170c6b99210b7d0f6794a"
     },
     {
       "path": "Plans/.evidence/plan-sharding-2026-06-09/evidence.json",
-      "sha256": "474dec25923df0ddd886c575c5d9cced8e1fcd9ef7af75968dba5786e07c8c3f"
+      "sha256": "72eec1b1f83cd669cb85cfd4809962dc56c4d918ad06cf5d834e094981f710f5"
     },
     {
       "path": "Plans/.evidence/ledger-transfer-certification-2026-06-09/evidence.json",
@@ -50,27 +50,27 @@
     },
     {
       "path": "Plans/.plan_index/plan_units.jsonl",
-      "sha256": "bf2d2540324199b5a62fa803939a359b4653719b8df0e30b706333974272fc9a"
+      "sha256": "68a3bd184c648eb77ccce9e96bb71f84e73bc0f66939571ebaeb48e967bffc28"
     },
     {
       "path": "Plans/.plan_index/doc_cards.json",
-      "sha256": "e7175f90a3054edd8ecc7c31a915e4e1bdd78d38e7ca2663de821a9ff6fe04b7"
+      "sha256": "ffb1c459b55769b5a8595dc25f9476750b192920baa413729475b05fb30afdee"
     },
     {
       "path": "Plans/.plan_index/dependencies.json",
-      "sha256": "2118820621bfdca9eca8f1aba55604a134acd2ea6bbef97d0ec407b1b51fd702"
+      "sha256": "af44f2cc5e39bdfbd5c8cdd55faa09d32487064520ae63953a34ab08494e5174"
     },
     {
       "path": "Plans/.plan_index/acceptance_units.jsonl",
-      "sha256": "a93f8b48105eef3bb2d85aef4c88b19b99f79daf1aa08f1044388781f0fa3657"
+      "sha256": "b8deffd93dd460658730e1b8ae0347f9d99879e7b56f4819c9ccfaa8b0506cbe"
     },
     {
       "path": "Plans/.plan_index/coverage_report.json",
-      "sha256": "c7046af15fc8759130bc92a4c4bd3be770bb4d92f41a1451732456a6e8d1e17d"
+      "sha256": "fb71f2b1882f3cfb0199e65f3a6987d89be16864ca860505e909ed6294d8ad40"
     },
     {
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "419c53770afab799fef6155b1bcd336ebad1f53af8f49dc1fab98fdfe6807b3e"
+      "sha256": "d8d93a159e91894e42d6b92ae612d8cdd0b88b99e9ce59042c9a084847146495"
     }
   ],
   "checks": [
@@ -288,6 +288,11 @@
       "name": "validate-evidence",
       "result": "PASS",
       "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "final-fable-convergence-pnc019",
+      "result": "PASS",
+      "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
     }
   ],
   "commands_run": [
@@ -532,6 +537,18 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-pnc019-certification-harness.py run",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py generate",
       "exit_code": 0
     }
   ],

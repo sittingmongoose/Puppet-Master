@@ -87,8 +87,8 @@ Processed all non-runtime FABLE rows from `remaining_action_plan_after_repair.js
 - `Plans/.audits/fable-20260706/buildability_repair_registry.jsonl`
 - `Plans/.audits/_semantic_closure_registry.jsonl`
 
-## Runtime Boundary
-PNC-019, IRB-005, and IRB-011 remain open. Static owner-doc evidence, semantic closure, schema validation, and green validators are not executable lifecycle certification.
+## Deferred-Repair Runtime Boundary
+At the close of the deferred-action repair pass, PNC-019, IRB-005, and IRB-011 remained open because static owner-doc evidence, semantic closure, schema validation, and green validators were not executable lifecycle certification.
 
 ## Validation
 The clean validator capture at 2026-07-08T13:25:42Z passed all required commands:
@@ -107,4 +107,20 @@ The clean validator capture at 2026-07-08T13:25:42Z passed all required commands
 - `pm-plans-verify run-gates --subcheck-timeout-seconds 60`
 - `git diff --check`
 
-Generated governance artifacts were refreshed after owner-doc and wiring-matrix changes. `Plans/.plan_index/node_readiness_report.json` remains `blocked_runtime_certification_incomplete`; this is the required PNC-019 boundary, not a repair claim.
+Generated governance artifacts were refreshed after owner-doc and wiring-matrix changes. This capture is superseded by the final convergence update below, which records the later governed PNC-019 harness receipt and readiness regeneration.
+
+## Final Convergence Update - 2026-07-08
+
+Generated: 2026-07-08T14:42:27Z
+
+This final convergence processed the 13 rows that were still `explicitly_deferred` after the deferred-action repair pass.
+
+- repaired: 5 (`sfk-6e2bf4e4dd077d9ae2743668`, `sfk-ddd4dece078c664fd31f6de5`, `sfk-937c36d705a22bf16645cca2`, `sfk-1c95c03aec7949b6ad8641a7`, `sfk-c347a44e26b08efce550bdfd`)
+- preserved explicitly_deferred: 8 (`sfk-ddc264cdea296caf349adecd`, `sfk-4da31b138448d57593acde8d`, `sfk-bbe24dbaee588f11b4a55c4d`, `sfk-e98bc6a59c457b5cf85d8d99`, `sfk-382a8aaadd071809899261b5`, `sfk-d180028c03fc70fb93e6bfb8`, `sfk-aebb6fb13c915a60c1a5be40`, `sfk-d62d739e27a728d8ad210435`)
+- PNC-019 certification: current governed harness receipt written; `node_readiness_report.status = ready_for_node_compile`; `buildability_gate_passed = true`; `open_blocker_count = 0`.
+- Forbidden ordinary product outputs created: 0 WorkNodes, 0 NodeSeeds, 0 queues, 0 runtime launches, 0 final manifests, 0 implementation files, 0 production build tasks.
+
+Superseding state/report:
+- `Plans/.audits/fable-20260706/final_fable_action_state.jsonl`
+- `Plans/.audits/fable-20260706/FINAL_FABLE_CONVERGENCE_AND_PNC019_CERTIFICATION.md`
+- `Plans/.audits/fable-20260706/final_fable_convergence_and_pnc019_certification_report.json`

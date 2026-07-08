@@ -2,7 +2,7 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "7397880c384ea90b3ff5e44167a12f7f9e68ae565b483e45c7bdb1a92be38320"
+      "sha256": "c350d0800fb019c51106ee11cddbf492dcadb509932d85384af231aed65a2a8e"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
@@ -70,7 +70,7 @@
     },
     {
       "path": "Plans/requirements_quality_report.schema.json",
-      "sha256": "62857cb0bf9d8a9a332e10139885162bd2bb750c433bc92c006ea3cc92b71489"
+      "sha256": "1e36f692a52420a3b3b5315bcd131ea6f818abaaf401fe1689e35fbc0ede7447"
     },
     {
       "path": "Plans/test_strategy.schema.json",
@@ -297,6 +297,11 @@
       "name": "validate-evidence",
       "result": "PASS",
       "details": "Evidence bundle hashes refreshed after FileSafe fail-closed security repair"
+    },
+    {
+      "name": "final-fable-convergence-pnc019",
+      "result": "PASS",
+      "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
     }
   ],
   "commands_run": [
@@ -504,6 +509,18 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-pnc019-certification-harness.py run",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py generate",
       "exit_code": 0
     }
   ],

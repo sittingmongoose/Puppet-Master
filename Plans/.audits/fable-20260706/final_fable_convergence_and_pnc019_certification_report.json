@@ -1,0 +1,199 @@
+{
+  "action_state_path": "Plans/.audits/fable-20260706/final_fable_action_state.jsonl",
+  "audit_id": "fable-20260706",
+  "buildability_pass_claim_allowed": true,
+  "disposition_counts_all_rows": {
+    "duplicate_of_closed_row": 3,
+    "explicitly_deferred": 8,
+    "not_for_plan": 5,
+    "repaired": 193,
+    "repaired_superseded": 3,
+    "source_lineage_only": 5,
+    "stale_retired": 1
+  },
+  "final_deferred_slice": {
+    "input_explicitly_deferred_count": 13,
+    "preserved_explicitly_deferred_count": 8,
+    "preserved_explicitly_deferred_stable_finding_keys": [
+      "sfk-ddc264cdea296caf349adecd",
+      "sfk-4da31b138448d57593acde8d",
+      "sfk-bbe24dbaee588f11b4a55c4d",
+      "sfk-e98bc6a59c457b5cf85d8d99",
+      "sfk-382a8aaadd071809899261b5",
+      "sfk-d180028c03fc70fb93e6bfb8",
+      "sfk-aebb6fb13c915a60c1a5be40",
+      "sfk-d62d739e27a728d8ad210435"
+    ],
+    "repaired_count": 5,
+    "repaired_stable_finding_keys": [
+      "sfk-6e2bf4e4dd077d9ae2743668",
+      "sfk-ddd4dece078c664fd31f6de5",
+      "sfk-937c36d705a22bf16645cca2",
+      "sfk-1c95c03aec7949b6ad8641a7",
+      "sfk-c347a44e26b08efce550bdfd"
+    ]
+  },
+  "final_validation": {
+    "commands": [
+      {
+        "cmd": "python3 scripts/pm-audit-closure.py validate",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "status": "pass"
+      },
+      {
+        "acceptance_unit_count": 19961,
+        "cmd": "python3 scripts/pm-plan-index.py validate",
+        "node_readiness_status": "ready_for_node_compile",
+        "plan_unit_count": 5513,
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-gui-asset-policy",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-shard-plans.py --check",
+        "docs_checked": 78,
+        "shards_checked": 1516,
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-audit-status-index.py generate",
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-audit-status-index.py validate",
+        "current_blocker_count": 0,
+        "status": "pass"
+      },
+      {
+        "cmd": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 60",
+        "status": "pass"
+      },
+      {
+        "cmd": "git diff --check",
+        "status": "pass"
+      }
+    ],
+    "status": "pass",
+    "validated_at_utc": "2026-07-08T14:54:29Z"
+  },
+  "forbidden_outputs": [
+    "ordinary product WorkNodes",
+    "NodeSeeds",
+    "queues",
+    "runtime launches",
+    "final manifests",
+    "implementation files",
+    "production build tasks"
+  ],
+  "forbidden_outputs_created": false,
+  "generated_at_utc": "2026-07-08T14:42:27Z",
+  "governance_refresh_note": "Final governance refresh completed: shards, sharding evidence, Spec Lock, evidence bundles, audit closure hashes, audit status index, plan migration hashes, plan index, and implementation-readiness reports were refreshed after the final convergence writes.",
+  "main_agent_writer_only": true,
+  "pnc019_certification": {
+    "approve_and_build_enabled": true,
+    "buildability_gate_passed": true,
+    "buildability_gate_report": "Plans/.implementation_readiness/buildability_gate_report.json",
+    "node_readiness_report": "Plans/.plan_index/node_readiness_report.json",
+    "node_readiness_status": "ready_for_node_compile",
+    "open_blocker_count": 0,
+    "pnc_currentness_rows_repaired": [
+      "sfk-7fa7bf6b7fafb60002d66d35",
+      "sfk-e5bfc8881f0a5180870744e3"
+    ],
+    "readiness_blockers": "Plans/.implementation_readiness/readiness_blockers.jsonl",
+    "receipt_checks": {
+      "lifecycle_trace_count": 11,
+      "negative_case_count": 10,
+      "ordinary_product_artifact_counts": {
+        "manifests": 0,
+        "nodeseeds": 0,
+        "production_build_tasks": 0,
+        "queues": 0,
+        "runtime_launches": 0,
+        "worknodes": 0
+      },
+      "positive_case_count": 9,
+      "source_hash_count": 12,
+      "status": "pass"
+    },
+    "receipt_path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+    "runtime_enablement_status": {
+      "artifact_generation_policy": "PlanUnit indexing still emits no NodeSeed, WorkNode, WorkGraph, queue, or executable runtime artifacts; ordinary PlanCompile output may start only through the certified runtime compiler, Executor intake, activation, and Goal Runtime certification contracts.",
+      "bootstrap_authority_ref": "PNC-022",
+      "bootstrap_authority_refs": [
+        "PNC-022"
+      ],
+      "bootstrap_authorized": true,
+      "bootstrap_scope": "pnc019_certification_harness_only",
+      "certification_authority": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+      "certification_harness_specified": true,
+      "compiler_contract_complete": true,
+      "disabled_guards": [],
+      "executable_lifecycle_certification_complete": true,
+      "executable_lifecycle_certification_ref": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+      "ordinary_product_worknodes_allowed": true,
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+      "pnc019_negative_case_count": 10,
+      "pnc019_positive_case_count": 9,
+      "runtime_blocked_by_ref": null,
+      "runtime_enabled": true,
+      "runtime_enablement_ref": "PNC-007",
+      "runtime_policy_snapshot_ref": "Plans/prd_planning_runtime_contracts.json",
+      "status": "runtime_certified_ready_for_plancompile"
+    }
+  },
+  "read_only_subagent_lanes": [
+    "deferred-terminal-storage",
+    "deferred-UCC-schema",
+    "deferred-plugin-provider-stream-feature",
+    "deferred-architecture-gates",
+    "deferred-schema-auto-decisions",
+    "PNC019-runtime-lifecycle",
+    "PNC019-clean-room",
+    "readiness/validator/closure"
+  ],
+  "schema_id": "pm.audit.final_fable_convergence_and_pnc019_certification.v1",
+  "updated_projection_paths": [
+    "Plans/.audits/fable-20260706/deferred_fable_action_after.jsonl",
+    "Plans/.audits/fable-20260706/remaining_action_plan_after_repair.jsonl",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
+    "Plans/.audits/_semantic_closure_registry.jsonl"
+  ]
+}
