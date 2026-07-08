@@ -1,0 +1,251 @@
+{
+  "audit_id": "fable-20260706",
+  "blocked_requires_user_decision_rows": [],
+  "changed_audit_artifacts": [
+    "Plans/.audits/fable-20260706/remaining_action_plan_after_repair.jsonl",
+    "Plans/.audits/fable-20260706/remaining_action_plan_repair_report.json",
+    "Plans/.audits/fable-20260706/REMAINING_ACTION_PLAN_REPAIR.md",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
+    "Plans/.audits/_semantic_closure_registry.jsonl"
+  ],
+  "changed_owner_docs": [
+    "Plans/Architecture_Invariants.md",
+    "Plans/Automated_Testing_System.md",
+    "Plans/BinaryLocator_Spec.md",
+    "Plans/Bootstrap_Planning_Migration.md",
+    "Plans/Commands_System.md",
+    "Plans/Containers_Registry_and_Unraid.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/DRY_Rules.md",
+    "Plans/Decision_Log.md",
+    "Plans/Decision_Policy.md",
+    "Plans/Document_Packaging_Policy.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Formatters_System.md",
+    "Plans/GUI_Rebuild_Requirements_Checklist.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/Glossary.md",
+    "Plans/Goal_Runtime_System.md",
+    "Plans/LSPSupport.md",
+    "Plans/Media_Generation_and_Capabilities.md",
+    "Plans/MiscPlan.md",
+    "Plans/Multi-Account.md",
+    "Plans/OpenCode_Coverage_Matrix.md",
+    "Plans/OpenCode_Deep_Extraction.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Personas.md",
+    "Plans/Plan_Document_System.md",
+    "Plans/Planning_Wizard.md",
+    "Plans/Progression_Gates.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "Plans/Release_Supply_Chain.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Skills_System.md",
+    "Plans/Tools.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/UI_Wiring_Rules.md",
+    "Plans/Widget_System.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/agent-rules-context.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/assistant-memory-subsystem.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/feature-list.md",
+    "Plans/human-in-the-loop.md",
+    "Plans/interview-subagent-integration.md",
+    "Plans/newfeatures.md",
+    "Plans/newtools.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/rewrite-tie-in-memo.md",
+    "Plans/storage-plan.md",
+    "Plans/usage-feature.md"
+  ],
+  "excluded_runtime_rows": 2,
+  "final_disposition_counts": {
+    "duplicate_of_closed_row": 3,
+    "explicitly_deferred": 35,
+    "not_for_plan": 5,
+    "repaired": 168,
+    "repaired_superseded": 3,
+    "source_lineage_only": 1,
+    "stale_retired": 1
+  },
+  "generated_at_utc": "2026-07-08T01:24:48Z",
+  "global_closure_rows_added": 216,
+  "ledger_id": "remaining-action-plan-repair-20260708",
+  "owner_doc_note_counts": {
+    "Plans/Architecture_Invariants.md": 3,
+    "Plans/Automated_Testing_System.md": 3,
+    "Plans/BinaryLocator_Spec.md": 3,
+    "Plans/Bootstrap_Planning_Migration.md": 1,
+    "Plans/Commands_System.md": 3,
+    "Plans/Containers_Registry_and_Unraid.md": 3,
+    "Plans/Contracts_V0.md": 5,
+    "Plans/Crosswalk.md": 2,
+    "Plans/DRY_Rules.md": 1,
+    "Plans/Decision_Log.md": 2,
+    "Plans/Decision_Policy.md": 3,
+    "Plans/Document_Packaging_Policy.md": 2,
+    "Plans/Executor_Protocol.md": 3,
+    "Plans/FileManager.md": 4,
+    "Plans/FileSafe.md": 1,
+    "Plans/FinalGUISpec.md": 11,
+    "Plans/Formatters_System.md": 1,
+    "Plans/GUI_Rebuild_Requirements_Checklist.md": 2,
+    "Plans/GitHub_Integration.md": 4,
+    "Plans/Glossary.md": 1,
+    "Plans/Goal_Runtime_System.md": 2,
+    "Plans/LSPSupport.md": 4,
+    "Plans/Media_Generation_and_Capabilities.md": 10,
+    "Plans/MiscPlan.md": 6,
+    "Plans/Multi-Account.md": 1,
+    "Plans/OpenCode_Coverage_Matrix.md": 1,
+    "Plans/OpenCode_Deep_Extraction.md": 2,
+    "Plans/Orchestrator_Page.md": 5,
+    "Plans/Permissions_System.md": 12,
+    "Plans/Personas.md": 3,
+    "Plans/Plan_Document_System.md": 3,
+    "Plans/Planning_Wizard.md": 4,
+    "Plans/Progression_Gates.md": 1,
+    "Plans/Prompt_Pipeline.md": 3,
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md": 3,
+    "Plans/Release_Supply_Chain.md": 4,
+    "Plans/Run_Graph_View.md": 2,
+    "Plans/Run_Modes.md": 2,
+    "Plans/Runtime_Artifacts_Panel.md": 3,
+    "Plans/Section15_MVP_Promoted_Features_Spec.md": 9,
+    "Plans/Skills_System.md": 2,
+    "Plans/Tools.md": 11,
+    "Plans/UI_Command_Catalog.md": 1,
+    "Plans/UI_Wiring_Rules.md": 1,
+    "Plans/Widget_System.md": 4,
+    "Plans/WorktreeGitImprovement.md": 3,
+    "Plans/agent-rules-context.md": 2,
+    "Plans/assistant-chat-design.md": 3,
+    "Plans/assistant-memory-subsystem.md": 2,
+    "Plans/chain-wizard-flexibility.md": 1,
+    "Plans/feature-list.md": 1,
+    "Plans/human-in-the-loop.md": 3,
+    "Plans/interview-subagent-integration.md": 5,
+    "Plans/newfeatures.md": 2,
+    "Plans/newtools.md": 10,
+    "Plans/orchestrator-subagent-integration.md": 14,
+    "Plans/rewrite-tie-in-memo.md": 1,
+    "Plans/storage-plan.md": 3,
+    "Plans/usage-feature.md": 5
+  },
+  "pnc019_boundary": {
+    "buildability_gate_passed": false,
+    "buildability_gate_passed_must_remain_false": true,
+    "buildability_status": "blocked",
+    "executable_lifecycle_certification_complete": false,
+    "no_worknodes_created": true,
+    "node_readiness_status": "blocked_runtime_certification_incomplete",
+    "nodeseed_candidates_created": false,
+    "open_blocker_count": 2,
+    "ordinary_product_worknodes_allowed": false,
+    "pnc019_receipt_not_refreshed": true,
+    "runtime_blocked_by_ref": "PNC-019",
+    "runtime_enabled": false,
+    "runtime_lifecycle_and_clean_room_harness_unmodified": true
+  },
+  "processed_non_runtime_rows": 216,
+  "remaining_pnc019_rows": [
+    "fable-20260706-report-l0548-critical-l506-510-registry-itself-states-buildability-gate-passed-false-e29bd955",
+    "Plans/.implementation_readiness::{IRB-005,IRB-011}"
+  ],
+  "schema_id": "pm.audit.remaining_action_plan_repair_report.v1",
+  "source_action_plan": "Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl",
+  "subagent_lanes_completed": [
+    "PlanUnit AC/dependency",
+    "GUI concept/design residuals",
+    "owner decisions",
+    "P2/P3 doc hygiene cluster A",
+    "P2/P3 doc hygiene cluster B",
+    "P2/P3 doc hygiene cluster C",
+    "registry/closure",
+    "validator/currentness"
+  ],
+  "successor_action_plan": "Plans/.audits/fable-20260706/remaining_action_plan_after_repair.jsonl",
+  "successor_action_plan_disposition_counts": {
+    "duplicate_of_closed_row": 3,
+    "explicitly_deferred": 35,
+    "not_for_plan": 5,
+    "out_of_scope_runtime_certification": 2,
+    "repaired": 168,
+    "repaired_superseded": 3,
+    "source_lineage_only": 1,
+    "stale_retired": 1
+  },
+  "validator_closure_status_counts": {
+    "explicitly_deferred": 35,
+    "not_for_plan": 5,
+    "repaired": 174,
+    "source_lineage_only": 1,
+    "stale_retired": 1
+  },
+  "validator_results": [
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass"
+    },
+    {
+      "command": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 60",
+      "status": "pass"
+    },
+    {
+      "command": "git diff --check",
+      "status": "pass"
+    }
+  ],
+  "validator_results_recorded_at_utc": "2026-07-08T01:34:16Z"
+}

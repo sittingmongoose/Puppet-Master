@@ -1741,3 +1741,13 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
 
 Phase 2B batch 047 atomized `Document_Packaging_Policy-S0001` through `Document_Packaging_Policy-S0023` into `DPP-002` through `DPP-029`, with structural parent spans `Document_Packaging_Policy-S0007` and `Document_Packaging_Policy-S0017` mapped to their child units while preserving anchor alias `7`. Phase 2B batch 048 structurally dispositioned `Document_Packaging_Policy-S0024`, `S0025`, `S0026`, and `S0028`, and retired `DPP-001` as migration-lineage compatibility coverage for `Document_Packaging_Policy-S0027`. `Plans/Document_Packaging_Policy.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+
+This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 334` (repaired; source line 1133; `sfk-803c53af977a001393cd07fc`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L90-114: 2.0a-2.0b documents 5+ unresolved SSOT naming contradictions (`chat.thread.created` vs `chat.thread_created`, etc.) as *permanent policy* rather than pointing to a resolution owner/date an implementer cannot know which shape to emit.
+- `registry_line 335` (repaired; source line 1134; `sfk-2ebbc3349354d2a57460398b`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L211: "the run MUST fail" has no defined exit code, error format, or partial-write rollback spec.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
