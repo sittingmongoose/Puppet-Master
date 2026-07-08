@@ -2,9 +2,9 @@
 
 Source: `Plans/CLI_Bridged_Providers.md`
 
-Source lines: L69-L202
+Source lines: L94-L231
 
-Source SHA256: `343107263a39fdf98bdde8b8ece01c26d3f7c26664a0af42a24432be3abdde2c`
+Source SHA256: `c58ca345332cd6dd1195020ca2b54d27b46879421cad26a225f3cbcfaee683d7`
 
 ---
 
@@ -89,6 +89,8 @@ The existing `working_directory` passthrough is sufficient for assistant worktre
 
 When a thread has a worktree binding, MCP tools and CLI-bridged provider launches receive the frozen execution-context `working_directory`; tool invocations that use `cwd` run in that worktree path, and git-aware commands such as `git status` resolve git context from that cwd. No additional provider-specific worktree configuration is required.
 
+<a id="PROVIDER-TRANSFORM"></a>
+
 Normalized output preservation (`normalized output preservation`) is mandatory for every bridge. CLI/server adapters must keep provider output, tool-call fragments, errors, truncation markers, ordering/repair evidence, usage/cost observations, and correlation ids in the normalized stream before UI, storage, or retry logic consumes them; adapters may redact secrets, but they must not collapse provider output into unstructured text or drop fields needed to replay, audit, or compare the request.
 
 ### Provider guard rails
@@ -122,6 +124,8 @@ For provider-facade `/auth/ingestion`, CLI/server bridges preserve credential pr
 Gemini/VertexAI adapter initialization is fail-fast: a nil/error client init result MUST propagate immediately as a provider error and must not be stored behind a typed-interface value that later appears valid.
 
 Bridged providers must map upstream termination metadata into PM's normalized event stream. A provider `finishReason=length` attached to an incomplete `tool_use` never becomes an `/execute` request; the bridge emits a closing `tool_result(ok=false, error=truncated_by_length)` event for downstream tool policy to record without synthesizing missing arguments.
+
+<a id="ERROR-CLASSIFICATION"></a>
 
 Provider-adapter finish-reason canon includes `FinishReasonUnknown`, `FinishReasonContentFilter`, and `FinishReasonSafety`; `finishReason=length` on an incomplete tool call is a `/no-dispatch` path, while empty-choices, nil-client, JSON, and bounds guards fail as structured provider errors before tool dispatch.
 

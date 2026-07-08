@@ -79,7 +79,9 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 ### 5.1 Reserved diagnostic categories and required details keys
 
-| Category | Required `diagnostic.details` keys | Semantics |
+The required key list below is category-specific and is applied after the common `ProviderDiagnosticDetailsV1` slot from `Plans/CLI_Bridged_Providers.md`. Runtime-scoped diagnostics MUST include `schema_version`, `run_id`, `source`, and `attempt_id`; pre-admission diagnostics that have no runtime dispatch use `attempt_id = "pre_attempt"` and preserve provider/config identity in `provider_attempt_ref?` or `correlation_id?`.
+
+| Category | Category-specific required `diagnostic.details` keys | Semantics |
 |---|---|---|
 | `run_started` | `run_id`, `source`, `timestamp` | Emitted once when the adapter begins processing a provider run. |
 | `run_finished` | `run_id`, `source`, `timestamp`, `outcome` | Emitted once when the adapter completes processing. `outcome` is `"success"` or `"failed"`. |
@@ -100,6 +102,19 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 | `overseer_audit_verdict` | `run_id`, `source`, `final_verdict`, `verifier_passed`, `forced_remediation` | Final audit verdict. May force remediation even if verifier passed. |
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Glossary.md, ContractName:Plans/Executor_Protocol.md, Gate:GATE-009
+
+### 5.1A Versioned continuity and diagnostic schema slot
+
+All external-reference mappings in this document consume the facade-owned `ProviderDiagnosticDetailsV1` slot from `Plans/CLI_Bridged_Providers.md`. The slot is the legal location for `attempt_id`, `provider_attempt_ref?`, `correlation_id?`, sequence/order metadata, actor/account refs, trust-state refs, and pressure-state refs. This document may require those fields for A2A/native mappings, but it does not introduce new V0 event types or move PM runtime identity into A2A.
+
+Continuity constraints:
+- reconnect or observe-only flows for the same PM runtime attempt keep the same `attempt_id`
+- retries, prerequisite resumes, remediation reruns, and restore-before-reruns create a new PM runtime `attempt_id`
+- upstream provider/session/task IDs are recorded only in `provider_attempt_ref?` or `correlation_id?`
+- `tier_boundary`, `from_tier`, and `to_tier` remain compatibility/source labels inside diagnostics and MUST NOT become current PM runtime ownership or routing keys
+- actor, account, trust, switch, and pressure signals are references to owner records, not replacement schema branches inside A2A
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
 ### 5.2 Namespacing rule (normative)
 
@@ -367,13 +382,18 @@ Rules:
 
 #### P5 provider-stream continuity recovery requirements
 
-- The doc internally contradicts itself on attempt continuity: - 2026-03-09 addenda say normalized streams MUST preserve `attempt_id` - but none of the reserved diagnostic category schemas actually expose `attempt_id` - adapters currently have no canonical way to satisfy both requirements at once
-- `tier_boundary` is not just stale prose here; it is a reserved diagnostic category with hard detail keys (`from_tier` / `to_tier`). That means the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep.
-- Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.
-- The provider boundary still lacks a legal place for rewrite-era correlation and pressure semantics: - bridged envelopes remain thinner than their own addenda - A2A still forbids new categories while the rewrite needs actor/role/account/switch/trust signals at the stream layer - `provider_attempt_ref?` and similar continuity fields are still conceptually present but not fully owned by a stable schema slot
-- The A2A addenda require `attempt_id` continuity, but the schema anchor never permits it explicitly.
+Provider-stream continuity is resolved through the versioned common diagnostic-details slot in §5.1A and the facade owner in `Plans/CLI_Bridged_Providers.md`.
+
+Normative requirements:
+- every runtime-scoped reserved diagnostic category exposes PM runtime `attempt_id` through `ProviderDiagnosticDetailsV1`
+- reconnect and observe-only provider flows preserve the same PM `attempt_id`
+- retries, remediation reruns, prerequisite resumes, and restore-before-reruns create a new PM `attempt_id`
+- `provider_attempt_ref?` records upstream provider/session/task continuity and MUST NOT replace PM runtime identity
+- `correlation_id?` and `sequence?` preserve bridge ordering and replay/repair evidence when the upstream protocol provides it
+- actor, account, trust, switch, and pressure signals are carried as references to owner records through `actor_ref?`, `account_ref?`, `trust_state_ref?`, and `pressure_state_ref?`
+- `tier_boundary`, `from_tier`, and `to_tier` are compatibility/source diagnostic labels only; they do not reintroduce tier-era runtime ownership
 - Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.
-- Add explicit versioning/migration notes where A2A or bridged categories/fields must grow.
+- Add explicit versioning/migration notes when A2A or bridged fields grow beyond `ProviderDiagnosticDetailsV1`.
 - Model-wave synthesis from Claude Opus 4.6 fleet sweep across Plans/**. Focuses on Orchestrator-model impact from the transition away from Phase/Task/Subtask/Iteration tier hierarchy toward a node-graph / work-package / feature-seam execution model.
 - OpenCode and other bridged runtimes may switch or obscure upstream accounts behind the bridge; the docs currently do not say whether this is capturable, opaque-but-accepted, or a hard gap.
 - Keep page-tab and panel-subview resolution as destination-layer concepts, not core identity concepts.
@@ -1975,15 +1995,16 @@ owner_hints:
 
 ```yaml
 plan_unit_id: PSMERA-025
-unit_type: deferred_reconciliation
+unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
 canonical_text: >-
-  The P5 provider-stream continuity recovery bundle records unresolved but preserved schema gaps: attempt_id
-  continuity is required but reserved diagnostic schemas do not expose attempt_id, tier_boundary embeds stale
-  tier semantics, provider_attempt_ref? lacks a stable slot, actor/account/switch/trust metadata needs
-  versioning, OpenCode account opacity remains unresolved, and page-tab/panel-subview remain destination-layer
-  concepts rather than core identity concepts.
+  Provider-stream continuity recovery uses the versioned ProviderDiagnosticDetailsV1 slot from
+  Plans/CLI_Bridged_Providers.md: runtime-scoped diagnostics expose attempt_id, reconnect and observe-only flows
+  preserve the same PM attempt_id, retries/remediation/prerequisite resumes/restore-before-reruns create new PM
+  attempt_id values, provider_attempt_ref? stores upstream provider/session/task continuity, actor/account/trust/pressure
+  values are owner refs, tier_boundary/from_tier/to_tier remain compatibility diagnostic labels only, and page-tab/panel-subview
+  remain destination-layer concepts rather than core identity concepts.
 gui_related: true
 gui_classification_reason: "This unit records schema gaps that affect UI destination-layer routing terms as well as backend stream schema ownership."
 split_recommended: true
@@ -2000,6 +2021,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "Provider-Stream Continuity Schema Gaps And Stale Routing Dispositions remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "Runtime-scoped diagnostic mappings expose attempt_id through ProviderDiagnosticDetailsV1."
+  - "provider_attempt_ref? is a provider/session continuity reference and never replaces PM runtime attempt_id."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -2011,7 +2034,7 @@ context_scope: provider_stream_deferred_reconciliation
 implementation_surfaces:
   - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
 node_compile_hint:
-  mode: blocked_schema_gap_disposition
+  mode: provider_stream_continuity_schema_contract
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0042"
@@ -2041,9 +2064,9 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes:
   - "The reserved tier_boundary diagnostic category is compatibility-sensitive and cannot be reconciled by a terminology sweep."
-  - "A future owner-doc/schema versioning pass is required for attempt_id, provider_attempt_ref?, actor/account/switch/trust metadata, and OpenCode account opacity."
+  - "ProviderDiagnosticDetailsV1 is the current versioned owner slot for attempt_id, provider_attempt_ref?, actor/account/trust, and pressure metadata."
 stale_retired_dispositions:
-  - "tier_boundary embeds stale Phase/Task/Subtask/Iteration tier semantics at the stream-schema layer."
+  - "tier_boundary/from_tier/to_tier are compatibility diagnostic labels only and do not restore Phase/Task/Subtask/Iteration runtime ownership."
 owner_hints:
   - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
   - "Plans/CLI_Bridged_Providers.md"
@@ -2166,6 +2189,6 @@ Original spans from `Provider_Stream_Mapping_External_Reference_A2A-S0001` throu
 
 This addendum repairs non-runtime provider-stream rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Keeps `sfk-bbe24dbaee588f11b4a55c4d` explicitly deferred: provider diagnostic category schemas need a versioned schema-owner slice before closure.
-- Keeps `sfk-e98bc6a59c457b5cf85d8d99` explicitly deferred: raw P5 continuity/recovery audit prose must be converted into schema text in a provider-stream lane before closure.
+- Repairs `sfk-bbe24dbaee588f11b4a55c4d`: reserved diagnostic categories now consume the versioned `ProviderDiagnosticDetailsV1` schema slot, exposing runtime `attempt_id` and provider continuity fields without adding V0 event types.
+- Repairs `sfk-e98bc6a59c457b5cf85d8d99`: raw P5 continuity/recovery audit prose has been converted into normative provider-stream continuity requirements tied to `ProviderDiagnosticDetailsV1`.
 - Repairs `sfk-f343634c482c449df4c8d04f`: `approval_scope_key` format is `approval:{project_id}:{policy_axis}:{target_hash}:{operation_class}`. `target_hash` is lowercase hex SHA-256 over the normalized target identity. Keys are recomputed when project, policy axis, target, or operation class changes.

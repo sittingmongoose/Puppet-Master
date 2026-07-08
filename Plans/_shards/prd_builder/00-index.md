@@ -1,6 +1,6 @@
 # Shard Index: Plans/PRD_Builder.md
 
-Generated: 2026-07-08T16:32:36Z
+Generated: 2026-07-08T18:25:16Z
 
 Source SHA256: `e9769cb50487f832d0101abd9fea1326ce9b589a88ed94975e4f0665075de62a`
 

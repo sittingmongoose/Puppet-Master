@@ -2,9 +2,9 @@
 
 Source: `Plans/newfeatures.md`
 
-Source lines: L94-L1200
+Source lines: L94-L1205
 
-Source SHA256: `ea117c0a477a28605fb0b14c4c7c32646f871153efefa922bcd5051d5ce4e3b0`
+Source SHA256: `09c9b55682dcc0d23f24a3512c14e70168dd50cbcdafcbdfc88e9518d3d2f9c2`
 
 ---
 
@@ -256,7 +256,9 @@ canonical_text: >-
   concern, corroboration, promotion, graph-patch, trust state, and command-catalog fields are required feature families.
   Runtime object summaries refresh object_kind around rewrite-era lineage objects including Concern, Graph Patch, Feature
   Seam, Work Package, History, Ledger, /timeline, usage-linked receipts, Crosswalk.md /open contracts, and the
-  distinction between chronological History and structured durable Ledger inspection.
+  distinction between chronological History and structured durable Ledger inspection. Corroboration, promotion, graph-patch,
+  and trust-state summary coverage consumes the concrete governance runtime record schemas and state machines from
+  Contracts_V0 CV-315 and storage-plan SP-233 rather than leaving those families as placeholders.
 gui_related: true
 gui_classification_reason: The unit preserves user-visible command-catalog, route/open, and runtime object summary gaps.
 split_recommended: false
@@ -266,6 +268,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - /corroboration/promotion/graph-patch remains a preserved required feature family.
+- corroboration, promotion, graph-patch, and trust-state families are owner-linked to CV-315 and SP-233 schemas/state machines.
 - object_kind runtime object summary language remains preserved.
 - History and Ledger remain distinguished in the summary.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
@@ -298,11 +301,13 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
+- Contracts_V0.md CV-315 owns governance runtime record schemas and state machines for corroboration, promotion, graph-patch, and projection_trust.
+- storage-plan.md SP-233 owns the durable storage keys and projection trust revalidation gates.
 - Crosswalk.md owns referenced /open contracts; this document preserves high-level feature-summary coverage only.
 owner_hints:
 - Plans/newfeatures.md
 preserved_contractrefs:
-- 'ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md'
+- 'ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
 ```
 
 ### N-007 - Broad Summary Compression Guard

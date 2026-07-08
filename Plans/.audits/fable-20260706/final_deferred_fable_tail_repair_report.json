@@ -1,0 +1,253 @@
+{
+  "schema_id": "pm.audit.final_deferred_fable_tail_repair_report.v1",
+  "audit_id": "fable-20260706-final-deferred-tail-repair",
+  "generated_at_utc": "2026-07-08T18:18:43Z",
+  "scope": "final six explicitly_deferred FABLE tail rows before WorkNode generation",
+  "forbidden_artifacts_created": [],
+  "subagents": [
+    {
+      "lane": "UCC schema expansion",
+      "mode": "read_only",
+      "status": "completed"
+    },
+    {
+      "lane": "provider-stream diagnostics",
+      "mode": "read_only",
+      "status": "completed"
+    },
+    {
+      "lane": "provider-stream P5 continuity",
+      "mode": "read_only",
+      "status": "completed"
+    },
+    {
+      "lane": "newfeatures schemas/state machines",
+      "mode": "read_only",
+      "status": "completed"
+    },
+    {
+      "lane": "OpenCode anchors",
+      "mode": "read_only",
+      "status": "completed"
+    },
+    {
+      "lane": "auto_decisions identity",
+      "mode": "read_only",
+      "status": "completed"
+    },
+    {
+      "lane": "buildability/PNC/closure",
+      "mode": "read_only",
+      "status": "completed"
+    }
+  ],
+  "final_disposition_counts": {
+    "input_explicitly_deferred": 6,
+    "repaired": 6,
+    "remaining_explicitly_deferred": 0
+  },
+  "pnc019_source_hash_impact": {
+    "requires_governed_rerun": true,
+    "reason": "Plans/Orchestrator_Page.md is part of the PNC-019 source-hash set and changed for the newfeatures/schema-state-machine repair.",
+    "required_commands": [
+      "python3 scripts/pm-pnc019-certification-harness.py run",
+      "python3 scripts/pm-plan-index.py generate",
+      "python3 scripts/pm-implementation-readiness.py generate"
+    ],
+    "status": "regenerated_current"
+  },
+  "validation_status": "pass",
+  "validation_results": [
+    {
+      "cmd": "python3 scripts/pm-pnc019-certification-harness.py run",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py generate",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-implementation-readiness.py generate",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 60",
+      "status": "pass"
+    }
+  ],
+  "rows": [
+    {
+      "stable_finding_key": "sfk-ddc264cdea296caf349adecd",
+      "registry_line": 196,
+      "lane": "UCC schema expansion",
+      "final_disposition": "repaired",
+      "closure_reason": "UCC-049 through UCC-106 are repaired by a strict UI command schema overlay: every row now exposes command_id, payload_required, payload_optional, result_fields, error_codes, disabled_reason_codes, and owner_doc_ref through concrete cmd.* tokens or strict owner-referenced family schemas.",
+      "owner_doc_evidence": [
+        "Plans/UI_Command_Catalog.md:8085",
+        "Plans/UI_Command_Catalog.md:8088"
+      ],
+      "reopen_condition": "Reopen if the UCC-049 through UCC-106 overlay is removed, loses any required schema field, or stops owner-linking prose-only command families to a concrete schema owner.",
+      "pnc019_source_hash_impact": "unchanged_by_this_row",
+      "non_buildability_blocking_rationale": "No WorkNodes, NodeSeeds, runtime launches, implementation files, final manifests, or production build tasks were created; buildability is only claimed if validators accept regenerated governance artifacts."
+    },
+    {
+      "stable_finding_key": "sfk-bbe24dbaee588f11b4a55c4d",
+      "registry_line": 313,
+      "lane": "provider-stream diagnostics",
+      "final_disposition": "repaired",
+      "closure_reason": "Provider stream diagnostic schemas are repaired by the versioned ProviderDiagnosticDetailsV1 slot: runtime-scoped reserved diagnostics now carry attempt_id, with pre-admission diagnostics explicitly using pre_attempt and provider identity kept separate in provider_attempt_ref? or correlation_id?.",
+      "owner_doc_evidence": [
+        "Plans/CLI_Bridged_Providers.md:41",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:82",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:106",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:2192"
+      ],
+      "reopen_condition": "Reopen if reserved provider diagnostic categories no longer consume ProviderDiagnosticDetailsV1 or if runtime diagnostics lose the attempt_id slot/continuity rule.",
+      "pnc019_source_hash_impact": "unchanged_by_this_row",
+      "non_buildability_blocking_rationale": "No WorkNodes, NodeSeeds, runtime launches, implementation files, final manifests, or production build tasks were created; buildability is only claimed if validators accept regenerated governance artifacts."
+    },
+    {
+      "stable_finding_key": "sfk-e98bc6a59c457b5cf85d8d99",
+      "registry_line": 314,
+      "lane": "provider-stream P5 continuity",
+      "final_disposition": "repaired",
+      "closure_reason": "Provider stream P5 continuity/recovery prose is repaired by integrated normative requirements tied to ProviderDiagnosticDetailsV1: reconnect and observe-only flows preserve attempt_id, retries/remediation/restores create new PM attempt_id values, and tier_boundary labels are compatibility metadata rather than runtime identity.",
+      "owner_doc_evidence": [
+        "Plans/CLI_Bridged_Providers.md:41",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:106",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:388",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:396",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:2002",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:2193"
+      ],
+      "reopen_condition": "Reopen if P5 provider-stream continuity returns to raw audit prose or loses the versioned attempt_id/provider_attempt_ref continuity requirements.",
+      "pnc019_source_hash_impact": "unchanged_by_this_row",
+      "non_buildability_blocking_rationale": "No WorkNodes, NodeSeeds, runtime launches, implementation files, final manifests, or production build tasks were created; buildability is only claimed if validators accept regenerated governance artifacts."
+    },
+    {
+      "stable_finding_key": "sfk-382a8aaadd071809899261b5",
+      "registry_line": 351,
+      "lane": "newfeatures schemas/state machines",
+      "final_disposition": "repaired",
+      "closure_reason": "newfeatures N-006 is repaired by concrete owner links: Contracts_V0 CV-315 defines governance runtime record schemas/state machines for corroboration, promotion, graph-patch, and projection_trust, storage-plan SP-233 defines durable keys and trust revalidation gates, and Orchestrator/Run Graph/newfeatures consume those owner definitions.",
+      "owner_doc_evidence": [
+        "Plans/newfeatures.md:344",
+        "Plans/newfeatures.md:354",
+        "Plans/newfeatures.md:387",
+        "Plans/Contracts_V0.md:20064",
+        "Plans/Contracts_V0.md:20101",
+        "Plans/storage-plan.md:16631",
+        "Plans/storage-plan.md:16651",
+        "Plans/Orchestrator_Page.md:174",
+        "Plans/Run_Graph_View.md:639",
+        "Plans/newfeatures.md:1225",
+        "Plans/newfeatures.md:1232"
+      ],
+      "reopen_condition": "Reopen if N-006 stops owner-linking corroboration, promotion, graph-patch, or trust-state coverage to CV-315/SP-233, or if those owner schemas/state machines are removed.",
+      "pnc019_source_hash_impact": "Plans/Orchestrator_Page.md is a PNC-019 source hash input, so governed PNC/index/readiness regeneration is required.",
+      "non_buildability_blocking_rationale": "No WorkNodes, NodeSeeds, runtime launches, implementation files, final manifests, or production build tasks were created; buildability is only claimed if validators accept regenerated governance artifacts."
+    },
+    {
+      "stable_finding_key": "sfk-d180028c03fc70fb93e6bfb8",
+      "registry_line": 352,
+      "lane": "OpenCode anchors",
+      "final_disposition": "repaired",
+      "closure_reason": "OpenCode stable-anchor coverage is repaired: CLI_Bridged_Providers publishes PROVIDER-TRANSFORM and ERROR-CLASSIFICATION anchors, Models_System publishes MODEL-OVERFLOW-DETECTION/OVERFLOW-DETECTION and MODEL-RETRY-POLICY/RETRY-POLICY anchors, and OCM records those anchors as repaired alongside the previously landed Prompt/Tools/FinalGUI anchors.",
+      "owner_doc_evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:141",
+        "Plans/OpenCode_Coverage_Matrix.md:142",
+        "Plans/OpenCode_Coverage_Matrix.md:219",
+        "Plans/OpenCode_Coverage_Matrix.md:237",
+        "Plans/CLI_Bridged_Providers.md:175",
+        "Plans/CLI_Bridged_Providers.md:211",
+        "Plans/Models_System.md:547",
+        "Plans/Models_System.md:548",
+        "Plans/Models_System.md:1270",
+        "Plans/Models_System.md:1271",
+        "Plans/OpenCode_Coverage_Matrix.md:1215"
+      ],
+      "reopen_condition": "Reopen if OCM marks CLI bridged-provider transform/error-classification or Models overflow/retry anchors missing, or if those owner anchors are removed from their exact owner docs.",
+      "pnc019_source_hash_impact": "unchanged_by_this_row",
+      "non_buildability_blocking_rationale": "No WorkNodes, NodeSeeds, runtime launches, implementation files, final manifests, or production build tasks were created; buildability is only claimed if validators accept regenerated governance artifacts."
+    },
+    {
+      "stable_finding_key": "sfk-d62d739e27a728d8ad210435",
+      "registry_line": 389,
+      "lane": "auto_decisions identity",
+      "final_disposition": "repaired",
+      "closure_reason": "auto_decisions identity semantics are repaired without renumbering history: future rows must use unique decision_id values, validate-auto-decisions grandfathering is restricted to exact historical (decision_id, inputs_hash) identities, and pm-governance-seal.py refuses ambiguous duplicate-id upserts instead of mutating grandfathered rows.",
+      "owner_doc_evidence": [
+        "Plans/Release_Supply_Chain.md:657",
+        "Plans/Release_Supply_Chain.md:667",
+        "Plans/auto_decisions.schema.json:26",
+        "scripts/pm-plans-verify.py:409",
+        "scripts/pm-plans-verify.py:528",
+        "scripts/pm-plans-verify.py:582",
+        "scripts/pm-governance-seal.py:199",
+        "scripts/pm-governance-seal.py:202"
+      ],
+      "reopen_condition": "Reopen if validate-auto-decisions allows a new duplicate decision_id or changed duplicate identity, or if pm-governance-seal.py again upserts ambiguous duplicate decision_id rows by first match.",
+      "pnc019_source_hash_impact": "unchanged_by_this_row",
+      "non_buildability_blocking_rationale": "No WorkNodes, NodeSeeds, runtime launches, implementation files, final manifests, or production build tasks were created; buildability is only claimed if validators accept regenerated governance artifacts."
+    }
+  ],
+  "validated_at_utc": "2026-07-08T18:30:04Z",
+  "buildability_gate_result": {
+    "buildability_gate_passed": true,
+    "buildability_status": "pass",
+    "open_blocker_count": 0,
+    "source_hashes_current": true,
+    "node_readiness_status": "ready_for_node_compile",
+    "pnc019_receipt_status": "pass",
+    "node_readiness_report_status": "ready_for_node_compile",
+    "claim_boundary": "Buildability remains pass only because PNC-019, plan index, implementation-readiness, closure, evidence, shards, and run-gates validators accept the regenerated artifacts."
+  }
+}

@@ -4,7 +4,7 @@ Source: `Plans/Run_Graph_View.md`
 
 Source lines: L188-L817
 
-Source SHA256: `bba41eafbbded5865b46f24362f9ee697d7f44d60d4073993c9c14ac9862b703`
+Source SHA256: `2dcf8ef7b900d5f80ffcbec627bbdd65080b64bce72858676b52190ebead51b0`
 
 ---
 
@@ -457,9 +457,9 @@ unblocks: [RGV-010]
 acceptance_criteria:
 - Live-status tables consume canonical runtime records and projections first.
 - Stale or degraded projection trust is disclosed before live claims or live action affordances.
-- Concern merge, split, and supersession remain discussion-only until concern identity/routing rules become contract-level.
+- Concern merge, split, and supersession consume contract-level concern and governance-record identity rather than local Run Graph state.
 - Concerns have durable identity, lineage, source links, status, resolution_kind, and rationale fields rather than only badges or notes.
-- Graph patch application that changes canonical graph generation is hard-gated or runtime-controlled.
+- Graph patch application that changes canonical graph generation consumes `CV-315` graph_patch state transitions and `SP-233` durable storage keys, and remains hard-gated or runtime-controlled.
 - Mutating Run Graph commands carry projection-trust payloads and route through allowed_action_ids-backed runtime actions when blocked/recovery action identity is involved.
 validation_surfaces:
 - Projection trust/manual action-gating review.
@@ -507,7 +507,7 @@ owner_hints:
 - Plans/Executor_Protocol.md
 owner_adjudication:
   candidate_owners: [Plans/Run_Graph_View.md, Plans/Contracts_V0.md, Plans/Executor_Protocol.md]
-  evidence: Concern identity and graph projection trust are consumed by Run Graph, while event/runtime schema authority remains in Contracts and Executor owner docs.
+  evidence: Concern identity and graph projection trust are consumed by Run Graph, while governance record schemas and projection-trust state machines are owned by Contracts_V0 CV-315 and storage-plan SP-233.
 ```
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md

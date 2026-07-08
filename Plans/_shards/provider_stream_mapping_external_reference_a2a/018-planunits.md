@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`
 
-Source lines: L387-L2151
+Source lines: L407-L2174
 
-Source SHA256: `a497a4740f6579a773ecc70aced0ba62b3da2bd91e4afd75b33b83340508eee4`
+Source SHA256: `a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906`
 
 ---
 
@@ -1599,15 +1599,16 @@ owner_hints:
 
 ```yaml
 plan_unit_id: PSMERA-025
-unit_type: deferred_reconciliation
+unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
 canonical_text: >-
-  The P5 provider-stream continuity recovery bundle records unresolved but preserved schema gaps: attempt_id
-  continuity is required but reserved diagnostic schemas do not expose attempt_id, tier_boundary embeds stale
-  tier semantics, provider_attempt_ref? lacks a stable slot, actor/account/switch/trust metadata needs
-  versioning, OpenCode account opacity remains unresolved, and page-tab/panel-subview remain destination-layer
-  concepts rather than core identity concepts.
+  Provider-stream continuity recovery uses the versioned ProviderDiagnosticDetailsV1 slot from
+  Plans/CLI_Bridged_Providers.md: runtime-scoped diagnostics expose attempt_id, reconnect and observe-only flows
+  preserve the same PM attempt_id, retries/remediation/prerequisite resumes/restore-before-reruns create new PM
+  attempt_id values, provider_attempt_ref? stores upstream provider/session/task continuity, actor/account/trust/pressure
+  values are owner refs, tier_boundary/from_tier/to_tier remain compatibility diagnostic labels only, and page-tab/panel-subview
+  remain destination-layer concepts rather than core identity concepts.
 gui_related: true
 gui_classification_reason: "This unit records schema gaps that affect UI destination-layer routing terms as well as backend stream schema ownership."
 split_recommended: true
@@ -1624,6 +1625,8 @@ depends_on:
 unblocks: []
 acceptance_criteria:
   - "Provider-Stream Continuity Schema Gaps And Stale Routing Dispositions remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "Runtime-scoped diagnostic mappings expose attempt_id through ProviderDiagnosticDetailsV1."
+  - "provider_attempt_ref? is a provider/session continuity reference and never replaces PM runtime attempt_id."
   - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
 validation_surfaces:
@@ -1635,7 +1638,7 @@ context_scope: provider_stream_deferred_reconciliation
 implementation_surfaces:
   - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
 node_compile_hint:
-  mode: blocked_schema_gap_disposition
+  mode: provider_stream_continuity_schema_contract
   create_worknodes: false
 source_lineage:
   - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0042"
@@ -1665,9 +1668,9 @@ negative_constraints:
 preserved_contractrefs: []
 compatibility_only_notes:
   - "The reserved tier_boundary diagnostic category is compatibility-sensitive and cannot be reconciled by a terminology sweep."
-  - "A future owner-doc/schema versioning pass is required for attempt_id, provider_attempt_ref?, actor/account/switch/trust metadata, and OpenCode account opacity."
+  - "ProviderDiagnosticDetailsV1 is the current versioned owner slot for attempt_id, provider_attempt_ref?, actor/account/trust, and pressure metadata."
 stale_retired_dispositions:
-  - "tier_boundary embeds stale Phase/Task/Subtask/Iteration tier semantics at the stream-schema layer."
+  - "tier_boundary/from_tier/to_tier are compatibility diagnostic labels only and do not restore Phase/Task/Subtask/Iteration runtime ownership."
 owner_hints:
   - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
   - "Plans/CLI_Bridged_Providers.md"

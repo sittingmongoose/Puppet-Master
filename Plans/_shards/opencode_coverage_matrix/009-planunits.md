@@ -2,9 +2,9 @@
 
 Source: `Plans/OpenCode_Coverage_Matrix.md`
 
-Source lines: L264-L1192
+Source lines: L264-L1197
 
-Source SHA256: `b91d6210dca3579223fe6095c487c28ea6fdbede4e0446c68246ee38b4a14001`
+Source SHA256: `d775247c8b00867abc5374cd74a1973a1943935b5395298ef7079d37c0c9682e`
 
 ---
 
@@ -391,7 +391,7 @@ plan_unit_id: OCM-009
 unit_type: requirement
 status: accepted
 owner_doc: Plans/OpenCode_Coverage_Matrix.md
-canonical_text: 'The stable-anchor audit preserves missing-anchor findings for CLI_Bridged_Providers.md #PROVIDER-TRANSFORM and #ERROR-CLASSIFICATION, Models_System.md #OVERFLOW-DETECTION and #RETRY-POLICY, Prompt_Pipeline.md context-assembly/cache-preservation and compaction-threshold anchors, Tools.md #MCP-INTEGRATION, and optional future FinalGUISpec.md #SKILLS-TAB.'
+canonical_text: 'The stable-anchor audit records repaired owner anchors for CLI_Bridged_Providers.md #PROVIDER-TRANSFORM and #ERROR-CLASSIFICATION, Models_System.md #MODEL-OVERFLOW-DETECTION/#OVERFLOW-DETECTION and #MODEL-RETRY-POLICY/#RETRY-POLICY, Prompt_Pipeline.md #CONTEXT-ASSEMBLY-CACHE-PRESERVATION/#COMPACTION/#COMPACTION-THRESHOLDS, Tools.md #MCP-INTEGRATION, and FinalGUISpec.md #SKILLS-TAB.'
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible audit surfaces, settings, tabs, or Doctor/currentness findings.
 split_recommended: false
@@ -405,13 +405,13 @@ acceptance_criteria:
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
-risk_class: stable_anchor_gap_audit_findings
+risk_class: stable_anchor_repair_audit_findings
 reasoning_tier: standard
 context_scope: opencode_coverage_matrix_standardization
 implementation_surfaces:
 - Plans/OpenCode_Coverage_Matrix.md
 node_compile_hint:
-  mode: stable_anchor_gap_audit_findings
+  mode: stable_anchor_repair_audit_findings
   create_worknodes: false
 source_lineage:
 - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:OpenCode_Coverage_Matrix-S0007
@@ -419,17 +419,20 @@ preserved_exact_tokens:
 - '#PROVIDER-TRANSFORM'
 - '#ERROR-CLASSIFICATION'
 - '#MODEL-ERRORS'
+- '#MODEL-OVERFLOW-DETECTION'
 - '#OVERFLOW-DETECTION'
+- '#MODEL-RETRY-POLICY'
 - '#RETRY-POLICY'
-- context-assembly/cache-preservation
-- compaction-threshold rules
+- '#CONTEXT-ASSEMBLY-CACHE-PRESERVATION'
+- '#COMPACTION'
+- '#COMPACTION-THRESHOLDS'
 - '#MCP-INTEGRATION'
 - '#SKILLS-TAB'
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Anchor gaps are audit findings, not local implementation tasks.
+- Anchor repairs are audit findings, not local implementation tasks.
 owner_hints:
 - Plans/OpenCode_Coverage_Matrix.md
 preserved_contractrefs: []
@@ -610,7 +613,7 @@ plan_unit_id: OCM-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/OpenCode_Coverage_Matrix.md
-canonical_text: 'Open anchor-addition audit findings preserve CLI_Bridged_Providers.md anchors #PROVIDER-TRANSFORM and #ERROR-CLASSIFICATION, Prompt_Pipeline.md context-assembly/cache-preservation and compaction-threshold anchors, Tools.md #MCP-INTEGRATION, and optional future #SKILLS-TAB if cross-reference tooling requires it.'
+canonical_text: 'Anchor-addition audit findings are repaired for CLI_Bridged_Providers.md anchors #PROVIDER-TRANSFORM and #ERROR-CLASSIFICATION, Prompt_Pipeline.md #CONTEXT-ASSEMBLY-CACHE-PRESERVATION/#COMPACTION/#COMPACTION-THRESHOLDS, Tools.md #MCP-INTEGRATION, FinalGUISpec.md #SKILLS-TAB, and Models_System.md overflow/retry anchors.'
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible audit surfaces, settings, tabs, or Doctor/currentness findings.
 split_recommended: false
@@ -638,16 +641,18 @@ preserved_exact_tokens:
 - Anchor Additions
 - '#PROVIDER-TRANSFORM'
 - '#ERROR-CLASSIFICATION'
-- context-assembly/cache-preservation
-- compaction-threshold rules
+- '#CONTEXT-ASSEMBLY-CACHE-PRESERVATION'
+- '#COMPACTION'
+- '#COMPACTION-THRESHOLDS'
 - '#MCP-INTEGRATION'
 - '#SKILLS-TAB'
-- future work
+- '#MODEL-OVERFLOW-DETECTION'
+- '#MODEL-RETRY-POLICY'
 negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Open anchor additions are audit findings for owner docs.
+- Anchor additions are repaired audit findings for owner docs.
 owner_hints:
 - Plans/OpenCode_Coverage_Matrix.md
 preserved_contractrefs: []
@@ -660,7 +665,7 @@ plan_unit_id: OCM-014
 unit_type: requirement
 status: accepted
 owner_doc: Plans/OpenCode_Coverage_Matrix.md
-canonical_text: 'DRY tightening preserves Models_System.md anchor needs #OVERFLOW-DETECTION and #RETRY-POLICY, provider/account/model reconciliation through Plans/CLI_Bridged_Providers.md, /CLI_Bridged_Providers.md, Plans/Multi-Account.md, /Multi-Account.md, Plans/Models_System.md, /Models_System.md, and the disabled_plugins inconsistency between Plugins_System.md section 7.3 and Personas.md section 3.2.'
+canonical_text: 'DRY tightening preserves repaired Models_System.md overflow/retry anchors #MODEL-OVERFLOW-DETECTION/#OVERFLOW-DETECTION and #MODEL-RETRY-POLICY/#RETRY-POLICY, provider/account/model reconciliation through Plans/CLI_Bridged_Providers.md, /CLI_Bridged_Providers.md, Plans/Multi-Account.md, /Multi-Account.md, Plans/Models_System.md, /Models_System.md, and the disabled_plugins inconsistency between Plugins_System.md section 7.3 and Personas.md section 3.2.'
 gui_related: false
 gui_classification_reason: The unit covers audit metadata, backend policy, owner-boundary, or coverage facts rather than GUI presentation.
 split_recommended: false

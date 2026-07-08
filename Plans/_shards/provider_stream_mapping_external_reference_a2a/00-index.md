@@ -1,30 +1,30 @@
 # Shard Index: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
 
-Generated: 2026-07-08T16:32:36Z
+Generated: 2026-07-08T18:25:16Z
 
-Source SHA256: `a497a4740f6579a773ecc70aced0ba62b3da2bd91e4afd75b33b83340508eee4`
+Source SHA256: `a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `60ce49807c155a9f8d3020960920a77bb1bfb0ec81c52038cfb8950c335ec9fd`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `dbee90483df441ce49e1ada4a9075c56f19d85908adb2d9fc4876ff00b26cd8a`
-- [003 - 1. Purpose](003-1.-purpose.md) L12-L25 `d3bea202fb08fb0394e68d912ffe85411095b95f0736bbe1c6c566b00bf0055d`
-- [004 - 2. Non-goals](004-2.-non-goals.md) L26-L34 `b4decf6c827cd2c00848772c933cb3f29bcee1940cb2ecd0d7d4a0db26267895`
-- [005 - 3. References (DRY)](005-3.-references-dry.md) L35-L49 `6430dad02566617e213949a86cd21cc2e3e101f5fab5979b0a6f79bc81f7923b`
-- [006 - 4. V0-safe primitives used](006-4.-v0-safe-primitives-used.md) L51-L71 `bd91ab1dfd03ec3f10b47e23e8536bcc135362cb9550a46a9f7f63626ade9551`
-- [007 - 5. Canonical diagnostic instrumentation (reserved categories)](007-5.-canonical-diagnostic-instrumentation-reserved-categories.md) L73-L110 `1347ceec64b82b23e719998e9d5c07b47950ae249b57493724cc3f4cc38be42a`
-- [008 - 6. Mapping table 1 — Upstream native events → V0](008-6.-mapping-table-1-upstream-native-events-v0.md) L112-L142 `e075bbe7f45d1d42fce3c290de98504fbbf35eec8029bd65e434d3881c911e78`
-- [009 - 7. Mapping table 2 — Upstream A2A bridge concepts → V0](009-7.-mapping-table-2-upstream-a2a-bridge-concepts-v0.md) L144-L174 `4cace7a780afd5115a0fb545c0bab780c54bd3c5d4c31984192c8993d1c75f0e`
-- [010 - 8. Deterministic rules (normative)](010-8.-deterministic-rules-normative.md) L176-L257 `c74c266d0b8d8c06cfc846b8a9cab14941059df438ba9254838ed6f6e4bfb29d`
-- [011 - 9. Overseer subjective audit protocol instrumentation (normative)](011-9.-overseer-subjective-audit-protocol-instrumentation-normative.md) L259-L291 `2e0af848c8f881bf87ed6da06fd0fadaf5ae64e695a1bdfdf93780269eb4ade2`
-- [012 - 10. Portable patterns (A–E)](012-10.-portable-patterns-a-e.md) L293-L317 `e7f058c3bfb87131a28f945215d436c536d2d976647d31d458a9c1564cadb0fb`
-- [013 - Retry/Remediation Event Continuity Addendum (2026-03-08)](013-retry-remediation-event-continuity-addendum-2026-03-08.md) L319-L331 `d6de2a2a1e7f21b1523f08e74cb5d8daa16052399a091d937cc0ed155ca05eb1`
-- [014 - Stream Wake and Attempt Continuity Consolidation Addendum (2026-03-09)](014-stream-wake-and-attempt-continuity-consolidation-addendum-2026-0.md) L332-L347 `7847f3022c0e4481712f07c98394b2d902f1b13cb9751d399fb7548b820accab`
-- [015 - Runtime Attempt Identity vs Provider Continuity (2026-03-09)](015-runtime-attempt-identity-vs-provider-continuity-2026-03-09.md) L349-L357 `797c58be19001898ec3ed8b26bef5728686b6f55e8329a6f27b1b752f5ba7b6c`
-- [016 - Canonical data-shape reconciliation](016-canonical-data-shape-reconciliation.md) L358-L379 `522fe94970aa5905c690e4d63fd812245c040113e3f0cbbd72b3e1927dfd798c`
-- [017 - Owner / Consumer Map](017-owner-consumer-map.md) L381-L385 `24cd238a12255f933256df269c66b3229fdc9eb1d813010e4415692a954f8255`
-- [018 - PlanUnits](018-planunits.md) L387-L2151 `abf376719684bf480cbea9544f6d8666c13c4f08b61e202e04d4c0bd4c734b50`
-- [019 - Migration Coverage](019-migration-coverage.md) L2153-L2163 `afae225115ee4532bb4dccbc252dbd071cf6d75857239b2e0e9c430018861386`
-- [020 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2165-L2171 `17244520c99e3f07052f69049691aaa4416892a0f7d769c958640a8981482d76`
+- [001 - Preamble](001-preamble.md) L1-L1 `3bc51c967e9d01b81be636817a974989b17024dfaca0d7f60cfa7e95574643e3`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L9 `7b0a963919b623df7fd0346caa14a1ad3a7f0f6c000521094cda7188b276562a`
+- [003 - 1. Purpose](003-1.-purpose.md) L12-L25 `ff72c6713bf056ec9581cf8fc712cd62e11c5b01a9268a93e5a5c7d21cae8056`
+- [004 - 2. Non-goals](004-2.-non-goals.md) L26-L34 `c374d1e8bd16c8ce6715b630bcdaf53ee070314d75597fc12b2de91d895c2d48`
+- [005 - 3. References (DRY)](005-3.-references-dry.md) L35-L49 `89787c87fe94da2183a98aa2d9fe89405f4f660d40234bb2ea6c89e8ef16e953`
+- [006 - 4. V0-safe primitives used](006-4.-v0-safe-primitives-used.md) L51-L71 `c970fd7f7214fdce386dc905ca084eb77773bf5d1eceb7840ad3656ac2162890`
+- [007 - 5. Canonical diagnostic instrumentation (reserved categories)](007-5.-canonical-diagnostic-instrumentation-reserved-categories.md) L73-L125 `f9fdb827774ac178ee586cfe958b9d176849aff905d9ed185f4b5b045495f033`
+- [008 - 6. Mapping table 1 — Upstream native events → V0](008-6.-mapping-table-1-upstream-native-events-v0.md) L127-L157 `366d807a0a0ec8fbfd3623a16e056f8d72bb52cb9f6074fb9468e486deb77046`
+- [009 - 7. Mapping table 2 — Upstream A2A bridge concepts → V0](009-7.-mapping-table-2-upstream-a2a-bridge-concepts-v0.md) L159-L189 `fa726f80107f8e93e8828d5017fa034af7ba952d55ff47a4a2e8fc907ec38419`
+- [010 - 8. Deterministic rules (normative)](010-8.-deterministic-rules-normative.md) L191-L272 `4deba9d3704b322bf406f45fa928937acf364177164791fe1c6f6b1d4b460ed5`
+- [011 - 9. Overseer subjective audit protocol instrumentation (normative)](011-9.-overseer-subjective-audit-protocol-instrumentation-normative.md) L274-L306 `1b96759063305d7462efdd41a471a4471b6d960975c41436d9319886d70a0a22`
+- [012 - 10. Portable patterns (A–E)](012-10.-portable-patterns-a-e.md) L308-L332 `9fc02f1cb61628e9c515e0ee96a1f1ae522fda07ffb2da79561086ea807a63d0`
+- [013 - Retry/Remediation Event Continuity Addendum (2026-03-08)](013-retry-remediation-event-continuity-addendum-2026-03-08.md) L334-L346 `5d1ba68bfab43d41ad4485af91b2d298dd1ec95b1364ce20c3a29ea317367255`
+- [014 - Stream Wake and Attempt Continuity Consolidation Addendum (2026-03-09)](014-stream-wake-and-attempt-continuity-consolidation-addendum-2026-0.md) L347-L362 `d0353d013b9944a9eb8601c8a378f40585e5437071a3b2c7e3986849f8be476d`
+- [015 - Runtime Attempt Identity vs Provider Continuity (2026-03-09)](015-runtime-attempt-identity-vs-provider-continuity-2026-03-09.md) L364-L372 `1a3374264871a7b9ddd7dc5f84a69dcba7cda9a11f6a0de53d93aa9b2e76a9b6`
+- [016 - Canonical data-shape reconciliation](016-canonical-data-shape-reconciliation.md) L373-L399 `9b649047d817f1e9c712ad316b9b6993873fd5d07d6bb6720435701364125a06`
+- [017 - Owner / Consumer Map](017-owner-consumer-map.md) L401-L405 `34f84663196265e181a5fa04a30641b3d8c3c46e2cb603a95f52d570500f8a70`
+- [018 - PlanUnits](018-planunits.md) L407-L2174 `bb431f3b350a9599517e557add124c5d938cea47a009de3d3672fb5d5db291e0`
+- [019 - Migration Coverage](019-migration-coverage.md) L2176-L2186 `ecd7ada899ba6302690dfb071c12ebe4a40179ce02a727a80342c9bf9437f1e0`
+- [020 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L2188-L2194 `57a2a68a93ae4e6a8197d4d9a88d7c4c44e98a04671265994b4fa35a3887d3aa`

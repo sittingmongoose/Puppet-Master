@@ -2,9 +2,9 @@
 
 Source: `Plans/OpenCode_Coverage_Matrix.md`
 
-Source lines: L1194-L1204
+Source lines: L1199-L1209
 
-Source SHA256: `b91d6210dca3579223fe6095c487c28ea6fdbede4e0446c68246ee38b4a14001`
+Source SHA256: `d775247c8b00867abc5374cd74a1973a1943935b5395298ef7079d37c0c9682e`
 
 ---
 

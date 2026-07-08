@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`
 
-Source lines: L358-L379
+Source lines: L373-L399
 
-Source SHA256: `a497a4740f6579a773ecc70aced0ba62b3da2bd91e4afd75b33b83340508eee4`
+Source SHA256: `a068e282f37be95699a82dba71b64c812aa14b7cf4ce556c2f7ed110b9eb6906`
 
 ---
 
@@ -20,13 +20,18 @@ Source SHA256: `a497a4740f6579a773ecc70aced0ba62b3da2bd91e4afd75b33b83340508eee4
 
 #### P5 provider-stream continuity recovery requirements
 
-- The doc internally contradicts itself on attempt continuity: - 2026-03-09 addenda say normalized streams MUST preserve `attempt_id` - but none of the reserved diagnostic category schemas actually expose `attempt_id` - adapters currently have no canonical way to satisfy both requirements at once
-- `tier_boundary` is not just stale prose here; it is a reserved diagnostic category with hard detail keys (`from_tier` / `to_tier`). That means the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep.
-- Provider continuity fields like `provider_attempt_ref?` are named but still not owned by a stable schema slot.
-- The provider boundary still lacks a legal place for rewrite-era correlation and pressure semantics: - bridged envelopes remain thinner than their own addenda - A2A still forbids new categories while the rewrite needs actor/role/account/switch/trust signals at the stream layer - `provider_attempt_ref?` and similar continuity fields are still conceptually present but not fully owned by a stable schema slot
-- The A2A addenda require `attempt_id` continuity, but the schema anchor never permits it explicitly.
+Provider-stream continuity is resolved through the versioned common diagnostic-details slot in §5.1A and the facade owner in `Plans/CLI_Bridged_Providers.md`.
+
+Normative requirements:
+- every runtime-scoped reserved diagnostic category exposes PM runtime `attempt_id` through `ProviderDiagnosticDetailsV1`
+- reconnect and observe-only provider flows preserve the same PM `attempt_id`
+- retries, remediation reruns, prerequisite resumes, and restore-before-reruns create a new PM `attempt_id`
+- `provider_attempt_ref?` records upstream provider/session/task continuity and MUST NOT replace PM runtime identity
+- `correlation_id?` and `sequence?` preserve bridge ordering and replay/repair evidence when the upstream protocol provides it
+- actor, account, trust, switch, and pressure signals are carried as references to owner records through `actor_ref?`, `account_ref?`, `trust_state_ref?`, and `pressure_state_ref?`
+- `tier_boundary`, `from_tier`, and `to_tier` are compatibility/source diagnostic labels only; they do not reintroduce tier-era runtime ownership
 - Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.
-- Add explicit versioning/migration notes where A2A or bridged categories/fields must grow.
+- Add explicit versioning/migration notes when A2A or bridged fields grow beyond `ProviderDiagnosticDetailsV1`.
 - Model-wave synthesis from Claude Opus 4.6 fleet sweep across Plans/**. Focuses on Orchestrator-model impact from the transition away from Phase/Task/Subtask/Iteration tier hierarchy toward a node-graph / work-package / feature-seam execution model.
 - OpenCode and other bridged runtimes may switch or obscure upstream accounts behind the bridge; the docs currently do not say whether this is capturable, opaque-but-accepted, or a hard gap.
 - Keep page-tab and panel-subview resolution as destination-layer concepts, not core identity concepts.

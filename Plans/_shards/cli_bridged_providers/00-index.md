@@ -1,21 +1,21 @@
 # Shard Index: Plans/CLI_Bridged_Providers.md
 
-Generated: 2026-07-08T16:32:36Z
+Generated: 2026-07-08T18:25:16Z
 
-Source SHA256: `343107263a39fdf98bdde8b8ece01c26d3f7c26664a0af42a24432be3abdde2c`
+Source SHA256: `c58ca345332cd6dd1195020ca2b54d27b46879421cad26a225f3cbcfaee683d7`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `c90890e1d9375a9abd372e72a0defe5635d1285d104d8a894f3a45f7b7bc393d`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `8d44a82e28c37795a85fb704368e61e7669730bb28cafd6c7950b7ab91d6e8fa`
-- [003 - Purpose](003-purpose.md) L15-L34 `62b13b243992cc48239f6a944543f07e8955e7e44bb2112174f8d9bf91e4156a`
-- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L36-L67 `4f318ef21c52c167cca9ab1519a14748bf36f313fa9565fce9bd1b42e7ef9b2d`
-- [005 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L69-L202 `0e371af081117ff6e3af65812cc422fe118997b800de8aaeadf23f94402a5276`
-- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L204-L208 `459da3b75df6fcf18f6d1277b2228d6005e517634ee4008238a779bf25197681`
-- [007 - PlanUnits](007-planunits.md) L210-L1128 `2a429b1f26476b67f8c2e97680a08d4801e9c2fbfb7df751b52dbb709ccd1d32`
-- [008 - Migration Coverage](008-migration-coverage.md) L1130-L1140 `bf3c452004236a814f7a447a689947a9a70861a07fa2668135388141efc90ca7`
-- [009 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](009-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1142-L1314 `39de313e22864ee4b24727f3edbce596c482350f269d796ff377ce4bad46d59f`
-- [010 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1316-L1398 `e1d906b4ec510d5fd4693eb8ce4595136d5315e41c22d60190e1b3a4a25c8d96`
-- [011 - FABLE Residual CLI Bridge Contract Cleanup Addendum - 2026-07-07](011-fable-residual-cli-bridge-contract-cleanup-addendum-2026-07-07.md) L1400-L1514 `4b6e4232a71a9708e2d953e99ae950b7f8efc54f8f08a709b01e5b0517b69eb2`
+- [001 - Preamble](001-preamble.md) L1-L1 `1555f5a72d8b35319ca20a1d53e0e32aba79986d6a35dd27afe741b2d46d1bbe`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `1397722cf56ab1a3deea4cb0bec518eef9fe75bc46eab2f16b6267f395923b1d`
+- [003 - Purpose](003-purpose.md) L15-L59 `37a6f5e2f1a60942379bec2c31c409355b114b86109247c971bc120b5199b9f1`
+- [004 - Canonical data-shape reconciliation](004-canonical-data-shape-reconciliation.md) L61-L92 `3298eed171ef103b81f97ffb4f24f5032cf86712c166dae045e69738d00c7487`
+- [005 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](005-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L94-L231 `e82f72ab715565798d6235b440257e1eb505197ca1cec8fb411863a2bf722a13`
+- [006 - Owner / Consumer Map](006-owner-consumer-map.md) L233-L237 `291acf278f58cf94dd118c602c01bdbe805d4db5eb04f58571b1b0718cd630c5`
+- [007 - PlanUnits](007-planunits.md) L239-L1157 `27288d06ef0d19059423a9cecea2269a0ecd9fcbf332a9a987086e8f6e7f5976`
+- [008 - Migration Coverage](008-migration-coverage.md) L1159-L1169 `fac44c799d2c5ce9487bfcdd9a4686ba0a079b7caa120fb670be73294220cb28`
+- [009 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](009-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L1171-L1343 `7b4bc5e195bfb12a371f34fd5e1e509077159251fe01114747cc1c7ba88ab5fe`
+- [010 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](010-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1345-L1427 `c43d597bb9c5b404962c0dce698490942c3366082a5e38e79bd62214a6bed2ae`
+- [011 - FABLE Residual CLI Bridge Contract Cleanup Addendum - 2026-07-07](011-fable-residual-cli-bridge-contract-cleanup-addendum-2026-07-07.md) L1429-L1543 `bc79d73964e3c29f3f2c26d4619b5730795c3c0d61d0dab5aa1b99fe52c5b185`
