@@ -1,0 +1,187 @@
+{
+  "schema_id": "pm.audit.post_fable_buildability_seal.v1",
+  "audit_id": "fable-20260706",
+  "generated_at_utc": "2026-07-08T16:37:50Z",
+  "final_seal_status": "pass",
+  "main_agent_writer_only": true,
+  "read_only_subagent_lanes": [
+    "UCC schema tail",
+    "provider-stream diagnostics/P5",
+    "newfeatures schemas",
+    "OpenCode anchors",
+    "auto_decisions identity",
+    "buildability/PNC/closure registry"
+  ],
+  "forbidden_outputs_created": false,
+  "forbidden_outputs": [
+    "ordinary product WorkNodes",
+    "NodeSeeds",
+    "queues",
+    "runtime launches",
+    "final manifests",
+    "implementation files",
+    "production build tasks"
+  ],
+  "current_final_action_state_counts": {
+    "duplicate_of_closed_row": 3,
+    "explicitly_deferred": 6,
+    "not_for_plan": 5,
+    "repaired": 195,
+    "repaired_superseded": 3,
+    "source_lineage_only": 5,
+    "stale_retired": 1
+  },
+  "projection_count_cleanup": {
+    "current_explicitly_deferred_count": 6,
+    "superseded_deferred_count": 8,
+    "superseded_count_location": "Plans/.audits/fable-20260706/final_fable_convergence_and_pnc019_certification_report.json#/final_deferred_slice/superseded_history",
+    "status": "current_count_no_longer_unqualified"
+  },
+  "buildability": {
+    "buildability_gate_passed": true,
+    "buildability_status": "pass",
+    "open_blocker_count": 0,
+    "source_hashes_current": true,
+    "buildability_gate_report": "Plans/.implementation_readiness/buildability_gate_report.json",
+    "node_readiness_status": "ready_for_node_compile",
+    "node_readiness_report": "Plans/.plan_index/node_readiness_report.json"
+  },
+  "pnc019_certification": {
+    "receipt_path": "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+    "status": "pass",
+    "certification_id": "PNC-019",
+    "positive_case_count": 9,
+    "negative_case_count": 10,
+    "lifecycle_trace_count": 11,
+    "ordinary_product_artifact_counts": {
+      "manifests": 0,
+      "nodeseeds": 0,
+      "production_build_tasks": 0,
+      "queues": 0,
+      "runtime_launches": 0,
+      "worknodes": 0
+    }
+  },
+  "closure_registry_blocked_open_check": {
+    "refs_checked": [
+      "PNC-019",
+      "IRB-005",
+      "IRB-011"
+    ],
+    "blocked_or_open_rows_found": 0,
+    "status": "pass"
+  },
+  "deferred_rows": [
+    {
+      "stable_finding_key": "sfk-ddc264cdea296caf349adecd",
+      "owner": "Plans/UI_Command_Catalog.md",
+      "disposition": "explicitly_deferred",
+      "reason": "UCC-049 through UCC-106 still need full command_id, payload_required, payload_optional, result_fields, error_codes, disabled_reason_codes, and owner_doc_ref fields.",
+      "reopen_condition": "Expand UCC-049 through UCC-106 into full payload/result/error/disabled reason schemas.",
+      "non_buildability_blocking_rationale": "UI command schema-tail work is not PNC-019 lifecycle or clean-room readiness."
+    },
+    {
+      "stable_finding_key": "sfk-bbe24dbaee588f11b4a55c4d",
+      "owner": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "disposition": "explicitly_deferred",
+      "reason": "Provider diagnostic category schemas still need attempt_id-bearing versioned schema slots.",
+      "reopen_condition": "Add attempt_id-bearing diagnostic category schemas and validate provider-stream continuity fields.",
+      "non_buildability_blocking_rationale": "Provider-stream non-executable readiness is clear; this is a future schema-versioning lane."
+    },
+    {
+      "stable_finding_key": "sfk-e98bc6a59c457b5cf85d8d99",
+      "owner": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "disposition": "explicitly_deferred",
+      "reason": "P5 provider-stream continuity/recovery prose still needs conversion into integrated versioned requirements.",
+      "reopen_condition": "Convert raw P5 continuity/recovery audit prose into normative provider-stream requirements.",
+      "non_buildability_blocking_rationale": "This does not reopen runtime lifecycle, clean-room, or current buildability status."
+    },
+    {
+      "stable_finding_key": "sfk-382a8aaadd071809899261b5",
+      "owner": "Plans/newfeatures.md",
+      "disposition": "explicitly_deferred",
+      "reason": "Corroboration, promotion, graph-patch, and trust-state schemas/state machines are not materialized in owner docs.",
+      "reopen_condition": "Land corroboration, promotion, graph-patch, and trust-state schemas/state machines in owner docs before closing the summary row.",
+      "non_buildability_blocking_rationale": "newfeatures.md is summary/source-lineage coverage here; buildability is certified through the readiness and PNC artifacts."
+    },
+    {
+      "stable_finding_key": "sfk-d180028c03fc70fb93e6bfb8",
+      "owner": "Plans/OpenCode_Coverage_Matrix.md",
+      "disposition": "explicitly_deferred",
+      "reason": "Safe anchors landed for model errors, compaction, context/cache, MCP integration, and Skills tab, but CLI bridged-provider transform/error-classification anchors and Models overflow/retry anchors still need exact owner placement.",
+      "reopen_condition": "Add PROVIDER-TRANSFORM, ERROR-CLASSIFICATION, and dedicated Models overflow/retry anchors before treating OCM stable-anchor coverage as repaired.",
+      "non_buildability_blocking_rationale": "Anchor/currentness metadata is not a buildability blocker."
+    },
+    {
+      "stable_finding_key": "sfk-d62d739e27a728d8ad210435",
+      "owner": "Plans/Release_Supply_Chain.md",
+      "disposition": "explicitly_deferred",
+      "reason": "Row-level JSON Schema cannot enforce JSONL-wide decision_id uniqueness, historical duplicate ids are count-grandfathered, and the generator still upserts by bare decision_id.",
+      "reopen_condition": "Enforce unique future decision_id values or migrate historical duplicates to composite-key semantics with validator and generator coverage.",
+      "non_buildability_blocking_rationale": "validate-auto-decisions passes under the current grandfathered policy; identity convergence is not an active buildability blocker."
+    }
+  ],
+  "validation_results": [
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-index.py validate",
+      "status": "pass",
+      "node_readiness_status": "ready_for_node_compile",
+      "plan_unit_count": 5513,
+      "acceptance_unit_count": 19961
+    },
+    {
+      "cmd": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-evidence",
+      "status": "pass"
+    },
+    {
+      "cmd": "python3 scripts/pm-shard-plans.py --check",
+      "status": "pass",
+      "docs_checked": 78,
+      "shards_checked": 1516
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 60",
+      "status": "pass"
+    },
+    {
+      "cmd": "git diff --check",
+      "status": "pass"
+    }
+  ]
+}

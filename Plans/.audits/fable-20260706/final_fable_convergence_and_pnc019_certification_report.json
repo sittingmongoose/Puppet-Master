@@ -4,9 +4,9 @@
   "buildability_pass_claim_allowed": true,
   "disposition_counts_all_rows": {
     "duplicate_of_closed_row": 3,
-    "explicitly_deferred": 8,
+    "explicitly_deferred": 6,
     "not_for_plan": 5,
-    "repaired": 193,
+    "repaired": 195,
     "repaired_superseded": 3,
     "source_lineage_only": 5,
     "stale_retired": 1
@@ -32,26 +32,43 @@
     "report": "Plans/.audits/fable-20260706/final_deferred_lane_and_registry_sync_report.json"
   },
   "final_deferred_slice": {
-    "input_explicitly_deferred_count": 13,
-    "preserved_explicitly_deferred_count": 8,
-    "preserved_explicitly_deferred_stable_finding_keys": [
+    "current_explicitly_deferred_count": 6,
+    "current_explicitly_deferred_stable_finding_keys": [
       "sfk-ddc264cdea296caf349adecd",
-      "sfk-4da31b138448d57593acde8d",
       "sfk-bbe24dbaee588f11b4a55c4d",
       "sfk-e98bc6a59c457b5cf85d8d99",
       "sfk-382a8aaadd071809899261b5",
       "sfk-d180028c03fc70fb93e6bfb8",
-      "sfk-aebb6fb13c915a60c1a5be40",
       "sfk-d62d739e27a728d8ad210435"
     ],
-    "repaired_count": 5,
-    "repaired_stable_finding_keys": [
-      "sfk-6e2bf4e4dd077d9ae2743668",
-      "sfk-ddd4dece078c664fd31f6de5",
-      "sfk-937c36d705a22bf16645cca2",
-      "sfk-1c95c03aec7949b6ad8641a7",
-      "sfk-c347a44e26b08efce550bdfd"
-    ]
+    "current_non_buildability_blocking_rationale": "The remaining six rows are explicitly deferred owner-doc/schema/detail lanes and do not claim PNC-019, IRB-005, IRB-011, runtime lifecycle, clean-room, or buildability-blocking status.",
+    "superseded_history": {
+      "input_explicitly_deferred_count": 13,
+      "prior_preserved_explicitly_deferred_count": 8,
+      "prior_preserved_explicitly_deferred_stable_finding_keys": [
+        "sfk-ddc264cdea296caf349adecd",
+        "sfk-4da31b138448d57593acde8d",
+        "sfk-bbe24dbaee588f11b4a55c4d",
+        "sfk-e98bc6a59c457b5cf85d8d99",
+        "sfk-382a8aaadd071809899261b5",
+        "sfk-d180028c03fc70fb93e6bfb8",
+        "sfk-aebb6fb13c915a60c1a5be40",
+        "sfk-d62d739e27a728d8ad210435"
+      ],
+      "repaired_count_before_final_sync": 5,
+      "repaired_stable_finding_keys_before_final_sync": [
+        "sfk-6e2bf4e4dd077d9ae2743668",
+        "sfk-ddd4dece078c664fd31f6de5",
+        "sfk-937c36d705a22bf16645cca2",
+        "sfk-1c95c03aec7949b6ad8641a7",
+        "sfk-c347a44e26b08efce550bdfd"
+      ],
+      "repaired_from_original_deferred_by_final_sync": [
+        "sfk-4da31b138448d57593acde8d",
+        "sfk-aebb6fb13c915a60c1a5be40"
+      ],
+      "history_note": "The previous unqualified count of 8 explicitly_deferred rows is superseded by the current final action state count of 6."
+    }
   },
   "final_validation": {
     "commands": [
@@ -143,7 +160,7 @@
     "production build tasks"
   ],
   "forbidden_outputs_created": false,
-  "generated_at_utc": "2026-07-08T15:34:51Z",
+  "generated_at_utc": "2026-07-08T16:30:03Z",
   "governance_refresh_note": "Final governance refresh completed: shards, sharding evidence, Spec Lock, evidence bundles, audit closure hashes, audit status index, plan migration hashes, plan index, and implementation-readiness reports were refreshed after the final convergence writes.",
   "main_agent_writer_only": true,
   "pnc019_certification": {
