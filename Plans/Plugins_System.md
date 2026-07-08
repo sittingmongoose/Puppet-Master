@@ -92,7 +92,7 @@ Each plugin directory MUST contain a `plugin.json` manifest:
 | `description` | **Required** | `string` | Max 500 characters. |
 | `hooks` | Recommended | `string[]` | List of hook event names this plugin subscribes to (from §4). |
 | `tools` | Optional | `string[]` | List of custom tool names this plugin registers (§6). |
-| `entry` | **Required** | `string` | Relative path to the plugin entry point (WASM module, script, or subprocess binary). |
+| `entry` | **Required** | `string` | Relative path to the plugin entry point (WASM module, subprocess-based entry, or dynamic library). JavaScript/TypeScript/Bun entries are OpenCode compatibility evidence only and are not a Puppet Master runtime dependency. |
 
 ContractRef: ContractName:Plans/Plugins_System.md#DISCOVERY
 

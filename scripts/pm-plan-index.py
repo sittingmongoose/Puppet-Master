@@ -1063,6 +1063,11 @@ def node_readiness_report(
         if isinstance(unit.get("node_compile_hint"), dict)
         and unit["node_compile_hint"].get("mode") == "source_preserving_planunit"
     ]
+    next_required_action = (
+        "Materialize and run the PNC-019 executable lifecycle certification harness for Approve And Build through PlanCompile, Executor intake, activation, Orchestrator projection, testing evidence, restart/cancellation, and negative-case rejection before any PlanCompile runtime artifacts, NodeSeeds, WorkNodes, executable tasks, or final node queues are materialized."
+        if runtime_certification_incomplete
+        else "PNC-019 executable lifecycle certification is current; ordinary PlanCompile output may start only through the certified runtime compiler, Executor intake, activation, and Goal Runtime certification contracts, while this index still emits no NodeSeeds, WorkNodes, queues, runtime launches, final manifests, implementation files, or production build tasks."
+    )
 
     return {
         "schema_id": "pm.plan_index.node_readiness_report.v1",
@@ -1091,9 +1096,7 @@ def node_readiness_report(
         "no_executable_build_tasks_created": True,
         "no_final_node_queues_created": True,
         "nodeseed_candidates_created": False,
-        "next_required_action": (
-            "Materialize and run the PNC-019 executable lifecycle certification harness for Approve And Build through PlanCompile, Executor intake, activation, Orchestrator projection, testing evidence, restart/cancellation, and negative-case rejection before any PlanCompile runtime artifacts, NodeSeeds, WorkNodes, executable tasks, or final node queues are materialized."
-        )
+        "next_required_action": next_required_action,
     }
 
 

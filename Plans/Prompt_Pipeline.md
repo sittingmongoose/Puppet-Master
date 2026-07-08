@@ -225,6 +225,8 @@ Rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
 
+<a id="COMPACTION"></a>
+
 ## 2. Compaction and pruning
 ### 2.0 Compaction-immune content
 
@@ -238,6 +240,8 @@ The following content MUST survive compaction unchanged unless the user explicit
 - current and recent reasoning blocks required for correct continuation
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
+<a id="COMPACTION-THRESHOLDS"></a>
 
 The total immune set MUST NOT exceed `max_compaction_immune_pct` (default: 30, overridable per model metadata) percent of the effective context window. `effective_context_window` means the token budget selected after provider route, requested/effective model, account entitlement, and runtime safety reserve are resolved; when a child/subagent uses a narrower model or policy, the child's effective window is used for the child's compaction budget.
 
@@ -267,6 +271,8 @@ Overflow handling:
 2. If the untouchable set alone exceeds the cap, keep it intact, emit `diag.compaction_immune_overflow`, and continue execution.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
+<a id="CONTEXT-ASSEMBLY-CACHE-PRESERVATION"></a>
 
 ### 2.1 Context assembly and cache preservation
 

@@ -1436,6 +1436,8 @@ Settings > Terminal groups Appearance, `/layout` & Workspaces, Shell & Startup, 
 
 Shortcut discovery is in-product and `/remappable`: it prioritizes true terminal operations over layout-management and other app-level actions, distinguishes terminal-owned shortcuts from `/TUI-owned` keys, and keeps search, next/previous match, scrollback paging, top/bottom jump, command-block navigation, font zoom, clear/reset, `/shortcuts/behaviors`, and copy/paste visible.
 
+<a id="SKILLS-TAB"></a>
+
 #### 7.4.2 Agent Config Skills tab
 
 Agent Config surfaces a Skills tab that mirrors the Skills owner contract. Skill rows show source/readiness and contextual badges, including `referenced_by_persona`, `auto_invokable`, `requires_missing_capability`, and `catalog_update_available`, without turning Settings into the skill-management owner.

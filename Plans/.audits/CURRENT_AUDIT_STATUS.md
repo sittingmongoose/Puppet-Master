@@ -2,7 +2,7 @@
 
 This generated index separates immutable historical report headers from current presentation status. Old `FINAL_REPORT.md` files are not rewritten; finding-level closure authority remains `Plans/.audits/_semantic_closure_registry.jsonl`.
 
-- Generated: `2026-07-08T14:53:54Z`
+- Generated: `2026-07-08T15:43:16Z`
 - Reports indexed: 63
 - Current blockers: 0
 - Historical BLOCKED/FAIL reports indexed: 24

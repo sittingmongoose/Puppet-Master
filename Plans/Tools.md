@@ -1009,6 +1009,8 @@ See [OpenCode -- Custom tools](https://opencode.ai/docs/tools/#custom-tools) for
 
 ---
 
+<a id="MCP-INTEGRATION"></a>
+
 ## 5. MCP integration (in scope)
 
 MCP canon is owned by `Plans/MCP_Integration.md`. This section is a consumer cross-reference for tool-registry and permission integration only.

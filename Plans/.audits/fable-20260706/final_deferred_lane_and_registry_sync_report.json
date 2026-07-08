@@ -1,0 +1,216 @@
+{
+  "audit_id": "fable-20260706",
+  "changed_counts": {
+    "_semantic_closure_registry.jsonl": 6,
+    "buildability_repair_registry.jsonl": 1,
+    "deferred_fable_action_after.jsonl": 6,
+    "final_fable_action_state.jsonl": 6,
+    "remaining_action_plan_after_repair.jsonl": 6
+  },
+  "forbidden_outputs": [
+    "ordinary product WorkNodes",
+    "NodeSeeds",
+    "queues",
+    "runtime launches",
+    "final manifests",
+    "implementation files",
+    "production build tasks"
+  ],
+  "forbidden_outputs_created": false,
+  "generated_at_utc": "2026-07-08T15:34:51Z",
+  "main_agent_writer_only": true,
+  "pnc019_registry_sync": {
+    "buildability_gate_passed": true,
+    "node_readiness_status": "ready_for_node_compile",
+    "open_blocker_count": 0,
+    "stable_keys_represented_current": [
+      "sfk-7fa7bf6b7fafb60002d66d35",
+      "sfk-e5bfc8881f0a5180870744e3"
+    ],
+    "stale_registry_rows_superseded": [
+      "sfk-6189f386d246ede37719f958",
+      "sfk-55c5b4091efe1bddaacdcacd"
+    ],
+    "status": "repaired"
+  },
+  "processed_original_explicitly_deferred_rows": {
+    "count": 8,
+    "preserved_explicitly_deferred": [
+      "sfk-ddc264cdea296caf349adecd",
+      "sfk-bbe24dbaee588f11b4a55c4d",
+      "sfk-e98bc6a59c457b5cf85d8d99",
+      "sfk-382a8aaadd071809899261b5",
+      "sfk-d180028c03fc70fb93e6bfb8",
+      "sfk-d62d739e27a728d8ad210435"
+    ],
+    "repaired": [
+      "sfk-4da31b138448d57593acde8d",
+      "sfk-aebb6fb13c915a60c1a5be40"
+    ]
+  },
+  "read_only_subagent_lanes": [
+    "UCC schema expansion",
+    "plugin runtime strategy",
+    "provider-stream diagnostics/P5 continuity",
+    "newfeatures schemas/state machines",
+    "OpenCode stable anchors",
+    "schema/plan_graph/change_budget",
+    "auto_decisions identity",
+    "PNC closure-registry sync/readiness"
+  ],
+  "row_results": {
+    "sfk-382a8aaadd071809899261b5": {
+      "disposition": "explicitly_deferred",
+      "owner": "Plans/newfeatures.md",
+      "reason": "Corroboration/promotion/graph-patch/trust-state schemas and state machines are not materialized in owner docs."
+    },
+    "sfk-4da31b138448d57593acde8d": {
+      "disposition": "repaired",
+      "owner": "Plans/Plugins_System.md",
+      "reason": "Plugin runtime owner docs choose WASM/subprocess/dynamic-library entries and forbid JS/TS/Bun dependency."
+    },
+    "sfk-aebb6fb13c915a60c1a5be40": {
+      "disposition": "repaired",
+      "owner": "Plans/Release_Supply_Chain.md",
+      "reason": "plan_graph.schema nodes[].change_budget now uses a closed pm.change_budget.schema.v1 shape."
+    },
+    "sfk-bbe24dbaee588f11b4a55c4d": {
+      "disposition": "explicitly_deferred",
+      "owner": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "reason": "Diagnostic category schemas still need attempt_id-bearing versioned schema slots."
+    },
+    "sfk-d180028c03fc70fb93e6bfb8": {
+      "disposition": "explicitly_deferred",
+      "owner": "Plans/OpenCode_Coverage_Matrix.md",
+      "reason": "Safe anchors landed, but provider transform/error-classification and model overflow/retry anchors still need exact owner placement."
+    },
+    "sfk-d62d739e27a728d8ad210435": {
+      "disposition": "explicitly_deferred",
+      "owner": "Plans/Release_Supply_Chain.md",
+      "reason": "auto_decisions generator/validator identity still needs convergence beyond duplicate-count grandfathering."
+    },
+    "sfk-ddc264cdea296caf349adecd": {
+      "disposition": "explicitly_deferred",
+      "owner": "Plans/UI_Command_Catalog.md",
+      "reason": "58 UCC-049..UCC-106 rows still need full payload/result/error/disabled schema fields."
+    },
+    "sfk-e98bc6a59c457b5cf85d8d99": {
+      "disposition": "explicitly_deferred",
+      "owner": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "reason": "P5 continuity/recovery prose remains a deferred reconciliation schema lane."
+    }
+  },
+  "schema_id": "pm.audit.fable.final_deferred_lane_and_registry_sync.v1",
+  "updated_projection_paths": [
+    "Plans/.audits/fable-20260706/final_fable_action_state.jsonl",
+    "Plans/.audits/fable-20260706/deferred_fable_action_after.jsonl",
+    "Plans/.audits/fable-20260706/remaining_action_plan_after_repair.jsonl",
+    "Plans/.audits/fable-20260706/buildability_repair_registry.jsonl",
+    "Plans/.audits/_semantic_closure_registry.jsonl",
+    "Plans/.audits/fable-20260706/pnc019_runtime_certification_currentness_report.json",
+    "Plans/.audits/fable-20260706/final_fable_convergence_and_pnc019_certification_report.json"
+  ],
+  "validation_results": {
+    "buildability_gate_passed": true,
+    "commands": [
+      {
+        "command": "python3 scripts/pm-pnc019-certification-harness.py run",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plan-index.py generate",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-implementation-readiness.py generate",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-shard-plans.py --generate --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-governance-seal.py refresh --spec-lock Plans/Spec_Lock.json --evidence Plans/.evidence/spec-lock-support-refresh-2026-06-09/evidence.json --no-node-artifacts",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-governance-seal.py sync-plan-sharding-evidence --evidence Plans/.evidence/plan-sharding-2026-06-09/evidence.json --report Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plan-migration.py refresh-batch-hashes --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-audit-closure.py refresh-hashes --registry Plans/.audits/_semantic_closure_registry.jsonl",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-audit-closure.py effective-status --registry Plans/.audits/_semantic_closure_registry.jsonl --audit-dir Plans/.audits/fable-20260706 --write",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-audit-status-index.py generate",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-audit-closure.py validate",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plan-index.py validate",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py validate-implementation-readiness",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py lint-contractrefs",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py validate-plan-graph",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py validate-evidence",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-shard-plans.py --check",
+        "status": "pass"
+      },
+      {
+        "command": "python3 scripts/pm-plans-verify.py run-gates --subcheck-timeout-seconds 60",
+        "status": "pass"
+      }
+    ],
+    "final_gate_status": "pass",
+    "node_readiness_status": "ready_for_node_compile",
+    "open_blocker_count": 0,
+    "status": "pass",
+    "validated_at_utc": "2026-07-08T15:42:46Z"
+  },
+  "validation_to_run_after_generation": []
+}

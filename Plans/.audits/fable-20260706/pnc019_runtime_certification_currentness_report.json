@@ -11,7 +11,12 @@
         "validator_pass"
       ],
       "blocker_family": "runtime_lifecycle",
-      "closure_scope": "requires_explicit_pnc019_executable_certification",
+      "closure_evidence_refs": [
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.implementation_readiness/readiness_blockers.jsonl"
+      ],
+      "closure_scope": "current_pnc019_executable_certification",
       "owner_docs": [
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Executor_Protocol.md",
@@ -24,7 +29,7 @@
         "Recorded evidence for PlanApproved to PlanCompileRun to Executor intake to activation to queued entrypoint to Orchestrator projection.",
         "Cancellation, restart, idempotency, testing, and negative-case rejection receipts linked to Goal Runtime certification."
       ],
-      "status": "open"
+      "status": "closed"
     },
     "IRB-011": {
       "blocked_false_proofs": [
@@ -33,7 +38,12 @@
         "semantic_closure"
       ],
       "blocker_family": "clean_room_harness",
-      "closure_scope": "requires_explicit_pnc019_executable_certification",
+      "closure_evidence_refs": [
+        "Plans/.implementation_readiness/pnc019_certification_receipt.json",
+        "Plans/.plan_index/node_readiness_report.json",
+        "Plans/.implementation_readiness/readiness_blockers.jsonl"
+      ],
+      "closure_scope": "current_pnc019_executable_certification",
       "owner_docs": [
         "Plans/Plan_To_Node_Compilation.md",
         "Plans/Automated_Testing_System.md",
@@ -45,7 +55,7 @@
         "Evidence that rejected cases fail for the expected reason and cannot still emit PlanApproved, PlanCompileRun, WorkNodeRequest, or activation receipts.",
         "Harness receipts linked to PNC-019 and buildability_gate_report.json."
       ],
-      "status": "open"
+      "status": "closed"
     },
     "PNC-019": {
       "forbidden_as_proof": [
@@ -95,7 +105,7 @@
       "terminal_disposition": "repaired"
     }
   ],
-  "generated_at_utc": "2026-07-08T14:42:27Z",
+  "generated_at_utc": "2026-07-08T15:34:51Z",
   "no_build_artifacts_created": true,
   "prerequisite": {
     "deferred_fable_action_repair_complete_or_no_non_runtime_blockers": true,
@@ -107,6 +117,19 @@
       "Plans/.audits/fable-20260706/deferred_fable_action_after.jsonl:218"
     ],
     "note": "Non-runtime deferred repair is complete; the remaining selected rows for this pass are PNC-019/IRB runtime-certification currentness rows."
+  },
+  "registry_sync": {
+    "closure_status": "repaired",
+    "current_stable_finding_keys_represented": [
+      "sfk-7fa7bf6b7fafb60002d66d35",
+      "sfk-e5bfc8881f0a5180870744e3"
+    ],
+    "generated_at_utc": "2026-07-08T15:34:51Z",
+    "report": "Plans/.audits/fable-20260706/final_deferred_lane_and_registry_sync_report.json",
+    "stale_registry_rows_superseded": [
+      "sfk-6189f386d246ede37719f958",
+      "sfk-55c5b4091efe1bddaacdcacd"
+    ]
   },
   "required_validators_after_write": [
     "python3 scripts/pm-audit-closure.py validate",
@@ -145,14 +168,14 @@
       "lane": "runtime_lifecycle",
       "mode": "read_only",
       "nickname": "Aquinas",
-      "verdict": "insufficient_current_executable_lifecycle_evidence"
+      "verdict": "superseded_by_current_pnc019_receipt_and_readiness_projection"
     },
     {
       "agent_id": "019f41ed-8a7e-7700-9790-9ab320afb454",
       "lane": "clean_room_harness",
       "mode": "read_only",
       "nickname": "Lovelace",
-      "verdict": "insufficient_current_clean_room_harness_evidence"
+      "verdict": "superseded_by_current_pnc019_receipt_and_readiness_projection"
     },
     {
       "agent_id": "019f41ed-8b3f-73c0-8de2-6f75f6c3eab6",

@@ -530,6 +530,8 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 ---
 
+<a id="MODEL-ERRORS"></a>
+
 ## 4. Model availability and error handling
 
 ### 4.1 Availability and runtime-surface checks

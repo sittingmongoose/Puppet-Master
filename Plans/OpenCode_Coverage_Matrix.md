@@ -136,13 +136,13 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 ### 3.2 SSOT docs missing stable anchors
 
 
-| SSOT Document | Missing Anchors |
+| SSOT Document | Stable Anchor Status |
 |---|---|
-| `Plans/CLI_Bridged_Providers.md` | No `#PROVIDER-TRANSFORM` anchor for the transform layer contract; no `#ERROR-CLASSIFICATION` anchor for error categorization. |
-| `Plans/Models_System.md` §4 | No anchor on the "Model availability and error handling" section (needs `#MODEL-ERRORS` — already present on inspection). No anchor on overflow detection or retry policy subsections. |
-| `Plans/Prompt_Pipeline.md` | No stable anchor on the context-assembly/cache-preservation subsection beneath `#ASSEMBLY-PIPELINE`; compaction-threshold rules should also carry a dedicated stable anchor beneath `#COMPACTION`. |
-| `Plans/Tools.md` | No `#MCP-INTEGRATION` anchor for MCP tool registration flow. |
-| `Plans/FinalGUISpec.md` | Agent Config Skills content now lives at §7.4A; add a stable `#SKILLS-TAB` anchor only if future cross-reference tooling requires one. |
+| `Plans/CLI_Bridged_Providers.md` | Still deferred: `#PROVIDER-TRANSFORM` and `#ERROR-CLASSIFICATION` need owner placement because provider transform/error classification spans guard rails and PlanUnits rather than exact matching sections. |
+| `Plans/Models_System.md` §4 | Partially repaired: `#MODEL-ERRORS` anchors model availability/error handling. Overflow detection and retry ownership still need dedicated owner-section placement before `#MODEL-OVERFLOW-DETECTION` or `#MODEL-RETRY-POLICY` can be treated as stable. |
+| `Plans/Prompt_Pipeline.md` | Repaired: `#CONTEXT-ASSEMBLY-CACHE-PRESERVATION` anchors context assembly/cache preservation beneath `#ASSEMBLY-PIPELINE`, `#COMPACTION` anchors compaction, and `#COMPACTION-THRESHOLDS` anchors compaction-threshold rules. |
+| `Plans/Tools.md` | Repaired: `#MCP-INTEGRATION` anchors the MCP tool registration consumer boundary. |
+| `Plans/FinalGUISpec.md` | Repaired: `#SKILLS-TAB` anchors the Agent Config Skills tab. |
 
 ---
 
@@ -1207,4 +1207,4 @@ Phase 2B batch 108 atomized source spans `OpenCode_Coverage_Matrix-S0001` throug
 
 This addendum repairs non-runtime OpenCode coverage rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Keeps `sfk-d180028c03fc70fb93e6bfb8` explicitly deferred: stable-anchor gaps require owner-doc anchor work. This matrix records coverage pressure and must not be used as closure proof until the owner docs publish stable anchors.
+- Keeps `sfk-d180028c03fc70fb93e6bfb8` explicitly deferred with partial safe anchor repair: `Plans/Models_System.md` now publishes `#MODEL-ERRORS`, `Plans/Prompt_Pipeline.md` publishes `#COMPACTION`, `#COMPACTION-THRESHOLDS`, and `#CONTEXT-ASSEMBLY-CACHE-PRESERVATION`, `Plans/Tools.md` publishes `#MCP-INTEGRATION`, and `Plans/FinalGUISpec.md` publishes `#SKILLS-TAB`. Closure still requires owner placement for the CLI bridged-provider transform/error-classification anchors and dedicated Models overflow/retry anchors before OCM can treat the row as fully repaired.
