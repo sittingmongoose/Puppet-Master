@@ -339,7 +339,9 @@ canonical_text: >-
   concern, corroboration, promotion, graph-patch, trust state, and command-catalog fields are required feature families.
   Runtime object summaries refresh object_kind around rewrite-era lineage objects including Concern, Graph Patch, Feature
   Seam, Work Package, History, Ledger, /timeline, usage-linked receipts, Crosswalk.md /open contracts, and the
-  distinction between chronological History and structured durable Ledger inspection.
+  distinction between chronological History and structured durable Ledger inspection. Corroboration, promotion, graph-patch,
+  and trust-state summary coverage consumes the concrete governance runtime record schemas and state machines from
+  Contracts_V0 CV-315 and storage-plan SP-233 rather than leaving those families as placeholders.
 gui_related: true
 gui_classification_reason: The unit preserves user-visible command-catalog, route/open, and runtime object summary gaps.
 split_recommended: false
@@ -349,6 +351,7 @@ unblocks: []
 acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - /corroboration/promotion/graph-patch remains a preserved required feature family.
+- corroboration, promotion, graph-patch, and trust-state families are owner-linked to CV-315 and SP-233 schemas/state machines.
 - object_kind runtime object summary language remains preserved.
 - History and Ledger remain distinguished in the summary.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
@@ -381,11 +384,13 @@ negative_constraints:
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
+- Contracts_V0.md CV-315 owns governance runtime record schemas and state machines for corroboration, promotion, graph-patch, and projection_trust.
+- storage-plan.md SP-233 owns the durable storage keys and projection trust revalidation gates.
 - Crosswalk.md owns referenced /open contracts; this document preserves high-level feature-summary coverage only.
 owner_hints:
 - Plans/newfeatures.md
 preserved_contractrefs:
-- 'ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md'
+- 'ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
 ```
 
 ### N-007 - Broad Summary Compression Guard
@@ -1217,13 +1222,13 @@ Phase 2B batch 103 atomized source spans `newfeatures-S0002` through `newfeature
 This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
 
 - `registry_line 350` (explicitly_deferred; source line 1178; `sfk-a842ba71d3915b955e7ddd63`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: pure PlanUnit YAML with no data models/algorithms/GUI wiring mislabeled "Implementation Plan" in its own H1 despite every unit having `create_worknodes: false`.
-- `registry_line 351` (explicitly_deferred; source line 1179; `sfk-382a8aaadd071809899261b5`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] N-006: names required feature families (corroboration/promotion/graph-patch, trust state) with zero schema or state machine.
+- `registry_line 351` (repaired; source line 1179; `sfk-382a8aaadd071809899261b5`): Repaired: N-006 now links corroboration, promotion, graph-patch, and trust-state summary coverage to the `CV-315` governance runtime record schemas/state machines and `SP-233` storage binding. No buildability or runtime proof is claimed here. Source summary: - [HIGH] N-006: names required feature families (corroboration/promotion/graph-patch, trust state) with zero schema or state machine.
 
 ## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
 
 This addendum repairs non-runtime newfeatures rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-a842ba71d3915b955e7ddd63`: this document is a feature summary/source-lineage compilation, not an implementation plan. Its PlanUnits preserve intent and route ownership while `create_worknodes` remains false.
-- Keeps `sfk-382a8aaadd071809899261b5` explicitly deferred: N-006 feature families need schemas/state machines in their owner docs before this summary can be closed as implementation-ready evidence.
+- Repairs `sfk-382a8aaadd071809899261b5`: N-006 now owner-links corroboration, promotion, graph-patch, and trust-state summary coverage to the `CV-315` governance runtime record schemas/state machines and the `SP-233` storage binding. This is non-runtime owner-doc/schema repair only and does not create WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 evidence.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

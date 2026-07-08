@@ -405,27 +405,102 @@ def cmd_validate_auto_decisions(args: argparse.Namespace) -> dict[str, Any]:
 
     failures: list[dict[str, Any]] = []
     rows_checked = 0
-    decision_counts: dict[str, int] = {}
-    historical_duplicate_counts = {
-        "dec-r-20260312-160857-01-spec-lock-refresh": 3,
-        "dec-r-20260316-160450-01-spec-lock-refresh": 2,
-        "dec-r-20260328-192850-02-spec-lock-refresh": 2,
-        "dec-r-20260328-192850-04-spec-lock-refresh": 2,
-        "dec-r-20260328-192850-05-spec-lock-refresh": 2,
-        "dec-r-20260329-235630-04-spec-lock-refresh": 2,
-        "dec-rewrite-20260307-230437-dockerhub-docker-management-and-unraid-template-publishing-audit-remediation-spec-lock-refresh": 2,
-        "dec-rewrite-20260308-010858-persona-runtime-audit-gap-closure-spec-lock-refresh": 8,
-        "dec-rewrite-20260308-044815-dockerhub-docker-management-and-unraid-template-publishing-audit-remediation-packet-spec-lock-refresh": 2,
-        "dec-rewrite-20260308-194441-plan-and-deep-plan-pt-wizard-escalation-and-assistant-to-interview-handoff-spec-lock-refresh": 3,
-        "dec-rewrite-20260308-203718-runtime-scheduler-scoring-wakeups-remediation-safe-points-and-decomposition-fallback-spec-lock-refresh": 2,
-        "dec-rewrite-20260309-004657-runtime-scheduler-scoring-wakeups-remediation-lineage-safe-points-retry-taxonomy-and-draft-decomposition-degradation-boundaries-spec-lock-refresh": 2,
-        "dec-rewrite-20260309-031700-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-outcomes-and-decomposition-fallback-spec-lock-refresh": 2,
-        "dec-rewrite-20260309-041936-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-outcomes-and-decomposition-fallback-reconciliation-spec-lock-refresh": 2,
-        "dec-rewrite-20260309-185017-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-recovery-cross-doc-reconciliation-spec-lock-refresh": 7,
-        "dec-rewrite-20260310-172932-gui-artifacts-usage-panels-spec-lock-refresh": 3,
-        "dec-rewrite-20260310-210122-gui-artifacts-usage-panels-spec-lock-refresh": 3,
-        "dec-rewrite-20260311-030008-gui-artifacts-usage-panels-spec-lock-refresh": 2,
-        "dec-rewrite-20260311-152314-implementation-readiness-reconciliation-spec-lock-refresh": 5,
+    decision_rows: dict[str, list[dict[str, Any]]] = {}
+    historical_duplicate_identities = {
+        "dec-r-20260312-160857-01-spec-lock-refresh": {
+            "44df2e108c6ffe43bf58701084fe5e0e52b122f0603df39798ce82278eea8b35",
+            "973a76d2df4393bd83e597420d5db33a0b3cb967dc99975792f61afa14d1bc92",
+            "b353a1ab66ba54b461b185f716605e3fd58c8df962653362fc5048f9a5ac8cdf",
+        },
+        "dec-r-20260316-160450-01-spec-lock-refresh": {
+            "619c1248a60bc3273494b482ba49221e5782edcd1420bcfb531598a01fffdbb0",
+            "ebf091c2aebf7a0702c5f0e131c4c9e5dca473dacea6b1fd9c12f6f3646c1255",
+        },
+        "dec-r-20260328-192850-02-spec-lock-refresh": {
+            "47ebc8ab44a213b9c03d2963649e031c586e874a61501c7e03102f84bc3735ad",
+            "7a23f68cf924f2c26b488be9c056cb6c0cb1b84130da3a46ad2dc9377aaf823d",
+        },
+        "dec-r-20260328-192850-04-spec-lock-refresh": {
+            "8604c0e121eed97b1092618a6b28a34c1c7e29f6693eda922abd3a6aaebde0df",
+            "8b554daddb092cb72f3a9b1d2819aa323bd7dc6f1db770d3da70bfd9697bc3a3",
+        },
+        "dec-r-20260328-192850-05-spec-lock-refresh": {
+            "26a0d43a6b49797d3a888640d223974b305eb629599dc77cbcebe99dae580eac",
+            "b454497eff451d6fc4a52a86a5e612a45828cf59edce938ade36f3d559faac5e",
+        },
+        "dec-r-20260329-235630-04-spec-lock-refresh": {
+            "2e61d9bdf53a6f53de4ebb197d438075934777f235a812ab4ccdad4d7d8fa85e",
+            "faa39c4bd5c56c4192caaaa5f32d8ef939106fccbcbb29e96ad14b677034ae3c",
+        },
+        "dec-rewrite-20260307-230437-dockerhub-docker-management-and-unraid-template-publishing-audit-remediation-spec-lock-refresh": {
+            "a987f31168a3d319384880f5d463d9dc20c8878f55a13bca0f10f3f6a7b18392",
+            "cad4a7f4f62e14290f8f65d777b42e11b3cc55f45f639c09fb0e6c2978fbebc8",
+        },
+        "dec-rewrite-20260308-010858-persona-runtime-audit-gap-closure-spec-lock-refresh": {
+            "04f689c3bb3914905669880cc7b65dae49d95eca067b9f1b6343fa0409428ffe",
+            "0ba5e493e14a8920945fb6f707de6fd807772bd4939cfe7b8ae039395cc0ec7a",
+            "280164c8f879052436780757f7ccca49f7d62f0c467c103a2c71024f9448aa12",
+            "40449a7aa7f500ae134fb879aac532232646f7a06b03687af858d67a56f02adc",
+            "95bcf9b0006e6518fc17a9fc9b0f057a7219c9ad6bf3914d7708faa53ddc68b2",
+            "9ad1de7d3f979df4feac78caf5272708f341fb51411f8acec7e669cb80e156a9",
+            "bf281c32ab7fa92c9daf98071cd8429570ee67bbc6f28d81800c42b46691d147",
+            "d3b3e012e6f6c264a78e862e0232baa2f602f75a249e232e954535804c8a62fb",
+        },
+        "dec-rewrite-20260308-044815-dockerhub-docker-management-and-unraid-template-publishing-audit-remediation-packet-spec-lock-refresh": {
+            "014cd57d56cf3033f6f4577c9ed2ada5ef486f520eb4d3f60342a6c0e1ad2cec",
+            "f7bd44528b01fec3911d5ebd45afd2fb70a018b315365395fe365fc56b9bf711",
+        },
+        "dec-rewrite-20260308-194441-plan-and-deep-plan-pt-wizard-escalation-and-assistant-to-interview-handoff-spec-lock-refresh": {
+            "401fcf18059fb39dcc74ce7792a15f3c2f4c5e83b54f67e60f47586d7deb3067",
+            "a7e82a7d876c1762071baa57a5376d00ff97bf46d2c537cb392df0c846c656c4",
+            "f8fa53e1c4dcd574b6d4be5e6f3a4de4659ee9bc5ea89f3c30d7307671213222",
+        },
+        "dec-rewrite-20260308-203718-runtime-scheduler-scoring-wakeups-remediation-safe-points-and-decomposition-fallback-spec-lock-refresh": {
+            "15517e1f4c4e3c9cc736a10bfef3696a43609ed541bdaaaa6cebd0be6a53c542",
+            "f8eef42561abe3d00c1e65c0b03e95d6670b8883be2dec2653570d2ed2441996",
+        },
+        "dec-rewrite-20260309-004657-runtime-scheduler-scoring-wakeups-remediation-lineage-safe-points-retry-taxonomy-and-draft-decomposition-degradation-boundaries-spec-lock-refresh": {
+            "64fba9a7cc49ef2620851745516c7c03880a1b691cceffa2d1add439dd7b7d6c",
+            "7055563458f14709df2c1881ba7102fc521861d8dc3b8c915695ca7983f5af55",
+        },
+        "dec-rewrite-20260309-031700-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-outcomes-and-decomposition-fallback-spec-lock-refresh": {
+            "6e5d5251ae534c2011fcaf68cd0dfb6217ee2d34d0263929d851605fba31d4cc",
+            "768d6a6a74b8b4eb23902cd5a78f28599f30451d3d3d68b16730421e60c52cd9",
+        },
+        "dec-rewrite-20260309-041936-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-outcomes-and-decomposition-fallback-reconciliation-spec-lock-refresh": {
+            "225acc272f6b034ac57b9ccf23d1ae60cab0313b45dc4fdf434b61aca4bacc55",
+            "40a2a3759d401c13ee21a32fcc2fb2c052c983805346e3aa1450ff13f374ba7c",
+        },
+        "dec-rewrite-20260309-185017-runtime-scheduler-scoring-wakeups-remediation-safe-points-blocked-recovery-cross-doc-reconciliation-spec-lock-refresh": {
+            "07cb77d93d2ddba09933d903ee93b759d8badc3d38091bf2328404a4696fe0a8",
+            "0808474b9a64dd962abdbe244ee247af8ff2d3e54459097095d03488ef957700",
+            "52bc05c0b6a13f529a00172fce2c61702193a1ef0358777ee8b091ca75b72b33",
+            "81df0b6e9da5ecd527e0b0fa787ed82f84dfecdbfce13b72a97f86686bf4d697",
+            "90349169f5e006640348cb254a3509f60ccf658248aeb4aa37114c42e3eefd78",
+            "9876c629d47eacce552e7ff30f16c536c38bf55d4a07a92b9cdbb0b3c59e1bb5",
+            "d884d1146b87b0b7ac4ae46bce395092901aa0c9b9396b6fb3c03533d3346607",
+        },
+        "dec-rewrite-20260310-172932-gui-artifacts-usage-panels-spec-lock-refresh": {
+            "4bf8b70bbc83d612885862158364796e8d0b72856bf48d3627e3e019b051e69c",
+            "d73cb2038593ec9c6608908e8b6810818d4a26ae6a04025501b26046c4f4749d",
+            "feef3a7b04367df9fd30c6f01737b244a0b289e5407e3c1dc76f975fe72d2cc9",
+        },
+        "dec-rewrite-20260310-210122-gui-artifacts-usage-panels-spec-lock-refresh": {
+            "3712172002ea50bdfbb6ccfd8e03fd9adca8d5a856fc755ba6cfe6ab7a3abc4c",
+            "b175a279d43eff7d8d7ee369ea98d63d3260374ea5c7afc4febfedb08f3420f6",
+            "ff9c09ac2085871bf2c2d0ba24ca4a75eb4d7a97377c0615b9d381a14709f7df",
+        },
+        "dec-rewrite-20260311-030008-gui-artifacts-usage-panels-spec-lock-refresh": {
+            "8073fe511e7ab44a2117508b7f24229e2ef1448aaef7c640a3c1fa2fb323e697",
+            "d6b5f5881b77c64e452f45e2fadba3eb33219b88b0173f54f499876295fec43c",
+        },
+        "dec-rewrite-20260311-152314-implementation-readiness-reconciliation-spec-lock-refresh": {
+            "0c80ce8713732ba8743ff76f120ef18ae2d3780de8585e727cde961eb9a77240",
+            "0cca67425d1ff312059dffa3b39cdfbd653ed07ffe667b1d2b1f5ce828ca7620",
+            "5e432471930a8afd4c66fa2d7575ea91e147c1f210dec57c2ab349046d702b7c",
+            "a3ef94696513ca07fd834a83cc591ef6445255702015ab84458e3b36edf314f3",
+            "c0ecc5d5d7fa3e347a51f77aa7cd1cc5acc6d8bb2481fbec115ea25d07a1770a",
+        },
     }
     for target in targets:
         for line_no, line in enumerate(target.read_text(encoding="utf-8").splitlines(), start=1):
@@ -441,29 +516,70 @@ def cmd_validate_auto_decisions(args: argparse.Namespace) -> dict[str, Any]:
                 failures.append({"path": rel(target), "line": line_no, "error": error})
             decision_id = row.get("decision_id")
             if isinstance(decision_id, str):
-                decision_counts[decision_id] = decision_counts.get(decision_id, 0) + 1
+                decision_rows.setdefault(decision_id, []).append(
+                    {
+                        "path": rel(target),
+                        "line": line_no,
+                        "inputs_hash": row.get("inputs_hash"),
+                    }
+                )
 
     duplicate_policy_notes = []
-    for decision_id, count in sorted(decision_counts.items()):
-        allowed_count = historical_duplicate_counts.get(decision_id, 1)
-        if count > allowed_count:
+    for decision_id, entries in sorted(decision_rows.items()):
+        if len(entries) <= 1:
+            continue
+        allowed_hashes = historical_duplicate_identities.get(decision_id, set())
+        if not allowed_hashes:
             failures.append(
                 {
                     "path": "Plans/auto_decisions.jsonl",
                     "decision_id": decision_id,
                     "error": "duplicate_decision_id",
-                    "count": count,
-                    "allowed_count": allowed_count,
+                    "count": len(entries),
+                    "allowed_historical_identities": 0,
                 }
             )
-        if allowed_count > 1 and count == allowed_count:
-            duplicate_policy_notes.append({"decision_id": decision_id, "historical_count": allowed_count})
+            continue
+        seen_hashes: dict[str, int] = {}
+        for entry in entries:
+            inputs_hash = entry.get("inputs_hash")
+            if not isinstance(inputs_hash, str) or inputs_hash not in allowed_hashes:
+                failures.append(
+                    {
+                        "path": entry["path"],
+                        "line": entry["line"],
+                        "decision_id": decision_id,
+                        "inputs_hash": inputs_hash,
+                        "error": "non_grandfathered_duplicate_decision_identity",
+                    }
+                )
+                continue
+            seen_hashes[inputs_hash] = seen_hashes.get(inputs_hash, 0) + 1
+        for inputs_hash, count in sorted(seen_hashes.items()):
+            if count > 1:
+                failures.append(
+                    {
+                        "path": "Plans/auto_decisions.jsonl",
+                        "decision_id": decision_id,
+                        "inputs_hash": inputs_hash,
+                        "error": "duplicate_grandfathered_decision_identity",
+                        "count": count,
+                    }
+                )
+        if not any(failure.get("decision_id") == decision_id for failure in failures):
+            duplicate_policy_notes.append(
+                {
+                    "decision_id": decision_id,
+                    "historical_identity_count": len(allowed_hashes),
+                    "present_identity_count": len(seen_hashes),
+                }
+            )
 
     return report_status(
         "validate-auto-decisions",
         failures,
         rows_checked=rows_checked,
-        historical_duplicate_policy="listed pre-existing decision_id counts are grandfathered; any new duplicate or increased historical duplicate count fails validation",
+        historical_duplicate_policy="listed pre-existing (decision_id, inputs_hash) identities are grandfathered; any new duplicate decision_id or changed duplicate identity fails validation",
         historical_duplicate_decision_ids=duplicate_policy_notes,
     )
 

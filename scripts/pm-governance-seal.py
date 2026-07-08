@@ -196,14 +196,26 @@ def upsert_auto_decision(
         "contract_refs": contract_refs,
     }
     changed = False
-    for index, existing in enumerate(rows):
-        if existing.get("decision_id") != decision_id:
-            continue
+    matching_indexes = [index for index, existing in enumerate(rows) if existing.get("decision_id") == decision_id]
+    if len(matching_indexes) > 1:
+        raise SystemExit(
+            "auto_decisions upsert is ambiguous for duplicate decision_id "
+            f"{decision_id!r}; choose a new unique future decision_id instead of mutating grandfathered history"
+        )
+    if matching_indexes:
+        index = matching_indexes[0]
+        existing = rows[index]
+        identity_fields = ("scope", "decision")
+        mismatches = [field for field in identity_fields if existing.get(field) != row.get(field)]
+        if mismatches:
+            raise SystemExit(
+                "auto_decisions upsert would change stable identity fields for "
+                f"{decision_id!r}: {', '.join(mismatches)}; choose a new unique decision_id"
+            )
         row["timestamp_utc"] = existing.get("timestamp_utc", row["timestamp_utc"])
         if existing != row:
             rows[index] = row
             changed = True
-        break
     else:
         rows.append(row)
         changed = True

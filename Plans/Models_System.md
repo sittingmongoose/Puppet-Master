@@ -544,6 +544,15 @@ Provider stop reasons and finish-reason normalization rules are not sufficient t
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
+<a id="MODEL-OVERFLOW-DETECTION"></a>
+<a id="OVERFLOW-DETECTION"></a>
+
+### 4.1A Overflow detection owner anchor
+
+Model overflow detection is a model/runtime capability question before it becomes a retry or compaction decision. The model capability snapshot owns `context_window`, `effective_context_window`, `max_input_tokens`, `max_output_tokens`, `supports_truncation_signal`, and provider-specific overflow signal evidence. An adapter or provider may report overflow, length truncation, context-window exhaustion, or equivalent status, but it must preserve the provider signal and requested/effective model snapshot instead of converting it into a generic retry reason. Prompt compaction and context assembly consume these fields through `Plans/Prompt_Pipeline.md#COMPACTION` and `#COMPACTION-THRESHOLDS`; runtime retry policy consumes the classified outcome after model overflow has been attributed.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#COMPACTION, ContractName:Plans/CLI_Bridged_Providers.md#ERROR-CLASSIFICATION
+
 ### 4.2 Pricing metadata and stale-pricing behavior
 
 Pricing metadata is versioned. `pricing_version` identifies the pricing table used for cost calculation. User-supplied overrides are applied before warnings. Doctor integration warns when stored pricing metadata is stale relative to the current provider metadata snapshot.
@@ -1257,6 +1266,9 @@ Puppet Master follows that structure conceptually, but uses Persona as the canon
 - Unsupported controls must be visible in both editor UI and runtime UI.
 - Provider capability matrix must be the shared source for editor gating and runtime disclosure.
 - Chat/Interview/Builder/Orchestrator history/event views must show effective Persona/model/platform rather than only stored preferences.
+
+<a id="MODEL-RETRY-POLICY"></a>
+<a id="RETRY-POLICY"></a>
 
 ## Provider Failure-Class Alignment Addendum (2026-03-08)
 

@@ -33,6 +33,31 @@ ContractRef: ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.m
 
 A2A seam warning: A2A bridge packet verification keeps `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` in the highest-risk verify-only omission lane unless its intro and `/non-goal` framing still read as external-reference and `/future-interop` only; otherwise, it must be promoted out of `MUST VERIFY`. Adjacent docs rechecked and kept out of the packet for now are `Plans/Models_System.md`, whose current capability and compaction-threshold fields already match the narrowed owner set, and `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`, whose current intro/non-goal framing already keeps A2A external-only. Other `MUST VERIFY` watchers must confirm that `Plans/Section15_MVP_Promoted_Features_Spec.md` defers `terminate_session` / graceful shutdown to `Run_Modes.md`; `Plans/Runtime_Artifacts_Panel.md` keeps `cost_usage` and `reasoning_tokens` compatible with microdollars and usage canon; `Plans/Wiring_Matrix.md` terminal kill wiring and checksum-validation flows do not conflict with process-group kills or mandatory CRC recovery; `Plans/MiscPlan.md` SIGTERM, symlink, and multi-instance notes remain advisory and do not shadow the new SSOT; and `Plans/assistant-chat-design.md` concurrent-thread UI defaults are not misread as global subagent concurrency limits.
 
+### Normalized provider diagnostic details schema
+
+Provider-facade diagnostics share a versioned details slot so external bridge mappings can preserve runtime continuity without adding V0 event types. Every runtime-scoped `diagnostic` event MUST expose these fields before category-specific details are interpreted:
+
+```typescript
+ProviderDiagnosticDetailsV1 {
+  schema_version: "pm.provider.diagnostic_details.v1";
+  run_id: string;
+  source: string;
+  attempt_id: string;              // PM runtime attempt identity for runtime-scoped diagnostics
+  timestamp?: string;              // RFC3339 UTC when known
+  provider_attempt_ref?: string;   // upstream provider/session/task continuity, never a PM attempt id
+  correlation_id?: string;         // bridge-local ordering/correlation handle
+  sequence?: number;               // monotonically increasing within run_id/source when available
+  actor_ref?: string;
+  account_ref?: string;
+  trust_state_ref?: string;
+  pressure_state_ref?: string;
+}
+```
+
+Pre-admission discovery, static provider health, or configuration diagnostics that are not attached to a runtime dispatch MUST set `attempt_id` to `pre_attempt` and include the concrete provider/account/config identity in `provider_attempt_ref?` or `correlation_id?`. Runtime retries, remediation reruns, prerequisite resumes, and restore-before-reruns create a new PM `attempt_id`; reconnect or observe-only flows for the same runtime attempt keep the same `attempt_id` and update only provider continuity fields. Provider/session/task IDs MUST NOT replace PM runtime attempt identity.
+
+ContractRef: ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
 ## Canonical data-shape reconciliation
 
 ### Required data shape
@@ -147,6 +172,8 @@ The existing `working_directory` passthrough is sufficient for assistant worktre
 
 When a thread has a worktree binding, MCP tools and CLI-bridged provider launches receive the frozen execution-context `working_directory`; tool invocations that use `cwd` run in that worktree path, and git-aware commands such as `git status` resolve git context from that cwd. No additional provider-specific worktree configuration is required.
 
+<a id="PROVIDER-TRANSFORM"></a>
+
 Normalized output preservation (`normalized output preservation`) is mandatory for every bridge. CLI/server adapters must keep provider output, tool-call fragments, errors, truncation markers, ordering/repair evidence, usage/cost observations, and correlation ids in the normalized stream before UI, storage, or retry logic consumes them; adapters may redact secrets, but they must not collapse provider output into unstructured text or drop fields needed to replay, audit, or compare the request.
 
 ### Provider guard rails
@@ -180,6 +207,8 @@ For provider-facade `/auth/ingestion`, CLI/server bridges preserve credential pr
 Gemini/VertexAI adapter initialization is fail-fast: a nil/error client init result MUST propagate immediately as a provider error and must not be stored behind a typed-interface value that later appears valid.
 
 Bridged providers must map upstream termination metadata into PM's normalized event stream. A provider `finishReason=length` attached to an incomplete `tool_use` never becomes an `/execute` request; the bridge emits a closing `tool_result(ok=false, error=truncated_by_length)` event for downstream tool policy to record without synthesizing missing arguments.
+
+<a id="ERROR-CLASSIFICATION"></a>
 
 Provider-adapter finish-reason canon includes `FinishReasonUnknown`, `FinishReasonContentFilter`, and `FinishReasonSafety`; `finishReason=length` on an incomplete tool call is a `/no-dispatch` path, while empty-choices, nil-client, JSON, and bounds guards fail as structured provider errors before tool dispatch.
 

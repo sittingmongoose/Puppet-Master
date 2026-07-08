@@ -22,7 +22,8 @@
     },
     "decision_id": {
       "type": "string",
-      "minLength": 3
+      "minLength": 3,
+      "description": "File-wide unique identity for future rows. Historical duplicate decision_id values are grandfathered only by validate-auto-decisions when their exact (decision_id, inputs_hash) identity is listed by the validator; new rows must not reuse a historical duplicate decision_id."
     },
     "timestamp_utc": {
       "type": "string"
@@ -63,4 +64,3 @@
     }
   }
 }
-
