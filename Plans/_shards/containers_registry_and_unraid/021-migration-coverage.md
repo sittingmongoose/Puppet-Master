@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L5965-L5975
+Source lines: L5965-L5977
 
-Source SHA256: `fdbce2e83dc53773be18beff37e23dcc26b1e0ec557067d1ae39b9b20e162d2b`
+Source SHA256: `a3d69979cdde387e0015474600dc77158482aaf61bc24982ee811be902a708d8`
 
 ---
 
@@ -19,3 +19,5 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 All original spans from `Containers_Registry_and_Unraid-S0001` through `Containers_Registry_and_Unraid-S0082` remain preserved in place. Phase 2B batch 028 atomized `Containers_Registry_and_Unraid-S0001` through `Containers_Registry_and_Unraid-S0027` into fine-grained PlanUnits `CRAU-002` through `CRAU-031` or explicit structural dispositions. Phase 2B batch 029 atomized `Containers_Registry_and_Unraid-S0028` through `Containers_Registry_and_Unraid-S0062` into fine-grained PlanUnits `CRAU-032` through `CRAU-063` or explicit structural dispositions. Phase 2B batch 030 atomized `Containers_Registry_and_Unraid-S0063` through `Containers_Registry_and_Unraid-S0082` into fine-grained PlanUnits `CRAU-064` through `CRAU-084`. Phase 2B batch 031 dispositioned structural spans `Containers_Registry_and_Unraid-S0083`, `Containers_Registry_and_Unraid-S0084`, and `Containers_Registry_and_Unraid-S0086` as structural no-unit coverage and retired `CRAU-001` as migration lineage for `Containers_Registry_and_Unraid-S0085`. This phase did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

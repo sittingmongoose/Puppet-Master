@@ -1,21 +1,22 @@
 # Shard Index: Plans/Release_Supply_Chain.md
 
-Generated: 2026-07-07T23:24:02Z
+Generated: 2026-07-08T01:27:17Z
 
-Source SHA256: `9f06cc4699b43dead8417046d588b265631f17d65466e2eec60ba43fc710782e`
+Source SHA256: `3a6e36e3dc09321bc12245b66e91b59bc6748a5a339f30f369a05cc6b7fee9e8`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `2390ff546f92c447050affd4caa572e630677e5bbccaa2a1eaa8051a3b35413a`
-- [002 - 0. Scope](002-0.-scope.md) L6-L10 `90b56044fc7ccfb6c2a019e6a3f2273de89267d0559b9cdd75b7637cf68ac3b6`
-- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L12-L22 `fa97c3fc43ce85faae50e1bf3981c986bd2de1f84aa0d53c41d41b5a3443b7f7`
-- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L24-L561 `63344c6cd4dae48308935ac7623ce042da55d3302ed356a3c335d3c05e67efa5`
-- [005 - 3. Contracts, Schemas, Events, Or Data Shapes](005-3.-contracts-schemas-events-or-data-shapes.md) L563-L565 `c587e8f5f98d3b1a488be6465ff0b3a47b51b547e4cabbc48d8832cd6f94bb11`
-- [006 - 4. Integration Surfaces](006-4.-integration-surfaces.md) L567-L569 `3acde8d9bd34b6480e7d0f581096d416912820b3396ac4c42f23b82e800bebe3`
-- [007 - 5. Validation And Acceptance](007-5.-validation-and-acceptance.md) L571-L573 `1cef93fa755fa325cc93f9184d1a7af5f5ea3a4584c960fc39227c00b4279aa7`
-- [008 - 6. Plan-To-Node Readiness](008-6.-plan-to-node-readiness.md) L575-L577 `1944d0738a80f151722499d49ce18a1bbb37d8cc8b16e7133cf19119d3ddb008`
-- [009 - 7. Deferred, Retired, Compatibility, And Non-Goals](009-7.-deferred-retired-compatibility-and-non-goals.md) L579-L581 `6a241f74522a5b96b764007dfedc556c917fa48c73f4029d5c6c5c4f90544891`
-- [010 - 8. Source Lineage And Governance](010-8.-source-lineage-and-governance.md) L583-L587 `877b49e134465a32fc1c0ec5de4ffb88021bb904390e15ccf041255358745966`
-- [011 - FABLE Residual Release Supply Chain Cleanup Addendum - 2026-07-07](011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md) L589-L648 `2841ed6917198583109367fa5d26e9e1dfd838629eeb3ee471959a824179a83e`
+- [001 - Preamble](001-preamble.md) L1-L4 `1f12aa20ff6f7ac7263c3e6a0bab335092efbac3c35aaf23c8292a63570e554a`
+- [002 - 0. Scope](002-0.-scope.md) L6-L10 `c3eef1143311cac4025f72bd6585714ee4131364604e8d2891c7d26a38027c7f`
+- [003 - 1. Ownership And Consumers](003-1.-ownership-and-consumers.md) L12-L22 `8c7d15cea680198665c0301dbf596016ccae4a44e9b716cdb080f0f29ae80b09`
+- [004 - 2. Canonical PlanUnits](004-2.-canonical-planunits.md) L24-L561 `0e686502b3e905ddfccba4f33ba8200f196ff2c78ceab450beb4d572e503be58`
+- [005 - 3. Contracts, Schemas, Events, Or Data Shapes](005-3.-contracts-schemas-events-or-data-shapes.md) L563-L565 `600ef2855ec70f9c3c0e83e978235bf883a49f283029cde65f6b736054d155ae`
+- [006 - 4. Integration Surfaces](006-4.-integration-surfaces.md) L567-L569 `7106eb2b2ccd5d9bf126ac4b5a1e21b3f1d1f857d0f0da7543bcfccf3fd664b7`
+- [007 - 5. Validation And Acceptance](007-5.-validation-and-acceptance.md) L571-L573 `346d2b0c77031bc3d20a131ac2f96e1ab0c7f8a5f189ba22630e946f8d64b538`
+- [008 - 6. Plan-To-Node Readiness](008-6.-plan-to-node-readiness.md) L575-L577 `86161a91ed0546812d12e8b9b70da15da9b7744f4c23805ab489b1c6cf3a0c0e`
+- [009 - 7. Deferred, Retired, Compatibility, And Non-Goals](009-7.-deferred-retired-compatibility-and-non-goals.md) L579-L581 `a35aa15c20d5eb86e6fa7e19e2b5569010d30ebe868f098ac5588b284834f3f6`
+- [010 - 8. Source Lineage And Governance](010-8.-source-lineage-and-governance.md) L583-L587 `6726ce0824c166b9b19d2bd0e9fc51a4c59e02a8c81facdd7743c5d240112439`
+- [011 - FABLE Residual Release Supply Chain Cleanup Addendum - 2026-07-07](011-fable-residual-release-supply-chain-cleanup-addendum-2026-07-07.md) L589-L650 `bad94a4cdf20fc5586128e18be12e9cb7962e915b3fd694c56c16747da8edb62`
+- [012 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](012-fable-remaining-action-plan-repair-notes-2026-07-08.md) L651-L660 `0d4884f0405bc7aec02c9522036a710d63c7b6cf4317103879952438ad46e81d`

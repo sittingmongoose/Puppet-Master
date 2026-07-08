@@ -1,30 +1,31 @@
 # Shard Index: Plans/Personas.md
 
-Generated: 2026-07-07T23:24:02Z
+Generated: 2026-07-08T01:27:17Z
 
-Source SHA256: `93a948241c79656528bf10eaeb01e6d82e44ce50b5cabc1981bf22c314950b1e`
+Source SHA256: `72bd84fe015d24252ac5562b46aec46c47ebfd992b77315a67a8e3ccd8363e4c`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `6e481d65b64ea4b0adbce06d2ab4459977e443bd848bef6f3f763e167f12c204`
-- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L27 `afffd83365ced0eb60a811c0711cb2a8e2c4eb90fc587f2bf19eb445c60630f0`
-- [003 - 1. Definitions](003-1.-definitions.md) L29-L76 `3506c9ceecb87103e58257f6e7717767ac3c473df8c12dd55cc9e162c7922ead`
-- [004 - 2. Storage layout](004-2.-storage-layout.md) L78-L123 `d45b56a4da11e4bc21061d3dc7243b289aef1a461c37589b38a96f9145f93015`
-- [005 - 3. Persona format (schema)](005-3.-persona-format-schema.md) L125-L211 `8df4e4e9f8761d498d11753cdf4c4dd45c34d92a9f06cbc11486f85b356575ad`
-- [006 - 4. GUI requirements](006-4.-gui-requirements.md) L213-L261 `3e21d21e931d86083650df31801a03d150b655ee1889e979764d7eff7d02221a`
-- [007 - 5. Integration: Persona application to a run](007-5.-integration-persona-application-to-a-run.md) L263-L329 `0b095a597a12fe4b41b5d7c39a403b04f8028510f9f11a338cdc5fffceabdee9`
-- [008 - 6. Reserved Personas](008-6.-reserved-personas.md) L331-L355 `21bcfc6bbc18f5b81c9254c955571b5d90324c68c677e584ddb05dcf031ccf67`
-- [009 - 7. Relationship to the Persona registry and delegated-subagent registry](009-7.-relationship-to-the-persona-registry-and-delegated-subagent-r.md) L356-L377 `7c0c75b5351b68e60561f8a7b665f2a76e3b175d6ddfa2d914f6d752221c489c`
-- [010 - 8. OpenCode baseline and Puppet Master deltas](010-8.-opencode-baseline-and-puppet-master-deltas.md) L378-L398 `7813be034cfa7c1bec2b02acd60c8ea5b2a0503512f196551654fee0479b348f`
-- [011 - 9. Acceptance criteria](011-9.-acceptance-criteria.md) L400-L427 `6c4437fee9520ea8e8e92d76589b195552eabbace4a65fae2564acbe7bfdc186`
-- [012 - 10. Persona Runtime Contract Expansion (2026-03-06)](012-10.-persona-runtime-contract-expansion-2026-03-06.md) L428-L471 `1f6111942daa3fc16f5a9e5660f6c22f3019091380bf422f82d9a724da6fd480`
-- [013 - 11. Core Persona catalog](013-11.-core-persona-catalog.md) L472-L613 `b9f250355ab1f4ecffecfd9229fd38619a7e19a985f7d65951aa6cff4c3db9d5`
-- [014 - 12. Specialty Persona catalog and curation](014-12.-specialty-persona-catalog-and-curation.md) L614-L680 `fb7317ab8db5291694417517a3cb993b9cdcc39256b0222f2567aa55db817c89`
-- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L682-L686 `9a55489cdde0c5e8c312a0ac07c348aad23be5f740692e36845dc40b3c0e6218`
-- [016 - PlanUnits](016-planunits.md) L688-L3175 `598de1d42392b180364bf7e70a48509fa4412562b54abc3439e731ab0feeed42`
-- [017 - Migration Coverage](017-migration-coverage.md) L3177-L3187 `0577ff83faf9c79b86886229673576d4aa1d71a19de4d30bb57ffb76ba187ee4`
-- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L3189-L3236 `15fc3b15e2d1b4372d9b4566e95cf0e726c62f8d61850c4ae251e9c852d48717`
-- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3239-L3307 `112a7600322e363c0e41c3b8cc518e625c38af9e9ff2760a63a472f18d413a9a`
-- [020 - Ledger Compile Addendum - pldg-20260626-001-feature-name](020-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3310-L3444 `9516ce9a557b6b3503bb21e586e7ebb5dba616b1cbdd76feefc7d0f0b759b8c6`
+- [001 - Preamble](001-preamble.md) L1-L4 `58b023be07b1e120fec1d8b0985e03f18bdf16227fa5fbc09dd801e6be21201e`
+- [002 - 0. Scope and SSOT status](002-0.-scope-and-ssot-status.md) L6-L27 `73e09e6421ab218d2546351ee846a510404556752325229147c34c47b97d9b60`
+- [003 - 1. Definitions](003-1.-definitions.md) L29-L76 `7ee6306fe9d551dbadf307b4ddf553a94baad5818740d5fa3648f68d10f3fba9`
+- [004 - 2. Storage layout](004-2.-storage-layout.md) L78-L123 `913a5da348f8a12a2d216fd27361be358cb3b21e3350e5e1a19bb19d9b5fd393`
+- [005 - 3. Persona format (schema)](005-3.-persona-format-schema.md) L125-L211 `a9cbf6df6e22950344f36684c70ea704204a74db840fdac29752c29791b8dfbb`
+- [006 - 4. GUI requirements](006-4.-gui-requirements.md) L213-L261 `33ff6f17a6c6e0f6296ee4a530742160876af4fe7dba2b37a4b9fe58e65cb0fc`
+- [007 - 5. Integration: Persona application to a run](007-5.-integration-persona-application-to-a-run.md) L263-L329 `41aeb69c3d3911127f76be4ded11772e696b675ebfe5815a7d4f276613d5a280`
+- [008 - 6. Reserved Personas](008-6.-reserved-personas.md) L331-L355 `8a88b0f7e7c69f1d986b6c1a45979b888c6f2469c0e40f53694d81f386b6160f`
+- [009 - 7. Relationship to the Persona registry and delegated-subagent registry](009-7.-relationship-to-the-persona-registry-and-delegated-subagent-r.md) L356-L377 `d1cc2d6b102a66586181f781b35df60243b3c658280372587a67efbcaceab72e`
+- [010 - 8. OpenCode baseline and Puppet Master deltas](010-8.-opencode-baseline-and-puppet-master-deltas.md) L378-L398 `f8cc7e96ff67034d621c4fe515e8d6c2196d44af562488c2f37f7b635dfefece`
+- [011 - 9. Acceptance criteria](011-9.-acceptance-criteria.md) L400-L427 `b7cea7f7f9f6d5f3c25a5aba4e743679aa991b234b22530f4f24bf84e264723b`
+- [012 - 10. Persona Runtime Contract Expansion (2026-03-06)](012-10.-persona-runtime-contract-expansion-2026-03-06.md) L428-L471 `90724b866e21e9ce78e054ab9f334469df66f8f13a4521a4a9ee60ac800f9c97`
+- [013 - 11. Core Persona catalog](013-11.-core-persona-catalog.md) L472-L613 `0f9b1de9e48851cea00600710a1ca0da3bff4fcf5d9b2eeaa0ef9afaae660b03`
+- [014 - 12. Specialty Persona catalog and curation](014-12.-specialty-persona-catalog-and-curation.md) L614-L680 `cfca0b99faacf193ed52fea71825931af980ff69ba7b43ed6f649acefff1cef9`
+- [015 - Owner / Consumer Map](015-owner-consumer-map.md) L682-L686 `86e0fd0c8bf8e491e9793240a09ea0a6f3609b66f031e2790c495c107baf15f8`
+- [016 - PlanUnits](016-planunits.md) L688-L3175 `e0b1c66353238abf669d40091bc209af0d512a783cdfbb3f7f7c5c2c549ce1e9`
+- [017 - Migration Coverage](017-migration-coverage.md) L3177-L3187 `ff16c929a3fcc94656075748b3a3de18d36eb868891354898b788c05e4d96059`
+- [018 - Ledger Compile Addendum - pldg-20260614-001](018-ledger-compile-addendum-pldg-20260614-001.md) L3189-L3236 `f3207f93b6730ffb4905e0547d4f3c56578745f45bf47e3fa3e7b3692e9be72c`
+- [019 - Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard](019-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md) L3239-L3307 `4ccc92cbe54eca68a7ef28c6d39ad8f5e11977646128fb7bcf20a3c90c02966f`
+- [020 - Ledger Compile Addendum - pldg-20260626-001-feature-name](020-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3310-L3446 `16e1322a6f3ec8219b9a7b07eaa414de3bb97ea28ee25d8e89d8b6cd8dfa1cda`
+- [021 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](021-fable-remaining-action-plan-repair-notes-2026-07-08.md) L3447-L3455 `b93ff74f35d39cd5341afd52f072f7e34c521145a546a2ae7e2f298d263108d9`

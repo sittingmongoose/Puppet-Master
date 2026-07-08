@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L2394-L3114
+Source lines: L2394-L3116
 
-Source SHA256: `c364c8a56534bfa55e15d74218dac25322c02987445aec5d2980f4bc89f62fec`
+Source SHA256: `74994ba0e7026b664524bb346e2a2c97c44ecfc82997d5772492937923c4d71c`
 
 ---
 
@@ -729,3 +729,5 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L10145-L10237
+Source lines: L10145-L10239
 
-Source SHA256: `c440749e7b8562af34dc9b1a1201165b0170c005336e2bf96b468b936094a547`
+Source SHA256: `549fc6f601509dc82b3f76bb694c5ed08ec61384f2988768b91d1a46f2ab69ee`
 
 ---
 
@@ -101,3 +101,5 @@ owner_hints:
 - Concepts/PMConcept.html
 - Plans/assistant-chat-design.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

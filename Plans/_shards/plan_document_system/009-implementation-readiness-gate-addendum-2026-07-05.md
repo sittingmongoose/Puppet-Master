@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_Document_System.md`
 
-Source lines: L1012-L1183
+Source lines: L1012-L1185
 
-Source SHA256: `2b877c8321e049c0aab8fb6d3763d8e72471d91212a9402c449d9cf7b7dd1566`
+Source SHA256: `f6da11d13d7f763fd41236e49a03a271c180073bd1b84298263ac458d4642e7c`
 
 ---
 
@@ -180,3 +180,5 @@ owner_hints:
   - Plans/.implementation_readiness/non_executable_closure_evidence.json
   - scripts/pm-implementation-readiness.py
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

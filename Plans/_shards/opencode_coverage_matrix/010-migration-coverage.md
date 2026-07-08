@@ -2,9 +2,9 @@
 
 Source: `Plans/OpenCode_Coverage_Matrix.md`
 
-Source lines: L1194-L1204
+Source lines: L1194-L1206
 
-Source SHA256: `ef41c8912e244286a61906a651b70fee14c39a342a5bda1095c1081c4fed56c3`
+Source SHA256: `de203bc221ad1f85b3d77f5881ce418b484318e55dff949d6c3f26243920d19f`
 
 ---
 
@@ -19,3 +19,5 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 108 atomized source spans `OpenCode_Coverage_Matrix-S0001` through `OpenCode_Coverage_Matrix-S0022` into fine-grained PlanUnits `OCM-002` through `OCM-017`. `OpenCode_Coverage_Matrix-S0023` and `OpenCode_Coverage_Matrix-S0025` are structural metadata dispositions, and `OpenCode_Coverage_Matrix-S0024` is the retired `OCM-001` bridge disposition. `OCM-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

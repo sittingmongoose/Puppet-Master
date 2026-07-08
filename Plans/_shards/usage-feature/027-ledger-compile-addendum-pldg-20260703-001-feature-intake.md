@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L5323-L5764
+Source lines: L5323-L5766
 
-Source SHA256: `a6b3d7e50490ec5e6a1cde444ce9dc7ef5c7a1af6c12d74639d3c01d2a7f1162`
+Source SHA256: `72bdae3668eee969c2de469ca4d8ce227c67636de732ddbee56c90f385d2122e`
 
 ---
 
@@ -450,3 +450,5 @@ pm_gap_or_delta: External observability should be supported without making OTLP 
 proposal_or_recommendation: 'Add OptionalObservabilityExporter: OTLP/Helicone-style adapters consume redacted seglog projections, not raw canonical logs. Export backpressure, retry, and failure never block PM execution unless policy says so.'
 compile_disposition: create_new_planunit
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

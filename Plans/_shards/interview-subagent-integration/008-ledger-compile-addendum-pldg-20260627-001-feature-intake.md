@@ -2,9 +2,9 @@
 
 Source: `Plans/interview-subagent-integration.md`
 
-Source lines: L997-L1053
+Source lines: L997-L1055
 
-Source SHA256: `09870b344b6b002b65b4525e209ddfc4638b45ffe8f2523a543c6ee02325e9a5`
+Source SHA256: `810009c99c4e18b767e918b5a5b777c1acf28aaeb0253a8a2dd5f85dae707df9`
 
 ---
 
@@ -65,3 +65,5 @@ owner_hints:
   - Plans/Prompt_Pipeline.md
   - Plans/agent-rules-context.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

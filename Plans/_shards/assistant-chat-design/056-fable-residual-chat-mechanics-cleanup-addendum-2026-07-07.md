@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23441-L23512
+Source lines: L23441-L23514
 
-Source SHA256: `b322ef7e272004fa5b90acbdd24df5f9b75f2a65ce81cd5833b9b9f17ad35cb4`
+Source SHA256: `fd771a48f2504c579c3da677bf83d903eea99f103dbb478d0f107d7c25c88e49`
 
 ---
 
@@ -80,3 +80,5 @@ owner_hints:
   - Plans/storage-plan.md
   - Plans/Permissions_System.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

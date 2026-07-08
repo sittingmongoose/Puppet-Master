@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Policy.md`
 
-Source lines: L3307-L3366
+Source lines: L3307-L3368
 
-Source SHA256: `9ecf3fea83953a6a763b3d4cd902f1c5bba3b041b42ed48244dcc7a480af6030`
+Source SHA256: `b207b63da950e011e04156e61c1426ee4b7921a8774ab2f7e45766efe6673dd6`
 
 ---
 
@@ -68,3 +68,5 @@ owner_hints:
   - Plans/DRY_Rules.md
   - Plans/Permissions_System.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

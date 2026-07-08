@@ -4,7 +4,7 @@ Source: `Plans/Document_Packaging_Policy.md`
 
 Source lines: L1-L4
 
-Source SHA256: `7c555d8159c75c51128ca3ef90555d4bfc70961f959ff7aae895f184f14bf3bc`
+Source SHA256: `3c834360059f6f49f22343004eccfccf69dd569792ef84a958cca9bc74013a77`
 
 ---
 

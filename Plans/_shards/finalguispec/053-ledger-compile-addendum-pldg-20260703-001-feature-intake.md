@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L26716-L27174
+Source lines: L26716-L27176
 
-Source SHA256: `7bdec1f1dc213cffa20bdb39b72e26439653741d4d94554b6c6d72aab702b04c`
+Source SHA256: `4a16e4aaee9cf314e64ee5b6a60f5460dcd91de2951f117db4367215b5844bd6`
 
 ---
 
@@ -467,3 +467,5 @@ compatibility_only_notes:
 owner_boundary_notes:
 - "FinalGUISpec owns GUI platform and visible capability policy; Automated_Testing_System owns web GUI dev/test workflow; UI_Command_Catalog owns only development-preview command IDs."
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

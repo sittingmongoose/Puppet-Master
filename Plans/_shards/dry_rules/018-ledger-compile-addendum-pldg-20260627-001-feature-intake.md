@@ -2,9 +2,9 @@
 
 Source: `Plans/DRY_Rules.md`
 
-Source lines: L1983-L2044
+Source lines: L1983-L2046
 
-Source SHA256: `9cce018f157fd089b9b816a15fb2fb1cc879416528572e90a4167e66ca42bad5`
+Source SHA256: `29ad3a1087680b6ba220879b41447dae31c7db854131ed2b4f2424627ef57433`
 
 ---
 
@@ -70,3 +70,5 @@ owner_hints:
   - Plans/Decision_Policy.md
   - Plans/agent-rules-context.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

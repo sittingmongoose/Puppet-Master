@@ -1,16 +1,17 @@
 # Shard Index: Plans/Decision_Log.md
 
-Generated: 2026-07-07T23:24:02Z
+Generated: 2026-07-08T01:27:17Z
 
-Source SHA256: `6cd8b149fdba75a886c760e08326fe023794577c1f4a7061263c105bdb12ebdf`
+Source SHA256: `903a5cc05c94247222af6abc77ff7561d27acc543d84f453eae84aaec332f594`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `ddd561421fa7b08cbca1b7265e3d63321cc607d97267fe8a4527c8f1b382a3b5`
-- [002 - Purpose](002-purpose.md) L6-L11 `a64b20919d1001d8079ff59ffb5b6a3ef25fe05291a8ec2e6aaf8d6eb12fa238`
-- [003 - Entries](003-entries.md) L13-L119 `b4e6f5a3492bb232eb1fce97ea2f1e495418c91981815639f45e2a77d249468f`
-- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L121-L125 `78b34a6f7755ab3c7ad4d9df9cb049c2f15b4f684bf4a08ce2d44aede9a7dc28`
-- [005 - PlanUnits](005-planunits.md) L127-L1500 `9052c027d0ca88bc02440da2841f20e5340daf2cb2aa7255fd726f84f1a1dced`
-- [006 - Migration Coverage](006-migration-coverage.md) L1502-L1512 `8821c5a68e565c03671b995d78f0c1ae0f6791350dd2763e2ff2af4c0515f06e`
+- [001 - Preamble](001-preamble.md) L1-L4 `caffc4b5c56dea814d9a1726b4a092333d39365045ab0bad2d37d5708b3f4557`
+- [002 - Purpose](002-purpose.md) L6-L11 `584d6656843073ac62137882d1f61cf295bbaba860e2536c97d8c08d715021a9`
+- [003 - Entries](003-entries.md) L13-L119 `e71ea828015205a18b99cfc9ca37eec994302835998d4dd95bf0431510428bc8`
+- [004 - Owner / Consumer Map](004-owner-consumer-map.md) L121-L125 `3425ae0c1bff4829af1692f64e93b0defe06db5a197fa964bfcb5b09713331cc`
+- [005 - PlanUnits](005-planunits.md) L127-L1500 `9acf1f638a9f0a42e7013bc9da57bb62966cf04baa9f60ff4719ed5f80436322`
+- [006 - Migration Coverage](006-migration-coverage.md) L1502-L1514 `18c48169c92b1f73883381231376c6b93baca14b90959b8f4a50e6b8302d3409`
+- [007 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](007-fable-remaining-action-plan-repair-notes-2026-07-08.md) L1515-L1522 `8313e68e7ee8d8ffc43f633e7af005e0f8454d984a4fc8faa638fcb2a51fafc3`

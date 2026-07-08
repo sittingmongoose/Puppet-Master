@@ -1,37 +1,38 @@
 # Shard Index: Plans/newtools.md
 
-Generated: 2026-07-07T23:24:02Z
+Generated: 2026-07-08T01:27:17Z
 
-Source SHA256: `cad0e89af13bf8410029021e2aa1ab83861ce1896fea1e860fa11c1b5277c1b8`
+Source SHA256: `ffbd051250477260c68d5b762039fa9642fad62b6b3303c875094edf86260873`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L4 `77dac904d626ab086fd29f7ca5cf0eca9341b53ea8483b5e84f0c81559bf2c2c`
-- [002 - Plan Document Status](002-plan-document-status.md) L6-L14 `6642eadf84a4ae948e7a9cebea9de73a1a05d61b07af50df248cf9e4f2385202`
-- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L16-L33 `2c233af1d624d5dff7694b2d7ebf2c6738481c02ba6316261918d05aefca1c4a`
-- [004 - DRY Method Compliance](004-dry-method-compliance.md) L34-L68 `6cb33df0ec8c4515d66ad52c9f5f4ab04e22cf33ae83db65cf2bd0d259a8824b`
-- [005 - Table of Contents](005-table-of-contents.md) L70-L94 `44b699b3e2a3c2122a47be380cd6d91a2a9cd1bfade50c078afb266f47839318`
-- [006 - 1. Executive Summary](006-1.-executive-summary.md) L96-L113 `9bce074ee443af4f780a6fdd2a9e71824617f1dbc07fe1a20bf2797872182b39`
-- [007 - 2. Relationship to Other Plans](007-2.-relationship-to-other-plans.md) L115-L126 `955c4d1816ded378f99ec5eaad41ff7ddb39eae7bf7fa7b01cb19ebdb50b683e`
-- [008 - 3. Problem Statement](008-3.-problem-statement.md) L128-L134 `4bcbe44887362f295e130517b6242d2b7d332644bfc2d72e88ee864c15c619c9`
-- [009 - 4. Goals](009-4.-goals.md) L136-L149 `c4c9389ec15ee68a078f0dc39c531595b7704880d1aa83d5cc335a4f3668fce2`
-- [010 - 5. Design Overview](010-5.-design-overview.md) L151-L165 `fd45f91f20ab58b1944bbd56fd6b9777f85297d5a2fa38f488d33df2cee13655`
-- [011 - 6. Framework & Tool Discovery (DRY)](011-6.-framework-tool-discovery-dry.md) L167-L226 `b9bb9c5dd4004be9cfa78f7d9ae8ed4cbd0e68996b522fe2e2673cd16fbef24f`
-- [012 - 7. Interviewer Flow Changes](012-7.-interviewer-flow-changes.md) L228-L255 `5417088f5b55aeee2ae8da72c2fbdda9a51dc85662296975682fe8029f0464e9`
-- [013 - 8. MCP Support and GUI Settings](013-8.-mcp-support-and-gui-settings.md) L257-L328 `63f46617ead27cbea771364b119070dd68965b2442b77c82c69ae24f17164bef`
-- [014 - 9. Custom Headless GUI Tool](014-9.-custom-headless-gui-tool.md) L329-L357 `7c40daa9bb47b317f9114c91156222b4c0b5f99d87089ec7224a43bde0c2df8b`
-- [015 - 10. Integration with Test Strategy & Plans](015-10.-integration-with-test-strategy-plans.md) L359-L384 `aa01c8c25a3afc4c0d06f52fc27e1d776c3c3434c85a85c0cb67a93eec5993d0`
-- [016 - 11. Implementation Checklist](016-11.-implementation-checklist.md) L386-L407 `d50998656c7fb5424dc759e5c391e27cec9e3aef72ce624a4f69d06be4b8c4c5`
-- [017 - 12. Gaps, Risks, and DRY Notes](017-12.-gaps-risks-and-dry-notes.md) L409-L571 `1738aeef3c253dfdcb8db69c8a1ebdf4adf0e7acb6e320a609c096b8fa9391d8`
-- [018 - 12.7 Crews and Subagent Communication Enhancements for Tool Discovery](018-12.7-crews-and-subagent-communication-enhancements-for-tool-disc.md) L573-L585 `37a19d787ae6df669a9416cc27e8aecf59387f2e4d0d399eaee5c8e5f15554a0`
-- [019 - 12.8 Lifecycle and Quality Enhancements for Tool Discovery](019-12.8-lifecycle-and-quality-enhancements-for-tool-discovery.md) L586-L598 `ad712a032ddde844ec9954bd012cde82fa1ffd34fd184f8aadfa1aa9de042d6b`
-- [020 - 13. Evidence-in-Chat Contract and Flow (research-evidence-media-chat)](020-13.-evidence-in-chat-contract-and-flow-research-evidence-media-c.md) L599-L701 `aa03b638751f7ec81b3e67fbe9048fa056311265a97a03b36f3a2143244cd5b1`
-- [021 - 14. Live Visualization Execution Architecture (research-live-visualization)](021-14.-live-visualization-execution-architecture-research-live-visu.md) L703-L869 `3fd6f01a02040acd81d077ecec1c8c892de6563cf0487120ecf85693c9efba4d`
-- [022 - 14.5 Mobile Testing Stacks (research-mobile-testing-stacks)](022-14.5-mobile-testing-stacks-research-mobile-testing-stacks.md) L871-L966 `9d48a63bc8ab3361bef77459ff855224a59fe5cb0e80963acf68d603bc340adb`
-- [023 - 14.6 Preview, Build, Docker, and Actions Contracts](023-14.6-preview-build-docker-and-actions-contracts.md) L968-L1160 `a1f09cc5b17b74b2bbe786638ee3fc4025504bee4bfe2a9322017483f3a00aa4`
-- [024 - 15. References](024-15.-references.md) L1162-L1304 `5d918aa12c42570e07bb9833ad324ebd1aef909c8f27940c44b0256d5418bc7b`
-- [025 - Owner / Consumer Map](025-owner-consumer-map.md) L1306-L1310 `b5b554038c09ac85fb4a45b32a823671f8ad4ace650b17232474ac4002e1ae07`
-- [026 - PlanUnits](026-planunits.md) L1312-L8592 `9a0c2aca3fd98dc44cc21186c7f8d5d72b0bbf2265a905ddb7fa5e7e8898edd8`
-- [027 - Migration Coverage](027-migration-coverage.md) L8594-L8604 `6cdacfcaa1ca0e55cecb4fbf365c00721c294e803d584e23de0e26d9aed277c6`
+- [001 - Preamble](001-preamble.md) L1-L4 `e6348d329a00cec2e22cdb502adff6f72d134b3ac0abad0af7fbb7d612989ee3`
+- [002 - Plan Document Status](002-plan-document-status.md) L6-L14 `0feb99ed70974de5e356055666b763a22aa6e2f995ded32ea8c68648cd90127a`
+- [003 - Rewrite alignment (2026-02-21)](003-rewrite-alignment-2026-02-21.md) L16-L33 `5540ee379aff2d9410a71cd690d9d53899bee9322cce537722a3845cddd9e377`
+- [004 - DRY Method Compliance](004-dry-method-compliance.md) L34-L68 `b226ae9a6aba7ffab1760cc3e22c1339fb4f614ef19b8efb4419564458675519`
+- [005 - Table of Contents](005-table-of-contents.md) L70-L94 `9e98d8c560a5f46bea3c15f3e19dd7f7d76fe6eb49cdc2c9579e1f7fec2bcbd6`
+- [006 - 1. Executive Summary](006-1.-executive-summary.md) L96-L113 `cf7c531ed31096d4ad9a3c31086eb4a52b7d1694fc638aee4b003f05fe21db7c`
+- [007 - 2. Relationship to Other Plans](007-2.-relationship-to-other-plans.md) L115-L126 `896766f6e7dae3f567815b723e652d8b61e820a0edc3cc0b5fe956527c59b94b`
+- [008 - 3. Problem Statement](008-3.-problem-statement.md) L128-L134 `4df7bbd4dbef8016dc35d86c644387ec5445a63fee077a3f04603b663441c535`
+- [009 - 4. Goals](009-4.-goals.md) L136-L149 `5daed2c6c1173b1953505b18231e56990a40cb5f089a09e166c1d45105c775f3`
+- [010 - 5. Design Overview](010-5.-design-overview.md) L151-L165 `cd14d06fe1dd20f1b6d772905bf7d0a78e83f448e65281db38b27fc48648cde4`
+- [011 - 6. Framework & Tool Discovery (DRY)](011-6.-framework-tool-discovery-dry.md) L167-L226 `968d99462acbbfe72fc9fd59a474fcdc225e9a428f44e98a79f7c4aa35318eaa`
+- [012 - 7. Interviewer Flow Changes](012-7.-interviewer-flow-changes.md) L228-L255 `d892dd2d8e3d9f1d56d4d75140d078be3c9ced12068a89eaecb2fc697be66c84`
+- [013 - 8. MCP Support and GUI Settings](013-8.-mcp-support-and-gui-settings.md) L257-L328 `4cb0042e5b531a1b81b0c8d04d01d0c3dc676f19bd9d3390be59ad977f817e33`
+- [014 - 9. Custom Headless GUI Tool](014-9.-custom-headless-gui-tool.md) L329-L357 `d4ed29e5c217c15ebf95644d7fa05a1f37f9426fb2a252ca62d4bbbe2c8f4f5b`
+- [015 - 10. Integration with Test Strategy & Plans](015-10.-integration-with-test-strategy-plans.md) L359-L384 `911a1dc407994c98c6d64b9b919e702bedd9f14f118e9165ab68a3057423b325`
+- [016 - 11. Implementation Checklist](016-11.-implementation-checklist.md) L386-L407 `0b0fdf8888830eee4c0c248e62b3a5f7a5458e70162c8b88dfa6c67fe74503db`
+- [017 - 12. Gaps, Risks, and DRY Notes](017-12.-gaps-risks-and-dry-notes.md) L409-L571 `2709a86215c50e40694a2db2b1f4ad77993bd4d3b17a6cbffe1723eb455601cf`
+- [018 - 12.7 Crews and Subagent Communication Enhancements for Tool Discovery](018-12.7-crews-and-subagent-communication-enhancements-for-tool-disc.md) L573-L585 `451b7160d0d846eb079ac197b56f6a9e27a4edb8b98e78ff1f39a8a889f5bd47`
+- [019 - 12.8 Lifecycle and Quality Enhancements for Tool Discovery](019-12.8-lifecycle-and-quality-enhancements-for-tool-discovery.md) L586-L598 `f4cbcb76ebc7630fa30616b20e0edbe18ec57eb952535259c7b885417334ce18`
+- [020 - 13. Evidence-in-Chat Contract and Flow (research-evidence-media-chat)](020-13.-evidence-in-chat-contract-and-flow-research-evidence-media-c.md) L599-L701 `2bf41ddb2636c8b3ad01d0a8beae1a0c16b0cf9e92201d3282a9c62891b9a8f8`
+- [021 - 14. Live Visualization Execution Architecture (research-live-visualization)](021-14.-live-visualization-execution-architecture-research-live-visu.md) L703-L869 `600faaa24a6aa1c051eb083cc5d550c3d55634b0be4502757c7e512bf0af735f`
+- [022 - 14.5 Mobile Testing Stacks (research-mobile-testing-stacks)](022-14.5-mobile-testing-stacks-research-mobile-testing-stacks.md) L871-L966 `d09367fbf27d90396c31a81cadb46e6ffa4f196007286f7c2074db30df7c5c0f`
+- [023 - 14.6 Preview, Build, Docker, and Actions Contracts](023-14.6-preview-build-docker-and-actions-contracts.md) L968-L1160 `24b758354c19a919f8d2d68a3afd9d6073b9116685dfb25784784bca59c6b8e3`
+- [024 - 15. References](024-15.-references.md) L1162-L1304 `35dacfc0b7c835e510acd31992494f8b3e9a7ca27c307704d849ff8ba6c8c922`
+- [025 - Owner / Consumer Map](025-owner-consumer-map.md) L1306-L1310 `ccd36801e75d3be5ff0cda9388817e56139b729bf095660dc98b89eb155e2e3f`
+- [026 - PlanUnits](026-planunits.md) L1312-L8592 `eb63626f12be5088589931f64dc8c1ea4daa1694845ad33a4aa108cf9516fd53`
+- [027 - Migration Coverage](027-migration-coverage.md) L8594-L8606 `a2e3a2cf4ca1e620f9b0e63345af98a82fe1b9fe3a05aee7f8ce7865756be0d6`
+- [028 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](028-fable-remaining-action-plan-repair-notes-2026-07-08.md) L8607-L8622 `a00c8bbb64a56c7dad8fe0645af9c0780e6c2576d00c0028ffb7e249204328f0`

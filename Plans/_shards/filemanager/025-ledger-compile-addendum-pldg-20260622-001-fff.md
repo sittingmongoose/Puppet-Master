@@ -2,9 +2,9 @@
 
 Source: `Plans/FileManager.md`
 
-Source lines: L4440-L4482
+Source lines: L4440-L4484
 
-Source SHA256: `4ea1e4cb9c50c00f7ecb6570db41f7e583199c5c0c655d72d0a2995c7d1b0998`
+Source SHA256: `85d2c7083340ba95430846ebbbd565b9db1263a335a735485b94ceda37c0b85c`
 
 ---
 
@@ -51,3 +51,5 @@ negative_constraints:
   - Do not make File Manager the content-search or exact-verification owner.
 owner_hints: [Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/Tools.md]
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

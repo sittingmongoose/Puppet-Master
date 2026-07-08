@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L4014-L5016
+Source lines: L4014-L5018
 
-Source SHA256: `7058487b8665c45ef7a5394a271e4a7a64d6e5c76760abdbd7ed82f1512a8ac0`
+Source SHA256: `c9e42dad47823889bfcbf99bf1c29c9c42da839afb6f77a0dc8857b9c4ec7d50`
 
 ---
 
@@ -1011,3 +1011,5 @@ pm_gap_or_delta: No first-class ContextEpoch object found in repo scan
 proposal_or_recommendation: Add CONTEXT-EPOCH-RECORD with instruction/tool/MCP/provider/catalog/cache/history hashes
 compile_disposition: create_new_planunit
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

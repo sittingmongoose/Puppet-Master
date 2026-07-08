@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L1460-L1530
+Source lines: L1460-L1532
 
-Source SHA256: `a2ac3668827960ebcc4362263a03a0d86723f955bb8869095086a27aa9f0335a`
+Source SHA256: `dfa879c8e0ab5201456393f714ab389cb61e969a03f838340fe99a0be6f5c2fa`
 
 ---
 
@@ -79,3 +79,5 @@ owner_hints:
   - Plans/UI_Wiring_Rules.md
   - Plans/Progression_Gates.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

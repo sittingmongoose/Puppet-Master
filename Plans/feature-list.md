@@ -1579,3 +1579,12 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Phase 2B batch 053 atomized `feature-list-S0001` through `feature-list-S0018` into `FL-002` through `FL-025`, structurally dispositioned `feature-list-S0019`, `feature-list-S0020`, and `feature-list-S0022`, and retired `FL-001` as migration lineage for `feature-list-S0021`. No residual source-preserving feature-list PlanUnit remains. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+
+This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 336` (explicitly_deferred; source line 1139; `sfk-e04efb06a95454f9dd8c233d`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] whole doc: declared a "reference inventory" (FL-002) ~40% of capability bullets describe behavior with zero mechanism, deferring entirely to owner docs; readiness rests on those docs, not this one.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

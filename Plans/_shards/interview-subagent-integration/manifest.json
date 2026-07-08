@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-07T23:24:02Z",
+  "generated_at_utc": "2026-07-08T01:27:17Z",
   "index_path": "Plans/_shards/interview-subagent-integration/00-index.md",
-  "index_sha256": "0de0591954879bd58808102eb29b0eb73135c1e051ba771492f29a70c327866e",
+  "index_sha256": "e3c70211504a1910fb3afa953432272b9de35c4344f97ce174e63c48e9c9b9e9",
   "manifest_path": "Plans/_shards/interview-subagent-integration/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/interview-subagent-integration/001-preamble.md",
-      "sha256": "f47e8bd8d006e86dd508e715d3f0665667bf673fd8f3a42ecfaabf14e0b9d54c",
+      "sha256": "84fb77ed9f7375e1c7a5a6ccae71960d1747aef536997ab01e4339a70593aca6",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/interview-subagent-integration/002-canonical-owner-section-requirements.md",
-      "sha256": "4a54a20e1605fbd1bddce784ce801899b347e5a0c76dda1f774c0126eab256bf",
+      "sha256": "dcbf659d3f8c52efcf9af0536f4b72aabb5b8d2f904c3e04f3861c51998f39b8",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Change Summary",
       "path": "Plans/_shards/interview-subagent-integration/003-change-summary.md",
-      "sha256": "e7cb8164fdbc8c556d6eea9bc72f85c00a24a5b8ded4886d71ff493be7001d54",
+      "sha256": "709249c0d6a746e432300dedb1f74d3c0bf68fc83781896d137190b15af22286",
       "shard_id": "003",
       "source_line_end": 18,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "Interview runtime boundary and handoff lineage",
       "path": "Plans/_shards/interview-subagent-integration/004-interview-runtime-boundary-and-handoff-lineage.md",
-      "sha256": "424bb9e8531e625a32c2cc4846f8747936f5096ca99cbd5acfdafa927c340487",
+      "sha256": "12b0ea2aa2278323c1be1a8b2a46e2be8cd423832887d5967f9d2fd874641e2b",
       "shard_id": "004",
       "source_line_end": 54,
       "source_line_start": 20,
@@ -44,7 +44,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/interview-subagent-integration/005-owner-consumer-map.md",
-      "sha256": "5c9e1fe02606c57c0acfd7f8da02307146e96384ac6f31f92ac2ede78c38b3e0",
+      "sha256": "a8fb15e098f64e9daff9f7c52edfc77d4cd6c60a055d2e80e281e65c8019864f",
       "shard_id": "005",
       "source_line_end": 60,
       "source_line_start": 56,
@@ -53,7 +53,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/interview-subagent-integration/006-planunits.md",
-      "sha256": "e98b257e9f3e8ec9f17f0dba1b411e97133213c87bc13aeefb9138b11897d811",
+      "sha256": "a40d98f7b8cc2c26ffb74a94be6818b1ebf5885e43341ecd7902594cef6907ec",
       "shard_id": "006",
       "source_line_end": 983,
       "source_line_start": 62,
@@ -62,7 +62,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/interview-subagent-integration/007-migration-coverage.md",
-      "sha256": "7b1d84393444552186b0e6d959012b055233511139862093b2fdf8f6b25699ee",
+      "sha256": "68701b7e0362cb2f0b79e9cc46c24019e222723f0b7ebce4929ee6ac45cd85d8",
       "shard_id": "007",
       "source_line_end": 995,
       "source_line_start": 985,
@@ -71,16 +71,25 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/interview-subagent-integration/008-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "25f443dbc82112a35b3b41e22496f3a598a8ad44ae8bb05710422673718054b4",
+      "sha256": "eda453a183d68da3584b00afa7398ca1a21f77101f3f1125faacee91ab44f728",
       "shard_id": "008",
-      "source_line_end": 1053,
+      "source_line_end": 1055,
       "source_line_start": 997,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
+      "path": "Plans/_shards/interview-subagent-integration/009-fable-remaining-action-plan-repair-notes-2026-07-08.md",
+      "sha256": "64cb312dff42cc59796e8ad12a7a7befd61c83439c0b69aa81e62b61a0e301b4",
+      "shard_id": "009",
+      "source_line_end": 1066,
+      "source_line_start": 1056,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1053,
+    "line_count": 1066,
     "path": "Plans/interview-subagent-integration.md",
-    "sha256": "09870b344b6b002b65b4525e209ddfc4638b45ffe8f2523a543c6ee02325e9a5"
+    "sha256": "810009c99c4e18b767e918b5a5b777c1acf28aaeb0253a8a2dd5f85dae707df9"
   }
 }

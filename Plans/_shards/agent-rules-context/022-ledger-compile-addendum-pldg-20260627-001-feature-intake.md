@@ -2,9 +2,9 @@
 
 Source: `Plans/agent-rules-context.md`
 
-Source lines: L2301-L2365
+Source lines: L2301-L2367
 
-Source SHA256: `973cc1c959ccca05ed7bb6a3a3be1c4c8b7d537342c2897621b42cf489e5671b`
+Source SHA256: `2f36d282c3795dd66d65f8fa473693d2bce1447500c2fe32d789b3faba2ab603`
 
 ---
 
@@ -73,3 +73,5 @@ owner_hints:
   - Plans/Prompt_Pipeline.md
   - Plans/DRY_Rules.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

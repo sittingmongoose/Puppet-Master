@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L2346-L2507
+Source lines: L2346-L2509
 
-Source SHA256: `4984c402176d87ec6f715ad4e3fdd607076d38cc08b2d6a84ca17e6ca49f2a20`
+Source SHA256: `d67792a23f746247d610e52cc1760f8713edeaf6da1c63660930c7cdaac9436d`
 
 ---
 
@@ -170,3 +170,5 @@ pm_gap_or_delta: MemoryTierContract covered layers and budgets, but not enough a
 relationship_to_prior_reports: Extends memory budget/governance into user-visible store operations.
 compile_disposition: create_new_planunit
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

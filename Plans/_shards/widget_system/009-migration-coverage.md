@@ -2,9 +2,9 @@
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1017-L1027
+Source lines: L1017-L1029
 
-Source SHA256: `7c20cb1ee539092df99bc16c4aa6285d0f959816ddd732556bdd9dfae2d5e525`
+Source SHA256: `a4643bdeaaee90bee9f376e50446d3b0d6d518b2d14056049905f0e557a23c58`
 
 ---
 
@@ -19,3 +19,5 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
 
 Phase 2B batch 198 atomized `Widget_System-S0001` through `Widget_System-S0009` into fine-grained PlanUnits `WS-002` through `WS-014`, while preserving hostability scope, owner/consumer boundaries, routed GUI consumer paths, projection contracts, projection trust, compatibility retirements, layout namespaces, Progress-only composition, promoted Progress catalog IDs, Progress label taxonomy, Dashboard/Usage/Source Control hostability, and settings hierarchy. Generated Owner / Consumer Map and PlanUnits heading spans `Widget_System-S0010` and `Widget_System-S0011` were structurally dispositioned, generated bridge span `Widget_System-S0012` was retired through `WS-001` as migration-lineage-only compatibility residue, and generated Migration Coverage span `Widget_System-S0013` was structurally dispositioned. `WS-001` no longer uses `source_preserving_planunit` mode and must not own product coverage. Batch 198 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Graph_View.md`
 
-Source lines: L1016-L1067
+Source lines: L1016-L1069
 
-Source SHA256: `d14ad2869679d339b363925f389defafaa8a573433c8e80627b3c506bc14a4d8`
+Source SHA256: `425251624cd5f16edfc3482ac684337870bb6eea6a690b13da3b544a9ab4b2b9`
 
 ---
 
@@ -60,3 +60,5 @@ owner_hints:
 - Plans/FinalGUISpec.md
 - Plans/Run_Graph_View.md
 ```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

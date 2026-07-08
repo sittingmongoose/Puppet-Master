@@ -4434,3 +4434,14 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batches 115 and 116 atomized `Architecture_Invariants-S0001` through `Architecture_Invariants-S0040` into fine-grained PlanUnits `AI-002` through `AI-067`. `Architecture_Invariants-S0041` is the PlanUnits heading/container, `Architecture_Invariants-S0042` is the retired `AI-001` source-preserving bridge, and `Architecture_Invariants-S0043` is Migration Coverage metadata. `AI-001` is now migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+
+This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 265` (repaired; source line 928; `sfk-60e840c059b6db237485d48c`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [CRITICAL] L29-68: INV-001's rule is preceded by ~40 lines of raw unedited reconciliation fragments inside the canonical rule body extract to changelog or delete.
+- `registry_line 266` (repaired; source line 929; `sfk-ddd4dece078c664fd31f6de5`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [CRITICAL] L44,54,57: invariants describe their OWN unresolved gaps (`correlation_id` lacks trace-through, `usage_event_ref` still special-cased) as if canonical not enforceable as stated.
+- `registry_line 267` (repaired; source line 930; `sfk-937c36d705a22bf16645cca2`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L271,275,283 / GATE-003/001/010: cited repeatedly as enforcement authorities with no gate registry/definition doc found anywhere in Plans/*.md via grep.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

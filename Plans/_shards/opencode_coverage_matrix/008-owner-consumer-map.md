@@ -4,7 +4,7 @@ Source: `Plans/OpenCode_Coverage_Matrix.md`
 
 Source lines: L258-L262
 
-Source SHA256: `ef41c8912e244286a61906a651b70fee14c39a342a5bda1095c1081c4fed56c3`
+Source SHA256: `de203bc221ad1f85b3d77f5881ce418b484318e55dff949d6c3f26243920d19f`
 
 ---
 
