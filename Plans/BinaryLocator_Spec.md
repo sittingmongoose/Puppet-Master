@@ -195,6 +195,7 @@ Candidate roots (by OS):
 Selection rule (deterministic):
 - Enumerate immediate child directory names under the versions directory and select the lexicographically greatest name using byte-order string comparison. (ContractRef: Primitive:Provider)
 - Treat directory names as opaque strings (no semantic version parsing). (ContractRef: Primitive:Provider)
+- Ignore non-directory children, hidden lock/temp names beginning with `.`, and names ending in `.tmp`; if two directory entries compare equal after platform path normalization, prefer the one whose canonical absolute path is byte-order greatest. (ContractRef: Primitive:Provider)
 - Probe `.../<chosen>/cursor-agent` (Unix/WSL) or `...\\<chosen>\\cursor-agent.exe` (Windows Native), then validate. (ContractRef: Primitive:Provider)
 
 Legacy anchor: `puppet-master-rs/src/install/script_installer.rs` (Cursor shim notes).
@@ -247,6 +248,7 @@ BinaryLocator MUST use a Provider-owned SSOT version command for each `provider_
 - Execute: `<resolved_path> <version_command...>` with a 5s timeout. (ContractRef: Primitive:Provider)
 - The child process environment MUST set an enhanced PATH to reduce false negatives for launcher scripts. (ContractRef: Primitive:Provider)
   - Legacy anchor: `puppet-master-rs/src/platforms/path_utils.rs` `build_enhanced_path_for_subprocess()`.
+- Timeout cleanup is deterministic: send graceful termination first (`SIGTERM` on Unix-like hosts or `TerminateProcess` for the launched process on Windows), wait `500ms`, then force-kill the remaining child process group/tree when the platform exposes one. The validation result is `Invalid` with reason `timeout_killed` when forced cleanup was required and `timeout_terminated` when graceful termination completed.
 
 ### Version parsing (deterministic)
 BinaryLocator MUST parse `version` using this deterministic rule order. (ContractRef: Primitive:Provider)
@@ -283,6 +285,8 @@ AutoDecision: Collision guard is **disabled by default** until Provider SSOT def
 BinaryLocator MUST maintain: (ContractRef: Primitive:Provider)
 - A per-user persistent cache (durable KV) keyed by `provider_cli`. (ContractRef: Primitive:SessionStore)
 - A per-workspace ephemeral cache keyed by `(provider_cli, workspace_fingerprint)` during the current Session. (ContractRef: Primitive:Provider)
+
+Persistent cache rows serialize as `{ provider_cli, resolved_path, version?, validated_at_utc, validation_method, workspace_fingerprint?, path_fingerprint, status }`. `workspace_fingerprint = sha256_utf8(canonical_project_root + "\n" + git_worktree_id_or_empty + "\n" + provider_cli)`; `path_fingerprint = sha256_utf8(resolved_path + "\n" + file_size_or_empty + "\n" + modified_time_or_empty)`.
 
 ### Cache read policy
 
@@ -1821,14 +1825,3 @@ pm_gap_or_delta: No explicit DesktopServerVersionHandshake found
 proposal_or_recommendation: Add DesktopServerVersionHandshake and EmbeddedRuntimeLifecycle
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
-
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
-
-- `registry_line 328` (repaired; source line 1119; `sfk-77ed7ed2d7561c5d564f6ff5`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L282-296: cache file format/path/serialization and `workspace_fingerprint` algorithm undefined; unclear which of the locked redb/seglog stack backs it.
-- `registry_line 329` (repaired; source line 1120; `sfk-93d0ab9899ac150135e4d0cc`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L247-249: 5s subprocess timeout has no cleanup spec (SIGTERM vs SIGKILL, zombie handling, Windows process-tree kill).
-- `registry_line 330` (repaired; source line 1121; `sfk-bf615aff54c4421dbc3e50b1`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L188-198: Cursor versions-dir "lexicographically greatest" selection has no filter/tie-break for non-version junk directories.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

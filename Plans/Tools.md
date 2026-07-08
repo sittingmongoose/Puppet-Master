@@ -288,6 +288,8 @@ The following contracts define the minimum runtime envelopes for the core built-
 
 All core tool-contract (`/tool-contract`) adapters default to sync execution semantics unless/until a tool contract explicitly exposes async handles. When a call is blocked by permissions, FileSafe, or an unavailable MCP/service (`/service`), the result must include a structured recovery action rather than a passive error only. Non-terminal operation previews use the same mini-card family as terminal output: web/search results show source/result mini-cards, and code-edit previews expose `/diffs` cards that open the editor diff without treating the preview as the final mutation. Built-in tool contracts must keep concrete `I/O/limit/error` guidance, unknown-tool default handling, GUI permission/preset visibility (`/presets`), and usage `/token` / `/tokens` event linkage discoverable from this registry.
 
+`ToolTurnSettlement` uses the wire field `settlement_state`. Allowed values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. Precedence when multiple conditions apply is: `fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`. `success` is legal only when required result, error, truncation, retention, and redaction metadata have been normalized and persisted or intentionally omitted by the specific tool contract.
+
 #### 3.5.1 `bash` contract
 
 **Input parameters**
@@ -296,7 +298,7 @@ All core tool-contract (`/tool-contract`) adapters default to sync execution sem
 |-----------|------|----------|-------------|
 | `command` | string | yes | Shell command text to execute in the project/workspace environment. |
 | `mode` | enum (`"sync"` \| `"async"`) | no | Execution mode. Default `sync`. `sync` waits through `initial_wait`; `async` returns immediately with a live shell handle. |
-| `initial_wait` | integer seconds | no | Sync-mode wait window before returning partial output and a running shell handle. Default `30`; must stay within the runtime's accepted range. |
+| `initial_wait` | integer seconds | no | Sync-mode wait window before returning partial output and a running shell handle. Default `30`; minimum `1`; maximum `300`; values outside this closed range are `validation_error`. |
 | `shellId` | string | no | Existing shell/session binding to reuse for stateful commands; omitted to create a new shell binding. |
 | `detach` | boolean | no | Async-only. When `true`, the process is fully detached and survives client shutdown; when `false`, it remains attached to the shell session. |
 
@@ -323,6 +325,7 @@ All core tool-contract (`/tool-contract`) adapters default to sync execution sem
 **Timeout behavior**
 
 - Default sync wait window: `30s` via `initial_wait`.
+- Accepted `initial_wait` range: `1..=300` seconds. `0`, negative values, fractional values, and values above `300` are rejected before dispatch.
 - Recommended hard execution ceiling: `30m` per shell command unless a stricter runner limit is configured.
 - If `initial_wait` expires first, the command remains live and returns `status: "running"` with partial `stdout` / `stderr`.
 - If the hard execution ceiling expires, the runtime terminates the process and returns `{ shellId, status: "timed_out", stdout, stderr, exit_code: null, error: { code: "timeout" } }`.
@@ -1143,7 +1146,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run
 
 Automatic retries are classed and capped per invocation:
 - transient transport, server-warming, and recoverable bootstrap failures MAY retry automatically, but the total automatic attempts are capped at 3 per invocation
-- default backoff is `1000ms`, `2000ms`, then `4000ms` with `+/-25%` jitter unless a stricter `Retry-After` or provider minimum delay applies
+- default backoff bases are `1000ms`, `2000ms`, then `4000ms`; jitter is applied as `clamp(base_ms + deterministic_jitter_ms, 0ms, parent_remaining_budget_ms)` where `deterministic_jitter_ms` is selected from the closed interval `[-floor(base_ms * 0.25), +floor(base_ms * 0.25)]` using the invocation id plus attempt number as the seed; a stricter `Retry-After` or provider minimum delay raises the post-jitter floor before the parent-budget clamp
 - helper/client recreation is allowed only for failures explicitly classified as recoverable, and the recreated attempt still counts toward the same retry cap
 - auth-required, permission-denied, schema-mismatch, validation-failed, content-filter, and safety-stop classes are terminal for that invocation and MUST NOT be retried automatically
 
@@ -12095,20 +12098,11 @@ compile_disposition: create_new_planunit
 ```
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
 
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
 
-- `registry_line 135` (repaired; source line 594; `sfk-88d65b2be00892daadd2f0d8`): Owner-doc note repairs duplicate or ambiguous section authority by requiring title/PlanUnit anchors and retiring numeric-only references. Source summary: - [CRITICAL] L8316-8317,10473-10474: two `## 10` sections exist in the same doc, each with their own 10.3/10.7 every citation of "10.x"/"11-14" by other PlanUnits is ambiguous until this is fixed (self-acknowledged elsewhere as the "Tools.md#10 defect").
 - `registry_line 136` (explicitly_deferred; source line 595; `sfk-0649b6a2c860f179ee699f58`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L11413-12095 (T-167 through T-175): 9 PlanUnits marked `status: accepted` contain only problem statements/acceptance-criteria one-liners zero schemas, state machines, or wire formats (ToolTurnSettlement, ProviderToolTurnAdmissionGate, CommandInvocationContract, etc.)
-- `registry_line 137` (repaired; source line 596; `sfk-d4b10d4f155a6b9869dc6ddc`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L11413-11497 (T-167): 9 named states (success/partial/truncated/malformed/redacted/etc.) with no transition rules, no precedence when multiple apply, no wire field name FIX: define enum field name + precedence order.
-- `registry_line 138` (repaired; source line 597; `sfk-e257db159bd84ee85f74371d`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L11737-11810 (T-171): `invocation_kind` enum given but no concrete data structure or reconciliation with the existing `bash` tool contract FIX: needs schema + explicit tie-in.
 - `registry_line 139` (explicitly_deferred; source line 598; `sfk-47f640ed50d4ed24f6b34c49`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L11812-11885 (T-172): fields listed (configured/allowed/injected/visible_to_model/etc.) with no types, no example payload, no persistence location.
-- `registry_line 140` (repaired; source line 599; `sfk-a1ff6aea4b2e892b6ef20ed1`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L297-299: `bash` tool `initial_wait` range is referenced but min/max never quantified.
-- `registry_line 141` (repaired; source line 600; `sfk-775f69ff8e4a12d5f442f2e5`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1145-1146: retry jitter formula (25%) doesn't state application method or whether it can push delay negative FIX: define precisely.
-- `registry_line 142` (repaired; source line 601; `sfk-93d35815be976b651248b9bc`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1949-2031: DuckDuckGo capability description restated 4+ times with slightly different phrasing across 11.1/11.3 risk of silent drift.
-- `registry_line 143` (repaired; source line 602; `sfk-f03e45ea5b3fd0c8b0a456cb`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L7672-7719 (T-101): "advanced query-pattern matcher contract" for webcrawl host-pattern scoping has no named owner explicit unresolved dependency.
-- `registry_line 170` (repaired; source line 671; `sfk-ed92df2325332306b2463b50`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L5866-5994,6070-6137: `cmd.browser.share_with_agent`, `browser_run_code`, `browser_evaluate` referenced as exact command tokens but not found anywhere in Tools.md via grep.
-- `registry_line 322` (repaired; source line 1099; `sfk-ca8ac335e38bf1a7766e9217`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1391-1406 (G-022): "InstantGrep" cited as owned by Tools.md **confirmed via grep, zero occurrences of "InstantGrep" in Tools.md** the promoted user-facing name is undefined in its stated owner doc.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

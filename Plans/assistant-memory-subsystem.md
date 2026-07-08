@@ -203,8 +203,8 @@ Canonical mapping:
 
 Deterministic embed text:
 - `embed_text = kind + "\n" + join(tags) + "\n" + join(claims[].text)` (exclude `details`)
-- `embed_text_hash = hash(embed_text)`
-- `text_hash = hash(kind + "\n" + join(tags) + "\n" + join(claims[].text) + "\n" + summary + "\n" + details_or_empty)`
+- `embed_text_hash = sha256_utf8(embed_text)` as lowercase hex SHA-256 over the exact UTF-8 bytes
+- `text_hash = sha256_utf8(kind + "\n" + join(tags) + "\n" + join(claims[].text) + "\n" + summary + "\n" + details_or_empty)` as lowercase hex SHA-256 over the exact UTF-8 bytes
 
 Rule: USearch embeddings MUST be computed from deterministic `embed_text` and MUST use `embed_text_hash` to detect no-op updates and deduplicate repeated Auto triggers.
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers
@@ -338,6 +338,12 @@ Activation scoring must include:
 - recency decay (`half_life_days`)
 - access signals (`access_count`, `last_access_at`)
 - retrieval blend (BM25 + ANN scores)
+
+Deterministic activation score:
+
+`score = (0.50 * normalized_bm25 + 0.50 * normalized_ann + pinned_boost + kind_status_weight + access_weight) * recency_multiplier`
+
+Defaults: `pinned_boost = 0.20` when pinned else `0`; `kind_status_weight = 0.10` for Verified active project gists, `0` for other eligible Verified gists; `access_weight = min(0.15, ln(1 + access_count) * 0.03)`; `recency_multiplier = 0.5 ^ (age_days / effective_half_life_days)`; `effective_half_life_days = half_life_days` unless overridden by the Done rule below. Missing BM25 or ANN scores normalize to `0`; ties sort by newer `updated_at`, then lexical `id`.
 
 Rule: Done-status gists MUST decay faster using `effective_half_life_days = half_life_days * 0.5`.
 ContractRef: ConfigKey:assistant.memory.done_decay_multiplier, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
@@ -2505,13 +2511,3 @@ pm_gap_or_delta: MemoryTierContract covered layers and budgets, but not enough a
 relationship_to_prior_reports: Extends memory budget/governance into user-visible store operations.
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
-
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
-
-- `registry_line 302` (repaired; source line 1039; `sfk-a8729f443cda5680ec95bcb1`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1417-1425/L333-343: activation scoring lists 5 components (pinned boost, recency decay, BM25+ANN blend, etc.) but only 2 numeric constants exist (0.5/0.5 blend, 0.5 Done multiplier) no combining formula across all 5.
-- `registry_line 303` (repaired; source line 1040; `sfk-1dcaefad0282b10e9a9bf8fa`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L204-207: `embed_text`/`text_hash` use an unspecified `hash()` function no algorithm named (SHA-256? xxhash?).
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

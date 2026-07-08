@@ -239,7 +239,7 @@ The following content MUST survive compaction unchanged unless the user explicit
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
-The total immune set MUST NOT exceed `max_compaction_immune_pct` (default: 30, overridable per model metadata) percent of the effective context window.
+The total immune set MUST NOT exceed `max_compaction_immune_pct` (default: 30, overridable per model metadata) percent of the effective context window. `effective_context_window` means the token budget selected after provider route, requested/effective model, account entitlement, and runtime safety reserve are resolved; when a child/subagent uses a narrower model or policy, the child's effective window is used for the child's compaction budget.
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md
 
@@ -4173,9 +4173,12 @@ preserved_exact_tokens:
 negative_constraints: []
 observed_signal: Pi reports JSON plus trailing reasoning, same-delta content/reasoning/tool calls, empty/duplicate tool calls, and stringified MCP params; Agent Zero issue list includes truncated tool calls treated as success.
 pm_current_coverage: Tools T-077/T-078 already reject invalid args and truncated invocations before dispatch or success.
-pm_gap_or_delta: Add a HistoryAdmissionGate before persistence/replay for assistant/tool turns with name/id/JSON/type/reasoning/role checks and quarantine outcomes.
+pm_gap_or_delta: >-
+  Add a HistoryAdmissionGate before persistence/replay for assistant/tool turns with name/id/JSON/type/reasoning/role checks and quarantine outcomes.
 compile_disposition: create_new_planunit
 ```
+
+`HistoryAdmissionGate` writes rejected or quarantined turns to `history_quarantine.v1:{thread_id}:{turn_id}` in the event-sourced storage projection. Minimum quarantine fields are `quarantine_id`, `thread_id`, `turn_id`, `provider_message_ref`, `reason_code`, `severity`, `raw_ref`, `normalized_preview_ref?`, `admission_decision` (`reject`, `quarantine_and_skip_replay`, `repair_required`), `created_at_utc`, and `redaction_profile`. Validation checks are closed to `empty_tool_name`, `duplicate_tool_call_id`, `malformed_json_arguments`, `trailing_reasoning_after_json`, `role_mismatch`, `length_truncated_tool_call`, `stringified_mcp_params`, and `same_delta_duplicate_content`.
 
 ### PP-061 - P0-CONTEXT-EPOCH-BASELINE
 
@@ -5014,14 +5017,3 @@ pm_gap_or_delta: No first-class ContextEpoch object found in repo scan
 proposal_or_recommendation: Add CONTEXT-EPOCH-RECORD with instruction/tool/MCP/provider/catalog/cache/history hashes
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
-
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
-
-- `registry_line 253` (repaired; source line 901; `sfk-ccad8553537b0e17aeb5671b`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L79-96: 9 named pipeline stages have no per-stage algorithm/I-O contract.
-- `registry_line 254` (repaired; source line 902; `sfk-b396b1cb5317435b5bf00626`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L242: `max_compaction_immune_pct` default 30% but "effective context window" is never defined (tokens? which model's window for subagents?).
-- `registry_line 256` (repaired; source line 904; `sfk-c87a7d3ae3ed9070e1b8ca5a`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L4099-4178 (PP-060): HistoryAdmissionGate needs quarantine storage location and validation rule set undefined.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

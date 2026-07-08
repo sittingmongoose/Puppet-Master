@@ -1074,6 +1074,7 @@ acceptance_criteria:
   - Validators are first-class gates for certification where available.
   - Progress records expose progress_fingerprint, blocker_signature, repeat_count, artifact hashes, and no-progress continuation detection.
   - Repeated identical blockers without artifact change route to repair/adjudication rather than indefinite retry.
+  - "Default budget values are explicit: max_turns=25, max_tokens=null (provider/model policy owns the concrete token ceiling), max_wall_time_seconds=7200, and max_parallel_agents=0 unless a parent Goal or user-supplied run policy narrows them."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future progress-fingerprint and validator-gate tests
@@ -1763,7 +1764,7 @@ Goal Runtime requires these data-shape families:
 - Goal Completion Receipt: tier, changed files/artifacts, checklist disposition, checks run/skipped, evidence refs, validator outputs, child receipts, verifier/adjudicator decision, unresolved/open items, degraded-mode reason, and source-to-target mapping when applicable.
 - Child goal state: `child_goal_id`, `parent_goal_id`, `agent_id`, `status`, `objective`, `allowed_scope`, `write_policy`, `budget`, `task_list`, `result_artifacts`, `completion_receipt`, stale/re-steer state, and `recovery_state`.
 - Progress state: `progress_fingerprint`, `blocker_signature`, artifact hashes, retry count, `repeat_count`, and no-progress continuation markers.
-- Write authority: `read_only`, `proposal_only`, `isolated_worktree`, `direct_write_single_owner`, `direct_write_partitioned`, and parent-granted `single-writer lease`.
+- Write authority: canonical `write_mode` enum values are `read_only`, `proposal_only`, `isolated_worktree`, `direct_write_single_owner`, `direct_write_partitioned`, and `leased_writer`. The phrase "parent-granted single-writer lease" is a human-readable description of `leased_writer`, not a separate enum value.
 
 ### Goal and GoalRun payload minima
 
@@ -3112,13 +3113,3 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/Executor_Protocol.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
-
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
-
-- `registry_line 291` (repaired; source line 1013; `sfk-77c72e6b199c46f5035c68c4`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1064-1076 (GRS-015): budget fields (max_turns, max_tokens, max_wall_time_seconds, max_parallel_agents) have no default values or units anywhere.
-- `registry_line 292` (repaired; source line 1014; `sfk-d42af8f8290bf76a2b1f438f`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1766 vs L1854 (GRS-026): two non-identical write-authority/write_mode enums for what appears to be the same concept (`direct_write_single_owner` vs `leased_writer` families) reconcile.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

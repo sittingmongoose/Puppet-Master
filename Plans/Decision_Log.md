@@ -1512,11 +1512,10 @@ Run-scoped proof artifacts:
 All original spans from `Decision_Log-S0001` through `Decision_Log-S0026` are preserved in place. Phase 2B batch 043 atomized or structurally dispositioned those spans into `DL-002` through `DL-026`, the retired `DL-001` bridge, and explicit structural coverage_map dispositions. `DL-001` is retained only as migration-lineage compatibility coverage and must not re-own atomized source coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
 
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
 
 - `registry_line 341` (explicitly_deferred; source line 1152; `sfk-f6f04565ca3fcaa8bf3a4f6d`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: steer asks about "decision record schema/GUI" no such schema or GUI exists anywhere in the file; every DL unit is a prose decision statement with governance metadata only.
-- `registry_line 342` (repaired; source line 1153; `sfk-1608f2e00293837927ad2df5`): Owner-doc note resolves split_recommended residue as a tracked owner-doc cleanup item, not implementation readiness proof. Source summary: - [HIGH] "Each entry is timestamped and final" (L7) is contradicted by 5 PlanUnits (DL-021/023/024/025/026) all flagging `split_recommended: true` with no split ever executed.
 
 <!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
