@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-08T01:27:17Z",
+  "generated_at_utc": "2026-07-08T02:09:09Z",
   "index_path": "Plans/_shards/media_generation_and_capabilities/00-index.md",
-  "index_sha256": "43b0c47fbc980363669ffea91d144b04b7f3aa57517cdacc4bc7a989d11b9591",
+  "index_sha256": "7dbf1cf1d44ce56e9fb5c46781c66815e223ed6343fa29264846e36c5c45bd77",
   "manifest_path": "Plans/_shards/media_generation_and_capabilities/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/media_generation_and_capabilities/001-preamble.md",
-      "sha256": "5f9eadd3d2c4af4a44a640ce231d04975088e5fb6f6c7574b8642cf9cd4d8232",
+      "sha256": "9f4689e4e56e03f6dc51e84f45bba77ab6ed04bde7cd6c34b9892444088a8a6f",
       "shard_id": "001",
       "source_line_end": 18,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/media_generation_and_capabilities/002-0.-scope-and-ssot-status.md",
-      "sha256": "863547566e732ec5bc88da11e43f656d34ac5f2c773cdb6b17ad9ee2219031b8",
+      "sha256": "153b003a1f217035b36224c6e2970a6654a816c7be5c07b04b043e8858384223",
       "shard_id": "002",
       "source_line_end": 51,
       "source_line_start": 20,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Capability system",
       "path": "Plans/_shards/media_generation_and_capabilities/003-1.-capability-system.md",
-      "sha256": "2615cc3c6b453908c0e31450c510800e0b952a61930109b54f33cab7cea4dce7",
+      "sha256": "488145f605bb3d28fd9dfef3eb907fa9ba0cf78d70d5664aada708f74c90805c",
       "shard_id": "003",
       "source_line_end": 81,
       "source_line_start": 52,
@@ -35,7 +35,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260624-001-provider-updates",
       "path": "Plans/_shards/media_generation_and_capabilities/004-ledger-compile-addendum-pldg-20260624-001-provider-updates.md",
-      "sha256": "e7c968a9c0cb670bd02644c1866c25391b3b89a50d01e99ad07f60dc92479a15",
+      "sha256": "b48a4a3c0ee0ccb4dbe324a27a427f6e6896287ab79ddc1978a85ec7cb00c409",
       "shard_id": "004",
       "source_line_end": 374,
       "source_line_start": 83,
@@ -44,7 +44,7 @@
     {
       "heading": "2. Media generation contract",
       "path": "Plans/_shards/media_generation_and_capabilities/005-2.-media-generation-contract.md",
-      "sha256": "ac9bb40130a8d7d3f5276733443408376998cdafe82b02c27b18ad02c6b19c1b",
+      "sha256": "dce4e47b0aee51c6682749f0183ab273b48fa2fc2768529a3e3cedc69fb94881",
       "shard_id": "005",
       "source_line_end": 614,
       "source_line_start": 375,
@@ -53,16 +53,16 @@
     {
       "heading": "3. Natural-language slot extraction grammar",
       "path": "Plans/_shards/media_generation_and_capabilities/006-3.-natural-language-slot-extraction-grammar.md",
-      "sha256": "80ce81949a15ac532e6ce7223aaec4eb78b3b3cab5e440b45bea92bba3d90c0d",
+      "sha256": "1c5b8f63cb17e6ab6d7f96edbed1c7cf80469b6f8c5c09ade94d750bdcdcb549",
       "shard_id": "006",
-      "source_line_end": 6584,
+      "source_line_end": 6576,
       "source_line_start": 615,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 6584,
+    "line_count": 6576,
     "path": "Plans/Media_Generation_and_Capabilities.md",
-    "sha256": "e00838998225b8f83013853d2464d9e55284c7cfe242680f262e0c830fe5370c"
+    "sha256": "f5a1d574049d5f97861a8ec0488edbc1a2c9118e310ba37519201f1d0931f248"
   }
 }

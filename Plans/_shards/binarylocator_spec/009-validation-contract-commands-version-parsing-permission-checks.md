@@ -2,9 +2,9 @@
 
 Source: `Plans/BinaryLocator_Spec.md`
 
-Source lines: L238-L278
+Source lines: L239-L280
 
-Source SHA256: `ad4e0b77b672faf847917425be40a12d452f41d9d489bba0879c7e512ac828a5`
+Source SHA256: `841eb411c76dcc294459641183432172fed5ee3515a566e23716c09b85ad1e6a`
 
 ---
 
@@ -20,6 +20,7 @@ BinaryLocator MUST use a Provider-owned SSOT version command for each `provider_
 - Execute: `<resolved_path> <version_command...>` with a 5s timeout. (ContractRef: Primitive:Provider)
 - The child process environment MUST set an enhanced PATH to reduce false negatives for launcher scripts. (ContractRef: Primitive:Provider)
   - Legacy anchor: `puppet-master-rs/src/platforms/path_utils.rs` `build_enhanced_path_for_subprocess()`.
+- Timeout cleanup is deterministic: send graceful termination first (`SIGTERM` on Unix-like hosts or `TerminateProcess` for the launched process on Windows), wait `500ms`, then force-kill the remaining child process group/tree when the platform exposes one. The validation result is `Invalid` with reason `timeout_killed` when forced cleanup was required and `timeout_terminated` when graceful termination completed.
 
 ### Version parsing (deterministic)
 BinaryLocator MUST parse `version` using this deterministic rule order. (ContractRef: Primitive:Provider)

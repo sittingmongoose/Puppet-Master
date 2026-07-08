@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L1100-L1253
+Source lines: L1100-L1267
 
-Source SHA256: `8e9a3f5f46b668dfa38b83eb26a79b5431dc72b5882f9b330136f337f275d438`
+Source SHA256: `f7ef4aa3ba367fa37acea6aafdcd6f0e93d0a38b9258b94fbe891e14cf51aa27`
 
 ---
 
@@ -50,6 +50,18 @@ Rules:
 - Mutating actions use a per-target in-flight operation key for `/dedupe` across the main window, detached windows, Dashboard, and Orchestrator shortcuts. Identical operations coalesce, while conflicting operations surface `operation_in_progress` with the owning target/action context.
 - Every mutating action revalidates stable target identity immediately before execution, including stale table rows, stale cards, and stale `/selections`. If the selected target has materially changed, the action aborts with `state_changed_refresh_required` and requires refresh or reselection.
 - Remote-side-effect transports may end as `indeterminate_remote_outcome` when the server-side action might have succeeded but the client lost confirmation. The receipt preserves `requested`, `transport_lost`, and later `reconciled` states, and the UI exposes a `Refresh remote state` recovery CTA rather than labeling the action simply failed.
+
+Policy-field defaults and closed enums:
+
+| Field | Default | Allowed values |
+| --- | --- | --- |
+| `network_access_policy` | `ask` | `deny`, `ask`, `allow_project_declared`, `allow_session`, `allow_all` |
+| `secret_access_policy` | `ask` | `deny`, `ask`, `allow_named_secret`, `allow_session_named_secret` |
+| `destructive_command_policy` | `ask` | `deny`, `ask`, `allow_once`, `allow_session_for_target` |
+| `filesystem_write_policy` | `ask_project` | `deny`, `ask_project`, `allow_project`, `allow_declared_paths` |
+| `database_test_data_policy` | `deny_real` | `deny_real`, `ask_sandbox`, `allow_sandbox` |
+
+Recovery reason-code minima: `blocked_policy`, `blocked_approval`, `blocked_preflight`, `state_changed_refresh_required`, `operation_in_progress`, `indeterminate_remote_outcome`, `budget_exhausted`, and `permission_snapshot_stale`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
 
@@ -108,6 +120,8 @@ After any approval, policy, mode, or project change, a retry creates a new permi
   }
 }
 ```
+
+`stop_reason_code` values consumed by permission-adjacent blocked receipts are `user_stopped`, `policy_denied`, `budget_exhausted`, `safe_point_required`, `permission_snapshot_stale`, and `indeterminate_remote_outcome`. `blocked_reason_code` values are `approval_required`, `policy_denied`, `preflight_failed`, `state_changed`, `domain_sensitive_action`, `secret_required`, `network_forbidden`, `external_side_effect`, and `operation_in_progress`. `budget_kind` values are `turns`, `tokens`, `wall_time_seconds`, `parallel_agents`, and `cost`.
 
 **Rules:**
 1. The snapshot is created before `attempt.started` becomes durable; when a run has no narrower attempt record yet, the effective permission snapshot is frozen before run start becomes durable.

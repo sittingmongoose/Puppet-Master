@@ -1,32 +1,32 @@
 # Shard Index: Plans/Containers_Registry_and_Unraid.md
 
-Generated: 2026-07-08T01:27:17Z
+Generated: 2026-07-08T02:09:09Z
 
-Source SHA256: `a3d69979cdde387e0015474600dc77158482aaf61bc24982ee811be902a708d8`
+Source SHA256: `6b154994648054c552e3b3a762882042df11eb6875b7a86224ae271a0bd0de68`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `fbd5a81cdf6c2007432ed73211dc27a1649898eccd3e29929d6bda6e09d2f739`
-- [002 - Purpose and scope](002-purpose-and-scope.md) L4-L16 `e9feff77e27eea8226ce575a63019e34ca5b5fe41291112e161a477143f9eb43`
-- [003 - Relationship to existing plans](003-relationship-to-existing-plans.md) L18-L24 `8587074f963a6e2ccde91e87d83cd83b7172b17fbe7e98723bb21434b1e2426f`
-- [004 - Product goals](004-product-goals.md) L26-L34 `9bd39393d6b1778768808f3940543d10584ab18dafe5babcfa95817485eb5b2f`
-- [005 - User-visible surfaces](005-user-visible-surfaces.md) L36-L244 `a925804ac79879cf3828f7623268ea7ea2d166458fabbbbed6f517637d7d7215`
-- [006 - Docker project detection and visibility rules](006-docker-project-detection-and-visibility-rules.md) L246-L261 `a82ca155abf472d80623859517fc274766f9d03d8c1b8e78b3f4c4c608711f77`
-- [007 - Authentication model](007-authentication-model.md) L263-L352 `cb9ce0b9c7778fada936583e9162c545e0fb836a9af058f22de5a57385d543b3`
-- [008 - DockerHub repository discovery, selection, and creation](008-dockerhub-repository-discovery-selection-and-creation.md) L354-L397 `f49d7328d36377f860e7d5e2f3d29556befacf60d87ef53d078ad0927a51f885`
-- [009 - Build, run, preview, and publish flow](009-build-run-preview-and-publish-flow.md) L399-L547 `51f2adde67e042e75be420eb1813ff6e39509d1237a88ac70743f01c2fef5d30`
-- [010 - Unraid XML generation and distribution model](010-unraid-xml-generation-and-distribution-model.md) L549-L741 `a2a620f5964ce4b16b5a4f0dee596f4b98588ca5de8e43cec47de1db62483e1b`
-- [011 - Unraid template repository setup, layout, and publishing](011-unraid-template-repository-setup-layout-and-publishing.md) L743-L858 `1c494520ccaab871da0ef73d08195b3257fb96bd0078ae8337dc0920cb2ca683`
-- [012 - `ca_profile.xml` behavior](012-ca_profile.xml-behavior.md) L860-L881 `59e04a8d6f7052cb91674795235172b993891b6016607e49657a57b24b5e6654`
-- [013 - Data/state model to preserve in implementation docs](013-data-state-model-to-preserve-in-implementation-docs.md) L883-L933 `ab0ec29fad05e962d5883d3e6d1def859564b6c0b3e3625f904f9a50255e616b`
-- [014 - Safety and constraints](014-safety-and-constraints.md) L935-L941 `7e63fc95336cc89602959d23bf66d426eb993ccc13fb9ac5430ee5007ae340d9`
-- [015 - Initial non-goals](015-initial-non-goals.md) L943-L948 `7d37715dd4b14b1f84364f11cfb7d48f171c339bcbc0109215fd1e02c90977d7`
-- [016 - Acceptance criteria](016-acceptance-criteria.md) L950-L964 `ca391cfd683c57f61a61a5f34334898a770024298c753e4bd930d97e3174a616`
-- [017 - Remote Side-Effect Blocked Payload Normalization (2026-03-09)](017-remote-side-effect-blocked-payload-normalization-2026-03-09.md) L966-L986 `051859a87c5bdfaed1ec58ab796b4973f5eebe040e0318d35853849d1e776cf1`
-- [018 - Owner / Consumer Map](018-owner-consumer-map.md) L988-L992 `75d1e5942826e5de5bb436c3ce8613ca21d9e6430672e0bda110ef295ba3e6c7`
-- [019 - PlanUnits](019-planunits.md) L994-L5654 `111eefc6eeb5c783363693f564fb7a0904adbd5372362141585f9c4feae955f0`
-- [020 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](020-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L5656-L5963 `c65c4427aeb3e6394a48f88a47a119fc0d7f0059ee73c1cfd2ae32a240276ef8`
-- [021 - Migration Coverage](021-migration-coverage.md) L5965-L5977 `7d0a40679a0987bf7c2dabf9b74718bdcd4d288b59cccadb4444a7e784558a5a`
-- [022 - FABLE Remaining Action Plan Repair Notes (2026-07-08)](022-fable-remaining-action-plan-repair-notes-2026-07-08.md) L5978-L5986 `3cea656e2ffb680e6e36a059db728e82d3d6d56967a7c432bb739dc51f75ab9f`
+- [001 - Preamble](001-preamble.md) L1-L1 `08fe7a1c92e08008421f0760294d8ea255693fc3fa5779ba16271b102325de66`
+- [002 - Purpose and scope](002-purpose-and-scope.md) L4-L16 `1d3af11a8cd0813459b37b4aa88a5b9a6201baa9b45f76261be592d60f093658`
+- [003 - Relationship to existing plans](003-relationship-to-existing-plans.md) L18-L24 `875b4ce3ff589f912ddaa1ab5653d73a5ff3ab9715d0fd26ec5963b5dab86404`
+- [004 - Product goals](004-product-goals.md) L26-L34 `ba48dad66307309a073255a2177e18bc002be69eb7f96899db69e7925ce9626b`
+- [005 - User-visible surfaces](005-user-visible-surfaces.md) L36-L244 `3c820e46919732b465bdfcb81eb961c69992fe4d57017671b57ff6b315eacad8`
+- [006 - Docker project detection and visibility rules](006-docker-project-detection-and-visibility-rules.md) L246-L261 `635d7c6f651c18ea651a30f99b68771e038b6e8295e60ddf8a36b263d91c41f3`
+- [007 - Authentication model](007-authentication-model.md) L263-L352 `19f1df6dccb5a4682d7350737a67aec4f54ebbb02752abf8262ccc2ccf336844`
+- [008 - DockerHub repository discovery, selection, and creation](008-dockerhub-repository-discovery-selection-and-creation.md) L354-L397 `21e96c7e7c96d2be99fcf9e6ccd36f62deb03826f11a8af7611f3455aaf05c40`
+- [009 - Build, run, preview, and publish flow](009-build-run-preview-and-publish-flow.md) L399-L547 `85989f2de1dbb5e90ff0774e4c5c5b92ec6c5c1a550d91192e90391b1759c728`
+- [010 - Unraid XML generation and distribution model](010-unraid-xml-generation-and-distribution-model.md) L549-L741 `04488f6308c749cc09b27fc684ee491cf385a297bc8da98ae79763d572b48854`
+- [011 - Unraid template repository setup, layout, and publishing](011-unraid-template-repository-setup-layout-and-publishing.md) L743-L858 `315e52730ef262d1e7912c743e1f869ac06a97d4aeb7592f69fda9ea853c455e`
+- [012 - `ca_profile.xml` behavior](012-ca_profile.xml-behavior.md) L860-L881 `89506981a86bb343ccddf91eea0bee645cd9a38afdccad1ae5f534d6998f2383`
+- [013 - Data/state model to preserve in implementation docs](013-data-state-model-to-preserve-in-implementation-docs.md) L883-L933 `e76d1f27814cef4d690cb4847697fddf459e642b55c919aa29d3908a78cbf358`
+- [014 - Safety and constraints](014-safety-and-constraints.md) L935-L941 `b852886a0f2ea27de9907e8450b736cfbc5857588c24e45d63033105c5c5c5e7`
+- [015 - Initial non-goals](015-initial-non-goals.md) L943-L948 `1437aa239d3b161e581656ef62fa91e4eafc4cb65d7b4a9f135d85d6297b06f0`
+- [016 - Acceptance criteria](016-acceptance-criteria.md) L950-L964 `153d90cb06a85ea5a6b84f27cc3e76c1e5474cbd6ed3c1df70b7f3dc6c61df15`
+- [017 - Remote Side-Effect Blocked Payload Normalization (2026-03-09)](017-remote-side-effect-blocked-payload-normalization-2026-03-09.md) L966-L986 `4135414742df6bd2047f2eac0e32c379d3f8b204a7782ef44349f8e59bc2ba43`
+- [018 - Owner / Consumer Map](018-owner-consumer-map.md) L988-L992 `008c5523ea107eae00594465bee650a26d673eea6e2c38ffebdf3df28d8461d9`
+- [019 - PlanUnits](019-planunits.md) L994-L5654 `be72b85c684d28752f70ca06caff9754301699b0a95878792df7c98ce3855911`
+- [020 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](020-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L5656-L5963 `1e69645738e7509694826f7ab0844bca0142f56100dbc4c9d30d939ff9b301b7`
+- [021 - Migration Coverage](021-migration-coverage.md) L5965-L5977 `c5ccf879dba46f1ae63bfc2d0dd32922e0c27801db7a14cd43799b1bf2189403`
+- [022 - FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)](022-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md) L5978-L5984 `ab932a33713a45d140b4020175ba510958d011a17a00ade67dde89b33c4eaef9`

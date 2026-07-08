@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L90-L1754
+Source lines: L90-L1755
 
-Source SHA256: `74994ba0e7026b664524bb346e2a2c97c44ecfc82997d5772492937923c4d71c`
+Source SHA256: `37f0a7aa5ab93f498be98c282237c78ad8a08981d14d989ca74a8c0fded6894a`
 
 ---
 
@@ -995,6 +995,7 @@ acceptance_criteria:
   - Validators are first-class gates for certification where available.
   - Progress records expose progress_fingerprint, blocker_signature, repeat_count, artifact hashes, and no-progress continuation detection.
   - Repeated identical blockers without artifact change route to repair/adjudication rather than indefinite retry.
+  - "Default budget values are explicit: max_turns=25, max_tokens=null (provider/model policy owns the concrete token ceiling), max_wall_time_seconds=7200, and max_parallel_agents=0 unless a parent Goal or user-supplied run policy narrows them."
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - future progress-fingerprint and validator-gate tests

@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-08T01:27:17Z",
+  "generated_at_utc": "2026-07-08T02:09:09Z",
   "index_path": "Plans/_shards/document_packaging_policy/00-index.md",
-  "index_sha256": "213a232715a7b064ece1734a744737e17dc0b0777ec62a6256af79a34cbf5fb5",
+  "index_sha256": "eec61a55801629091124aa4056c0ea9cf302c5c6e6adb6c2ce6d60cb0a586719",
   "manifest_path": "Plans/_shards/document_packaging_policy/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/document_packaging_policy/001-preamble.md",
-      "sha256": "d0f213c95a0b7eba7d92814872e7bd1d90b7201b045e492485c1fe4760f1b5d4",
+      "sha256": "f309a4e401e88809b4d76dc11e627133c694073224e3033ac03791675bbe2745",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope and alignment",
       "path": "Plans/_shards/document_packaging_policy/002-0.-scope-and-alignment.md",
-      "sha256": "d7762133cdf4aa4d40aab4ab16a5a4da86e0e1fdd079a2287b82e8cd8c783529",
+      "sha256": "5ff5fd47e25dba1324479a22c6bbc8657e015b2773eddef93699bdb43a2b259f",
       "shard_id": "002",
       "source_line_end": 16,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Document Set contract",
       "path": "Plans/_shards/document_packaging_policy/003-1.-document-set-contract.md",
-      "sha256": "f1e86ce19208c60fa85a216171a7608a35b88ad3023b238d2aaa9b6f236a0fc3",
+      "sha256": "3d747e15de251fb86974631c8acda66e64d1d1a3142ba281e41793de52e84e7e",
       "shard_id": "003",
       "source_line_end": 72,
       "source_line_start": 18,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Deterministic split rules",
       "path": "Plans/_shards/document_packaging_policy/004-2.-deterministic-split-rules.md",
-      "sha256": "9ac1fad56c40d6474d42214be565440efc660e80fe4106677d7c1e0d512e20f9",
+      "sha256": "46c4f6cabeec394e08c5de78c341643bf55c168964ae6f483b9c591cd3e973c0",
       "shard_id": "004",
       "source_line_end": 135,
       "source_line_start": 74,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Trigger budgets and deterministic defaults",
       "path": "Plans/_shards/document_packaging_policy/005-3.-trigger-budgets-and-deterministic-defaults.md",
-      "sha256": "a8f7fa86fb76f3416c088c5644c21f07e839f5372099353bb7de89fe95e2dd3f",
+      "sha256": "73f19d3bf93a6871c662e7c33028264c7390ddd6b98bd51b41ae44f254c6a6eb",
       "shard_id": "005",
       "source_line_end": 148,
       "source_line_start": 137,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Losslessness proof (hard requirement)",
       "path": "Plans/_shards/document_packaging_policy/006-4.-losslessness-proof-hard-requirement.md",
-      "sha256": "e6206a47cc384dfe215447da0e85805d7c94274724a1cb4259a775937fe37abf",
+      "sha256": "54dfcf3ff0549b36fd3381f0034bbcf82d8df650a6c81c12d47df43cbac66c74",
       "shard_id": "006",
       "source_line_end": 164,
       "source_line_start": 150,
@@ -62,7 +62,7 @@
     {
       "heading": "5. Three independent audits (full coverage, no sampling)",
       "path": "Plans/_shards/document_packaging_policy/007-5.-three-independent-audits-full-coverage-no-sampling.md",
-      "sha256": "c75e261469eeb404eef28b46449721f55c35670f92551af45a2537c38d2e1d49",
+      "sha256": "754abec9f2f77e5de2dc791b68c5302c21057c26ae48248bf55c4eb6f7f2d4f0",
       "shard_id": "007",
       "source_line_end": 196,
       "source_line_start": 166,
@@ -71,7 +71,7 @@
     {
       "heading": "6. Enforcement coverage and run failure rule",
       "path": "Plans/_shards/document_packaging_policy/008-6.-enforcement-coverage-and-run-failure-rule.md",
-      "sha256": "31c929f70a77d3f43466b37e950fd187e05c878eac387424f659fd9327c549e0",
+      "sha256": "b686387801a9027d41611f6ac68f47fed2b2fd831607a5a47926ca47aed72f32",
       "shard_id": "008",
       "source_line_end": 215,
       "source_line_start": 198,
@@ -80,7 +80,7 @@
     {
       "heading": "7. On-disk path convention and pointer stub contract",
       "path": "Plans/_shards/document_packaging_policy/009-7.-on-disk-path-convention-and-pointer-stub-contract.md",
-      "sha256": "c9fb03b3896d03531d23465b873280a9e4f0ab43a566c42b71f68980b72463f5",
+      "sha256": "fc6995b9209eb49d788eaac08146e40619c839d429c6501e48d4f388df9927e7",
       "shard_id": "009",
       "source_line_end": 338,
       "source_line_start": 217,
@@ -89,7 +89,7 @@
     {
       "heading": "References",
       "path": "Plans/_shards/document_packaging_policy/010-references.md",
-      "sha256": "99c7cfd24a11440b20eeb4b1fe85da8fe4b926c13db158c804b1613caaeba94b",
+      "sha256": "d7d2e8528d4716dbaca4aadd9e078c8fd95cbe23215fbe6352257debe65723b4",
       "shard_id": "010",
       "source_line_end": 344,
       "source_line_start": 340,
@@ -98,7 +98,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/document_packaging_policy/011-owner-consumer-map.md",
-      "sha256": "86e4fca7ff0da70a70cb1d679499a1420d10dd74943041546643c1957e2cc468",
+      "sha256": "563fbe20061181f97c2430058f676c4efcbc2b066b2d682c3db6ba4a2e69ecde",
       "shard_id": "011",
       "source_line_end": 350,
       "source_line_start": 346,
@@ -107,7 +107,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/document_packaging_policy/012-planunits.md",
-      "sha256": "b14dc117f84023d916a1d69649a31bdfdb9560c596da37aab5532d438cbd4415",
+      "sha256": "3da50e7bbbc7c4871dac11bd6b82352240c181307996c4d41ffbc6c36569097e",
       "shard_id": "012",
       "source_line_end": 1729,
       "source_line_start": 352,
@@ -116,25 +116,16 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/document_packaging_policy/013-migration-coverage.md",
-      "sha256": "f291c7a228047af72905130a31a1f0fd2043054560038a032439db7129bc450c",
+      "sha256": "dbdb92221ce16293ea1f4ea8d60813a2cc645812908b7c301436198d880a9f37",
       "shard_id": "013",
-      "source_line_end": 1745,
+      "source_line_end": 1743,
       "source_line_start": 1731,
-      "split_rule": "heading-##"
-    },
-    {
-      "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
-      "path": "Plans/_shards/document_packaging_policy/014-fable-remaining-action-plan-repair-notes-2026-07-08.md",
-      "sha256": "5e5ff326ac109c46f8bbd17504b5434284a7d8044ad33b32d378f561f1a831a2",
-      "shard_id": "014",
-      "source_line_end": 1753,
-      "source_line_start": 1746,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1753,
+    "line_count": 1743,
     "path": "Plans/Document_Packaging_Policy.md",
-    "sha256": "3c834360059f6f49f22343004eccfccf69dd569792ef84a958cca9bc74013a77"
+    "sha256": "7c555d8159c75c51128ca3ef90555d4bfc70961f959ff7aae895f184f14bf3bc"
   }
 }

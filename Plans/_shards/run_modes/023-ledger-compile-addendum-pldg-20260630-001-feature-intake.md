@@ -2,9 +2,9 @@
 
 Source: `Plans/Run_Modes.md`
 
-Source lines: L1023-L1105
+Source lines: L1023-L1103
 
-Source SHA256: `071b010d6cb5f9ff7238c27f263154cbc0f1c658f3673bd6d05ae9990c0148fc`
+Source SHA256: `5a1167cc903337c1c4dfcff9772374935b540b13f2af8f0e5fafff58fc784e74`
 
 ---
 
@@ -89,5 +89,3 @@ owner_hints:
   - Plans/CLI_Bridged_Providers.md
   - Plans/orchestrator-subagent-integration.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

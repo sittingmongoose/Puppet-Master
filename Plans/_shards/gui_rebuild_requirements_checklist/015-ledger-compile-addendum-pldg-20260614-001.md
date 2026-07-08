@@ -2,9 +2,9 @@
 
 Source: `Plans/GUI_Rebuild_Requirements_Checklist.md`
 
-Source lines: L1798-L1835
+Source lines: L1798-L1833
 
-Source SHA256: `1ed2399d4d019f900e5a287c12e85ceba9c042fe93743fbcefa1c9f90bc217eb`
+Source SHA256: `28ffe502125883e33ded97b18f62b1a8b17abff9800c4c44fa951a19b274591a`
 
 ---
 
@@ -44,5 +44,3 @@ negative_constraints:
   - Do not make the checklist the implementation owner for concern lifecycle or blocked-state fields.
 owner_hints: [Plans/GUI_Rebuild_Requirements_Checklist.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Orchestrator_Page.md]
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

@@ -2,9 +2,9 @@
 
 Source: `Plans/Skills_System.md`
 
-Source lines: L2488-L2556
+Source lines: L2488-L2554
 
-Source SHA256: `9f230f28908e466df2b8d4f3f42cb26788139f5740c8f6a183c7065e1389124f`
+Source SHA256: `22c154c6e7258dcfcd07fdfcd2e76e72d563bbe5d69c5b5c41d5fe61e08943c2`
 
 ---
 
@@ -75,5 +75,3 @@ owner_hints:
   - Plans/Skills_System.md
   - Plans/Permissions_System.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

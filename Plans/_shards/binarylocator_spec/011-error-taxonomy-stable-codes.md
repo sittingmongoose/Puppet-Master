@@ -2,9 +2,9 @@
 
 Source: `Plans/BinaryLocator_Spec.md`
 
-Source lines: L300-L320
+Source lines: L304-L324
 
-Source SHA256: `ad4e0b77b672faf847917425be40a12d452f41d9d489bba0879c7e512ac828a5`
+Source SHA256: `841eb411c76dcc294459641183432172fed5ee3515a566e23716c09b85ad1e6a`
 
 ---
 

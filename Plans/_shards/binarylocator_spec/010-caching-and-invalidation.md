@@ -2,9 +2,9 @@
 
 Source: `Plans/BinaryLocator_Spec.md`
 
-Source lines: L280-L298
+Source lines: L282-L302
 
-Source SHA256: `ad4e0b77b672faf847917425be40a12d452f41d9d489bba0879c7e512ac828a5`
+Source SHA256: `841eb411c76dcc294459641183432172fed5ee3515a566e23716c09b85ad1e6a`
 
 ---
 
@@ -14,6 +14,8 @@ Source SHA256: `ad4e0b77b672faf847917425be40a12d452f41d9d489bba0879c7e512ac828a5
 BinaryLocator MUST maintain: (ContractRef: Primitive:Provider)
 - A per-user persistent cache (durable KV) keyed by `provider_cli`. (ContractRef: Primitive:SessionStore)
 - A per-workspace ephemeral cache keyed by `(provider_cli, workspace_fingerprint)` during the current Session. (ContractRef: Primitive:Provider)
+
+Persistent cache rows serialize as `{ provider_cli, resolved_path, version?, validated_at_utc, validation_method, workspace_fingerprint?, path_fingerprint, status }`. `workspace_fingerprint = sha256_utf8(canonical_project_root + "\n" + git_worktree_id_or_empty + "\n" + provider_cli)`; `path_fingerprint = sha256_utf8(resolved_path + "\n" + file_size_or_empty + "\n" + modified_time_or_empty)`.
 
 ### Cache read policy
 

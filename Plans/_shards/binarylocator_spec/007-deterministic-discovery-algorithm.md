@@ -2,9 +2,9 @@
 
 Source: `Plans/BinaryLocator_Spec.md`
 
-Source lines: L112-L209
+Source lines: L112-L210
 
-Source SHA256: `ad4e0b77b672faf847917425be40a12d452f41d9d489bba0879c7e512ac828a5`
+Source SHA256: `841eb411c76dcc294459641183432172fed5ee3515a566e23716c09b85ad1e6a`
 
 ---
 
@@ -94,6 +94,7 @@ Candidate roots (by OS):
 Selection rule (deterministic):
 - Enumerate immediate child directory names under the versions directory and select the lexicographically greatest name using byte-order string comparison. (ContractRef: Primitive:Provider)
 - Treat directory names as opaque strings (no semantic version parsing). (ContractRef: Primitive:Provider)
+- Ignore non-directory children, hidden lock/temp names beginning with `.`, and names ending in `.tmp`; if two directory entries compare equal after platform path normalization, prefer the one whose canonical absolute path is byte-order greatest. (ContractRef: Primitive:Provider)
 - Probe `.../<chosen>/cursor-agent` (Unix/WSL) or `...\\<chosen>\\cursor-agent.exe` (Windows Native), then validate. (ContractRef: Primitive:Provider)
 
 Legacy anchor: `puppet-master-rs/src/install/script_installer.rs` (Cursor shim notes).

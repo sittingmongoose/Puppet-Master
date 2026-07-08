@@ -2,9 +2,9 @@
 
 Source: `Plans/Glossary.md`
 
-Source lines: L1627-L2012
+Source lines: L1627-L2010
 
-Source SHA256: `57e4e8c784c7e0f702e8788fbd30c5eb74c73c3610e2eb27d45e6a815fa6ca63`
+Source SHA256: `3ae792ae1bcf40cb995d4e51d503396c3ece2d8be1939cda972bbdfd337361d5`
 
 ---
 
@@ -392,5 +392,3 @@ owner_hints:
 - Plans/Permissions_System.md
 - Plans/Commands_System.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

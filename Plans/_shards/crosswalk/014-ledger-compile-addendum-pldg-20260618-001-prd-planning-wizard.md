@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L3190-L3267
+Source lines: L3190-L3265
 
-Source SHA256: `26055c82552be4d6c4fd366f4149878c7db0c215e6e0ae58abc863e03ce4caeb`
+Source SHA256: `78a37585e81a05216af1f0ed3179f18c73a400cd1b7c006405d34e6d1643ecb0`
 
 ---
 
@@ -84,5 +84,3 @@ owner_hints:
 - Plans/Crosswalk.md
 - Plans/Wiring_Matrix.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

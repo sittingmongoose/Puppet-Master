@@ -2008,12 +2008,3 @@ owner_hints:
 - Plans/Permissions_System.md
 - Plans/Commands_System.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
-
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
-
-- `registry_line 322` (repaired; source line 1099; `sfk-ca8ac335e38bf1a7766e9217`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1391-1406 (G-022): "InstantGrep" cited as owned by Tools.md **confirmed via grep, zero occurrences of "InstantGrep" in Tools.md** the promoted user-facing name is undefined in its stated owner doc.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

@@ -1098,12 +1098,3 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 075 atomized `Formatters_System-S0001` through `Formatters_System-S0024` into `FS-002` through `FS-015`, with mixed GUI/runtime spans split where safe. `Formatters_System-S0025`, `Formatters_System-S0026`, and `Formatters_System-S0028` are structural owner-map, PlanUnits-heading, and Migration Coverage dispositions. `Formatters_System-S0027` maps to retired bridge lineage `FS-001`; `FS-001` no longer uses source-preserving compile mode, and `Plans/Formatters_System.md` has no remaining source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
-
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
-
-- `registry_line 364` (repaired; source line 1221; `sfk-52b912e858e3f723a8838777`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L57: "invoked sequentially in registration order" "registration order" itself is never defined (config order? alphabetical? built-in-then-custom?).
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L6702-L7080
+Source lines: L6702-L7078
 
-Source SHA256: `3ec1bdf87e2f0987f906375739d62055c38b721088d672f1d2d6209251ce0036`
+Source SHA256: `ec985cbe5ad6cff2f7a16ec09e01680021dc515df6155697f21cdfbbc2dc5f76`
 
 ---
 
@@ -385,5 +385,3 @@ owner_hints:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

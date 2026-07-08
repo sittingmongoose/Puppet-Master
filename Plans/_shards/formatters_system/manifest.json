@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-08T01:27:17Z",
+  "generated_at_utc": "2026-07-08T02:09:09Z",
   "index_path": "Plans/_shards/formatters_system/00-index.md",
-  "index_sha256": "09a1083e97ccc0c77c240985a9b5f197700327c04b9eae836576eb990f9702b6",
+  "index_sha256": "a3c82bbcd0757500a3262cda4df769b52908aeb9d6af5f00579f8c0f678034d8",
   "manifest_path": "Plans/_shards/formatters_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/formatters_system/001-preamble.md",
-      "sha256": "5e728291fea14b72550991c3a9bee9a9a5700b315fd0d89886fc49b74fd1707a",
+      "sha256": "e3d97483477a2e68427c8a5eb61e1b7392e81dd3324fc5bb65bfcb88cda77dae",
       "shard_id": "001",
       "source_line_end": 4,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope and SSOT status",
       "path": "Plans/_shards/formatters_system/002-0.-scope-and-ssot-status.md",
-      "sha256": "359f1e151f2980528b5463fdeead20ef0d870839381dc754e98ce578b6556913",
+      "sha256": "c325c38f700a28fb8ab0ab8368dbe1319715f1431ee3364f05d0061d2cfe1a64",
       "shard_id": "002",
       "source_line_end": 29,
       "source_line_start": 6,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Definitions",
       "path": "Plans/_shards/formatters_system/003-1.-definitions.md",
-      "sha256": "fb73c09d28d19873a21c03eef39b6773adc00adcd464be67d70a59f4dd680868",
+      "sha256": "96c8ba641a19306d85b81167586a34671a6409d3366ab28a7dc266a3805e0db1",
       "shard_id": "003",
       "source_line_end": 45,
       "source_line_start": 31,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Lifecycle",
       "path": "Plans/_shards/formatters_system/004-2.-lifecycle.md",
-      "sha256": "ea09870e47c1f649a8c85922cae8aee018df44d2cbafd062f3434d451174817c",
+      "sha256": "961fc682b94011bff276b385809aebfe25748df9309c28ddafab910d80b46be6",
       "shard_id": "004",
       "source_line_end": 94,
       "source_line_start": 47,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Built-in formatters",
       "path": "Plans/_shards/formatters_system/005-3.-built-in-formatters.md",
-      "sha256": "2f5cb219dd69d6ae9f5c2d57b70a721f7d40419d0db52ca19f0fd0eb2e38843e",
+      "sha256": "0525be7678f03c02fe43d21e276881d14bf514ca7fbe19271e0b555355777f07",
       "shard_id": "005",
       "source_line_end": 130,
       "source_line_start": 96,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Configuration",
       "path": "Plans/_shards/formatters_system/006-4.-configuration.md",
-      "sha256": "095c0b635f3e34565c9d251d2476deaaccc0ac02adaf5ee458fe2ec887683b93",
+      "sha256": "844601f67d8086c95073335eb9ac7f943fff9c99c3a21f091b492e623b0cb159",
       "shard_id": "006",
       "source_line_end": 183,
       "source_line_start": 132,
@@ -62,7 +62,7 @@
     {
       "heading": "5. GUI requirements",
       "path": "Plans/_shards/formatters_system/007-5.-gui-requirements.md",
-      "sha256": "83947b59f7cebf2b76605acde5588b04bce420fd6038c92bdae05105750695e7",
+      "sha256": "c24a83e768ea2d4e580e1e82c19dc7c3bf5b91a4653deff5849e55bd2cea9422",
       "shard_id": "007",
       "source_line_end": 220,
       "source_line_start": 185,
@@ -71,7 +71,7 @@
     {
       "heading": "6. OpenCode baseline and Puppet Master deltas",
       "path": "Plans/_shards/formatters_system/008-6.-opencode-baseline-and-puppet-master-deltas.md",
-      "sha256": "1dbbe578a2caf29cc6d211ac0645f8634b3bd184dce2656d88ceed1e2b66b8d7",
+      "sha256": "8c04c73ebe93f35e600af1afa4c0d5da3e9c8fe0e341d74d49c775d8b82fbe70",
       "shard_id": "008",
       "source_line_end": 242,
       "source_line_start": 222,
@@ -80,7 +80,7 @@
     {
       "heading": "7. Acceptance criteria",
       "path": "Plans/_shards/formatters_system/009-7.-acceptance-criteria.md",
-      "sha256": "e4c9d0f8c7efb717c761f8d2bb0c094b94b0a8d3577d3a07d5b81b3ff250f716",
+      "sha256": "fcf076a7250b616cdc1ffbe8c801e6996c01e6840ae74d263df9532dbb2ee4b7",
       "shard_id": "009",
       "source_line_end": 275,
       "source_line_start": 244,
@@ -89,7 +89,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/formatters_system/010-owner-consumer-map.md",
-      "sha256": "60aeb78474127961c17a2dc640af33ff8fafdf50f03f187a42fbee1bdca6b0c6",
+      "sha256": "603da1cd67bbbedf4eb7027fddc8c0267665d1c7c6dfcda8ca84af30fb2f9d5c",
       "shard_id": "010",
       "source_line_end": 281,
       "source_line_start": 277,
@@ -98,7 +98,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/formatters_system/011-planunits.md",
-      "sha256": "998ef57f6f67b0b3efd86e48e219280493eacb1db8c572006a2c421c606a9f44",
+      "sha256": "c62827c4b13161d84b6bed53f65627e7d0807ce4fe75a2d9b0a339a7d74bbdc0",
       "shard_id": "011",
       "source_line_end": 1088,
       "source_line_start": 283,
@@ -107,25 +107,16 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/formatters_system/012-migration-coverage.md",
-      "sha256": "1f2110839ff32f0b152ad8db91d4bcec2c6212429c93b54a80de36ad068adf88",
+      "sha256": "ef0c78f4fe79b9456db9b654ca36b4091132476713a837401f565278fcae00c1",
       "shard_id": "012",
-      "source_line_end": 1102,
+      "source_line_end": 1100,
       "source_line_start": 1090,
-      "split_rule": "heading-##"
-    },
-    {
-      "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
-      "path": "Plans/_shards/formatters_system/013-fable-remaining-action-plan-repair-notes-2026-07-08.md",
-      "sha256": "934ef9178cbe4c1f08e7cc01e7b14a8e54c4daa4c175a14f1b31005cebc947f0",
-      "shard_id": "013",
-      "source_line_end": 1109,
-      "source_line_start": 1103,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1109,
+    "line_count": 1100,
     "path": "Plans/Formatters_System.md",
-    "sha256": "395c808e5b926e0362d2a2df2302e40f212e8548ce64793bbb2b0897663afd57"
+    "sha256": "3d28212da48c59912d2d76b83215cf96ddad1aa544a65138fda23f7e0474ba5c"
   }
 }

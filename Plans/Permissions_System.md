@@ -725,7 +725,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#ST
 | **Persona** | Named profiles referenced by `default_permissions_profile` in `PERSONA.md` frontmatter; stored alongside global permissions config at `~/.config/puppet-master/permission-profiles/<profile_id>.toml` | TOML | Until user edits/deletes |
 | **Session** | In-memory session cache | Runtime | Current session only; cleared on restart |
 
-Durable approvals created through `create_project_rule` or `create_global_rule` are persisted in their owning config layer as metadata-bearing records with the logical fields `{ tool_pattern, action, scope_key?, created_at, created_by_thread_id }`. File-level TOML projections MAY additionally expose these rules in the simpler per-tool tables shown below, but the stored rule identity and audit metadata remain part of the canonical durable record.
+Durable approvals created through `create_project_rule` or `create_global_rule` are persisted in their owning config layer as metadata-bearing records with the logical fields `{ rule_id, tool_pattern, action, scope_key?, created_at, created_by_thread_id }`. `rule_id` is a stable UUID generated at rule creation and is the canonical revocation/update key; `tool_pattern` is not unique and MUST NOT be used as the durable identity. File-level TOML projections MAY additionally expose these rules in the simpler per-tool tables shown below, but the stored rule identity and audit metadata remain part of the canonical durable record.
 
 ### 9.1 TOML format
 
@@ -1140,6 +1140,18 @@ Rules:
 - Every mutating action revalidates stable target identity immediately before execution, including stale table rows, stale cards, and stale `/selections`. If the selected target has materially changed, the action aborts with `state_changed_refresh_required` and requires refresh or reselection.
 - Remote-side-effect transports may end as `indeterminate_remote_outcome` when the server-side action might have succeeded but the client lost confirmation. The receipt preserves `requested`, `transport_lost`, and later `reconciled` states, and the UI exposes a `Refresh remote state` recovery CTA rather than labeling the action simply failed.
 
+Policy-field defaults and closed enums:
+
+| Field | Default | Allowed values |
+| --- | --- | --- |
+| `network_access_policy` | `ask` | `deny`, `ask`, `allow_project_declared`, `allow_session`, `allow_all` |
+| `secret_access_policy` | `ask` | `deny`, `ask`, `allow_named_secret`, `allow_session_named_secret` |
+| `destructive_command_policy` | `ask` | `deny`, `ask`, `allow_once`, `allow_session_for_target` |
+| `filesystem_write_policy` | `ask_project` | `deny`, `ask_project`, `allow_project`, `allow_declared_paths` |
+| `database_test_data_policy` | `deny_real` | `deny_real`, `ask_sandbox`, `allow_sandbox` |
+
+Recovery reason-code minima: `blocked_policy`, `blocked_approval`, `blocked_preflight`, `state_changed_refresh_required`, `operation_in_progress`, `indeterminate_remote_outcome`, `budget_exhausted`, and `permission_snapshot_stale`.
+
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
 
 A permission snapshot captures the resolved permission state at attempt start for auditability, immutability, and replay-safe approval logic.
@@ -1197,6 +1209,8 @@ After any approval, policy, mode, or project change, a retry creates a new permi
   }
 }
 ```
+
+`stop_reason_code` values consumed by permission-adjacent blocked receipts are `user_stopped`, `policy_denied`, `budget_exhausted`, `safe_point_required`, `permission_snapshot_stale`, and `indeterminate_remote_outcome`. `blocked_reason_code` values are `approval_required`, `policy_denied`, `preflight_failed`, `state_changed`, `domain_sensitive_action`, `secret_required`, `network_forbidden`, `external_side_effect`, and `operation_in_progress`. `budget_kind` values are `turns`, `tokens`, `wall_time_seconds`, `parallel_agents`, and `cost`.
 
 **Rules:**
 1. The snapshot is created before `attempt.started` becomes durable; when a run has no narrower attempt record yet, the effective permission snapshot is frozen before run start becomes durable.
@@ -8672,9 +8686,12 @@ negative_constraints: []
 observed_signal: Cline v4 issue reports plan-mode tasks writing files and running Docker/DB schema changes; Cline issue list includes destructive shell commands running without approval when model emitted requires_approval=false; Codex and Warp both expose approvals/autonomy settings and managed permission profile evolution.
 pm_current_coverage: PM has central tool policy engine, permission model, FileSafe, and terminal pre-run approval requirements.
 pm_gap_or_delta: Need model-independent enforcement receipt that a plan/autonomy mode cannot be downgraded by model output or adapter schema.
-proposal_or_recommendation: Add AutonomyCeilingReceipt checked after provider/tool parsing but before execution. The runtime, not the model/tool payload, decides whether mutation can proceed.
+proposal_or_recommendation: >-
+  Add AutonomyCeilingReceipt checked after provider/tool parsing but before execution. The runtime, not the model/tool payload, decides whether mutation can proceed.
 compile_disposition: create_new_planunit
 ```
+
+`AutonomyCeilingReceipt` fields: `receipt_id`, `schema_version`, `attempt_id`, `run_id?`, `requested_mode`, `effective_mode`, `ceiling_source_ref`, `tool_call_ref?`, `provider_message_ref?`, `mutation_class`, `decision` (`allow`, `block`, `require_approval`), `blocked_reason_code?`, `permission_snapshot_id`, `created_at_utc`, and `enforcement_point` (`post_parse_pre_execution`). Storage location is the canonical event stream as an `autonomy.ceiling_checked` payload with redb projection by `attempt_id`. Enforcement order is provider/tool parse, schema validation, autonomy ceiling check, permission/FileSafe check, then dispatch.
 
 ## FABLE Residual Permission Consent Cleanup Addendum - 2026-07-07
 
@@ -8928,23 +8945,3 @@ negative_constraints:
 - Do not treat command approval as reusable CLI privilege.
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
-
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
-
-- `registry_line 173` (repaired; source line 688; `sfk-344077d4e91d4dba8a844f8b`): Owner-doc note repairs the stale absence/open-reference claim by naming the current owner or by making the stale pointer non-authoritative. Source summary: - [HIGH] L1016,396: "`always` response (6.2)" 6.2 does not exist; derivation actually lives in 3.4 FIX: correct all references.
-- `registry_line 174` (repaired; source line 689; `sfk-95212a02bf1d39bbc2883d92`): Owner-doc note repairs the stale absence/open-reference claim by naming the current owner or by making the stale pointer non-authoritative. Source summary: - [HIGH] L1028: "6.4A" does not exist anywhere in the doc; `create_project_rule`/`create_global_rule` only described in unlabeled prose.
-- `registry_line 175` (repaired; source line 690; `sfk-c2365f0841b6e3af70ad6310`): Owner-doc note repairs the stale absence/open-reference claim by naming the current owner or by making the stale pointer non-authoritative. Source summary: - [HIGH] L1034: "2.4B" does not exist; scope specificity lives in unlabeled prose inside 2.4.
-- `registry_line 177` (repaired; source line 692; `sfk-7f8163685646ce05ce4fe9c4`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L728: durable rule record has no `rule_id` field, yet rules must be revocable and `tool_pattern` alone can collide FIX: add a stable UUID field.
-- `registry_line 178` (repaired; source line 693; `sfk-fdf444265abf92192b7160bd`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L713-779: TOML persistence layer has no corruption/parse-failure recovery, no concurrent-write conflict handling, no atomic-write/rename strategy.
-- `registry_line 179` (repaired; source line 694; `sfk-57ac0d8ad5d91758f6c339a1`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L4634-4950 (PS-063/065/068): Permissions tab route, rule-editor add/reorder/delete, and directory-picker all lack exact command/IPC names and validation-error UI states.
-- `registry_line 180` (repaired; source line 695; `sfk-37acd88b10f91659e418b02a`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L8606-8704 (new, dated 2026-07-03): AutonomyCeilingReceipt and ProviderEgressPolicy introduced with zero field schema, storage location, or enforcement-point algorithm.
-- `registry_line 182` (repaired; source line 697; `sfk-06d806e2c31d2df1b9e763f3`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L7708-7709: `network_access_policy`/`secret_access_policy`/`destructive_command_policy` field names referenced by 3+ units with no single canonical enum/defaults table.
-- `registry_line 183` (repaired; source line 698; `sfk-613f7652b32c4e3abfe4f6e2`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1136: runtime-addendum domain-sensitive permission classes (docker exec, kubectl exec, git force-push) don't appear anywhere in the 5 tool-key table a parallel undocumented taxonomy.
-- `registry_line 184` (repaired; source line 699; `sfk-ea6603b7ef92e31beeee32b4`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L1150-1199: permission_snapshot schema exists but reason-code enums (stop_reason_code, blocked_reason_code, budget_kind) lack full value sets/transitions.
-- `registry_line 185` (repaired; source line 700; `sfk-6f3fd08bf73eb3f910729299`): Owner-doc note repairs duplicate or ambiguous section authority by requiring title/PlanUnit anchors and retiring numeric-only references. Source summary: - [HIGH] L4899-4950 (PS-068): external-directory picker has no dispatch name, no duplicate-path or invalid-glob error state.
-- `registry_line 191` (repaired; source line 720; `sfk-c5e20efd85f389d003c5cf07`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] L7423 (N2-132): "deny-code families" for a shared trust/proxy/governance preflight are named but never enumerated, with no link to the exact Permissions_System.md mechanism.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

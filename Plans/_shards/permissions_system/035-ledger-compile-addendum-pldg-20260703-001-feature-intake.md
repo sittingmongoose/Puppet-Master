@@ -2,9 +2,9 @@
 
 Source: `Plans/Permissions_System.md`
 
-Source lines: L8594-L8677
+Source lines: L8608-L8694
 
-Source SHA256: `8e9a3f5f46b668dfa38b83eb26a79b5431dc72b5882f9b330136f337f275d438`
+Source SHA256: `f7ef4aa3ba367fa37acea6aafdcd6f0e93d0a38b9258b94fbe891e14cf51aa27`
 
 ---
 
@@ -89,6 +89,9 @@ negative_constraints: []
 observed_signal: Cline v4 issue reports plan-mode tasks writing files and running Docker/DB schema changes; Cline issue list includes destructive shell commands running without approval when model emitted requires_approval=false; Codex and Warp both expose approvals/autonomy settings and managed permission profile evolution.
 pm_current_coverage: PM has central tool policy engine, permission model, FileSafe, and terminal pre-run approval requirements.
 pm_gap_or_delta: Need model-independent enforcement receipt that a plan/autonomy mode cannot be downgraded by model output or adapter schema.
-proposal_or_recommendation: Add AutonomyCeilingReceipt checked after provider/tool parsing but before execution. The runtime, not the model/tool payload, decides whether mutation can proceed.
+proposal_or_recommendation: >-
+  Add AutonomyCeilingReceipt checked after provider/tool parsing but before execution. The runtime, not the model/tool payload, decides whether mutation can proceed.
 compile_disposition: create_new_planunit
 ```
+
+`AutonomyCeilingReceipt` fields: `receipt_id`, `schema_version`, `attempt_id`, `run_id?`, `requested_mode`, `effective_mode`, `ceiling_source_ref`, `tool_call_ref?`, `provider_message_ref?`, `mutation_class`, `decision` (`allow`, `block`, `require_approval`), `blocked_reason_code?`, `permission_snapshot_id`, `created_at_utc`, and `enforcement_point` (`post_parse_pre_execution`). Storage location is the canonical event stream as an `autonomy.ceiling_checked` payload with redb projection by `attempt_id`. Enforcement order is provider/tool parse, schema validation, autonomy ceiling check, permission/FileSafe check, then dispatch.

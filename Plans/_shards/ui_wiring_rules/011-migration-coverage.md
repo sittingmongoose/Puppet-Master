@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Wiring_Rules.md`
 
-Source lines: L567-L590
+Source lines: L567-L588
 
-Source SHA256: `45f73acb1df7d8221f63292dacc254860ab3ad124f1cc06dcbd0da32492a5aea`
+Source SHA256: `13faee121b33fae25e58a15a9b69d0ae25a5c71aea86bcefc83234d665952ebb`
 
 ---
 
@@ -30,5 +30,3 @@ Run-scoped proof artifacts:
 | `UI_Wiring_Rules-S0017` | Reference table preserved; covered by `UIW-008`. |
 
 No WorkNodes, NodeSeeds, executable build tasks, Spec Lock refresh, shard regeneration, evidence refresh, or plan_graph update was performed during this pilot conversion.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

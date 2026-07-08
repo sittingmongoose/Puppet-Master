@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L8181-L9214
+Source lines: L8181-L9212
 
-Source SHA256: `46df2540088076542f93f48d3f2e59932d097185a55261e4d591f01b270d3443`
+Source SHA256: `da2e1c9d9a1aecce5930958fa972e31f9b67b57cced326bf1b5fac76a9d1185f`
 
 ---
 
@@ -1040,5 +1040,3 @@ negative_constraints:
 - Do not mint pseudo-terminals outside terminal_session_id ownership.
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

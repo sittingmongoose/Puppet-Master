@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L4014-L5018
+Source lines: L4014-L5019
 
-Source SHA256: `c9e42dad47823889bfcbf99bf1c29c9c42da839afb6f77a0dc8857b9c4ec7d50`
+Source SHA256: `5e0601b2110f4a425498048019fc374e0359ec6f5676479b0553c17c60332b3e`
 
 ---
 
@@ -170,9 +170,12 @@ preserved_exact_tokens:
 negative_constraints: []
 observed_signal: Pi reports JSON plus trailing reasoning, same-delta content/reasoning/tool calls, empty/duplicate tool calls, and stringified MCP params; Agent Zero issue list includes truncated tool calls treated as success.
 pm_current_coverage: Tools T-077/T-078 already reject invalid args and truncated invocations before dispatch or success.
-pm_gap_or_delta: Add a HistoryAdmissionGate before persistence/replay for assistant/tool turns with name/id/JSON/type/reasoning/role checks and quarantine outcomes.
+pm_gap_or_delta: >-
+  Add a HistoryAdmissionGate before persistence/replay for assistant/tool turns with name/id/JSON/type/reasoning/role checks and quarantine outcomes.
 compile_disposition: create_new_planunit
 ```
+
+`HistoryAdmissionGate` writes rejected or quarantined turns to `history_quarantine.v1:{thread_id}:{turn_id}` in the event-sourced storage projection. Minimum quarantine fields are `quarantine_id`, `thread_id`, `turn_id`, `provider_message_ref`, `reason_code`, `severity`, `raw_ref`, `normalized_preview_ref?`, `admission_decision` (`reject`, `quarantine_and_skip_replay`, `repair_required`), `created_at_utc`, and `redaction_profile`. Validation checks are closed to `empty_tool_name`, `duplicate_tool_call_id`, `malformed_json_arguments`, `trailing_reasoning_after_json`, `role_mismatch`, `length_truncated_tool_call`, `stringified_mcp_params`, and `same_delta_duplicate_content`.
 
 ### PP-061 - P0-CONTEXT-EPOCH-BASELINE
 
@@ -1011,5 +1014,3 @@ pm_gap_or_delta: No first-class ContextEpoch object found in repo scan
 proposal_or_recommendation: Add CONTEXT-EPOCH-RECORD with instruction/tool/MCP/provider/catalog/cache/history hashes
 compile_disposition: create_new_planunit
 ```
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->

@@ -844,12 +844,3 @@ Run-scoped proof artifacts:
 - `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
 
 Phase 2B batch 161 atomized `rewrite-tie-in-memo-S0001` through `rewrite-tie-in-memo-S0038` into fine-grained PlanUnits `RTIM-002` through `RTIM-039` or explicit structural dispositions. Phase 2B batch 162 structurally dispositioned generated tail spans `rewrite-tie-in-memo-S0039`, `rewrite-tie-in-memo-S0040`, and `rewrite-tie-in-memo-S0042`, and retired `rewrite-tie-in-memo-S0041` as the `RTIM-001` bridge lineage. `RTIM-001` is migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
-## FABLE Remaining Action Plan Repair Notes (2026-07-08)
-
-This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
-
-- `registry_line 361` (repaired; source line 1209; `sfk-fa77b0b241094242f6dcfb70`): Owner-doc note records the canonical narrow repair/disposition for this FABLE row and retires the ambiguous or stale wording as implementation authority. Source summary: - [HIGH] title claims "(Active)" and "No open questions" but the entire body is a routing memo where nearly every RTIM unit defers to an "owner doc" this is derivative-of-a-migration canon, not fresh spec (RTIM-001 was already retired into 38 successor units).
-
-<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
