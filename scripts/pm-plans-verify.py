@@ -5846,6 +5846,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         plans_to_code_handoff_schema=compact_gate_report(check_map["plans_to_code_handoff_schema"]),
         prd_planning_runtime_contracts=compact_gate_report(check_map["prd_planning_runtime_contracts"]),
         implementation_readiness=compact_gate_report(check_map["implementation_readiness"]),
+        plan_migration=compact_gate_report(check_map["plan_migration"]),
         runtime_artifact_schemas=compact_gate_report(check_map["runtime_artifact_schemas"]),
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
