@@ -128,6 +128,9 @@ class SubcheckTimeout(RuntimeError):
     pass
 
 
+_AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
+
+
 def _terminate_process_group(proc: subprocess.Popen) -> tuple[bool, str]:
     """Best-effort terminate a validator subprocess and any children holding its pipes.
 
@@ -160,25 +163,39 @@ def run_validator_subprocess(
     *,
     timeout_seconds: int,
     extra_failure_fields: dict[str, Any] | None = None,
+    aggregate_child: bool = False,
 ) -> tuple[subprocess.CompletedProcess | None, dict[str, Any] | None]:
     """Run a validator subprocess for a run-gates/audit-governance gate.
 
-    Uses start_new_session=True so the child is its own process group; on timeout we kill the
-    whole group so grandchildren holding the stdout/stderr pipe cannot strand the parent's
-    communicate() call. Always returns instead of hanging.
+    Standalone validators and aggregate wrappers use start_new_session=True so the child is
+    its own process group. Aggregate wrappers mark their environment so nested validators
+    inherit the wrapper's process group instead of starting an escape session. On timeout we
+    therefore kill the whole aggregate tree, including nested validators and grandchildren
+    holding stdout/stderr pipes. Always returns instead of hanging.
 
     Returns ``(completed_proc, None)`` on normal completion, or ``(None, report_status)``
     with a structured ``subprocess_timeout`` report on timeout. Never raises.
     """
+    nested_in_aggregate = os.environ.get(_AGGREGATE_CHILD_ENV) == "1"
     extra_failure_fields = extra_failure_fields or {}
-    effective_timeout = timeout_seconds if timeout_seconds and timeout_seconds > 0 else None
+    # The aggregate wrapper owns the deadline for the whole process group. A nested helper
+    # must not race that deadline and kill the group containing itself; it blocks until the
+    # wrapper completes normally or the aggregate parent kills the complete group.
+    effective_timeout = None if nested_in_aggregate else (
+        timeout_seconds if timeout_seconds and timeout_seconds > 0 else None
+    )
+    child_env: dict[str, str] | None = None
+    if aggregate_child:
+        child_env = os.environ.copy()
+        child_env[_AGGREGATE_CHILD_ENV] = "1"
     proc = subprocess.Popen(
         argv,
         cwd=ROOT,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        start_new_session=True,
+        start_new_session=not nested_in_aggregate,
+        env=child_env,
     )
     try:
         out, err = proc.communicate(timeout=effective_timeout)
@@ -446,6 +463,7 @@ def _run_subprocess_check(
             argv,
             timeout_seconds=timeout_seconds,
             extra_failure_fields={"command_id": command_id},
+            aggregate_child=True,
         )
         if timeout_report is not None:
             # Rewrite the check name to the aggregate subcheck name the caller expects.

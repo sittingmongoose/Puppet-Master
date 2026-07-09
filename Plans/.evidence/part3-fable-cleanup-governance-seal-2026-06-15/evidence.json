@@ -106,11 +106,11 @@
     },
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "e7952e265aaf7434669736234596d7d25c314cfc56aab009e89e528e208b97ec"
+      "sha256": "40c60b4afc3bc8c3d04af9dfb99fc4e7f226aee3befa5b6e79286b5c2681ee9f"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "845a418b87726502c58f77975fe4a8f80cb517fe43a495e29789badc586382e0"
+      "sha256": "baefd24e3406b029a8f5c6a2bd0dd0a85a0d490bf960be8df4ce21264becd166"
     },
     {
       "path": "Plans/plan_graph.json",
@@ -322,6 +322,11 @@
       "name": "final-fable-convergence-pnc019",
       "result": "PASS",
       "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
+    },
+    {
+      "name": "pm165-final-timeout-hardening",
+      "result": "PASS",
+      "details": "Project Codex config remains intentionally empty to avoid locking model or agent defaults; pytest cache cleanup and nested aggregate process-group timeout hardening remain complete."
     }
   ],
   "commands_run": [

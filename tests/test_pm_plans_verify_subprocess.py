@@ -114,6 +114,67 @@ class RunValidatorSubprocessTests(unittest.TestCase):
         # know the grandchild pid directly, so we rely on the bounded elapsed time above as
         # the structural proof that the process group was reaped.
 
+    def test_nested_aggregate_validator_joins_wrapper_process_group_and_is_reaped(self) -> None:
+        nested = self.tmp / "nested.py"
+        wrapper = self.tmp / "wrapper.py"
+        nested_state = self.tmp / "nested_state.json"
+        wrapper_state = self.tmp / "wrapper_state.json"
+        write_stub_validator(
+            nested,
+            (
+                "import json, os, time\n"
+                "from pathlib import Path\n"
+                f"Path({str(nested_state)!r}).write_text("
+                "json.dumps({'pid': os.getpid(), 'pgid': os.getpgrp()}), encoding='utf-8')\n"
+                "time.sleep(60)\n"
+            ),
+        )
+        write_stub_validator(
+            wrapper,
+            (
+                "import importlib.util, json, os, sys\n"
+                "from pathlib import Path\n"
+                f"Path({str(wrapper_state)!r}).write_text("
+                "json.dumps({'pid': os.getpid(), 'pgid': os.getpgrp()}), encoding='utf-8')\n"
+                f"spec = importlib.util.spec_from_file_location('nested_pm_plans_verify', {str(MODULE_PATH)!r})\n"
+                "module = importlib.util.module_from_spec(spec)\n"
+                "spec.loader.exec_module(module)\n"
+                f"module.run_validator_subprocess('nested', [sys.executable, {str(nested)!r}], timeout_seconds=60)\n"
+            ),
+        )
+
+        started = time.monotonic()
+        proc, timeout_report = pm_plans_verify.run_validator_subprocess(
+            "aggregate-wrapper",
+            [sys.executable, str(wrapper)],
+            timeout_seconds=2,
+            aggregate_child=True,
+        )
+        elapsed = time.monotonic() - started
+
+        self.assertIsNone(proc)
+        assert timeout_report is not None
+        self.assertEqual(timeout_report["failures"][0]["error"], "subprocess_timeout")
+        self.assertTrue(timeout_report["failures"][0]["process_group_killed"])
+        self.assertLess(elapsed, 8.0)
+        self.assertTrue(wrapper_state.exists())
+        self.assertTrue(nested_state.exists())
+        wrapper_process = json.loads(wrapper_state.read_text(encoding="utf-8"))
+        nested_process = json.loads(nested_state.read_text(encoding="utf-8"))
+        self.assertEqual(wrapper_process["pid"], wrapper_process["pgid"])
+        self.assertEqual(nested_process["pgid"], wrapper_process["pgid"])
+
+        nested_pid = nested_process["pid"]
+        deadline = time.monotonic() + 3
+        while time.monotonic() < deadline:
+            try:
+                os.kill(nested_pid, 0)
+            except ProcessLookupError:
+                break
+            time.sleep(0.05)
+        else:
+            self.fail(f"nested aggregate validator still alive after wrapper timeout: pid={nested_pid}")
+
     def test_gui_asset_policy_gate_honors_timeout(self) -> None:
         """cmd_validate_gui_asset_policy must respect subcheck_timeout_seconds (regression)."""
         import argparse
@@ -323,7 +384,9 @@ class AggregateCommandMappingTests(unittest.TestCase):
 
         names = self._capture_aggregate_names(pm_plans_verify.cmd_audit_governance)
 
-        def fake_run_validator_subprocess(check_name, argv, *, timeout_seconds, extra_failure_fields=None):
+        def fake_run_validator_subprocess(
+            check_name, argv, *, timeout_seconds, extra_failure_fields=None, aggregate_child=False
+        ):
             command_id = argv[2]
             if command_id not in pm_plans_verify.COMMANDS:
                 return (
@@ -371,7 +434,9 @@ class AggregateCommandMappingTests(unittest.TestCase):
 
         captured_argvs: list[list[str]] = []
 
-        def fake_run_validator_subprocess(check_name, argv, *, timeout_seconds, extra_failure_fields=None):
+        def fake_run_validator_subprocess(
+            check_name, argv, *, timeout_seconds, extra_failure_fields=None, aggregate_child=False
+        ):
             captured_argvs.append(argv)
             return (
                 subprocess.CompletedProcess(
