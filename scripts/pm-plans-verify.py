@@ -205,9 +205,35 @@ def run_validator_subprocess(
     except subprocess.TimeoutExpired:
         group_killed, mechanism = _terminate_process_group(proc)
         try:
-            out, err = proc.communicate(timeout=max(timeout_seconds or 1, 1))
-        except Exception:  # pragma: no cover - defensive reap fallback after group kill
-            out, err = (proc.stdout.read() if proc.stdout else "") or "", (proc.stderr.read() if proc.stderr else "") or ""
+            out, err = proc.communicate(timeout=1)
+        except Exception as cleanup_exc:  # pragma: no cover - defensive reap fallback after group kill
+            # Never call read() here: an escaped descendant may still hold a copied pipe
+            # descriptor open, so waiting for EOF could block forever. Keep only output
+            # already buffered by communicate(), close our pipe handles, and bound the
+            # direct-child reap as well.
+            out = getattr(cleanup_exc, "output", "") or ""
+            err = getattr(cleanup_exc, "stderr", "") or ""
+            if isinstance(out, bytes):
+                out = out.decode("utf-8", errors="replace")
+            if isinstance(err, bytes):
+                err = err.decode("utf-8", errors="replace")
+            for pipe in (proc.stdout, proc.stderr):
+                if pipe is not None:
+                    try:
+                        pipe.close()
+                    except Exception:
+                        pass
+            try:
+                proc.wait(timeout=1)
+            except Exception:
+                try:
+                    proc.kill()
+                except Exception:
+                    pass
+                try:
+                    proc.wait(timeout=1)
+                except Exception:
+                    pass
         timeout_report = report_status(
             check_name,
             [
