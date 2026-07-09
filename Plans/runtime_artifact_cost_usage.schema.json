@@ -12,6 +12,7 @@
     "run_id",
     "attempt_id",
     "usage_event_ref",
+    "usage_record_id",
     "created_at_utc",
     "projection_freshness",
     "projection_health",
@@ -457,6 +458,10 @@
       "type": "string",
       "minLength": 1
     },
+    "usage_record_id": {
+      "type": "string",
+      "minLength": 1
+    },
     "receipt_refs": {
       "type": "array",
       "items": {
@@ -508,6 +513,7 @@
       "additionalProperties": false,
       "required": [
         "usage_event_ref",
+        "usage_record_id",
         "reasoning_tokens",
         "provider",
         "usage",
@@ -519,6 +525,10 @@
       ],
       "properties": {
         "usage_event_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "usage_record_id": {
           "type": "string",
           "minLength": 1
         },
@@ -549,11 +559,16 @@
           "additionalProperties": false,
           "required": [
             "usage_event_ref",
+            "usage_record_id",
             "provider_attempt_ref",
             "raw_payload_ref"
           ],
           "properties": {
             "usage_event_ref": {
+              "type": "string",
+              "minLength": 1
+            },
+            "usage_record_id": {
               "type": "string",
               "minLength": 1
             },

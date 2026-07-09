@@ -73,12 +73,12 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "f59c7a3070f80a6d824cff981d83a735afe665821fe2f90daa49610c3d890e52"
+      "sha256": "7e909ea69aeac90b36795b9e9eb8df4abc32756951923001081943dba04f936b"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "58fabe8eb51ca7fd7c9ff3b4950c2daa6a24e808da1a45b2d3377777ecaef8ac"
+      "sha256": "09486b3c2cc714548fb695b3ce6adc63521c9f59fdb80393ece6dcce6be3d2d6"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "1bc000920920b52496217803b2c95a76d9e8dd96d95d41f0ad69b26cee66b71e"
+      "sha256": "812b50266f4e61e1068755a38f4d7e89e94ac942df3e938b4b07c64f65016af0"
     }
   ],
   "checks": [
@@ -778,6 +778,14 @@
     },
     {
       "cmd": "python3 scripts/pm-implementation-readiness.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
       "exit_code": 0
     }
   ],

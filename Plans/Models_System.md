@@ -224,9 +224,9 @@ Required fields:
 - `requested_model` / `effective_model` keep the canonical model id
 - `requested_runtime_platform_id` / `effective_runtime_platform_id` disclose the concrete runtime surface
 - `requested_model_provider_id` / `effective_model_provider_id` disclose the model vendor namespace when that differs from the runtime surface label
-- `provider_usage_source_kind?` records the usage-evidence source family for the selected runtime surface
-- when model/runtime selection is shown beside usage data, `provider_usage_source_kind?` maps to the Usage/Contracts `usage_source_kind` field and preserves whether the evidence is project-local, provider/API-backed (`/API-backed`), API-key-derived, OAuth-quota-derived, or estimated instead of flattening all model rows into one source label
-- `provider_signal_confidence?` records confidence for provider-derived signals that affect model/runtime availability or usage disclosure
+- `source_class?`, `source_confidence?`, and `source_authority?` record the usage-evidence authority for the selected runtime surface
+- when model/runtime selection is shown beside usage data, legacy `provider_usage_source_kind?` maps through Usage/Contracts aliases into `source_class` / `source_authority` and preserves whether the evidence is project-local, provider/API-backed (`/API-backed`), API-key-derived, OAuth-quota-derived, or estimated instead of flattening all model rows into one source label
+- legacy `provider_signal_confidence?` records confidence for provider-derived signals only until normalized into `source_confidence`; it is a migration/display alias and not a competing model-row authority field
 - `model_id_raw`, `effort`, `compact_threshold`, `auth_family`, `pool_scope`, `effective_runtime`, and `effective_runtime_snapshot` remain inspectable runtime/model fields when they affect selection, compatibility, or requested/effective disclosure.
 - In `/OpenCode-era` multi-platform availability, platform-mapping is additive: raw IDs and `provider_id/model_id` stay exact, while runtime-platform fields distinguish active surfaces such as `gemini_direct`, `antigravity_cli`, OpenCode bridges, and Cursor CLI without renaming the canonical model ID. The legacy `gemini_cli` surface remains retired/source-lineage vocabulary only.
 
@@ -567,7 +567,7 @@ OpenCode product pricing is a reference formula, not an authoritative PM cost so
 
 The explanatory formula is per 1M token pricing units: `input * input_rate`, `output * output_rate`, `cache_read * cache_read_rate`, `cache_write * cache_write_rate`, and `reasoning * output_rate`; the estimate may still be inaccurate for some providers such as OpenRouter because of cache/input reporting differences.
 
-Provider-sensitive token counting uses `token_counting_adapter_id` and `token_counting_basis` before cost or budget enforcement reads canonical token buckets. Provider raw counts may be preserved for audit, but the adapter result is what feeds `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens`.
+Provider-sensitive token counting uses `token_counting_adapter_id`, `token_counting_basis`, and `counting_semantics` before cost or budget enforcement reads canonical UF-085 token buckets. Provider raw counts may be preserved for audit, but the adapter result is what feeds `input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, and `context_estimate`. Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens` remain compatibility import/export aliases only.
 
 Context-detail `Breakdown` views that consume model/runtime usage metadata show the context usage bar, token buckets, and grouped breakdowns by role, tools, and provider/model when available.
 
@@ -2891,8 +2891,10 @@ plan_unit_id: MS-028
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Provider-sensitive token counting uses token_counting_adapter_id and token_counting_basis before cost or budget
-  enforcement reads canonical token buckets; raw provider counts may be retained for audit.
+canonical_text: Provider-sensitive token counting uses token_counting_adapter_id, token_counting_basis, and
+  counting_semantics before cost or budget enforcement reads UF-085 token buckets; raw provider counts may be retained
+  for audit, while legacy input_tokens/output_tokens/cache_read_input_tokens/cache_creation_input_tokens/reasoning_tokens
+  are compatibility aliases only.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -2930,7 +2932,8 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Provider raw counts may be preserved for audit, but adapter results feed canonical cost and budget token buckets.
+- Provider raw counts may be preserved for audit, but adapter results feed canonical UF-085 cost and budget token buckets.
+- Legacy token names must not become model-row canonical usage fields.
 owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs:

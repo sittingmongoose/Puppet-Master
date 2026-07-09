@@ -197,9 +197,10 @@
                 "trace_kind": "llm_call",
                 "tool_call_id": "tool-call-001",
                 "llm_call_id": "llm-call-001",
-                "provider_attempt_ref": "provider-attempt-001",
-                "usage_event_ref": "usage-event-001",
-                "lifecycle": {
+      "provider_attempt_ref": "provider-attempt-001",
+      "usage_event_ref": "usage-event-001",
+      "usage_record_id": "usage-record-001",
+      "lifecycle": {
                     "started_at_utc": "2026-07-02T00:00:00Z",
                     "partial_at_utc": "2026-07-02T00:00:01Z",
                     "final_at_utc": "2026-07-02T00:00:02Z",
@@ -214,10 +215,11 @@
                     "redaction_status": "redacted",
                     "provider_payload_hash": "sha256:toolllmfixture"
                 },
-                "settlement": {
-                    "settlement_status": "settled",
-                    "usage_event_ref": "usage-event-001",
-                    "usage_artifact_ref": "artifact-cost-usage-001",
+      "settlement": {
+        "settlement_status": "settled",
+        "usage_event_ref": "usage-event-001",
+        "usage_record_id": "usage-record-001",
+        "usage_artifact_ref": "artifact-cost-usage-001",
                     "quota_artifact_ref": null
                 },
                 "retry": {
@@ -225,10 +227,11 @@
                     "parent_trace_ref": null,
                     "dedupe_key": "dedupe-tool-llm-001"
                 },
-                "refs": {
-                    "provider_attempt_ref": "provider-attempt-001",
-                    "usage_event_ref": "usage-event-001",
-                    "raw_payload_ref": "raw/provider/tool-llm-001.json",
+      "refs": {
+        "provider_attempt_ref": "provider-attempt-001",
+        "usage_event_ref": "usage-event-001",
+        "usage_record_id": "usage-record-001",
+        "raw_payload_ref": "raw/provider/tool-llm-001.json",
                     "receipt_refs": []
                 },
                 "flags": {
@@ -263,10 +266,11 @@
             "artifact_id": "artifact-cost-usage-001",
             "artifact_type": "cost_usage",
             "project_id": "fixture-project",
-            "run_id": "run-001",
-            "attempt_id": "attempt-001",
-            "usage_event_ref": "usage-event-001",
-            "created_at_utc": "2026-07-02T00:00:00Z",
+      "run_id": "run-001",
+      "attempt_id": "attempt-001",
+      "usage_event_ref": "usage-event-001",
+      "usage_record_id": "usage-record-001",
+      "created_at_utc": "2026-07-02T00:00:00Z",
             "projection_freshness": "current",
             "projection_health": "healthy",
             "retention_class": "project",
@@ -274,8 +278,9 @@
                 "artifact:artifact-cost-usage-001"
             ],
             "type_payload": {
-                "usage_event_ref": "usage-event-001",
-                "reasoning_tokens": 12,
+      "usage_event_ref": "usage-event-001",
+      "usage_record_id": "usage-record-001",
+      "reasoning_tokens": 12,
                 "total_tokens": 42,
                 "provider": {
                     "provider_id": "openai",
@@ -357,9 +362,10 @@
                     "redaction_status": "redacted",
                     "provider_payload_hash": "sha256:usagefixture"
                 },
-                "refs": {
-                    "usage_event_ref": "usage-event-001",
-                    "provider_attempt_ref": "provider-attempt-001",
+      "refs": {
+        "usage_event_ref": "usage-event-001",
+        "usage_record_id": "usage-record-001",
+        "provider_attempt_ref": "provider-attempt-001",
                     "attempt_id": "attempt-001",
                     "run_id": "run-001",
                     "thread_id": null,

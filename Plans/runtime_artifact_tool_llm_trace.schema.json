@@ -73,6 +73,9 @@
     "usage_event_ref": {
       "type": "string"
     },
+    "usage_record_id": {
+      "type": "string"
+    },
     "receipt_refs": {
       "type": "array",
       "items": {
@@ -127,6 +130,8 @@
         "trace_kind",
         "tool_call_id",
         "provider_attempt_ref",
+        "usage_event_ref",
+        "usage_record_id",
         "lifecycle",
         "raw_payload",
         "settlement",
@@ -174,6 +179,9 @@
           "$ref": "#/$defs/stringOrNull"
         },
         "usage_event_ref": {
+          "$ref": "#/$defs/stringOrNull"
+        },
+        "usage_record_id": {
           "$ref": "#/$defs/stringOrNull"
         },
         "lifecycle": {
@@ -254,6 +262,7 @@
           "required": [
             "settlement_status",
             "usage_event_ref",
+            "usage_record_id",
             "usage_artifact_ref"
           ],
           "properties": {
@@ -269,6 +278,9 @@
               ]
             },
             "usage_event_ref": {
+              "$ref": "#/$defs/stringOrNull"
+            },
+            "usage_record_id": {
               "$ref": "#/$defs/stringOrNull"
             },
             "usage_artifact_ref": {
@@ -312,6 +324,7 @@
           "required": [
             "provider_attempt_ref",
             "usage_event_ref",
+            "usage_record_id",
             "raw_payload_ref"
           ],
           "properties": {
@@ -319,6 +332,9 @@
               "$ref": "#/$defs/stringOrNull"
             },
             "usage_event_ref": {
+              "$ref": "#/$defs/stringOrNull"
+            },
+            "usage_record_id": {
               "$ref": "#/$defs/stringOrNull"
             },
             "raw_payload_ref": {

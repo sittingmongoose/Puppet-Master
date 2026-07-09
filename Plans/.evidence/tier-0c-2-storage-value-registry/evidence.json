@@ -13,17 +13,17 @@
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "543b93c9771ce314ee7be89798922a90dcf8815551355e2959e58fcf489c320f"
+      "sha256": "5b4b587f06256cc9e3f8c7f57232429dcfa3ae71c8326c54468dcea6e8bad6d0"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "e59fcfded32fd48b7eda52cd047c78f9dd84865355b7e6b3af7bf6670e24d1ee"
+      "sha256": "9a512bae7d9214c09849e4d3743f01059ed1f647a76eeee10d7153e06a3a30a9"
     },
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "f59c7a3070f80a6d824cff981d83a735afe665821fe2f90daa49610c3d890e52"
+      "sha256": "7e909ea69aeac90b36795b9e9eb8df4abc32756951923001081943dba04f936b"
     }
   ],
   "checks": [
@@ -152,6 +152,18 @@
     },
     {
       "cmd": "python3 scripts/pm-implementation-readiness.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
       "exit_code": 0
     }
   ],

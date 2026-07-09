@@ -91,6 +91,7 @@ Until this stack exists, any temporary compatibility path MUST still preserve th
 - `Provider_OpenCode.md`, `Provider_OpenCode`, `CLI_Bridged_Providers.md`, and `CLI_Bridged_Providers` must carry account identity and execution-scope attribution before Usage projections consume provider events, so account identity is not silently lost before rollups see the data.
 - `cmd.nav.open_usage_subject` resolves canonical Usage/Ledger identity from `usage_event_ref` or an equivalent usage target; domain-specific usage commands are wrappers over the shared route/subject model, not independent argument families.
 - `/multi-account` usage surfaces keep configurable thresholds, platform quota visibility, rate-limit/reset countdowns, project-scoped usage storage, dashboard widgets, runtime event persistence, and usage + ledger + analytics rollups in one Usage projection model.
+- `Concepts/pm6-build/**`, including PMConcept6 Usage page parts, internal contracts, manifest owners, embedded demo data, and working/assembled HTML, is illustrative source-lineage only. It does not define active Usage UX, UsageRecord fields, source classes, cost authority, provider quota truth, refresh/retention intervals, widget IDs, commands, runtime events, receipts, WorkNodes, NodeSeeds, queues, or wiring. Any promoted detail must be restated in live owner docs and, for controls/actions, production wiring evidence; otherwise Usage follows this document's normalized UsageRecord/value-state contracts and `Plans/FinalGUISpec.md` presentation constraints.
 
 ## Executive Summary
 
@@ -2750,7 +2751,7 @@ plan_unit_id: UF-035
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: UsageRecord schema expectations preserve unified schema aliases, usage_id, created_at_utc, account_id, provider_id, model_id, usage_source_kind, provider_runtime_usage, provider_quota_api, provider_usage_api, provider_error_hint, project_rollup, local-estimated, API-key-derived, and OAuth-quota-derived source detail.
+canonical_text: UsageRecord schema expectations preserve unified schema alias lineage such as usage_id, usage_source_kind, provider_runtime_usage, provider_quota_api, provider_usage_api, provider_error_hint, project_rollup, local-estimated, API-key-derived, and OAuth-quota-derived source detail, but those aliases normalize into usage_record_id, source_class, source_confidence, source_authority, provider/usage/quota projections, and UF-085 fields before persistence, aggregation, GUI projection, or route/open drill-through.
 gui_related: false
 gui_classification_reason: The unit preserves backend UsageRecord schema and attribution fields.
 split_recommended: false
@@ -2791,9 +2792,12 @@ preserved_exact_tokens:
 - local-estimated
 - API-key-derived
 - OAuth-quota-derived
-negative_constraints: []
+negative_constraints:
+- Do not present usage_id, usage_source_kind, provider_runtime_usage, provider_quota_api, provider_usage_api, or provider_error_hint as competing canonical UsageRecord fields.
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- usage_id and usage_source_kind are legacy import/display aliases only and must not replace usage_record_id, source_class, source_confidence, or source_authority.
+- provider_runtime_usage, provider_quota_api, provider_usage_api, and provider_error_hint are source-lineage/provider projection hints, not competing canonical UsageRecord fields.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md
@@ -5534,6 +5538,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shard-plans.py --check
+  - python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures
   - python3 scripts/pm-plans-verify.py run-gates
   - future GUI Usage fixture suite
   - future runtime artifact JSON Schema negative fixture suite
@@ -5800,7 +5805,7 @@ owner_hints:
 
 This addendum repairs non-runtime usage rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-f5e4f21174c14fb661692c70`: `UnifiedUsageRecord` fields are `usage_record_id`, `project_id`, `run_id?`, `thread_id?`, `provider_id`, `model_id`, `account_id?`, `input_tokens`, `output_tokens`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars`, `final_cost_microdollars?`, `currency`, `usage_source`, `created_at_utc`, and `schema_version`.
+- Repairs `sfk-f5e4f21174c14fb661692c70`: legacy `UnifiedUsageRecord` import fields such as `usage_record_id`, `project_id`, `run_id?`, `thread_id?`, `provider_id`, `model_id`, `account_id?`, `input_tokens`, `output_tokens`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars`, `final_cost_microdollars?`, `currency`, `usage_source`, `created_at_utc`, and `schema_version` are source-lineage/migration inputs only; active persistence, aggregation, GUI projection, and route/open drill-through normalize them to UF-085 UsageRecord fields, source_class/source_confidence/source_authority, settlement, cost, quota, and refs packets before use.
 - Repairs `sfk-08907092c21fff88a8b7c871`: `UsageAnomalyGuard` computes `current_window_cost / max(median_previous_7_windows_cost, 1)` over a default 1-hour window. Default spike ratio threshold is `3.0`; confidence is `min(1.0, observed_samples / 7.0)`.
 - Repairs `sfk-829f3e79121c4f7c6355204a`: refresh config key is `usage.refresh_interval_seconds` with default `300`; retention config key is `usage.retention_days` with default `90`. Enforcement occurs during usage projection compaction, not at event ingestion.
 
@@ -5812,7 +5817,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  P0-CACHE-USAGE-ENVELOPE (P0) is compiled as canonical Puppet Master intent for Normalize cache usage/read/write metrics: Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason; UI does not show zero cache as unsupported or vice versa.
+  P0-CACHE-USAGE-ENVELOPE (P0) is compiled as canonical Puppet Master intent for Normalize cache usage/read/write metrics: Usage records expose UF-085 cache buckets (`cache_read`, `cache_write`, and `cache_write_1h` / provider TTL-specific `cache_write_ttl` where exposed) plus cache_reporting_state and cache_miss_reason; the legacy cached_input_tokens source token is preserved only as source-lineage/import alias. UI does not show zero cache as unsupported or vice versa.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -5820,13 +5825,13 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason
+- Usage records expose cache_read/cache_write/cache_write_1h-or-cache_write_ttl/cache_reporting_state/cache_miss_reason and preserve cached_input_tokens only as source-lineage/import alias.
 - UI does not show zero cache as unsupported or vice versa.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason
+- Usage records expose cache_read/cache_write/cache_write_1h-or-cache_write_ttl/cache_reporting_state/cache_miss_reason and preserve cached_input_tokens only as source-lineage/import alias.
 - UI does not show zero cache as unsupported or vice versa.
 risk_class: p0_context_cache_hardening
 reasoning_tier: high
@@ -5863,8 +5868,9 @@ preserved_exact_tokens:
 - P0-CACHE-USAGE-ENVELOPE
 - P0
 - Normalize cache usage/read/write metrics
+- cached_input_tokens
 negative_constraints: []
-proposal_or_recommendation: Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason; UI does not show zero cache as unsupported or vice versa.
+proposal_or_recommendation: Usage records expose cache_read/cache_write/cache_write_1h-or-cache_write_ttl/cache_reporting_state/cache_miss_reason and preserve cached_input_tokens only as source-lineage/import alias; UI does not show zero cache as unsupported or vice versa.
 compile_disposition: create_new_planunit
 ```
 

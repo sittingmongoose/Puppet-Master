@@ -1878,9 +1878,9 @@ RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS = {
     "document": ["document_ref"],
     "restore_point": ["safe_point_id"],
     "browser_recording": ["browser_session_id"],
-    "tool_llm_trace": ["trace_ref"],
+    "tool_llm_trace": ["trace_ref", "usage_record_id"],
     "context_snapshot": ["snapshot_ref"],
-    "cost_usage": ["usage_event_ref", "reasoning_tokens"],
+    "cost_usage": ["usage_event_ref", "usage_record_id", "reasoning_tokens"],
     "hitl_approval": ["approval_scope_key", "decision"],
     "failed_attempts": ["attempt_refs"],
     "subagent_lineage": ["parent_attempt_ref", "child_attempt_refs"],
@@ -2083,8 +2083,121 @@ def cmd_validate_project_output_fixtures(args: argparse.Namespace) -> dict[str, 
     return report_status("validate-project-output-fixtures", failures, fixture_root=str(fixture_root.relative_to(ROOT)))
 
 
+USAGE_GUI_REQUIRED_FIXTURE_IDS = [
+    "GUI-USG-001",
+    "GUI-USG-002",
+    "GUI-USG-003",
+    "GUI-USG-004",
+    "GUI-USG-005",
+    "GUI-USG-006",
+    "GUI-USG-007",
+    "GUI-USG-008",
+    "GUI-CBP-001",
+    "GUI-CBP-002",
+    "GUI-ROUTE-001",
+    "GUI-RAW-001",
+    "GUI-RAP-001",
+]
+
+USAGE_GUI_REQUIRED_FIXTURE_TOKENS = {
+    "GUI-USG-001": ["source_class:unknown", "usage_reporting_state:unknown_or_unavailable", "zero_tokens", "zero_cost"],
+    "GUI-USG-002": ["source_class:provider_reported", "settlement_status:settled_or_adjusted", "zero_buckets", "provider_payload_hash"],
+    "GUI-USG-003": ["cost_status:unknown", "cost_microdollars:null", "cost_minor_units:null", "$0.00"],
+    "GUI-USG-004": ["usage_event_ref", "usage_record_id", "hidden_byok", "hidden_subscription", "fake_per_token_price"],
+    "GUI-USG-005": ["quota_status:disabled", "disabled_reason", "zero_remaining", "reset_countdown"],
+    "GUI-USG-006": ["cache_read:0", "cache_reporting_state:reported", "cache_reporting_state:not_exposed", "unsupported_cache_as_zero"],
+    "GUI-USG-007": ["counting_semantics", "input_total_includes_cache", "output_total_includes_reasoning", "double_counted_total"],
+    "GUI-USG-008": ["settlement_status:streaming_partial_or_failed", "stream_state:partial_or_aborted", "dedupe_key", "duplicate_partial_rollup"],
+    "GUI-CBP-001": ["/stats", "/usage", "/quota", "/credits", "usage:unknown", "quota:not_exposed"],
+    "GUI-CBP-002": ["provider_id:antigravity_cli", "route:agy", "G1 credits", "UseG1Credits", "provider_total_from_credits"],
+    "GUI-ROUTE-001": ["route_target.object_kind:usage_event", "object_id:usage_event_ref", "usage_record_id", "timestamp_primary_route"],
+    "GUI-RAW-001": ["Curated normalized fields", "Raw redacted refs", "provider_payload_hash", "raw_provider_secrets"],
+    "GUI-RAP-001": ["cost_usage", "tool_llm_trace", "envelope_plus_per_type", "envelope_only_valid", "arbitrary_non_empty_type_payload_valid"],
+}
+
+
+def cmd_validate_usage_gui_fixtures(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+    fixture_path = ROOT / "tests/fixtures/usage_gui/golden/usage_gui_acceptance_fixtures.json"
+    if not fixture_path.exists():
+        failures.append({"path": rel(fixture_path), "error": "missing_usage_gui_fixture_matrix"})
+        return report_status("validate-usage-gui-fixtures", failures)
+
+    fixture_matrix = load_json(fixture_path)
+    if fixture_matrix.get("schema_id") != "pm.usage_gui.acceptance_fixture_matrix.v1":
+        failures.append({"path": rel(fixture_path), "error": "wrong_schema_id"})
+    if fixture_matrix.get("owner_plan_unit") != "UF-088":
+        failures.append({"path": rel(fixture_path), "error": "wrong_owner_plan_unit"})
+
+    fixtures = fixture_matrix.get("fixtures", [])
+    if not isinstance(fixtures, list):
+        return report_status("validate-usage-gui-fixtures", [{"path": rel(fixture_path), "error": "fixtures_not_list"}])
+
+    by_id: dict[str, dict[str, Any]] = {}
+    for index, fixture in enumerate(fixtures):
+        if not isinstance(fixture, dict):
+            failures.append({"path": rel(fixture_path), "fixture_index": index, "error": "fixture_not_object"})
+            continue
+        fixture_id = fixture.get("fixture_id")
+        if not isinstance(fixture_id, str):
+            failures.append({"path": rel(fixture_path), "fixture_index": index, "error": "fixture_id_missing"})
+            continue
+        if fixture_id in by_id:
+            failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "error": "duplicate_fixture_id"})
+        by_id[fixture_id] = fixture
+
+        for field in ["surfaces", "source_lineage", "must", "must_not"]:
+            values = fixture.get(field)
+            if not isinstance(values, list) or not values or not all(isinstance(value, str) and value for value in values):
+                failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "field": field, "error": "missing_or_invalid_fixture_list"})
+
+        fixture_text = json.dumps(fixture, sort_keys=True)
+        for token in USAGE_GUI_REQUIRED_FIXTURE_TOKENS.get(fixture_id, []):
+            if token not in fixture_text:
+                failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "token": token, "error": "missing_required_fixture_assertion_token"})
+
+    expected = set(USAGE_GUI_REQUIRED_FIXTURE_IDS)
+    actual = set(by_id)
+    for fixture_id in sorted(expected - actual):
+        failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "error": "missing_required_usage_gui_fixture"})
+    for fixture_id in sorted(actual - expected):
+        failures.append({"path": rel(fixture_path), "fixture_id": fixture_id, "error": "unexpected_usage_gui_fixture"})
+
+    return report_status(
+        "validate-usage-gui-fixtures",
+        failures,
+        required_fixture_count=len(USAGE_GUI_REQUIRED_FIXTURE_IDS),
+        fixture_count=len(fixtures),
+    )
+
+
 COMMAND_TOKEN_RE = re.compile(r"(?<![A-Za-z0-9_])cmd\.[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*(?![A-Za-z0-9_])")
 HANDLER_LOCATION_RE = re.compile(r"^(crate::)?[A-Za-z_][A-Za-z0-9_]*(::[A-Za-z_][A-Za-z0-9_]*)+$")
+RETIRED_CHAT_USAGE_COMMAND_IDS = {
+    "cmd.chat.open_thread_usage",
+    "cmd.chat.focus_thread_usage",
+    "cmd.chat.close_thread_usage",
+}
+USAGE_ROUTE_COMMAND_IDS = {
+    "cmd.nav.open_usage_subject",
+    "cmd.artifacts.show_in_usage",
+    "cmd.artifacts.show_in_ledger",
+}
+USAGE_ROUTE_PASSTHROUGH_FIELDS = {
+    "usage_event_ref",
+    "usage_record_id",
+    "provider_attempt_ref",
+    "attempt_id",
+    "node_id",
+    "tool_call_id",
+    "trace_ref",
+    "receipt_ref",
+    "receipt_refs",
+    "raw_payload_ref",
+    "artifact_id",
+    "run_id",
+    "thread_id",
+}
 
 
 def wiring_command_excluded(command_id: str, excluded_tokens: list[str]) -> bool:
@@ -2139,6 +2252,8 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
             continue
         command_id = str(row.get("ui_command_id", ""))
         production_commands.add(command_id)
+        if command_id in RETIRED_CHAT_USAGE_COMMAND_IDS:
+            failures.append({"path": row_path, "command_id": command_id, "error": "retired_chat_usage_alias_in_production_wiring"})
         if row.get("ui_element_id") != key:
             failures.append({"path": row_path, "error": "ui_element_id_key_mismatch", "ui_element_id": row.get("ui_element_id")})
         if row.get("example") is True:
@@ -2158,8 +2273,10 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
         if isinstance(effect_contract, dict):
             typed_contract_rows += 1
             effect_refs = effect_contract.get("receipt_or_event_refs", [])
+            effect_kind = effect_contract.get("effect_kind")
         else:
             effect_refs = []
+            effect_kind = None
             failures.append({"path": row_path, "command_id": command_id, "error": "missing_effect_contract"})
 
         test_evidence = row.get("test_evidence", [])
@@ -2199,6 +2316,51 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
                     )
         elif not isinstance(event_requirements, list) or not event_requirements:
             failures.append({"path": row_path, "command_id": command_id, "error": "no_event_row_missing_no_persist_test_requirement"})
+
+        if command_id in USAGE_ROUTE_COMMAND_IDS:
+            if effect_kind not in {"route_open", "mixed"}:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "command_id": command_id,
+                        "effect_kind": effect_kind,
+                        "error": "usage_route_command_not_route_open",
+                    }
+                )
+            if "route_open_fixture" not in evidence_kinds:
+                failures.append({"path": row_path, "command_id": command_id, "error": "usage_route_missing_route_open_fixture"})
+            route_contract = row.get("route_contract")
+            if not isinstance(route_contract, dict):
+                failures.append({"path": row_path, "command_id": command_id, "error": "usage_route_missing_route_contract"})
+            else:
+                if route_contract.get("route_target_required") is not True:
+                    failures.append({"path": row_path, "command_id": command_id, "error": "usage_route_target_not_required"})
+                if route_contract.get("open_subject_required") is not True:
+                    failures.append({"path": row_path, "command_id": command_id, "error": "usage_route_open_subject_not_required"})
+                if route_contract.get("route_target_object_kind_when_usage_event_ref") != "usage_event":
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "command_id": command_id,
+                            "error": "usage_route_wrong_object_kind_for_usage_event_ref",
+                        }
+                    )
+                passthrough = route_contract.get("correlation_passthrough", [])
+                if not isinstance(passthrough, list):
+                    failures.append({"path": row_path, "command_id": command_id, "error": "usage_route_invalid_correlation_passthrough"})
+                    passthrough_set: set[str] = set()
+                else:
+                    passthrough_set = {str(item) for item in passthrough}
+                missing_passthrough = sorted(USAGE_ROUTE_PASSTHROUGH_FIELDS - passthrough_set)
+                for field in missing_passthrough:
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "command_id": command_id,
+                            "field": field,
+                            "error": "usage_route_missing_correlation_passthrough_field",
+                        }
+                    )
 
     missing_commands = sorted(
         command_id
@@ -2824,6 +2986,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
+        ("validate_usage_gui_fixtures", cmd_validate_usage_gui_fixtures, argparse.Namespace()),
         ("validate_gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
         ("validate_filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
@@ -2867,6 +3030,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("runtime_artifact_schemas", cmd_validate_runtime_artifact_schemas, argparse.Namespace()),
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
+        ("usage_gui_fixtures", cmd_validate_usage_gui_fixtures, argparse.Namespace()),
         ("gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
         ("filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
@@ -2899,6 +3063,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         runtime_artifact_schemas=compact_gate_report(check_map["runtime_artifact_schemas"]),
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
+        usage_gui_fixtures=compact_gate_report(check_map["usage_gui_fixtures"]),
         gui_asset_policy=compact_gate_report(check_map["gui_asset_policy"]),
         filesafe_security_policy=compact_gate_report(check_map["filesafe_security_policy"]),
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
@@ -2926,6 +3091,7 @@ COMMANDS = {
     "validate-runtime-artifact-schemas": cmd_validate_runtime_artifact_schemas,
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
+    "validate-usage-gui-fixtures": cmd_validate_usage_gui_fixtures,
     "validate-gui-asset-policy": cmd_validate_gui_asset_policy,
     "validate-filesafe-security-policy": cmd_validate_filesafe_security_policy,
     "validate-wiring-matrix": cmd_validate_wiring_matrix,
