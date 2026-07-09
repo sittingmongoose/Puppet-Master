@@ -290,7 +290,7 @@ OpenCode response parts map to Puppet Master normalized events:
 | `thinking` part (if present) | `thinking_delta` | Reasoning/thinking output |
 | Tool call in parts | `tool_use` | `tool_use_id` from part, `tool_name`, `arguments` |
 | Tool result in parts | `tool_result` | `tool_use_id`, `ok`, `result` |
-| Usage info in message | `usage` | `input_tokens`, `output_tokens` from message metadata |
+| Usage info in message | `usage` | Provider-native raw `input_tokens` / `output_tokens` metadata is compatibility mapper input only; before UsageRecord persistence, display, rollups, or accounting it normalizes to UF-085 `input_total` / `output_total` with source, settlement, cost, refs, and counting_semantics. |
 | Error in message | `error` | Map OpenCode error types to normalized categories |
 | Final message received | `done` | `status` = `success` or `failed` based on error presence |
 
@@ -1080,6 +1080,8 @@ preserved_exact_tokens:
   - "Connected in OpenCode"
   - "stale-state"
 negative_constraints: []
+compatibility_only_notes:
+  - "OpenCode message metadata names input_tokens and output_tokens are provider-native raw aliases only; active UsageRecord accounting normalizes them to UF-085 buckets before persistence, display, rollups, or accounting checks."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md"
 stale_retired_dispositions:

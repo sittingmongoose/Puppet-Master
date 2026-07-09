@@ -878,7 +878,13 @@
           "raw_payload_ref",
           "artifact_id",
           "run_id",
-          "thread_id"
+          "thread_id",
+          "source_class",
+          "source_confidence",
+          "source_authority",
+          "settlement_status",
+          "projection_freshness",
+          "projection_health"
         ]
       }
     },
@@ -959,7 +965,13 @@
           "raw_payload_ref",
           "artifact_id",
           "run_id",
-          "thread_id"
+          "thread_id",
+          "source_class",
+          "source_confidence",
+          "source_authority",
+          "settlement_status",
+          "projection_freshness",
+          "projection_health"
         ]
       }
     },
@@ -16454,7 +16466,13 @@
           "raw_payload_ref",
           "artifact_id",
           "run_id",
-          "thread_id"
+          "thread_id",
+          "source_class",
+          "source_confidence",
+          "source_authority",
+          "settlement_status",
+          "projection_freshness",
+          "projection_health"
         ]
       }
     },

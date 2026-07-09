@@ -13,12 +13,12 @@
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "debb26a46ab8b99845c7a579933dacfb9a275d0c43579b0efac4be82889d8fe3"
+      "sha256": "ef64a69415f0bea11569d932cccd11c54c9c1bf1f538a0c8330ac5c9bbac117c"
     },
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "7e909ea69aeac90b36795b9e9eb8df4abc32756951923001081943dba04f936b"
+      "sha256": "05c14cf736262b9c07ab1f23c048dc6740d14c1919e1788d86f7bb413b28abf0"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "09486b3c2cc714548fb695b3ce6adc63521c9f59fdb80393ece6dcce6be3d2d6"
+      "sha256": "4ddd47cfd7d5be2a9dc046459df3cf5f41f2c03e053c57ac40f574ff41aad1bb"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",

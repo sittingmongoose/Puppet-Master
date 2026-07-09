@@ -521,11 +521,41 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
     }
   ],
   "usage": {
+    "usage_record_id": "usr_media_req_20260301_a1b2c3d4",
+    "usage_event_ref": "usage_event://project/current/run/run_20260301/attempt/attempt_media_0001",
+    "source_class": "provider_reported",
+    "source_confidence": "estimated",
+    "source_authority": "provider_receipt",
+    "settlement_status": "observed",
+    "cost_status": "estimated",
     "cost_microdollars": 3000,
-    "cost_is_estimate": true,
-    "input_tokens": 42,
-    "output_tokens": 0,
-    "media_units": 1
+    "currency": "USD",
+    "token_buckets": {
+      "input_total": 42,
+      "input_non_cached": 42,
+      "cache_read": 0,
+      "cache_write": 0,
+      "cache_write_1h": 0,
+      "cache_write_ttl": null,
+      "output_total": 0,
+      "output_visible": 0,
+      "reasoning": 0,
+      "thoughts": 0,
+      "provider_total": 42,
+      "context_estimate": null
+    },
+    "counting_semantics": {
+      "input_total_includes_cache": true,
+      "output_total_includes_reasoning": true,
+      "provider_total_authority": "provider_reported"
+    },
+    "media_units": [
+      {
+        "unit_kind": "image_generation",
+        "quantity": 1,
+        "provider_unit_ref": "generated_image"
+      }
+    ]
   },
   "error": null
 }
@@ -542,19 +572,18 @@ Response fields:
   - `sha256` (string): hex-encoded SHA-256 of the artifact bytes.
   - `bytes` (integer): artifact file size in bytes.
   - `meta` (object): kind-specific metadata — `w`/`h` for images/video, `duration` for video/audio, `sample_rate` for audio, plus `model_used`, `seed`, `generation_time_ms`.
-- `usage` (object, required):
-  - `cost_microdollars` (`cost_microdollars: u64`): canonical persisted cost in microdollars (1 USD = 1,000,000 microdollars). This is the SSOT cost field per Architecture_Invariants.md INV-015.
-  - `cost_is_estimate` (`cost_is_estimate: bool`): `true` when the cost is a provider-reported estimate rather than an authoritative actual. Media generation costs are typically estimates.
-  - `input_tokens` (u64, optional): input token count if applicable.
-  - `output_tokens` (u64, optional): output token count if applicable.
-  - `media_units` (u64, optional): provider-specific media generation unit count.
+- `usage` (object, required when usage is available): canonical UsageRecord bridge data from `Plans/usage-feature.md` UF-085 rather than a media-local accounting schema. It carries `usage_record_id`, `usage_event_ref`, `source_class`, `source_confidence`, `source_authority`, `settlement_status`, `cost_status`, `cost_microdollars` or provider minor-unit cost fields, `currency`, `token_buckets`, `counting_semantics`, and `media_units`.
+  - `token_buckets` carries the canonical buckets `input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` or provider TTL-specific `cache_write_ttl`, `output_total`, `output_visible`, JSON-safe `reasoning` / `thoughts`, `provider_total`, and `context_estimate`, with unknown/not-exposed values represented explicitly instead of collapsed.
+  - `counting_semantics` states whether cache buckets are subsets of input totals, whether reasoning/thoughts are subsets of output totals, and whether `provider_total` is provider authoritative or derived; media rollups must not double-count inclusive provider totals.
+  - `media_units` is a media-specific quantity list such as generated image count, seconds of audio/video, frames, or provider media credits; it is not a token total, cost total, usage authority, or replacement for UF-085 buckets.
+  - Legacy import names such as `cost_is_estimate`, `input_tokens`, and `output_tokens` may appear only at provider/import boundaries or in source-lineage fixtures. They normalize to `cost_status`, `input_total`, `output_total`, canonical source/settlement fields, and UsageRecord identity before manifest persistence, GUI display, rollups, or accounting checks.
 - `error` (object | null): present on failure (see §2.6).
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md
 
 **Deterministic artifact layout:** Generated artifacts are written to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` (zero-padded index). A `manifest.json` is co-located alongside artifacts in the same directory, containing the full `artifacts[]` array plus `request_id` and generation metadata, enabling offline re-verification. No inline `data_uri` is returned.
 
-**Manifest contract and write ordering:** `manifest.json` MUST be a durable, self-sufficient index for the request directory and include at minimum: `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and `usage` (when available). Implementations MUST write artifact files first, compute hashes/bytes from the final bytes on disk, and only then write `manifest.json`. If the provider returns partial output and final artifact persistence fails, the call returns failure and MUST NOT leave a manifest claiming success for missing artifacts.
+**Manifest contract and write ordering:** `manifest.json` MUST be a durable, self-sufficient index for the request directory and include at minimum: `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and the canonical UsageRecord bridge `usage` (when available). Implementations MUST write artifact files first, compute hashes/bytes from the final bytes on disk, normalize any legacy provider usage aliases to UF-085 fields, and only then write `manifest.json`. If the provider returns partial output and final artifact persistence fails, the call returns failure and MUST NOT leave a manifest claiming success for missing artifacts.
 
 **Generation supersession record:** When remediation or graph generation supersedes a media attempt, the result carries old generation, new generation, invalidated path refs, new path refs, surviving `/rejoined` path refs, and resulting concern, `/promotion/recovery`, or recovery implications so overlays and blocked actions disclose the final state without diffing addenda.
 
@@ -2473,7 +2502,7 @@ plan_unit_id: MGAC-026
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Media_Generation_and_Capabilities.md
-canonical_text: Successful media.generate responses include success, request_id, kind, an engine route identity object with provider_entry_id, media_route_id, and generated_media_route_id when output is matched, artifacts, usage, and error fields with artifact metadata and canonical usage cost fields such as cost_microdollars and cost_is_estimate.
+canonical_text: Successful media.generate responses include success, request_id, kind, an engine route identity object with provider_entry_id, media_route_id, and generated_media_route_id when output is matched, artifacts, canonical UsageRecord bridge usage, and error fields with artifact metadata, usage_event_ref, UsageRecord identity, source_class/source_confidence/source_authority, settlement and cost status, UF-085 token buckets, counting_semantics, cost_microdollars or provider minor-unit costs, and media-specific media_units that are not token totals.
 gui_related: true
 gui_classification_reason: The unit defines user-visible media, capability picker, GUI copy, artifact display, or interaction behavior.
 split_recommended: true
@@ -2517,15 +2546,35 @@ preserved_exact_tokens:
 - seed
 - generation_time_ms
 - usage
+- usage_record_id
+- usage_event_ref
+- source_class
+- source_confidence
+- source_authority
+- settlement_status
+- cost_status
 - cost_microdollars
-- cost_is_estimate
-- input_tokens
-- output_tokens
+- input_total
+- input_non_cached
+- cache_read
+- cache_write
+- cache_write_1h
+- cache_write_ttl
+- output_total
+- output_visible
+- reasoning
+- thoughts
+- provider_total
+- context_estimate
+- counting_semantics
 - media_units
 negative_constraints:
 - Active response schemas MUST NOT constrain media route identity to a fixed `gemini_api`/`cursor_native` enum.
+- Active media response or manifest schemas MUST NOT preserve `cost_is_estimate`, `input_tokens`, or `output_tokens` as accounting/display authority after provider import mapping.
+- "`media_units` MUST remain media-specific quantity and must not be used as a token total or UsageRecord replacement."
 compatibility_only_notes:
 - The older `engine.backend` field name is source-lineage vocabulary only; active generated-media responses use the engine route identity object.
+- Older `cost_is_estimate`, `input_tokens`, and `output_tokens` names are compatibility/import aliases only and normalize to `cost_status`, `input_total`, `output_total`, canonical source/settlement fields, and UsageRecord identity before persistence, GUI display, rollups, or accounting checks.
 stale_retired_dispositions:
 - '`engine.backend`, `gemini_api`, and `cursor_native` are preserved only as stale/source-lineage terms from the older response schema and are not active route taxonomy.'
 owner_boundary_notes:
