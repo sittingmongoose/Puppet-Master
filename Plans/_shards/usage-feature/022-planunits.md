@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L927-L5009
+Source lines: L928-L5013
 
-Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d`
+Source SHA256: `0f850dcf9674989a11bc3adb101e6db90f01c07eceab680592d9fd9d9969142d`
 
 ---
 
@@ -1834,7 +1834,7 @@ plan_unit_id: UF-035
 unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
-canonical_text: UsageRecord schema expectations preserve unified schema aliases, usage_id, created_at_utc, account_id, provider_id, model_id, usage_source_kind, provider_runtime_usage, provider_quota_api, provider_usage_api, provider_error_hint, project_rollup, local-estimated, API-key-derived, and OAuth-quota-derived source detail.
+canonical_text: UsageRecord schema expectations preserve unified schema alias lineage such as usage_id, usage_source_kind, provider_runtime_usage, provider_quota_api, provider_usage_api, provider_error_hint, project_rollup, local-estimated, API-key-derived, and OAuth-quota-derived source detail, but those aliases normalize into usage_record_id, source_class, source_confidence, source_authority, provider/usage/quota projections, and UF-085 fields before persistence, aggregation, GUI projection, or route/open drill-through.
 gui_related: false
 gui_classification_reason: The unit preserves backend UsageRecord schema and attribution fields.
 split_recommended: false
@@ -1875,9 +1875,12 @@ preserved_exact_tokens:
 - local-estimated
 - API-key-derived
 - OAuth-quota-derived
-negative_constraints: []
+negative_constraints:
+- Do not present usage_id, usage_source_kind, provider_runtime_usage, provider_quota_api, provider_usage_api, or provider_error_hint as competing canonical UsageRecord fields.
 preserved_contractrefs: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- usage_id and usage_source_kind are legacy import/display aliases only and must not replace usage_record_id, source_class, source_confidence, or source_authority.
+- provider_runtime_usage, provider_quota_api, provider_usage_api, and provider_error_hint are source-lineage/provider projection hints, not competing canonical UsageRecord fields.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/usage-feature.md

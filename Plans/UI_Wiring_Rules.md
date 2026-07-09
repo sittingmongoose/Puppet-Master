@@ -33,7 +33,7 @@ Annotation and targeted-revision work is a cross-surface GUI feature, not just a
 
 Cross-surface wiring reviews for Debug Mode and similar features must verify command IDs, overlays, attachments, and route/open wiring against non-derived owner-doc clusters, including `/runtime/permissions/storage/browser/artifacts/tools/UI`, `/prompt/command`, and `/index/terminology`, while keeping product semantics in the owner docs rather than in wiring rows.
 
-Route-aware wiring verification extends the simple `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proof with optional metadata fields: `command_arg_contract_ref?`, `route_target_kind?`, `subject_kind?`, `deprecated_alias_for?`, `preconditions?`, `arg_passthrough_requirements?`, and `correlation_passthrough?`. These fields are verification hints only; `WiringEntry` consumes route/open semantics and cannot become the route owner.
+Route-aware wiring verification extends the simple `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proof with optional metadata fields: `command_arg_contract_ref?`, `route_target_kind?`, `subject_kind?`, `deprecated_alias_for?`, `preconditions?`, `arg_passthrough_requirements?`, `correlation_passthrough?`, and `route_contract?`. For Usage route/open rows, `route_contract` is a validation proof packet: it requires `route_target`, `OpenSubject`, `route_target.object_kind = usage_event` when `usage_event_ref` exists, and passthrough for UsageRecord/runtime/provider refs. These fields are verification hints only; `WiringEntry` consumes route/open semantics and cannot become the route owner.
 
 The wiring layer remains deliberately small: rows key off `ui_command_id`, handler location, expected events, and evidence, while gate logic understands command-normalization metadata and keeps `wiring-schema` expansion minimal instead of duplicating command-owner contracts.
 
@@ -220,7 +220,7 @@ plan_unit_id: UIW-005
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Wiring_Rules.md
-canonical_text: Route-aware and cross-surface wiring verification extends element-to-command proof with metadata such as command_arg_contract_ref, route_target_kind, subject_kind, deprecated_alias_for, preconditions, arg_passthrough_requirements, and correlation_passthrough, while keeping route, runtime, product semantics, and GUI layout in their owner docs.
+canonical_text: Route-aware and cross-surface wiring verification extends element-to-command proof with metadata such as command_arg_contract_ref, route_target_kind, subject_kind, deprecated_alias_for, preconditions, arg_passthrough_requirements, correlation_passthrough, and route_contract, while keeping route, runtime, product semantics, and GUI layout in their owner docs; Usage route/open rows use route_contract to prove route_target/OpenSubject and UsageRecord correlation passthrough.
 gui_related: true
 gui_classification_reason: The unit governs GUI wiring verification for routed controls, overlays, attachments, and cross-surface interactions.
 split_recommended: false
@@ -228,6 +228,7 @@ depends_on: [UIW-001, UIW-002]
 unblocks: [UIW-006, UIW-007]
 acceptance_criteria:
   - Wiring rows may carry route-aware metadata without becoming route owners.
+  - Usage route/open rows carry route_contract proof for route_target, OpenSubject, usage_event object identity, and UsageRecord correlation passthrough.
   - Concept artifacts are treated as evidence lineage, not live Plans owner paths.
   - Runtime action wiring normalizes stale graph recovery actions to canonical runtime command contracts.
 validation_surfaces:
@@ -241,7 +242,7 @@ implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans
 node_compile_hint: {mode: route_aware_wiring_metadata, create_worknodes: false}
 source_lineage:
   - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0003
-preserved_exact_tokens: ["Concepts/PuppetMasterDashComp.html", "/PuppetMasterDashComp.html", "Concepts/PMConcept.html", "/PMConcept.html", "command_arg_contract_ref", "route_target_kind", "subject_kind", "deprecated_alias_for", "preconditions", "arg_passthrough_requirements", "correlation_passthrough", "GATE-010", "cmd.runtime"]
+preserved_exact_tokens: ["Concepts/PuppetMasterDashComp.html", "/PuppetMasterDashComp.html", "Concepts/PMConcept.html", "/PMConcept.html", "command_arg_contract_ref", "route_target_kind", "subject_kind", "deprecated_alias_for", "preconditions", "arg_passthrough_requirements", "correlation_passthrough", "route_contract", "GATE-010", "cmd.runtime"]
 negative_constraints:
   - Concept artifacts MUST NOT be copied verbatim into canon or treated as live owner paths.
   - WiringEntry consumes route/open semantics and cannot become the route owner.

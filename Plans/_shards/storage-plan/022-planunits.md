@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2321-L14923
+Source lines: L2321-L14936
 
-Source SHA256: `20bffb5510832dc562b2fed9750937a6cca5876b413695c4132f187744d7fc02`
+Source SHA256: `ed9771ce83eeeaed6d52411bdc4339f4dd1ddf421c14c18bdc8be5a0c7d869f8`
 
 ---
 
@@ -8594,6 +8594,18 @@ preserved_exact_tokens:
 - cache_creation_input_tokens
 - reasoning_tokens
 - total_tokens
+- input_total
+- input_non_cached
+- cache_read
+- cache_write
+- cache_write_1h
+- cache_write_ttl
+- output_total
+- output_visible
+- reasoning/thoughts
+- provider_total
+- context_estimate
+- counting_semantics
 - cost_microdollars
 - provider_id
 - model_id
@@ -8606,6 +8618,7 @@ preserved_exact_tokens:
 - canonical per-request data remains usage.event
 negative_constraints:
 - run.completed optional usage snapshot does not replace canonical per-request usage.event data.
+- Legacy token names are compatibility import/export aliases and must not replace UF-085 usage fields in persisted storage, aggregation, or GUI projection.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []

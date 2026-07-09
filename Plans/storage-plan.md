@@ -1603,7 +1603,7 @@ For `chat.thread_worktree_pr_failed`, `phase` is the exact enum `push | api`: us
 - [ ] **Wire Usage/dashboard:** read 5h/7d and rollups from redb; trigger analytics scan on interval or when Usage view opens (per usage-feature.md).
 - [ ] **Emit usage.event with thread_id and parent lineage:** When recording usage for Assistant or Interview runs, include `thread_id`, `parent_run_id` when applicable, and the canonical attribution fields needed for per-thread and parent-rollup aggregation.
 - [ ] **Emit usage.event for hidden/background model work:** title generation, summaries, compaction helpers, tool-triggered model calls, and other helper invocations still write canonical `usage.event` records even when not directly user-visible.
-- [ ] **Emit run.completed with optional usage snapshot:** When a run finishes, include optional `usage` in the `run.completed` payload using the canonical usage field set (`input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, `reasoning_tokens`, `total_tokens`, `cost_microdollars`, `provider_id`, `model_id`, `account_id?`, `billing_entity_id?`, `entitlement_class?`, `thread_id`, `parent_run_id?`, `cache_hit?`, `cache_strategy?`). The storage type for canonical persisted cost is `cost_microdollars: u64`; canonical per-request data remains `usage.event`.
+- [ ] **Emit run.completed with optional usage snapshot:** When a run finishes, include optional `usage` in the `run.completed` payload using the canonical UF-085 usage field set (`input_total`, `input_non_cached`, `cache_read`, `cache_write`, `cache_write_1h` / `cache_write_ttl` where exposed, `output_total`, `output_visible`, `reasoning` / `thoughts`, `provider_total`, `context_estimate`, `counting_semantics`, `cost_microdollars`, `provider_id`, `model_id`, `account_id?`, `billing_entity_id?`, `entitlement_class?`, `source_class`, `source_confidence`, `source_authority`, `thread_id`, `parent_run_id?`, `cache_hit?`, `cache_strategy?`). Legacy `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, `reasoning_tokens`, and `total_tokens` are import/export aliases only. The storage type for canonical persisted cost is `cost_microdollars: u64`; canonical per-request data remains `usage.event`.
 
 ## 4. Impact on chat (Assistant / Interview)
 
@@ -10904,6 +10904,18 @@ preserved_exact_tokens:
 - cache_creation_input_tokens
 - reasoning_tokens
 - total_tokens
+- input_total
+- input_non_cached
+- cache_read
+- cache_write
+- cache_write_1h
+- cache_write_ttl
+- output_total
+- output_visible
+- reasoning/thoughts
+- provider_total
+- context_estimate
+- counting_semantics
 - cost_microdollars
 - provider_id
 - model_id
@@ -10916,6 +10928,7 @@ preserved_exact_tokens:
 - canonical per-request data remains usage.event
 negative_constraints:
 - run.completed optional usage snapshot does not replace canonical per-request usage.event data.
+- Legacy token names are compatibility import/export aliases and must not replace UF-085 usage fields in persisted storage, aggregation, or GUI projection.
 preserved_contractrefs: []
 compatibility_only_notes: []
 stale_retired_dispositions: []

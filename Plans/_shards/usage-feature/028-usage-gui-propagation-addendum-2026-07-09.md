@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L5411-L5598
+Source lines: L5415-L5603
 
-Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d`
+Source SHA256: `0f850dcf9674989a11bc3adb101e6db90f01c07eceab680592d9fd9d9969142d`
 
 ---
 
@@ -134,6 +134,7 @@ acceptance_criteria:
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
   - python3 scripts/pm-shard-plans.py --check
+  - python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures
   - python3 scripts/pm-plans-verify.py run-gates
   - future GUI Usage fixture suite
   - future runtime artifact JSON Schema negative fixture suite

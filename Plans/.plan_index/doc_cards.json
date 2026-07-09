@@ -343,7 +343,7 @@
       "implementation_surfaces": [
         "Plans/Architecture_Invariants.md"
       ],
-      "line_count": 4411,
+      "line_count": 4414,
       "path": "Plans/Architecture_Invariants.md",
       "plan_unit_count": 67,
       "plan_unit_ids": [
@@ -487,7 +487,7 @@
         "wiring_matrix_rule_two_coverage",
         "worktree_source_control_runtime_visibility"
       ],
-      "sha256": "3f3e3b9f42434b65cdfcdfd03597ce25926979886fe66d28c06cd0f8d23a3cc3",
+      "sha256": "6d940af76f0d50c6f92e8692ebc817938edcf6015f12a2072bc063517d7020f1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 67
@@ -2915,7 +2915,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 20217,
+      "line_count": 20238,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 316,
       "plan_unit_ids": [
@@ -3557,7 +3557,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "b92b70688010827e85ac852f0d1478d8d671338c8f364970e0601dbd77b96c21",
+      "sha256": "488d38eae813957cd89cf529244aa09ce7f7e05ad8aa1fbda47e07319d3cd205",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 316
@@ -6039,17 +6039,19 @@
       "all_planunits_have_gui_related": true,
       "gui_related_counts": {
         "False": 12,
-        "True": 18
+        "True": 19
       },
-      "heading_count": 52,
+      "heading_count": 53,
       "implementation_surfaces": [
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
-        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
       ],
-      "line_count": 1840,
+      "line_count": 1912,
       "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
-      "plan_unit_count": 30,
+      "plan_unit_count": 31,
       "plan_unit_ids": [
         "GRRC-002",
         "GRRC-003",
@@ -6080,30 +6082,42 @@
         "GRRC-028",
         "GRRC-029",
         "GRRC-001",
-        "GRRC-030"
+        "GRRC-030",
+        "GRRC-031"
       ],
       "reasoning_tiers": [
+        "high",
         "standard"
       ],
       "risk_classes": [
         "checklist_owner_drift",
         "gui_rebuild_checklist_drift",
+        "gui_usage_fixture_false_pass",
         "migration_lineage"
       ],
-      "sha256": "6f67f5aef3b9346f7b29df9e3addcdc5bf8b4dfa77b570489a327b463eb99858",
+      "sha256": "e90f9dc31975413434663b0ac37c13ac8056eb735a5745d65aa35686bac467c5",
       "source_preserving_unit_ids": [],
       "status_counts": {
-        "accepted": 30
+        "accepted": 31
       },
       "title": "GUI Rebuild Requirements Checklist (2026-02-23)",
       "unit_type_counts": {
         "compatibility_disposition": 1,
-        "requirement": 29
+        "requirement": 30
       },
       "validation_surfaces": [
+        "future Dashboard Usage widget fixture suite",
+        "future GUI Usage fixture suite",
+        "future chat Context Detail Pane usage fixture suite",
+        "future provider/model usage-state fixture suite",
         "manual checklist owner-reference review",
         "python3 scripts/pm-plan-index.py validate",
-        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+        "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+        "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
+        "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures",
+        "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "python3 scripts/pm-shard-plans.py --check"
       ]
     },
     {
@@ -6944,7 +6958,7 @@
         "future Teacher thread model chips",
         "future model route resolver"
       ],
-      "line_count": 9497,
+      "line_count": 9500,
       "path": "Plans/Models_System.md",
       "plan_unit_count": 136,
       "plan_unit_ids": [
@@ -7219,7 +7233,7 @@
         "web_operation_input_surface_mirror",
         "webresearch_tiering_automation_session_boundary"
       ],
-      "sha256": "87d9afd9ad3db1e329d9bef8c845f6d4f5794bfee9d843cd483c75c4099c857b",
+      "sha256": "b090e5c05e26340ac11f6a4cd5bc3f5c52506bfe61005111f6e564c087207ba1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 136
@@ -11593,7 +11607,7 @@
         "teacher_activity_trace_gap",
         "vision_artifact_lineage_loss"
       ],
-      "sha256": "490cbceee1d122f33dfe29a830ebdf41b579b3ed15a5ce3e7b6dcdf6bdd5b5f5",
+      "sha256": "6966f6f122a8c32dbebdf00ba927141f1c427e52cdf4898c5f0212d6704ee4cc",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 42,
@@ -12083,7 +12097,7 @@
         "future visualizer artifact records",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 16775,
+      "line_count": 16788,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 234,
       "plan_unit_ids": [
@@ -12351,7 +12365,7 @@
         "teach_memory_persistence_drift",
         "usage_projection_storage_alias_drift"
       ],
-      "sha256": "20bffb5510832dc562b2fed9750937a6cca5876b413695c4132f187744d7fc02",
+      "sha256": "ed9771ce83eeeaed6d52411bdc4339f4dd1ddf421c14c18bdc8be5a0c7d869f8",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 233,
@@ -12905,7 +12919,7 @@
         "usage_command_route_identity_drift",
         "vision_command_drift"
       ],
-      "sha256": "7e92233e3df5d901e274ea6227df325a9589f060edad32f0d31586d2d4b6736e",
+      "sha256": "1c1da8cf360d07c473487b951f5d82ccd007d2ca69e4f34494579a3496173cbe",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 108,
@@ -12957,7 +12971,7 @@
         "Plans/Wiring_Matrix.schema.json",
         "Plans/evidence.schema.json"
       ],
-      "line_count": 594,
+      "line_count": 595,
       "path": "Plans/UI_Wiring_Rules.md",
       "plan_unit_count": 9,
       "plan_unit_ids": [
@@ -12986,7 +13000,7 @@
         "ui_backend_bypass",
         "unwired_gui"
       ],
-      "sha256": "d1d6d0343f82e9cd9686268804603ddba875295ca1e70c2ca3ce4cc4126724c4",
+      "sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 9
@@ -13050,7 +13064,7 @@
         "Plans/usage-feature.md",
         "future usage events"
       ],
-      "line_count": 6163,
+      "line_count": 6169,
       "path": "Plans/usage-feature.md",
       "plan_unit_count": 88,
       "plan_unit_ids": [
@@ -13166,7 +13180,7 @@
         "usage_source_confidence_drift",
         "vision_usage_attribution_gap"
       ],
-      "sha256": "cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d",
+      "sha256": "0f850dcf9674989a11bc3adb101e6db90f01c07eceab680592d9fd9d9969142d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 88
@@ -13197,7 +13211,7 @@
         "Sudden token/cost jump pauses or confirms under policy.",
         "UI does not show zero cache as unsupported or vice versa.",
         "Usage attribution and budget receipt fixtures",
-        "Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason",
+        "Usage records expose cache_read/cache_write/cache_write_1h-or-cache_write_ttl/cache_reporting_state/cache_miss_reason and preserve cached_input_tokens only as source-lineage/import alias.",
         "User sees why cost was blocked/allowed.",
         "future GUI Usage fixture suite",
         "future GUI usage projection fixture suite",
@@ -13215,6 +13229,7 @@
         "python3 scripts/pm-plan-index.py validate",
         "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
         "python3 scripts/pm-plans-verify.py run-gates",
+        "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures",
         "python3 scripts/pm-shard-plans.py --check"
       ]
     },
@@ -13537,7 +13552,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-07-09T04:14:00Z",
+  "generated_at_utc": "2026-07-09T09:46:15Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
@@ -13546,12 +13561,12 @@
     "docs_without_plan_units": 0,
     "gui_related_counts": {
       "False": 3124,
-      "True": 2411
+      "True": 2412
     },
-    "plan_unit_count": 5535,
+    "plan_unit_count": 5536,
     "source_preserving_unit_count": 0,
     "status_counts": {
-      "accepted": 5357,
+      "accepted": 5358,
       "retired": 178
     },
     "unit_type_counts": {
@@ -13593,7 +13608,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4581,
+      "requirement": 4582,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

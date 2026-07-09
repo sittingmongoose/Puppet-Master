@@ -808,20 +808,20 @@
       "handler_location": "handlers::artifacts::show_in_ledger",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.artifacts.show_in_ledger must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.artifacts.show_in_ledger must be registered in the UICommand dispatcher with typed route_target and OpenSubject args/result contract",
         "cmd.artifacts.show_in_ledger must expose projected state selector and disabled reason before dispatch",
-        "cmd.artifacts.show_in_ledger dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.artifacts.show_in_ledger must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.artifacts.show_in_ledger must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.artifacts.show_in_ledger dispatch evidence must preserve command_id, origin, correlation_id, handler target, route target, result, and route/open receipt effect",
+        "cmd.artifacts.show_in_ledger must carry route_target.object_kind = usage_event and object_id derived from usage_event_ref when usage_event_ref is present",
+        "cmd.artifacts.show_in_ledger must pass through UsageRecord correlation fields without dropping usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, or thread_id"
       ],
-      "evidence_required": "Production wiring contract for cmd.artifacts.show_in_ledger; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production route/open wiring contract for cmd.artifacts.show_in_ledger; certification requires render/control evidence, dispatcher fixture, typed route_target/OpenSubject payload assertion, usage_event object-kind proof, correlation-passthrough proof, projected state selector, disabled-reason proof, route/open receipt assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.artifacts_show_in_ledger.availability",
       "disabled_reason_projection": "state.commands.artifacts_show_in_ledger.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.artifacts.show_in_ledger has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "route_open",
+        "description": "cmd.artifacts.show_in_ledger opens or focuses a Usage/Ledger subject through canonical route/open identity; when usage_event_ref is present, route_target.object_kind is usage_event and route_target.object_id is the canonical usage event id.",
         "receipt_or_event_refs": [
-          "cmd.artifacts.show_in_ledger.dispatch_receipt"
+          "cmd.artifacts.show_in_ledger.route_open_receipt"
         ]
       },
       "accessibility_contract": {
@@ -842,19 +842,45 @@
           "requirement": "Availability reads state.commands.artifacts_show_in_ledger.availability and disabled copy reads state.commands.artifacts_show_in_ledger.disabled_reason."
         },
         {
-          "test_id": "wiring.catalog.artifacts_show_in_ledger.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.artifacts.show_in_ledger has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
           "test_id": "wiring.catalog.artifacts_show_in_ledger.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_ledger.route_open",
+          "evidence_kind": "route_open_fixture",
+          "requirement": "Dispatching cmd.artifacts.show_in_ledger with usage_event_ref yields route_target.object_kind=usage_event, stable object_id, OpenSubject, and full UsageRecord/provider/runtime correlation passthrough."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_ledger.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.artifacts.show_in_ledger records route/open receipt cmd.artifacts.show_in_ledger.route_open_receipt and emits no fabricated domain event."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.artifacts.show_in_ledger records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+        "Assert cmd.artifacts.show_in_ledger records route/open receipt cmd.artifacts.show_in_ledger.route_open_receipt and preserves route_target/OpenSubject plus UsageRecord correlation fields.",
+        "Assert cmd.artifacts.show_in_ledger rejects or normalizes any usage_event_ref payload that lacks route_target.object_kind=usage_event and stable object_id."
+      ],
+      "route_contract": {
+        "route_target_required": true,
+        "open_subject_required": true,
+        "route_target_object_kind_when_usage_event_ref": "usage_event",
+        "correlation_passthrough": [
+          "usage_event_ref",
+          "usage_record_id",
+          "provider_attempt_ref",
+          "attempt_id",
+          "node_id",
+          "tool_call_id",
+          "trace_ref",
+          "receipt_ref",
+          "receipt_refs",
+          "raw_payload_ref",
+          "artifact_id",
+          "run_id",
+          "thread_id"
+        ]
+      }
     },
     "catalog.artifacts_show_in_usage": {
       "ui_element_id": "catalog.artifacts_show_in_usage",
@@ -863,20 +889,20 @@
       "handler_location": "handlers::artifacts::show_in_usage",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.artifacts.show_in_usage must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.artifacts.show_in_usage must be registered in the UICommand dispatcher with typed route_target and OpenSubject args/result contract",
         "cmd.artifacts.show_in_usage must expose projected state selector and disabled reason before dispatch",
-        "cmd.artifacts.show_in_usage dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.artifacts.show_in_usage must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.artifacts.show_in_usage must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.artifacts.show_in_usage dispatch evidence must preserve command_id, origin, correlation_id, handler target, route target, result, and route/open receipt effect",
+        "cmd.artifacts.show_in_usage must carry route_target.object_kind = usage_event and object_id derived from usage_event_ref when usage_event_ref is present",
+        "cmd.artifacts.show_in_usage must pass through UsageRecord correlation fields without dropping usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, or thread_id"
       ],
-      "evidence_required": "Production wiring contract for cmd.artifacts.show_in_usage; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production route/open wiring contract for cmd.artifacts.show_in_usage; certification requires render/control evidence, dispatcher fixture, typed route_target/OpenSubject payload assertion, usage_event object-kind proof, correlation-passthrough proof, projected state selector, disabled-reason proof, route/open receipt assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.artifacts_show_in_usage.availability",
       "disabled_reason_projection": "state.commands.artifacts_show_in_usage.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.artifacts.show_in_usage has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "route_open",
+        "description": "cmd.artifacts.show_in_usage opens or focuses a Usage/Ledger subject through canonical route/open identity; when usage_event_ref is present, route_target.object_kind is usage_event and route_target.object_id is the canonical usage event id.",
         "receipt_or_event_refs": [
-          "cmd.artifacts.show_in_usage.dispatch_receipt"
+          "cmd.artifacts.show_in_usage.route_open_receipt"
         ]
       },
       "accessibility_contract": {
@@ -897,19 +923,45 @@
           "requirement": "Availability reads state.commands.artifacts_show_in_usage.availability and disabled copy reads state.commands.artifacts_show_in_usage.disabled_reason."
         },
         {
-          "test_id": "wiring.catalog.artifacts_show_in_usage.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.artifacts.show_in_usage has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
           "test_id": "wiring.catalog.artifacts_show_in_usage.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_usage.route_open",
+          "evidence_kind": "route_open_fixture",
+          "requirement": "Dispatching cmd.artifacts.show_in_usage with usage_event_ref yields route_target.object_kind=usage_event, stable object_id, OpenSubject, and full UsageRecord/provider/runtime correlation passthrough."
+        },
+        {
+          "test_id": "wiring.catalog.artifacts_show_in_usage.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.artifacts.show_in_usage records route/open receipt cmd.artifacts.show_in_usage.route_open_receipt and emits no fabricated domain event."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.artifacts.show_in_usage records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+        "Assert cmd.artifacts.show_in_usage records route/open receipt cmd.artifacts.show_in_usage.route_open_receipt and preserves route_target/OpenSubject plus UsageRecord correlation fields.",
+        "Assert cmd.artifacts.show_in_usage rejects or normalizes any usage_event_ref payload that lacks route_target.object_kind=usage_event and stable object_id."
+      ],
+      "route_contract": {
+        "route_target_required": true,
+        "open_subject_required": true,
+        "route_target_object_kind_when_usage_event_ref": "usage_event",
+        "correlation_passthrough": [
+          "usage_event_ref",
+          "usage_record_id",
+          "provider_attempt_ref",
+          "attempt_id",
+          "node_id",
+          "tool_call_id",
+          "trace_ref",
+          "receipt_ref",
+          "receipt_refs",
+          "raw_payload_ref",
+          "artifact_id",
+          "run_id",
+          "thread_id"
+        ]
+      }
     },
     "catalog.browser_add_full_screenshot_to_chat": {
       "ui_element_id": "catalog.browser_add_full_screenshot_to_chat",
@@ -16332,20 +16384,20 @@
       "handler_location": "handlers::nav::open_usage_subject",
       "expected_event_types": [],
       "acceptance_checks": [
-        "cmd.nav.open_usage_subject must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.nav.open_usage_subject must be registered in the UICommand dispatcher with typed route_target and OpenSubject args/result contract",
         "cmd.nav.open_usage_subject must expose projected state selector and disabled reason before dispatch",
-        "cmd.nav.open_usage_subject dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.nav.open_usage_subject must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.nav.open_usage_subject must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.nav.open_usage_subject dispatch evidence must preserve command_id, origin, correlation_id, handler target, route target, result, and route/open receipt effect",
+        "cmd.nav.open_usage_subject must carry route_target.object_kind = usage_event and object_id derived from usage_event_ref when usage_event_ref is present",
+        "cmd.nav.open_usage_subject must pass through UsageRecord correlation fields without dropping usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, or thread_id"
       ],
-      "evidence_required": "Production wiring contract for cmd.nav.open_usage_subject; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "evidence_required": "Production route/open wiring contract for cmd.nav.open_usage_subject; certification requires render/control evidence, dispatcher fixture, typed route_target/OpenSubject payload assertion, usage_event object-kind proof, correlation-passthrough proof, projected state selector, disabled-reason proof, route/open receipt assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.nav_open_usage_subject.availability",
       "disabled_reason_projection": "state.commands.nav_open_usage_subject.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.nav.open_usage_subject has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "route_open",
+        "description": "cmd.nav.open_usage_subject opens or focuses a Usage/Ledger subject through canonical route/open identity; when usage_event_ref is present, route_target.object_kind is usage_event and route_target.object_id is the canonical usage event id.",
         "receipt_or_event_refs": [
-          "cmd.nav.open_usage_subject.dispatch_receipt"
+          "cmd.nav.open_usage_subject.route_open_receipt"
         ]
       },
       "accessibility_contract": {
@@ -16366,19 +16418,45 @@
           "requirement": "Availability reads state.commands.nav_open_usage_subject.availability and disabled copy reads state.commands.nav_open_usage_subject.disabled_reason."
         },
         {
-          "test_id": "wiring.catalog.nav_open_usage_subject.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.nav.open_usage_subject has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
           "test_id": "wiring.catalog.nav_open_usage_subject.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.nav_open_usage_subject.route_open",
+          "evidence_kind": "route_open_fixture",
+          "requirement": "Dispatching cmd.nav.open_usage_subject with usage_event_ref yields route_target.object_kind=usage_event, stable object_id, OpenSubject, and full UsageRecord/provider/runtime correlation passthrough."
+        },
+        {
+          "test_id": "wiring.catalog.nav_open_usage_subject.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.nav.open_usage_subject records route/open receipt cmd.nav.open_usage_subject.route_open_receipt and emits no fabricated domain event."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.nav.open_usage_subject records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
+        "Assert cmd.nav.open_usage_subject records route/open receipt cmd.nav.open_usage_subject.route_open_receipt and preserves route_target/OpenSubject plus UsageRecord correlation fields.",
+        "Assert cmd.nav.open_usage_subject rejects or normalizes any usage_event_ref payload that lacks route_target.object_kind=usage_event and stable object_id."
+      ],
+      "route_contract": {
+        "route_target_required": true,
+        "open_subject_required": true,
+        "route_target_object_kind_when_usage_event_ref": "usage_event",
+        "correlation_passthrough": [
+          "usage_event_ref",
+          "usage_record_id",
+          "provider_attempt_ref",
+          "attempt_id",
+          "node_id",
+          "tool_call_id",
+          "trace_ref",
+          "receipt_ref",
+          "receipt_refs",
+          "raw_payload_ref",
+          "artifact_id",
+          "run_id",
+          "thread_id"
+        ]
+      }
     },
     "catalog.notifications_destination_create": {
       "ui_element_id": "catalog.notifications_destination_create",

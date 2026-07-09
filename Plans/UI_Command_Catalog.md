@@ -1118,8 +1118,8 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 
 | Command ID | Payload | Behavior |
 |---|---|---|
-| `cmd.artifacts.show_in_usage` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Usage on the referenced artifact/usage subject using object-first route/open identity; `route_target.object_kind = usage_event` is required when `usage_event_ref` is available. |
-| `cmd.artifacts.show_in_ledger` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, ledger_ref?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Ledger on the referenced artifact, receipt, usage event, or run context using shared route/open identity. |
+| `cmd.artifacts.show_in_usage` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Usage on the referenced artifact/usage subject using object-first route/open identity; `route_target.object_kind = usage_event` is required when `usage_event_ref` is available. |
+| `cmd.artifacts.show_in_ledger` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, ledger_ref?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Ledger on the referenced artifact, receipt, usage event, or run context using shared route/open identity. |
 
 
 ### Search Command Catalog

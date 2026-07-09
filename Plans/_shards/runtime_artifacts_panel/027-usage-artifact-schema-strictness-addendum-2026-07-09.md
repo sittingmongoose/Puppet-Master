@@ -4,7 +4,7 @@ Source: `Plans/Runtime_Artifacts_Panel.md`
 
 Source lines: L1824-L1908
 
-Source SHA256: `490cbceee1d122f33dfe29a830ebdf41b579b3ed15a5ce3e7b6dcdf6bdd5b5f5`
+Source SHA256: `6966f6f122a8c32dbebdf00ba927141f1c427e52cdf4898c5f0212d6704ee4cc`
 
 ---
 
@@ -27,10 +27,10 @@ depends_on: [RAP-016, RAP-017, RAP-018, UF-085, CBP-027]
 unblocks: []
 acceptance_criteria:
   - "`Plans/runtime_artifact_cost_usage.schema.json` rejects an artifact whose `type_payload` lacks provider, usage, cost, quota, authority, refs, or flags."
-  - "`Plans/runtime_artifact_cost_usage.schema.json` requires `usage_event_ref` and nonnegative `reasoning_tokens`."
-  - "`Plans/runtime_artifact_tool_llm_trace.schema.json` rejects an artifact whose `type_payload` lacks `trace_ref`, trace lifecycle, provider attempt linkage, usage settlement linkage, retry/escalation relation, or raw-payload/redaction refs."
+  - "`Plans/runtime_artifact_cost_usage.schema.json` requires `usage_event_ref`, `usage_record_id`, and nonnegative `reasoning_tokens`."
+  - "`Plans/runtime_artifact_tool_llm_trace.schema.json` rejects an artifact whose `type_payload` lacks `trace_ref`, `usage_record_id`, trace lifecycle, provider attempt linkage, usage settlement linkage, retry/escalation relation, or raw-payload/redaction refs."
   - Schema-only validation can distinguish missing, unknown, disabled, estimated, provider-reported, CLI-reported, BYOK, and subscription-hidden states without accepting arbitrary payloads.
-  - Runtime Artifacts drill-through uses canonical `usage_event_ref`, `provider_attempt_ref`, and `trace_ref` rather than timestamp heuristics or artifact-local cost models.
+  - Runtime Artifacts drill-through uses canonical `usage_event_ref`, `usage_record_id`, `provider_attempt_ref`, and `trace_ref` rather than timestamp heuristics or artifact-local cost models.
   - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, production build tasks, generated governance artifacts, final manifests, or PNC-019 receipts are created by this PlanUnit.
 validation_surfaces:
   - python3 -m json.tool Plans/runtime_artifact_cost_usage.schema.json

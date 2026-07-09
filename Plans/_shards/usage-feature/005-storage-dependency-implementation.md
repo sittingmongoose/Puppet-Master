@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L35-L93
+Source lines: L35-L94
 
-Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d`
+Source SHA256: `0f850dcf9674989a11bc3adb101e6db90f01c07eceab680592d9fd9d9969142d`
 
 ---
 
@@ -67,3 +67,4 @@ Until this stack exists, any temporary compatibility path MUST still preserve th
 - `Provider_OpenCode.md`, `Provider_OpenCode`, `CLI_Bridged_Providers.md`, and `CLI_Bridged_Providers` must carry account identity and execution-scope attribution before Usage projections consume provider events, so account identity is not silently lost before rollups see the data.
 - `cmd.nav.open_usage_subject` resolves canonical Usage/Ledger identity from `usage_event_ref` or an equivalent usage target; domain-specific usage commands are wrappers over the shared route/subject model, not independent argument families.
 - `/multi-account` usage surfaces keep configurable thresholds, platform quota visibility, rate-limit/reset countdowns, project-scoped usage storage, dashboard widgets, runtime event persistence, and usage + ledger + analytics rollups in one Usage projection model.
+- `Concepts/pm6-build/**`, including PMConcept6 Usage page parts, internal contracts, manifest owners, embedded demo data, and working/assembled HTML, is illustrative source-lineage only. It does not define active Usage UX, UsageRecord fields, source classes, cost authority, provider quota truth, refresh/retention intervals, widget IDs, commands, runtime events, receipts, WorkNodes, NodeSeeds, queues, or wiring. Any promoted detail must be restated in live owner docs and, for controls/actions, production wiring evidence; otherwise Usage follows this document's normalized UsageRecord/value-state contracts and `Plans/FinalGUISpec.md` presentation constraints.

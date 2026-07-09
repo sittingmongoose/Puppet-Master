@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11836,
+    "depends_on_edge_count": 11847,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13901,
-    "node_count": 5535,
+    "edge_count": 13912,
+    "node_count": 5536,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 2065,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-07-09T04:14:00Z",
+  "generated_at_utc": "2026-07-09T09:46:15Z",
   "gui_related_units": {
-    "count": 2411,
+    "count": 2412,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3201,8 +3201,8 @@
         "source_location": {
           "heading": "AI-023 - Interactive Element Command Mapping",
           "heading_level": 3,
-          "heading_line": 1703,
-          "line": 1705,
+          "heading_line": 1706,
+          "line": 1708,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3212,8 +3212,8 @@
         "source_location": {
           "heading": "AI-026 - GATE 003 UI Invariant Checks",
           "heading_level": 3,
-          "heading_line": 1871,
-          "line": 1873,
+          "heading_line": 1874,
+          "line": 1876,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3223,8 +3223,8 @@
         "source_location": {
           "heading": "AI-027 - Debug Overlay Is Not Runtime Mode",
           "heading_level": 3,
-          "heading_line": 1929,
-          "line": 1931,
+          "heading_line": 1932,
+          "line": 1934,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3234,8 +3234,8 @@
         "source_location": {
           "heading": "AI-031 - Frozen Runtime State Summary Consumers",
           "heading_level": 3,
-          "heading_line": 2146,
-          "line": 2148,
+          "heading_line": 2149,
+          "line": 2151,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3245,8 +3245,8 @@
         "source_location": {
           "heading": "AI-034 - Route Consuming Command Wrappers",
           "heading_level": 3,
-          "heading_line": 2326,
-          "line": 2328,
+          "heading_line": 2329,
+          "line": 2331,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3256,8 +3256,8 @@
         "source_location": {
           "heading": "AI-035 - Graph Artifact Stale Consumer Reconciliation",
           "heading_level": 3,
-          "heading_line": 2382,
-          "line": 2384,
+          "heading_line": 2385,
+          "line": 2387,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3267,8 +3267,8 @@
         "source_location": {
           "heading": "AI-036 - Route Transport And Object Kind Identity",
           "heading_level": 3,
-          "heading_line": 2442,
-          "line": 2444,
+          "heading_line": 2445,
+          "line": 2447,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3278,8 +3278,8 @@
         "source_location": {
           "heading": "AI-038 - Worktree Source Control Runtime Visibility",
           "heading_level": 3,
-          "heading_line": 2558,
-          "line": 2560,
+          "heading_line": 2561,
+          "line": 2563,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3289,8 +3289,8 @@
         "source_location": {
           "heading": "AI-039 - Legacy Tier Event And Usage Evidence Demotion",
           "heading_level": 3,
-          "heading_line": 2617,
-          "line": 2619,
+          "heading_line": 2620,
+          "line": 2622,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3300,8 +3300,8 @@
         "source_location": {
           "heading": "AI-041 - Project Activation Import And Visible Ambiguity",
           "heading_level": 3,
-          "heading_line": 2741,
-          "line": 2743,
+          "heading_line": 2744,
+          "line": 2746,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3311,8 +3311,8 @@
         "source_location": {
           "heading": "AI-042 - Index Sync Degraded State And Shared Shell Workflow",
           "heading_level": 3,
-          "heading_line": 2800,
-          "line": 2802,
+          "heading_line": 2803,
+          "line": 2805,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3322,8 +3322,8 @@
         "source_location": {
           "heading": "AI-045 - Native Workbench Service Bound Evidence",
           "heading_level": 3,
-          "heading_line": 2984,
-          "line": 2986,
+          "heading_line": 2987,
+          "line": 2989,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3333,8 +3333,8 @@
         "source_location": {
           "heading": "AI-046 - UI Responsiveness And Background Service Projections",
           "heading_level": 3,
-          "heading_line": 3052,
-          "line": 3054,
+          "heading_line": 3055,
+          "line": 3057,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3344,8 +3344,8 @@
         "source_location": {
           "heading": "AI-047 - Platform Adapter Seam",
           "heading_level": 3,
-          "heading_line": 3117,
-          "line": 3119,
+          "heading_line": 3120,
+          "line": 3122,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3355,8 +3355,8 @@
         "source_location": {
           "heading": "AI-055 - Debug And Deep Plan Overlay Boundaries",
           "heading_level": 3,
-          "heading_line": 3632,
-          "line": 3634,
+          "heading_line": 3635,
+          "line": 3637,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3366,8 +3366,8 @@
         "source_location": {
           "heading": "AI-057 - Visible Browser Evidence Attachment",
           "heading_level": 3,
-          "heading_line": 3752,
-          "line": 3754,
+          "heading_line": 3755,
+          "line": 3757,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3377,8 +3377,8 @@
         "source_location": {
           "heading": "AI-061 - File Browser Recovery Consumer Routing",
           "heading_level": 3,
-          "heading_line": 3986,
-          "line": 3988,
+          "heading_line": 3989,
+          "line": 3991,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3388,8 +3388,8 @@
         "source_location": {
           "heading": "AI-062 - Firecrawl Billing And Audit UI Ownership",
           "heading_level": 3,
-          "heading_line": 4045,
-          "line": 4047,
+          "heading_line": 4048,
+          "line": 4050,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3399,8 +3399,8 @@
         "source_location": {
           "heading": "AI-064 - HITL And Widget Recovery Consumers",
           "heading_level": 3,
-          "heading_line": 4171,
-          "line": 4173,
+          "heading_line": 4174,
+          "line": 4176,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -3410,8 +3410,8 @@
         "source_location": {
           "heading": "AI-066 - Log Audit GUI Drift Blocking",
           "heading_level": 3,
-          "heading_line": 4286,
-          "line": 4288,
+          "heading_line": 4289,
+          "line": 4291,
           "path": "Plans/Architecture_Invariants.md"
         }
       },
@@ -5324,8 +5324,8 @@
         "source_location": {
           "heading": "CV-001 - Contracts V0 Explicit Residual Source-Token-Bank Disposition",
           "heading_level": 3,
-          "heading_line": 16708,
-          "line": 16710,
+          "heading_line": 16729,
+          "line": 16731,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5335,8 +5335,8 @@
         "source_location": {
           "heading": "CV-002 - Contracts V0 Cross-Cutting Contract SSOT",
           "heading_level": 3,
-          "heading_line": 2913,
-          "line": 2915,
+          "heading_line": 2918,
+          "line": 2920,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5346,8 +5346,8 @@
         "source_location": {
           "heading": "CV-015 - Requested Effective Identity Projection Display",
           "heading_level": 3,
-          "heading_line": 3584,
-          "line": 3586,
+          "heading_line": 3589,
+          "line": 3591,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5357,8 +5357,8 @@
         "source_location": {
           "heading": "CV-018 - Gemini Display And Provider Grouping Constraint",
           "heading_level": 3,
-          "heading_line": 3726,
-          "line": 3728,
+          "heading_line": 3731,
+          "line": 3733,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5368,8 +5368,8 @@
         "source_location": {
           "heading": "CV-020 - Provider Family Connection Profile Additive Fields",
           "heading_level": 3,
-          "heading_line": 3814,
-          "line": 3816,
+          "heading_line": 3819,
+          "line": 3821,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5379,8 +5379,8 @@
         "source_location": {
           "heading": "CV-021 - Selectable Unit Resolver Debug Boundary",
           "heading_level": 3,
-          "heading_line": 3861,
-          "line": 3863,
+          "heading_line": 3866,
+          "line": 3868,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5390,8 +5390,8 @@
         "source_location": {
           "heading": "CV-028 - Requested Effective Projection Visibility",
           "heading_level": 3,
-          "heading_line": 4192,
-          "line": 4194,
+          "heading_line": 4197,
+          "line": 4199,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5401,8 +5401,8 @@
         "source_location": {
           "heading": "CV-030 - Blocked GUI Action Projection Safety",
           "heading_level": 3,
-          "heading_line": 4291,
-          "line": 4293,
+          "heading_line": 4296,
+          "line": 4298,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5412,8 +5412,8 @@
         "source_location": {
           "heading": "CV-037 - Run Graph Projection And Inspector Contract",
           "heading_level": 3,
-          "heading_line": 4623,
-          "line": 4625,
+          "heading_line": 4628,
+          "line": 4630,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5423,8 +5423,8 @@
         "source_location": {
           "heading": "CV-041 - Command Route Shared Primitive Contract",
           "heading_level": 3,
-          "heading_line": 4819,
-          "line": 4821,
+          "heading_line": 4824,
+          "line": 4826,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5434,8 +5434,8 @@
         "source_location": {
           "heading": "CV-043 - Shared Concern Projection Family",
           "heading_level": 3,
-          "heading_line": 4917,
-          "line": 4919,
+          "heading_line": 4922,
+          "line": 4924,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5445,8 +5445,8 @@
         "source_location": {
           "heading": "CV-051 - Project Attention Route Payload",
           "heading_level": 3,
-          "heading_line": 5283,
-          "line": 5285,
+          "heading_line": 5288,
+          "line": 5290,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5456,8 +5456,8 @@
         "source_location": {
           "heading": "CV-058 - Inspector Target Closed Focus Enum",
           "heading_level": 3,
-          "heading_line": 5608,
-          "line": 5610,
+          "heading_line": 5613,
+          "line": 5615,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5467,8 +5467,8 @@
         "source_location": {
           "heading": "CV-073 - Durable Approver Identity Events",
           "heading_level": 3,
-          "heading_line": 6332,
-          "line": 6334,
+          "heading_line": 6337,
+          "line": 6339,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5478,8 +5478,8 @@
         "source_location": {
           "heading": "CV-074 - Lifecycle Reason Code Fields",
           "heading_level": 3,
-          "heading_line": 6381,
-          "line": 6383,
+          "heading_line": 6386,
+          "line": 6388,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5489,8 +5489,8 @@
         "source_location": {
           "heading": "CV-075 - Task Lifecycle Durability Over Projections",
           "heading_level": 3,
-          "heading_line": 6429,
-          "line": 6431,
+          "heading_line": 6434,
+          "line": 6436,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5500,8 +5500,8 @@
         "source_location": {
           "heading": "CV-077 - Bundle Annotation And Selection Handoff",
           "heading_level": 3,
-          "heading_line": 6528,
-          "line": 6530,
+          "heading_line": 6533,
+          "line": 6535,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5511,8 +5511,8 @@
         "source_location": {
           "heading": "CV-082 - Bundle Revision And Approval Event Minima",
           "heading_level": 3,
-          "heading_line": 6780,
-          "line": 6782,
+          "heading_line": 6785,
+          "line": 6787,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5522,8 +5522,8 @@
         "source_location": {
           "heading": "CV-089 - Provider Stream Persistence Boundary",
           "heading_level": 3,
-          "heading_line": 7130,
-          "line": 7132,
+          "heading_line": 7135,
+          "line": 7137,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5533,8 +5533,8 @@
         "source_location": {
           "heading": "CV-091 - Provider Consumer Normalization And Tool Access",
           "heading_level": 3,
-          "heading_line": 7228,
-          "line": 7230,
+          "heading_line": 7233,
+          "line": 7235,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5544,8 +5544,8 @@
         "source_location": {
           "heading": "CV-094 - Provider Support-State And Provenance Dispositions",
           "heading_level": 3,
-          "heading_line": 7378,
-          "line": 7380,
+          "heading_line": 7383,
+          "line": 7385,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5555,8 +5555,8 @@
         "source_location": {
           "heading": "CV-103 - Common Web Provenance Provider And Execution Path Fields",
           "heading_level": 3,
-          "heading_line": 7899,
-          "line": 7901,
+          "heading_line": 7904,
+          "line": 7906,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5566,8 +5566,8 @@
         "source_location": {
           "heading": "CV-105 - Web Input Quality And Provenance Badge Contract",
           "heading_level": 3,
-          "heading_line": 8007,
-          "line": 8009,
+          "heading_line": 8012,
+          "line": 8014,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5577,8 +5577,8 @@
         "source_location": {
           "heading": "CV-107 - Question Lifecycle Runtime UI State Mapping",
           "heading_level": 3,
-          "heading_line": 8105,
-          "line": 8107,
+          "heading_line": 8110,
+          "line": 8112,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5588,8 +5588,8 @@
         "source_location": {
           "heading": "CV-108 - Structured Question Responses And Option Wire Format",
           "heading_level": 3,
-          "heading_line": 8156,
-          "line": 8158,
+          "heading_line": 8161,
+          "line": 8163,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5599,8 +5599,8 @@
         "source_location": {
           "heading": "CV-113 - Provider Fallback Audit Disclosure",
           "heading_level": 3,
-          "heading_line": 8407,
-          "line": 8409,
+          "heading_line": 8412,
+          "line": 8414,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5610,8 +5610,8 @@
         "source_location": {
           "heading": "CV-117 - Chat Plan TODO Mutation Schema",
           "heading_level": 3,
-          "heading_line": 8609,
-          "line": 8611,
+          "heading_line": 8614,
+          "line": 8616,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5621,8 +5621,8 @@
         "source_location": {
           "heading": "CV-128 - Orthogonal Account State And UI Chip Derivation",
           "heading_level": 3,
-          "heading_line": 9179,
-          "line": 9181,
+          "heading_line": 9184,
+          "line": 9186,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5632,8 +5632,8 @@
         "source_location": {
           "heading": "CV-129 - Multi-Account Status Summary Projection",
           "heading_level": 3,
-          "heading_line": 9233,
-          "line": 9235,
+          "heading_line": 9238,
+          "line": 9240,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5643,8 +5643,8 @@
         "source_location": {
           "heading": "CV-132 - Product Auth Copy And Anthropic Helper Action",
           "heading_level": 3,
-          "heading_line": 9379,
-          "line": 9381,
+          "heading_line": 9384,
+          "line": 9386,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5654,8 +5654,8 @@
         "source_location": {
           "heading": "CV-138 - Setup Readiness Split And Auth-Surface Validation Branches",
           "heading_level": 3,
-          "heading_line": 9682,
-          "line": 9684,
+          "heading_line": 9687,
+          "line": 9689,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5665,8 +5665,8 @@
         "source_location": {
           "heading": "CV-140 - Usage Warning Quiet Window And Setup Action Labels",
           "heading_level": 3,
-          "heading_line": 9800,
-          "line": 9802,
+          "heading_line": 9805,
+          "line": 9807,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5676,8 +5676,8 @@
         "source_location": {
           "heading": "CV-144 - Model Lifecycle State And Sunset Dispatch Boundary",
           "heading_level": 3,
-          "heading_line": 9999,
-          "line": 10001,
+          "heading_line": 10004,
+          "line": 10006,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5687,8 +5687,8 @@
         "source_location": {
           "heading": "CV-156 - HITL Labels And Approval UI Actions",
           "heading_level": 3,
-          "heading_line": 10599,
-          "line": 10601,
+          "heading_line": 10604,
+          "line": 10606,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5698,8 +5698,8 @@
         "source_location": {
           "heading": "CV-159 - Assistant Worktree UICommand Registrations",
           "heading_level": 3,
-          "heading_line": 10742,
-          "line": 10744,
+          "heading_line": 10747,
+          "line": 10749,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5709,8 +5709,8 @@
         "source_location": {
           "heading": "CV-165 - Terminal And Dev Session Route Identity",
           "heading_level": 3,
-          "heading_line": 11050,
-          "line": 11052,
+          "heading_line": 11055,
+          "line": 11057,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5720,8 +5720,8 @@
         "source_location": {
           "heading": "CV-166 - Route Activation Scope And Shell-State Boundary",
           "heading_level": 3,
-          "heading_line": 11104,
-          "line": 11106,
+          "heading_line": 11109,
+          "line": 11111,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5731,8 +5731,8 @@
         "source_location": {
           "heading": "CV-167 - Inspector Target Refinement Boundary",
           "heading_level": 3,
-          "heading_line": 11157,
-          "line": 11159,
+          "heading_line": 11162,
+          "line": 11164,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5742,8 +5742,8 @@
         "source_location": {
           "heading": "CV-178 - Durable Panel Settings Ownership",
           "heading_level": 3,
-          "heading_line": 11709,
-          "line": 11711,
+          "heading_line": 11714,
+          "line": 11716,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5753,8 +5753,8 @@
         "source_location": {
           "heading": "CV-179 - Live Panel State Is Not Settings Canon",
           "heading_level": 3,
-          "heading_line": 11762,
-          "line": 11764,
+          "heading_line": 11767,
+          "line": 11769,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5764,8 +5764,8 @@
         "source_location": {
           "heading": "CV-180 - Account-Sensitive UI Cache Partitioning",
           "heading_level": 3,
-          "heading_line": 11807,
-          "line": 11809,
+          "heading_line": 11812,
+          "line": 11814,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5775,8 +5775,8 @@
         "source_location": {
           "heading": "CV-182 - Runtime Admin Capability Disclosure",
           "heading_level": 3,
-          "heading_line": 11905,
-          "line": 11907,
+          "heading_line": 11910,
+          "line": 11912,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5786,8 +5786,8 @@
         "source_location": {
           "heading": "CV-184 - Provider Recovery Labels And Entitlement Copy",
           "heading_level": 3,
-          "heading_line": 11999,
-          "line": 12001,
+          "heading_line": 12004,
+          "line": 12006,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5797,8 +5797,8 @@
         "source_location": {
           "heading": "CV-185 - Current Requested Effective Runtime Inspector Visibility",
           "heading_level": 3,
-          "heading_line": 12052,
-          "line": 12054,
+          "heading_line": 12057,
+          "line": 12059,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5808,8 +5808,8 @@
         "source_location": {
           "heading": "CV-187 - UI Scale Setting Field Contract",
           "heading_level": 3,
-          "heading_line": 12142,
-          "line": 12144,
+          "heading_line": 12147,
+          "line": 12149,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5819,8 +5819,8 @@
         "source_location": {
           "heading": "CV-188 - Slint Native Scale Mechanism And Iced Prohibition",
           "heading_level": 3,
-          "heading_line": 12192,
-          "line": 12194,
+          "heading_line": 12197,
+          "line": 12199,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5830,8 +5830,8 @@
         "source_location": {
           "heading": "CV-190 - Thread Usage Detail Surface Replacement",
           "heading_level": 3,
-          "heading_line": 12286,
-          "line": 12288,
+          "heading_line": 12291,
+          "line": 12293,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5841,8 +5841,8 @@
         "source_location": {
           "heading": "CV-191 - Compact Message Usage Row Schema",
           "heading_level": 3,
-          "heading_line": 12346,
-          "line": 12348,
+          "heading_line": 12351,
+          "line": 12353,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5852,8 +5852,8 @@
         "source_location": {
           "heading": "CV-192 - Context Detail Editor Tab Paths",
           "heading_level": 3,
-          "heading_line": 12399,
-          "line": 12401,
+          "heading_line": 12404,
+          "line": 12406,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5863,8 +5863,8 @@
         "source_location": {
           "heading": "CV-193 - Thread Estimated Cost Display",
           "heading_level": 3,
-          "heading_line": 12448,
-          "line": 12450,
+          "heading_line": 12453,
+          "line": 12455,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5874,8 +5874,8 @@
         "source_location": {
           "heading": "CV-202 - Gemini OAuth API-Key Auth Surface Boundary",
           "heading_level": 3,
-          "heading_line": 12884,
-          "line": 12886,
+          "heading_line": 12901,
+          "line": 12903,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5885,8 +5885,8 @@
         "source_location": {
           "heading": "CV-206 - Cost USD Presentation Precision",
           "heading_level": 3,
-          "heading_line": 13081,
-          "line": 13083,
+          "heading_line": 13098,
+          "line": 13100,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5896,8 +5896,8 @@
         "source_location": {
           "heading": "CV-214 - UI Readiness Projection Consumer Boundary",
           "heading_level": 3,
-          "heading_line": 13481,
-          "line": 13483,
+          "heading_line": 13502,
+          "line": 13504,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5907,8 +5907,8 @@
         "source_location": {
           "heading": "CV-225 - Safe Point Worktree Context Restoration",
           "heading_level": 3,
-          "heading_line": 13999,
-          "line": 14001,
+          "heading_line": 14020,
+          "line": 14022,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5918,8 +5918,8 @@
         "source_location": {
           "heading": "CV-235 - Canonical Event Projection Derivation",
           "heading_level": 3,
-          "heading_line": 14486,
-          "line": 14488,
+          "heading_line": 14507,
+          "line": 14509,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5929,8 +5929,8 @@
         "source_location": {
           "heading": "CV-236 - Safe-Point Recovery Boundary And Graph Lock",
           "heading_level": 3,
-          "heading_line": 14532,
-          "line": 14534,
+          "heading_line": 14553,
+          "line": 14555,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5940,8 +5940,8 @@
         "source_location": {
           "heading": "CV-252 - Wait State And No-Inference Constraints",
           "heading_level": 3,
-          "heading_line": 15337,
-          "line": 15339,
+          "heading_line": 15358,
+          "line": 15360,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5951,8 +5951,8 @@
         "source_location": {
           "heading": "CV-253 - Timestamp Provenance And Display Rules",
           "heading_level": 3,
-          "heading_line": 15389,
-          "line": 15391,
+          "heading_line": 15410,
+          "line": 15412,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5962,8 +5962,8 @@
         "source_location": {
           "heading": "CV-254 - Clock Skew And Scheduled Projection Rules",
           "heading_level": 3,
-          "heading_line": 15439,
-          "line": 15441,
+          "heading_line": 15460,
+          "line": 15462,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5973,8 +5973,8 @@
         "source_location": {
           "heading": "CV-260 - Child-To-Parent Signals And Legacy Labels",
           "heading_level": 3,
-          "heading_line": 15751,
-          "line": 15753,
+          "heading_line": 15772,
+          "line": 15774,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5984,8 +5984,8 @@
         "source_location": {
           "heading": "CV-261 - Child Projection Identity And Reversibility",
           "heading_level": 3,
-          "heading_line": 15809,
-          "line": 15811,
+          "heading_line": 15830,
+          "line": 15832,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -5995,8 +5995,8 @@
         "source_location": {
           "heading": "CV-290 - Planning Runtime Events, Packs, Records, And Exceptions",
           "heading_level": 3,
-          "heading_line": 17822,
-          "line": 17824,
+          "heading_line": 17843,
+          "line": 17845,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -6006,8 +6006,8 @@
         "source_location": {
           "heading": "CV-306 - P0-WEBSOCKET-SECURITY-BOUNDARIES",
           "heading_level": 3,
-          "heading_line": 19366,
-          "line": 19368,
+          "heading_line": 19387,
+          "line": 19389,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -6017,8 +6017,8 @@
         "source_location": {
           "heading": "CV-307 - P0-RUNTIME-SURFACE-READINESS-PROBE",
           "heading_level": 3,
-          "heading_line": 19441,
-          "line": 19443,
+          "heading_line": 19462,
+          "line": 19464,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -6028,8 +6028,8 @@
         "source_location": {
           "heading": "CV-308 - prompt_admission_execution",
           "heading_level": 3,
-          "heading_line": 19511,
-          "line": 19513,
+          "heading_line": 19532,
+          "line": 19534,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -6039,8 +6039,8 @@
         "source_location": {
           "heading": "CV-314 - FABLE Residual Contracts Feature Boundary",
           "heading_level": 3,
-          "heading_line": 19938,
-          "line": 19940,
+          "heading_line": 19959,
+          "line": 19961,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -6050,8 +6050,8 @@
         "source_location": {
           "heading": "CV-316 - GUI Usage Route Subject Payload Contract",
           "heading_level": 3,
-          "heading_line": 20160,
-          "line": 20162,
+          "heading_line": 20181,
+          "line": 20183,
           "path": "Plans/Contracts_V0.md"
         }
       },
@@ -13624,6 +13624,17 @@
         }
       },
       {
+        "owner_doc": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "plan_unit_id": "GRRC-031",
+        "source_location": {
+          "heading": "GRRC-031 - GUI Usage Acceptance Fixture Matrix Checklist Gate",
+          "heading_level": 3,
+          "heading_line": 1835,
+          "line": 1837,
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Goal_Runtime_System.md",
         "plan_unit_id": "GRS-003",
         "source_location": {
@@ -15906,8 +15917,8 @@
         "source_location": {
           "heading": "MS-029 - Context Breakdown Usage View",
           "heading_level": 3,
-          "heading_line": 2942,
-          "line": 2944,
+          "heading_line": 2945,
+          "line": 2947,
           "path": "Plans/Models_System.md"
         }
       },
@@ -15917,8 +15928,8 @@
         "source_location": {
           "heading": "MS-036 - Firecrawl Deployment Disclosure Boundary",
           "heading_level": 3,
-          "heading_line": 3330,
-          "line": 3332,
+          "heading_line": 3333,
+          "line": 3335,
           "path": "Plans/Models_System.md"
         }
       },
@@ -15928,8 +15939,8 @@
         "source_location": {
           "heading": "MS-047 - Disabled Variants Visibility",
           "heading_level": 3,
-          "heading_line": 3927,
-          "line": 3929,
+          "heading_line": 3930,
+          "line": 3932,
           "path": "Plans/Models_System.md"
         }
       },
@@ -15939,8 +15950,8 @@
         "source_location": {
           "heading": "MS-048 - Variant Cycling Surfaces",
           "heading_level": 3,
-          "heading_line": 3979,
-          "line": 3981,
+          "heading_line": 3982,
+          "line": 3984,
           "path": "Plans/Models_System.md"
         }
       },
@@ -15950,8 +15961,8 @@
         "source_location": {
           "heading": "MS-051 - Persona Variant Preselection",
           "heading_level": 3,
-          "heading_line": 4135,
-          "line": 4137,
+          "heading_line": 4138,
+          "line": 4140,
           "path": "Plans/Models_System.md"
         }
       },
@@ -15961,8 +15972,8 @@
         "source_location": {
           "heading": "MS-053 - Canonical Media Alias Registry",
           "heading_level": 3,
-          "heading_line": 4243,
-          "line": 4245,
+          "heading_line": 4246,
+          "line": 4248,
           "path": "Plans/Models_System.md"
         }
       },
@@ -15972,8 +15983,8 @@
         "source_location": {
           "heading": "MS-054 - GUI Model Label ID Separation",
           "heading_level": 3,
-          "heading_line": 4306,
-          "line": 4308,
+          "heading_line": 4309,
+          "line": 4311,
           "path": "Plans/Models_System.md"
         }
       },
@@ -15983,8 +15994,8 @@
         "source_location": {
           "heading": "MS-055 - Chat Model Picker Display Contract",
           "heading_level": 3,
-          "heading_line": 4358,
-          "line": 4360,
+          "heading_line": 4361,
+          "line": 4363,
           "path": "Plans/Models_System.md"
         }
       },
@@ -15994,8 +16005,8 @@
         "source_location": {
           "heading": "MS-057 - Settings Models Availability Display",
           "heading_level": 3,
-          "heading_line": 4465,
-          "line": 4467,
+          "heading_line": 4468,
+          "line": 4470,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16005,8 +16016,8 @@
         "source_location": {
           "heading": "MS-058 - Model Refresh And Threshold Actions",
           "heading_level": 3,
-          "heading_line": 4542,
-          "line": 4544,
+          "heading_line": 4545,
+          "line": 4547,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16016,8 +16027,8 @@
         "source_location": {
           "heading": "MS-060 - Effort GUI Requested Effective Disclosure",
           "heading_level": 3,
-          "heading_line": 4661,
-          "line": 4663,
+          "heading_line": 4664,
+          "line": 4666,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16027,8 +16038,8 @@
         "source_location": {
           "heading": "MS-062 - Detailed Inspector Runtime Identity",
           "heading_level": 3,
-          "heading_line": 4771,
-          "line": 4773,
+          "heading_line": 4774,
+          "line": 4776,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16038,8 +16049,8 @@
         "source_location": {
           "heading": "MS-066 - Puppet Master GUI Model Deltas",
           "heading_level": 3,
-          "heading_line": 4981,
-          "line": 4983,
+          "heading_line": 4984,
+          "line": 4986,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16049,8 +16060,8 @@
         "source_location": {
           "heading": "MS-070 - Acceptance Model Picker And Settings UI",
           "heading_level": 3,
-          "heading_line": 5205,
-          "line": 5207,
+          "heading_line": 5208,
+          "line": 5210,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16060,8 +16071,8 @@
         "source_location": {
           "heading": "MS-077 - Coding Plan Product Labels In Picker Recommendation Surfaces",
           "heading_level": 3,
-          "heading_line": 5606,
-          "line": 5608,
+          "heading_line": 5609,
+          "line": 5611,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16071,8 +16082,8 @@
         "source_location": {
           "heading": "MS-078 - Interview GUI UX Gemini Stage Default",
           "heading_level": 3,
-          "heading_line": 5661,
-          "line": 5663,
+          "heading_line": 5664,
+          "line": 5666,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16082,8 +16093,8 @@
         "source_location": {
           "heading": "MS-085 - Talkativeness Snapshot Bridge And GUI Gating Rule",
           "heading_level": 3,
-          "heading_line": 6130,
-          "line": 6132,
+          "heading_line": 6133,
+          "line": 6135,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16093,8 +16104,8 @@
         "source_location": {
           "heading": "MS-086 - Unsupported Persona Control Skip Disclosure",
           "heading_level": 3,
-          "heading_line": 6184,
-          "line": 6186,
+          "heading_line": 6187,
+          "line": 6189,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16104,8 +16115,8 @@
         "source_location": {
           "heading": "MS-087 - Persona Control GUI Support States",
           "heading_level": 3,
-          "heading_line": 6243,
-          "line": 6245,
+          "heading_line": 6246,
+          "line": 6248,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16115,8 +16126,8 @@
         "source_location": {
           "heading": "MS-088 - Runtime Surface Effective Choice Display",
           "heading_level": 3,
-          "heading_line": 6300,
-          "line": 6302,
+          "heading_line": 6303,
+          "line": 6305,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16126,8 +16137,8 @@
         "source_location": {
           "heading": "MS-090 - Effective Runtime Acceptance Criteria",
           "heading_level": 3,
-          "heading_line": 6415,
-          "line": 6417,
+          "heading_line": 6418,
+          "line": 6420,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16137,8 +16148,8 @@
         "source_location": {
           "heading": "MS-095 - UI Artifact Snapshot ID Consumption",
           "heading_level": 3,
-          "heading_line": 6697,
-          "line": 6699,
+          "heading_line": 6700,
+          "line": 6702,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16148,8 +16159,8 @@
         "source_location": {
           "heading": "MS-097 - Default Crew Runtime Settings And Copilot Normalization",
           "heading_level": 3,
-          "heading_line": 6806,
-          "line": 6808,
+          "heading_line": 6809,
+          "line": 6811,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16159,8 +16170,8 @@
         "source_location": {
           "heading": "MS-099 - Provider Model Selection Precedence Chain",
           "heading_level": 3,
-          "heading_line": 6928,
-          "line": 6930,
+          "heading_line": 6931,
+          "line": 6933,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16170,8 +16181,8 @@
         "source_location": {
           "heading": "MS-104 - Clamp Substitution Semantics And Partial Evidence Disclosure",
           "heading_level": 3,
-          "heading_line": 7221,
-          "line": 7223,
+          "heading_line": 7224,
+          "line": 7226,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16181,8 +16192,8 @@
         "source_location": {
           "heading": "MS-107 - Provider Model Precedence Owner Pointer Compile Addendum",
           "heading_level": 3,
-          "heading_line": 7477,
-          "line": 7479,
+          "heading_line": 7480,
+          "line": 7482,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16192,8 +16203,8 @@
         "source_location": {
           "heading": "MS-110 - Condensed Plans-To-Code Model Settings",
           "heading_level": 3,
-          "heading_line": 7662,
-          "line": 7664,
+          "heading_line": 7665,
+          "line": 7667,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16203,8 +16214,8 @@
         "source_location": {
           "heading": "MS-116 - Vision Bridge Requested Effective Route Resolution",
           "heading_level": 3,
-          "heading_line": 7855,
-          "line": 7857,
+          "heading_line": 7858,
+          "line": 7860,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16214,8 +16225,8 @@
         "source_location": {
           "heading": "MS-117 - Teach Teacher Low End Model Setting",
           "heading_level": 3,
-          "heading_line": 7946,
-          "line": 7948,
+          "heading_line": 7949,
+          "line": 7951,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16225,8 +16236,8 @@
         "source_location": {
           "heading": "MS-118 - Free Models Wrapper Catalog And Route Readiness Identity",
           "heading_level": 3,
-          "heading_line": 8096,
-          "line": 8098,
+          "heading_line": 8099,
+          "line": 8101,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16236,8 +16247,8 @@
         "source_location": {
           "heading": "MS-119 - Free Models Auto Apply Source Resolver And Runtime Adapter Boundary",
           "heading_level": 3,
-          "heading_line": 8159,
-          "line": 8161,
+          "heading_line": 8162,
+          "line": 8164,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16247,8 +16258,8 @@
         "source_location": {
           "heading": "MS-120 - Free Models Top-10 Precedence And Deterministic Fallback Eligibility",
           "heading_level": 3,
-          "heading_line": 8224,
-          "line": 8226,
+          "heading_line": 8227,
+          "line": 8229,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16258,8 +16269,8 @@
         "source_location": {
           "heading": "MS-121 - Free Models Availability Reason Model And Setup Eligibility",
           "heading_level": 3,
-          "heading_line": 8372,
-          "line": 8374,
+          "heading_line": 8375,
+          "line": 8377,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16269,8 +16280,8 @@
         "source_location": {
           "heading": "MS-122 - First-Run Paid Provider And Free Models Sequencing",
           "heading_level": 3,
-          "heading_line": 8288,
-          "line": 8290,
+          "heading_line": 8291,
+          "line": 8293,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16280,8 +16291,8 @@
         "source_location": {
           "heading": "MS-123 - P0-PROVIDER-METADATA-REPLAY",
           "heading_level": 3,
-          "heading_line": 8440,
-          "line": 8442,
+          "heading_line": 8443,
+          "line": 8445,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16291,8 +16302,8 @@
         "source_location": {
           "heading": "MS-125 - P0-REASONING-REPLAY-MATRIX",
           "heading_level": 3,
-          "heading_line": 8606,
-          "line": 8608,
+          "heading_line": 8609,
+          "line": 8611,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16302,8 +16313,8 @@
         "source_location": {
           "heading": "MS-126 - P0-EFFORT-POLICY-SETTLEMENT",
           "heading_level": 3,
-          "heading_line": 8685,
-          "line": 8687,
+          "heading_line": 8688,
+          "line": 8690,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16313,8 +16324,8 @@
         "source_location": {
           "heading": "MS-127 - P0-PROVIDER-CAPABILITY-EPOCH-2",
           "heading_level": 3,
-          "heading_line": 8772,
-          "line": 8774,
+          "heading_line": 8775,
+          "line": 8777,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16324,8 +16335,8 @@
         "source_location": {
           "heading": "MS-128 - P1-MODEL-SELECTION-ROUTER",
           "heading_level": 3,
-          "heading_line": 8858,
-          "line": 8860,
+          "heading_line": 8861,
+          "line": 8863,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16335,8 +16346,8 @@
         "source_location": {
           "heading": "MS-129 - P2-MODEL-CATALOG-CONFIDENCE-UI",
           "heading_level": 3,
-          "heading_line": 8939,
-          "line": 8941,
+          "heading_line": 8942,
+          "line": 8944,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16346,8 +16357,8 @@
         "source_location": {
           "heading": "MS-130 - P0-ENTITLEMENT-QUOTA-SETTLEMENT",
           "heading_level": 3,
-          "heading_line": 9018,
-          "line": 9020,
+          "heading_line": 9021,
+          "line": 9023,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16357,8 +16368,8 @@
         "source_location": {
           "heading": "MS-132 - provider_metadata_replay",
           "heading_level": 3,
-          "heading_line": 9161,
-          "line": 9163,
+          "heading_line": 9164,
+          "line": 9166,
           "path": "Plans/Models_System.md"
         }
       },
@@ -16368,8 +16379,8 @@
         "source_location": {
           "heading": "MS-136 - Model Capability Usage Signal Display Contract",
           "heading_level": 3,
-          "heading_line": 9440,
-          "line": 9442,
+          "heading_line": 9443,
+          "line": 9445,
           "path": "Plans/Models_System.md"
         }
       },
@@ -22242,8 +22253,8 @@
         "source_location": {
           "heading": "SP-001 - Storage Plan Generated Artifact Residual",
           "heading_level": 3,
-          "heading_line": 14869,
-          "line": 14871,
+          "heading_line": 14882,
+          "line": 14884,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22847,8 +22858,8 @@
         "source_location": {
           "heading": "SP-151 - Runtime Snapshot Alias Rejection And Surface Consumption Boundary",
           "heading_level": 3,
-          "heading_line": 11043,
-          "line": 11045,
+          "heading_line": 11056,
+          "line": 11058,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22858,8 +22869,8 @@
         "source_location": {
           "heading": "SP-152 - Web Runtime Identity And No-Silent-Cross-Fallback Disclosure",
           "heading_level": 3,
-          "heading_line": 11100,
-          "line": 11102,
+          "heading_line": 11113,
+          "line": 11115,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22869,8 +22880,8 @@
         "source_location": {
           "heading": "SP-154 - Question Card Composer Control Persistence Boundary",
           "heading_level": 3,
-          "heading_line": 11228,
-          "line": 11230,
+          "heading_line": 11241,
+          "line": 11243,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22880,8 +22891,8 @@
         "source_location": {
           "heading": "SP-155 - Plan Deep Plan Normalized TODO Projection Contract",
           "heading_level": 3,
-          "heading_line": 11288,
-          "line": 11290,
+          "heading_line": 11301,
+          "line": 11303,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22891,8 +22902,8 @@
         "source_location": {
           "heading": "SP-157 - TODO Panel Verification And Compact Progress Boundary",
           "heading_level": 3,
-          "heading_line": 11414,
-          "line": 11416,
+          "heading_line": 11427,
+          "line": 11429,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22902,8 +22913,8 @@
         "source_location": {
           "heading": "SP-158 - Durable TODO Mutation Event And Source-Of-Truth Boundary",
           "heading_level": 3,
-          "heading_line": 11473,
-          "line": 11475,
+          "heading_line": 11486,
+          "line": 11488,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22913,8 +22924,8 @@
         "source_location": {
           "heading": "SP-159 - Activity Transparency Bridge And Blocked Payload Owner",
           "heading_level": 3,
-          "heading_line": 11531,
-          "line": 11533,
+          "heading_line": 11544,
+          "line": 11546,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22924,8 +22935,8 @@
         "source_location": {
           "heading": "SP-160 - Long-Running Progress And Question TODO Carry-Through",
           "heading_level": 3,
-          "heading_line": 11589,
-          "line": 11591,
+          "heading_line": 11602,
+          "line": 11604,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22935,8 +22946,8 @@
         "source_location": {
           "heading": "SP-161 - Command HITL Terminal And Subagent Activity Snapshots",
           "heading_level": 3,
-          "heading_line": 11656,
-          "line": 11658,
+          "heading_line": 11669,
+          "line": 11671,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22946,8 +22957,8 @@
         "source_location": {
           "heading": "SP-163 - Web Operation Execution Path Fallback And Display Label Boundary",
           "heading_level": 3,
-          "heading_line": 11809,
-          "line": 11811,
+          "heading_line": 11822,
+          "line": 11824,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22957,8 +22968,8 @@
         "source_location": {
           "heading": "SP-166 - Inline Visualizer Source Metadata And Sandbox Bridge Storage",
           "heading_level": 3,
-          "heading_line": 11998,
-          "line": 12000,
+          "heading_line": 12011,
+          "line": 12013,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22968,8 +22979,8 @@
         "source_location": {
           "heading": "SP-167 - Inline Visualizer Replay Snapshot Fallback And Display State",
           "heading_level": 3,
-          "heading_line": 12067,
-          "line": 12069,
+          "heading_line": 12080,
+          "line": 12082,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22979,8 +22990,8 @@
         "source_location": {
           "heading": "SP-169 - Unsaved Editor Recovery Required Shared-Buffer Lifecycle",
           "heading_level": 3,
-          "heading_line": 12173,
-          "line": 12175,
+          "heading_line": 12186,
+          "line": 12188,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -22990,8 +23001,8 @@
         "source_location": {
           "heading": "SP-170 - Editor Recovery Key Snapshot Restore And Conflict Handling",
           "heading_level": 3,
-          "heading_line": 12237,
-          "line": 12239,
+          "heading_line": 12250,
+          "line": 12252,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23001,8 +23012,8 @@
         "source_location": {
           "heading": "SP-171 - Requested Effective Runtime Visibility Distinctions",
           "heading_level": 3,
-          "heading_line": 12293,
-          "line": 12295,
+          "heading_line": 12306,
+          "line": 12308,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23012,8 +23023,8 @@
         "source_location": {
           "heading": "SP-173 - Search And Source Control Projection Separation",
           "heading_level": 3,
-          "heading_line": 12400,
-          "line": 12402,
+          "heading_line": 12413,
+          "line": 12415,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23023,8 +23034,8 @@
         "source_location": {
           "heading": "SP-174 - Source Control Review And Conflict Projection State",
           "heading_level": 3,
-          "heading_line": 12467,
-          "line": 12469,
+          "heading_line": 12480,
+          "line": 12482,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23034,8 +23045,8 @@
         "source_location": {
           "heading": "SP-175 - GitHub Actions Receipt To Code Correlation Projection",
           "heading_level": 3,
-          "heading_line": 12538,
-          "line": 12540,
+          "heading_line": 12551,
+          "line": 12553,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23045,8 +23056,8 @@
         "source_location": {
           "heading": "SP-177 - LSP Protocol Trace Inspection Buffer Boundary",
           "heading_level": 3,
-          "heading_line": 12671,
-          "line": 12673,
+          "heading_line": 12684,
+          "line": 12686,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23056,8 +23067,8 @@
         "source_location": {
           "heading": "SP-180 - User-Visible Storage Error Lock And Boot Recovery",
           "heading_level": 3,
-          "heading_line": 12842,
-          "line": 12844,
+          "heading_line": 12855,
+          "line": 12857,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23067,8 +23078,8 @@
         "source_location": {
           "heading": "SP-185 - Analytics Chat Editor Usage Wiring Phase",
           "heading_level": 3,
-          "heading_line": 13165,
-          "line": 13167,
+          "heading_line": 13178,
+          "line": 13180,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23078,8 +23089,8 @@
         "source_location": {
           "heading": "SP-187 - Durable Store Startup Lock And Fallback Order",
           "heading_level": 3,
-          "heading_line": 13294,
-          "line": 13296,
+          "heading_line": 13307,
+          "line": 13309,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23089,8 +23100,8 @@
         "source_location": {
           "heading": "SP-188 - Regex Index Startup Recovery",
           "heading_level": 3,
-          "heading_line": 13361,
-          "line": 13363,
+          "heading_line": 13374,
+          "line": 13376,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23100,8 +23111,8 @@
         "source_location": {
           "heading": "SP-195 - End-To-End Chat Editor Usage Acceptance",
           "heading_level": 3,
-          "heading_line": 13787,
-          "line": 13789,
+          "heading_line": 13800,
+          "line": 13802,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23111,8 +23122,8 @@
         "source_location": {
           "heading": "SP-196 - Storage Plan Version History Preservation",
           "heading_level": 3,
-          "heading_line": 13836,
-          "line": 13838,
+          "heading_line": 13849,
+          "line": 13851,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23122,8 +23133,8 @@
         "source_location": {
           "heading": "SP-203 - Projection Freshness Health Fallback Surface",
           "heading_level": 3,
-          "heading_line": 14265,
-          "line": 14267,
+          "heading_line": 14278,
+          "line": 14280,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23133,8 +23144,8 @@
         "source_location": {
           "heading": "SP-209 - Web Cache Owner Contract And Core Routing",
           "heading_level": 3,
-          "heading_line": 14620,
-          "line": 14622,
+          "heading_line": 14633,
+          "line": 14635,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23144,8 +23155,8 @@
         "source_location": {
           "heading": "SP-211 - Web Cache Lookup Bypass Hit Rules",
           "heading_level": 3,
-          "heading_line": 14752,
-          "line": 14754,
+          "heading_line": 14765,
+          "line": 14767,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23155,8 +23166,8 @@
         "source_location": {
           "heading": "SP-217 - Discovery Index Persistence, Cache Identity, And History Boundaries",
           "heading_level": 3,
-          "heading_line": 15277,
-          "line": 15279,
+          "heading_line": 15290,
+          "line": 15292,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23166,8 +23177,8 @@
         "source_location": {
           "heading": "SP-227 - P0-HISTORY-STORAGE-CAPS",
           "heading_level": 3,
-          "heading_line": 16119,
-          "line": 16121,
+          "heading_line": 16132,
+          "line": 16134,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23177,8 +23188,8 @@
         "source_location": {
           "heading": "SP-228 - P1-RESOURCE-QUOTAS-INDEXERS-WATCHERS",
           "heading_level": 3,
-          "heading_line": 16199,
-          "line": 16201,
+          "heading_line": 16212,
+          "line": 16214,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -23188,8 +23199,8 @@
         "source_location": {
           "heading": "SP-229 - P0-SYSTEM-RESOURCE-GOVERNOR",
           "heading_level": 3,
-          "heading_line": 16280,
-          "line": 16282,
+          "heading_line": 16293,
+          "line": 16295,
           "path": "Plans/storage-plan.md"
         }
       },
@@ -25003,8 +25014,8 @@
         "source_location": {
           "heading": "UF-002 - Usage Feature Envelope",
           "heading_level": 3,
-          "heading_line": 929,
-          "line": 931,
+          "heading_line": 930,
+          "line": 932,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25014,8 +25025,8 @@
         "source_location": {
           "heading": "UF-003 - Rollup Backed Storage Dependency",
           "heading_level": 3,
-          "heading_line": 983,
-          "line": 985,
+          "heading_line": 984,
+          "line": 986,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25025,8 +25036,8 @@
         "source_location": {
           "heading": "UF-004 - Usage Storage Routing Identity",
           "heading_level": 3,
-          "heading_line": 1038,
-          "line": 1040,
+          "heading_line": 1039,
+          "line": 1041,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25036,8 +25047,8 @@
         "source_location": {
           "heading": "UF-005 - Usage Export Taxonomy",
           "heading_level": 3,
-          "heading_line": 1092,
-          "line": 1094,
+          "heading_line": 1093,
+          "line": 1095,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25047,8 +25058,8 @@
         "source_location": {
           "heading": "UF-006 - Projection Trust Blocking And Freshness",
           "heading_level": 3,
-          "heading_line": 1149,
-          "line": 1151,
+          "heading_line": 1150,
+          "line": 1152,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25058,8 +25069,8 @@
         "source_location": {
           "heading": "UF-008 - Widget Shell And Project Card Usage Consumers",
           "heading_level": 3,
-          "heading_line": 1264,
-          "line": 1266,
+          "heading_line": 1265,
+          "line": 1267,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25069,8 +25080,8 @@
         "source_location": {
           "heading": "UF-009 - Quota Visibility And Alerts",
           "heading_level": 3,
-          "heading_line": 1316,
-          "line": 1318,
+          "heading_line": 1317,
+          "line": 1319,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25080,8 +25091,8 @@
         "source_location": {
           "heading": "UF-010 - Ledger Analytics Reporting And Retention",
           "heading_level": 3,
-          "heading_line": 1370,
-          "line": 1372,
+          "heading_line": 1371,
+          "line": 1373,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25091,8 +25102,8 @@
         "source_location": {
           "heading": "UF-011 - Chat Context Circle Affordance",
           "heading_level": 3,
-          "heading_line": 1425,
-          "line": 1427,
+          "heading_line": 1426,
+          "line": 1428,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25102,8 +25113,8 @@
         "source_location": {
           "heading": "UF-012 - Context Detail Pane Inspection",
           "heading_level": 3,
-          "heading_line": 1486,
-          "line": 1488,
+          "heading_line": 1487,
+          "line": 1489,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25113,8 +25124,8 @@
         "source_location": {
           "heading": "UF-013 - Per Thread Estimated Cost Rule",
           "heading_level": 3,
-          "heading_line": 1543,
-          "line": 1545,
+          "heading_line": 1544,
+          "line": 1546,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25124,8 +25135,8 @@
         "source_location": {
           "heading": "UF-014 - Cursor Usage Account Augmentation",
           "heading_level": 3,
-          "heading_line": 1596,
-          "line": 1598,
+          "heading_line": 1597,
+          "line": 1599,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25135,8 +25146,8 @@
         "source_location": {
           "heading": "UF-015 - Codex Direct Provider Buckets",
           "heading_level": 3,
-          "heading_line": 1650,
-          "line": 1652,
+          "heading_line": 1651,
+          "line": 1653,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25146,8 +25157,8 @@
         "source_location": {
           "heading": "UF-017 - Copilot Status Disclosure",
           "heading_level": 3,
-          "heading_line": 1760,
-          "line": 1762,
+          "heading_line": 1761,
+          "line": 1763,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25157,8 +25168,8 @@
         "source_location": {
           "heading": "UF-020 - Gemini Direct Setup Usage",
           "heading_level": 3,
-          "heading_line": 1913,
-          "line": 1915,
+          "heading_line": 1914,
+          "line": 1916,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25168,8 +25179,8 @@
         "source_location": {
           "heading": "UF-022 - Active Provider Family Pooling Capability Posture",
           "heading_level": 3,
-          "heading_line": 2027,
-          "line": 2029,
+          "heading_line": 2028,
+          "line": 2030,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25179,8 +25190,8 @@
         "source_location": {
           "heading": "UF-023 - Provider Source Confidence Augmentation",
           "heading_level": 3,
-          "heading_line": 2090,
-          "line": 2092,
+          "heading_line": 2091,
+          "line": 2093,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25190,8 +25201,8 @@
         "source_location": {
           "heading": "UF-025 - Cost Usage Artifact Routing",
           "heading_level": 3,
-          "heading_line": 2198,
-          "line": 2200,
+          "heading_line": 2199,
+          "line": 2201,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25201,8 +25212,8 @@
         "source_location": {
           "heading": "UF-026 - OpenCode Product Pipeline Reference",
           "heading_level": 3,
-          "heading_line": 2253,
-          "line": 2255,
+          "heading_line": 2254,
+          "line": 2256,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25212,8 +25223,8 @@
         "source_location": {
           "heading": "UF-028 - Usage Linked Planning Widget Consumer Boundary",
           "heading_level": 3,
-          "heading_line": 2365,
-          "line": 2367,
+          "heading_line": 2366,
+          "line": 2368,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25223,8 +25234,8 @@
         "source_location": {
           "heading": "UF-029 - Canonical Usage Placement And Exclusions",
           "heading_level": 3,
-          "heading_line": 2417,
-          "line": 2419,
+          "heading_line": 2418,
+          "line": 2420,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25234,8 +25245,8 @@
         "source_location": {
           "heading": "UF-033 - Artifact Bridge And Inspector Routing",
           "heading_level": 3,
-          "heading_line": 2632,
-          "line": 2634,
+          "heading_line": 2633,
+          "line": 2635,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25245,8 +25256,8 @@
         "source_location": {
           "heading": "UF-034 - Notification Projection Health Gating",
           "heading_level": 3,
-          "heading_line": 2690,
-          "line": 2692,
+          "heading_line": 2691,
+          "line": 2693,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25256,8 +25267,8 @@
         "source_location": {
           "heading": "UF-036 - Cost Precision Display Boundary",
           "heading_level": 3,
-          "heading_line": 2802,
-          "line": 2804,
+          "heading_line": 2806,
+          "line": 2808,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25267,8 +25278,8 @@
         "source_location": {
           "heading": "UF-037 - Blocked Escalation Observability",
           "heading_level": 3,
-          "heading_line": 2854,
-          "line": 2856,
+          "heading_line": 2858,
+          "line": 2860,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25278,8 +25289,8 @@
         "source_location": {
           "heading": "UF-038 - Usage Secrets Fallback Source Labeling",
           "heading_level": 3,
-          "heading_line": 2913,
-          "line": 2915,
+          "heading_line": 2917,
+          "line": 2919,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25289,8 +25300,8 @@
         "source_location": {
           "heading": "UF-040 - Canonical UsageRecord Write Path",
           "heading_level": 3,
-          "heading_line": 3014,
-          "line": 3016,
+          "heading_line": 3018,
+          "line": 3020,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25300,8 +25311,8 @@
         "source_location": {
           "heading": "UF-041 - Usage Window Model And Platform Semantics",
           "heading_level": 3,
-          "heading_line": 3067,
-          "line": 3069,
+          "heading_line": 3071,
+          "line": 3073,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25311,8 +25322,8 @@
         "source_location": {
           "heading": "UF-042 - Seglog Retention Rollup Freshness",
           "heading_level": 3,
-          "heading_line": 3124,
-          "line": 3126,
+          "heading_line": 3128,
+          "line": 3130,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25322,8 +25333,8 @@
         "source_location": {
           "heading": "UF-043 - Stale Data And Project Scope Disclosure",
           "heading_level": 3,
-          "heading_line": 3178,
-          "line": 3180,
+          "heading_line": 3182,
+          "line": 3184,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25333,8 +25344,8 @@
         "source_location": {
           "heading": "UF-045 - Deferred Reset Countdown",
           "heading_level": 3,
-          "heading_line": 3282,
-          "line": 3284,
+          "heading_line": 3286,
+          "line": 3288,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25344,8 +25355,8 @@
         "source_location": {
           "heading": "UF-047 - Deferred Usage Page Export",
           "heading_level": 3,
-          "heading_line": 3381,
-          "line": 3383,
+          "heading_line": 3385,
+          "line": 3387,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25355,8 +25366,8 @@
         "source_location": {
           "heading": "UF-048 - Deferred Compact Header Usage",
           "heading_level": 3,
-          "heading_line": 3430,
-          "line": 3432,
+          "heading_line": 3434,
+          "line": 3436,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25366,8 +25377,8 @@
         "source_location": {
           "heading": "UF-049 - Deferred Doctor Usage Integration",
           "heading_level": 3,
-          "heading_line": 3479,
-          "line": 3481,
+          "heading_line": 3483,
+          "line": 3485,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25377,8 +25388,8 @@
         "source_location": {
           "heading": "UF-054 - Usage Success Criteria",
           "heading_level": 3,
-          "heading_line": 3725,
-          "line": 3727,
+          "heading_line": 3729,
+          "line": 3731,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25388,8 +25399,8 @@
         "source_location": {
           "heading": "UF-055 - Widget Composed Usage Page Scope",
           "heading_level": 3,
-          "heading_line": 3776,
-          "line": 3778,
+          "heading_line": 3780,
+          "line": 3782,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25399,8 +25410,8 @@
         "source_location": {
           "heading": "UF-056 - Default Usage Layout Non Empty Seed",
           "heading_level": 3,
-          "heading_line": 3832,
-          "line": 3834,
+          "heading_line": 3836,
+          "line": 3838,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25410,8 +25421,8 @@
         "source_location": {
           "heading": "UF-058 - Default Usage Widget Layout Table",
           "heading_level": 3,
-          "heading_line": 3933,
-          "line": 3935,
+          "heading_line": 3937,
+          "line": 3939,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25421,8 +25432,8 @@
         "source_location": {
           "heading": "UF-059 - Usage Widget Responsive Grid Resizing",
           "heading_level": 3,
-          "heading_line": 3998,
-          "line": 4000,
+          "heading_line": 4002,
+          "line": 4004,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25432,8 +25443,8 @@
         "source_location": {
           "heading": "UF-060 - Usage Widget Configuration And Persistence",
           "heading_level": 3,
-          "heading_line": 4052,
-          "line": 4054,
+          "heading_line": 4056,
+          "line": 4058,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25443,8 +25454,8 @@
         "source_location": {
           "heading": "UF-061 - Multi Account Widget Observability Boundary",
           "heading_level": 3,
-          "heading_line": 4108,
-          "line": 4110,
+          "heading_line": 4112,
+          "line": 4114,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25454,8 +25465,8 @@
         "source_location": {
           "heading": "UF-062 - Dashboard Add Widget Reuse For Usage Widgets",
           "heading_level": 3,
-          "heading_line": 4174,
-          "line": 4176,
+          "heading_line": 4178,
+          "line": 4180,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25465,8 +25476,8 @@
         "source_location": {
           "heading": "UF-064 - Cross Surface Cost Routing And View Ban",
           "heading_level": 3,
-          "heading_line": 4289,
-          "line": 4291,
+          "heading_line": 4293,
+          "line": 4295,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25476,8 +25487,8 @@
         "source_location": {
           "heading": "UF-065 - Reversibility Undo And High Cost Disclosure",
           "heading_level": 3,
-          "heading_line": 4349,
-          "line": 4351,
+          "heading_line": 4353,
+          "line": 4355,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25487,8 +25498,8 @@
         "source_location": {
           "heading": "UF-069 - Subject Routing And Inspector History Focus",
           "heading_level": 3,
-          "heading_line": 4597,
-          "line": 4599,
+          "heading_line": 4601,
+          "line": 4603,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25498,8 +25509,8 @@
         "source_location": {
           "heading": "UF-070 - Export Labels And View Export Boundary",
           "heading_level": 3,
-          "heading_line": 4656,
-          "line": 4658,
+          "heading_line": 4660,
+          "line": 4662,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25509,8 +25520,8 @@
         "source_location": {
           "heading": "UF-071 - Source Control Views And History Dimensions",
           "heading_level": 3,
-          "heading_line": 4713,
-          "line": 4715,
+          "heading_line": 4717,
+          "line": 4719,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25520,8 +25531,8 @@
         "source_location": {
           "heading": "UF-072 - Effective Resolution Display Boundary",
           "heading_level": 3,
-          "heading_line": 4776,
-          "line": 4778,
+          "heading_line": 4780,
+          "line": 4782,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25531,8 +25542,8 @@
         "source_location": {
           "heading": "UF-074 - Provider Usage Source Confidence And Missing-Vs-Zero Contract",
           "heading_level": 3,
-          "heading_line": 5027,
-          "line": 5029,
+          "heading_line": 5031,
+          "line": 5033,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25542,8 +25553,8 @@
         "source_location": {
           "heading": "UF-075 - Provider Plan Gating And Quota Pressure Presentation",
           "heading_level": 3,
-          "heading_line": 5070,
-          "line": 5072,
+          "heading_line": 5074,
+          "line": 5076,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25553,8 +25564,8 @@
         "source_location": {
           "heading": "UF-077 - Free Models Paid Costed Fallback Gates And Budget Evidence",
           "heading_level": 3,
-          "heading_line": 5212,
-          "line": 5214,
+          "heading_line": 5216,
+          "line": 5218,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25564,8 +25575,8 @@
         "source_location": {
           "heading": "UF-078 - Free Models Fallback Receipts And Immutable Request Provenance",
           "heading_level": 3,
-          "heading_line": 5267,
-          "line": 5269,
+          "heading_line": 5271,
+          "line": 5273,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25575,8 +25586,8 @@
         "source_location": {
           "heading": "UF-079 - P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE",
           "heading_level": 3,
-          "heading_line": 5330,
-          "line": 5332,
+          "heading_line": 5334,
+          "line": 5336,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25586,8 +25597,8 @@
         "source_location": {
           "heading": "UF-080 - P0-CACHE-USAGE-ENVELOPE",
           "heading_level": 3,
-          "heading_line": 5807,
-          "line": 5809,
+          "heading_line": 5812,
+          "line": 5814,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25597,8 +25608,8 @@
         "source_location": {
           "heading": "UF-081 - P2-CACHE-OBSERVABILITY-DASHBOARD",
           "heading_level": 3,
-          "heading_line": 5871,
-          "line": 5873,
+          "heading_line": 5877,
+          "line": 5879,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25608,8 +25619,8 @@
         "source_location": {
           "heading": "UF-085 - Implementation Ready Usage Accounting Contract",
           "heading_level": 3,
-          "heading_line": 5604,
-          "line": 5606,
+          "heading_line": 5609,
+          "line": 5611,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25619,8 +25630,8 @@
         "source_location": {
           "heading": "UF-087 - UsageRecord GUI Projection And Alias Contract",
           "heading_level": 3,
-          "heading_line": 5415,
-          "line": 5417,
+          "heading_line": 5419,
+          "line": 5421,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25630,8 +25641,8 @@
         "source_location": {
           "heading": "UF-088 - GUI Usage Acceptance Fixture Matrix",
           "heading_level": 3,
-          "heading_line": 5507,
-          "line": 5509,
+          "heading_line": 5511,
+          "line": 5513,
           "path": "Plans/usage-feature.md"
         }
       },
@@ -25696,8 +25707,8 @@
         "source_location": {
           "heading": "UIW-006 - Wiring Matrix Artifact Contract",
           "heading_level": 3,
-          "heading_line": 253,
-          "line": 255,
+          "heading_line": 254,
+          "line": 256,
           "path": "Plans/UI_Wiring_Rules.md"
         }
       },
@@ -25707,8 +25718,8 @@
         "source_location": {
           "heading": "UIW-007 - Autonomous Verification Strategy",
           "heading_level": 3,
-          "heading_line": 290,
-          "line": 292,
+          "heading_line": 291,
+          "line": 293,
           "path": "Plans/UI_Wiring_Rules.md"
         }
       },
@@ -25718,8 +25729,8 @@
         "source_location": {
           "heading": "UIW-008 - Reference Boundary Preservation",
           "heading_level": 3,
-          "heading_line": 326,
-          "line": 328,
+          "heading_line": 327,
+          "line": 329,
           "path": "Plans/UI_Wiring_Rules.md"
         }
       },
@@ -25729,8 +25740,8 @@
         "source_location": {
           "heading": "UIW-009 - Approve And Build Disabled Reason Projection",
           "heading_level": 3,
-          "heading_line": 358,
-          "line": 360,
+          "heading_line": 359,
+          "line": 361,
           "path": "Plans/UI_Wiring_Rules.md"
         }
       },
@@ -26545,10 +26556,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 5535,
+  "plan_unit_count": 5536,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 1207,
+      "high": 1208,
       "low": 5,
       "standard": 4323
     },
@@ -27692,6 +27703,7 @@
       "gui_tool_catalog_capability_flags": 1,
       "gui_tool_catalog_ssot": 1,
       "gui_usage_acceptance_false_pass": 1,
+      "gui_usage_fixture_false_pass": 1,
       "gui_usage_state_false_zero": 1,
       "gui_widget_catalog_dry_tagging": 1,
       "gui_wiring_matrix_enforcement": 1,
@@ -29500,7 +29512,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 5357,
+      "accepted": 5358,
       "retired": 178
     },
     "unit_type_counts": {
@@ -29542,7 +29554,7 @@
       "provider_taxonomy": 1,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 4581,
+      "requirement": 4582,
       "risk": 2,
       "runtime_contract": 22,
       "runtime_disclosure": 2,

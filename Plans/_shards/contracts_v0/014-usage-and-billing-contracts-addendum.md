@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2113-L2224
+Source lines: L2113-L2229
 
-Source SHA256: `b92b70688010827e85ac852f0d1478d8d671338c8f364970e0601dbd77b96c21`
+Source SHA256: `488d38eae813957cd89cf529244aa09ce7f7e05ad8aa1fbda47e07319d3cd205`
 
 ---
 
@@ -32,20 +32,25 @@ Implementation readiness pins canonical schema and `/field` names only when they
 ### Token bucket contract
 
 
-The canonical token fields are:
-- `input_tokens`
-- `output_tokens`
-- `cache_read_input_tokens`
-- `cache_creation_input_tokens`
-- `reasoning_tokens`
+The canonical UsageRecord token buckets are:
+- `input_total`
+- `input_non_cached`
+- `cache_read`
+- `cache_write`
+- `cache_write_1h` and provider TTL-specific `cache_write_ttl` when exposed
+- `output_total`
+- `output_visible`
+- `reasoning` / `thoughts`
+- `provider_total`
+- `context_estimate`
 
-Provider-specific token counting flows through a token-counting abstraction before these buckets are persisted. Usage events and run-completion snapshots preserve `token_counting_adapter_id`, `token_counting_basis`, and optional provider raw-count metadata when provider semantics differ; raw counts explain the canonical buckets but do not replace them.
+Provider-specific token counting flows through a token-counting abstraction before these buckets are persisted. Usage events and run-completion snapshots preserve `token_counting_adapter_id`, `token_counting_basis`, `counting_semantics`, and optional provider raw-count metadata when provider semantics differ; raw counts explain the canonical buckets but do not replace them. Legacy fields such as `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, `cache_read_tokens`, and `reasoning_tokens` are compatibility import/export aliases only and normalize into the UF-085 buckets before persistence, aggregation, spending-limit checks, GUI projection, or route/open drill-through.
 
-These fields are individually persisted. Storage-layer aggregation or collapse into a smaller field set is prohibited. The product LESSON from provider cost failures is that every LLM call, including title generation, summaries, hidden helper passes, subagents, and other background ops, emits usage with separated input, output, cache_read, cache_write, and reasoning buckets. Client-side spending limit enforcement reads the canonical usage stream rather than an optional display rollup.
+These UF-085 buckets are individually persisted or explicitly represented as unknown/not_exposed when a provider does not expose them. Storage-layer aggregation or collapse into a smaller field set is prohibited. The product LESSON from provider cost failures is that every LLM call, including title generation, summaries, hidden helper passes, subagents, and other background ops, emits usage with separated input, output, cache_read, cache_write, reasoning/thoughts, provider_total, and context_estimate buckets plus counting_semantics. Client-side spending limit enforcement reads the canonical usage stream rather than an optional display rollup.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md
 
-`total_tokens` MAY be stored or derived for convenience, but it MUST NOT replace the individual token buckets.
+`total_tokens` MAY be imported, exported, stored, or derived for convenience, but it MUST NOT replace the individual UF-085 token buckets and MUST NOT be computed by double-counting provider-inclusive cache or reasoning fields.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
@@ -60,7 +65,7 @@ Usage records and normalized usage events MUST preserve:
 - parent aggregation keys so subagent costs roll up to the parent run without losing the child usage event
 - `billing_entity_id` when quota semantics depend on it
 - `entitlement_class` when provider routing, quota, or pricing semantics depend on it
-- `usage_source_kind` so Gemini and similar providers can distinguish `local-estimated`, API-key-derived, OAuth-quota-derived, and `/API-key-derived/OAuth-quota-derived` attribution rather than collapsing all usage into one projection
+- `source_class`, `source_confidence`, and `source_authority`; compatibility fields such as `usage_source_kind`, `provider_usage_source_kind`, and `provider_signal_confidence` normalize into these fields so Gemini and similar providers can distinguish `local_estimated`, API-key-derived, OAuth-quota-derived, and `/API-key-derived/OAuth-quota-derived` attribution without collapsing all usage into one projection
 - usage-window metadata, including `window_label` and `window_scope`; `window_scope` is closed to `provider | account | account+model | org | server_profile`
 - `cache_hit?`
 - `cache_strategy?`
@@ -75,7 +80,7 @@ Rules:
 - Provider-settings/auth UI specs must expose OAuth login, `/re-auth/logout`, and status independently from API key presence/config, explain what each mode unlocks and which bucket it uses, and define precedence when both are present.
 - bridge adapters, storage snapshots, analytics rollups, and UI projections MUST NOT collapse that tuple to `billing_entity_id` alone when account or entitlement context exists
 - background/helper usage keeps the same attribution tuple and lineage through `parent_run_id` rather than inventing a second attribution model
-- Bridge-visible usage fields that affect spending-limit checks must round-trip through the normalized stream and remain aligned with `Plans/Run_Modes.md` and `Plans/CLI_Bridged_Providers.md`; UI, storage, and rollup consumers may summarize display text, but they cannot drop account, entitlement, or source-kind fields needed for enforcement.
+- Bridge-visible usage fields that affect spending-limit checks must round-trip through the normalized stream and remain aligned with `Plans/Run_Modes.md` and `Plans/CLI_Bridged_Providers.md`; UI, storage, and rollup consumers may summarize display text, but they cannot drop account, entitlement, source_class, source_confidence, or source_authority fields needed for enforcement.
 - `run.completed.usage` snapshots MUST NOT use the legacy `(tokens_in, tokens_out, cost, thread_id)` tuple as the persisted contract. If compatibility import sees legacy `tokens_in`, `tokens_out`, or `cost`, it maps them into the canonical token buckets, microdollar cost fields, attribution tuple, and runtime lineage; this migration work is separate from already-fixed root-precedence rules.
 - Cost accumulation is monotonic, non-decreasing, and /non-negative across a cumulative-session, including model-switch scenarios. A model-switch cost sign-flip or provider correction that would otherwise produce negative-raw-cost is recorded as an explicit /adjustment or clamp event rather than retroactively decreasing prior displayed usage.
 - `cost_usd` is presentation-only and derived from stored microdollars. Sub-cent display uses an adaptive precision tier, including `<$0.01 => 6 decimals`, while persistence remains integer microdollars; a negative-cost display is always backed by an explicit adjustment record, never by mutating prior usage.
@@ -102,7 +107,7 @@ OpenRouter cache policy is explicit:
 - OpenCode-sourced OpenRouter requests that expose `prompt_cache_key` keep that key as provider/cache metadata; TTL evidence from `#16848` and `#16850` informs adapter policy, while cache-write accounting evidence from `#18440` maps into PM usage buckets instead of redefining storage persistence.
 - PM records the OpenRouter cache TTL policy as provider/cache metadata and must not treat TTL as a PM-owned persistence guarantee.
 - OpenRouter `/accounting` records preserve the cache TTL policy used for the request so cost, cache reuse, and debug views can explain provider behavior without inventing PM-owned cache persistence.
-- OpenRouter cache-write token accounting maps into the canonical cache token buckets; cache-write tokens are persisted in `cache_creation_input_tokens`, and cache reads remain in `cache_read_input_tokens`.
+- OpenRouter cache-write token accounting maps into the canonical cache token buckets; cache-write tokens persist as `cache_write`, `cache_write_1h`, or provider TTL-specific `cache_write_ttl` where exposed, while cache reads persist as `cache_read`. Legacy `cache_creation_input_tokens` and `cache_read_input_tokens` are compatibility aliases only.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
 

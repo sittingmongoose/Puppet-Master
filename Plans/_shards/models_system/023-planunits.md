@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1429-L7461
+Source lines: L1429-L7464
 
-Source SHA256: `87d9afd9ad3db1e329d9bef8c845f6d4f5794bfee9d843cd483c75c4099c857b`
+Source SHA256: `b090e5c05e26340ac11f6a4cd5bc3f5c52506bfe61005111f6e564c087207ba1`
 
 ---
 
@@ -1473,8 +1473,10 @@ plan_unit_id: MS-028
 unit_type: runtime_contract
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Provider-sensitive token counting uses token_counting_adapter_id and token_counting_basis before cost or budget
-  enforcement reads canonical token buckets; raw provider counts may be retained for audit.
+canonical_text: Provider-sensitive token counting uses token_counting_adapter_id, token_counting_basis, and
+  counting_semantics before cost or budget enforcement reads UF-085 token buckets; raw provider counts may be retained
+  for audit, while legacy input_tokens/output_tokens/cache_read_input_tokens/cache_creation_input_tokens/reasoning_tokens
+  are compatibility aliases only.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -1512,7 +1514,8 @@ negative_constraints: []
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:
-- Provider raw counts may be preserved for audit, but adapter results feed canonical cost and budget token buckets.
+- Provider raw counts may be preserved for audit, but adapter results feed canonical UF-085 cost and budget token buckets.
+- Legacy token names must not become model-row canonical usage fields.
 owner_hints:
 - Plans/Models_System.md
 preserved_contractrefs:

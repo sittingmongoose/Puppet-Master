@@ -2,9 +2,9 @@
 
 Source: `Plans/Architecture_Invariants.md`
 
-Source lines: L420-L4391
+Source lines: L420-L4394
 
-Source SHA256: `3f3e3b9f42434b65cdfcdfd03597ce25926979886fe66d28c06cd0f8d23a3cc3`
+Source SHA256: `6d940af76f0d50c6f92e8692ebc817938edcf6015f12a2072bc063517d7020f1`
 
 ---
 
@@ -1129,9 +1129,11 @@ plan_unit_id: AI-020
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Architecture_Invariants.md
-canonical_text: Usage records store input_tokens, output_tokens, cache_read_input_tokens, cache_creation_input_tokens, and
-  reasoning_tokens individually, derive total_tokens without losing bucket detail, and prohibit pre-aggregation or collapsing
-  at the storage or event layer.
+canonical_text: Usage records store or explicitly represent UF-085 buckets input_total, input_non_cached, cache_read,
+  cache_write, cache_write_1h/cache_write_ttl where exposed, output_total, output_visible, reasoning/thoughts,
+  provider_total, and context_estimate individually, derive total_tokens without losing bucket detail or double-counting
+  provider-inclusive fields, treat legacy input_tokens/output_tokens/cache_read_input_tokens/cache_creation_input_tokens/
+  reasoning_tokens as compatibility aliases, and prohibit pre-aggregation or collapsing at the storage or event layer.
 gui_related: false
 gui_classification_reason: This unit covers usage event/storage schema, not GUI behavior.
 split_recommended: false
@@ -1171,6 +1173,7 @@ preserved_exact_tokens:
 negative_constraints:
 - Pre-aggregation or collapsing at the storage or event layer is prohibited.
 - Provider records that AGGREGATES into fewer persisted DB fields are non-canonical.
+- Legacy token names must not be presented as canonical UsageRecord fields.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes: []

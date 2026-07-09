@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L5799-L6163
+Source lines: L5804-L6169
 
-Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d`
+Source SHA256: `0f850dcf9674989a11bc3adb101e6db90f01c07eceab680592d9fd9d9969142d`
 
 ---
 
@@ -12,7 +12,7 @@ Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d
 
 This addendum repairs non-runtime usage rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-f5e4f21174c14fb661692c70`: `UnifiedUsageRecord` fields are `usage_record_id`, `project_id`, `run_id?`, `thread_id?`, `provider_id`, `model_id`, `account_id?`, `input_tokens`, `output_tokens`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars`, `final_cost_microdollars?`, `currency`, `usage_source`, `created_at_utc`, and `schema_version`.
+- Repairs `sfk-f5e4f21174c14fb661692c70`: legacy `UnifiedUsageRecord` import fields such as `usage_record_id`, `project_id`, `run_id?`, `thread_id?`, `provider_id`, `model_id`, `account_id?`, `input_tokens`, `output_tokens`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars`, `final_cost_microdollars?`, `currency`, `usage_source`, `created_at_utc`, and `schema_version` are source-lineage/migration inputs only; active persistence, aggregation, GUI projection, and route/open drill-through normalize them to UF-085 UsageRecord fields, source_class/source_confidence/source_authority, settlement, cost, quota, and refs packets before use.
 - Repairs `sfk-08907092c21fff88a8b7c871`: `UsageAnomalyGuard` computes `current_window_cost / max(median_previous_7_windows_cost, 1)` over a default 1-hour window. Default spike ratio threshold is `3.0`; confidence is `min(1.0, observed_samples / 7.0)`.
 - Repairs `sfk-829f3e79121c4f7c6355204a`: refresh config key is `usage.refresh_interval_seconds` with default `300`; retention config key is `usage.retention_days` with default `90`. Enforcement occurs during usage projection compaction, not at event ingestion.
 
@@ -24,7 +24,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  P0-CACHE-USAGE-ENVELOPE (P0) is compiled as canonical Puppet Master intent for Normalize cache usage/read/write metrics: Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason; UI does not show zero cache as unsupported or vice versa.
+  P0-CACHE-USAGE-ENVELOPE (P0) is compiled as canonical Puppet Master intent for Normalize cache usage/read/write metrics: Usage records expose UF-085 cache buckets (`cache_read`, `cache_write`, and `cache_write_1h` / provider TTL-specific `cache_write_ttl` where exposed) plus cache_reporting_state and cache_miss_reason; the legacy cached_input_tokens source token is preserved only as source-lineage/import alias. UI does not show zero cache as unsupported or vice versa.
 gui_related: true
 gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
 depends_on:
@@ -32,13 +32,13 @@ depends_on:
 - PNC-001
 unblocks: []
 acceptance_criteria:
-- Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason
+- Usage records expose cache_read/cache_write/cache_write_1h-or-cache_write_ttl/cache_reporting_state/cache_miss_reason and preserve cached_input_tokens only as source-lineage/import alias.
 - UI does not show zero cache as unsupported or vice versa.
 - No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
 validation_surfaces:
 - python3 scripts/pm-plan-index.py validate
 - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
-- Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason
+- Usage records expose cache_read/cache_write/cache_write_1h-or-cache_write_ttl/cache_reporting_state/cache_miss_reason and preserve cached_input_tokens only as source-lineage/import alias.
 - UI does not show zero cache as unsupported or vice versa.
 risk_class: p0_context_cache_hardening
 reasoning_tier: high
@@ -75,8 +75,9 @@ preserved_exact_tokens:
 - P0-CACHE-USAGE-ENVELOPE
 - P0
 - Normalize cache usage/read/write metrics
+- cached_input_tokens
 negative_constraints: []
-proposal_or_recommendation: Usage records expose cached_input_tokens/cache_write/cache_read/cache_reporting_state/cache_miss_reason; UI does not show zero cache as unsupported or vice versa.
+proposal_or_recommendation: Usage records expose cache_read/cache_write/cache_write_1h-or-cache_write_ttl/cache_reporting_state/cache_miss_reason and preserve cached_input_tokens only as source-lineage/import alias; UI does not show zero cache as unsupported or vice versa.
 compile_disposition: create_new_planunit
 ```
 

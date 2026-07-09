@@ -8,17 +8,17 @@
     {
       "note": "Small INV-022 repair for watcher reconciliation and SCM hot-path avoidance.",
       "path": "Plans/Architecture_Invariants.md",
-      "sha256": "3f3e3b9f42434b65cdfcdfd03597ce25926979886fe66d28c06cd0f8d23a3cc3"
+      "sha256": "6d940af76f0d50c6f92e8692ebc817938edcf6015f12a2072bc063517d7020f1"
     },
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "49b399d0942f8d7a615845c21e4197333692d79deb185b0724a05dc54e580cd7"
+      "sha256": "debb26a46ab8b99845c7a579933dacfb9a275d0c43579b0efac4be82889d8fe3"
     },
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "f59c7a3070f80a6d824cff981d83a735afe665821fe2f90daa49610c3d890e52"
+      "sha256": "7e909ea69aeac90b36795b9e9eb8df4abc32756951923001081943dba04f936b"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
@@ -28,7 +28,7 @@
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "58fabe8eb51ca7fd7c9ff3b4950c2daa6a24e808da1a45b2d3377777ecaef8ac"
+      "sha256": "09486b3c2cc714548fb695b3ce6adc63521c9f59fdb80393ece6dcce6be3d2d6"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -563,6 +563,14 @@
     },
     {
       "cmd": "python3 scripts/pm-implementation-readiness.py generate",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
       "exit_code": 0
     }
   ],
