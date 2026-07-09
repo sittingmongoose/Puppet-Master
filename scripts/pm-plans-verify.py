@@ -426,8 +426,8 @@ def _run_subprocess_check(
     children and pipe-holding grandchildren cannot strand the parent. Always returns a
     structured report instead of hanging.
     """
-    command_id = _AGGREGATE_NAME_TO_COMMAND.get(name, name.replace("_", "-"))
-    extra_cli_args = _aggregate_subcheck_cli_args(name, namespace)
+    command_id = _aggregate_subcheck_command_id(name)
+    extra_cli_args = _aggregate_subcheck_cli_args(name, namespace, timeout_seconds=timeout_seconds)
     temp_path: Path | None = None
     try:
         tmp = tempfile.NamedTemporaryFile(prefix=f"pm-subcheck-{name}-", suffix=".json", delete=False)
@@ -506,25 +506,72 @@ _AGGREGATE_NAME_TO_COMMAND = {
     "validate_audit_closure": "validate-audit-closure",
     "validate_audit_status_index": "validate-audit-status-index",
     "check_shards": "check-shards",
+    "spec_lock": "verify-spec-lock",
+    "plan_graph": "validate-plan-graph",
+    "auto_decisions": "validate-auto-decisions",
+    "evidence": "validate-evidence",
+    "support_refs": "lint-contractrefs",
+    "path_refs": "lint-path-refs",
+    "shards": "check-shards",
+    "project_artifacts": "check-project-artifacts",
+    "plans_to_code_handoff_schema": "validate-plans-to-code-handoff-schema",
+    "prd_planning_runtime_contracts": "validate-prd-planning-runtime-contracts",
+    "implementation_readiness": "validate-implementation-readiness",
+    "plan_migration": "validate-plan-migration",
+    "runtime_artifact_schemas": "validate-runtime-artifact-schemas",
+    "goal_runtime_event_fixtures": "validate-goal-runtime-event-fixtures",
+    "project_output_fixtures": "validate-project-output-fixtures",
+    "usage_gui_fixtures": "validate-usage-gui-fixtures",
+    "usage_contract_drift": "validate-usage-contract-drift",
+    "gui_asset_policy": "validate-gui-asset-policy",
+    "web_capability_contracts": "validate-web-capability-contracts",
+    "filesafe_security_policy": "validate-filesafe-security-policy",
+    "wiring_matrix": "validate-wiring-matrix",
+    "audit_closure": "validate-audit-closure",
+    "audit_status_index": "validate-audit-status-index",
 }
 
 
-def _aggregate_subcheck_cli_args(name: str, namespace: argparse.Namespace) -> list[str]:
+def _aggregate_subcheck_command_id(name: str) -> str:
+    """Return the standalone CLI command id for an aggregate subcheck name."""
+    return _AGGREGATE_NAME_TO_COMMAND.get(name, name.replace("_", "-"))
+
+
+_AGGREGATE_NAMES_WITH_TIMEOUT_ARG = {
+    "check_shards",
+    "shards",
+    "validate_prd_planning_runtime_contracts",
+    "prd_planning_runtime_contracts",
+    "validate_implementation_readiness",
+    "implementation_readiness",
+    "validate_gui_asset_policy",
+    "gui_asset_policy",
+}
+
+
+def _aggregate_subcheck_cli_args(
+    name: str,
+    namespace: argparse.Namespace,
+    *,
+    timeout_seconds: int | None = None,
+) -> list[str]:
     """Extra CLI args to pass when re-invoking an aggregate subcheck as a subprocess."""
-    if name == "validate_evidence":
+    effective_timeout_seconds = int(
+        timeout_seconds if timeout_seconds is not None else getattr(namespace, "subcheck_timeout_seconds", 0) or 0
+    )
+    if name in {"validate_evidence", "evidence"}:
         # validate-evidence takes positional paths; aggregates pass an empty list.
         return []
-    if name == "validate_plan_migration":
+    if name in {"validate_plan_migration", "plan_migration"}:
         run_dir = getattr(namespace, "run_dir", None) or str(DEFAULT_PLAN_MIGRATION_RUN.relative_to(ROOT))
-        timeout_seconds = int(getattr(namespace, "subcheck_timeout_seconds", 0) or 0)
-        return ["--run-dir", str(run_dir), "--subcheck-timeout-seconds", str(timeout_seconds)]
-    if name == "validate_audit_closure":
+        return ["--run-dir", str(run_dir), "--subcheck-timeout-seconds", str(effective_timeout_seconds)]
+    if name in {"validate_audit_closure", "audit_closure"}:
         registry = getattr(namespace, "registry", None) or "Plans/.audits/_semantic_closure_registry.jsonl"
-        timeout_seconds = int(getattr(namespace, "subcheck_timeout_seconds", 0) or 0)
-        return ["--registry", str(registry), "--subcheck-timeout-seconds", str(timeout_seconds)]
-    if name == "validate_audit_status_index":
-        timeout_seconds = int(getattr(namespace, "subcheck_timeout_seconds", 0) or 0)
-        return ["--subcheck-timeout-seconds", str(timeout_seconds)]
+        return ["--registry", str(registry), "--subcheck-timeout-seconds", str(effective_timeout_seconds)]
+    if name in {"validate_audit_status_index", "audit_status_index"}:
+        return ["--subcheck-timeout-seconds", str(effective_timeout_seconds)]
+    if name in _AGGREGATE_NAMES_WITH_TIMEOUT_ARG:
+        return ["--subcheck-timeout-seconds", str(effective_timeout_seconds)]
     return []
 
 
