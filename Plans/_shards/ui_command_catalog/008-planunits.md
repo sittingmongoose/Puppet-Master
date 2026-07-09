@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1246-L6859
+Source lines: L1247-L6862
 
-Source SHA256: `1dec6392b73b4f06b7dd292309d2915004316a0455275e6b9c5ac07d57803b48`
+Source SHA256: `23bf28ecc5cc3aab5bf8b9c4154d63c3762c27d7eeb85f98dd10331298d372a7`
 
 ---
 
@@ -4341,7 +4341,7 @@ plan_unit_id: UCC-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Reserved slash commands keep /web as one stable subcommand-required family, route natural-language web intents through the same dispatcher, map reading to webfetch, and lock /skill GUI, slash, and natural-language invocation paths to the same invoke_skill contract.
+canonical_text: Reserved slash commands keep /web as one stable subcommand-required family, expose /web fetch with the other five web operations, route slash, palette, natural-language, and agent-initiated web intents through the same dispatcher, map reading to webfetch, and lock /skill GUI, slash, and natural-language invocation paths to the same invoke_skill contract.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4354,6 +4354,7 @@ unblocks: []
 acceptance_criteria:
 - UCC-078 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- Slash, palette, natural-language, and autonomous agent routing fixtures cover `/web fetch`, URL-read intent parity, research/deep-research intent parity, and BrowserAction/Site Reader visual evidence intent parity through the same command/tool IDs.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -4371,6 +4372,7 @@ source_lineage:
 preserved_exact_tokens:
 - /web
 - /web search <query>
+- /web fetch <url>
 - /web extract <url>
 - /web research <task-or-question>
 - /web crawl <url>

@@ -1,24 +1,24 @@
 # Shard Index: Plans/MCP_Integration.md
 
-Generated: 2026-07-09T12:22:38Z
+Generated: 2026-07-09T16:45:37Z
 
-Source SHA256: `c781b2f9be022f5a88d695bc90721ba64c422065e13b0e42b5e7832ce3b83e41`
+Source SHA256: `ad675a543d57f278f123cf5194b939467ee723efd55a06e81cfd7fa6a5b7827e`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L6 `6691e90923b7f29984bc61232d001239b68c3e97ec42e02c2475d9fc75457821`
-- [002 - 1. Canonical naming](002-1.-canonical-naming.md) L8-L25 `fb8ad1155da22a21853b2eb87d20ab06cf3949fe2c1532367135838bdd7bbed8`
-- [003 - 2. Requested versus effective availability](003-2.-requested-versus-effective-availability.md) L26-L46 `9016b1d8e47ce70e49017bdcbf740ed222d2bbe04ef2dc338d84e07807e5131f`
-- [004 - 3. Credential binding and invalidation](004-3.-credential-binding-and-invalidation.md) L47-L66 `ddf21a62b6587b89710fb38517c3a32a34d84ecce87511508965e1a1fc308970`
-- [005 - 4. Cross-surface responsibilities](005-4.-cross-surface-responsibilities.md) L67-L79 `cd9b0b17b1ac9079f99889d1efaa096ac7a920d745aff9d20d243ac1bedac34b`
-- [006 - 5. Server config schema](006-5.-server-config-schema.md) L81-L138 `7ba93c0ac6bea6c7c121a7ebc2a296b7fffb4f05ec080351f42d53212e94e284`
-- [007 - 6. Supported flows](007-6.-supported-flows.md) L140-L150 `95e7f133b335bf134d6c3fb966f6f8d941856eaf9747a49538fb231199a08183`
-- [008 - 7. Effective tool availability and GUI surfacing](008-7.-effective-tool-availability-and-gui-surfacing.md) L152-L183 `caece7a8508054655f2bf639b29346cc9fe68a7cc8218bb430dfe6e6ed5f27bd`
-- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L185-L189 `64e36c39beee28f4f8421ebf93f393b163e7f2781ba022e88e184996191e96d1`
-- [010 - PlanUnits](010-planunits.md) L191-L242 `fe9b7b1f30c6c34d13be78c7cfc5d75a2e37407d9c28df06df7b8883d4745fd6`
-- [011 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L244-L1980 `61df3f04dc3c172aeeab1255eb7bee01bc68d1ec6aa3c1afc92b39a10c874d2c`
-- [012 - Migration Coverage](012-migration-coverage.md) L1982-L1992 `ca00d68dc864a2066b2c739565ced5fe6ffcf90d1515c26ac6ea0e8a0ef16db6`
-- [013 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](013-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1994-L2079 `2fdc5f81a2f99fbc747dc8ad514b3b47b555dab0aa6c4b0ff90222e34d6bc183`
-- [014 - FABLE Residual MCP Contract Cleanup Addendum - 2026-07-07](014-fable-residual-mcp-contract-cleanup-addendum-2026-07-07.md) L2081-L2581 `dc0b1fe3ffd32a3b3a93c843aca7f4b1ee3e1275cb7a95afb4e9e91e05788846`
+- [001 - Preamble](001-preamble.md) L1-L6 `85403b09fcd6e1e5efd65fe22a86f907051d0ff5e209f00d837d7338a969797e`
+- [002 - 1. Canonical naming](002-1.-canonical-naming.md) L8-L25 `5ca913fee4735da227d57be650da95fb82d2c5f3c1711f21b4b4aacb6e3087ee`
+- [003 - 2. Requested versus effective availability](003-2.-requested-versus-effective-availability.md) L26-L46 `05e348bf00b97121c764355ebbf690e978cc3a64d0f82534deed6a4d0be78f68`
+- [004 - 3. Credential binding and invalidation](004-3.-credential-binding-and-invalidation.md) L47-L66 `95fb35109de5f773d13362196ed2a1198a7897cb12e4b145185c327bf8af68da`
+- [005 - 4. Cross-surface responsibilities](005-4.-cross-surface-responsibilities.md) L67-L79 `9a44a809b2efef07f6923394264e662c2fb6ff97659e5991c81dd888490a2170`
+- [006 - 5. Server config schema](006-5.-server-config-schema.md) L81-L139 `d8b12ba3338617a956a175c58b62a592362277ac190e9831061ab19ec4394ab8`
+- [007 - 6. Supported flows](007-6.-supported-flows.md) L141-L151 `6c970bbfd37d25c3dc9e86e078120dd48e36fa069a3d48a869884ee981911528`
+- [008 - 7. Effective tool availability and GUI surfacing](008-7.-effective-tool-availability-and-gui-surfacing.md) L153-L184 `151b6f02b890c68db09e8c09fd760c493d1a0a3b1e4fdeee155c7d7531a9efb0`
+- [009 - Owner / Consumer Map](009-owner-consumer-map.md) L186-L190 `7918d3ffdc9b9e776113c5f488deb32110c63030f14a88e46cbfa8ffcdba5ebe`
+- [010 - PlanUnits](010-planunits.md) L192-L243 `a9ca3a2b3095d76686b0d73aa53fcdb322ec4c86fc1d42e8cefe02dab6a1fb31`
+- [011 - Ledger Compile Addendum - pldg-20260630-001-feature-intake](011-ledger-compile-addendum-pldg-20260630-001-feature-intake.md) L245-L1981 `2aacbd7b98aef11058fed6fbada55fef3951c9e4e563ef4de8340ebd1f6c50fa`
+- [012 - Migration Coverage](012-migration-coverage.md) L1983-L1993 `77b43ef7e7f089d460c3b4b5dca1d817a53b05bc25163e099f2c3f6e287a260a`
+- [013 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](013-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L1995-L2080 `de5d959277580a60d61cd7e69c51415ecb6abbf62da8e651840e004d6c71f861`
+- [014 - FABLE Residual MCP Contract Cleanup Addendum - 2026-07-07](014-fable-residual-mcp-contract-cleanup-addendum-2026-07-07.md) L2082-L2582 `515d82ed1eeff80886f0ae57eab6dee29e3d52d01536ec6d338c5e1d41a60d70`

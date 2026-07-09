@@ -1,0 +1,41 @@
+{
+  "generated_at_utc": "2026-07-09T16:45:37Z",
+  "index_path": "Plans/_shards/web_research_run_fixtures/00-index.md",
+  "index_sha256": "87288f57ad9893cef81ddd68aabe63b770f7df8bc705e6254e4414d39261a700",
+  "manifest_path": "Plans/_shards/web_research_run_fixtures/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/web_research_run_fixtures/001-lines-1-200.md",
+      "sha256": "a05e6cbcc3ca21db48cef6241df571d4ae060f8ddd5cd6ed53482c8ebd2ef961",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-400",
+      "path": "Plans/_shards/web_research_run_fixtures/002-lines-201-400.md",
+      "sha256": "22ac6895e58a66454a51a8d6752267485e8f29b3386cb870866bc71ae3ed3bde",
+      "shard_id": "002",
+      "source_line_end": 400,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 401-486",
+      "path": "Plans/_shards/web_research_run_fixtures/003-lines-401-486.md",
+      "sha256": "29abb5b3660df353728d45bbb2bd4e04cd8483aebfcd592801b4c9cb3ac768ed",
+      "shard_id": "003",
+      "source_line_end": 486,
+      "source_line_start": 401,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 486,
+    "path": "Plans/web_research_run_fixtures.json",
+    "sha256": "3790c11b623e2cc1dada4a60f2657db2530aedc222d0d7370224e29b373ddbe8"
+  }
+}

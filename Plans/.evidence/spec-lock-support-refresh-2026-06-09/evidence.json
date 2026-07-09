@@ -2,23 +2,23 @@
   "artifacts": [
     {
       "path": "Plans/Spec_Lock.json",
-      "sha256": "05c14cf736262b9c07ab1f23c048dc6740d14c1919e1788d86f7bb413b28abf0"
+      "sha256": "dfe5a146e4cb8124281effd727c53bb72e644dd06d3b6986e674fa6ab2efcd3f"
     },
     {
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "797794d7ae32cc1b6df7cd603d9d400e68d3dc3aeac7625f75a4b06ff32e20ac"
+      "sha256": "4e68dee324561ae79842570e010d9aa0052e5e9edce1a10edba0b19f861a78ca"
     },
     {
       "path": "Plans/plan_graph.json",
-      "sha256": "556f1937f1319bd47e0e1bee09825b9dcaca4a66c940d2b2e226e024c0a73f18"
+      "sha256": "93e850ac3d380d0e6591f59f23fc8eef9067c914d686b1fe631489cf9f6e7e40"
     },
     {
       "path": "Plans/sharding_config.json",
-      "sha256": "3279a2d35effd6524a2c5f4121aa4b098a9f07a0f644bf2280dfd8e1f69ca9db"
+      "sha256": "77d2e744986156a5f07b669db95e84cc74ad4d9d2c34c0de0ec586962ad485f0"
     },
     {
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "ef64a69415f0bea11569d932cccd11c54c9c1bf1f538a0c8330ac5c9bbac117c"
+      "sha256": "91432123a9d6bd61c82b0713c88f19d265903903daae169bc9b218ea8ac15a94"
     },
     {
       "path": "scripts/pm-shard-plans.py",
@@ -26,7 +26,7 @@
     },
     {
       "path": "Plans/Wiring_Matrix.schema.json",
-      "sha256": "f41da1e57593c1c8f963670ddd69a42b22a54ed12a145ab35d6d8cf580ee3849"
+      "sha256": "0c5c8bdb74c41bbc6a3032809227a4678ebb7eb7fa2281e3c6bc2b19b89e658f"
     },
     {
       "path": "Plans/acceptance_manifest.schema.json",
@@ -46,11 +46,11 @@
     },
     {
       "path": "Plans/evidence.schema.json",
-      "sha256": "12302339745460c6810efebb7bdf762aa8b52621245a70dca825dfc9aed21138"
+      "sha256": "65dcea7fe4f71f7ad6a29ff04e3b89c5bcaeb417948762b024f30f758d962e86"
     },
     {
       "path": "Plans/gui_automation_manifest.schema.json",
-      "sha256": "f549b161ebdcb34033caa26490f2ddf4ad9b2212ebf40be8d0e39565b732fac3"
+      "sha256": "a954473998c35e999108b1142a98e059a1d41933ac5a29e801226fe0dd8ae21c"
     },
     {
       "path": "Plans/plan_graph.schema.json",
@@ -529,6 +529,18 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-web-capability-contracts",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-contract-drift",
       "exit_code": 0
     }
   ],

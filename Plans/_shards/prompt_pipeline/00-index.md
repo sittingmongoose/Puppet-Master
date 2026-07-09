@@ -1,30 +1,30 @@
 # Shard Index: Plans/Prompt_Pipeline.md
 
-Generated: 2026-07-09T12:22:38Z
+Generated: 2026-07-09T16:45:37Z
 
-Source SHA256: `de24373d811638dc1fbdb8d49294a1654a39a2c03d2eda2c35693abdabe53e9a`
+Source SHA256: `d853429e5967defde777fa8cdc1d79dc201ae4fde3a7165850a1d2dc8c724ea0`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `c7d527311abe58c294188684fcb6c83b32b8c5fed441a691f9c8f20ce631f045`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `d062374000ce9ef015fb4f8fb7ded20058d27e1d99014bad33b34095f566bf3b`
-- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L14-L44 `1eaf86faf393e71e8c01c19ebb094be3cde0050482adfacd95b32133e14ffc3e`
-- [004 - 1. Prompt assembly pipeline](004-1.-prompt-assembly-pipeline.md) L46-L228 `ae1ff47955a0207949837ebc4d34c6997d64a71fc46b7ec59c94d760dc581853`
-- [005 - 2. Compaction and pruning](005-2.-compaction-and-pruning.md) L230-L386 `a4944d19d19783a202f957332106ec52aed706cca4c48d7a237b7e0191e0c0d4`
-- [006 - 3. Rotation (follow-up run spawning)](006-3.-rotation-follow-up-run-spawning.md) L387-L403 `26a8ca4c76a5a29f0550892f77ca4b89812bb9627caca40d1b7356febe5cf4da`
-- [007 - 4. GUI integration](007-4.-gui-integration.md) L405-L415 `e77cae9d06d4d8cb47fd4a85a537387732e415dbef92a4f6e1040e17f076695c`
-- [008 - 5. Acceptance criteria](008-5.-acceptance-criteria.md) L417-L429 `c871c42dfedda9ef374a641208f09dac6d895a5180b9f755bab25d15245e5a6e`
-- [009 - 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)](009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md) L430-L645 `398cd956d1913edb101f5a7438f800d0bf382070f5dae3c7047e7ddc2fd7139f`
-- [010 - Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)](010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md) L647-L653 `8c051d1e083ce8460f5a9d8d7fc13f59b5bca7da706e60f9a5030e634b0180ea`
-- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L655-L659 `7d25fd862eee83e5eb49caa8584d0b4271eafe961e6d0281872b7d27a323ffba`
-- [012 - PlanUnits](012-planunits.md) L661-L3475 `991cef225a1af4831aaba84874638ed0a3b034e2ce32dd257b6ee2eaf9490aa5`
-- [013 - Migration Coverage](013-migration-coverage.md) L3477-L3487 `04e56ad0cce376ad519367495f5f656e636fee59f7f90b6a5558cc2bcc559e83`
-- [014 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](014-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L3489-L3530 `f229d8d93e8cff1b0d74c7ee36c246e52a12ad764bd51b67355c5ec6a673acf3`
-- [015 - Ledger Compile Addendum - pldg-20260626-001-feature-name](015-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3533-L3894 `389993b2fb694b5eccc67e098058440b122d2fd6d773a2f5277feb2804c95636`
-- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L3896-L3962 `18c662ab90fcbcc97762ec306283a2874908761eaccd36674f41cc9b21ac9290`
-- [017 - Ledger Compile Addendum - pldg-20260629-001-feature-name](017-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L3964-L4022 `29f1f029c36e2b881473da16d7d957b1f516d5c3179d53ceec26a71fa8635498`
-- [018 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L4024-L4107 `eac7b219eb0aae65a6f088c0752f6ba1cefa070c2f1791d63f0fd4de8235de90`
-- [019 - Usage GUI Propagation Addendum - 2026-07-09](019-usage-gui-propagation-addendum-2026-07-09.md) L4109-L4169 `4cd7c2dd6392779c4f232ef190b13bb53944b718a9a9d0997629898e3ee6cdff`
-- [020 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L4171-L5097 `79a1f470d78a16aa40f8ec37386bfdf42e26f8bf8d4552392889c3ce5557d6bd`
+- [001 - Preamble](001-preamble.md) L1-L1 `1985dce7b22c0dcb486299cc6c9d1b4afabd2a519ca855cdaf8df0f3bc40b11f`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L12 `ed3f5ec4b81e7a386226cfd04367043adc766732c1cb6f340fee8c5bc61088f9`
+- [003 - 0. Scope and SSOT status](003-0.-scope-and-ssot-status.md) L14-L44 `5f20c041b8bcc13b0a89ed5803ce08273d39d5d06eba4a30e48f106cd7ceae7f`
+- [004 - 1. Prompt assembly pipeline](004-1.-prompt-assembly-pipeline.md) L46-L228 `d0764e541fb3f6e5de8a2dc57aa50e62cb12c2935be852c24fc9acd0024c0790`
+- [005 - 2. Compaction and pruning](005-2.-compaction-and-pruning.md) L230-L386 `2710f8e255c19bc3a702d4ff3a63d99ecec15e6cd495a0e27db9fdba56f5ebd0`
+- [006 - 3. Rotation (follow-up run spawning)](006-3.-rotation-follow-up-run-spawning.md) L387-L403 `6b30a69120d11bd40bfd687232e1219e92136e33935d5024c3b64e35b9e7779d`
+- [007 - 4. GUI integration](007-4.-gui-integration.md) L405-L415 `ffb9d0aa116c13bdd49084d1e99af3e45ae73aefbba68c6b91211eeef85195df`
+- [008 - 5. Acceptance criteria](008-5.-acceptance-criteria.md) L417-L429 `37f80d0398309b296d328a3cb6b8b9ecde42bc4b67dd024122cefb69e6b78055`
+- [009 - 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)](009-6.-effective-persona-and-runtime-resolution-pipeline-2026-03-06.md) L430-L646 `ed290d851ebfcba2d652010ef43e428a5346be222ce7568e006ada5b09221d5e`
+- [010 - Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)](010-runtime-attempt-snapshot-and-handoff-consolidation-addendum-2026.md) L648-L654 `10862177b2c00672e6a48f67916945b00eeeda5b2b019a1567eb1ac31e7796fd`
+- [011 - Owner / Consumer Map](011-owner-consumer-map.md) L656-L660 `f92711238b228867c82f36a3994ea7d3db228ee6838ed39de6fc2ceedaa2884c`
+- [012 - PlanUnits](012-planunits.md) L662-L3476 `63662b406363060ae7e6dce8dafecfb1319fadace7b0b3ee54507935aefae5eb`
+- [013 - Migration Coverage](013-migration-coverage.md) L3478-L3488 `98070d9acb1675eb4b9725f4bf29c0979641b6309cfa04a027e5321f519e5921`
+- [014 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](014-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L3490-L3531 `7d79c1d4ada61a50b9f1be3c1fb91d0f02fed70f9873b00cdeec4bdfba6e5403`
+- [015 - Ledger Compile Addendum - pldg-20260626-001-feature-name](015-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L3534-L3895 `f15939a0aa3c6aa29458955d5637b4d66bdd77937981330cda0d49add63919cb`
+- [016 - Ledger Compile Addendum - pldg-20260627-001-feature-intake](016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md) L3897-L3963 `e9f12e3e5b4df387a8ea53cb29f3f1f53fc10b22748e3d32d28f627412d519e2`
+- [017 - Ledger Compile Addendum - pldg-20260629-001-feature-name](017-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L3965-L4023 `2be5ccb1f3819f442fb710fcd231ce5fb698f4f5a7794a129c1a0e5b610a0622`
+- [018 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](018-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L4025-L4108 `ebd49e383ffd3f42e3b88ee18d8844ab4d66a386d45602bbcb7504a52f6d84d2`
+- [019 - Usage GUI Propagation Addendum - 2026-07-09](019-usage-gui-propagation-addendum-2026-07-09.md) L4110-L4170 `c1c220d81e7ed8d658abb06df6e041ab668400bdd7ad11f6c12b33d140a67c27`
+- [020 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](020-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L4172-L5098 `53334f48161189793f52e696cdcff18b1daea914701f9ffeb44eea56f5b594db`

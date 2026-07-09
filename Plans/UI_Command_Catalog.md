@@ -994,8 +994,9 @@ Core rules:
 - Skill discovery and invocation are locked to three paths—GUI panel, /skill, and natural language—without an MVP subcommand family, all converging on the same invoke_skill contract.
 - Exact named obligations that must survive in this reserved family are the six-tool web family, reserved slash-command set, Agent Config and Skills ownership, and the question, TODO, and visualizer terms.
 - `/skill use`, `/skill list`, and `/skill show` are not MVP subcommands. Bare `/skill` lists available skills, while `/skill <skill_name> [args]`, the Skills panel, and natural language all invoke the same `invoke_skill` contract.
-- Web command GUI help/autocomplete exposes `/web` sub-operations as one reserved built-in family: `/web search <query>`, `/web extract <url>`, `/web research <task-or-question>`, `/web crawl <url>`, and `/web map <url>`. Bare `/web` dispatches `cmd.chat.web.help` as a non-executing help entry; it does not default to top-level `/search` or `/crawl`.
+- Web command GUI help/autocomplete exposes `/web` sub-operations as one reserved built-in family: `/web search <query>`, `/web fetch <url>`, `/web extract <url>`, `/web research <task-or-question>`, `/web crawl <url>`, and `/web map <url>`. Bare `/web` dispatches `cmd.chat.web.help` as a non-executing help entry; it does not default to top-level `/search` or `/crawl`.
 - Legacy top-level tool-name spellings such as `/webfetch` and `/webresearch` are compatibility/tool-key lineage, not active slash-command prototypes; user-facing slash input stays under `/web fetch <url>` and `/web research <task>`.
+- Web intent taxonomy is shared by slash, palette, natural language, and agent/subagent initiation: current/latest/docs/issues/PR questions route to `cmd.chat.web.search` followed by read-backed `webfetch` when claims require evidence; "read this URL" and pasted URLs route to `cmd.chat.web.fetch` / `webfetch`; structured page pulls route to `cmd.chat.web.extract`; site traversal routes to `cmd.chat.web.crawl`; site topology routes to `cmd.chat.web.map`; compare, investigate, research, and deep-research requests route to `cmd.chat.web.research` with `research_mode`; visual, dynamic-page, iframe, console, network, screenshot, or PDF evidence needs route through BrowserAction / Site Reader under the same dispatcher. All routes persist `invocation_source` and optional `agent_reason`.
 - The `/web` family is a surface-bound reserved-command family; `/provisional` or catch-all entries remain help/autocomplete affordances until promoted into concrete subcommand IDs.
 - Web `/activity` and history rows use assistant-chat-design-style operation cards: top-level requested/effective runtime snapshot fields plus web-operation child payloads, with large `sources_ref`, `content_ref`, and `map_ref` material dereferenced on demand from refs/blobs or `/blob` storage rather than loaded eagerly.
 - Web-source transparency is first-class for cited-web-search and agent-web-research: cards and history expose `/sources`, source counts, `Web search: {query}`, and the six distinct labels (LOCKED) `Searching Web: <query>`, `Extracting Site: <url>`, `Researching Web: <task>`, `Crawling Site: <url>`, `Mapping Site: <root_url>`, and `Reading Site: <url>`, with `Reading Site: <url>` reserved for the PM-native Site Reader path.
@@ -5576,7 +5577,7 @@ plan_unit_id: UCC-078
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Reserved slash commands keep /web as one stable subcommand-required family, route natural-language web intents through the same dispatcher, map reading to webfetch, and lock /skill GUI, slash, and natural-language invocation paths to the same invoke_skill contract.
+canonical_text: Reserved slash commands keep /web as one stable subcommand-required family, expose /web fetch with the other five web operations, route slash, palette, natural-language, and agent-initiated web intents through the same dispatcher, map reading to webfetch, and lock /skill GUI, slash, and natural-language invocation paths to the same invoke_skill contract.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -5589,6 +5590,7 @@ unblocks: []
 acceptance_criteria:
 - UCC-078 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
 - ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- Slash, palette, natural-language, and autonomous agent routing fixtures cover `/web fetch`, URL-read intent parity, research/deep-research intent parity, and BrowserAction/Site Reader visual evidence intent parity through the same command/tool IDs.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5606,6 +5608,7 @@ source_lineage:
 preserved_exact_tokens:
 - /web
 - /web search <query>
+- /web fetch <url>
 - /web extract <url>
 - /web research <task-or-question>
 - /web crawl <url>
@@ -8083,7 +8086,7 @@ owner_hints:
 This addendum repairs non-runtime UI command catalog rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
 - Repairs `sfk-ddc264cdea296caf349adecd`: UCC-049 through UCC-106 now inherit the strict schema overlay below. Each row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text.
-- Repairs `sfk-ed92df2325332306b2463b50`: browser production command IDs are `cmd.browser.share_with_agent`, `cmd.browser.revoke_share_with_agent`, `cmd.browser.run_code`, and `cmd.browser.evaluate`. Legacy `browser_run_code` and `browser_evaluate` are compatibility aliases only.
+- Repairs `sfk-ed92df2325332306b2463b50`: browser production command IDs keep `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent`; `cmd.browser.run_code`, `cmd.browser.evaluate`, legacy `browser_run_code`, and legacy `browser_evaluate` are compatibility-only diagnostic/page-evaluation lineage, not default production browser commands.
 
 ### UCC-049 through UCC-106 strict schema overlay
 

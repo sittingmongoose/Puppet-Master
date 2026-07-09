@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L30-L77
+Source lines: L30-L79
 
-Source SHA256: `74c0ccbef90588d03db0d6aa5c122423455ff151db62ff8a3db09791ed1283af`
+Source SHA256: `2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a`
 
 ---
 
@@ -36,6 +36,8 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Pro
 Task-tool delegation must honor per-target deny rules and must reject unsafe self-dispatch loops. A long-running task that returns a `session_id` is still governed by the same child lifecycle, resume, timeout, and parent supervision rules rather than becoming an unowned detached session.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+Subagents may self-initiate read-only web/search/fetch/extract/research/deep-research/crawl/map work only within the parent-granted child permission ceiling and only when delegated source reading, bounded crawl/map, dynamic-page visual state, iframe/form evidence, console/network diagnostics, or source currentness is material to the assignment. These calls route through the PM WebOperation/BrowserAction dispatcher with `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, or `BrowserAction/Site Reader`; each record carries `invocation_source = subagent`, required `agent_reason`, source_subagent_id lineage, permission/capability gates, visible operation cards, and `subagent_evidence_receipts`. Subagent web/browser evidence is advisory to the parent and must not create WorkNodes, NodeSeeds, runtime queues, implementation files, build tasks, hidden inter-agent channels, or permission escalation beyond the parent envelope.
 
 #### Task tool contract alignment
 

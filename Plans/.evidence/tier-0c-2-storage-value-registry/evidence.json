@@ -13,17 +13,17 @@
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "11fd7ce720d949e8b71720b91e9e51c74c11a27c56709b1a6e53003713416326"
+      "sha256": "941a17d31f73c64ecb72d3908254a20f87c734691381b5141c009d981b7dfbbb"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
       "path": "Plans/.plan_index/node_readiness_report.json",
-      "sha256": "6146ecbe961b2ff7aaf5f77dd953aa42c6f03ae6c42fc1aeebbcc6bddbe88646"
+      "sha256": "f14bdf7bfc1c6e9ce0dd79ee80031570eb1484f65d0cde51e9f98d46ebe44544"
     },
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "05c14cf736262b9c07ab1f23c048dc6740d14c1919e1788d86f7bb413b28abf0"
+      "sha256": "dfe5a146e4cb8124281effd727c53bb72e644dd06d3b6986e674fa6ab2efcd3f"
     }
   ],
   "checks": [
@@ -164,6 +164,22 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-web-capability-contracts",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-contract-drift",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
       "exit_code": 0
     }
   ],

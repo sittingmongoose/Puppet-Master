@@ -3488,7 +3488,7 @@ Core rules:
 - Narrative order is command trigger in assistant narrative, inline operation card (mini terminal/search/diff), then assistant textual summary `/commentary`; cards do not float out of narrative position.
 - Web operation cards render completed content only on `/completion`; while running, activity progress text may stream labels such as `Researching Web: <query>` or `Crawling Site: example.com (12/25 pages)` for `/25` page caps, and summary rows use `<operation>: <query/url> — N sources` when a source count is available.
 - Web/provider GUI consumers treat `Plans/Tools.md` as the PRIMARY SSOT for `WebAction`, Firecrawl-as-provider routing, `/questionnaire` and TODO carry-through, while FinalGUISpec owns visible card/progress behavior.
-- GUI web cards expose structured `web_input` as operation input; TODO projections surfaced with web/activity progress use `pending | in_progress | completed | blocked | skipped`.
+- GUI web cards expose structured `operation_input` as the canonical operation input; legacy `web_input` is source-lineage/compatibility input that normalizes before card rendering. TODO projections surfaced with web/activity progress use `pending | in_progress | completed | blocked | skipped`.
 - Runtime disclosure fields shown by web cards include `requested_account_binding`, `operational_identity`, `effective_account_label`, `effective_provider_identity`, and `effective_project_id` when present.
 - Legacy `/operation-card` references normalize to the operation-card widget family; individual web, terminal, search, and diff card types keep their owner-specific payload contracts.
 - Search and diff/web cards do not expose terminal `show terminal` or `detach/pop-out` affordances; only terminal cards expose those actions, while long-running web operations may use `background` state.
@@ -23601,7 +23601,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Web/provider GUI cards expose structured web_input operation input, TODO progress statuses,
+  Web/provider GUI cards expose structured operation_input as canonical operation input while
+  normalizing legacy web_input before rendering, TODO progress statuses,
   requested/effective runtime identity fields, exact provider class split
   account-backed|API-backed|no-key, QuestionItem-aligned question widgets, support tier,
   fallback disclosure, source count or scope summary, and warning or error text.
@@ -23630,7 +23631,8 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
 preserved_exact_tokens:
-- "web_input"
+- "operation_input"
+- "legacy web_input"
 - "pending | in_progress | completed | blocked | skipped"
 - "requested_account_binding"
 - "operational_identity"
@@ -23642,7 +23644,8 @@ preserved_exact_tokens:
 - "support tier"
 - "fallback disclosure"
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- "Legacy web_input normalizes to operation_input before GUI web cards render."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."

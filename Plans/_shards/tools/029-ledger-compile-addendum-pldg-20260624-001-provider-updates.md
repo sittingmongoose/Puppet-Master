@@ -2,9 +2,9 @@
 
 Source: `Plans/Tools.md`
 
-Source lines: L2405-L10868
+Source lines: L2409-L10873
 
-Source SHA256: `cbbb06892d4d407c00bc79c41c49c4f000d8f7ba4054dc8a8a0c86ae8e39819c`
+Source SHA256: `42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca`
 
 ---
 
@@ -1975,7 +1975,7 @@ acceptance_criteria:
 - TTL defaults, `cache_state`, and `execution_path` remain preserved.
 - The common result envelope and operation-specific extensions remain preserved.
 - Semantic audit `read` maps to the canonical `webfetch` tool.
-- '`web_input` remains the canonical structured routing/audit input.'
+- '`operation_input` is the canonical structured routing/audit input; legacy `web_input` normalizes to it.'
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
 - python3 scripts/pm-plan-index.py validate
@@ -2001,13 +2001,14 @@ preserved_exact_tokens:
 - pm_research_composed
 - 'provenance_badge?: string'
 - cache_state
-- web_input
-- web_input_preview
+- operation_input
+- operation_input_preview
 - denial_reason_code
 negative_constraints:
-- '`web_input_preview` must not replace structured `web_input`.'
+- '`operation_input_preview` must not replace structured `operation_input`.'
 preserved_contractrefs: []
 compatibility_only_notes:
+- Legacy `web_input` and `web_input_preview` normalize to `operation_input` and `operation_input_preview`.
 - Legacy child payload `blocked_reason_code?` aliases normalize to `denial_reason_code`.
 stale_retired_dispositions: []
 owner_hints:
@@ -7652,7 +7653,7 @@ plan_unit_id: T-146
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Tools.md
-canonical_text: Natural-language and slash web intents share dispatcher mappings, and cited web search performs search, selected
+canonical_text: Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents share dispatcher mappings, and cited web search performs search, selected
   read/fetch, then final cited answer.
 gui_related: false
 gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
@@ -7664,7 +7665,7 @@ depends_on:
 unblocks: []
 acceptance_criteria:
 - Reading intents resolve to `webfetch`, not `websearch`.
-- Command tables and routing docs mirror the same mappings.
+- Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard routes mirror the same command/tool mappings.
 - Provider helper names do not become PM-owned tool names.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits

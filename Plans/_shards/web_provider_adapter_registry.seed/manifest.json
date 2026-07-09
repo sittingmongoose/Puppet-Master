@@ -1,0 +1,68 @@
+{
+  "generated_at_utc": "2026-07-09T16:45:37Z",
+  "index_path": "Plans/_shards/web_provider_adapter_registry.seed/00-index.md",
+  "index_sha256": "06142787ad29a3e90850ff3189c2d87a388eba38e2828fe8ace94aa94267c7e6",
+  "manifest_path": "Plans/_shards/web_provider_adapter_registry.seed/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/web_provider_adapter_registry.seed/001-lines-1-200.md",
+      "sha256": "f4edf0ef46be431511547cc9ef5c16bdb3417fda847880f5abff619c603e4be8",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-400",
+      "path": "Plans/_shards/web_provider_adapter_registry.seed/002-lines-201-400.md",
+      "sha256": "a09d0c20c7e1240197310ca3db5b9f3d0047b59974b1a0ff7e7347f64016bf54",
+      "shard_id": "002",
+      "source_line_end": 400,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 401-600",
+      "path": "Plans/_shards/web_provider_adapter_registry.seed/003-lines-401-600.md",
+      "sha256": "15a9b6161742ba33606b619eaad0b46342cf3fedbc64402eec94022c61bb7b68",
+      "shard_id": "003",
+      "source_line_end": 600,
+      "source_line_start": 401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 601-800",
+      "path": "Plans/_shards/web_provider_adapter_registry.seed/004-lines-601-800.md",
+      "sha256": "1fcbceb88f2e0c03c1fb6d315a42a4b4d7fe700491717f2e4f0b5e923ca4751b",
+      "shard_id": "004",
+      "source_line_end": 800,
+      "source_line_start": 601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 801-1000",
+      "path": "Plans/_shards/web_provider_adapter_registry.seed/005-lines-801-1000.md",
+      "sha256": "2ead9b27b15dcf231f6b0db6da70108fdeab96a7212c9384d4bf4e80f078d2b1",
+      "shard_id": "005",
+      "source_line_end": 1000,
+      "source_line_start": 801,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 1001-1128",
+      "path": "Plans/_shards/web_provider_adapter_registry.seed/006-lines-1001-1128.md",
+      "sha256": "463af052247142b99cd04232dbf91c40b21270ed1f9b298297347d83611f7add",
+      "shard_id": "006",
+      "source_line_end": 1128,
+      "source_line_start": 1001,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 1128,
+    "path": "Plans/web_provider_adapter_registry.seed.json",
+    "sha256": "cdc3bc5fbef3ffc20a6e3c83d441549621da5d0d291b7a79524d9129aa2ab385"
+  }
+}

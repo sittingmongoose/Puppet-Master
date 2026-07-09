@@ -1777,7 +1777,7 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md#3.4
 
 Web-operation ref/blob storage uses `blob-ref` naming conventions for large payloads, registers per-tool `payload.meta` child fields for replay and audit joins, and binds cache storage to the web content cache structure plus the declared `TTL` retention table.
 
-Concrete web-operation storage registers the `payload.meta` child fields used by replay and audit without duplicating full result bodies. Common inline fields include `web_operation`, `web_input_preview`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `sources_ref?`, `result_quality_hint?`, `warnings_count?`, and `error_code?`. Operation child fields include `query_preview`, `/candidate`, and `results_count` for `websearch`; `url`, `/url/task`, `content_format?`, and `content_length_hint?` for `webextract`; `task_preview`, `/what`, `sources_used_count?`, and `answer_summary_ref?` for `webresearch`; `root_url`, `pages_visited_count?`, `pages_returned_count?`, `depth_limit?`, `max_pages?`, and `max_depth?` for `webcrawl`; and `root_url`, `nodes_count?`, `edges_count?`, `max_pages?`, and `max_depth?` for `webmap`.
+Concrete web-operation storage registers the `payload.meta` child fields used by replay and audit without duplicating full result bodies. Common inline fields include `web_operation`, `tool_id`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source`, `agent_reason?`, source IDs when present, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `sources_ref?`, `result_quality_hint?`, `warnings_count?`, and `error_code?`. Legacy `web_input` and `web_input_preview` normalize to `operation_input` and `operation_input_preview`; storage does not create a second structured input vocabulary. Operation child fields include `query_preview`, `/candidate`, and `results_count` for `websearch`; `url`, `final_url?`, `status?`, `formats_returned?`, `content_ref?`, `page_representation_ref?`, `browser_session_id?`, `cache_state?`, `read_receipt_refs?`, and `citation_refs?` for `webfetch` / semantic `read`; `url`, `/url/task`, `content_format?`, `content_length_hint?`, `content_ref?`, `extract_receipt_ref?`, and `citation_refs?` for `webextract`; `task_preview`, `/what`, `research_run_ref?`, `sources_used_count?`, `read_receipt_refs?`, `citation_refs?`, `subagent_refs?`, `closure_state?`, and `answer_summary_ref?` for `webresearch` and `deep_research`; `root_url`, `pages_visited_count?`, `pages_returned_count?`, `depth_limit?`, `max_pages?`, and `max_depth?` for `webcrawl`; and `root_url`, `nodes_count?`, `edges_count?`, `max_pages?`, and `max_depth?` for `webmap`.
 
 Web activity storage also preserves the web-operation `execution_path?: string` field when present so replay can distinguish `provider_search_native`, `provider_extract_native`, `pm_search_plus_site_reader`, `pm_site_reader`, `provider_firecrawl_scrape`, `pm_fetch_fallback`, `provider_firecrawl_agent`, and `pm_research_composed` routes without reading display labels.
 
@@ -1800,7 +1800,7 @@ Compact web activity cards may display provider-named labels such as `Searching 
 | `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
 | `detail_ref` | Inspection reference for drilldown payloads. |
 | `report_ref` | Inspection reference for report payloads. |
-| `web_input` | Structured web-operation input object for routing, audit, replay, and provenance joins; this is not a preview string. |
+| `operation_input` | Structured web-operation input object for routing, audit, replay, and provenance joins; this is not a preview string. Legacy `web_input` normalizes to this field and remains compatibility/source-lineage only. |
 | `result_quality_hint` | Web output quality hint with exact values `search_snippets_only`, `extracted_pages`, `site_reader_pages`, and `research_synthesis`; storage preserves it for replay and audit without deriving it from display labels. |
 | `provenance_badge` | Web provenance display/join badge using canonical underscore values `site_reader`, `search_snippet`, `site_extract`, `research_synthesis`, `crawl_result`, and `map_result`; `provider_scrape` is persisted only with the proposed-extension caveat from `Plans/Contracts_V0.md`. |
 
@@ -11787,7 +11787,10 @@ preserved_exact_tokens:
 - web content cache
 - TTL
 - web_operation
-- web_input_preview
+- operation_input_ref?
+- operation_input_preview?
+- invocation_source
+- agent_reason?
 - support_tier
 - execution_path
 - requested_adapter_id?
@@ -11806,14 +11809,17 @@ preserved_exact_tokens:
 - /candidate
 - results_count
 - websearch
+- webfetch
 - webextract
 - webresearch
+- deep_research
 - webcrawl
 - webmap
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions'
-compatibility_only_notes: []
+compatibility_only_notes:
+- Legacy `web_input_preview` normalizes to `operation_input_preview`.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/storage-plan.md
@@ -11890,7 +11896,7 @@ plan_unit_id: SP-164
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Activity payload records preserve runtime bridge fields for node, attempt, lane, package, execution role, account, operational identity, provider attempt, usage event, inspection refs, structured web_input, result quality, and provenance badge values.
+canonical_text: Activity payload records preserve runtime bridge fields for node, attempt, lane, package, execution role, account, operational identity, provider attempt, usage event, inspection refs, structured operation_input, result quality, and provenance badge values.
 gui_related: false
 gui_classification_reason: This unit preserves backend activity payload field-table semantics.
 split_recommended: false
@@ -11930,7 +11936,7 @@ preserved_exact_tokens:
 - usage_event_ref
 - detail_ref
 - report_ref
-- web_input
+- operation_input
 - Structured web-operation input object
 - result_quality_hint
 - search_snippets_only
@@ -11948,6 +11954,7 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions'
 compatibility_only_notes:
+- Legacy `web_input` normalizes to `operation_input`.
 - provider_scrape is persisted only with the proposed-extension caveat from Plans/Contracts_V0.md.
 stale_retired_dispositions: []
 owner_hints:

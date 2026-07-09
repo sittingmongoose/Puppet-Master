@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L690-L3407
+Source lines: L693-L3421
 
-Source SHA256: `6bbeb3202202950844a47a48ab5f9984340611e1eca4aae5aaab364d3af34020`
+Source SHA256: `f7aaca1cd05a7cdfbf63169869b4c53407c80cebe0b27e7437e4f8111a1c8255`
 
 ---
 
@@ -1961,7 +1961,11 @@ owner_doc: Plans/Commands_System.md
 canonical_text: >-
   The /web family remains one reserved slash-command family with bare /web
   opening help/autocomplete only, execution requiring explicit subcommands, and
-  stable cmd.chat.web.* IDs for search, fetch, extract, research, crawl, and map.
+  stable cmd.chat.web.* IDs for search, fetch, extract, research, crawl, and map;
+  slash, palette, natural-language, autonomous agent, subagent, Goal, PRD, and
+  Planning Wizard web/browser intents enter the same WebOperation / BrowserAction
+  dispatcher with invocation_source, optional agent_reason, and URL reads
+  normalized to webfetch.
 gui_related: false
 gui_classification_reason: Web slash parsing and command IDs are dispatcher semantics.
 split_recommended: true
@@ -1975,6 +1979,9 @@ acceptance_criteria:
   - The stale rule that bare /web with query routes to cmd.web.search by default is retired.
   - cmd.web.search is not the implicit destination for bare /web.
   - Stable command IDs include cmd.chat.web.search, cmd.chat.web.fetch, cmd.chat.web.extract, cmd.chat.web.research, cmd.chat.web.crawl, and cmd.chat.web.map.
+  - Slash, palette, natural-language, autonomous agent, subagent, Goal Runtime, PRD Builder, and Planning Wizard entrypoints converge on the same WebOperation / BrowserAction dispatcher.
+  - Dispatch records invocation_source, optional agent_reason, and source IDs before tool execution.
+  - URL reads normalize to cmd.chat.web.fetch / webfetch rather than websearch.
   - URL normalization applies and parse failure shows usage.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2003,6 +2010,10 @@ preserved_exact_tokens:
   - "cmd.chat.web.research"
   - "cmd.chat.web.crawl"
   - "cmd.chat.web.map"
+  - "WebOperation / BrowserAction dispatcher"
+  - "invocation_source"
+  - "agent_reason"
+  - "webfetch"
   - "bare /web shows help/autocomplete only"
 negative_constraints:
   - "Do not flatten /web into separate slash families."

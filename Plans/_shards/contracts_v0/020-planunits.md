@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L2916-L17159
+Source lines: L2916-L17166
 
-Source SHA256: `488d38eae813957cd89cf529244aa09ce7f7e05ad8aa1fbda47e07319d3cd205`
+Source SHA256: `4237e1c14fbacb969e3ce54fb0ac2c5742967fe20f28cc6c0acabb7a1241d4a5`
 
 ---
 
@@ -5104,7 +5104,7 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-### CV-105 - Web Input Quality And Provenance Badge Contract
+### CV-105 - Web Operation Input Quality And Provenance Badge Contract
 
 ```yaml
 plan_unit_id: CV-105
@@ -5112,7 +5112,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Web output preserves result_quality_hint, structured web_input, and
+  Web output preserves result_quality_hint, structured operation_input, and
   underscore provenance_badge values for stable joins across contracts, storage,
   and web activity displays, while provider_scrape remains a proposed extension
   caveat where narrowed locked sets are required.
@@ -5123,7 +5123,7 @@ depends_on: [CV-103]
 unblocks: [CV-112]
 acceptance_criteria:
   - result_quality_hint preserves search_snippets_only, extracted_pages, site_reader_pages, and research_synthesis.
-  - web_input remains a structured object for routing, audit, replay, and provenance joins.
+  - operation_input remains a structured object for routing, audit, replay, and provenance joins.
   - provenance_badge uses canonical underscore values for stable joins.
   - provider_scrape remains marked as a provider-specific proposed extension pending harmonization where narrowed locked sets are required.
 validation_surfaces:
@@ -5131,7 +5131,7 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: web_provenance_badge_drift
 reasoning_tier: high
-context_scope: web_input_quality_provenance_badge
+context_scope: web_operation_input_quality_provenance_badge
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
@@ -5147,14 +5147,15 @@ preserved_exact_tokens:
   - "`extracted_pages`"
   - "`site_reader_pages`"
   - "`research_synthesis`"
-  - "`web_input`"
+  - "`operation_input`"
   - "`provenance_badge`"
   - "`site_reader`"
   - "`provider_scrape`"
 compatibility_only_notes:
+  - "Legacy `web_input` normalizes to `operation_input`."
   - "provider_scrape is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization."
 negative_constraints:
-  - "web_input is not a preview string and must not be flattened into display text."
+  - "operation_input is not a preview string and must not be flattened into display text."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -5461,19 +5462,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Web operation payload.meta preserves invoked result hints and denial meta
-  fields as lightweight previews, counts, enum-like routing/provenance values,
-  and stable error codes for websearch, webextract, webresearch, webcrawl, and
-  webmap operations.
+  Web operation payload.meta preserves invoked result hints, operation_input
+  refs/previews, invocation provenance, and denial meta fields as lightweight
+  previews, counts, enum-like routing/provenance values, and stable error codes
+  for websearch, webfetch/read, webextract, webresearch/deep_research, webcrawl,
+  and webmap operations.
 gui_related: false
 gui_classification_reason: This unit defines event meta fields for web operations.
 split_recommended: true
 depends_on: [CV-105, CV-111]
 unblocks: [CV-113, CV-114]
 acceptance_criteria:
-  - tool.invoked.payload.meta preserves common web fields including web_operation, web_input_preview, support_tier, execution_path, adapter IDs, projection state, fallback flags, counts, quality hints, warnings, and error_code.
-  - Operation-specific hints are preserved for websearch, webextract, webresearch, webcrawl, and webmap.
-  - tool.denied.payload.meta preserves web operation, input preview, requested adapter, projection, blocked reason, allowed_action_ids[]?, and headless_denied?.
+  - tool.invoked.payload.meta preserves common web fields including web_operation, tool_id, operation_input_ref, operation_input_preview, invocation_source, support_tier, execution_path, adapter IDs, projection state, fallback flags, counts, quality hints, warnings, and error_code.
+  - Operation-specific hints are preserved for websearch, webfetch/read, webextract, webresearch/deep_research, webcrawl, and webmap.
+  - tool.denied.payload.meta preserves web operation, input preview, requested adapter, projection, denial_reason_code, allowed_action_ids[]?, and headless_denied?.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -5491,15 +5493,20 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0041
 preserved_exact_tokens:
   - "`web_operation`"
-  - "`web_input_preview`"
+  - "`operation_input_preview`"
+  - "`operation_input_ref`"
+  - "`invocation_source`"
   - "`support_tier`"
   - "`execution_path`"
   - "`projection_freshness?`"
   - "`provider_fallback_occurred`"
   - "`warnings_count?: number`"
-  - "`blocked_reason_code?`"
+  - "`denial_reason_code?`"
   - "`allowed_action_ids[]?`"
   - "`headless_denied?`"
+compatibility_only_notes:
+  - "`web_input` and `web_input_preview` normalize to `operation_input` and `operation_input_preview`."
+  - "Legacy web child payload `blocked_reason_code?` normalizes to `denial_reason_code?`."
 owner_hints:
   - Plans/Contracts_V0.md
 ```

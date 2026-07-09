@@ -2,9 +2,9 @@
 
 Source: `Plans/Multi-Account.md`
 
-Source lines: L834-L4677
+Source lines: L834-L4678
 
-Source SHA256: `3067bf530d8e578f1039547626650db7aad3272134b213d7f0218d24d1b0bd3e`
+Source SHA256: `da9e013f1ea114359b0f5f0680d5bbc25479d9b16fc679a04d51f31ea2ffb848`
 
 ---
 
@@ -2214,8 +2214,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: Gemini Direct usage/source expectations preserve source-qualified labels. API-key/local-only views use
-  source-qualified estimated wording, and source_confidence exposes whether quota pressure is authoritative, structured,
-  heuristic, or local-only. Legacy Gemini CLI family-usage and signal_confidence wording is compatibility/source-lineage only.
+  source-qualified estimated wording, source_confidence uses only high, medium, low, or unknown ordinal confidence values,
+  and authoritative, structured, heuristic, or local-only provenance is carried by source_authority, source_class, value/projection
+  state, or display copy. Legacy Gemini CLI family-usage and signal_confidence wording is compatibility/source-lineage only.
 gui_related: true
 gui_classification_reason: The unit defines user-visible Gemini usage labels and confidence disclosure.
 split_recommended: true

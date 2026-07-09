@@ -2,9 +2,9 @@
 
 Source: `Plans/00-plans-index.md`
 
-Source lines: L496-L579
+Source lines: L497-L594
 
-Source SHA256: `0ae73a65d17ec6a4616c9b671c80e7bc8cbd0445104a6f08f60f3f1978e35549`
+Source SHA256: `4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e`
 
 ---
 
@@ -91,4 +91,18 @@ Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-sh
 | `storage_value_registry.json` | [`Plans/_shards/storage_value_registry/00-index.md`](Plans/_shards/storage_value_registry/00-index.md) |
 | `non_executable_closure_evidence.schema.json` | [`Plans/_shards/non_executable_closure_evidence.schema/00-index.md`](Plans/_shards/non_executable_closure_evidence.schema/00-index.md) |
 | `non_executable_closure_evidence.json` | [`Plans/_shards/non_executable_closure_evidence/00-index.md`](Plans/_shards/non_executable_closure_evidence/00-index.md) |
+| `web_agent_policy_fixtures.json` | [`Plans/_shards/web_agent_policy_fixtures/00-index.md`](Plans/_shards/web_agent_policy_fixtures/00-index.md) |
+| `web_capability_findings_coverage.json` | [`Plans/_shards/web_capability_findings_coverage/00-index.md`](Plans/_shards/web_capability_findings_coverage/00-index.md) |
+| `web_capability_findings_coverage.schema.json` | [`Plans/_shards/web_capability_findings_coverage.schema/00-index.md`](Plans/_shards/web_capability_findings_coverage.schema/00-index.md) |
+| `web_capability_source_packet_receipt.json` | [`Plans/_shards/web_capability_source_packet_receipt/00-index.md`](Plans/_shards/web_capability_source_packet_receipt/00-index.md) |
+| `web_capability_source_packet_receipt.schema.json` | [`Plans/_shards/web_capability_source_packet_receipt.schema/00-index.md`](Plans/_shards/web_capability_source_packet_receipt.schema/00-index.md) |
+| `web_intent_routing_fixtures.json` | [`Plans/_shards/web_intent_routing_fixtures/00-index.md`](Plans/_shards/web_intent_routing_fixtures/00-index.md) |
+| `web_operation_card_fixtures.json` | [`Plans/_shards/web_operation_card_fixtures/00-index.md`](Plans/_shards/web_operation_card_fixtures/00-index.md) |
+| `web_operation_contracts.schema.json` | [`Plans/_shards/web_operation_contracts.schema/00-index.md`](Plans/_shards/web_operation_contracts.schema/00-index.md) |
+| `web_operation_job_fixtures.json` | [`Plans/_shards/web_operation_job_fixtures/00-index.md`](Plans/_shards/web_operation_job_fixtures/00-index.md) |
+| `web_policy_negative_fixtures.json` | [`Plans/_shards/web_policy_negative_fixtures/00-index.md`](Plans/_shards/web_policy_negative_fixtures/00-index.md) |
+| `web_policy_negative_fixtures.schema.json` | [`Plans/_shards/web_policy_negative_fixtures.schema/00-index.md`](Plans/_shards/web_policy_negative_fixtures.schema/00-index.md) |
+| `web_provider_adapter_registry.seed.json` | [`Plans/_shards/web_provider_adapter_registry.seed/00-index.md`](Plans/_shards/web_provider_adapter_registry.seed/00-index.md) |
+| `web_provider_projection_fixtures.json` | [`Plans/_shards/web_provider_projection_fixtures/00-index.md`](Plans/_shards/web_provider_projection_fixtures/00-index.md) |
+| `web_research_run_fixtures.json` | [`Plans/_shards/web_research_run_fixtures/00-index.md`](Plans/_shards/web_research_run_fixtures/00-index.md) |
 | `Release_Supply_Chain.md` | [`Plans/_shards/release_supply_chain/00-index.md`](Plans/_shards/release_supply_chain/00-index.md) |

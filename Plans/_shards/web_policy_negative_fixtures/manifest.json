@@ -1,0 +1,23 @@
+{
+  "generated_at_utc": "2026-07-09T16:45:37Z",
+  "index_path": "Plans/_shards/web_policy_negative_fixtures/00-index.md",
+  "index_sha256": "ff06f671ba3dbb5183d527396e333637b29000992f8e8e3e33e26fba3c12c43c",
+  "manifest_path": "Plans/_shards/web_policy_negative_fixtures/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-62",
+      "path": "Plans/_shards/web_policy_negative_fixtures/001-lines-1-62.md",
+      "sha256": "707cd02b6ce348b197fa9c13e81d1403b1e2e79ab6547bd7b877ff14336eee22",
+      "shard_id": "001",
+      "source_line_end": 62,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 62,
+    "path": "Plans/web_policy_negative_fixtures.json",
+    "sha256": "1d0b2f2c79cf0310030a42bbb5f201425f375dd73b4ed5a91c62b41fa3c23eb1"
+  }
+}

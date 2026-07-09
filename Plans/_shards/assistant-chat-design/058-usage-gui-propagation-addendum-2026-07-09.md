@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23561-L23635
+Source lines: L23568-L23642
 
-Source SHA256: `bd5b0c5cb02bdd93fdb204ad9e14ff65d3beba8942c13f0fddbe799977c2971d`
+Source SHA256: `dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67`
 
 ---
 
@@ -26,7 +26,7 @@ gui_classification_reason: Defines visible chat context, usage, compact, detail-
 depends_on: [ACD-092, ACD-410, UF-085, UF-086, UF-087, RAP-043]
 unblocks: []
 acceptance_criteria:
-  - Context circle hover displays provider-authoritative, estimated, stale, partial, unknown, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state and source_confidence, not chat-local math.
+  - Context circle hover displays provider authority, estimated cost or value state, stale projection state, partial settlement state, unknown confidence or value state, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state, projection state, settlement_status, cost_status, source_class, source_authority, and source_confidence values high, medium, low, or unknown, not chat-local math.
   - "`More Details` opens the editor-tab Context Detail Pane through route/open and preserves usage_event_ref plus attempt_id, provider_attempt_ref, node_id, tool_call_id, trace_ref, receipt refs, and raw_payload_ref when present."
   - "`Compact Now` dispatches only `cmd.chat.compact_context`, preserves the context epoch, and does not mutate or recompute historical UsageRecord totals."
   - Context Detail Pane displays cache_read, cache_write, cache_write_1h or cache_write_ttl, output_total, output_visible, reasoning/thoughts, provider_total, context_estimate, counting_semantics, settlement_status, and projection_freshness when present.

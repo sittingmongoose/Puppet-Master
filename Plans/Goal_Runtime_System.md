@@ -10,6 +10,8 @@ The Goal Runtime System is Puppet Master's native autonomous execution mode for 
 
 Goal Mode is general-purpose: user-facing Assistant Chat can invoke it for bugs, features, tests-until-pass, refactors, documentation, repository research, migrations, audits/repairs, and planning/doc transfer. Internal product flows such as future Planning Wizard ledger-to-Plans transfer use the same engine invisibly; legacy Chain Wizard transfer references are compatibility/source-lineage aliases only.
 
+Goal Mode may self-initiate `websearch`, `webfetch`, `webextract`, `webresearch`, `deep_research`, `webcrawl`, `webmap`, and Site Reader / BrowserAction evidence when current, external, URL, visual, dynamic-page, docs/issues/PR, comparison, research, or deep-research evidence matters. These calls go through the shared PM WebOperation/BrowserAction dispatcher, record `invocation_source` and `agent_reason`, obey the effective permission/no-network/egress policy, and render visible operation, progress, partial, denied, fallback, source, approval, session, or unavailable cards in the owning surface.
+
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md
 
 ## 1. Ownership And Consumers
@@ -21,6 +23,8 @@ Assistant Chat owns the visible chat controls and displays that project Goal Run
 FinalGUISpec owns GUI placement for settings surfaces, including the two Goal Mode model selections for worker and verifier/adjudicator roles.
 
 Planning Ledger, Plan Document, and Plan-To-Node docs remain owners for ledger records, PlanUnits, generated indexes, and the readiness-only compiler boundary. Goal Runtime may consume those contracts for ledger-to-Plans goals, but it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+When Goal Runtime is invoked by PRD Builder, Planning Wizard, Chain Wizard compatibility flows, or ledger-to-Plans transfer, web/browser evidence is source evidence only until an explicit compile/build phase. Read receipts, extract receipts, citations, browser artifacts, and research closure states may flow into ledger records, PRD source refs, PlanningRun evidence, PlanUnit source lineage, or Goal receipts, but they do not create implementation work or runtime dispatch by themselves.
 
 Permissions_System owns the global approval ladder and rule resolution. Goal Runtime owns the Goal-specific invocation rule: high-risk goal actions request explicit approval and invisible/internal goals block when outside predeclared authority.
 

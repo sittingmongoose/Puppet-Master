@@ -2,9 +2,9 @@
 
 Source: `Plans/Models_System.md`
 
-Source lines: L1429-L7464
+Source lines: L1429-L7473
 
-Source SHA256: `b090e5c05e26340ac11f6a4cd5bc3f5c52506bfe61005111f6e564c087207ba1`
+Source SHA256: `d450764365ab58d529afb744c047514616f51a82bdf31cc6fffb224edbd8e57b`
 
 ---
 
@@ -1693,8 +1693,11 @@ plan_unit_id: MS-032
 unit_type: consumer_alignment
 status: accepted
 owner_doc: Plans/Models_System.md
-canonical_text: Models_System mirrors web provider capability routing while preserving Site Reader as the default and primary
-  path and keeping Firecrawl, Tavily, Exa, and other providers as explicit fallback, alternative, or override routes.
+canonical_text: Models_System mirrors web provider capability routing from the PM WebProviderAdapterRegistry while preserving
+  Site Reader as the default and primary path and keeping Firecrawl, Tavily, Exa, Anthropic/OpenAI model-native search,
+  Google-compatible adapters, DuckDuckGo, MCP projections, and coding-agent bridge routes as explicit fallback, alternative,
+  or override routes with credential refs, support tier, health, cost/cache, egress policy, and projection state rather than
+  raw secrets or competing provider truth.
 gui_related: false
 gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
   behavior rather than direct GUI presentation.
@@ -1705,6 +1708,7 @@ acceptance_criteria:
 - Covered source spans remain losslessly available for exact-text audit.
 - The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
 - Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- Model/provider catalog rows that expose web capability mirror registry adapter IDs, operation support, model-native availability, and projection state; they do not create a separate web provider dependency graph.
 - No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
 validation_surfaces:
 - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1725,9 +1729,14 @@ preserved_exact_tokens:
 - Firecrawl
 - Tavily
 - Exa
+- Anthropic/OpenAI model-native search
+- Google-compatible adapters
+- DuckDuckGo
+- WebProviderAdapterRegistry
 - fallback/alternative paths
 negative_constraints:
 - Firecrawl, Tavily, and Exa webfetch capability must not be flattened to fallback-only merely because Site Reader is preferred.
+- Do not make provider/model catalog rows the source of truth for web adapter capability, secrets, egress policy, or MCP projection state.
 compatibility_only_notes: []
 stale_retired_dispositions: []
 owner_boundary_notes:

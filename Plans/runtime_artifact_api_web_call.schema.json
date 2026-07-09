@@ -1,1 +1,1045 @@
-{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"pm.runtime_artifact.api_web_call.schema.v1","title":"Runtime Artifact api_web_call","type":"object","additionalProperties":false,"required":["schema_id","artifact_id","artifact_type","project_id","run_id","attempt_id","created_at_utc","projection_freshness","projection_health","retention_class","routing_refs","type_payload"],"properties":{"schema_id":{"type":"string","const":"pm.runtime_artifact.api_web_call.schema.v1"},"artifact_id":{"type":"string","minLength":1},"artifact_type":{"type":"string","const":"api_web_call"},"project_id":{"type":"string","minLength":1},"run_id":{"type":"string","minLength":1},"attempt_id":{"type":"string","minLength":1},"thread_id":{"type":"string"},"node_id":{"type":"string"},"provider_attempt_ref":{"type":"string"},"usage_event_ref":{"type":"string"},"receipt_refs":{"type":"array","items":{"type":"string","minLength":1}},"producer_ref":{"type":"string"},"actor_ref":{"type":"string"},"created_at_utc":{"type":"string","minLength":1},"summary":{"type":"string"},"detail_ref":{"type":"string"},"content_ref":{"type":"string"},"source_surface":{"type":"string"},"projection_freshness":{"type":"string"},"projection_health":{"type":"string"},"retention_class":{"type":"string"},"routing_refs":{"type":"array","minItems":1,"items":{"type":"string","minLength":1}},"type_payload":{"type":"object","minProperties":1}}}
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.runtime_artifact.api_web_call.schema.v1",
+  "title": "Runtime Artifact api_web_call",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "artifact_id",
+    "artifact_type",
+    "project_id",
+    "run_id",
+    "attempt_id",
+    "created_at_utc",
+    "projection_freshness",
+    "projection_health",
+    "retention_class",
+    "routing_refs",
+    "type_payload"
+  ],
+  "properties": {
+    "schema_id": {
+      "type": "string",
+      "const": "pm.runtime_artifact.api_web_call.schema.v1"
+    },
+    "artifact_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_type": {
+      "type": "string",
+      "const": "api_web_call"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attempt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "thread_id": {
+      "type": "string"
+    },
+    "node_id": {
+      "type": "string"
+    },
+    "provider_attempt_ref": {
+      "type": "string"
+    },
+    "usage_event_ref": {
+      "type": "string"
+    },
+    "receipt_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "producer_ref": {
+      "type": "string"
+    },
+    "actor_ref": {
+      "type": "string"
+    },
+    "created_at_utc": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string"
+    },
+    "detail_ref": {
+      "type": "string"
+    },
+    "content_ref": {
+      "type": "string"
+    },
+    "source_surface": {
+      "type": "string"
+    },
+    "projection_freshness": {
+      "type": "string"
+    },
+    "projection_health": {
+      "type": "string"
+    },
+    "retention_class": {
+      "type": "string"
+    },
+    "routing_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "type_payload": {
+      "$ref": "#/$defs/ApiWebCallPayload"
+    }
+  },
+  "$defs": {
+    "InvocationProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "invocation_source": {
+                "enum": [
+                  "agent_initiated",
+                  "goal",
+                  "prd",
+                  "planning_wizard",
+                  "subagent"
+                ]
+              }
+            },
+            "required": [
+              "invocation_source"
+            ]
+          },
+          "then": {
+            "required": [
+              "agent_reason"
+            ]
+          }
+        }
+      ],
+      "required": [
+        "invocation_source"
+      ],
+      "properties": {
+        "invocation_source": {
+          "type": "string",
+          "enum": [
+            "slash",
+            "palette",
+            "nl_user",
+            "agent_initiated",
+            "goal",
+            "prd",
+            "planning_wizard",
+            "subagent"
+          ]
+        },
+        "agent_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_user_message_id": {
+          "type": "string"
+        },
+        "source_goal_id": {
+          "type": "string"
+        },
+        "source_subagent_id": {
+          "type": "string"
+        },
+        "source_prd_id": {
+          "type": "string"
+        },
+        "source_planning_run_id": {
+          "type": "string"
+        }
+      }
+    },
+    "BrowserActionInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action_type"
+      ],
+      "properties": {
+        "action_type": {
+          "type": "string",
+          "enum": [
+            "navigate",
+            "back",
+            "reload",
+            "refresh",
+            "observe",
+            "find",
+            "detail",
+            "snapshot",
+            "screenshot",
+            "pdf",
+            "console",
+            "network",
+            "open_tab",
+            "select_tab",
+            "close_tab",
+            "click",
+            "scroll",
+            "type",
+            "fill_form",
+            "select_option",
+            "hover",
+            "drag",
+            "press_key",
+            "upload_file",
+            "handle_dialog",
+            "wait_for",
+            "verify_text",
+            "verify_element",
+            "verify_value",
+            "set_viewport"
+          ]
+        },
+        "input_action_label": {
+          "type": "string",
+          "enum": [
+            "navigate",
+            "back",
+            "reload",
+            "refresh",
+            "observe",
+            "find",
+            "detail",
+            "snapshot",
+            "screenshot",
+            "PDF",
+            "pdf",
+            "console",
+            "network",
+            "open_tab",
+            "select_tab",
+            "close_tab",
+            "click",
+            "scroll",
+            "type",
+            "fill form",
+            "fill_form",
+            "select option",
+            "select_option",
+            "hover",
+            "drag",
+            "press key",
+            "press_key",
+            "file upload",
+            "upload_file",
+            "dialog handle",
+            "handle_dialog",
+            "wait",
+            "wait_for",
+            "verify visible text",
+            "verify text",
+            "verify_text",
+            "verify element",
+            "verify_element",
+            "verify value",
+            "verify_value",
+            "set_viewport"
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "tab_id": {
+          "type": "string"
+        },
+        "selector": {
+          "type": "string"
+        },
+        "locator_ref": {
+          "type": "string"
+        },
+        "query": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "form_values": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "option_value": {
+          "type": "string"
+        },
+        "file_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dialog_action": {
+          "type": "string",
+          "enum": [
+            "accept",
+            "dismiss"
+          ]
+        },
+        "x": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "timeout_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "verification_expected": {
+          "type": "string"
+        },
+        "verification_ref": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "CachePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_age_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "store": {
+          "type": "boolean"
+        },
+        "cache_key_ref": {
+          "type": "string"
+        },
+        "redaction_profile_id": {
+          "type": "string"
+        }
+      }
+    },
+    "WebSearchInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "web_operation",
+        "tool_id",
+        "query"
+      ],
+      "properties": {
+        "web_operation": {
+          "const": "search"
+        },
+        "tool_id": {
+          "const": "websearch"
+        },
+        "query": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adapter_hint": {
+          "type": "string"
+        },
+        "max_results": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "include_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "time_range": {
+          "type": "string"
+        },
+        "cache_policy": {
+          "$ref": "#/$defs/CachePolicy"
+        }
+      }
+    },
+    "WebFetchInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "web_operation",
+        "tool_id",
+        "url"
+      ],
+      "properties": {
+        "web_operation": {
+          "const": "read"
+        },
+        "tool_id": {
+          "const": "webfetch"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adapter_hint": {
+          "type": "string"
+        },
+        "formats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pdf_mode": {
+          "type": "string",
+          "enum": [
+            "fast",
+            "auto",
+            "ocr"
+          ]
+        },
+        "cache_policy": {
+          "$ref": "#/$defs/CachePolicy"
+        }
+      }
+    },
+    "WebExtractInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "web_operation",
+        "tool_id",
+        "url"
+      ],
+      "properties": {
+        "web_operation": {
+          "const": "extract"
+        },
+        "tool_id": {
+          "const": "webextract"
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adapter_hint": {
+          "type": "string"
+        },
+        "detail_hint": {
+          "type": "string",
+          "enum": [
+            "fast",
+            "balanced",
+            "deep"
+          ]
+        },
+        "schema_ref": {
+          "type": "string"
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "schema_mode": {
+          "type": "string",
+          "enum": [
+            "strict",
+            "lenient"
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/BrowserActionInput"
+          }
+        },
+        "actions_total_timeout_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 30000
+        }
+      }
+    },
+    "WebResearchInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "web_operation",
+        "tool_id",
+        "task"
+      ],
+      "properties": {
+        "web_operation": {
+          "type": "string",
+          "enum": [
+            "research",
+            "deep_research"
+          ]
+        },
+        "tool_id": {
+          "const": "webresearch"
+        },
+        "task": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adapter_hint": {
+          "type": "string"
+        },
+        "research_mode": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "deep"
+          ]
+        },
+        "depth_hint": {
+          "type": "string",
+          "enum": [
+            "fast",
+            "balanced",
+            "deep"
+          ]
+        },
+        "max_sources": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "auto_read_cap": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "autonomous": {
+          "type": "boolean"
+        },
+        "starting_urls": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "string"
+          }
+        },
+        "schema_ref": {
+          "type": "string"
+        },
+        "schema_mode": {
+          "type": "string",
+          "enum": [
+            "strict",
+            "lenient"
+          ]
+        }
+      }
+    },
+    "WebTraversalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "web_operation",
+        "tool_id",
+        "root_url"
+      ],
+      "properties": {
+        "web_operation": {
+          "type": "string",
+          "enum": [
+            "crawl",
+            "map"
+          ]
+        },
+        "tool_id": {
+          "type": "string",
+          "enum": [
+            "webcrawl",
+            "webmap"
+          ]
+        },
+        "root_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "adapter_hint": {
+          "type": "string"
+        },
+        "max_pages": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_depth": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "same_origin_only": {
+          "type": "boolean"
+        },
+        "include_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude_paths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "respect_robots": {
+          "type": "boolean"
+        },
+        "dedup": {
+          "type": "boolean"
+        },
+        "search": {
+          "type": "string"
+        }
+      }
+    },
+    "ProviderSupportTier": {
+      "type": "string",
+      "enum": ["native", "model_native", "native_ish", "near_native", "pm_composed", "partial", "fallback_only", "unsupported", "unavailable"]
+    },
+    "WebOperationJob": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": ["completed", "failed", "cancelled", "timeout"]
+              }
+            },
+            "required": ["status"]
+          },
+          "then": {"required": ["finished_at_utc"]}
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": ["failed", "timeout"]
+              }
+            },
+            "required": ["status"]
+          },
+          "then": {"required": ["failure_reason_code"]}
+        }
+      ],
+      "required": ["job_id", "web_operation", "tool_id", "invocation", "status", "created_at_utc", "not_runtime_queue"],
+      "properties": {
+        "job_id": {"type": "string", "minLength": 1},
+        "web_operation": {"type": "string", "enum": ["search", "read", "extract", "research", "deep_research", "crawl", "map"]},
+        "tool_id": {"type": "string", "enum": ["websearch", "webfetch", "webextract", "webresearch", "webcrawl", "webmap"]},
+        "invocation": {"$ref": "#/$defs/InvocationProvenance"},
+        "provider_job_id": {"type": "string"},
+        "provider_adapter_id": {"type": "string"},
+        "status": {"type": "string", "enum": ["queued", "polling", "running", "partial", "completed", "failed", "cancelled", "timeout", "denied"]},
+        "status_source": {"type": "string", "enum": ["pm_composed", "provider_poll", "provider_webhook", "browser_runtime"]},
+        "poll_ref": {"type": "string"},
+        "progress_ref": {"type": "string"},
+        "partial_result_ref": {"type": "string"},
+        "result_ref": {"type": "string"},
+        "permission_snapshot_id": {"type": "string"},
+        "cache_ref": {"type": "string"},
+        "redaction_profile_id": {"type": "string"},
+        "timeout_ms": {"type": "integer", "minimum": 0},
+        "created_at_utc": {"type": "string", "minLength": 1},
+        "updated_at_utc": {"type": "string"},
+        "finished_at_utc": {"type": "string"},
+        "failure_reason_code": {"type": "string"},
+        "cancelled": {"type": "boolean"},
+        "not_runtime_queue": {"type": "boolean", "const": true}
+      }
+    },
+    "WebActionInput": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/WebSearchInput"
+        },
+        {
+          "$ref": "#/$defs/WebFetchInput"
+        },
+        {
+          "$ref": "#/$defs/WebExtractInput"
+        },
+        {
+          "$ref": "#/$defs/WebResearchInput"
+        },
+        {
+          "$ref": "#/$defs/WebTraversalInput"
+        }
+      ]
+    },
+    "ApiWebCallPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": ["web_operation", "tool_id", "operation_input"],
+              "properties": {
+                "web_operation": {"const": "search"},
+                "tool_id": {"const": "websearch"},
+                "operation_input": {"$ref": "#/$defs/WebSearchInput"}
+              }
+            },
+            {
+              "required": ["web_operation", "tool_id", "operation_input"],
+              "properties": {
+                "web_operation": {"const": "read"},
+                "tool_id": {"const": "webfetch"},
+                "operation_input": {"$ref": "#/$defs/WebFetchInput"}
+              }
+            },
+            {
+              "required": ["web_operation", "tool_id", "operation_input"],
+              "properties": {
+                "web_operation": {"const": "extract"},
+                "tool_id": {"const": "webextract"},
+                "operation_input": {"$ref": "#/$defs/WebExtractInput"}
+              }
+            },
+            {
+              "required": ["web_operation", "tool_id", "operation_input"],
+              "properties": {
+                "web_operation": {"const": "research"},
+                "tool_id": {"const": "webresearch"},
+                "operation_input": {
+                  "allOf": [
+                    {"$ref": "#/$defs/WebResearchInput"},
+                    {"properties": {"web_operation": {"const": "research"}, "research_mode": {"enum": ["standard"]}}}
+                  ]
+                }
+              }
+            },
+            {
+              "required": ["web_operation", "tool_id", "operation_input"],
+              "properties": {
+                "web_operation": {"const": "deep_research"},
+                "tool_id": {"const": "webresearch"},
+                "operation_input": {
+                  "allOf": [
+                    {"$ref": "#/$defs/WebResearchInput"},
+                    {"properties": {"web_operation": {"const": "deep_research"}, "research_mode": {"const": "deep"}}}
+                  ]
+                }
+              }
+            },
+            {
+              "required": ["web_operation", "tool_id", "operation_input"],
+              "properties": {
+                "web_operation": {"const": "crawl"},
+                "tool_id": {"const": "webcrawl"},
+                "operation_input": {
+                  "allOf": [
+                    {"$ref": "#/$defs/WebTraversalInput"},
+                    {"properties": {"web_operation": {"const": "crawl"}, "tool_id": {"const": "webcrawl"}}}
+                  ]
+                }
+              }
+            },
+            {
+              "required": ["web_operation", "tool_id", "operation_input"],
+              "properties": {
+                "web_operation": {"const": "map"},
+                "tool_id": {"const": "webmap"},
+                "operation_input": {
+                  "allOf": [
+                    {"$ref": "#/$defs/WebTraversalInput"},
+                    {"properties": {"web_operation": {"const": "map"}, "tool_id": {"const": "webmap"}}}
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "if": {
+            "properties": {
+              "success": {"const": true},
+              "web_operation": {"const": "read"}
+            },
+            "required": ["success", "web_operation"]
+          },
+          "then": {"required": ["content_ref", "read_receipt_refs"]}
+        },
+        {
+          "if": {
+            "properties": {
+              "success": {"const": true},
+              "web_operation": {"const": "extract"}
+            },
+            "required": ["success", "web_operation"]
+          },
+          "then": {"required": ["content_ref", "citation_refs"]}
+        },
+        {
+          "if": {
+            "properties": {
+              "success": {"const": true},
+              "web_operation": {"enum": ["research", "deep_research"]}
+            },
+            "required": ["success", "web_operation"]
+          },
+          "then": {
+            "required": ["sources_ref", "answer_summary_ref"],
+            "anyOf": [
+              {"required": ["research_run_ref"]},
+              {"required": ["read_receipt_refs", "citation_refs"]}
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "invocation": {
+                "properties": {
+                  "invocation_source": {
+                    "enum": ["prd", "planning_wizard"]
+                  }
+                },
+                "required": ["invocation_source"]
+              }
+            },
+            "required": ["invocation"]
+          },
+          "then": {
+            "anyOf": [
+              {"required": ["ledger_source_evidence_ref"]},
+              {"required": ["plan_source_evidence_ref"]}
+            ]
+          }
+        }
+      ],
+      "required": [
+        "source_system",
+        "redacted_request_ref",
+        "redacted_response_ref",
+        "web_operation",
+        "tool_id",
+        "operation_input",
+        "invocation",
+        "success",
+        "provider_fallback_occurred"
+      ],
+      "properties": {
+        "source_system": {
+          "type": "string",
+          "minLength": 1
+        },
+        "redacted_request_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "redacted_response_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "web_operation": {
+          "type": "string",
+          "enum": [
+            "search",
+            "read",
+            "extract",
+            "research",
+            "deep_research",
+            "crawl",
+            "map"
+          ]
+        },
+        "tool_id": {
+          "type": "string",
+          "enum": [
+            "websearch",
+            "webfetch",
+            "webextract",
+            "webresearch",
+            "webcrawl",
+            "webmap"
+          ]
+        },
+        "operation_input": {
+          "$ref": "#/$defs/WebActionInput"
+        },
+        "invocation": {
+          "$ref": "#/$defs/InvocationProvenance"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "support_tier": {
+          "$ref": "#/$defs/ProviderSupportTier"
+        },
+        "execution_path": {
+          "type": "string"
+        },
+        "requested_adapter_id": {
+          "type": "string"
+        },
+        "effective_adapter_id": {
+          "type": "string"
+        },
+        "adapter_selection_reason": {
+          "type": "string"
+        },
+        "provider_fallback_occurred": {
+          "type": "boolean"
+        },
+        "provider_fallback_summary": {
+          "type": "string"
+        },
+        "source_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sources_ref": {
+          "type": "string"
+        },
+        "answer_summary_ref": {
+          "type": "string"
+        },
+        "research_run_ref": {
+          "type": "string"
+        },
+        "ledger_source_evidence_ref": {
+          "type": "string"
+        },
+        "plan_source_evidence_ref": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "content_ref": {
+          "type": "string"
+        },
+        "map_ref": {
+          "type": "string"
+        },
+        "scope_summary": {
+          "type": "string"
+        },
+        "pages_visited_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pages_returned_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nodes_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "edges_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sitemap_used": {
+          "type": "boolean"
+        },
+        "page_representation_ref": {
+          "type": "string"
+        },
+        "browser_session_id": {
+          "type": "string"
+        },
+        "cache_state": {
+          "type": "string",
+          "enum": [
+            "hit",
+            "miss",
+            "bypassed",
+            "stored",
+            "not_stored"
+          ]
+        },
+        "read_receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "citation_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "denial_reason_code": {
+          "type": "string"
+        },
+        "job_ref": {
+          "type": "string"
+        },
+        "job": {
+          "$ref": "#/$defs/WebOperationJob"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "error_code": {
+          "type": "string"
+        },
+        "error_message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

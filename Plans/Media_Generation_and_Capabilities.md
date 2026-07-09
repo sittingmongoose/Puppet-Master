@@ -524,7 +524,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
     "usage_record_id": "usr_media_req_20260301_a1b2c3d4",
     "usage_event_ref": "usage_event://project/current/run/run_20260301/attempt/attempt_media_0001",
     "source_class": "provider_reported",
-    "source_confidence": "estimated",
+    "source_confidence": "high",
     "source_authority": "provider_receipt",
     "settlement_status": "observed",
     "cost_status": "estimated",

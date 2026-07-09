@@ -8,27 +8,27 @@
     {
       "note": "Primary Persona owner repair.",
       "path": "Plans/Personas.md",
-      "sha256": "be34262ec620936b9b92e011d201c2e09780ddbaeff24ddea1490891b9b97493"
+      "sha256": "435cc1de310cbdca24e7e092cdaf51c3be06f2dde1cbae0d42df448609bfb0db"
     },
     {
       "note": "Plan/Deep Plan post-plan owner repair.",
       "path": "Plans/assistant-chat-design.md",
-      "sha256": "bd5b0c5cb02bdd93fdb204ad9e14ff65d3beba8942c13f0fddbe799977c2971d"
+      "sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67"
     },
     {
       "note": "Requirements Builder drafting Persona clarification.",
       "path": "Plans/chain-wizard-flexibility.md",
-      "sha256": "97ca3ca0ab23491371276606a2d603882f4feb323489ec27fc266110e3b8e6a3"
+      "sha256": "15df9ed3508b90683979c3b365810cd89cba46ef428dc390c6a6e969e33f5058"
     },
     {
       "note": "Stale document-writer fallback cleanup.",
       "path": "Plans/orchestrator-subagent-integration.md",
-      "sha256": "74c0ccbef90588d03db0d6aa5c122423455ff151db62ff8a3db09791ed1283af"
+      "sha256": "2bde7668eabbbcef6d6f10401afba7c7b841e220af3ef0db6fef035d11e6844a"
     },
     {
       "note": "Index protected core summary repair.",
       "path": "Plans/00-plans-index.md",
-      "sha256": "0ae73a65d17ec6a4616c9b671c80e7bc8cbd0445104a6f08f60f3f1978e35549"
+      "sha256": "4eefdf9546cfd489c71e58fb020fe39e5df1fff2aeb0941d6eb77d43f26c9c9e"
     },
     {
       "note": "Glossary protected core summary repair.",
@@ -63,22 +63,22 @@
     {
       "note": "Schema-valid repair decision row.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "797794d7ae32cc1b6df7cd603d9d400e68d3dc3aeac7625f75a4b06ff32e20ac"
+      "sha256": "4e68dee324561ae79842570e010d9aa0052e5e9edce1a10edba0b19f861a78ca"
     },
     {
       "note": "P6 node repair refs.",
       "path": "Plans/plan_graph.json",
-      "sha256": "556f1937f1319bd47e0e1bee09825b9dcaca4a66c940d2b2e226e024c0a73f18"
+      "sha256": "93e850ac3d380d0e6591f59f23fc8eef9067c914d686b1fe631489cf9f6e7e40"
     },
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "05c14cf736262b9c07ab1f23c048dc6740d14c1919e1788d86f7bb413b28abf0"
+      "sha256": "dfe5a146e4cb8124281effd727c53bb72e644dd06d3b6986e674fa6ab2efcd3f"
     },
     {
       "note": "Shard regeneration report.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "4ddd47cfd7d5be2a9dc046459df3cf5f41f2c03e053c57ac40f574ff41aad1bb"
+      "sha256": "dfbddbe68eff0045c51be1ff0f8e251eddf2037906abd6f59922b6af93a62f14"
     },
     {
       "note": "File Manager/Editor P6 ledger metadata closed as audit-only source-lineage memory.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "8dff0f8fe70f739d1cf0625d350b83dc8f3e1603f8e75421f2a59da171233f7a"
+      "sha256": "30c4e5fc3ce7335c3989180c5900a926669993aa7da6f0d3c9678f2f5f81d354"
     }
   ],
   "checks": [
@@ -786,6 +786,18 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-web-capability-contracts",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-contract-drift",
       "exit_code": 0
     }
   ],

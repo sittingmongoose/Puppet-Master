@@ -397,8 +397,8 @@ When a user responds `always` to an `ask` prompt (§6.2), the system derives a s
 
 - **bash:** The command prefix (first word + space + `*`). Example: invocation `git commit -m "fix"` → pattern `"git *"`.
 - **edit/read/glob/grep:** The directory prefix (`<dir>/**`). Example: invocation path `src/auth/login.rs` → pattern `"src/auth/**"`.
-- **webfetch/websearch:** The domain (`https://<domain>/*`). Example: URL `https://docs.rs/tokio/latest` → pattern `"https://docs.rs/*"`.
-- **webextract/webresearch/webcrawl/webmap:** the normalized target origin and scope. Single-target extraction uses the concrete URL origin (`https://<domain>/*`); bounded crawl/map rules use the approved origin plus an explicit crawl-scope discriminator, never a naked wildcard.
+- **websearch/webresearch:** Wildcard discovery scope (`*`) or query/task-category scope when the advanced matcher is implemented, because the URL set is not known before discovery. The wildcard is tool-scoped and never grants unrelated network, file, shell, or mutation authority.
+- **webfetch/webextract/webcrawl/webmap:** The normalized target origin and scope. Single-target reads and extraction use the concrete URL origin (`https://<domain>/*`); bounded crawl/map rules use the approved root origin plus an explicit crawl-scope discriminator, never a naked wildcard.
 - Web approval pre-population is deterministic: `websearch` and `webresearch` pre-populate `*`; `webfetch` and `webextract` pre-populate `https://<actual-host>/*` derived from the URL; `webcrawl` and `webmap` pre-populate `https://<actual-root-host>/*` derived from `root_url`. The `/suggest` value is a user-editable pre-population convenience, not a lock.
 
 The suggested pattern is displayed to the user during approval confirmation. The user MAY edit the pattern before a durable project/global rule is created, but the canonical approval anchor remains `approval_scope_key` plus blocked-episode identity rather than a UI session id.
@@ -414,6 +414,10 @@ For canonical permission-key derivation, web operations use normalized suffixes 
 Default web-operation posture remains `ask` where network web tools are enabled: `webextract`, `webresearch`, `webcrawl`, and `webmap` are explicit permission keys alongside `webfetch` and `websearch`. Extract/crawl/map approvals use granular URL/domain pattern rules; search/research may use query/task pattern rules only when the advanced matcher is implemented. Crawl/map fan-out must be visible in permission cards and audit payloads rather than hidden behind generic `webfetch`.
 
 For any URL-derived web key, the runtime MUST extract the host, normalize it to the registrable domain, and use that canonical domain in the derived key. Example: `docs.example.com` normalizes to `example.com`.
+
+Before any URL-derived web operation dispatches, the WebOperation permission check consumes the effective WebEgressPolicy: redirect policy, timeout/abort policy, proxy/trust policy, DNS-rebind check, SSRF/private-host/localhost policy, robots policy, crawl fanout/depth caps, cache/no-secret policy, and redaction profile. Private hosts, link-local IPs, localhost, file URLs, internal metadata endpoints, and DNS rebinding outcomes deny by default unless an explicit configured-provider endpoint or user-approved private-host policy applies. Robots denial, fanout cap, depth cap, cache bypass, and redaction-before-display outcomes are recorded as permission/audit evidence and surfaced in operation, denied, partial, approval, session, or batch cards.
+
+WebOperation permission decisions are standalone receipts as well as nested operation metadata: each receipt preserves `permission_snapshot_id`, `decision`, `invocation_source`, optional `agent_reason`, and `tool_use_id` or `invocation_ref` so approval, denial, resumed, and headless-denied cards can explain whether the operation came from slash, palette, natural language, agent initiative, Goal Runtime, PRD Builder, Planning Wizard, or subagent work.
 
 Wildcard matching for preset and policy authoring MAY use `web*:*` to represent all web-operation permission keys as a family. This wildcard is valid for preset definitions and other broad-scope policy surfaces but does not change the requirement that concrete approvals resolve to normalized derived keys.
 

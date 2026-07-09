@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L3761-L24610
+Source lines: L3761-L24613
 
-Source SHA256: `7236ee5f73d5999720dab50565a293e5e396ce8833679acb4b42393e21a9c585`
+Source SHA256: `2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5`
 
 ---
 
@@ -19851,7 +19851,8 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: >-
-  Web/provider GUI cards expose structured web_input operation input, TODO progress statuses,
+  Web/provider GUI cards expose structured operation_input as canonical operation input while
+  normalizing legacy web_input before rendering, TODO progress statuses,
   requested/effective runtime identity fields, exact provider class split
   account-backed|API-backed|no-key, QuestionItem-aligned question widgets, support tier,
   fallback disclosure, source count or scope summary, and warning or error text.
@@ -19880,7 +19881,8 @@ node_compile_hint:
 source_lineage:
 - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
 preserved_exact_tokens:
-- "web_input"
+- "operation_input"
+- "legacy web_input"
 - "pending | in_progress | completed | blocked | skipped"
 - "requested_account_binding"
 - "operational_identity"
@@ -19892,7 +19894,8 @@ preserved_exact_tokens:
 - "support tier"
 - "fallback disclosure"
 negative_constraints: []
-compatibility_only_notes: []
+compatibility_only_notes:
+- "Legacy web_input normalizes to operation_input before GUI web cards render."
 stale_retired_dispositions: []
 owner_boundary_notes:
 - "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."

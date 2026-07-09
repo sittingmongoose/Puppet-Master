@@ -231,6 +231,7 @@ Reconciliation readiness is classified instead of treated as one undifferentiate
 #### Artifact envelope routing preference
 - Cost-bearing artifact routing prefers `usage_event_ref` instead of timestamp heuristics when linking to Usage and Ledger.
 - Runtime artifacts that summarize external operations must carry receipt linkage.
+- Orchestrator may self-initiate read-only web/search/fetch/extract/research/deep-research/crawl/map work only when orchestration needs current or external source verification, issue/PR/docs currentness, or visual/dynamic browser evidence. These calls route through the PM WebOperation/BrowserAction dispatcher, not through slash-help-only command discovery, and use `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, or `BrowserAction/Site Reader` with `invocation_source = goal`, required `agent_reason`, permission/capability gates, visible operation cards, and `orchestrator_evidence_receipts`. Orchestrator web evidence does not create WorkNodes, NodeSeeds, runtime queues, implementation files, or build tasks; it records source/evidence receipts for the current GoalRun or blocked-state decision.
 
 #### External runtime receipt and blocked-state pivots
 - Orchestrator remains the page-level recovery owner for blocked flows, while Source Control, GitHub Actions, Docker Manager, and Docker Manager Kubernetes views mirror the same blocked episode, same `blocked_reason_code`, same ordered `allowed_action_ids[]`, same requested/effective state, and same explanation text.

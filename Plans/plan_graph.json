@@ -80,7 +80,21 @@
         "ContractName:Plans/Release_Supply_Chain.md",
         "ContractName:Plans/event_record.schema.json",
         "ContractName:Plans/.implementation_readiness/non_executable_closure_evidence.schema.json",
-        "ContractName:Plans/.implementation_readiness/non_executable_closure_evidence.json"
+        "ContractName:Plans/.implementation_readiness/non_executable_closure_evidence.json",
+        "ContractName:Plans/web_agent_policy_fixtures.json",
+        "ContractName:Plans/web_capability_findings_coverage.json",
+        "ContractName:Plans/web_capability_findings_coverage.schema.json",
+        "ContractName:Plans/web_capability_source_packet_receipt.json",
+        "ContractName:Plans/web_capability_source_packet_receipt.schema.json",
+        "ContractName:Plans/web_intent_routing_fixtures.json",
+        "ContractName:Plans/web_operation_card_fixtures.json",
+        "ContractName:Plans/web_operation_contracts.schema.json",
+        "ContractName:Plans/web_operation_job_fixtures.json",
+        "ContractName:Plans/web_policy_negative_fixtures.json",
+        "ContractName:Plans/web_policy_negative_fixtures.schema.json",
+        "ContractName:Plans/web_provider_adapter_registry.seed.json",
+        "ContractName:Plans/web_provider_projection_fixtures.json",
+        "ContractName:Plans/web_research_run_fixtures.json"
       ],
       "decision_refs": [
         "dec-2026-06-09-build-governance-support-seal",
@@ -92,7 +106,8 @@
         "dec-2026-06-19-prd-planning-wizard-governance-coverage-repair",
         "AD-20260621-prd-planning-runtime-contract-packet",
         "dec-2026-07-06-non-executable-readiness-closure-evidence-schema-governance-registration",
-        "dec-2026-07-06-non-executable-readiness-closure-evidence-governance-registration"
+        "dec-2026-07-06-non-executable-readiness-closure-evidence-governance-registration",
+        "dec-2026-07-09-web-capability-agentic-routing-governance-registration"
       ],
       "evidence_pointer": {
         "kind": "filesystem_path",
@@ -225,6 +240,76 @@
           "kind": "file",
           "ref": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
           "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_agent_policy_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_capability_findings_coverage.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_capability_findings_coverage.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_capability_source_packet_receipt.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_capability_source_packet_receipt.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_intent_routing_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_operation_card_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_operation_contracts.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_operation_job_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_policy_negative_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_policy_negative_fixtures.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_provider_adapter_registry.seed.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_provider_projection_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_research_run_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
         }
       ],
       "node_id": "pm.build-governance.spec-lock-support-refresh",
@@ -351,6 +436,76 @@
         {
           "kind": "file",
           "ref": "Plans/.implementation_readiness/non_executable_closure_evidence.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_agent_policy_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_capability_findings_coverage.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_capability_findings_coverage.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_capability_source_packet_receipt.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_capability_source_packet_receipt.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_intent_routing_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_operation_card_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_operation_contracts.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_operation_job_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_policy_negative_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_policy_negative_fixtures.schema.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_provider_adapter_registry.seed.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_provider_projection_fixtures.json",
+          "note": "Registered canonical owner doc coverage."
+        },
+        {
+          "kind": "file",
+          "ref": "Plans/web_research_run_fixtures.json",
           "note": "Registered canonical owner doc coverage."
         }
       ],

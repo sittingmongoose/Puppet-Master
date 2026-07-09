@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L5027-L5115
 
-Source SHA256: `3db57d29d09e6ed7fd7caf1489bbc473314c94990c88e238e45142318f57cedc`
+Source SHA256: `ad9bf8f3329f9ada56d1e8bb2be054a7fc3f0e778ee641104e8913334070e9f1`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/usage-feature.md
 canonical_text: >-
-  Provider usage displays must carry source_confidence and distinguish missing, unavailable, unsupported, blocked, stale, estimated, provider-reported, and zero. Usage rows consume requested/effective provider, model, account, route, media, and artifact identity from Contracts/Models rather than inventing a feature-local provider schema. Media generation and coding-plan usage must disclose whether usage comes from provider status-line fields, direct provider API metadata, artifact receipts, local estimates, or unavailable source state. Antigravity public `agy` rows and Antigravity OAuth/internal `gemini-3.1-flash-image` generated-image routes keep separate usage/source-confidence rows where usage evidence differs; missing private/internal usage metadata is displayed as missing/unavailable, not zero.
+  Provider usage displays must carry source_confidence as high, medium, low, or unknown and separately distinguish missing, unavailable, unsupported, blocked, stale, estimated, provider-reported, and zero through value state, projection state, source_class, source_authority, settlement_status, or cost_status. Usage rows consume requested/effective provider, model, account, route, media, and artifact identity from Contracts/Models rather than inventing a feature-local provider schema. Media generation and coding-plan usage must disclose whether usage comes from provider status-line fields, direct provider API metadata, artifact receipts, local estimates, or unavailable source state. Antigravity public `agy` rows and Antigravity OAuth/internal `gemini-3.1-flash-image` generated-image routes keep separate usage/source-confidence rows where usage evidence differs; missing private/internal usage metadata is displayed as missing/unavailable, not zero.
 gui_related: true
 gui_classification_reason: Usage/quota/status rows are user-visible presentation and recovery behavior.
 depends_on: [CV-292, CV-293, MA-063]

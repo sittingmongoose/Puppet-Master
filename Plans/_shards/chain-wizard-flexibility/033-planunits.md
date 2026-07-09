@@ -2,9 +2,9 @@
 
 Source: `Plans/chain-wizard-flexibility.md`
 
-Source lines: L2320-L9932
+Source lines: L2321-L9940
 
-Source SHA256: `97ca3ca0ab23491371276606a2d603882f4feb323489ec27fc266110e3b8e6a3`
+Source SHA256: `15df9ed3508b90683979c3b365810cd89cba46ef428dc390c6a6e969e33f5058`
 
 ---
 
@@ -1350,7 +1350,7 @@ plan_unit_id: CWF-024
 unit_type: requirement
 status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
-canonical_text: Wizard-produced Plan and Deep Plan artifacts use the normalized TODO schema, treat Plan and Deep Plan as intensity variants of plan runtime mode, may use read-only research subagents and web tools through normal permissions, and keep mutating tools denied in plan mode.
+canonical_text: Wizard-produced Plan and Deep Plan artifacts use the normalized TODO schema, treat Plan and Deep Plan as intensity variants of plan runtime mode, route any source-lineage web/browser/research/deep-research need through the active PM WebOperation / BrowserAction dispatcher with read/extract-backed receipts, and keep mutating tools denied in plan mode.
 gui_related: true
 gui_classification_reason: This unit covers wizard planning surfaces, questionnaire cards, runtime identity display, and user-visible Plan/Deep Plan/TODO handoff.
 split_recommended: true
@@ -1362,6 +1362,7 @@ acceptance_criteria:
   - Plan and Deep Plan are intensity variants, not categorical runtime modes.
   - Deep Plan may spawn read-only research subagents including web research.
   - Wizard questions render through the shared questionnaire card and preserve effective_persona.
+  - Web, browser, research, and deep-research needs use the active shared dispatcher with invocation_source, agent_reason, URL-read-to-webfetch normalization, and read/extract-backed citations.
   - Web tools use the normal permission stack and mutating tools remain denied in plan mode.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -1375,6 +1376,8 @@ implementation_surfaces:
   - Plans/storage-plan.md
   - Plans/Run_Modes.md
   - Plans/Permissions_System.md
+  - Plans/Tools.md
+  - Plans/UI_Command_Catalog.md
 node_compile_hint:
   mode: chain_wizard_plan_deep_plan_todo_permission_boundary
   create_worknodes: false
@@ -1384,6 +1387,10 @@ preserved_exact_tokens:
   - "plan"
   - "/intensity"
   - "read-only research subagents"
+  - "WebOperation / BrowserAction dispatcher"
+  - "invocation_source"
+  - "agent_reason"
+  - "webfetch"
   - "TODO auto-use heuristic"
   - "/questionnaire"
   - "effective_persona"

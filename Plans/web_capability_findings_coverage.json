@@ -1,0 +1,156 @@
+{
+  "schema_id": "pm.web_capability_findings_coverage.v1",
+  "source_packet": {
+    "review": "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+    "matrix": "FINDINGS_MATRIX_V3.json",
+    "receipt": "Plans/web_capability_source_packet_receipt.json"
+  },
+  "coverage_state": "contracts_fixtures_validators_ready_governance_pending",
+  "negative_constraints": [
+    "This coverage artifact is not a WorkNode, NodeSeed, executable queue, runtime implementation, build task, or governance seal.",
+    "Rows prove current canonical contract, fixture, and validator coverage only; generated Spec Lock, shards, evidence, plan index, audit closure, and readiness artifacts still require an explicit governance refresh.",
+    "Provider-facing .claude, .cursor, and .codex web projections are generator targets modeled by no-secret fixtures unless an explicit projection sync writes local config.",
+    "Provider registry rows are source-packet seeds with explicit packet/receipt provenance and health_state=unknown until live provider health/projection sync materializes current evidence."
+  ],
+  "required_validator_surfaces": [
+    "python3 scripts/pm-plans-verify.py validate-web-capability-contracts",
+    "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
+    "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+    "python3 scripts/pm-plans-verify.py validate-project-output-fixtures"
+  ],
+  "findings": [
+    {
+      "finding_id": "WGUI-001",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "/web fetch appears in slash/help/palette/direct routes and NL URL read routes to cmd.chat.web.fetch/webfetch.",
+      "evidence_files": ["Plans/assistant-chat-design.md", "Plans/UI_Command_Catalog.md", "Plans/Commands_System.md", "Plans/web_intent_routing_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WGUI-002",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Production wiring excludes retired cmd.web.* rows, active web commands use cmd.chat.web.* IDs, browser cmd.browser.* rows preserve UI catalog event/no-event parity, and raw page-evaluation aliases stay compatibility-only.",
+      "evidence_files": ["Plans/Wiring_Matrix.production.json", "Plans/Wiring_Matrix.production.exclusions.json", "Plans/UI_Command_Catalog.md"],
+      "validator_surfaces": ["validate-wiring-matrix", "validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WGUI-003",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Denied web operation cards use operation_input and denial_reason_code, with legacy web_input/blocked_reason aliases normalized before rendering.",
+      "evidence_files": ["Plans/assistant-chat-design.md", "Plans/Contracts_V0.md", "Plans/Permissions_System.md", "Plans/web_operation_contracts.schema.json", "Plans/web_operation_card_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WSCH-001",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "api_web_call is discriminated by operation/tool/input and evidence includes webextract, webresearch, deep_research, and async WebOperationJob branches.",
+      "evidence_files": ["Plans/runtime_artifact_api_web_call.schema.json", "Plans/evidence.schema.json", "Plans/web_operation_job_fixtures.json", "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"],
+      "validator_surfaces": ["validate-runtime-artifact-schemas", "validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WSCH-002",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "webfetch/read has explicit operation metadata, content/page/browser/cache/read-receipt fields, and read<->webfetch normalization.",
+      "evidence_files": ["Plans/Tools.md", "Plans/Contracts_V0.md", "Plans/storage-plan.md", "Plans/runtime_artifact_api_web_call.schema.json", "Plans/evidence.schema.json"],
+      "validator_surfaces": ["validate-web-capability-contracts", "validate-runtime-artifact-schemas"]
+    },
+    {
+      "finding_id": "WPERM-001",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Search/research approvals use wildcard operation scope; URL/root operations use host/site scope; batch/fanout visibility is explicit.",
+      "evidence_files": ["Plans/Permissions_System.md", "Plans/Tools.md", "Plans/web_policy_negative_fixtures.json", "Plans/web_operation_contracts.schema.json"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WGUI-004",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "WebOperationCard, ResearchProgressCard, denied, partial, fallback, refs, settings, approval/session, and batch card states have typed fixtures.",
+      "evidence_files": ["Plans/web_operation_contracts.schema.json", "Plans/web_operation_card_fixtures.json", "Plans/assistant-chat-design.md", "Plans/FinalGUISpec.md"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WBRO-001",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "PageRepresentation, BrowserSession, BrowserActionResult, browser recording artifacts, redaction, and runtime states are schema-backed.",
+      "evidence_files": ["Plans/web_operation_contracts.schema.json", "Plans/runtime_artifact_browser_recording.schema.json", "Plans/gui_automation_manifest.schema.json", "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts", "validate-runtime-artifact-schemas"]
+    },
+    {
+      "finding_id": "WBRO-002",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Testing manifests carry browser sessions, Open/Watch state, visibility/background/runtime_unavailable remediation, screenshot/PDF/console/network artifacts, and redaction refs.",
+      "evidence_files": ["Plans/Automated_Testing_System.md", "Plans/gui_automation_manifest.schema.json", "tests/fixtures/project_output_artifacts/s2_011/golden/minimal_project/schema_payloads/gui_automation_manifest.json"],
+      "validator_surfaces": ["validate-web-capability-contracts", "validate-project-output-fixtures"]
+    },
+    {
+      "finding_id": "WPROV-001",
+      "status": "fixture_projection_ready_live_projection_sync_pending",
+      "summary": "Provider registry and no-secret projection fixtures cover PM Site Reader, direct API, MCP, model-native, coding-agent projection targets, normalized support-tier vocabulary, and distinct research/deep_research capabilities; registry rows cite packet/receipt provenance and keep health unknown until live .claude/.cursor/.codex/provider health sync runs.",
+      "evidence_files": ["Plans/web_provider_adapter_registry.seed.json", "Plans/web_provider_projection_fixtures.json", "Plans/MCP_Integration.md", "Plans/Models_System.md"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WRES-001",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Research/deep-research runs carry sources, read receipts, URL-identity-checked citations, synthesis steps, subagent records, async job state, closure/failure state, PM-composed default, optional provider-autonomous mode, and provider-registry capability distinction.",
+      "evidence_files": ["Plans/web_operation_contracts.schema.json", "Plans/web_research_run_fixtures.json", "Plans/web_operation_job_fixtures.json", "Plans/web_provider_adapter_registry.seed.json", "Plans/Tools.md", "Plans/Models_System.md", "Plans/assistant-chat-design.md"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WSEC-001",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "SSRF/private-host, DNS rebinding, registrable-domain permission scope, robots/fanout/depth, URL/query redaction, browser artifact redaction, cache redaction, prompt-injection chips, no-secret projection, and runtime-unavailable negatives are fixture-backed and executable in validator assertions.",
+      "evidence_files": ["Plans/web_policy_negative_fixtures.json", "Plans/web_operation_contracts.schema.json", "Plans/Permissions_System.md", "Plans/Automated_Testing_System.md"],
+      "validator_surfaces": ["validate-web-capability-contracts", "validate-project-output-fixtures"]
+    },
+    {
+      "finding_id": "WPLAN-001",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "PRD Builder and Planning Wizard research produces ledger/plan source evidence until explicit compile/build and forbids WorkNode/NodeSeed/runtime queue creation.",
+      "evidence_files": ["Plans/PRD_Builder.md", "Plans/Planning_Wizard.md", "Plans/Goal_Runtime_System.md", "Plans/web_policy_negative_fixtures.json", "Plans/web_intent_routing_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WROUTE-002",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Intent fixtures include route-equivalence groups and an agentic dispatch matrix proving slash, palette, NL user, agent, Goal, PRD, Planning Wizard, and subagent routes normalize to the same command/tool/operation for search/read/extract/research/deep-research/crawl/map/browser evidence.",
+      "evidence_files": ["Plans/web_intent_routing_fixtures.json", "Plans/UI_Command_Catalog.md", "Plans/Commands_System.md", "Plans/assistant-chat-design.md"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WAGENT-001",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Prompt Pipeline, Personas, Goal Runtime, Run Modes, PRD Builder, Planning Wizard, Orchestrator, and subagents receive active web/browser capability affordance and self-initiation policy fixtures; retired Chain Wizard references remain lineage-only and normalize to Planning Wizard.",
+      "evidence_files": ["Plans/Prompt_Pipeline.md", "Plans/Personas.md", "Plans/Goal_Runtime_System.md", "Plans/Run_Modes.md", "Plans/PRD_Builder.md", "Plans/Planning_Wizard.md", "Plans/web_agent_policy_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WAGENT-002",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Invocation provenance and agent_reason are required across WebOperation, BrowserActionResult, ResearchRun, evidence records, permission receipts, runtime artifacts, and chat cards.",
+      "evidence_files": ["Plans/web_operation_contracts.schema.json", "Plans/evidence.schema.json", "Plans/runtime_artifact_api_web_call.schema.json", "Plans/runtime_artifact_browser_recording.schema.json", "Plans/Permissions_System.md", "Plans/web_operation_card_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts", "validate-runtime-artifact-schemas"]
+    },
+    {
+      "finding_id": "WAGENT-003",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Ask/Plan/Deep Plan expose read-only web tools unless no-network/admin policy denies them, with visible cards rather than silent denial.",
+      "evidence_files": ["Plans/Run_Modes.md", "Plans/Permissions_System.md", "Plans/assistant-chat-design.md", "Plans/web_policy_negative_fixtures.json", "Plans/web_agent_policy_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WAGENT-004",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "PRD/Planning Wizard source-intake research stores receipts and source evidence for planning state until explicit compile/build approval, and policy/evidence fixtures reject WorkNode/NodeSeed/runtime queue leakage.",
+      "evidence_files": ["Plans/PRD_Builder.md", "Plans/Planning_Wizard.md", "Plans/Goal_Runtime_System.md", "Plans/evidence.schema.json", "Plans/web_intent_routing_fixtures.json", "Plans/web_policy_negative_fixtures.json", "Plans/web_agent_policy_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts"]
+    },
+    {
+      "finding_id": "WAGENT-005",
+      "status": "covered_by_contracts_and_validators",
+      "summary": "Agent-initiated native browser/Site Reader use is covered for dynamic, visual, iframe, form/interaction/upload/dialog actions, console/network, screenshot/PDF, runtime_unavailable, chips/cards, Open/Watch, action caps, and redaction cases.",
+      "evidence_files": ["Plans/Tools.md", "Plans/web_operation_contracts.schema.json", "Plans/runtime_artifact_api_web_call.schema.json", "Plans/runtime_artifact_browser_recording.schema.json", "Plans/gui_automation_manifest.schema.json", "Plans/web_intent_routing_fixtures.json", "Plans/web_policy_negative_fixtures.json", "Plans/web_agent_policy_fixtures.json", "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"],
+      "validator_surfaces": ["validate-web-capability-contracts", "validate-runtime-artifact-schemas", "validate-project-output-fixtures"]
+    }
+  ]
+}

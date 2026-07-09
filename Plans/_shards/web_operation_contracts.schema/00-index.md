@@ -1,0 +1,15 @@
+# Shard Index: Plans/web_operation_contracts.schema.json
+
+Generated: 2026-07-09T16:45:37Z
+
+Source SHA256: `2bfb45758f60fc2ca373c935f88648f1b08901f1744a11e3792d6308af81773e`
+
+Manifest: [`manifest.json`](manifest.json)
+
+## Shards
+
+- [001 - Lines 1-200](001-lines-1-200.md) L1-L200 `f4c466e2e02529dd89f4ba3ba8547096b9e9035cdac78ed74411452c0a10a353`
+- [002 - Lines 201-400](002-lines-201-400.md) L201-L400 `572eab3064a0fc1a407cc78d40ebe530e8a5f96a798fb6fa45e4aa7e03122a4d`
+- [003 - Lines 401-600](003-lines-401-600.md) L401-L600 `dba2656780410e6979b309adc2261817147fc80908be4a6367224b56da74a2e7`
+- [004 - Lines 601-800](004-lines-601-800.md) L601-L800 `c0b54f55653d0750681ad037160aadf0f5c77230f8955bd39d0f7f05832cd531`
+- [005 - Lines 801-947](005-lines-801-947.md) L801-L947 `6d02608f51106e7a8cbe67a55e17e5bdcfdd3cf68ac004024aae94b8c53bc688`

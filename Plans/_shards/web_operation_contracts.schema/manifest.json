@@ -1,0 +1,59 @@
+{
+  "generated_at_utc": "2026-07-09T16:45:37Z",
+  "index_path": "Plans/_shards/web_operation_contracts.schema/00-index.md",
+  "index_sha256": "6537c06e27c25f06758408fa30668e3b723283acd391cf1ca5943ddea0c0bd89",
+  "manifest_path": "Plans/_shards/web_operation_contracts.schema/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/web_operation_contracts.schema/001-lines-1-200.md",
+      "sha256": "f4c466e2e02529dd89f4ba3ba8547096b9e9035cdac78ed74411452c0a10a353",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-400",
+      "path": "Plans/_shards/web_operation_contracts.schema/002-lines-201-400.md",
+      "sha256": "572eab3064a0fc1a407cc78d40ebe530e8a5f96a798fb6fa45e4aa7e03122a4d",
+      "shard_id": "002",
+      "source_line_end": 400,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 401-600",
+      "path": "Plans/_shards/web_operation_contracts.schema/003-lines-401-600.md",
+      "sha256": "dba2656780410e6979b309adc2261817147fc80908be4a6367224b56da74a2e7",
+      "shard_id": "003",
+      "source_line_end": 600,
+      "source_line_start": 401,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 601-800",
+      "path": "Plans/_shards/web_operation_contracts.schema/004-lines-601-800.md",
+      "sha256": "c0b54f55653d0750681ad037160aadf0f5c77230f8955bd39d0f7f05832cd531",
+      "shard_id": "004",
+      "source_line_end": 800,
+      "source_line_start": 601,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 801-947",
+      "path": "Plans/_shards/web_operation_contracts.schema/005-lines-801-947.md",
+      "sha256": "6d02608f51106e7a8cbe67a55e17e5bdcfdd3cf68ac004024aae94b8c53bc688",
+      "shard_id": "005",
+      "source_line_end": 947,
+      "source_line_start": 801,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 947,
+    "path": "Plans/web_operation_contracts.schema.json",
+    "sha256": "2bfb45758f60fc2ca373c935f88648f1b08901f1744a11e3792d6308af81773e"
+  }
+}

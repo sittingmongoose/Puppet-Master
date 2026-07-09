@@ -190,6 +190,7 @@ Collision rules:
 - `/skill` is part of the reserved built-in slash-command set and remains a built-in helper surface for skill discovery or invocation; it cannot be rebound by User Commands or `override_builtin`
 - `/plugins` remains a plugin-management/navigation surface, not a User Command namespace that a project command may redefine
 - natural-language and slash dispatch share the same underlying dispatcher, so collision handling is consistent across both entry points
+- Slash, palette, natural-language, agent-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web/browser intents normalize to the active `cmd.chat.web.*` command IDs and PM WebOperation / BrowserAction dispatcher; `/web` slash forms are entrypoints only, not the capability boundary. Command dispatch records `invocation_source`, optional `agent_reason`, and source IDs before the tool call; URL-reading phrases route to `cmd.chat.web.fetch` / `webfetch`, while visual, dynamic-page, iframe, console, network, screenshot, or PDF evidence requests attach BrowserAction/Site Reader requirements to the same command dispatch.
 
 Reserved-name validation is a command-system boundary shared with chat-design, chat-overlay, and command-catalog consumers. The runtime rejects command files, palette entries, or plugin/skill projections that collide with the reserved-name set before they can emit a canonical-event, and `/mode` must be disambiguated by owner context so chat-overlay display mode, runtime run mode, and User Command frontmatter do not share an untyped payload slot. GPT-era registry audits do not create new event names by observation: `chat.thread.created` and `chat.thread_created` cannot both be active names for the same event, and `chat.message.submitted` is not valid support for `cmd.chat.run_user_command` until the event registry owns that name.
 
@@ -496,6 +497,8 @@ This section owns `## 7. Reserved built-in slash commands` as the locked reserve
 Packet regeneration treats this owner as a `replace_section` unit: repairs for the reserved-set contract replace `## 7. Reserved built-in slash commands` itself rather than appending raw material after `### 6.3 Shortcut binding`, so stale-residue child/parent packet material cannot survive beside the canonical `/web`, `/skill`, and `/cancel` rules.
 
 The `/web` family is reserved as one command family, not flattened into independent top-level commands. Bare `/web` has no-default execution behavior: it opens help/autocomplete only, and execution requires a subcommand such as `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, or `/web map`. The stale rule `Bare /web (with query argument) routes to cmd.web.search by default` is retired; `cmd.web.search` is not the implicit destination for bare `/web`.
+
+The reserved `/web` slash family is one entrypoint into the shared PM WebOperation / BrowserAction dispatcher. Slash, command palette, natural-language user intent, autonomous assistant/subagent initiation, Goal Runtime, PRD Builder, and Planning Wizard requests resolve to the same `cmd.chat.web.search`, `cmd.chat.web.fetch`, `cmd.chat.web.extract`, `cmd.chat.web.research`, `cmd.chat.web.crawl`, or `cmd.chat.web.map` IDs before tool dispatch. Dispatch payloads preserve `invocation_source`, optional `agent_reason`, and source IDs, and reading a URL always normalizes to `webfetch` rather than search.
 
 This section is the slash-command SSOT for the single canonical set of reserved chat slash commands; consumers mirror these commands rather than defining local variants.
 
@@ -2640,7 +2643,11 @@ owner_doc: Plans/Commands_System.md
 canonical_text: >-
   The /web family remains one reserved slash-command family with bare /web
   opening help/autocomplete only, execution requiring explicit subcommands, and
-  stable cmd.chat.web.* IDs for search, fetch, extract, research, crawl, and map.
+  stable cmd.chat.web.* IDs for search, fetch, extract, research, crawl, and map;
+  slash, palette, natural-language, autonomous agent, subagent, Goal, PRD, and
+  Planning Wizard web/browser intents enter the same WebOperation / BrowserAction
+  dispatcher with invocation_source, optional agent_reason, and URL reads
+  normalized to webfetch.
 gui_related: false
 gui_classification_reason: Web slash parsing and command IDs are dispatcher semantics.
 split_recommended: true
@@ -2654,6 +2661,9 @@ acceptance_criteria:
   - The stale rule that bare /web with query routes to cmd.web.search by default is retired.
   - cmd.web.search is not the implicit destination for bare /web.
   - Stable command IDs include cmd.chat.web.search, cmd.chat.web.fetch, cmd.chat.web.extract, cmd.chat.web.research, cmd.chat.web.crawl, and cmd.chat.web.map.
+  - Slash, palette, natural-language, autonomous agent, subagent, Goal Runtime, PRD Builder, and Planning Wizard entrypoints converge on the same WebOperation / BrowserAction dispatcher.
+  - Dispatch records invocation_source, optional agent_reason, and source IDs before tool execution.
+  - URL reads normalize to cmd.chat.web.fetch / webfetch rather than websearch.
   - URL normalization applies and parse failure shows usage.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -2682,6 +2692,10 @@ preserved_exact_tokens:
   - "cmd.chat.web.research"
   - "cmd.chat.web.crawl"
   - "cmd.chat.web.map"
+  - "WebOperation / BrowserAction dispatcher"
+  - "invocation_source"
+  - "agent_reason"
+  - "webfetch"
   - "bare /web shows help/autocomplete only"
 negative_constraints:
   - "Do not flatten /web into separate slash families."

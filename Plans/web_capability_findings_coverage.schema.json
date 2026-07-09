@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.web_capability_findings_coverage.schema.v1",
+  "title": "Puppet Master Web Capability Findings Coverage",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "source_packet",
+    "coverage_state",
+    "negative_constraints",
+    "required_validator_surfaces",
+    "findings"
+  ],
+  "properties": {
+    "schema_id": {"type": "string", "const": "pm.web_capability_findings_coverage.v1"},
+    "source_packet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["review", "matrix", "receipt"],
+      "properties": {
+        "review": {"type": "string", "minLength": 1},
+        "matrix": {"type": "string", "minLength": 1},
+        "receipt": {"type": "string", "minLength": 1}
+      }
+    },
+    "coverage_state": {
+      "type": "string",
+      "enum": ["contracts_fixtures_validators_ready_governance_pending"]
+    },
+    "negative_constraints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "required_validator_surfaces": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "findings": {
+      "type": "array",
+      "minItems": 19,
+      "items": {"$ref": "#/$defs/FindingCoverage"}
+    }
+  },
+  "$defs": {
+    "FindingCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finding_id", "status", "summary", "evidence_files", "validator_surfaces"],
+      "properties": {
+        "finding_id": {
+          "type": "string",
+          "enum": [
+            "WGUI-001",
+            "WGUI-002",
+            "WGUI-003",
+            "WSCH-001",
+            "WSCH-002",
+            "WPERM-001",
+            "WGUI-004",
+            "WBRO-001",
+            "WBRO-002",
+            "WPROV-001",
+            "WRES-001",
+            "WSEC-001",
+            "WPLAN-001",
+            "WROUTE-002",
+            "WAGENT-001",
+            "WAGENT-002",
+            "WAGENT-003",
+            "WAGENT-004",
+            "WAGENT-005"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "covered_by_contracts_and_validators",
+            "fixture_projection_ready_live_projection_sync_pending"
+          ]
+        },
+        "summary": {"type": "string", "minLength": 1},
+        "evidence_files": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "validator_surfaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

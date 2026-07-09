@@ -11,6 +11,37 @@
   "summary_path": "artifacts/gui/summary.json",
   "checks_path": "artifacts/gui/checks.json",
   "recording_disabled_reason": "schema fixture only",
+  "browser_sessions": [
+    {
+      "browser_session_id": "browser-session-fr-001",
+      "visibility_state": "show_when_possible",
+      "open_watch_state": "open_available",
+      "stream_refs": [
+        "stream:browser-fr-001"
+      ],
+      "evidence_refs": [
+        "gui-artifact-browser-screenshot-fr-001",
+        "gui-artifact-browser-pdf-fr-001",
+        "gui-artifact-browser-console-fr-001",
+        "gui-artifact-browser-network-fr-001"
+      ],
+      "redaction_manifest_ref": "redaction:browser-fr-001"
+    },
+    {
+      "browser_session_id": "browser-session-fr-unavailable-001",
+      "visibility_state": "runtime_unavailable",
+      "open_watch_state": "unavailable",
+      "evidence_refs": [
+        "gui-artifact-browser-unavailable-fr-001"
+      ],
+      "disabled_reason_code": "pm_native_browser_unavailable",
+      "remediation_action_ids": [
+        "open_settings_browser_runtime",
+        "retry_with_plain_fetch"
+      ],
+      "redaction_manifest_ref": "redaction:browser-fr-unavailable-001"
+    }
+  ],
   "artifacts": [
     {
       "artifact_id": "gui-artifact-fr-001",
@@ -19,6 +50,70 @@
       "mime_type": "application/json",
       "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
       "size_bytes": 2
+    },
+    {
+      "artifact_id": "gui-artifact-browser-screenshot-fr-001",
+      "kind": "browser_screenshot",
+      "relative_path": "artifacts/gui/browser/screenshot.png",
+      "mime_type": "image/png",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "size_bytes": 128,
+      "width": 1280,
+      "height": 720,
+      "browser_session_id": "browser-session-fr-001",
+      "page_representation_ref": "page-representation:fr-001",
+      "redaction_status": "applied",
+      "timeline_seq": 2,
+      "created_at_utc": "2026-07-02T00:00:01Z"
+    },
+    {
+      "artifact_id": "gui-artifact-browser-pdf-fr-001",
+      "kind": "browser_pdf",
+      "relative_path": "artifacts/gui/browser/page.pdf",
+      "mime_type": "application/pdf",
+      "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "size_bytes": 256,
+      "browser_session_id": "browser-session-fr-001",
+      "page_representation_ref": "page-representation:fr-001",
+      "redaction_status": "applied",
+      "timeline_seq": 3,
+      "created_at_utc": "2026-07-02T00:00:01Z"
+    },
+    {
+      "artifact_id": "gui-artifact-browser-console-fr-001",
+      "kind": "console",
+      "relative_path": "artifacts/gui/browser/console.jsonl",
+      "mime_type": "application/jsonl",
+      "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+      "size_bytes": 64,
+      "browser_session_id": "browser-session-fr-001",
+      "redaction_status": "applied",
+      "timeline_seq": 4,
+      "created_at_utc": "2026-07-02T00:00:01Z"
+    },
+    {
+      "artifact_id": "gui-artifact-browser-network-fr-001",
+      "kind": "network",
+      "relative_path": "artifacts/gui/browser/network.jsonl",
+      "mime_type": "application/jsonl",
+      "sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "size_bytes": 64,
+      "browser_session_id": "browser-session-fr-001",
+      "redaction_status": "applied",
+      "timeline_seq": 5,
+      "created_at_utc": "2026-07-02T00:00:01Z"
+    },
+    {
+      "artifact_id": "gui-artifact-browser-unavailable-fr-001",
+      "kind": "state",
+      "relative_path": "artifacts/gui/browser/runtime_unavailable.json",
+      "mime_type": "application/json",
+      "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+      "size_bytes": 96,
+      "browser_session_id": "browser-session-fr-unavailable-001",
+      "redaction_status": "not_needed",
+      "timeline_seq": 6,
+      "created_at_utc": "2026-07-02T00:00:01Z"
     }
   ]
 }

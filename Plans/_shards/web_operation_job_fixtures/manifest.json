@@ -1,0 +1,23 @@
+{
+  "generated_at_utc": "2026-07-09T16:45:37Z",
+  "index_path": "Plans/_shards/web_operation_job_fixtures/00-index.md",
+  "index_sha256": "4a711736d73f098a31894fa22a8b3a7dff026f6813101b1ca015806c5d9462b9",
+  "manifest_path": "Plans/_shards/web_operation_job_fixtures/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-91",
+      "path": "Plans/_shards/web_operation_job_fixtures/001-lines-1-91.md",
+      "sha256": "30f579e26f234b833182807d3260ecf2b5aef5705561003ee1812f4e329adaea",
+      "shard_id": "001",
+      "source_line_end": 91,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 91,
+    "path": "Plans/web_operation_job_fixtures.json",
+    "sha256": "2d32e33c5f3581094ee87c7d2831ad9a3ef6737164318c52d489c79c0dd1e221"
+  }
+}

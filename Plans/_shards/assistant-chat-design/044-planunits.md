@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3500-L21919
+Source lines: L3502-L21926
 
-Source SHA256: `bd5b0c5cb02bdd93fdb204ad9e14ff65d3beba8942c13f0fddbe799977c2971d`
+Source SHA256: `dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67`
 
 ---
 
@@ -883,13 +883,13 @@ plan_unit_id: ACD-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Natural-language web intents and slash commands use the same dispatcher. Site or page reading intents route to webfetch rather than websearch or provider extract.
+canonical_text: Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents use the same dispatcher. Site or page reading intents route to webfetch rather than websearch or provider extract.
 gui_related: true
 gui_classification_reason: Dispatcher parity affects user-visible command routing, help, and activity behavior.
 depends_on: [ACD-015]
 unblocks: []
 acceptance_criteria:
-  - Natural-language and slash-command web intents resolve through the same dispatcher.
+  - Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents resolve through the same dispatcher.
   - Reading intents such as read this URL and fetch this page resolve to webfetch, not websearch.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -5460,10 +5460,11 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Denied web-operation activity preserves `tool.denied.payload.meta` with
-  `web_operation`, `web_input`, `denial_reason_code`, `denial_source`,
-  `suggested_recovery_action`, requested adapter/projection fields,
-  `allowed_action_ids[]`, and `headless_denied`; web error applicability stays
-  aligned with canonical provider-to-PM error mapping.
+  `web_operation`, canonical `operation_input`, `operation_input_preview?`,
+  `invocation_source`, optional `agent_reason`, `denial_reason_code`,
+  `denial_source`, `suggested_recovery_action`, requested adapter/projection
+  fields, `allowed_action_ids[]`, and `headless_denied`; web error
+  applicability stays aligned with canonical provider-to-PM error mapping.
 gui_related: false
 gui_classification_reason: Denied payload metadata and error taxonomy are contract/runtime behavior.
 depends_on: [ACD-109, ACD-107]
@@ -5490,7 +5491,9 @@ source_lineage:
 preserved_exact_tokens:
   - "tool.denied.payload.meta"
   - "web_operation"
-  - "web_input"
+  - "operation_input"
+  - "operation_input_preview"
+  - "invocation_source"
   - "denial_reason_code"
   - "denial_source"
   - "suggested_recovery_action"
@@ -5498,6 +5501,8 @@ preserved_exact_tokens:
   - "headless_denied"
   - "adapter_unavailable"
   - "unsupported_operation"
+compatibility_only_notes:
+  - "Legacy `web_input` normalizes to `operation_input` before chat renders denied web-operation activity."
   - "content_blocked"
   - "content_not_found"
   - "unsupported_source"

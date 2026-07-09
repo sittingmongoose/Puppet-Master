@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L2321-L14936
+Source lines: L2321-L14943
 
-Source SHA256: `ed9771ce83eeeaed6d52411bdc4339f4dd1ddf421c14c18bdc8be5a0c7d869f8`
+Source SHA256: `66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1`
 
 ---
 
@@ -9477,7 +9477,10 @@ preserved_exact_tokens:
 - web content cache
 - TTL
 - web_operation
-- web_input_preview
+- operation_input_ref?
+- operation_input_preview?
+- invocation_source
+- agent_reason?
 - support_tier
 - execution_path
 - requested_adapter_id?
@@ -9496,14 +9499,17 @@ preserved_exact_tokens:
 - /candidate
 - results_count
 - websearch
+- webfetch
 - webextract
 - webresearch
+- deep_research
 - webcrawl
 - webmap
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions'
-compatibility_only_notes: []
+compatibility_only_notes:
+- Legacy `web_input_preview` normalizes to `operation_input_preview`.
 stale_retired_dispositions: []
 owner_hints:
 - Plans/storage-plan.md
@@ -9580,7 +9586,7 @@ plan_unit_id: SP-164
 unit_type: requirement
 status: accepted
 owner_doc: Plans/storage-plan.md
-canonical_text: Activity payload records preserve runtime bridge fields for node, attempt, lane, package, execution role, account, operational identity, provider attempt, usage event, inspection refs, structured web_input, result quality, and provenance badge values.
+canonical_text: Activity payload records preserve runtime bridge fields for node, attempt, lane, package, execution role, account, operational identity, provider attempt, usage event, inspection refs, structured operation_input, result quality, and provenance badge values.
 gui_related: false
 gui_classification_reason: This unit preserves backend activity payload field-table semantics.
 split_recommended: false
@@ -9620,7 +9626,7 @@ preserved_exact_tokens:
 - usage_event_ref
 - detail_ref
 - report_ref
-- web_input
+- operation_input
 - Structured web-operation input object
 - result_quality_hint
 - search_snippets_only
@@ -9638,6 +9644,7 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions'
 compatibility_only_notes:
+- Legacy `web_input` normalizes to `operation_input`.
 - provider_scrape is persisted only with the proposed-extension caveat from Plans/Contracts_V0.md.
 stale_retired_dispositions: []
 owner_hints:

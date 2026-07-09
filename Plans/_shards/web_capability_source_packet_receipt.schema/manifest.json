@@ -1,0 +1,23 @@
+{
+  "generated_at_utc": "2026-07-09T16:45:37Z",
+  "index_path": "Plans/_shards/web_capability_source_packet_receipt.schema/00-index.md",
+  "index_sha256": "bb2e245f9c849595f92895df6231bd9989e3812867573f386fb0a68d6aadf537",
+  "manifest_path": "Plans/_shards/web_capability_source_packet_receipt.schema/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-67",
+      "path": "Plans/_shards/web_capability_source_packet_receipt.schema/001-lines-1-67.md",
+      "sha256": "15e0e7047a1d26abe8f54322f75d4ca9a6adbd58798c3acfcba0a08fd65c77ae",
+      "shard_id": "001",
+      "source_line_end": 67,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 67,
+    "path": "Plans/web_capability_source_packet_receipt.schema.json",
+    "sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"
+  }
+}

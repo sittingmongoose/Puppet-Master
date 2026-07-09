@@ -1,0 +1,32 @@
+{
+  "generated_at_utc": "2026-07-09T16:45:37Z",
+  "index_path": "Plans/_shards/web_operation_card_fixtures/00-index.md",
+  "index_sha256": "12e946f93c1110a1eea795af3fab5f78b24a4d270128446660d95e360b3b9c66",
+  "manifest_path": "Plans/_shards/web_operation_card_fixtures/manifest.json",
+  "schema_id": "pm.plan_shards.manifest.v1",
+  "shards": [
+    {
+      "heading": "Lines 1-200",
+      "path": "Plans/_shards/web_operation_card_fixtures/001-lines-1-200.md",
+      "sha256": "11fdc15514d318983a6d6a20fd0c08effb6fd4fdfe5d213e086e4c9245447ccb",
+      "shard_id": "001",
+      "source_line_end": 200,
+      "source_line_start": 1,
+      "split_rule": "line-count-200"
+    },
+    {
+      "heading": "Lines 201-237",
+      "path": "Plans/_shards/web_operation_card_fixtures/002-lines-201-237.md",
+      "sha256": "1fd350feffd96deac039b4dca79f0d9c430c0458e3c4352f42aaba02d4f44da6",
+      "shard_id": "002",
+      "source_line_end": 237,
+      "source_line_start": 201,
+      "split_rule": "line-count-200"
+    }
+  ],
+  "source": {
+    "line_count": 237,
+    "path": "Plans/web_operation_card_fixtures.json",
+    "sha256": "25f749b27370d2ddb215d3d8376288093e2522f97060641e871bc7d25cf31140"
+  }
+}
