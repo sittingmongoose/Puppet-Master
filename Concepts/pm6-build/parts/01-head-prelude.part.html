@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="friendly-dark" data-glass-bg="mesh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puppet Master - Dashboard</title>
+  <script>
+    /* pm6 boot: apply persisted theme prefs BEFORE first CSS paint (defaults: friendly-dark / mesh) */
+    (function () {
+      'use strict';
+      var d = document.documentElement;
+      try {
+        var themes = ['friendly-dark', 'friendly-light', 'retro-dark', 'retro-light', 'basic-light', 'basic-dark', 'glass-dark', 'glass-light'];
+        var t = localStorage.getItem('pm.theme');
+        if (themes.indexOf(t) === -1) { t = 'friendly-dark'; }
+        d.setAttribute('data-theme', t);
+        var modes = ['mesh', 'depth', 'minimal'];
+        var g = localStorage.getItem('pm.glassBg');
+        if (modes.indexOf(g) === -1) { g = 'mesh'; }
+        d.setAttribute('data-glass-bg', g);
+        var a = parseFloat(localStorage.getItem('pm.glassAlpha'));
+        if (!isNaN(a)) {
+          var light = /-light$/.test(t);
+          var lo = light ? 0.45 : 0.35;
+          var hi = light ? 0.88 : 0.85;
+          d.style.setProperty('--glass-alpha', String(Math.min(hi, Math.max(lo, a))));
+        }
+      } catch (e) { /* storage unavailable - keep markup defaults */ }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Orbitron:wght@700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">

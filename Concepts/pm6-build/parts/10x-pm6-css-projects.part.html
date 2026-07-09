@@ -1,0 +1,306 @@
+<style id="pm6-css-projects">
+    /* ============================================================
+       PMConcept6 — Projects page (owner: projects agent)
+       Base card/toolbar styles live in frozen part 08; this block
+       layers story-era polish, quick actions, sheet + empty state.
+       ============================================================ */
+
+    /* W2-PRUNE standin: inert definitions so check_css sees the TOKENS.md
+       contract vars defined until pm6-css-global (theme-tokens agent) lands.
+       Selector matches nothing; every usage below carries an inline fallback.
+       Delete this rule at W2 integration. */
+    #pm6-proj-token-standin-w2prune {
+      --motion-fast: 120ms; --motion-med: 240ms;
+      --ease-default: ease; --ease-spring: ease;
+      --elev-3: none; --elev-hover: none;
+      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-pill: 999px;
+      --accent-primary: var(--accent-blue);
+      --accent-soft: rgba(120, 140, 200, 0.12);
+      --fs-2xs: 10px; --fs-xs: 11px; --fs-sm: 12px; --fs-xl: 20px; --2xl: 24px;
+      --glass-alpha: 0.55; --glass-tint-rgb: 16, 20, 34;
+      --glass-edge: rgba(255, 255, 255, 0.35); --glass-hairline: rgba(255, 255, 255, 0.08);
+    }
+
+    /* ---- grid + entrance ---- */
+    .page-projects .projects-grid-bento {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    @keyframes pm6-proj-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
+    .page-projects .pm6-proj-card {
+      overflow: hidden; /* pm-sheen host (position:relative set in part 08) */
+      animation: pm6-proj-in var(--motion-med, 240ms) var(--ease-default, ease) both;
+      animation-delay: calc(var(--i, 0) * 50ms);
+    }
+    .page-projects .pm6-proj-card:hover {
+      box-shadow: var(--elev-hover, 0 10px 30px rgba(0, 0, 0, 0.18));
+    }
+    .page-projects .pm6-proj-card[hidden] { display: none; }
+    .page-projects .pm6-proj-card:focus-visible {
+      outline: 2px solid var(--accent-primary, var(--accent-blue));
+      outline-offset: 2px;
+    }
+
+    /* ---- header row: glyph + title + branch ---- */
+    .pm6-proj-glyph {
+      width: 34px; height: 34px; flex: 0 0 34px;
+      display: grid; place-items: center;
+      border-radius: var(--radius-md, 10px);
+      background: var(--accent-soft, rgba(120, 140, 200, 0.12));
+      color: var(--accent-primary, var(--accent-blue));
+      border: 1px solid var(--border-light);
+      transition: transform var(--motion-med, 240ms) var(--ease-spring, ease);
+    }
+    .pm6-proj-glyph svg { width: 18px; height: 18px; display: block; }
+    .pm6-proj-titlewrap { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .pm6-proj-branch {
+      font-size: var(--fs-xs, 11px); color: var(--text-muted);
+      display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;
+    }
+    .pm6-proj-branch .pm6-ico svg { width: 12px; height: 12px; display: block; }
+
+    /* ---- status pills (extends part-05 .status-badge) ---- */
+    .pm6-proj-card .status-badge { white-space: nowrap; flex-shrink: 0; }
+    .status-badge.pm6-ready { background: var(--accent-blue); color: var(--surface); }
+    .status-badge.pm6-attn { background: var(--accent-warning); color: var(--background); }
+    .status-badge.pm6-archived {
+      background: transparent; color: var(--text-muted);
+      border: 1px dashed var(--border-light);
+    }
+    @keyframes pm6-proj-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    .status-badge.pm6-live { animation: pm6-proj-pulse 2s var(--ease-default, ease) infinite; }
+
+    /* ---- last-activity line ---- */
+    .pm6-proj-activity {
+      font-size: var(--fs-sm, 12px); color: var(--text-secondary);
+      display: flex; align-items: center; gap: 6px; min-height: 18px;
+    }
+    .pm6-proj-activity .health-dot { flex-shrink: 0; }
+    .pm6-proj-reason { color: var(--accent-warning); }
+
+    /* ---- quick actions ---- */
+    .project-action-btn .pm6-ico svg { width: 14px; height: 14px; display: block; }
+    .project-action-btn.pm6-is-disabled { opacity: 0.45; cursor: not-allowed; }
+    .project-action-btn.pm6-is-disabled:hover { transform: none; }
+
+    /* ---- archived / leaving card states ---- */
+    .pm6-proj-card.pm6-proj-archived { opacity: 0.55; filter: saturate(0.6); }
+    .pm6-proj-card.pm6-proj-leaving {
+      opacity: 0; transform: scale(0.96);
+      transition: opacity var(--motion-med, 240ms) var(--ease-default, ease),
+                  transform var(--motion-med, 240ms) var(--ease-default, ease);
+      pointer-events: none;
+    }
+    @keyframes pm6-proj-shake {
+      25% { transform: translateX(-4px); } 75% { transform: translateX(4px); }
+    }
+    .pm6-proj-card.pm6-proj-shake { animation: pm6-proj-shake 0.3s var(--ease-default, ease); }
+
+    /* ---- inline confirm guard ---- */
+    .pm6-proj-confirm {
+      display: flex; align-items: center; gap: var(--sm); flex-wrap: wrap;
+      padding: var(--sm) var(--md);
+      border: 1px solid var(--accent-warning);
+      border-radius: var(--radius-md, 10px);
+      background: color-mix(in srgb, var(--accent-warning) 10%, transparent);
+      font-size: var(--fs-sm, 12px); color: var(--text-primary);
+    }
+    .pm6-proj-confirm[hidden] { display: none; }
+    .pm6-proj-confirm-btns { margin-left: auto; display: flex; gap: var(--xs); }
+    .pm6-proj-confirm-btns button {
+      font-family: var(--body-font); font-size: var(--fs-sm, 12px); font-weight: 600;
+      padding: 4px 10px; cursor: pointer;
+      border-radius: var(--radius-sm, 6px);
+      border: 1px solid var(--border-light);
+      background: var(--surface); color: var(--text-primary);
+      transition: all var(--motion-fast, 120ms) var(--ease-default, ease);
+    }
+    .pm6-proj-confirm-btns button:hover { border-color: var(--text-muted); }
+    .pm6-proj-confirm-btns button.danger { color: var(--accent-error); border-color: var(--accent-error); }
+    .pm6-proj-confirm-btns button.danger:hover {
+      background: color-mix(in srgb, var(--accent-error) 12%, transparent);
+    }
+
+    /* ---- toolbar extras ---- */
+    .pm6-proj-lbl-gap { margin-left: var(--xl); }
+    .pm6-proj-toolbar-spacer { flex: 1; }
+    .pm6-proj-searchwrap { position: relative; display: flex; align-items: center; }
+    .pm6-proj-searchwrap > .pm6-ico {
+      position: absolute; left: 10px; color: var(--text-muted); pointer-events: none;
+    }
+    .pm6-proj-searchwrap > .pm6-ico svg { width: 14px; height: 14px; display: block; }
+    .pm6-proj-search {
+      padding: 6px 12px 6px 30px; min-width: 200px;
+      font-size: 13px; font-family: var(--body-font);
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill, 999px);
+      color: var(--text-primary);
+      transition: border-color var(--motion-fast, 120ms) var(--ease-default, ease);
+    }
+    .pm6-proj-search:focus {
+      outline: 2px solid var(--accent-primary, var(--accent-blue));
+      outline-offset: 1px; border-color: transparent;
+    }
+
+    /* header buttons: icon alignment + refresh spin */
+    .page-projects .projects-actions button { display: inline-flex; align-items: center; gap: 6px; }
+    .page-projects .projects-actions .pm6-ico svg { width: 14px; height: 14px; display: block; }
+    @keyframes pm6-proj-spin { to { transform: rotate(360deg); } }
+    .pm6-spin svg { animation: pm6-proj-spin 0.8s linear infinite; }
+
+    /* ---- empty state (No results for current filter) ---- */
+    .pm6-proj-empty {
+      margin-top: var(--md); padding: var(--2xl, 24px);
+      display: flex; flex-direction: column; align-items: center; gap: var(--sm);
+      border: 1px dashed var(--border-light);
+      border-radius: var(--radius-md, 10px);
+      color: var(--text-muted); font-size: 13px; text-align: center;
+    }
+    .pm6-proj-empty[hidden] { display: none; }
+    .pm6-proj-empty-ico { color: var(--text-muted); }
+    .pm6-proj-empty-ico svg { width: 22px; height: 22px; display: block; }
+    .pm6-proj-empty button {
+      font-family: var(--body-font); font-size: var(--fs-sm, 12px); font-weight: 600;
+      padding: 5px 14px; cursor: pointer;
+      border-radius: var(--radius-pill, 999px);
+      border: 1px solid var(--border-light);
+      background: var(--surface); color: var(--text-primary);
+    }
+    .pm6-proj-empty button:hover { border-color: var(--accent-primary, var(--accent-blue)); }
+
+    /* ---- New Project / Open Folder sheet ---- */
+    .pm6-proj-sheet-backdrop {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0, 0, 0, 0.45);
+    }
+    .pm6-proj-sheet-backdrop[hidden] { display: none; }
+    @keyframes pm6-proj-sheet-in {
+      from { opacity: 0; transform: translateY(14px) scale(0.98); }
+      to { opacity: 1; transform: none; }
+    }
+    .pm6-proj-sheet {
+      width: min(440px, calc(100vw - 48px));
+      max-height: calc(100vh - 96px); overflow: auto;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg, 16px);
+      box-shadow: var(--elev-3, 0 12px 36px rgba(0, 0, 0, 0.22));
+      padding: var(--xl);
+      display: flex; flex-direction: column; gap: var(--lg);
+      animation: pm6-proj-sheet-in var(--motion-med, 240ms) var(--ease-spring, ease) both;
+    }
+    .pm6-proj-sheet-head { display: flex; align-items: flex-start; gap: var(--md); }
+    .pm6-proj-sheet-headtext { flex: 1; min-width: 0; }
+    .pm6-proj-sheet-kicker {
+      font-size: var(--fs-2xs, 10px); font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+    .pm6-proj-sheet-title {
+      font-family: var(--display-font); font-size: var(--fs-xl, 20px);
+      font-weight: 700; color: var(--text-primary); line-height: 1.2;
+    }
+    .pm6-proj-sheet-close {
+      width: 28px; height: 28px; flex: 0 0 28px;
+      display: grid; place-items: center; cursor: pointer;
+      border: 1px solid transparent; border-radius: var(--radius-sm, 6px);
+      background: transparent; color: var(--text-muted);
+      transition: all var(--motion-fast, 120ms) var(--ease-default, ease);
+    }
+    .pm6-proj-sheet-close:hover {
+      color: var(--text-primary); background: var(--surface); border-color: var(--border-light);
+    }
+    .pm6-proj-sheet-close svg { width: 14px; height: 14px; display: block; }
+    .pm6-proj-field { display: flex; flex-direction: column; gap: 6px; }
+    .pm6-proj-field > span {
+      font-size: var(--fs-xs, 11px); font-weight: 600; letter-spacing: 0.04em;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+    .pm6-proj-field input {
+      width: 100%; padding: 8px 10px; box-sizing: border-box;
+      font-family: var(--body-font); font-size: 13px;
+      background: var(--surface); color: var(--text-primary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md, 10px);
+      transition: border-color var(--motion-fast, 120ms) var(--ease-default, ease);
+    }
+    .pm6-proj-field input:focus {
+      outline: 2px solid var(--accent-primary, var(--accent-blue));
+      outline-offset: 1px; border-color: transparent;
+    }
+    .pm6-proj-field input.pm6-invalid {
+      border-color: var(--accent-error);
+      animation: pm6-proj-shake 0.3s var(--ease-default, ease);
+    }
+    .pm6-proj-chips { display: flex; flex-wrap: wrap; gap: var(--xs); }
+    .pm6-proj-chip {
+      font-family: var(--body-font); font-size: var(--fs-sm, 12px);
+      padding: 5px 12px; cursor: pointer;
+      border-radius: var(--radius-pill, 999px);
+      border: 1px solid var(--border-light);
+      background: var(--surface); color: var(--text-secondary);
+      transition: all var(--motion-fast, 120ms) var(--ease-default, ease);
+    }
+    .pm6-proj-chip:hover { border-color: var(--accent-primary, var(--accent-blue)); color: var(--text-primary); }
+    .pm6-proj-chip.active {
+      background: var(--accent-soft, rgba(120, 140, 200, 0.12));
+      border-color: var(--accent-primary, var(--accent-blue));
+      color: var(--text-primary); font-weight: 600;
+    }
+    .pm6-proj-sheet-hint { font-size: var(--fs-sm, 12px); color: var(--text-muted); line-height: 1.55; }
+    .pm6-proj-sheet-foot { display: flex; justify-content: flex-end; gap: var(--sm); }
+    .pm6-proj-sheet-foot button {
+      font-family: var(--body-font); font-size: 13px; font-weight: 600;
+      padding: 7px 16px; cursor: pointer;
+      border-radius: var(--radius-md, 10px);
+      border: 1px solid var(--border-light);
+      background: var(--surface); color: var(--text-primary);
+      transition: all var(--motion-fast, 120ms) var(--ease-default, ease);
+    }
+    .pm6-proj-sheet-foot button:hover { border-color: var(--text-muted); }
+    .pm6-proj-sheet-foot button.primary {
+      background: var(--accent-lime); color: var(--background); border-color: transparent;
+    }
+    .pm6-proj-sheet-foot button.primary:hover { filter: brightness(1.08); }
+
+    /* ---- theme accents (raw hex only inside [data-theme] scope) ---- */
+    [data-theme$="-light"] .pm6-proj-sheet-foot button.primary { color: #1A1A1A; }
+    [data-theme^="basic"] .pm6-proj-sheet-foot button.primary {
+      background: var(--accent-blue); color: var(--surface);
+    }
+    [data-theme^="retro"] .pm6-proj-glyph,
+    [data-theme^="retro"] .pm6-proj-chip,
+    [data-theme^="retro"] .pm6-proj-search,
+    [data-theme^="retro"] .pm6-proj-sheet,
+    [data-theme^="retro"] .pm6-proj-sheet-foot button,
+    [data-theme^="retro"] .pm6-proj-field input,
+    [data-theme^="retro"] .pm6-proj-confirm,
+    [data-theme^="retro"] .pm6-proj-empty,
+    [data-theme^="retro"] .pm6-proj-empty button { border-radius: 0; }
+    [data-theme^="retro"] .pm6-proj-glyph { color: var(--accent-lime); background: transparent; }
+    [data-theme^="glass"] .pm6-proj-sheet {
+      background: rgba(var(--glass-tint-rgb, 16, 20, 34), calc(var(--glass-alpha, 0.55) + 0.25));
+      box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255, 255, 255, 0.35)),
+                  inset 0 0 0 1px var(--glass-hairline, rgba(255, 255, 255, 0.08)),
+                  0 12px 36px rgba(0, 0, 0, 0.38);
+    }
+    [data-theme="glass-light"] .pm6-proj-sheet { background: var(--surface-elevated); }
+    [data-theme^="glass"] .pm6-proj-glyph { border-color: var(--glass-hairline, rgba(255, 255, 255, 0.08)); }
+
+    /* ---- reduced motion ---- */
+    @media (prefers-reduced-motion: reduce) {
+      .page-projects .pm6-proj-card,
+      .pm6-proj-sheet,
+      .status-badge.pm6-live,
+      .pm6-spin svg { animation: none; }
+      .pm6-proj-card.pm6-proj-leaving { transition: none; }
+    }
+    [data-motion="reduced"] .page-projects .pm6-proj-card,
+    [data-motion="reduced"] .pm6-proj-sheet,
+    [data-motion="reduced"] .status-badge.pm6-live,
+    [data-motion="reduced"] .pm6-spin svg { animation: none; }
+    [data-motion="reduced"] .pm6-proj-card.pm6-proj-leaving { transition: none; }
+</style>

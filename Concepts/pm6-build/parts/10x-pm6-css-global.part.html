@@ -1,0 +1,267 @@
+  <style id="pm6-css-global">
+    /* ==================================================================
+       pm6-css-global - shared utilities, motion system, friendly skins,
+       containment. Owned by theme-tokens (W1); polish extends (W3).
+       Token-only: vars from contracts/TOKENS.md; hex only under
+       [data-theme] scope. Reduced-motion block stays LAST in this file.
+       ================================================================== */
+
+    /* --- icon wrapper sizing (PM_ICONS injected SVGs) --- */
+    .pm6-ico { display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 1; }
+    .pm6-ico svg { width: 1em; height: 1em; display: block; }
+
+    /* --- transitional guard: shimmer overlay div until removed from part 11 --- */
+    .gl-shimmer-overlay { display: none; }
+
+    /* --- .pm-sheen hover utility (replaces all pink-glow hovers) --- */
+    .pm-sheen {
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--motion-med) var(--ease-default), box-shadow var(--motion-med) var(--ease-default);
+    }
+    .pm-sheen::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -70%;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(105deg, transparent, color-mix(in srgb, var(--text-primary) 8%, transparent), transparent);
+      transform: skewX(-18deg);
+      transition: left var(--sheen-dur) ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .pm-sheen:hover::before { left: 130%; }
+    .pm-sheen:hover { transform: translateY(-4px); box-shadow: var(--elev-hover); }
+    .pm-hover-icon { transition: transform var(--motion-med) var(--ease-spring); }
+    .pm-sheen:hover .pm-hover-icon { transform: scale(1.1) rotate(-4deg); }
+
+    /* --- motion keyframes --- */
+    @keyframes pm-enter-up {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes pm-enter-scale {
+      from { opacity: 0; transform: scale(.96); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes pm-pop {
+      0%   { transform: scale(.92); }
+      60%  { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+    @keyframes pm-press {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(.97); }
+      100% { transform: scale(1); }
+    }
+    @keyframes pm-page-in {
+      from { opacity: 0; transform: translateX(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes pm-celebrate {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(1.08); }
+      70%  { transform: scale(.98); }
+      100% { transform: scale(1); }
+    }
+    @keyframes pm-celebrate-ring {
+      from { opacity: .8; transform: scale(.6); }
+      to   { opacity: 0; transform: scale(1.6); }
+    }
+    @keyframes pm-shake-subtle {
+      0%, 100% { transform: translateX(0); }
+      25%      { transform: translateX(-3px); }
+      55%      { transform: translateX(3px); }
+      80%      { transform: translateX(-2px); }
+    }
+
+    /* --- motion utility classes + stagger helper (cap 8 via min()) --- */
+    .pm-enter-up { animation: pm-enter-up var(--motion-med) var(--ease-default) both; }
+    .pm-enter-scale { animation: pm-enter-scale var(--motion-med) var(--ease-default) both; }
+    .pm-pop { animation: pm-pop var(--motion-med) var(--ease-spring) both; }
+    .pm-page-in { animation: pm-page-in 180ms var(--ease-out) both; }
+    .pm-shake-subtle { animation: pm-shake-subtle 300ms var(--ease-smooth); }
+    .pm-press:active { transform: scale(.97); transition: transform var(--motion-fast) var(--ease-snap); }
+    .pm-celebrate { position: relative; animation: pm-celebrate 480ms var(--ease-spring); }
+    .pm-celebrate::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      border: 1px solid var(--accent-primary);
+      opacity: 0;
+      animation: pm-celebrate-ring 600ms var(--ease-out);
+      pointer-events: none;
+    }
+    .pm-stagger > * { animation-delay: calc(min(var(--i, 0), 8) * 50ms); }
+
+    /* --- focus ring alias (low-specificity default; explicit class wins) --- */
+    .pm6-focus-ring:focus-visible,
+    :where(button, [href], input, select, textarea, [role="tab"], [tabindex]):focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    /* --- containment (perf budget, design_system section 3) --- */
+    .bento-card, .widget-card, .bento-widget, .project-card-bento,
+    .chat-panel, .files-panel, .bottom-panel, .floating-chat,
+    .s4-panel, .chat-thread-sidebar { contain: layout paint; }
+    .page:not(.active) { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+
+    /* ==================================================================
+       FRIENDLY COMPONENT SKINS (friendly-dark is the app default)
+       Pill nav, 40px radius-14 activity tiles, accent-soft active fills,
+       borderless elevation-only cards with top-light inset. No glows.
+       ================================================================== */
+
+    /* nav: pill page tabs */
+    [data-theme^="friendly"] .title-bar .page-tabs { gap: var(--sm); }
+    [data-theme^="friendly"] .title-bar .page-tabs .page-tab {
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 6px 14px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      transition: background var(--motion-fast) var(--ease-smooth),
+                  color var(--motion-fast) var(--ease-smooth),
+                  transform var(--motion-med) var(--ease-spring);
+    }
+    [data-theme^="friendly"] .title-bar .page-tabs .page-tab:hover {
+      color: var(--text-primary);
+      background: color-mix(in srgb, var(--text-primary) 6%, transparent);
+    }
+    [data-theme^="friendly"] .title-bar .page-tabs .page-tab:active { transform: scale(.97); }
+    [data-theme^="friendly"] .title-bar .page-tabs .page-tab.active {
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    /* activity bar: Switch-home-row icon tiles */
+    [data-theme^="friendly"] .activity-bar { border-right: none; background: var(--surface-alt); }
+    [data-theme^="friendly"] .activity-bar .icon { border-radius: 14px; color: var(--text-muted); }
+    [data-theme^="friendly"] .activity-bar .icon .symbol {
+      width: 40px;
+      height: 40px;
+      max-width: 100%;
+      border-radius: 14px;
+      transition: transform var(--motion-med) var(--ease-spring),
+                  background var(--motion-fast) var(--ease-smooth);
+    }
+    [data-theme^="friendly"] .activity-bar.collapsed .icon .symbol { width: 28px; height: 28px; border-radius: 10px; }
+    [data-theme^="friendly"] .activity-bar .icon:hover { color: var(--text-primary); }
+    [data-theme^="friendly"] .activity-bar .icon:hover .symbol {
+      transform: scale(1.1);
+      background: color-mix(in srgb, var(--text-primary) 7%, transparent);
+    }
+    [data-theme^="friendly"] .activity-bar .icon.active { color: var(--accent-primary); }
+    [data-theme^="friendly"] .activity-bar .icon.active .symbol { background: var(--accent-soft); }
+    [data-theme^="friendly"] .activity-bar .icon.active::before {
+      background: var(--accent-primary);
+      border-radius: var(--radius-pill);
+      left: -2px;
+      top: 8px;
+      bottom: 8px;
+    }
+
+    /* cards: borderless, elevation-only, top-light inset */
+    [data-theme^="friendly"] .bento-widget,
+    [data-theme^="friendly"] .bento-card,
+    [data-theme^="friendly"] .widget-card,
+    [data-theme^="friendly"] .project-card-bento {
+      border: none;
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--elev-2), inset 0 1px 0 rgba(255,255,255,.04);
+    }
+    [data-theme="friendly-light"] .bento-widget,
+    [data-theme="friendly-light"] .bento-card,
+    [data-theme="friendly-light"] .widget-card,
+    [data-theme="friendly-light"] .project-card-bento {
+      background: var(--surface-elevated);
+      box-shadow: var(--elev-2), inset 0 1px 0 rgba(255,255,255,.85);
+    }
+
+    /* buttons: r10, pressed scale */
+    [data-theme^="friendly"] button { border-radius: 10px; font-family: var(--body-font); }
+    [data-theme^="friendly"] button:active { transform: scale(.97); }
+
+    /* chips + badges go full pill */
+    [data-theme^="friendly"] .role-badge { border-radius: var(--radius-pill); }
+
+    /* inputs: soft fills, accent focus ring */
+    [data-theme^="friendly"] .title-bar .search-bar,
+    [data-theme^="friendly"] .title-bar .theme-select,
+    [data-theme^="friendly"] .title-bar .project-dropdown {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-alt);
+    }
+    [data-theme^="friendly"] :where(input[type="text"], input[type="search"], textarea, select) {
+      border-radius: 10px;
+      transition: border-color var(--motion-fast) var(--ease-smooth),
+                  box-shadow var(--motion-fast) var(--ease-smooth);
+    }
+    [data-theme^="friendly"] :where(input[type="text"], input[type="search"], textarea, select):focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    /* side + chat panels: soft borderless surfaces */
+    [data-theme^="friendly"] .files-panel,
+    [data-theme^="friendly"] .chat-panel {
+      border-color: var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--elev-1);
+    }
+
+    /* dropdown popovers: lifted, rounded */
+    [data-theme^="friendly"] .chat-dropdown-popover {
+      border: none;
+      border-radius: 14px;
+      box-shadow: var(--elev-3);
+      background: var(--surface-elevated);
+    }
+    [data-theme^="friendly"] .chat-dropdown-item { border-radius: 10px; }
+    [data-theme^="friendly"] .chat-dropdown-item.active {
+      background: var(--accent-soft);
+      color: var(--accent-primary);
+    }
+
+    /* scrollbars: accent-tinted thumb on hover */
+    [data-theme="friendly-dark"] *:hover::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, var(--text-primary) 22%, transparent);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    [data-theme="friendly-light"] *:hover::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, var(--text-primary) 18%, transparent);
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    /* ==================================================================
+       REDUCED MOTION - keep LAST in this block
+       ================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+      #glass-bg * { animation: none !important; }
+    }
+    [data-motion="reduced"] *,
+    [data-motion="reduced"] *::before,
+    [data-motion="reduced"] *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .01ms !important;
+      scroll-behavior: auto !important;
+    }
+    [data-motion="reduced"] #glass-bg * { animation: none !important; }
+  </style>

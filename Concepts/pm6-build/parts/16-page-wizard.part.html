@@ -1,0 +1,163 @@
+          <div class="page page-wizard" id="panel-wizard">
+
+            <!-- ============================================================
+                 PMConcept6 Planning Wizard (flagship rebuild)
+                 Stages: intake -> discovery -> workspace (topic map +
+                 interview thread + live plan preview / readiness rail)
+                 -> integration -> final review -> Approve And Build.
+                 All dynamic regions are rendered by pm6-js-wizard.
+                 ============================================================ -->
+
+            <!-- STAGE 1: INTAKE ------------------------------------------------>
+            <section class="pm6-wiz-stage pm6-wiz-stage-intake active" id="pm6WizStageIntake" data-wiz-stage="intake">
+              <div class="pm6-wiz-intake-scroll">
+                <div class="pm6-wiz-hero pm-enter-up">
+                  <div class="pm6-wiz-kicker">Planning Wizard</div>
+                  <h1 class="pm6-wiz-hero-title">Let&rsquo;s plan something great.</h1>
+                  <p class="pm6-wiz-hero-sub">Answer a handful of plain-language questions. The wizard reads your project, drafts the whole plan with its own agents, and only interrupts you for real decisions.</p>
+                </div>
+
+                <div class="pm6-wiz-imported pm-enter-up" id="pm6WizImported">
+                  <span class="pm6-ico pm6-wiz-imported-ico" data-pm6-icon="sparkle"></span>
+                  <div class="pm6-wiz-imported-body">
+                    <div class="pm6-wiz-imported-title">Imported from Assistant Chat</div>
+                    <div class="pm6-wiz-imported-goal">&ldquo;Add import-from-URL to Tastebook &mdash; paste a recipe link and get a clean, editable recipe.&rdquo;</div>
+                    <div class="pm6-wiz-imported-chips">
+                      <span class="pm6-wiz-mchip">Scope: one feature, existing app</span>
+                      <span class="pm6-wiz-mchip ok">Draft plan included <span class="pm6-wiz-glyph">&#10003;</span></span>
+                      <span class="pm6-wiz-mchip warn">3 open questions carried over</span>
+                    </div>
+                  </div>
+                  <button class="pm6-wiz-ghostbtn" data-demo-action="wizard.viewThread" type="button">View thread</button>
+                </div>
+
+                <div class="pm6-wiz-sect-label pm-enter-up">Where does this project live?</div>
+                <div class="pm6-wiz-attach-grid pm-stagger" id="pm6WizAttachGrid">
+                  <button class="pm6-wiz-attach-card pm-sheen pm-enter-up" style="--i:0" type="button" data-demo-action="wizard.attach" data-demo-arg="local" data-attach="local">
+                    <span class="pm6-ico pm-hover-icon" data-pm6-icon="folder"></span>
+                    <span class="pm6-wiz-attach-name">Local folder</span>
+                    <span class="pm6-wiz-attach-desc">Point at a directory on this machine.</span>
+                    <span class="pm6-wiz-attach-check" aria-hidden="true">&#10003;</span>
+                  </button>
+                  <button class="pm6-wiz-attach-card pm-sheen pm-enter-up" style="--i:1" type="button" data-demo-action="wizard.attach" data-demo-arg="git" data-attach="git">
+                    <span class="pm6-ico pm-hover-icon" data-pm6-icon="branch"></span>
+                    <span class="pm6-wiz-attach-name">Git repository</span>
+                    <span class="pm6-wiz-attach-desc">Clone from any Git URL.</span>
+                    <span class="pm6-wiz-attach-check" aria-hidden="true">&#10003;</span>
+                  </button>
+                  <button class="pm6-wiz-attach-card pm-sheen pm-enter-up selected" style="--i:2" type="button" data-demo-action="wizard.attach" data-demo-arg="github" data-attach="github">
+                    <span class="pm6-ico pm-hover-icon" data-pm6-icon="globe"></span>
+                    <span class="pm6-wiz-attach-name">GitHub</span>
+                    <span class="pm6-wiz-attach-desc">Signed in &mdash; picked from your recent repos.</span>
+                    <span class="pm6-wiz-attach-repo"><span class="pm6-wiz-glyph">&#9679;</span> jared/tastebook &middot; main &middot; clean</span>
+                    <span class="pm6-wiz-attach-check" aria-hidden="true">&#10003;</span>
+                  </button>
+                  <button class="pm6-wiz-attach-card pm-sheen pm-enter-up" style="--i:3" type="button" data-demo-action="wizard.attach" data-demo-arg="ssh" data-attach="ssh">
+                    <span class="pm6-ico pm-hover-icon" data-pm6-icon="plug"></span>
+                    <span class="pm6-wiz-attach-name">Remote over SSH</span>
+                    <span class="pm6-wiz-attach-desc">Work against a machine you can reach.</span>
+                    <span class="pm6-wiz-attach-check" aria-hidden="true">&#10003;</span>
+                  </button>
+                </div>
+
+                <div class="pm6-wiz-sect-label pm-enter-up">What kind of work is this?</div>
+                <div class="pm6-wiz-intent-row pm-enter-up" id="pm6WizIntentRow">
+                  <button class="pm6-wiz-intent-chip sel" type="button" data-demo-action="wizard.intent" data-demo-arg="feature">New feature or enhancement</button>
+                  <button class="pm6-wiz-intent-chip" type="button" data-demo-action="wizard.intent" data-demo-arg="product">Brand-new product</button>
+                  <button class="pm6-wiz-intent-chip" type="button" data-demo-action="wizard.intent" data-demo-arg="refactor">Refactor or rewrite</button>
+                  <button class="pm6-wiz-intent-chip" type="button" data-demo-action="wizard.intent" data-demo-arg="bugfix">Bugfix</button>
+                  <button class="pm6-wiz-intent-chip" type="button" data-demo-action="wizard.intent" data-demo-arg="pr">Contribution PR</button>
+                </div>
+
+                <div class="pm6-wiz-intake-foot pm-enter-up">
+                  <div class="pm6-wiz-intake-note">
+                    <span class="pm6-ico" data-pm6-icon="info"></span>
+                    <span>Next, the wizard takes a <strong>read-only look</strong> at the repo &mdash; branch, frameworks, test commands. Nothing is changed.</span>
+                  </div>
+                  <button class="pm6-wiz-bigbtn pm-press" type="button" data-demo-action="wizard.startDiscovery">
+                    Start discovery <span class="pm6-wiz-glyph">&#8594;</span>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- STAGE 2: DISCOVERY --------------------------------------------->
+            <section class="pm6-wiz-stage pm6-wiz-stage-discovery" id="pm6WizStageDiscovery" data-wiz-stage="discovery">
+              <div class="pm6-wiz-disc-wrap">
+                <div class="pm6-wiz-disc-card pm-enter-scale">
+                  <div class="pm6-wiz-disc-spin" aria-hidden="true"></div>
+                  <div class="pm6-wiz-disc-title">Reading your project&hellip;</div>
+                  <div class="pm6-wiz-disc-sub"><span class="pm6-wiz-ro-badge">READ-ONLY</span> Looking, not touching. This takes a few seconds.</div>
+                  <div class="pm6-wiz-scanrows" id="pm6WizScanRows"></div>
+                  <div class="pm6-wiz-scanbar"><div class="pm6-wiz-scanbar-fill" id="pm6WizScanBar"></div></div>
+                </div>
+              </div>
+            </section>
+
+            <!-- STAGE 3: WORKSPACE (topic map / thread / preview + rail) -------->
+            <section class="pm6-wiz-stage pm6-wiz-stage-work" id="pm6WizStageWork" data-wiz-stage="workspace">
+
+              <header class="pm6-wiz-runhead" id="pm6WizRunHead">
+                <button class="pm6-wiz-runhead-collapse" type="button" data-demo-action="wizard.toggleHeader" aria-label="Collapse workspace header">
+                  <span class="pm6-wiz-glyph pm6-wiz-runhead-chev">&#9662;</span>
+                </button>
+                <div class="pm6-wiz-runhead-main">
+                  <div class="pm6-wiz-runhead-titlerow">
+                    <span class="pm6-wiz-runhead-title">Tastebook</span>
+                    <span class="pm6-wiz-runhead-run">PlanningRun pr-2026-0708 &middot; revision <span id="pm6WizRevision">12</span></span>
+                  </div>
+                  <div class="pm6-wiz-runhead-chips" id="pm6WizRunChips">
+                    <span class="pm6-wiz-mchip"><span class="pm6-ico" data-pm6-icon="globe"></span> jared/tastebook &middot; main</span>
+                    <span class="pm6-wiz-mchip">topic map <span id="pm6WizMapVersion">v9</span></span>
+                    <span class="pm6-wiz-mchip">SvelteKit &middot; Axum &middot; Postgres</span>
+                    <span class="pm6-wiz-mchip ok">imported from Assistant Chat</span>
+                  </div>
+                </div>
+                <div class="pm6-wiz-runhead-state" id="pm6WizRunState"></div>
+              </header>
+
+              <div class="pm6-wiz-workgrid">
+
+                <aside class="pm6-wiz-topics">
+                  <div class="pm6-wiz-col-head">
+                    <span class="pm6-wiz-col-title">Topic map</span>
+                    <span class="pm6-wiz-col-meta" id="pm6WizTopicCount"></span>
+                  </div>
+                  <div class="pm6-wiz-topic-list" id="pm6WizTopicList"></div>
+                  <div class="pm6-wiz-integrate-dock" id="pm6WizIntegrateDock"></div>
+                </aside>
+
+                <main class="pm6-wiz-thread" id="pm6WizThread"></main>
+
+                <aside class="pm6-wiz-right">
+                  <div class="pm6-wiz-preview">
+                    <div class="pm6-wiz-col-head">
+                      <span class="pm6-wiz-col-title">Live plan preview</span>
+                      <span class="pm6-wiz-col-meta" id="pm6WizDocMeta"></span>
+                    </div>
+                    <div class="pm6-wiz-doc" id="pm6WizDoc"></div>
+                  </div>
+                  <div class="pm6-wiz-rail" id="pm6WizRail"></div>
+                </aside>
+
+              </div>
+            </section>
+
+            <!-- Legacy contract hooks (inert, hidden). Frozen scripts in parts
+                 24-26 still query these ids/classes; keep them present exactly
+                 once so cross-part hooks resolve. Never shown. ---------------- -->
+            <div class="pm6-wiz-legacy" hidden aria-hidden="true">
+              <div class="wizard-nav-step" data-nav-step="0"></div>
+              <div class="wizard-nav-connector"></div>
+              <div class="wizard-step-panel" data-wizard-panel="0"></div>
+              <div class="wizard-doc-pill prd-pill"></div>
+              <div class="wizard-doc-pill exec-pill"></div>
+              <div id="prd-mock-content" class="selectable-doc"></div>
+              <div id="exec-mock-content"></div>
+              <div class="wizard-annotation-drawer">
+                <span class="gated-text"></span><span class="open-count">0</span>
+                <div class="drawer-content"></div>
+              </div>
+            </div>
+
+          </div>

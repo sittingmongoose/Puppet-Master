@@ -1,0 +1,605 @@
+{
+ "generated": "2026-07-08",
+ "working_sha256": "7a2bd3a707de59bf1358ac010c65a9a97f63b688cc343321830eacb9a12d5c4d",
+ "global": {
+  "deltas": {
+   "div": 0,
+   "span": 0,
+   "style": 0,
+   "script": 0,
+   "template": 0
+  },
+  "body_open_count": 1,
+  "lines": 21518
+ },
+ "parts": {
+  "01-head-prelude.part.html": {
+   "sha256": "0a1381dc7aa09c7a526c80a7524e4e6371a1e2a8de454468dc444b043d00365c",
+   "lines": 9,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "02-css-tokens.part.html": {
+   "sha256": "fc4ff1eb2403b8c146d637bef55f6980d824e81028dfb5ad8619960771518d93",
+   "lines": 445,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 1,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "03-css-glass-a.part.html": {
+   "sha256": "619252dd08e02dede9b48dcbe5924aa4150ddd0a8f52a39559c5c0ce866645bd",
+   "lines": 992,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "04-css-glass-b.part.html": {
+   "sha256": "f66989facf45957c4dbd3cfc247453d7044e3390a6a22139496ea1e431326fdd",
+   "lines": 1432,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "05-css-shell.part.html": {
+   "sha256": "42f28c851a75a7511419c2b7ca49aa81ede2965b3aa1c32dd44aee9a39d6f5c0",
+   "lines": 867,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "06-css-components-a.part.html": {
+   "sha256": "09fb951df00f4d757b017f7757489f808b8cea358d8fa3ce0f7781e7ce209bdf",
+   "lines": 1723,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "07-css-components-b.part.html": {
+   "sha256": "e948081d3c8d99259b1811fbf7a8d208470d619afa346b923f7eb37306e00564",
+   "lines": 609,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "08-css-components-c.part.html": {
+   "sha256": "ea7702b5180b1ece3263cb581a4ce31c1ce0e7b46fa4f7046c67243889498b6b",
+   "lines": 1936,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "09-css-bento-themes.part.html": {
+   "sha256": "f8342d5ee731ae7fb2c823d6c4bac33e40b9cbac60c52d3c3e992d631c90685d",
+   "lines": 907,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": -1,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10-css-settings.part.html": {
+   "sha256": "23dfc8d03b3df2b0c3b0ac383bd03195e1f41774cf61c52e672edf10ef214a93",
+   "lines": 930,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-global.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-dashboard.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-projects.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-wizard.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-orchestrator.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-usage.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-chat.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-bottom.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "10x-pm6-css-panels.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "11-html-shell-open.part.html": {
+   "sha256": "74573ff146f9722e2ad7ebbee2fbc7efc77d3cf4e4e0232f96f631b69302265c",
+   "lines": 48,
+   "div_delta": 3,
+   "deltas": {
+    "div": 3,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "12-html-side-panels.part.html": {
+   "sha256": "7670f17a68ae0f924cc9ede0bcf00c77cd280e8616e5d6099c7470db934ec60d",
+   "lines": 619,
+   "div_delta": -1,
+   "deltas": {
+    "div": -1,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "13-html-shell-mid.part.html": {
+   "sha256": "28ea4bae722e0b5bcdb520a3854b60c63ea420a21bc1dd99e83833485847401c",
+   "lines": 4,
+   "div_delta": 3,
+   "deltas": {
+    "div": 3,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "14-page-dashboard.part.html": {
+   "sha256": "da17f6ebb91de3cd51b1d32e3988c580a6f050d65dc26263457bf63eddcabe10",
+   "lines": 574,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "15-page-projects.part.html": {
+   "sha256": "6d6749d0de9270bec52887bd125c0906c8e841d7e660f120a78c6c82b4eb3fb1",
+   "lines": 257,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "16-page-wizard.part.html": {
+   "sha256": "2878dd01e6ac95ba37c2fa9afe3f312b39d33ab0f9107bf8e866698569ab9db7",
+   "lines": 461,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "17-page-orchestrator.part.html": {
+   "sha256": "f9063aedb086228fb29f766d4eccad305c5e8dd74f9ec113d7072aa43c49c911",
+   "lines": 414,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "18-page-usage.part.html": {
+   "sha256": "cae9e4933f0783f4f0c8a44fadd5b1071472fe6c898503e4b97339f16fd852ba",
+   "lines": 1375,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "19-page-settings-shell.part.html": {
+   "sha256": "163d527dab76002019e76232587c49191e6930c9b1a386be56466b196c50e010",
+   "lines": 34,
+   "div_delta": -2,
+   "deltas": {
+    "div": -2,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "20-html-bottom-panel.part.html": {
+   "sha256": "f66e4c82a08c25ae340c0ca34bcbdf1b8ee2e63f019488e03e56cfb0a4c125f9",
+   "lines": 179,
+   "div_delta": -1,
+   "deltas": {
+    "div": -1,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "21-html-chat-panel.part.html": {
+   "sha256": "a2e8663bb8250a83cdf8cfa587c16a742fd8eedb08f6364999e1916538d34e6f",
+   "lines": 501,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "22-html-status-toast.part.html": {
+   "sha256": "a77450ff84bea7ee6c12d3e38663dc5b7695393219ed715aeb40d3662b079e65",
+   "lines": 49,
+   "div_delta": -1,
+   "deltas": {
+    "div": -1,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "23-html-floating-chat.part.html": {
+   "sha256": "6b4ba7ea3309eda011874180cea4256e3590a6d2301f77b04463612e52ad2e48",
+   "lines": 724,
+   "div_delta": -1,
+   "deltas": {
+    "div": -1,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "24-js-main.part.html": {
+   "sha256": "b367b35ce760a9f454ff7db34e71e353382bf6f6d87ed98b72b66581e48dadd1",
+   "lines": 1558,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 1,
+    "template": 0
+   }
+  },
+  "25-js-terminal-demo.part.html": {
+   "sha256": "64f428f872f2c9a508c71d6eac3433980e4a00d27d3dac804836b7847d7a0fbb",
+   "lines": 2060,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "26-js-prd-annotations.part.html": {
+   "sha256": "fe04e3844cd1920af7a7d2118197162421bde0c784ad4eab6de241ff8bc86a2d",
+   "lines": 1415,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": -1,
+    "template": 0
+   }
+  },
+  "27-js-shimmer-filters.part.html": {
+   "sha256": "a46f7db32494f36ddbd2e7201523c7dbc701156ed75396996674d4a265e6a9d4",
+   "lines": 250,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "28-js-settings-data.part.html": {
+   "sha256": "74294f1c019c77dae80a2d5b665c4173ecca7f833f674200508baede32400835",
+   "lines": 2,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 1,
+    "template": 0
+   }
+  },
+  "29-js-settings-engine.part.html": {
+   "sha256": "ca58ec1165cb86f6237b4e3b73e1302b7c95b68f03467f7b744beec5bf7fe829",
+   "lines": 1142,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": -1,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-globals.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-demo-engine.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-dashboard.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-projects.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-wizard.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-orchestrator.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-usage.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-chat.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-bottom.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "29x-pm6-js-panels.part.html": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "lines": 0,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  },
+  "30-html-close.part.html": {
+   "sha256": "02ed54edc42fbbbc36988b2a184b67e49568be4807832538ba9b7edda53744d8",
+   "lines": 2,
+   "div_delta": 0,
+   "deltas": {
+    "div": 0,
+    "span": 0,
+    "style": 0,
+    "script": 0,
+    "template": 0
+   }
+  }
+ }
+}

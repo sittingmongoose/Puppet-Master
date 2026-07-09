@@ -1,0 +1,49 @@
+    <div id="pmToastStack" aria-live="polite"></div>
+    <div id="detachedTerminalWindow" aria-label="Detached terminal section">
+      <div class="pm-detached-drag" id="pmDetachedDrag">
+        <span>Terminal section (detached)</span>
+        <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.reattachSecondary()">Re-dock</button>
+      </div>
+      <div id="detachedTerminalBody" style="flex:1; min-height:0; display:flex; flex-direction:column;"></div>
+    </div>
+
+    <footer class="status-bar">
+      <div class="status-menu-wrap">
+        <button class="status-menu-btn" id="statusMenuBtn" title="Status" onclick="event.stopPropagation(); document.getElementById('statusMenuDropdown').classList.toggle('visible')">[i]</button>
+        <div class="status-menu-dropdown" id="statusMenuDropdown">
+          <div class="menu-section">
+            <div class="menu-section-title">Active server</div>
+            <div class="menu-section-content">Coming soon</div>
+          </div>
+          <div class="menu-section">
+            <div class="menu-section-title">MCPs</div>
+            <div class="menu-section-content">puppet-master: 2 MCPs configured</div>
+          </div>
+          <div class="menu-section">
+            <div class="menu-section-title">LSPs</div>
+            <div class="menu-section-content">
+              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > rust-analyzer')">Rust (rust-analyzer): <span style="color:var(--accent-lime);">Ready</span> <span style="color:var(--text-muted); font-size:9px;">(local, /, /puppet-master)</span></div>
+              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > tsserver')">TypeScript (tsserver): <span style="color:var(--accent-lime);">Ready</span> <span style="color:var(--text-muted); font-size:9px;">(ssh:dev-server, /, /frontend)</span></div>
+              <div style="cursor:pointer; padding:2px 0;" onclick="toast('Settings > LSP > pyright')">Python (pyright): <span style="color:var(--text-muted);">Disabled</span></div>
+            </div>
+          </div>
+          <div class="menu-section">
+            <div class="menu-section-title">Plugins</div>
+            <div class="menu-section-content">3 loaded, 1 enabled</div>
+          </div>
+        </div>
+      </div>
+      <span class="status-sep">|</span>
+      <span class="status-root" title="Root folder">~/projects/puppet-master</span>
+      <span class="status-sep">|</span>
+      <span class="status-git">main</span>
+      <span class="status-sync">Up to date</span>
+      <span class="status-commit">abc12ef</span>
+      <span class="status-sep">|</span>
+      <span class="status-ssh">SSH: dev-server 45ms</span>
+      <span class="remote-badge current" style="font-size:9px; cursor:pointer;" onclick="cycleBadge(this, ['current','refreshing','stale']); toast('Remote freshness: ' + this.textContent)">current</span>
+      <span class="status-ssh-rate">In: 12 KB/s | Out: 4 KB/s</span>
+      <span class="status-sep">|</span>
+      <span class="status-snapshot">Last snapshot: 10m ago</span>
+    </footer>
+  </div>

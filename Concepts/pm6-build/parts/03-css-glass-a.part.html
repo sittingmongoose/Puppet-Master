@@ -1,0 +1,954 @@
+    /* --- Glassmorphic: LIQUID GLASS multi-layer panels --- */
+    /* PMConcept6 rebuild: single-element liquid glass.
+       - No SVG filters, no ::before/::after backdrop-blur pseudo stacks.
+       - Backdrop-filter budget: 7 declarations in this block (title-bar,
+         activity-bar, files/left panel, chat panel, floating chat,
+         status-bar + bottom-panel chrome, modal/popover layer).
+       - Every other surface is a pre-baked rgba fill driven by
+         --glass-alpha (transparency slider) + inset specular/hairline.
+       - Identity accents: --pm6-glass-a-rgb (teal dark / sky-blue light),
+         --pm6-glass-b-rgb (pink dark / magenta light) — set per variant
+         in the glass-b block. */
+
+    /* Safety token definitions — theme-tokens owns the canonical :root
+       copies; values here match design_system §1/§2 exactly and are
+       overridden per variant in the glass-b block. */
+    [data-theme^="glass"] {
+      --glass-alpha: .55;
+      --glass-tint-rgb: 16, 20, 34;
+      --panel-blur: 16px;
+      --panel-blur-sm: 10px;
+      --glass-edge: rgba(255, 255, 255, .35);
+      --glass-hairline: rgba(255, 255, 255, .08);
+      --motion-fast: 120ms;
+      --motion-med: 320ms;
+      --ease-out: cubic-bezier(.22, 1, .36, 1);
+      --pm6-glass-a-rgb: 45, 212, 191;
+      --pm6-glass-b-rgb: 244, 114, 182;
+      --pm6-glass-sat: 1.5;
+      --pm6-glass-floor: rgba(255, 255, 255, .10);
+      --pm6-glass-drop: 0 8px 24px rgba(0, 0, 0, .38);
+    }
+
+    /* ======================================================
+       KEEPER CHROME — the only backdrop-filter surfaces
+       ====================================================== */
+
+    /* 1. Title bar — 16px */
+    [data-theme^="glass"] .title-bar {
+      background: linear-gradient(180deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)),
+        rgba(var(--glass-tint-rgb), var(--glass-alpha)));
+      backdrop-filter: blur(var(--panel-blur)) saturate(var(--pm6-glass-sat));
+      -webkit-backdrop-filter: blur(var(--panel-blur)) saturate(var(--pm6-glass-sat));
+      border-bottom: none;
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline);
+    }
+
+    /* 2. Activity bar — 14px */
+    [data-theme^="glass"] .activity-bar {
+      background: linear-gradient(180deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04)),
+        rgba(var(--glass-tint-rgb), var(--glass-alpha)));
+      backdrop-filter: blur(14px) saturate(var(--pm6-glass-sat));
+      -webkit-backdrop-filter: blur(14px) saturate(var(--pm6-glass-sat));
+      border-right: none;
+      box-shadow: inset -1px 0 0 var(--glass-hairline),
+        inset 0 1px 0 var(--glass-edge);
+    }
+
+    /* 3. Files panel + left panel — 12px */
+    [data-theme^="glass"] .files-panel,
+    [data-theme^="glass"] .left-panel {
+      background: linear-gradient(180deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04)),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) - .02)));
+      backdrop-filter: blur(12px) saturate(var(--pm6-glass-sat));
+      -webkit-backdrop-filter: blur(12px) saturate(var(--pm6-glass-sat));
+      border: none;
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline);
+    }
+    [data-theme^="glass"] .left-panel {
+      --surface-alt: rgba(var(--glass-tint-rgb), .20);
+    }
+    [data-theme^="glass"] .files-panel-header {
+      border-left: 4px solid var(--accent-blue);
+      border-bottom: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+    }
+
+    /* 4. Chat panel — 12px */
+    [data-theme^="glass"] .chat-panel {
+      background: linear-gradient(180deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)),
+        rgba(var(--glass-tint-rgb), var(--glass-alpha)));
+      backdrop-filter: blur(12px) saturate(var(--pm6-glass-sat));
+      -webkit-backdrop-filter: blur(12px) saturate(var(--pm6-glass-sat));
+      border-left: none;
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline),
+        inset 0 -12px 24px -18px var(--pm6-glass-floor);
+    }
+
+    /* 5. Floating chat — 20px hero */
+    [data-theme^="glass"] .floating-chat {
+      overflow: hidden;
+      border: none;
+      border-radius: var(--border-radius);
+      background: linear-gradient(180deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02)));
+      backdrop-filter: blur(20px) saturate(var(--pm6-glass-sat));
+      -webkit-backdrop-filter: blur(20px) saturate(var(--pm6-glass-sat));
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline),
+        inset 0 -12px 24px -18px var(--pm6-glass-floor),
+        var(--pm6-glass-drop);
+    }
+
+    /* 6. Status bar + bottom panel — 10px */
+    [data-theme^="glass"] .status-bar,
+    [data-theme^="glass"] .bottom-panel {
+      background: linear-gradient(180deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04)),
+        rgba(var(--glass-tint-rgb), var(--glass-alpha)));
+      backdrop-filter: blur(var(--panel-blur-sm)) saturate(var(--pm6-glass-sat));
+      -webkit-backdrop-filter: blur(var(--panel-blur-sm)) saturate(var(--pm6-glass-sat));
+      border-top: none;
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline);
+    }
+
+    /* 7. Modal / popover layer — 20px */
+    [data-theme^="glass"] .project-settings-content,
+    [data-theme^="glass"] .chat-dropdown-popover,
+    [data-theme^="glass"] .settings-inspector-panel {
+      background: linear-gradient(180deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16)),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08)));
+      backdrop-filter: blur(20px) saturate(var(--pm6-glass-sat));
+      -webkit-backdrop-filter: blur(20px) saturate(var(--pm6-glass-sat));
+      border: none;
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline),
+        inset 0 -12px 24px -18px var(--pm6-glass-floor),
+        var(--pm6-glass-drop);
+    }
+    [data-theme^="glass"] .project-settings-content {
+      position: relative;
+      border-radius: 16px;
+    }
+    [data-theme^="glass"] .chat-dropdown-popover {
+      border-radius: 12px;
+    }
+    [data-theme^="glass"] .settings-inspector-panel {
+      border-radius: 16px 0 0 16px;
+      border-left: none;
+    }
+
+    /* Hero surfaces: gradient-hairline edge (mask-composite ring) */
+    [data-theme^="glass"] .floating-chat::after,
+    [data-theme^="glass"] .project-settings-content::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg,
+        rgba(255, 255, 255, .35),
+        rgba(255, 255, 255, .05) 40%,
+        rgba(var(--pm6-glass-a-rgb), .25));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ======================================================
+       PRE-BAKED SURFACES — cards (no backdrop-filter)
+       ====================================================== */
+    [data-theme^="glass"] .bento-card,
+    [data-theme^="glass"] .widget-card,
+    [data-theme^="glass"] .project-card-bento {
+      position: relative;
+      border: none;
+      background: linear-gradient(180deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16)),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)));
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline),
+        inset 0 -12px 24px -18px var(--pm6-glass-floor),
+        0 4px 14px rgba(0, 0, 0, .16);
+      transition: box-shadow var(--motion-med) var(--ease-out),
+        transform var(--motion-med) var(--ease-out);
+    }
+    [data-theme^="glass"] .bento-card {
+      overflow: hidden auto;
+      border-radius: 16px;
+    }
+    [data-theme^="glass"] .widget-card {
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    [data-theme^="glass"] .project-card-bento {
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    [data-theme^="glass"] .bento-card:hover {
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline),
+        0 0 20px rgba(var(--pm6-glass-a-rgb), .18),
+        0 8px 28px rgba(0, 0, 0, .22);
+    }
+    [data-theme^="glass"] .project-card-bento:hover {
+      transform: translateY(-4px);
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px rgba(var(--pm6-glass-a-rgb), .30),
+        0 0 16px rgba(var(--pm6-glass-a-rgb), .14),
+        0 10px 30px rgba(0, 0, 0, .24);
+    }
+    [data-theme^="glass"] .project-card-bento.current {
+      border-left: 6px solid var(--accent-blue);
+      background: linear-gradient(to right,
+        rgba(var(--pm6-glass-a-rgb), .10),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)));
+    }
+
+    /* Secondary containers */
+    [data-theme^="glass"] .bento-widget,
+    [data-theme^="glass"] .activity-card,
+    [data-theme^="glass"] .questionnaire-ui,
+    [data-theme^="glass"] .wizard-form-container,
+    [data-theme^="glass"] .wizard-interview-container,
+    [data-theme^="glass"] .wizard-activity-floating,
+    [data-theme^="glass"] .runtime-snapshot {
+      border: none;
+      border-radius: 12px;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline);
+    }
+    [data-theme^="glass"] .wizard-activity-floating {
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline),
+        var(--pm6-glass-drop);
+    }
+    [data-theme^="glass"] .chat-thread-sidebar {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02));
+      border-right: none;
+      box-shadow: inset -1px 0 0 var(--glass-hairline);
+    }
+    [data-theme^="glass"] .panel-header {
+      border-left-color: var(--accent-blue);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+    }
+    [data-theme^="glass"] .sticky-plan-tracker {
+      border-bottom-color: var(--accent-blue);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+    }
+
+    /* ======================================================
+       TITLE-BAR CONTROLS (pre-baked)
+       ====================================================== */
+    [data-theme^="glass"] .title-bar .project-dropdown,
+    [data-theme^="glass"] .title-bar .theme-select,
+    [data-theme^="glass"] .title-bar .search-bar {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      border: 1px solid var(--glass-hairline);
+      border-radius: 8px;
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+    }
+    [data-theme^="glass"] .title-bar .project-dropdown {
+      padding: 3px 10px;
+      max-width: 200px;
+      overflow: hidden;
+    }
+    [data-theme^="glass"] .title-bar .project-dropdown span:first-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 160px;
+      display: inline-block;
+    }
+    [data-theme^="glass"] .title-bar .theme-select {
+      padding: 3px 8px;
+    }
+
+    /* ======================================================
+       INTERACTIVE ACCENTS
+       ====================================================== */
+    [data-theme^="glass"] .title-bar .page-tabs .page-tab.active {
+      background: rgba(var(--pm6-glass-a-rgb), .18);
+      color: var(--accent-blue);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .22),
+        inset 0 1px 0 var(--glass-edge);
+    }
+    [data-theme^="glass"] .activity-bar .icon.active {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .activity-bar .icon.active::before {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(var(--pm6-glass-a-rgb), .45);
+    }
+    [data-theme^="glass"] .wizard-btn {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      border: 1px solid var(--glass-hairline);
+      border-radius: 8px;
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+      transition: all var(--motion-fast) var(--ease-out);
+    }
+    [data-theme^="glass"] .wizard-btn:hover:not(:disabled) {
+      background: rgba(var(--pm6-glass-a-rgb), .12);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .18);
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .wizard-btn.primary {
+      background: linear-gradient(135deg,
+        rgba(var(--pm6-glass-a-rgb), .30),
+        rgba(var(--pm6-glass-a-rgb), .16));
+      color: var(--text-primary);
+      border: 1px solid rgba(var(--pm6-glass-a-rgb), .50);
+      box-shadow: 0 0 14px rgba(var(--pm6-glass-a-rgb), .18),
+        inset 0 1px 0 var(--glass-edge);
+    }
+    [data-theme^="glass"] .wizard-btn.primary:hover:not(:disabled) {
+      background: linear-gradient(135deg,
+        rgba(var(--pm6-glass-a-rgb), .45),
+        rgba(var(--pm6-glass-a-rgb), .28));
+      box-shadow: 0 0 20px rgba(var(--pm6-glass-a-rgb), .30),
+        inset 0 1px 0 var(--glass-edge);
+    }
+    [data-theme^="glass"] .orchestrator-buttons button {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      border: 1px solid var(--glass-hairline);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .orchestrator-buttons button.primary {
+      background: linear-gradient(135deg,
+        rgba(var(--pm6-glass-a-rgb), .26),
+        rgba(var(--pm6-glass-a-rgb), .14));
+      color: var(--text-primary);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .14);
+    }
+    [data-theme^="glass"] .page-projects .projects-actions button:hover {
+      background: rgba(var(--pm6-glass-a-rgb), .14);
+      color: var(--accent-blue);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: 0 4px 16px rgba(var(--pm6-glass-a-rgb), .14);
+    }
+    [data-theme^="glass"] .page-projects .projects-actions button.primary {
+      background: linear-gradient(135deg,
+        rgba(var(--pm6-glass-a-rgb), .24),
+        rgba(var(--pm6-glass-a-rgb), .12));
+      color: var(--text-primary);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+    }
+
+    /* Status badges */
+    [data-theme^="glass"] .status-badge {
+      background: rgba(var(--pm6-glass-a-rgb), .16);
+      color: var(--accent-lime);
+      border: 1px solid rgba(var(--pm6-glass-a-rgb), .38);
+      border-radius: 6px;
+      box-shadow: 0 0 8px rgba(var(--pm6-glass-a-rgb), .16);
+    }
+    [data-theme^="glass"] .status-badge.idle {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      color: var(--text-secondary);
+      border-color: var(--glass-hairline);
+      box-shadow: none;
+    }
+    [data-theme^="glass"] .status-badge.paused {
+      background: rgba(251, 146, 60, .18);
+      color: var(--accent-orange);
+      border-color: rgba(251, 146, 60, .40);
+      box-shadow: none;
+    }
+    [data-theme^="glass"] .status-badge.error {
+      background: rgba(var(--pm6-glass-b-rgb), .16);
+      color: var(--accent-magenta);
+      border-color: rgba(var(--pm6-glass-b-rgb), .40);
+      box-shadow: none;
+    }
+
+    /* Progress bars */
+    [data-theme^="glass"] .progress-bar {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .14));
+      border-radius: 4px;
+    }
+    [data-theme^="glass"] .progress-bar .fill {
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-lime));
+      border-radius: 4px;
+    }
+
+    /* Focus states */
+    [data-theme^="glass"] button:focus-visible,
+    [data-theme^="glass"] .page-tab:focus-visible,
+    [data-theme^="glass"] .orch-tab:focus-visible,
+    [data-theme^="glass"] input:focus-visible,
+    [data-theme^="glass"] select:focus-visible,
+    [data-theme^="glass"] textarea:focus-visible {
+      outline-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(var(--pm6-glass-a-rgb), .20);
+    }
+
+    /* ======================================================
+       CHAT COMPONENTS
+       ====================================================== */
+    [data-theme^="glass"] .chat-thread-item {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+      border: 1px solid transparent;
+      border-radius: 8px;
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+      transition: all var(--motion-fast) var(--ease-out);
+    }
+    [data-theme^="glass"] .chat-thread-item:hover {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16));
+      border-color: rgba(var(--pm6-glass-b-rgb), .16);
+    }
+    [data-theme^="glass"] .chat-thread-item.active {
+      background: rgba(var(--pm6-glass-b-rgb), .08);
+      border-color: rgba(var(--pm6-glass-b-rgb), .38);
+      box-shadow: 0 0 12px rgba(var(--pm6-glass-b-rgb), .14),
+        inset 0 1px 0 var(--glass-edge);
+    }
+    [data-theme^="glass"] .message.assistant .msg-body {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .14));
+      border: none;
+      border-left: none;
+      border-radius: 0 12px 12px 12px;
+      box-shadow: inset 0 0 0 1px var(--glass-hairline),
+        -10px 0 14px -10px rgba(var(--pm6-glass-b-rgb), .40);
+    }
+    [data-theme^="glass"] .message.user .msg-body {
+      background:
+        linear-gradient(135deg,
+          rgba(var(--pm6-glass-a-rgb), .18),
+          rgba(var(--pm6-glass-a-rgb), .08)),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+      color: var(--text-primary);
+      border: none;
+      border-radius: 12px 0 12px 12px;
+      box-shadow: inset 0 0 0 1px rgba(var(--pm6-glass-a-rgb), .25),
+        10px 0 14px -10px rgba(var(--pm6-glass-a-rgb), .40);
+    }
+    [data-theme^="glass"] .message.msg-focused .msg-body {
+      border-color: var(--accent-blue) !important;
+      background: rgba(var(--pm6-glass-a-rgb), .10) !important;
+      box-shadow: 0 0 0 1px rgba(var(--pm6-glass-a-rgb), .45),
+        0 0 18px rgba(var(--pm6-glass-a-rgb), .25) !important;
+    }
+    [data-theme^="glass"] .message.assistant .message-block {
+      border-left-color: var(--accent-magenta);
+    }
+    [data-theme^="glass"] .message-block {
+      border-left-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .message-files-touched a {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .chat-modes {
+      border-bottom: none;
+    }
+    [data-theme^="glass"] .chat-modes .mode {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+    }
+    [data-theme^="glass"] .chat-modes .mode.active {
+      background: rgba(var(--pm6-glass-b-rgb), .14);
+      color: var(--accent-magenta);
+      border: 1px solid rgba(var(--pm6-glass-b-rgb), .35);
+      box-shadow: 0 0 10px rgba(var(--pm6-glass-b-rgb), .20);
+    }
+    [data-theme^="glass"] .chat-panel-header-stacked {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+      border-bottom: none;
+      position: relative;
+      z-index: 10;
+    }
+    [data-theme^="glass"] .chat-header-workflow {
+      background: transparent;
+      border-bottom: none;
+    }
+    [data-theme^="glass"] .chat-queue-area {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04));
+      border: none;
+    }
+    [data-theme^="glass"] .chat-queue-area .queue-item .actions a {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .chat-footer {
+      border-top: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04));
+    }
+    [data-theme^="glass"] .chat-footer select {
+      border: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+    }
+    [data-theme^="glass"] .chat-footer .context-progress {
+      border: none;
+    }
+    [data-theme^="glass"] .chat-footer .context-progress.filled {
+      background: var(--accent-blue);
+    }
+    [data-theme^="glass"] .composer-chip {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+      border-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .chat-thread-sidebar .sidebar-title {
+      border-bottom: none;
+    }
+    [data-theme^="glass"] .chat-new-thread-btn {
+      background: linear-gradient(135deg,
+        rgba(var(--pm6-glass-b-rgb), .18),
+        rgba(var(--pm6-glass-b-rgb), .08));
+      color: var(--text-primary);
+      border: 1px solid rgba(var(--pm6-glass-b-rgb), .28);
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(var(--pm6-glass-b-rgb), .12);
+    }
+    [data-theme^="glass"] .chat-input-area textarea {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      border: 1px solid var(--glass-hairline);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .chat-input-area textarea:focus {
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: 0 0 0 3px rgba(var(--pm6-glass-a-rgb), .14);
+    }
+    [data-theme^="glass"] .chat-dropdown-item.active {
+      background: rgba(var(--pm6-glass-a-rgb), .12);
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .steer-queue-toggle span.active {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .jump-to-latest {
+      color: var(--accent-blue);
+    }
+
+    /* Working pulse — pre-rendered glow ring, opacity-only animation */
+    [data-theme^="glass"] .chat-thread-item .thread-working-pulse {
+      position: relative;
+    }
+    [data-theme^="glass"] .chat-thread-item .thread-working-pulse::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      box-shadow: 0 0 8px 2px rgba(var(--pm6-glass-b-rgb), .55);
+      opacity: 0;
+      animation: pm6-glass-pulse 1.6s var(--ease-out) infinite;
+      pointer-events: none;
+    }
+    @keyframes pm6-glass-pulse {
+      0% { opacity: 0; }
+      45% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* ======================================================
+       BOTTOM PANEL TABS + TERMINAL
+       ====================================================== */
+    [data-theme^="glass"] .bottom-tabs {
+      background: transparent;
+      border-bottom: 1px solid var(--glass-hairline);
+      overflow: visible;
+    }
+    [data-theme^="glass"] .bottom-tabs .tab {
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+      transition: all var(--motion-fast) var(--ease-out);
+      font-size: 10px;
+    }
+    [data-theme^="glass"] .bottom-tabs .tab:hover {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .14));
+    }
+    [data-theme^="glass"] .bottom-tabs .tab.active {
+      color: var(--accent-blue);
+      background: rgba(var(--pm6-glass-a-rgb), .14);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+    }
+    [data-theme^="glass"] .terminal-tabstrip {
+      background: transparent;
+      border-bottom: 1px solid var(--glass-hairline);
+    }
+    [data-theme^="glass"] .terminal-tab {
+      border-radius: 4px;
+      border: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04));
+      transition: all var(--motion-fast) var(--ease-out);
+    }
+    [data-theme^="glass"] .terminal-tab:hover {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .terminal-tab.active {
+      background: rgba(var(--pm6-glass-a-rgb), .12);
+      color: var(--text-primary);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+    }
+    [data-theme^="glass"] .pm-tiny-btn {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+      border-color: var(--glass-hairline);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .pm-tiny-btn:hover {
+      background: rgba(var(--pm6-glass-a-rgb), .12);
+      border-color: rgba(var(--pm6-glass-a-rgb), .22);
+    }
+    [data-theme^="glass"] .terminal-output,
+    [data-theme^="glass"] .terminal-pane {
+      background: var(--terminal-bg);
+      color: var(--terminal-fg);
+      box-shadow: inset 0 1px 0 var(--glass-hairline);
+    }
+
+    /* ======================================================
+       ORCHESTRATOR / GRAPH
+       ====================================================== */
+    [data-theme^="glass"] .orch-tab.active {
+      border-bottom-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .orch-rungraph-node {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .14));
+      border-radius: 8px;
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        0 2px 10px rgba(0, 0, 0, .22);
+    }
+    [data-theme^="glass"] .orch-rungraph-node.graph-pending {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .18));
+      border-color: var(--glass-hairline);
+      color: var(--text-secondary);
+    }
+    [data-theme^="glass"] .orch-rungraph-node.graph-running {
+      background: rgba(251, 191, 36, .22);
+      border-color: rgba(251, 191, 36, .55);
+      box-shadow: 0 0 14px rgba(251, 191, 36, .20);
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .orch-rungraph-node.graph-passed {
+      background: rgba(52, 211, 153, .22);
+      border-color: rgba(52, 211, 153, .55);
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .orch-rungraph-node.graph-failed {
+      background: rgba(248, 113, 113, .22);
+      border-color: rgba(248, 113, 113, .55);
+      box-shadow: 0 0 12px rgba(248, 113, 113, .18);
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .orch-rungraph-node.selected {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 14px rgba(var(--pm6-glass-a-rgb), .35);
+    }
+    [data-theme^="glass"] .orch-lane-node.selected {
+      background: rgba(var(--pm6-glass-a-rgb), .16);
+      color: var(--accent-blue);
+      border: 1px solid rgba(var(--pm6-glass-a-rgb), .40);
+    }
+    [data-theme^="glass"] .orch-lane-link,
+    [data-theme^="glass"] .orch-ledger-usage-link {
+      color: var(--accent-blue);
+    }
+
+    /* ======================================================
+       SETTINGS / PSM
+       ====================================================== */
+    [data-theme^="glass"] .settings-tab:hover,
+    [data-theme^="glass"] .psm-tab:hover {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+    }
+    [data-theme^="glass"] .settings-tab.active,
+    [data-theme^="glass"] .psm-tab.active {
+      border-left-color: var(--accent-blue);
+      background: rgba(var(--pm6-glass-a-rgb), .10);
+      color: var(--text-primary);
+      box-shadow: 0 0 10px rgba(var(--pm6-glass-a-rgb), .14);
+    }
+    [data-theme^="glass"] .psm-pane {
+      background: transparent;
+    }
+    [data-theme^="glass"] .psm-field input[type="text"],
+    [data-theme^="glass"] .psm-field select {
+      border: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      box-shadow: inset 0 0 0 1px var(--glass-hairline);
+    }
+    [data-theme^="glass"] .psm-toggle-row {
+      border: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+    }
+    [data-theme^="glass"] .psm-section-title {
+      border-bottom: none;
+    }
+    [data-theme^="glass"] .psm-footer {
+      background: transparent;
+      border-top: none;
+    }
+    [data-theme^="glass"] .psm-btn {
+      border: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+    }
+    [data-theme^="glass"] .psm-btn.primary {
+      background: linear-gradient(135deg,
+        rgba(var(--pm6-glass-a-rgb), .28),
+        rgba(var(--pm6-glass-a-rgb), .14));
+      color: var(--text-primary);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+    }
+    [data-theme^="glass"] .settings-group-header .badge {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+    }
+    [data-theme^="glass"] .settings-search-input {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      border: 1px solid var(--glass-hairline);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .settings-search-input:focus {
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: 0 0 0 3px rgba(var(--pm6-glass-a-rgb), .14);
+    }
+    [data-theme^="glass"] .bento-action {
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .bento-action:hover {
+      background: rgba(var(--pm6-glass-a-rgb), .14);
+      color: var(--text-primary);
+      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .18);
+    }
+    [data-theme^="glass"] .add-widget-btn:hover,
+    [data-theme^="glass"] .customize-widgets-btn:hover {
+      background: rgba(var(--pm6-glass-a-rgb), .14);
+      color: var(--accent-blue);
+      border-color: rgba(var(--pm6-glass-a-rgb), .30);
+    }
+
+    /* ======================================================
+       WIZARD & INTERVIEW
+       ====================================================== */
+    [data-theme^="glass"] .wizard-nav-step.active::after {
+      background: var(--accent-blue);
+      box-shadow: 0 0 10px rgba(var(--pm6-glass-a-rgb), .45);
+    }
+    [data-theme^="glass"] .wizard-nav-step.complete {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .wizard-nav-connector.complete {
+      background: var(--accent-blue);
+    }
+    [data-theme^="glass"] .wizard-intent-card {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      border: 1px solid transparent;
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .wizard-intent-card:hover {
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .14);
+    }
+    [data-theme^="glass"] .wizard-intent-card.active {
+      border-color: rgba(var(--pm6-glass-a-rgb), .55);
+      background: rgba(var(--pm6-glass-a-rgb), .10);
+      box-shadow: 0 0 16px rgba(var(--pm6-glass-a-rgb), .18);
+    }
+    [data-theme^="glass"] .wizard-input,
+    [data-theme^="glass"] .wizard-select {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      border: 1px solid var(--glass-hairline);
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .wizard-input:focus,
+    [data-theme^="glass"] .wizard-select:focus {
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: 0 0 0 3px rgba(var(--pm6-glass-a-rgb), .14);
+    }
+    [data-theme^="glass"] .wizard-doc-pill {
+      border-radius: 20px;
+    }
+    [data-theme^="glass"] .wizard-doc-pill.active {
+      background: rgba(var(--pm6-glass-a-rgb), .14);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .interview-node-step.active {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .interview-node-step.active .dot {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(var(--pm6-glass-a-rgb), .45);
+    }
+    [data-theme^="glass"] .msg-bubble {
+      border-radius: 12px;
+    }
+    [data-theme^="glass"] .msg-ai {
+      border-left-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .msg-user {
+      background: linear-gradient(135deg,
+        rgba(var(--pm6-glass-a-rgb), .18),
+        rgba(var(--pm6-glass-a-rgb), .08));
+      color: var(--text-primary);
+    }
+    [data-theme^="glass"] .interview-chip {
+      border-radius: 20px;
+      border: 1px solid var(--glass-hairline);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+    }
+    [data-theme^="glass"] .interview-chip:hover {
+      background: rgba(var(--pm6-glass-a-rgb), .14);
+      color: var(--accent-blue);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+    }
+    [data-theme^="glass"] .interview-text-input input {
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .wizard-activity-pulse {
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(var(--pm6-glass-a-rgb), .45);
+    }
+
+    /* ======================================================
+       MISC COMPONENTS
+       ====================================================== */
+    [data-theme^="glass"] .pixel-grid {
+      display: none;
+    }
+    [data-theme^="glass"] .preview-build-strip a {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .browser-session-badge,
+    [data-theme^="glass"] .browser-address-bar,
+    [data-theme^="glass"] .browser-takeover-btn {
+      border-radius: 8px;
+    }
+    [data-theme^="glass"] .browser-viewport [data-pickable]:hover {
+      outline-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .composer-chip.browser-selection {
+      border-color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .composer-chip.browser-selection::before {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] input[type="checkbox"] {
+      border-radius: 4px;
+      border: 1px solid var(--glass-hairline);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+    }
+    [data-theme^="glass"] input[type="checkbox"]:checked {
+      background: rgba(var(--pm6-glass-a-rgb), .30);
+      border-color: rgba(var(--pm6-glass-a-rgb), .55);
+    }
+    [data-theme^="glass"] .search-toggle.on {
+      background: rgba(var(--pm6-glass-a-rgb), .16);
+      color: var(--accent-blue);
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+    }
+    [data-theme^="glass"] .ai-btn {
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .ai-btn:hover {
+      background: rgba(var(--pm6-glass-a-rgb), .14);
+      color: var(--text-primary);
+      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .18);
+    }
+    [data-theme^="glass"] .action-btn:hover {
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .artifact-item:hover {
+      border-color: rgba(var(--pm6-glass-a-rgb), .30);
+    }
+    [data-theme^="glass"] .artifact-btn:hover {
+      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      color: var(--accent-blue);
+    }
+
+    /* ======================================================
+       LAYOUT DETACH — floating panel gaps (both glass variants)
+       ====================================================== */
+    [data-theme^="glass"] .editor-pane {
+      margin: 5px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: var(--pm6-glass-drop);
+    }
+    [data-theme^="glass"] .editor-pane .editor-area {
+      overflow: hidden;
+      border-radius: 0 0 12px 12px;
+    }
+    [data-theme^="glass"] .bottom-panel {
+      margin: 1px 5px 5px 5px;
+      border-radius: 10px;
+    }
+    [data-theme^="glass"] .chat-panel {
+      margin: 4px 0 4px 4px;
+      border-radius: 6px 0 0 6px;
+      border-left: 1px solid var(--border-light);
+    }
+    [data-theme^="glass"] .files-panel {
+      margin: 2px 2px 2px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    [data-theme^="glass"] .primary-content {
+      padding: 2px;
+    }
+    [data-theme^="glass"] .resizer-col {
+      width: 5px;
+      background: transparent;
+    }
+    [data-theme^="glass"] .resizer-row {
+      height: 2px;
+      background: transparent;
+    }
+    [data-theme^="glass"] .terminal-pane {
+      padding-top: var(--xs);
+    }
+    [data-theme^="glass"] .bento-card {
+      margin: 2px;
+    }
+
+    /* Editor tabs — minimal integrated capsules */
+    [data-theme^="glass"] .editor-tabs {
+      padding: 0 10px 0 16px;
+      gap: 4px;
+      border-bottom: 1px solid var(--glass-hairline);
+      background: transparent;
+    }
+    [data-theme^="glass"] .editor-tabs .tab {
+      padding: 4px 10px;
+      font-size: 11px;
+      border: none;
+      border-radius: 6px 6px 0 0;
+      color: var(--text-muted);
+      background: transparent;
+      margin-bottom: 0;
+      transition: color var(--motion-fast) var(--ease-out),
+        background var(--motion-fast) var(--ease-out);
+    }
+    [data-theme^="glass"] .editor-tabs .tab.active {
+      color: var(--text-primary);
+      background: rgba(var(--pm6-glass-a-rgb), .12);
+      border-color: transparent;
+    }
+    [data-theme^="glass"] .editor-tabs .tab:hover:not(.active) {
+      color: var(--text-secondary);
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+    }
+    [data-theme^="glass"] .editor-tabs .tab.active::after {
+      background: linear-gradient(90deg,
+        var(--accent-blue),
+        rgba(var(--pm6-glass-b-rgb), .50));
+    }

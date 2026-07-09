@@ -1,51 +1,791 @@
 {
-  "schema_id": "pm.runtime_artifact.fixture_matrix.v1",
-  "valid_payloads": [
-    {"schema_id":"pm.runtime_artifact.code_diff.schema.v1","artifact_id":"artifact-code-diff-001","artifact_type":"code_diff","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","thread_id":"thread-001","node_id":"node-001","provider_attempt_ref":"provider-attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-code-diff-001"],"type_payload":{"changed_paths":["src/lib.rs"],"diff_ref":"diffs/code-diff-001.patch"}},
-    {"schema_id":"pm.runtime_artifact.implementation_plan.schema.v1","artifact_id":"artifact-implementation-plan-001","artifact_type":"implementation_plan","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-implementation-plan-001"],"type_payload":{"plan_ref":"plans/implementation-plan.md"}},
-    {"schema_id":"pm.runtime_artifact.reasoning_summary.schema.v1","artifact_id":"artifact-reasoning-summary-001","artifact_type":"reasoning_summary","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-reasoning-summary-001"],"type_payload":{"summary":"Fixture reasoning summary."}},
-    {"schema_id":"pm.runtime_artifact.validation_test.schema.v1","artifact_id":"artifact-validation-test-001","artifact_type":"validation_test","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-validation-test-001"],"type_payload":{"test_ids":["test-fixture-001"],"command":"cargo test"}},
-    {"schema_id":"pm.runtime_artifact.screenshot.schema.v1","artifact_id":"artifact-screenshot-001","artifact_type":"screenshot","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-screenshot-001"],"type_payload":{"media_ref":"screenshots/home.png","width":1280,"height":720}},
-    {"schema_id":"pm.runtime_artifact.evidence.schema.v1","artifact_id":"artifact-evidence-001","artifact_type":"evidence","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"governed","routing_refs":["artifact:artifact-evidence-001"],"type_payload":{"evidence_kind":"validator_output","evidence_ref":"evidence/validator.json"}},
-    {"schema_id":"pm.runtime_artifact.document.schema.v1","artifact_id":"artifact-document-001","artifact_type":"document","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-document-001"],"type_payload":{"document_ref":"docs/output.md","mime_type":"text/markdown"}},
-    {"schema_id":"pm.runtime_artifact.restore_point.schema.v1","artifact_id":"artifact-restore-point-001","artifact_type":"restore_point","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"governed","routing_refs":["artifact:artifact-restore-point-001"],"type_payload":{"safe_point_id":"safe-point-001","source_control_ref":"git:abc123"}},
-    {"schema_id":"pm.runtime_artifact.browser_recording.schema.v1","artifact_id":"artifact-browser-recording-001","artifact_type":"browser_recording","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-browser-recording-001"],"type_payload":{"browser_session_id":"browser-session-001","recording_ref":"recordings/session.webm"}},
-    {"schema_id":"pm.runtime_artifact.tool_llm_trace.schema.v1","artifact_id":"artifact-tool-llm-trace-001","artifact_type":"tool_llm_trace","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"debug_retained","routing_refs":["artifact:artifact-tool-llm-trace-001"],"type_payload":{"trace_ref":"traces/tool-llm.jsonl"}},
-    {"schema_id":"pm.runtime_artifact.context_snapshot.schema.v1","artifact_id":"artifact-context-snapshot-001","artifact_type":"context_snapshot","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"debug_retained","routing_refs":["artifact:artifact-context-snapshot-001"],"type_payload":{"snapshot_ref":"snapshots/context.json"}},
-    {"schema_id":"pm.runtime_artifact.cost_usage.schema.v1","artifact_id":"artifact-cost-usage-001","artifact_type":"cost_usage","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","usage_event_ref":"usage-event-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-cost-usage-001"],"type_payload":{"usage_event_ref":"usage-event-001","reasoning_tokens":12,"total_tokens":42}},
-    {"schema_id":"pm.runtime_artifact.hitl_approval.schema.v1","artifact_id":"artifact-hitl-approval-001","artifact_type":"hitl_approval","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","receipt_refs":["receipt-hitl-001"],"created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"governed","routing_refs":["artifact:artifact-hitl-approval-001"],"type_payload":{"approval_scope_key":"approval:fixture","decision":"approved"}},
-    {"schema_id":"pm.runtime_artifact.failed_attempts.schema.v1","artifact_id":"artifact-failed-attempts-001","artifact_type":"failed_attempts","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","receipt_refs":["receipt-failed-001"],"created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"debug_retained","routing_refs":["artifact:artifact-failed-attempts-001"],"type_payload":{"attempt_refs":["attempt-previous-001"],"failure_summary":"Fixture failure."}},
-    {"schema_id":"pm.runtime_artifact.subagent_lineage.schema.v1","artifact_id":"artifact-subagent-lineage-001","artifact_type":"subagent_lineage","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-subagent-lineage-001"],"type_payload":{"parent_attempt_ref":"attempt-parent-001","child_attempt_refs":["attempt-child-001"]}},
-    {"schema_id":"pm.runtime_artifact.before_after_snapshot.schema.v1","artifact_id":"artifact-before-after-snapshot-001","artifact_type":"before_after_snapshot","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-before-after-snapshot-001"],"type_payload":{"before_ref":"snapshots/before.json","after_ref":"snapshots/after.json"}},
-    {"schema_id":"pm.runtime_artifact.suggested_next_steps.schema.v1","artifact_id":"artifact-suggested-next-steps-001","artifact_type":"suggested_next_steps","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-suggested-next-steps-001"],"type_payload":{"next_steps":["Run the next clean-checkout validator."]}},
-    {"schema_id":"pm.runtime_artifact.api_web_call.schema.v1","artifact_id":"artifact-api-web-call-001","artifact_type":"api_web_call","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"debug_retained","routing_refs":["artifact:artifact-api-web-call-001"],"type_payload":{"source_system":"example-api","redacted_request_ref":"api/request-redacted.json","redacted_response_ref":"api/response-redacted.json"}},
-    {"schema_id":"pm.runtime_artifact.artifact_version.schema.v1","artifact_id":"artifact-artifact-version-001","artifact_type":"artifact_version","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:artifact-artifact-version-001"],"type_payload":{"logical_artifact_id":"logical-artifact-001","artifact_version":"v1"}}
-  ],
-  "event_records": [
-    {"event_type":"runtime_artifact.code_diff","artifact_type":"code_diff","artifact_id":"artifact-code-diff-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.implementation_plan","artifact_type":"implementation_plan","artifact_id":"artifact-implementation-plan-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.reasoning_summary","artifact_type":"reasoning_summary","artifact_id":"artifact-reasoning-summary-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.validation_test","artifact_type":"validation_test","artifact_id":"artifact-validation-test-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.screenshot","artifact_type":"screenshot","artifact_id":"artifact-screenshot-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.evidence","artifact_type":"evidence","artifact_id":"artifact-evidence-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.document","artifact_type":"document","artifact_id":"artifact-document-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.restore_point","artifact_type":"restore_point","artifact_id":"artifact-restore-point-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.browser_recording","artifact_type":"browser_recording","artifact_id":"artifact-browser-recording-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.tool_llm_trace","artifact_type":"tool_llm_trace","artifact_id":"artifact-tool-llm-trace-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.context_snapshot","artifact_type":"context_snapshot","artifact_id":"artifact-context-snapshot-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.cost_usage","artifact_type":"cost_usage","artifact_id":"artifact-cost-usage-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.hitl_approval","artifact_type":"hitl_approval","artifact_id":"artifact-hitl-approval-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.failed_attempts","artifact_type":"failed_attempts","artifact_id":"artifact-failed-attempts-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.subagent_lineage","artifact_type":"subagent_lineage","artifact_id":"artifact-subagent-lineage-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.before_after_snapshot","artifact_type":"before_after_snapshot","artifact_id":"artifact-before-after-snapshot-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.suggested_next_steps","artifact_type":"suggested_next_steps","artifact_id":"artifact-suggested-next-steps-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.api_web_call","artifact_type":"api_web_call","artifact_id":"artifact-api-web-call-001","run_id":"run-001","attempt_id":"attempt-001"},
-    {"event_type":"runtime_artifact.artifact_version","artifact_type":"artifact_version","artifact_id":"artifact-artifact-version-001","run_id":"run-001","attempt_id":"attempt-001"}
-  ],
-  "invalid_payloads": [
-    {"case_id":"missing_attempt_id","artifact_type":"code_diff","payload":{"schema_id":"pm.runtime_artifact.code_diff.schema.v1","artifact_id":"bad-code-diff","artifact_type":"code_diff","project_id":"fixture-project","run_id":"run-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:bad-code-diff"],"type_payload":{"changed_paths":["src/lib.rs"]}}},
-    {"case_id":"wrong_artifact_type","artifact_type":"not_real","payload":{"schema_id":"pm.runtime_artifact.not_real.schema.v1","artifact_id":"bad-type","artifact_type":"not_real","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:bad-type"],"type_payload":{"changed_paths":["src/lib.rs"]}}},
-    {"case_id":"missing_reasoning_tokens","artifact_type":"cost_usage","payload":{"schema_id":"pm.runtime_artifact.cost_usage.schema.v1","artifact_id":"bad-cost","artifact_type":"cost_usage","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"project","routing_refs":["artifact:bad-cost"],"type_payload":{"usage_event_ref":"usage-event-001"}}},
-    {"case_id":"receipt_artifact_missing_required_decision","artifact_type":"hitl_approval","payload":{"schema_id":"pm.runtime_artifact.hitl_approval.schema.v1","artifact_id":"bad-hitl","artifact_type":"hitl_approval","project_id":"fixture-project","run_id":"run-001","attempt_id":"attempt-001","created_at_utc":"2026-07-02T00:00:00Z","projection_freshness":"current","projection_health":"healthy","retention_class":"governed","routing_refs":["artifact:bad-hitl"],"type_payload":{"approval_scope_key":"approval:fixture"}}}
-  ]
+    "schema_id": "pm.runtime_artifact.fixture_matrix.v1",
+    "valid_payloads": [
+        {
+            "schema_id": "pm.runtime_artifact.code_diff.schema.v1",
+            "artifact_id": "artifact-code-diff-001",
+            "artifact_type": "code_diff",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "thread_id": "thread-001",
+            "node_id": "node-001",
+            "provider_attempt_ref": "provider-attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-code-diff-001"
+            ],
+            "type_payload": {
+                "changed_paths": [
+                    "src/lib.rs"
+                ],
+                "diff_ref": "diffs/code-diff-001.patch"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.implementation_plan.schema.v1",
+            "artifact_id": "artifact-implementation-plan-001",
+            "artifact_type": "implementation_plan",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-implementation-plan-001"
+            ],
+            "type_payload": {
+                "plan_ref": "plans/implementation-plan.md"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.reasoning_summary.schema.v1",
+            "artifact_id": "artifact-reasoning-summary-001",
+            "artifact_type": "reasoning_summary",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-reasoning-summary-001"
+            ],
+            "type_payload": {
+                "summary": "Fixture reasoning summary."
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.validation_test.schema.v1",
+            "artifact_id": "artifact-validation-test-001",
+            "artifact_type": "validation_test",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-validation-test-001"
+            ],
+            "type_payload": {
+                "test_ids": [
+                    "test-fixture-001"
+                ],
+                "command": "cargo test"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.screenshot.schema.v1",
+            "artifact_id": "artifact-screenshot-001",
+            "artifact_type": "screenshot",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-screenshot-001"
+            ],
+            "type_payload": {
+                "media_ref": "screenshots/home.png",
+                "width": 1280,
+                "height": 720
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.evidence.schema.v1",
+            "artifact_id": "artifact-evidence-001",
+            "artifact_type": "evidence",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "governed",
+            "routing_refs": [
+                "artifact:artifact-evidence-001"
+            ],
+            "type_payload": {
+                "evidence_kind": "validator_output",
+                "evidence_ref": "evidence/validator.json"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.document.schema.v1",
+            "artifact_id": "artifact-document-001",
+            "artifact_type": "document",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-document-001"
+            ],
+            "type_payload": {
+                "document_ref": "docs/output.md",
+                "mime_type": "text/markdown"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.restore_point.schema.v1",
+            "artifact_id": "artifact-restore-point-001",
+            "artifact_type": "restore_point",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "governed",
+            "routing_refs": [
+                "artifact:artifact-restore-point-001"
+            ],
+            "type_payload": {
+                "safe_point_id": "safe-point-001",
+                "source_control_ref": "git:abc123"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.browser_recording.schema.v1",
+            "artifact_id": "artifact-browser-recording-001",
+            "artifact_type": "browser_recording",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-browser-recording-001"
+            ],
+            "type_payload": {
+                "browser_session_id": "browser-session-001",
+                "recording_ref": "recordings/session.webm"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.tool_llm_trace.schema.v1",
+            "artifact_id": "artifact-tool-llm-trace-001",
+            "artifact_type": "tool_llm_trace",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-tool-llm-trace-001"
+            ],
+            "type_payload": {
+                "trace_ref": "traces/tool-llm.jsonl",
+                "trace_kind": "llm_call",
+                "tool_call_id": "tool-call-001",
+                "llm_call_id": "llm-call-001",
+                "provider_attempt_ref": "provider-attempt-001",
+                "usage_event_ref": "usage-event-001",
+                "lifecycle": {
+                    "started_at_utc": "2026-07-02T00:00:00Z",
+                    "partial_at_utc": "2026-07-02T00:00:01Z",
+                    "final_at_utc": "2026-07-02T00:00:02Z",
+                    "error_at_utc": null,
+                    "abort_at_utc": null,
+                    "stream_state": "final",
+                    "partial_reason": null,
+                    "stop_reason": "stop"
+                },
+                "raw_payload": {
+                    "raw_payload_ref": "raw/provider/tool-llm-001.json",
+                    "redaction_status": "redacted",
+                    "provider_payload_hash": "sha256:toolllmfixture"
+                },
+                "settlement": {
+                    "settlement_status": "settled",
+                    "usage_event_ref": "usage-event-001",
+                    "usage_artifact_ref": "artifact-cost-usage-001",
+                    "quota_artifact_ref": null
+                },
+                "retry": {
+                    "relation": "none",
+                    "parent_trace_ref": null,
+                    "dedupe_key": "dedupe-tool-llm-001"
+                },
+                "refs": {
+                    "provider_attempt_ref": "provider-attempt-001",
+                    "usage_event_ref": "usage-event-001",
+                    "raw_payload_ref": "raw/provider/tool-llm-001.json",
+                    "receipt_refs": []
+                },
+                "flags": {
+                    "usage_observed": true,
+                    "quota_observed": false,
+                    "redacted": true,
+                    "provider_reported": true,
+                    "cli_reported": false
+                }
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.context_snapshot.schema.v1",
+            "artifact_id": "artifact-context-snapshot-001",
+            "artifact_type": "context_snapshot",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-context-snapshot-001"
+            ],
+            "type_payload": {
+                "snapshot_ref": "snapshots/context.json"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.cost_usage.schema.v1",
+            "artifact_id": "artifact-cost-usage-001",
+            "artifact_type": "cost_usage",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "usage_event_ref": "usage-event-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-cost-usage-001"
+            ],
+            "type_payload": {
+                "usage_event_ref": "usage-event-001",
+                "reasoning_tokens": 12,
+                "total_tokens": 42,
+                "provider": {
+                    "provider_id": "openai",
+                    "provider_route_kind": "direct_api",
+                    "provider_account_ref": "account-fixture",
+                    "model_id": "fixture-model",
+                    "model_variant": null,
+                    "reasoning_tier": "medium",
+                    "context_window_tokens": 128000
+                },
+                "usage": {
+                    "input_total": 30,
+                    "input_non_cached": 20,
+                    "cache_read": 10,
+                    "cache_write": 0,
+                    "cache_write_1h": 0,
+                    "cache_write_ttl": null,
+                    "cache_write_breakdown_state": "not_exposed",
+                    "output_total": 12,
+                    "output_visible": 0,
+                    "reasoning_tokens": 12,
+                    "thoughts_tokens": null,
+                    "provider_total": 42,
+                    "context_estimate": 30,
+                    "delta": {
+                        "input_total": 30,
+                        "output_total": 12
+                    },
+                    "cumulative": {
+                        "input_total": 30,
+                        "output_total": 12
+                    },
+                    "counting_semantics": {
+                        "input_total_includes_cache": "yes",
+                        "output_total_includes_reasoning": "yes",
+                        "provider_total_semantics": "provider_reported"
+                    },
+                    "usage_reporting_state": "final"
+                },
+                "cost": {
+                    "cost_status": "priced",
+                    "cost_microdollars": 7,
+                    "cost_minor_units": null,
+                    "currency": "USD",
+                    "pricing_snapshot_id": "pricing-fixture-001",
+                    "pricing_source": "fixture",
+                    "pricing_effective_at": "2026-07-02T00:00:00Z",
+                    "pricing_version": "v1",
+                    "bucket_costs_microdollars": {
+                        "input": 3,
+                        "output": 4
+                    },
+                    "custom_provider_price_row_ref": null
+                },
+                "quota": {
+                    "window_kind": "unknown",
+                    "window_scope": null,
+                    "quota_status": "unknown",
+                    "evidence_source": "unknown",
+                    "reset_at": null,
+                    "cooldown_until": null,
+                    "quota_remaining": null,
+                    "quota_used": null,
+                    "quota_limit": null,
+                    "credits_remaining": null,
+                    "credits_status": "unknown"
+                },
+                "authority": {
+                    "source_class": "provider_reported",
+                    "source_confidence": "high",
+                    "source_authority": "fixture-provider",
+                    "settlement_status": "settled",
+                    "observed_at_utc": "2026-07-02T00:00:00Z",
+                    "settled_at_utc": "2026-07-02T00:00:02Z",
+                    "adjusted_at_utc": null,
+                    "failure_class": null,
+                    "partial_reason": null,
+                    "raw_payload_ref": "raw/provider/usage-001.json",
+                    "redaction_status": "redacted",
+                    "provider_payload_hash": "sha256:usagefixture"
+                },
+                "refs": {
+                    "usage_event_ref": "usage-event-001",
+                    "provider_attempt_ref": "provider-attempt-001",
+                    "attempt_id": "attempt-001",
+                    "run_id": "run-001",
+                    "thread_id": null,
+                    "node_id": null,
+                    "tool_call_id": "tool-call-001",
+                    "parent_usage_record_id": null,
+                    "dedupe_key": "dedupe-usage-001",
+                    "raw_payload_ref": "raw/provider/usage-001.json",
+                    "receipt_refs": [],
+                    "child_usage_event_refs": []
+                },
+                "flags": {
+                    "is_estimated": false,
+                    "is_provider_reported": true,
+                    "is_cli_reported": false,
+                    "is_local_context_estimate": false,
+                    "is_subscription_hidden": false,
+                    "is_byok": false,
+                    "unknown_reason": null,
+                    "display_cost_policy": "show"
+                },
+                "stream": {
+                    "stop_reason": "stop",
+                    "abort_requested": false,
+                    "usage_observed_before_abort": false,
+                    "stream_end_source": "provider_final"
+                },
+                "provider_compat": {
+                    "supportsUsageInStreaming": true
+                }
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.hitl_approval.schema.v1",
+            "artifact_id": "artifact-hitl-approval-001",
+            "artifact_type": "hitl_approval",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "receipt_refs": [
+                "receipt-hitl-001"
+            ],
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "governed",
+            "routing_refs": [
+                "artifact:artifact-hitl-approval-001"
+            ],
+            "type_payload": {
+                "approval_scope_key": "approval:fixture",
+                "decision": "approved"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.failed_attempts.schema.v1",
+            "artifact_id": "artifact-failed-attempts-001",
+            "artifact_type": "failed_attempts",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "receipt_refs": [
+                "receipt-failed-001"
+            ],
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-failed-attempts-001"
+            ],
+            "type_payload": {
+                "attempt_refs": [
+                    "attempt-previous-001"
+                ],
+                "failure_summary": "Fixture failure."
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.subagent_lineage.schema.v1",
+            "artifact_id": "artifact-subagent-lineage-001",
+            "artifact_type": "subagent_lineage",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-subagent-lineage-001"
+            ],
+            "type_payload": {
+                "parent_attempt_ref": "attempt-parent-001",
+                "child_attempt_refs": [
+                    "attempt-child-001"
+                ]
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.before_after_snapshot.schema.v1",
+            "artifact_id": "artifact-before-after-snapshot-001",
+            "artifact_type": "before_after_snapshot",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-before-after-snapshot-001"
+            ],
+            "type_payload": {
+                "before_ref": "snapshots/before.json",
+                "after_ref": "snapshots/after.json"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.suggested_next_steps.schema.v1",
+            "artifact_id": "artifact-suggested-next-steps-001",
+            "artifact_type": "suggested_next_steps",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-suggested-next-steps-001"
+            ],
+            "type_payload": {
+                "next_steps": [
+                    "Run the next clean-checkout validator."
+                ]
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+            "artifact_id": "artifact-api-web-call-001",
+            "artifact_type": "api_web_call",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-api-web-call-001"
+            ],
+            "type_payload": {
+                "source_system": "example-api",
+                "redacted_request_ref": "api/request-redacted.json",
+                "redacted_response_ref": "api/response-redacted.json"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.artifact_version.schema.v1",
+            "artifact_id": "artifact-artifact-version-001",
+            "artifact_type": "artifact_version",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-artifact-version-001"
+            ],
+            "type_payload": {
+                "logical_artifact_id": "logical-artifact-001",
+                "artifact_version": "v1"
+            }
+        }
+    ],
+    "event_records": [
+        {
+            "event_type": "runtime_artifact.code_diff",
+            "artifact_type": "code_diff",
+            "artifact_id": "artifact-code-diff-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.implementation_plan",
+            "artifact_type": "implementation_plan",
+            "artifact_id": "artifact-implementation-plan-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.reasoning_summary",
+            "artifact_type": "reasoning_summary",
+            "artifact_id": "artifact-reasoning-summary-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.validation_test",
+            "artifact_type": "validation_test",
+            "artifact_id": "artifact-validation-test-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.screenshot",
+            "artifact_type": "screenshot",
+            "artifact_id": "artifact-screenshot-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.evidence",
+            "artifact_type": "evidence",
+            "artifact_id": "artifact-evidence-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.document",
+            "artifact_type": "document",
+            "artifact_id": "artifact-document-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.restore_point",
+            "artifact_type": "restore_point",
+            "artifact_id": "artifact-restore-point-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.browser_recording",
+            "artifact_type": "browser_recording",
+            "artifact_id": "artifact-browser-recording-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.tool_llm_trace",
+            "artifact_type": "tool_llm_trace",
+            "artifact_id": "artifact-tool-llm-trace-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.context_snapshot",
+            "artifact_type": "context_snapshot",
+            "artifact_id": "artifact-context-snapshot-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.cost_usage",
+            "artifact_type": "cost_usage",
+            "artifact_id": "artifact-cost-usage-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.hitl_approval",
+            "artifact_type": "hitl_approval",
+            "artifact_id": "artifact-hitl-approval-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.failed_attempts",
+            "artifact_type": "failed_attempts",
+            "artifact_id": "artifact-failed-attempts-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.subagent_lineage",
+            "artifact_type": "subagent_lineage",
+            "artifact_id": "artifact-subagent-lineage-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.before_after_snapshot",
+            "artifact_type": "before_after_snapshot",
+            "artifact_id": "artifact-before-after-snapshot-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.suggested_next_steps",
+            "artifact_type": "suggested_next_steps",
+            "artifact_id": "artifact-suggested-next-steps-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.api_web_call",
+            "artifact_type": "api_web_call",
+            "artifact_id": "artifact-api-web-call-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        },
+        {
+            "event_type": "runtime_artifact.artifact_version",
+            "artifact_type": "artifact_version",
+            "artifact_id": "artifact-artifact-version-001",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001"
+        }
+    ],
+    "invalid_payloads": [
+        {
+            "case_id": "missing_attempt_id",
+            "artifact_type": "code_diff",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.code_diff.schema.v1",
+                "artifact_id": "bad-code-diff",
+                "artifact_type": "code_diff",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-code-diff"
+                ],
+                "type_payload": {
+                    "changed_paths": [
+                        "src/lib.rs"
+                    ]
+                }
+            }
+        },
+        {
+            "case_id": "wrong_artifact_type",
+            "artifact_type": "not_real",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.not_real.schema.v1",
+                "artifact_id": "bad-type",
+                "artifact_type": "not_real",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-type"
+                ],
+                "type_payload": {
+                    "changed_paths": [
+                        "src/lib.rs"
+                    ]
+                }
+            }
+        },
+        {
+            "case_id": "missing_reasoning_tokens",
+            "artifact_type": "cost_usage",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.cost_usage.schema.v1",
+                "artifact_id": "bad-cost",
+                "artifact_type": "cost_usage",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-cost"
+                ],
+                "type_payload": {
+                    "usage_event_ref": "usage-event-001"
+                }
+            }
+        },
+        {
+            "case_id": "missing_tool_trace_contract",
+            "artifact_type": "tool_llm_trace",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.tool_llm_trace.schema.v1",
+                "artifact_id": "bad-tool-trace",
+                "artifact_type": "tool_llm_trace",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-tool-trace"
+                ],
+                "type_payload": {
+                    "trace_ref": "traces/tool-llm.jsonl"
+                }
+            }
+        },
+        {
+            "case_id": "receipt_artifact_missing_required_decision",
+            "artifact_type": "hitl_approval",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.hitl_approval.schema.v1",
+                "artifact_id": "bad-hitl",
+                "artifact_type": "hitl_approval",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "governed",
+                "routing_refs": [
+                    "artifact:bad-hitl"
+                ],
+                "type_payload": {
+                    "approval_scope_key": "approval:fixture"
+                }
+            }
+        }
+    ]
 }

@@ -1,0 +1,285 @@
+          <div class="page page-projects" id="panel-projects">
+            <nav class="projects-breadcrumb" aria-label="Breadcrumb">Home &gt; <span class="current">Projects</span></nav>
+            <div class="projects-header-bento">
+              <h1 class="projects-title">Projects</h1>
+              <div class="projects-actions">
+                <button type="button" class="primary" id="projectsAddBtn" data-demo-action="proj.new.open"><span class="pm6-ico" data-ico="sparkle" aria-hidden="true"></span>New Project</button>
+                <button type="button" data-demo-action="proj.folder.open"><span class="pm6-ico" data-ico="folder" aria-hidden="true"></span>Open Folder&hellip;</button>
+                <button type="button" class="ghost" id="pm6-proj-refresh" data-demo-action="proj.refresh"><span class="pm6-ico" data-ico="restart" aria-hidden="true"></span>Refresh</button>
+              </div>
+            </div>
+
+            <div class="projects-toolbar">
+              <label for="projectsSortBy">Sort by:</label>
+              <select id="projectsSortBy">
+                <option value="opened">Last Opened</option>
+                <option value="name">Name</option>
+                <option value="status">Status</option>
+              </select>
+              <label for="projectsFilterLang" class="pm6-proj-lbl-gap">Stack:</label>
+              <select id="projectsFilterLang">
+                <option value="all">All</option>
+                <option value="rust">Rust</option>
+                <option value="sveltekit">SvelteKit</option>
+                <option value="postgres">Postgres</option>
+                <option value="docker">Docker</option>
+                <option value="jsts">JS/TS</option>
+                <option value="python">Python</option>
+                <option value="csharp">C#</option>
+              </select>
+              <label for="projectsFilterStatus" class="pm6-proj-lbl-gap">Status:</label>
+              <select id="projectsFilterStatus">
+                <option value="all">All</option>
+                <option value="running">Running</option>
+                <option value="idle">Idle</option>
+                <option value="paused">Paused</option>
+                <option value="error">Error</option>
+              </select>
+
+              <div class="pm6-proj-toolbar-spacer"></div>
+
+              <div class="pm6-proj-searchwrap">
+                <span class="pm6-ico" data-ico="search" aria-hidden="true"></span>
+                <input type="text" id="pm6-proj-search" class="pm6-proj-search" placeholder="Search projects&hellip;" aria-label="Search projects" autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+
+            <div class="projects-grid-bento" id="pm6-proj-grid">
+
+              <!-- Card 1: tastebook — current, run #47 live -->
+              <div class="project-card-bento current pm-sheen pm6-proj-card" data-proj="tastebook" data-name="tastebook" data-langs="sveltekit rust postgres docker" data-status="running" data-health="healthy" data-order="0" data-path="~/dev/tastebook" data-demo-action="proj.open" data-demo-arg="tastebook" tabindex="0" role="button" aria-label="Open project tastebook" style="--i:0">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="pm6-proj-glyph pm-hover-icon pm6-ico" data-ico="rocket" aria-hidden="true"></span>
+                    <div class="pm6-proj-titlewrap">
+                      <span class="project-card-title">tastebook</span>
+                      <span class="pm6-proj-branch"><span class="pm6-ico" data-ico="branch" aria-hidden="true"></span>main &middot; 4 worktrees</span>
+                    </div>
+                  </div>
+                  <span class="status-badge pm6-live" data-role="chip" title="Live from Run #47 &mdash; click the card to open">Run #47 &middot; Running</span>
+                </div>
+                <div class="project-card-path" title="~/dev/tastebook">~/dev/tastebook</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">SvelteKit</span>
+                  <span class="lang-badge">Rust &middot; Axum</span>
+                  <span class="lang-badge">Postgres</span>
+                  <span class="lang-badge">Docker</span>
+                </div>
+                <div class="pm6-proj-activity" data-role="activity"><span class="health-dot healthy" title="Healthy"></span><span data-role="activity-text">Run #47 compiling seam graph &middot; just now</span></div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened" data-role="opened">Active now</span>
+                  <div class="project-card-actions">
+                    <button type="button" class="project-action-btn" title="Open (already active)" aria-label="Open tastebook" data-demo-action="proj.open" data-demo-arg="tastebook"><span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Project settings" aria-label="Settings for tastebook" data-demo-action="proj.settings" data-demo-arg="tastebook"><span class="pm6-ico" data-ico="gear" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Archive &mdash; unavailable: busy (Run #47 is live)" aria-label="Archive tastebook" data-demo-action="proj.archive" data-demo-arg="tastebook"><span class="pm6-ico" data-ico="layers" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn danger" title="Remove &mdash; unavailable: busy (Run #47 is live)" aria-label="Remove tastebook" data-demo-action="proj.remove" data-demo-arg="tastebook"><span class="pm6-ico" data-ico="close" aria-hidden="true"></span></button>
+                  </div>
+                </div>
+                <div class="pm6-proj-confirm" data-role="confirm" hidden></div>
+              </div>
+
+              <!-- Card 2: api-backend -->
+              <div class="project-card-bento pm-sheen pm6-proj-card" data-proj="api-backend" data-name="api-backend" data-langs="rust docker" data-status="running" data-health="healthy" data-order="1" data-path="~/projects/api-backend" data-demo-action="proj.open" data-demo-arg="api-backend" tabindex="0" role="button" aria-label="Open project api-backend" style="--i:1">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="pm6-proj-glyph pm-hover-icon pm6-ico" data-ico="plug" aria-hidden="true"></span>
+                    <div class="pm6-proj-titlewrap">
+                      <span class="project-card-title">api-backend</span>
+                      <span class="pm6-proj-branch"><span class="pm6-ico" data-ico="branch" aria-hidden="true"></span>main &middot; 1 worktree</span>
+                    </div>
+                  </div>
+                  <span class="status-badge" data-role="chip">Running</span>
+                </div>
+                <div class="project-card-path" title="~/projects/api-backend">~/projects/api-backend</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">Rust</span>
+                  <span class="lang-badge">Docker</span>
+                </div>
+                <div class="pm6-proj-activity" data-role="activity"><span class="health-dot healthy" title="Healthy"></span><span data-role="activity-text">cargo test green on lane api &middot; 1h ago</span></div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened" data-role="opened">1h ago</span>
+                  <div class="project-card-actions">
+                    <button type="button" class="project-action-btn" title="Open" aria-label="Open api-backend" data-demo-action="proj.open" data-demo-arg="api-backend"><span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Project settings" aria-label="Settings for api-backend" data-demo-action="proj.settings" data-demo-arg="api-backend"><span class="pm6-ico" data-ico="gear" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Archive" aria-label="Archive api-backend" data-demo-action="proj.archive" data-demo-arg="api-backend"><span class="pm6-ico" data-ico="layers" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn danger" title="Remove" aria-label="Remove api-backend" data-demo-action="proj.remove" data-demo-arg="api-backend"><span class="pm6-ico" data-ico="close" aria-hidden="true"></span></button>
+                  </div>
+                </div>
+                <div class="pm6-proj-confirm" data-role="confirm" hidden></div>
+              </div>
+
+              <!-- Card 3: docs-site -->
+              <div class="project-card-bento pm-sheen pm6-proj-card" data-proj="docs-site" data-name="docs-site" data-langs="jsts" data-status="idle" data-health="stale" data-order="2" data-path="~/repos/docs-site" data-demo-action="proj.open" data-demo-arg="docs-site" tabindex="0" role="button" aria-label="Open project docs-site" style="--i:2">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="pm6-proj-glyph pm-hover-icon pm6-ico" data-ico="globe" aria-hidden="true"></span>
+                    <div class="pm6-proj-titlewrap">
+                      <span class="project-card-title">docs-site</span>
+                      <span class="pm6-proj-branch"><span class="pm6-ico" data-ico="branch" aria-hidden="true"></span>main</span>
+                    </div>
+                  </div>
+                  <span class="status-badge idle" data-role="chip">Idle</span>
+                </div>
+                <div class="project-card-path" title="~/repos/docs-site">~/repos/docs-site</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">JS/TS</span>
+                </div>
+                <div class="pm6-proj-activity" data-role="activity"><span class="health-dot stale" title="Stale config"></span><span data-role="activity-text">Run #31 complete &middot; config drifted, re-plan suggested</span></div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened" data-role="opened">Yesterday</span>
+                  <div class="project-card-actions">
+                    <button type="button" class="project-action-btn" title="Open" aria-label="Open docs-site" data-demo-action="proj.open" data-demo-arg="docs-site"><span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Project settings" aria-label="Settings for docs-site" data-demo-action="proj.settings" data-demo-arg="docs-site"><span class="pm6-ico" data-ico="gear" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Archive" aria-label="Archive docs-site" data-demo-action="proj.archive" data-demo-arg="docs-site"><span class="pm6-ico" data-ico="layers" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn danger" title="Remove" aria-label="Remove docs-site" data-demo-action="proj.remove" data-demo-arg="docs-site"><span class="pm6-ico" data-ico="close" aria-hidden="true"></span></button>
+                  </div>
+                </div>
+                <div class="pm6-proj-confirm" data-role="confirm" hidden></div>
+              </div>
+
+              <!-- Card 4: legacy-app -->
+              <div class="project-card-bento pm-sheen pm6-proj-card" data-proj="legacy-app" data-name="legacy-app" data-langs="python docker" data-status="paused" data-health="healthy" data-order="3" data-path="~/work/legacy-app" data-demo-action="proj.open" data-demo-arg="legacy-app" tabindex="0" role="button" aria-label="Open project legacy-app" style="--i:3">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="pm6-proj-glyph pm-hover-icon pm6-ico" data-ico="toolbox" aria-hidden="true"></span>
+                    <div class="pm6-proj-titlewrap">
+                      <span class="project-card-title">legacy-app</span>
+                      <span class="pm6-proj-branch"><span class="pm6-ico" data-ico="branch" aria-hidden="true"></span>develop &middot; 2 worktrees</span>
+                    </div>
+                  </div>
+                  <span class="status-badge paused" data-role="chip">Paused</span>
+                </div>
+                <div class="project-card-path" title="~/work/legacy-app">~/work/legacy-app</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">Python</span>
+                  <span class="lang-badge">Docker</span>
+                </div>
+                <div class="pm6-proj-activity" data-role="activity"><span class="health-dot healthy" title="Healthy"></span><span data-role="activity-text">Paused at safe point sp-12 &middot; resume from the Orchestrator</span></div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened" data-role="opened">3 days ago</span>
+                  <div class="project-card-actions">
+                    <button type="button" class="project-action-btn" title="Open" aria-label="Open legacy-app" data-demo-action="proj.open" data-demo-arg="legacy-app"><span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Project settings" aria-label="Settings for legacy-app" data-demo-action="proj.settings" data-demo-arg="legacy-app"><span class="pm6-ico" data-ico="gear" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Archive" aria-label="Archive legacy-app" data-demo-action="proj.archive" data-demo-arg="legacy-app"><span class="pm6-ico" data-ico="layers" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn danger" title="Remove" aria-label="Remove legacy-app" data-demo-action="proj.remove" data-demo-arg="legacy-app"><span class="pm6-ico" data-ico="close" aria-hidden="true"></span></button>
+                  </div>
+                </div>
+                <div class="pm6-proj-confirm" data-role="confirm" hidden></div>
+              </div>
+
+              <!-- Card 5: experiment — folder missing -->
+              <div class="project-card-bento pm-sheen pm6-proj-card" data-proj="experiment" data-name="experiment" data-langs="csharp" data-status="error" data-health="error" data-order="4" data-path="/old/path/experiment" data-demo-action="proj.open" data-demo-arg="experiment" tabindex="0" role="button" aria-label="Open project experiment (unavailable)" style="--i:4">
+                <div class="project-card-header">
+                  <div class="project-card-title-area">
+                    <span class="pm6-proj-glyph pm-hover-icon pm6-ico" data-ico="telescope" aria-hidden="true"></span>
+                    <div class="pm6-proj-titlewrap">
+                      <span class="project-card-title">experiment</span>
+                      <span class="pm6-proj-branch"><span class="pm6-ico" data-ico="branch" aria-hidden="true"></span>main &middot; unreachable</span>
+                    </div>
+                  </div>
+                  <span class="status-badge error" data-role="chip">Needs Attention</span>
+                </div>
+                <div class="project-card-path" title="/old/path/experiment">/old/path/experiment</div>
+                <div class="project-card-tags">
+                  <span class="lang-badge">C#</span>
+                </div>
+                <div class="pm6-proj-activity" data-role="activity"><span class="health-dot error" title="Directory missing"></span><span data-role="activity-text" class="pm6-proj-reason">stale &mdash; folder missing &middot; fix the path in Settings, then Open</span></div>
+                <div class="project-card-footer">
+                  <span class="project-last-opened" data-role="opened">1 week ago</span>
+                  <div class="project-card-actions">
+                    <button type="button" class="project-action-btn pm6-is-disabled" aria-disabled="true" title="Open &mdash; unavailable: stale (folder missing; fix the path in Settings)" aria-label="Open experiment (unavailable)" data-demo-action="proj.open" data-demo-arg="experiment"><span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Project settings" aria-label="Settings for experiment" data-demo-action="proj.settings" data-demo-arg="experiment"><span class="pm6-ico" data-ico="gear" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn" title="Archive" aria-label="Archive experiment" data-demo-action="proj.archive" data-demo-arg="experiment"><span class="pm6-ico" data-ico="layers" aria-hidden="true"></span></button>
+                    <button type="button" class="project-action-btn danger" title="Remove" aria-label="Remove experiment" data-demo-action="proj.remove" data-demo-arg="experiment"><span class="pm6-ico" data-ico="close" aria-hidden="true"></span></button>
+                  </div>
+                </div>
+                <div class="pm6-proj-confirm" data-role="confirm" hidden></div>
+              </div>
+
+            </div>
+
+            <div class="pm6-proj-empty" id="pm6-proj-empty" hidden>
+              <span class="pm6-ico pm6-proj-empty-ico" data-ico="search" aria-hidden="true"></span>
+              <span>No results for the current filter &mdash; every project is still here, just hidden.</span>
+              <button type="button" data-demo-action="proj.filters.clear">Clear filters</button>
+            </div>
+
+            <!-- New Project / Open Folder sheet -->
+            <div class="pm6-proj-sheet-backdrop" id="pm6-proj-sheet" hidden>
+              <div class="pm6-proj-sheet" role="dialog" aria-modal="true" aria-labelledby="pm6-proj-sheet-title">
+                <div class="pm6-proj-sheet-head">
+                  <div class="pm6-proj-sheet-headtext">
+                    <div class="pm6-proj-sheet-kicker" id="pm6-proj-sheet-kicker">Create</div>
+                    <div class="pm6-proj-sheet-title" id="pm6-proj-sheet-title">New Project</div>
+                  </div>
+                  <button type="button" class="pm6-proj-sheet-close" title="Close" aria-label="Close" data-demo-action="proj.new.close"><span class="pm6-ico" data-ico="close" aria-hidden="true"></span></button>
+                </div>
+                <label class="pm6-proj-field">
+                  <span>Name</span>
+                  <input id="pm6-proj-new-name" type="text" placeholder="my-next-app" autocomplete="off" spellcheck="false">
+                </label>
+                <label class="pm6-proj-field">
+                  <span>Folder</span>
+                  <input id="pm6-proj-new-path" type="text" value="~/dev/" autocomplete="off" spellcheck="false">
+                </label>
+                <div class="pm6-proj-field" id="pm6-proj-tpl-field">
+                  <span>Template</span>
+                  <div class="pm6-proj-chips" id="pm6-proj-tpl-chips">
+                    <button type="button" class="pm6-proj-chip active" data-tpl="blank">Blank</button>
+                    <button type="button" class="pm6-proj-chip" data-tpl="sveltekit">Web app &middot; SvelteKit</button>
+                    <button type="button" class="pm6-proj-chip" data-tpl="axum">API service &middot; Axum</button>
+                    <button type="button" class="pm6-proj-chip" data-tpl="fullstack">Full-stack + Docker</button>
+                  </div>
+                </div>
+                <div class="pm6-proj-sheet-hint" id="pm6-proj-sheet-hint">The Planning Wizard picks the new project up as soon as it exists.</div>
+                <div class="pm6-proj-sheet-foot">
+                  <button type="button" data-demo-action="proj.new.close">Cancel</button>
+                  <button type="button" class="primary" id="pm6-proj-create" data-demo-action="proj.new.create">Create Project</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Settings Modal -->
+            <div id="projectSettingsModal" class="project-settings-modal" onclick="if(event.target===this) this.classList.remove('visible')">
+  <div class="s4-psm" id="s4-psm">
+    <div class="s4-psm-head">
+      <div class="s4-psm-head-text">
+        <div class="s4-psm-kicker">Project settings</div>
+        <div class="s4-psm-title">tastebook</div>
+      </div>
+      <button class="s4-psm-close" title="Close" onclick="document.getElementById('projectSettingsModal').classList.remove('visible')">&#10005;</button>
+    </div>
+
+    <div class="s4-psm-bar">
+      <span class="s4-ico s4-psm-bar-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" y1="16.5" x2="21" y2="21"></line></svg>
+      </span>
+      <input id="s4-psm-search" class="s4-psm-input" type="text" placeholder="Search this project&rsquo;s settings&hellip;" autocomplete="off" spellcheck="false" aria-label="Search project settings" />
+      <button class="s4-psm-clear" id="s4-psm-clear" hidden title="Clear">&#10005;</button>
+    </div>
+
+    <div class="s4-psm-tabs" id="s4-psm-tabs" role="tablist">
+      <button class="s4-psm-tabbtn active" data-psmtab="general" role="tab">General</button>
+      <button class="s4-psm-tabbtn" data-psmtab="env" role="tab">Environment</button>
+      <button class="s4-psm-tabbtn" data-psmtab="agents" role="tab">Agent behavior</button>
+      <span class="s4-psm-tab-ink" id="s4-psm-ink"></span>
+    </div>
+
+    <div class="s4-psm-body" id="s4-psm-body">
+      <div class="s4-psm-pane active" data-psmpane="general"></div>
+      <div class="s4-psm-pane" data-psmpane="env"></div>
+      <div class="s4-psm-pane" data-psmpane="agents"></div>
+      <div class="s4-psm-empty" id="s4-psm-empty" hidden>Nothing here matches &ldquo;<span id="s4-psm-empty-q"></span>&rdquo;</div>
+    </div>
+
+    <div class="s4-psm-foot">
+      <span class="s4-psm-foot-hint">Overrides apply to this project only</span>
+      <div class="s4-psm-foot-btns">
+        <button class="s4-psm-btn" onclick="document.getElementById('projectSettingsModal').classList.remove('visible')">Cancel</button>
+        <button class="s4-psm-btn primary" id="s4-psm-save">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>

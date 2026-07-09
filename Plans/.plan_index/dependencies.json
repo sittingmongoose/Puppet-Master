@@ -5206,6 +5206,7 @@
     "CRAU-053",
     "RAP-032",
     "UF-075",
+    "UF-085",
     "T-164",
     "PO-045",
     "PO-042",
@@ -5247,6 +5248,8 @@
     "CRAU-057",
     "RAP-033",
     "F3-400",
+    "CBP-027",
+    "UF-086",
     "PO-001",
     "CWF-150",
     "F-069",
@@ -5281,6 +5284,7 @@
     "CRAU-058",
     "CRAU-059",
     "POA-050",
+    "RAP-043",
     "RTIM-015",
     "CWF-151",
     "F-071",
@@ -11080,6 +11084,26 @@
       "edge_type": "depends_on",
       "from": "CBP-026",
       "to": "CBP-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CBP-027",
+      "to": "CBP-019"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CBP-027",
+      "to": "CBP-020"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CBP-027",
+      "to": "CBP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CBP-027",
+      "to": "UF-085"
     },
     {
       "edge_type": "depends_on",
@@ -38943,6 +38967,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RAP-043",
+      "to": "CBP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-043",
+      "to": "RAP-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-043",
+      "to": "RAP-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-043",
+      "to": "RAP-018"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-043",
+      "to": "UF-085"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RGV-002",
       "to": "RGV-001"
     },
@@ -59748,6 +59797,46 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UF-085",
+      "to": "UF-023"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-085",
+      "to": "UF-035"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-085",
+      "to": "UF-036"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-085",
+      "to": "UF-040"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-085",
+      "to": "UF-041"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-085",
+      "to": "UF-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-085",
+      "to": "UF-080"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-086",
+      "to": "UF-085"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UIW-002",
       "to": "UIW-001"
     },
@@ -67658,6 +67747,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "CBP-027",
+      "to": "RAP-043"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CBP-027",
+      "to": "UF-086"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "CRAU-002",
       "to": "CRAU-003"
     },
@@ -74403,6 +74502,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "UF-085",
+      "to": "CBP-027"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "UF-085",
+      "to": "RAP-043"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "UIW-001",
       "to": "UIW-002"
     },
@@ -74522,7 +74631,7 @@
       "to": "PG-061"
     }
   ],
-  "generated_at_utc": "2026-07-08T18:24:45Z",
+  "generated_at_utc": "2026-07-09T02:40:24Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -87743,8 +87852,8 @@
       "source_location": {
         "heading": "CBP-025 - CBP-025",
         "heading_level": 3,
-        "heading_line": 1497,
-        "line": 1499,
+        "heading_line": 1584,
+        "line": 1586,
         "path": "Plans/CLI_Bridged_Providers.md"
       },
       "status": "accepted",
@@ -87759,6 +87868,23 @@
       "risk_class": "fable_residual_cli_bridge_contract_drift",
       "source_location": {
         "heading": "CBP-026 - FABLE Residual CLI Bridge Invocation And Stream Contract",
+        "heading_level": 3,
+        "heading_line": 1520,
+        "line": 1522,
+        "path": "Plans/CLI_Bridged_Providers.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "antigravity_cli_usage_quota",
+      "gui_related": true,
+      "owner_doc": "Plans/CLI_Bridged_Providers.md",
+      "plan_unit_id": "CBP-027",
+      "reasoning_tier": "high",
+      "risk_class": "antigravity_usage_quota_drift",
+      "source_location": {
+        "heading": "CBP-027 - Antigravity CLI Usage Quota Credits And Statusline Contract",
         "heading_level": 3,
         "heading_line": 1433,
         "line": 1435,
@@ -150235,8 +150361,8 @@
       "source_location": {
         "heading": "RAP-001 - Runtime Artifacts Panel Retired Source-Preserving Bridge",
         "heading_level": 3,
-        "heading_line": 637,
-        "line": 639,
+        "heading_line": 639,
+        "line": 641,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "retired",
@@ -150252,8 +150378,8 @@
       "source_location": {
         "heading": "RAP-002 - Authority And Owner Preface",
         "heading_level": 3,
-        "heading_line": 410,
-        "line": 412,
+        "heading_line": 412,
+        "line": 414,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150269,8 +150395,8 @@
       "source_location": {
         "heading": "RAP-003 - Purpose Scope And Family Boundary",
         "heading_level": 3,
-        "heading_line": 505,
-        "line": 507,
+        "heading_line": 507,
+        "line": 509,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150286,8 +150412,8 @@
       "source_location": {
         "heading": "RAP-004 - Runtime Artifact Event Taxonomy",
         "heading_level": 3,
-        "heading_line": 511,
-        "line": 513,
+        "heading_line": 513,
+        "line": 515,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150303,8 +150429,8 @@
       "source_location": {
         "heading": "RAP-005 - Artifact Index And Projector Families",
         "heading_level": 3,
-        "heading_line": 517,
-        "line": 519,
+        "heading_line": 519,
+        "line": 521,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150320,8 +150446,8 @@
       "source_location": {
         "heading": "RAP-006 - Attribution Envelope Bridges",
         "heading_level": 3,
-        "heading_line": 523,
-        "line": 525,
+        "heading_line": 525,
+        "line": 527,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150337,8 +150463,8 @@
       "source_location": {
         "heading": "RAP-007 - Route-State Versus Shell-State",
         "heading_level": 3,
-        "heading_line": 529,
-        "line": 531,
+        "heading_line": 531,
+        "line": 533,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150354,8 +150480,8 @@
       "source_location": {
         "heading": "RAP-008 - Identity-Native Opens And Exports",
         "heading_level": 3,
-        "heading_line": 535,
-        "line": 537,
+        "heading_line": 537,
+        "line": 539,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150371,8 +150497,8 @@
       "source_location": {
         "heading": "RAP-009 - P5 Gap And Stale-Disposition Evidence",
         "heading_level": 3,
-        "heading_line": 541,
-        "line": 543,
+        "heading_line": 543,
+        "line": 545,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150388,8 +150514,8 @@
       "source_location": {
         "heading": "RAP-010 - Retention Classes And Usage Bridge",
         "heading_level": 3,
-        "heading_line": 547,
-        "line": 549,
+        "heading_line": 549,
+        "line": 551,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150405,8 +150531,8 @@
       "source_location": {
         "heading": "RAP-011 - Stream Audit And Instrumentation Boundaries",
         "heading_level": 3,
-        "heading_line": 553,
-        "line": 555,
+        "heading_line": 555,
+        "line": 557,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150422,8 +150548,8 @@
       "source_location": {
         "heading": "RAP-012 - Debug Investigation Grouping",
         "heading_level": 3,
-        "heading_line": 559,
-        "line": 561,
+        "heading_line": 561,
+        "line": 563,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150439,8 +150565,8 @@
       "source_location": {
         "heading": "RAP-013 - Investigation Bundle Manifest",
         "heading_level": 3,
-        "heading_line": 565,
-        "line": 567,
+        "heading_line": 567,
+        "line": 569,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150456,8 +150582,8 @@
       "source_location": {
         "heading": "RAP-014 - Export Taxonomy And Manifests",
         "heading_level": 3,
-        "heading_line": 571,
-        "line": 573,
+        "heading_line": 573,
+        "line": 575,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150473,8 +150599,8 @@
       "source_location": {
         "heading": "RAP-015 - External Provider-Native Artifacts",
         "heading_level": 3,
-        "heading_line": 577,
-        "line": 579,
+        "heading_line": 579,
+        "line": 581,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150490,8 +150616,8 @@
       "source_location": {
         "heading": "RAP-016 - Reasoning Tokens And Cost Usage",
         "heading_level": 3,
-        "heading_line": 583,
-        "line": 585,
+        "heading_line": 585,
+        "line": 587,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150507,8 +150633,8 @@
       "source_location": {
         "heading": "RAP-017 - JSON Schema Materialization",
         "heading_level": 3,
-        "heading_line": 589,
-        "line": 591,
+        "heading_line": 591,
+        "line": 593,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150524,8 +150650,8 @@
       "source_location": {
         "heading": "RAP-018 - Payload Schema Owner Split",
         "heading_level": 3,
-        "heading_line": 595,
-        "line": 597,
+        "heading_line": 597,
+        "line": 599,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150541,8 +150667,8 @@
       "source_location": {
         "heading": "RAP-019 - Identity-Native Open And Preview",
         "heading_level": 3,
-        "heading_line": 601,
-        "line": 603,
+        "heading_line": 603,
+        "line": 605,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150558,8 +150684,8 @@
       "source_location": {
         "heading": "RAP-020 - Index Projection And Owner Triangle",
         "heading_level": 3,
-        "heading_line": 607,
-        "line": 609,
+        "heading_line": 609,
+        "line": 611,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150575,8 +150701,8 @@
       "source_location": {
         "heading": "RAP-021 - Browser Evidence Session Ownership",
         "heading_level": 3,
-        "heading_line": 613,
-        "line": 615,
+        "heading_line": 615,
+        "line": 617,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150592,8 +150718,8 @@
       "source_location": {
         "heading": "RAP-022 - MVP Differentiators",
         "heading_level": 3,
-        "heading_line": 619,
-        "line": 621,
+        "heading_line": 621,
+        "line": 623,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150609,8 +150735,8 @@
       "source_location": {
         "heading": "RAP-023 - Reference Anchors",
         "heading_level": 3,
-        "heading_line": 625,
-        "line": 627,
+        "heading_line": 627,
+        "line": 629,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150626,8 +150752,8 @@
       "source_location": {
         "heading": "RAP-024 - Receipt Linkage And Bridge Viewer",
         "heading_level": 3,
-        "heading_line": 631,
-        "line": 633,
+        "heading_line": 633,
+        "line": 635,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150643,8 +150769,8 @@
       "source_location": {
         "heading": "RAP-025 - Structural Parent Section Recovery Compile Addendum",
         "heading_level": 3,
-        "heading_line": 657,
-        "line": 659,
+        "heading_line": 659,
+        "line": 661,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150660,8 +150786,8 @@
       "source_location": {
         "heading": "RAP-026 - Artifacts Index Identity And Open Resolution",
         "heading_level": 3,
-        "heading_line": 696,
-        "line": 698,
+        "heading_line": 698,
+        "line": 700,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150677,8 +150803,8 @@
       "source_location": {
         "heading": "RAP-027 - Goal Runtime Receipt And Verification Evidence Projection",
         "heading_level": 3,
-        "heading_line": 749,
-        "line": 751,
+        "heading_line": 751,
+        "line": 753,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150694,8 +150820,8 @@
       "source_location": {
         "heading": "RAP-029 - Plans-To-Code Receipt And Test Evidence Projection",
         "heading_level": 3,
-        "heading_line": 830,
-        "line": 832,
+        "heading_line": 832,
+        "line": 834,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150711,8 +150837,8 @@
       "source_location": {
         "heading": "RAP-030 - Visible Testing And Compile Evidence Projection",
         "heading_level": 3,
-        "heading_line": 898,
-        "line": 900,
+        "heading_line": 900,
+        "line": 902,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150728,8 +150854,8 @@
       "source_location": {
         "heading": "RAP-031 - Discovery Receipt Browsing, Redaction, And Retention Projection",
         "heading_level": 3,
-        "heading_line": 955,
-        "line": 957,
+        "heading_line": 957,
+        "line": 959,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150745,8 +150871,8 @@
       "source_location": {
         "heading": "RAP-032 - Provider Native Artifact Envelope Projection",
         "heading_level": 3,
-        "heading_line": 420,
-        "line": 422,
+        "heading_line": 422,
+        "line": 424,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150762,8 +150888,8 @@
       "source_location": {
         "heading": "RAP-033 - Generated Media Receipt And Expiry Projection",
         "heading_level": 3,
-        "heading_line": 463,
-        "line": 465,
+        "heading_line": 465,
+        "line": 467,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150779,8 +150905,8 @@
       "source_location": {
         "heading": "RAP-034 - History Runtime Artifact And Evidence Projection",
         "heading_level": 3,
-        "heading_line": 1005,
-        "line": 1007,
+        "heading_line": 1007,
+        "line": 1009,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150796,8 +150922,8 @@
       "source_location": {
         "heading": "RAP-035 - Vision Bridge Derived Description Artifacts",
         "heading_level": 3,
-        "heading_line": 1158,
-        "line": 1160,
+        "heading_line": 1160,
+        "line": 1162,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150813,8 +150939,8 @@
       "source_location": {
         "heading": "RAP-036 - Teacher Activity Transparency Projection",
         "heading_level": 3,
-        "heading_line": 1294,
-        "line": 1296,
+        "heading_line": 1296,
+        "line": 1298,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150830,8 +150956,8 @@
       "source_location": {
         "heading": "RAP-037 - Inline Visualizer Artifact Projection And Export Routing",
         "heading_level": 3,
-        "heading_line": 1417,
-        "line": 1419,
+        "heading_line": 1419,
+        "line": 1421,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150847,8 +150973,8 @@
       "source_location": {
         "heading": "RAP-038 - DRY Method Receipt And Disclosure Projection",
         "heading_level": 3,
-        "heading_line": 1471,
-        "line": 1473,
+        "heading_line": 1473,
+        "line": 1475,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150864,8 +150990,8 @@
       "source_location": {
         "heading": "RAP-039 - Notification Delivery Receipt Projection And Export Routing",
         "heading_level": 3,
-        "heading_line": 1533,
-        "line": 1535,
+        "heading_line": 1535,
+        "line": 1537,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150881,8 +151007,8 @@
       "source_location": {
         "heading": "RAP-040 - Free Models Auto Apply Diagnostics And Runtime Evidence Projection",
         "heading_level": 3,
-        "heading_line": 1610,
-        "line": 1612,
+        "heading_line": 1612,
+        "line": 1614,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150898,8 +151024,8 @@
       "source_location": {
         "heading": "RAP-041 - Free Models Route Provenance And Usage Receipt Projection",
         "heading_level": 3,
-        "heading_line": 1668,
-        "line": 1670,
+        "heading_line": 1670,
+        "line": 1672,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
@@ -150915,12 +151041,29 @@
       "source_location": {
         "heading": "RAP-042 - Containerized Host Evidence Projection And Receipt Browsing Boundary",
         "heading_level": 3,
-        "heading_line": 1729,
-        "line": 1731,
+        "heading_line": 1731,
+        "line": 1733,
         "path": "Plans/Runtime_Artifacts_Panel.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "runtime_artifact_usage_schema",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-043",
+      "reasoning_tier": "high",
+      "risk_class": "runtime_artifact_schema_false_pass",
+      "source_location": {
+        "heading": "RAP-043 - Usage And Tool Trace Schema Strictness",
+        "heading_level": 3,
+        "heading_line": 1828,
+        "line": 1830,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
     },
     {
       "context_scope": "run_graph_owner_surface",
@@ -165841,8 +165984,8 @@
       "source_location": {
         "heading": "UF-080 - P0-CACHE-USAGE-ENVELOPE",
         "heading_level": 3,
-        "heading_line": 5416,
-        "line": 5418,
+        "heading_line": 5615,
+        "line": 5617,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165858,8 +166001,8 @@
       "source_location": {
         "heading": "UF-081 - P2-CACHE-OBSERVABILITY-DASHBOARD",
         "heading_level": 3,
-        "heading_line": 5480,
-        "line": 5482,
+        "heading_line": 5679,
+        "line": 5681,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165875,8 +166018,8 @@
       "source_location": {
         "heading": "UF-082 - P2-CACHE-PRIVACY-POLICY",
         "heading_level": 3,
-        "heading_line": 5542,
-        "line": 5544,
+        "heading_line": 5741,
+        "line": 5743,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165892,8 +166035,8 @@
       "source_location": {
         "heading": "UF-083 - P1-USAGE-ANOMALY-QUOTA-GUARD",
         "heading_level": 3,
-        "heading_line": 5609,
-        "line": 5611,
+        "heading_line": 5808,
+        "line": 5810,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165909,12 +166052,46 @@
       "source_location": {
         "heading": "UF-084 - P2-OTEL-EXPORT-OPTIONAL-ADAPTER",
         "heading_level": 3,
-        "heading_line": 5695,
-        "line": 5697,
+        "heading_line": 5894,
+        "line": 5896,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
       "unit_type": "requirement"
+    },
+    {
+      "context_scope": "usage_accounting_contract",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-085",
+      "reasoning_tier": "high",
+      "risk_class": "usage_accounting_false_pass",
+      "source_location": {
+        "heading": "UF-085 - Implementation Ready Usage Accounting Contract",
+        "heading_level": 3,
+        "heading_line": 5412,
+        "line": 5414,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "usage_provider_parser_acceptance",
+      "gui_related": false,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-086",
+      "reasoning_tier": "high",
+      "risk_class": "usage_parser_fixture_gap",
+      "source_location": {
+        "heading": "UF-086 - Provider Parser Fixture And Acceptance Contract",
+        "heading_level": 3,
+        "heading_line": 5522,
+        "line": 5524,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance_contract"
     },
     {
       "context_scope": "ui_wiring",
@@ -168286,12 +168463,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11742,
+    "depends_on_edge_count": 11759,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13800,
-    "node_count": 5515,
+    "edge_count": 13821,
+    "node_count": 5519,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2058,
+    "unblocks_edge_count": 2062,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

@@ -1,0 +1,48 @@
+</head>
+<body>
+  <div class="app-shell">
+    <div class="gl-shimmer-overlay"><canvas id="gl-shimmer-canvas"></canvas></div>
+    <header class="title-bar">
+      <span class="app-name">Puppet Master</span>
+      <div class="project-dropdown">
+        <span>puppet-master-rs</span>
+        <span>&#9660;</span>
+      </div>
+      <nav class="page-tabs">
+        <span class="page-tab active" id="tab-dashboard" role="tab" tabindex="0" aria-selected="true" aria-controls="panel-dashboard" data-page="dashboard">Home</span>
+        <span class="page-tab" id="tab-projects" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-projects" data-page="projects">Projects</span>
+        <span class="page-tab" id="tab-wizard" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-wizard" data-page="wizard">Planning Wizard</span>
+        <span class="page-tab" id="tab-orchestrator" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-orchestrator" data-page="orchestrator">Orchestrator</span>
+        <span class="page-tab" id="tab-usage" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-usage" data-page="usage">Usage</span>
+        <span class="page-tab" id="tab-settings" role="tab" tabindex="0" aria-selected="false" aria-controls="panel-settings" data-page="settings">Settings</span>
+      </nav>
+      <div class="title-spacer"></div>
+      <input type="text" class="search-bar" placeholder="Search files, commands, settings...">
+      <select class="theme-select" id="themeSelect">
+        <option value="retro-dark">Retro Dark</option>
+        <option value="retro-light">Retro Light</option>
+        <option value="basic-light">Basic Light</option>
+        <option value="basic-dark">Basic Dark</option>
+        <option value="glass-dark">Glass Dark</option>
+        <option value="glass-light">Glass Light</option>
+      </select>
+    </header>
+
+    <div class="main-area">
+      <div class="left-panel">
+        <nav class="activity-bar collapsed" id="activityBar">
+          <div class="icon" title="Dashboard" id="dashboardToggleIcon"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg></span><span class="icon-label">HOME</span></div>
+          <div class="icon" title="Chat"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="icon-label">CHAT</span></div>
+          <div class="icon" title="Search" data-target="panel-search"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="icon-label">SEARCH</span></div>
+          <div class="icon active" title="Files" data-target="panel-files"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="icon-label">FILES</span></div>
+          <div class="icon" title="Run & Debug" data-target="panel-run"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="icon-label">RUN</span></div>
+          <div class="icon" title="Git" data-target="panel-git"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V9a3 3 0 0 0-3-3H9"/><line x1="6" y1="9" x2="6" y2="15"/></svg></span><span class="icon-label">GIT</span></div>
+          <div class="icon" title="Docker" data-target="panel-docker"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="icon-label">DOCKER</span></div>
+          <div class="icon" title="Source Control" data-target="panel-source"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></span><span class="icon-label">SOURCE</span></div>
+          <div class="icon" title="Unraid" data-target="panel-unraid"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></span><span class="icon-label">UNRAID</span></div>
+          <div class="icon" title="Artifacts" data-target="panel-artifacts"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span><span class="icon-label">ARTIFACTS</span></div>
+          <button class="activity-bar-toggle" id="activityBarToggle" title="Expand/Collapse">&gt;</button>
+        </nav>
+
+        <aside class="side-panel-slot" id="sidePanelSlot">
+

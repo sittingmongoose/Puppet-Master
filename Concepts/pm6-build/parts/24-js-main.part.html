@@ -1,0 +1,1558 @@
+  <div class="pixel-grid" id="pixelGrid"></div>
+
+  <script>
+    (function() {
+      'use strict';
+      function logCmd() {}
+      function toast(msg) {
+        var stack = document.getElementById('pmToastStack');
+        if (!stack) return;
+        var t = document.createElement('div');
+        t.className = 'pm-toast';
+        t.textContent = msg;
+        stack.appendChild(t);
+        setTimeout(function() { t.remove(); }, 3400);
+      }
+      var DND_MIME = 'application/x-puppet-master-term-pane';
+      var COLOR_PALETTE = ['#7ee787', '#79c0ff', '#ffa657', '#ff7b72', '#d2a8ff', '#56d4dd', '#e3b341', '#8b949e'];
+      var ICON_CATALOG = ['zap', 'terminal', 'server', 'box', 'layers', 'cpu', 'globe', 'sparkles', 'database', 'git', 'cloud', 'hammer', 'bug', 'package', 'radio', 'wifi', 'shield', 'folder', 'code', 'clock'];
+      function iconSvg(kind, size) {
+        var wh = size || 12;
+        var s = '<svg xmlns="http://www.w3.org/2000/svg" width="' + wh + '" height="' + wh + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
+        if (kind === 'zap') s += '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>';
+        else if (kind === 'terminal') s += '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>';
+        else if (kind === 'server') s += '<rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/>';
+        else if (kind === 'box') s += '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>';
+        else if (kind === 'layers') s += '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/>';
+        else if (kind === 'cpu') s += '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/>';
+        else if (kind === 'globe') s += '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>';
+        else if (kind === 'database') s += '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>';
+        else if (kind === 'git') s += '<circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 9v6a3 3 0 0 0 3 3h6"/><line x1="6" y1="21" x2="6" y2="18"/>';
+        else if (kind === 'cloud') s += '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>';
+        else if (kind === 'hammer') s += '<path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0-.83-.83-.83-2.17 0-3L9 15"/><path d="M14.41 14.41 20 20"/>';
+        else if (kind === 'bug') s += '<rect x="9" y="2" width="6" height="6" rx="1"/><path d="M9 12H5"/><path d="M19 12h-4"/><path d="M12 8v4"/><path d="M5 16h4"/><path d="M15 16h4"/>';
+        else if (kind === 'package') s += '<line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>';
+        else if (kind === 'radio') s += '<circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>';
+        else if (kind === 'wifi') s += '<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>';
+        else if (kind === 'shield') s += '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>';
+        else if (kind === 'folder') s += '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>';
+        else if (kind === 'code') s += '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>';
+        else if (kind === 'clock') s += '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>';
+        else if (kind === 'sparkles') s += '<path d="M12 3l1.9 5.8h6.1l-5 3.6 1.9 5.8-5-3.6-5 3.6 1.9-5.8-5-3.6h6.1z"/>';
+        else s += '<polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>';
+        return s + '</svg>';
+      }
+      function splitIconSvg(stacked) {
+        var s = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">';
+        if (stacked) {
+          s += '<rect x="4" y="3" width="16" height="7" rx="1"/><rect x="4" y="14" width="16" height="7" rx="1"/>';
+        } else {
+          s += '<rect x="3" y="4" width="7" height="16" rx="1"/><rect x="14" y="4" width="7" height="16" rx="1"/>';
+        }
+        return s + '</svg>';
+      }
+      function workgroupPlusSvg() {
+        return '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>' +
+          '<line x1="15" y1="13" x2="15" y2="19"/><line x1="12" y1="16" x2="18" y2="16"/>' +
+          '</svg>';
+      }
+      function dragPayloadWrite(dt, obj) {
+        var json = JSON.stringify(obj);
+        try { dt.setData(DND_MIME, json); } catch (e1) {}
+        try { dt.setData('text/plain', json); } catch (e2) {}
+      }
+      function countLeaves(node) {
+        if (!node) return 0;
+        if (node.type === 'leaf') return 1;
+        return node.children.reduce(function(a, c) { return a + countLeaves(c); }, 0);
+      }
+      function layoutGridDims(layout) {
+        if (!layout || layout.type === 'leaf') return { rows: 1, cols: 1 };
+        if (layout.type === 'row') {
+          var cw = 0, rh = 0;
+          layout.children.forEach(function(c) {
+            var d = layoutGridDims(c);
+            cw += d.cols;
+            rh = Math.max(rh, d.rows);
+          });
+          return { rows: rh, cols: cw };
+        }
+        var ch = 0, rw = 0;
+        layout.children.forEach(function(c) {
+          var d = layoutGridDims(c);
+          ch += d.rows;
+          rw = Math.max(rw, d.cols);
+        });
+        return { rows: ch, cols: rw };
+      }
+      function isValidQuadrantLayout(layout) {
+        var d = layoutGridDims(layout);
+        return d.rows <= 2 && d.cols <= 2 && countLeaves(layout) <= 4;
+      }
+      function removeLeaf(tree, paneId) {
+        if (!tree) return null;
+        if (tree.type === 'leaf') return tree.paneId === paneId ? null : tree;
+        var ch = tree.children.map(function(c) { return removeLeaf(c, paneId); }).filter(Boolean);
+        if (ch.length === 0) return null;
+        if (ch.length === 1) return ch[0];
+        return { type: tree.type, children: ch };
+      }
+      function firstPaneIdInTree(node) {
+        if (!node) return null;
+        if (node.type === 'leaf') return node.paneId;
+        for (var i = 0; i < node.children.length; i++) {
+          var x = firstPaneIdInTree(node.children[i]);
+          if (x) return x;
+        }
+        return null;
+      }
+      function collectLeafPaneIds(node, acc) {
+        acc = acc || [];
+        if (!node) return acc;
+        if (node.type === 'leaf') { acc.push(node.paneId); return acc; }
+        node.children.forEach(function(c) { collectLeafPaneIds(c, acc); });
+        return acc;
+      }
+      function paneChipLabel(paneId) {
+        var p = state.panes[paneId];
+        if (!p) return paneId;
+        return (p.displayName || paneId).slice(0, 22);
+      }
+      function paneSubColor(g, paneId) {
+        var p = state.panes[paneId];
+        if (p && p.subtabTextColor) return p.subtabTextColor;
+        return g.accentColor || '#8b949e';
+      }
+      function closeTermCtxMenus() {
+        document.querySelectorAll('.pm-term-ctx-menu').forEach(function(m) { m.remove(); });
+      }
+      document.addEventListener('click', function() { closeTermCtxMenus(); });
+      function openTermCtxMenu(pageX, pageY, build) {
+        closeTermCtxMenus();
+        var m = document.createElement('div');
+        m.className = 'pm-term-ctx-menu';
+        m.onclick = function(e) { e.stopPropagation(); };
+        build(m);
+        document.body.appendChild(m);
+        var mw = m.offsetWidth;
+        var mh = m.offsetHeight;
+        var x = pageX;
+        var y = pageY;
+        if (x + mw > window.innerWidth - 8) x = window.innerWidth - mw - 8;
+        if (y + mh > window.innerHeight - 8) y = window.innerHeight - mh - 8;
+        m.style.left = x + 'px';
+        m.style.top = y + 'px';
+        setTimeout(function() {
+          function out(ev) {
+            if (!m.contains(ev.target)) { closeTermCtxMenus(); document.removeEventListener('mousedown', out, true); }
+          }
+          document.addEventListener('mousedown', out, true);
+        }, 0);
+      }
+      function swapPaneIdsInTree(node, a, b) {
+        if (!node) return;
+        if (node.type === 'leaf') {
+          if (node.paneId === a) node.paneId = b;
+          else if (node.paneId === b) node.paneId = a;
+          return;
+        }
+        node.children.forEach(function(c) { swapPaneIdsInTree(c, a, b); });
+      }
+      var paneCounter = 200;
+      var defaultLines = {
+        alpha: [
+          { t: 'line', c: '$ cargo build --workspace' },
+          { t: 'line', c: '   Compiling puppet-master v0.1.0' },
+          { t: 'line stderr', c: 'error[E0433]: unresolved import `slint`' },
+          { t: 'line info', c: '  --> src/main.rs:12:5' }
+        ],
+        beta: [{ t: 'line info', c: '[historical transcript — PTY not live after restart]' }],
+        gamma: [
+          { t: 'line', c: '$ vite --host' },
+          { t: 'line info', c: '  VITE v5.4.0  ready in 412 ms' },
+          { t: 'line', c: '  Local:   http://localhost:3000/' }
+        ],
+        delta: [{ t: 'line', c: '$ git log --oneline -2' }, { t: 'line', c: 'a3f2c1d feat: add auth handler' }],
+        npm: [{ t: 'line', c: '$ npm run dev' }, { t: 'line info', c: 'webpack compiled' }],
+        docker: [{ t: 'line', c: '$ docker ps --format table' }, { t: 'line', c: 'CONTAINER ID   IMAGE     STATUS' }],
+        psql: [{ t: 'line', c: '$ psql -h localhost demo' }, { t: 'line', c: 'demo=# \\dt' }],
+        ci: [{ t: 'line', c: '[CI] pipeline #882 · running tests…' }, { t: 'line info', c: '  cargo test --workspace' }],
+        misc: [{ t: 'line', c: '$ bench --quick' }, { t: 'line', c: 'ok · 12.4ms' }],
+        term_tp_ci: [
+          { t: 'line info', c: '[06:00:00] pipeline #882 · branch main' },
+          { t: 'line', c: '[CI] queued on runner-pm-04' },
+          { t: 'line', c: '[CI] checkout · fetch depth 50 · 2.1s' },
+          { t: 'line', c: '[CI] cache restore · cargo-registry · hit' },
+          { t: 'line', c: '[CI] matrix: [linux-gnu, macos-arm]' },
+          { t: 'line info', c: '[06:00:18] linux-gnu · building' },
+          { t: 'line', c: '   Compiling workspace in release…' },
+          { t: 'line info', c: '[06:04:02] linux-gnu · tests starting' },
+          { t: 'line', c: 'test result: ok. 412 passed; 0 failed' },
+          { t: 'line info', c: '[06:07:55] pipeline success · artifacts uploaded' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_ci_cover: [
+          { t: 'line info', c: '[06:05:12] coverage · llvm-cov' },
+          { t: 'line', c: '$ cargo llvm-cov nextest --workspace --summary-only' },
+          { t: 'line', c: 'Filename                      Regions    Missed   Cover' },
+          { t: 'line', c: 'src/main.rs                      120        8     93.33%' },
+          { t: 'line', c: 'src/runtime/mod.rs               840       61     92.74%' },
+          { t: 'line', c: 'src/terminal/emu.rs              402       44     89.05%' },
+          { t: 'line', c: 'TOTAL                           15201     1102    92.75%' },
+          { t: 'line info', c: '[06:05:48] codecov upload · OK' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_ci_lint: [
+          { t: 'line info', c: '[06:02:11] job eslint-ui' },
+          { t: 'line', c: '$ pnpm --filter ui exec eslint . --max-warnings 0' },
+          { t: 'line', c: 'Linting… 184 files' },
+          { t: 'line stderr', c: '/src/components/TermStrip.tsx' },
+          { t: 'line stderr', c: '  42:7  warning  React Hook useEffect has a missing dependency: \'syncBar\'' },
+          { t: 'line', c: '✖ 1 problem (0 errors, 1 warning)' },
+          { t: 'line stderr', c: 'ESLint found too many warnings (maximum: 0).' },
+          { t: 'line info', c: '[06:02:24] exit code 1 · annotation posted to PR #441' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_ci_test: [
+          { t: 'line info', c: '[06:03:40] unit matrix · shard 2/4' },
+          { t: 'line', c: '$ cargo nextest run --partition count:4/2 --workspace' },
+          { t: 'line', c: 'Starting 103 tests across 28 binaries' },
+          { t: 'line', c: '        PASS [   0.8s] puppet-master::policy policy::deny_unsigned_tool' },
+          { t: 'line', c: '        PASS [   2.1s] puppet-master::storage wal_roundtrip' },
+          { t: 'line', c: '        PASS [  12.4s] puppet-master::gui screenshot_diff_smoke' },
+          { t: 'line', c: '        FAIL [   0.2s] puppet-master::net flaky_tunnel_retry (ignored)' },
+          { t: 'line info', c: '[06:04:01] summary: 102 passed, 1 ignored, 0 failed' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_db: [
+          { t: 'line info', c: '[15:44:22] psql · demo@localhost' },
+          { t: 'line', c: '$ psql -h localhost -U demo -d demo -c \'\\conninfo\'' },
+          { t: 'line', c: 'You are connected to database "demo" as user "demo" on host "localhost".' },
+          { t: 'line', c: 'demo=# SELECT now(), version();' },
+          { t: 'line', c: '            now             | version' },
+          { t: 'line', c: ' 2026-04-06 15:44:23.102+00 | PostgreSQL 16.2' },
+          { t: 'line', c: 'demo=# \\dt' },
+          { t: 'line', c: '               List of relations' },
+          { t: 'line', c: ' public | sessions | table | demo' },
+          { t: 'line info', c: '[15:44:25] idle in transaction: none' },
+          { t: 'line', c: 'demo=# ' }
+        ],
+        term_tp_db_dump: [
+          { t: 'line info', c: '[03:15:00] scheduled logical backup' },
+          { t: 'line', c: '$ pg_dump -h localhost -U demo -d demo -Fc -f /backup/demo_20260406_0315.dump' },
+          { t: 'line', c: 'pg_dump: last built-in OID is 16383' },
+          { t: 'line', c: 'pg_dump: reading extensions' },
+          { t: 'line', c: 'pg_dump: dumping contents of table "public.sessions"' },
+          { t: 'line info', c: '[03:15:14] 128 MB written · checksum SHA256 verified' },
+          { t: 'line', c: '$ ls -lh /backup/demo_20260406_0315.dump' },
+          { t: 'line', c: '-rw-r--r-- 1 backup backup 122M Apr  6 03:15 demo_20260406_0315.dump' },
+          { t: 'line info', c: 'Retention: 14d · off-site sync queued' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_db_exp: [
+          { t: 'line info', c: '[18:29:40] explain analyze' },
+          { t: 'line', c: 'demo=# EXPLAIN (ANALYZE, BUFFERS)' },
+          { t: 'line', c: 'SELECT * FROM sessions WHERE project_id = $1 ORDER BY updated_at DESC LIMIT 50;' },
+          { t: 'line', c: 'Limit  (cost=1.12..24.88 rows=50 width=128) (actual time=0.08..1.02 rows=50 loops=1)' },
+          { t: 'line', c: '  ->  Index Scan using sessions_project_updated_idx on sessions' },
+          { t: 'line', c: '        (actual time=0.06..0.88 rows=50 loops=1)' },
+          { t: 'line info', c: 'Planning Time: 0.214 ms · Execution Time: 1.124 ms' },
+          { t: 'line', c: 'demo=# ' }
+        ],
+        term_tp_db_mig: [
+          { t: 'line info', c: '[09:12:08] sqlx migrate · dry output' },
+          { t: 'line', c: '$ sqlx migrate info' },
+          { t: 'line', c: '1/applied  initial schema' },
+          { t: 'line', c: '2/applied  add session ledger' },
+          { t: 'line', c: '3/pending  add web_cache_ttl' },
+          { t: 'line', c: '$ sqlx migrate run' },
+          { t: 'line', c: 'Applied 3/migrate add web_cache_ttl (42ms)' },
+          { t: 'line', c: '$ sqlx migrate info' },
+          { t: 'line', c: '3/applied  add web_cache_ttl' },
+          { t: 'line info', c: '[09:12:11] database version locked at 3' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_dk: [
+          { t: 'line info', c: '[08:22:01] compose · project puppet-master' },
+          { t: 'line', c: '$ docker compose up -d' },
+          { t: 'line', c: ' Container pm-postgres-1  Running' },
+          { t: 'line', c: ' Container pm-redis-1     Running' },
+          { t: 'line', c: ' Container pm-api-1       Starting' },
+          { t: 'line', c: ' Container pm-api-1       Started' },
+          { t: 'line', c: '$ docker compose ps --format \'table {{.Name}}\\t{{.Status}}\'' },
+          { t: 'line', c: 'NAME            STATUS' },
+          { t: 'line', c: 'pm-api-1        Up 3 seconds (health: starting)' },
+          { t: 'line', c: 'pm-postgres-1   Up 2 days' },
+          { t: 'line info', c: '[08:22:08] healthcheck: api · 1/1 passing' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_dk_img: [
+          { t: 'line info', c: '[19:14:33] image inventory' },
+          { t: 'line', c: '$ docker images --format \'table {{.Repository}}\\t{{.Tag}}\\t{{.Size}}\' | head' },
+          { t: 'line', c: 'REPOSITORY          TAG       SIZE' },
+          { t: 'line', c: 'puppet-master-api   latest    842MB' },
+          { t: 'line', c: 'postgres            16        453MB' },
+          { t: 'line', c: 'redis               7         128MB' },
+          { t: 'line', c: '$ docker history puppet-master-api:latest --no-trunc | head -n 6' },
+          { t: 'line', c: 'IMAGE         CREATED BY' },
+          { t: 'line', c: '<missing>     RUN cargo build --release' },
+          { t: 'line info', c: '[19:14:36] 14 layers · base debian:bookworm-slim' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_dk_net: [
+          { t: 'line info', c: '[12:33:45] bridge networks' },
+          { t: 'line', c: '$ docker network ls | grep pm' },
+          { t: 'line', c: 'abc123   pm_default    bridge    local' },
+          { t: 'line', c: '$ docker network inspect pm_default --format \'{{json .IPAM.Config}}\'' },
+          { t: 'line', c: '[{"Subnet":"172.28.0.0/16","Gateway":"172.28.0.1"}]' },
+          { t: 'line', c: '$ docker compose exec api getent hosts postgres' },
+          { t: 'line', c: '172.28.0.3      postgres pm-postgres-1.pm_default' },
+          { t: 'line info', c: '[12:33:52] DNS resolution ok' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_dk_vol: [
+          { t: 'line info', c: '[07:51:12] named volumes' },
+          { t: 'line', c: '$ docker volume ls | grep pm_' },
+          { t: 'line', c: 'local     pm_postgres_data' },
+          { t: 'line', c: 'local     pm_redis_data' },
+          { t: 'line', c: 'local     pm_build_cache' },
+          { t: 'line', c: '$ docker system df -v | grep pm_postgres_data -A2' },
+          { t: 'line', c: 'VOLUME NAME         LINKS     SIZE' },
+          { t: 'line', c: 'pm_postgres_data    1         1.042GB' },
+          { t: 'line info', c: '[07:51:18] last backup snapshot: 2026-04-05T04:00Z' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_e2_fix: [
+          { t: 'line info', c: '[11:40:33] fixtures · refresh' },
+          { t: 'line', c: '$ ls -la e2e/fixtures/' },
+          { t: 'line', c: 'drwxr-xr-x  user  sessions-minimal.json' },
+          { t: 'line', c: 'drwxr-xr-x  user  wizard-stub.tar.zst' },
+          { t: 'line', c: '$ pm e2e fixtures verify --strict' },
+          { t: 'line', c: 'OK  sessions-minimal.json  schema v3' },
+          { t: 'line', c: 'OK  wizard-stub.tar.zst    checksum' },
+          { t: 'line info', c: '[11:40:38] fixtures pinned for commit a3f2c1d' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_e2_snap: [
+          { t: 'line info', c: '[13:55:01] snapshot update · ui' },
+          { t: 'line', c: '$ npx playwright test --update-snapshots --grep @visual' },
+          { t: 'line', c: 'Updating snapshot TerminalStrip-dark.png' },
+          { t: 'line', c: 'Updating snapshot PlanningWizard-step3.png' },
+          { t: 'line stderr', c: '3 snapshots updated, 0 removed.' },
+          { t: 'line', c: '$ git status --short e2e/snapshots' },
+          { t: 'line', c: ' M e2e/snapshots/TerminalStrip-dark.png' },
+          { t: 'line info', c: '[13:55:22] review required before merge' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_e2_tr: [
+          { t: 'line info', c: '[17:25:11] trace server · local' },
+          { t: 'line', c: '$ npx playwright show-trace test-results/debug/trace.zip' },
+          { t: 'line', c: 'Serving trace at http://127.0.0.1:9323/trace/index.html' },
+          { t: 'line', c: 'Press Ctrl+C to stop' },
+          { t: 'line info', c: '[17:25:14] loaded 1,204 events · 82 screenshots' },
+          { t: 'line', c: 'GET /trace/snapshot-0001.jpeg 200 2ms' },
+          { t: 'line', c: 'GET /trace/network.json 200 1ms' },
+          { t: 'line info', c: '[17:26:02] user opened action #44 "click" · selector [data-test=send]' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_e2e: [
+          { t: 'line info', c: '[17:22:05] playwright · headed=false' },
+          { t: 'line', c: '$ npx playwright test --reporter=line --workers=4' },
+          { t: 'line', c: 'Running 12 tests using 4 workers' },
+          { t: 'line', c: '... planning wizard > smoke (8.2s)' },
+          { t: 'line', c: '… assistant › send message (12.1s)' },
+          { t: 'line', c: '… terminal › split pane dnd (6.4s)' },
+          { t: 'line info', c: '[17:22:53] 12 passed (48.1s)' },
+          { t: 'line', c: 'To open last HTML report: npx playwright show-report' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_hist: [
+          { t: 'line info', c: '[09:41:02] session snapshot · pid 8841 · cwd ~/projects/puppet-master' },
+          { t: 'line', c: '$ rustc --version --verbose' },
+          { t: 'line', c: 'rustc 1.84.0 (stable)' },
+          { t: 'line', c: '$ cargo test -p puppet-master --no-run' },
+          { t: 'line', c: '   Compiling puppet-master v0.1.0' },
+          { t: 'line stderr', c: 'warning: unused variable: `ctx`' },
+          { t: 'line info', c: '   --> src/runtime/mod.rs:402:7' },
+          { t: 'line', c: '    Finished `test` profile [optimized + debuginfo]' },
+          { t: 'line info', c: '[09:43:18] PTY detached · exit code 0 (transcript frozen)' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_m_dep: [
+          { t: 'line info', c: '[14:48:30] dependency graph · mermaid export' },
+          { t: 'line', c: '$ cargo tree -p puppet-master -e normal --prefix none | head -n 20' },
+          { t: 'line', c: 'slint v1.8.0' },
+          { t: 'line', c: 'tokio v1.40.0' },
+          { t: 'line', c: 'serde v1.0.210' },
+          { t: 'line', c: '$ cargo deny check licenses' },
+          { t: 'line', c: 'licenses ok — 0 errors, 0 warnings' },
+          { t: 'line info', c: '[14:48:36] graph exported to Plans/.pipeline/deps.dot' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_m_gen: [
+          { t: 'line info', c: '[10:11:05] codegen · proto + openapi' },
+          { t: 'line', c: '$ buf generate proto/' },
+          { t: 'line', c: 'wrote gen/go/puppet/v1/service.pb.go' },
+          { t: 'line', c: '$ openapi-generator-cli generate -i docs/openapi.yaml -g rust -o gen/api' },
+          { t: 'line', c: '[main] INFO  writing file …/models/session.rs' },
+          { t: 'line info', c: '[10:11:18] 37 files changed' },
+          { t: 'line', c: '$ git diff --stat gen/ | tail -n 1' },
+          { t: 'line', c: ' 37 files changed, 4021 insertions(+), 118 deletions(-)' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_m_scp: [
+          { t: 'line info', c: '[16:18:22] bundle → staging' },
+          { t: 'line', c: '$ tar -czf /tmp/pm-bundle.tar.gz --exclude=target .' },
+          { t: 'line', c: '…' },
+          { t: 'line', c: '$ scp -C /tmp/pm-bundle.tar.gz deploy@staging.pm.internal:/incoming/' },
+          { t: 'line', c: 'pm-bundle.tar.gz   100%  210MB   12.4MB/s   00:17' },
+          { t: 'line', c: '$ ssh deploy@staging.pm.internal \'sha256sum /incoming/pm-bundle.tar.gz\'' },
+          { t: 'line', c: 'a91f…c02  /incoming/pm-bundle.tar.gz' },
+          { t: 'line info', c: '[16:18:42] checksum matched local' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_misc: [
+          { t: 'line info', c: '[21:33:17] microbench · 30 iterations' },
+          { t: 'line', c: '$ cargo bench -p puppet-master --bench routing -- --noplot' },
+          { t: 'line', c: 'routing/short_path   time:   [412 ns 418 ns 425 ns]' },
+          { t: 'line', c: 'routing/deep_chain   time:   [1.2 µs 1.22 µs 1.25 µs]' },
+          { t: 'line', c: 'Found 2 outliers among 30 measurements (6.67%)' },
+          { t: 'line info', c: '[21:33:45] results written target/criterion/routing' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_ps_cold: [
+          { t: 'line info', c: '[05:55:00] cold boot sequence' },
+          { t: 'line', c: '$ systemctl --user status pm-agent' },
+          { t: 'line', c: 'Active: active (running) since Mon 2026-04-06 05:54:58 UTC' },
+          { t: 'line', c: '$ pm daemon --foreground 2>&1 | head -n 12' },
+          { t: 'line', c: 'config loaded from ~/.config/puppet-master/config.toml' },
+          { t: 'line', c: 'telemetry: opt-in local only' },
+          { t: 'line', c: 'runtime: tokio worker threads = 8' },
+          { t: 'line info', c: '[05:55:04] ready · listening on /run/pm/agent.sock' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_ps_crash: [
+          { t: 'line info', c: '[02:33:18] crash artifact · SIGABRT' },
+          { t: 'line', c: '$ coredumpctl info 8841' },
+          { t: 'line', c: 'PID: 8841 (puppet-master)' },
+          { t: 'line', c: 'Signal: 6 (ABRT)' },
+          { t: 'line', c: 'Command Line: target/debug/puppet-master --demo' },
+          { t: 'line', c: '$ ls -la /var/lib/systemd/coredump/core.puppet-master.*' },
+          { t: 'line', c: '-rw-r-----  root root  128M … core.puppet-master.8841.lz4' },
+          { t: 'line info', c: '[02:33:22] uploaded to symbol server · id ab12…' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_ps_env: [
+          { t: 'line info', c: '[04:12:44] env freeze · prior session' },
+          { t: 'line', c: '$ env | sort | rg \'^(RUST|PM|PATH|CARGO)\'' },
+          { t: 'line', c: 'CARGO_HOME=/home/dev/.cargo' },
+          { t: 'line', c: 'PATH=/home/dev/.cargo/bin:…' },
+          { t: 'line', c: 'PM_PROFILE=dev' },
+          { t: 'line', c: 'RUST_BACKTRACE=1' },
+          { t: 'line', c: '$ printenv PM_SESSION_ID' },
+          { t: 'line', c: 'sess-7f3a- prior' },
+          { t: 'line info', c: '[04:12:47] captured 42 variables → .pm/env.freeze.json' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_sec: [
+          { t: 'line info', c: '[14:02:11] ui · ~/projects/puppet-master/ui' },
+          { t: 'line', c: '$ pnpm install --frozen-lockfile' },
+          { t: 'line', c: 'Lockfile is up to date, resolution step is skipped' },
+          { t: 'line', c: 'Packages: +0' },
+          { t: 'line', c: 'Done in 1.1s' },
+          { t: 'line', c: '$ vite --host 0.0.0.0 --port 3000' },
+          { t: 'line info', c: '  VITE v5.4.0  ready in 389 ms' },
+          { t: 'line', c: '  ➜  Local:   http://localhost:3000/' },
+          { t: 'line', c: '  ➜  Network: http://192.168.1.14:3000/' },
+          { t: 'line info', c: '[14:02:14] hmr · /@fs/src/App.tsx' },
+          { t: 'line', c: '14:02:15 [vite] hmr update /src/App.tsx' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_v_analyze: [
+          { t: 'line info', c: '[10:55:12] bundle scan · production build' },
+          { t: 'line', c: '$ vite build --mode production 2>&1 | tee /tmp/vite-build.log' },
+          { t: 'line', c: 'vite v5.4.0 building for production…' },
+          { t: 'line', c: 'transforming…' },
+          { t: 'line', c: '✓ 1842 modules transformed.' },
+          { t: 'line', c: 'rendering chunks…' },
+          { t: 'line', c: 'dist/index.html                   0.42 kB' },
+          { t: 'line', c: 'dist/assets/index-abc123.js     412.18 kB │ gzip: 128.4 kB' },
+          { t: 'line stderr', c: '(!) Some chunks are larger than 500 kB after minification.' },
+          { t: 'line info', c: '[10:55:48] build finished in 36.1s' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_v_cfg: [
+          { t: 'line info', c: '[11:18:44] TypeScript project introspection' },
+          { t: 'line', c: '$ node -p "require(\'./tsconfig.json\').compilerOptions.strict"' },
+          { t: 'line', c: 'true' },
+          { t: 'line', c: '$ npx tsc --showConfig | head -n 24' },
+          { t: 'line', c: '{' },
+          { t: 'line', c: '    "compilerOptions": {' },
+          { t: 'line', c: '        "target": "ES2022",' },
+          { t: 'line', c: '        "module": "ESNext",' },
+          { t: 'line', c: '        "moduleResolution": "bundler",' },
+          { t: 'line info', c: '… truncated …' },
+          { t: 'line', c: '$ npx tsc --noEmit 2>&1 | wc -l' },
+          { t: 'line', c: '0' },
+          { t: 'line info', c: '[11:18:52] no diagnostics' },
+          { t: 'line', c: '$ ' }
+        ],
+        term_tp_v_proxy: [
+          { t: 'line info', c: '[16:33:01] dev proxy · api → localhost:8080' },
+          { t: 'line', c: '$ curl -sI http://127.0.0.1:3000/api/health' },
+          { t: 'line', c: 'HTTP/1.1 200 OK' },
+          { t: 'line', c: 'vary: Origin' },
+          { t: 'line', c: 'x-powered-by: Express' },
+          { t: 'line', c: 'content-type: application/json; charset=utf-8' },
+          { t: 'line', c: 'content-length: 27' },
+          { t: 'line', c: '$ curl -s http://127.0.0.1:3000/api/health | jq .' },
+          { t: 'line', c: '{' },
+          { t: 'line', c: '  "ok": true,' },
+          { t: 'line', c: '  "revision": "r2041"' },
+          { t: 'line', c: '}' },
+          { t: 'line info', c: '[16:33:04] latency p50 6.2ms · p99 41ms (last 200 req)' },
+          { t: 'line', c: '$ ' }
+        ]
+      };
+      function mkPane(base, id, sessionId, linesKey, accent) {
+        return {
+          id: id, sessionId: sessionId, devSessionId: base.devSessionId || null, state: base.state || 'running',
+          profile: base.profile || 'build', accent: accent || 1, cwd: base.cwd || '~/projects/puppet-master',
+          profileLabel: base.profileLabel || '', displayName: base.displayName || 'Shell', iconId: base.iconId || 'terminal',
+          subtabTextColor: base.subtabTextColor || null,
+          rendererRequested: 'gpu', rendererEffective: 'canvas',
+          shellTier: 'rich', degradations: [], restoreOutcome: 'restored_live', durability: 'guaranteed_durable',
+          retentionTier: '10k_lines', commandBlock: { id: 'tcb-' + id, life: 'running' },
+          historyBanner: base.historyBanner || null, inspectorOpen: false,
+          lines: defaultLines[linesKey] || defaultLines.alpha
+        };
+      }
+      var state = {
+        clockTick: 0,
+        barOrder: ['g1', 'g_prior', 'g2', 'g3', 'g4', 'g5', 'g6', 'g7'],
+        barSlotIds: ['g1', 'g2', 'g3', '__overflow__'],
+        activeGroupId: 'g1',
+        focusedPaneId: 'tp-a',
+        editorTerminalPanels: [],
+        editorPanelCounter: 0,
+        dragPayload: null,
+        termStripAnim: false,
+        linkedSessions: { problems: 'ts-sess-alpha', output: 'ts-sess-alpha', ports: 'ts-sess-gamma' },
+        panes: {},
+        terminalGroups: []
+      };
+      state.panes = {
+        'tp-a': mkPane({ displayName: 'build', iconId: 'hammer' }, 'tp-a', 'ts-sess-alpha', 'alpha', 1),
+        'tp-b': mkPane({ displayName: 'git', iconId: 'git', rendererEffective: 'gpu' }, 'tp-b', 'ts-sess-delta', 'delta', 2),
+        'tp-c': mkPane({ displayName: 'agent log', iconId: 'radio', devSessionId: 'dev-sess-vite-01', shellTier: 'basic', degradations: ['integration_basic'] }, 'tp-c', 'ts-sess-alpha', 'alpha', 3),
+        'tp-d': mkPane({ displayName: 'watch', iconId: 'wifi', rendererEffective: 'gpu' }, 'tp-d', 'ts-sess-delta', 'delta', 4),
+        'tp-hist': mkPane({
+          displayName: 'prior shell', iconId: 'clock',
+          state: 'exited', profile: 'shell', cwd: '~', shellTier: 'opaque',
+          degradations: ['no_pty_live'], restoreOutcome: 'restored_exited', durability: 'transient_only',
+          retentionTier: 'transcript_snapshot', commandBlock: { id: 'tcb-7701', life: 'failed' },
+          historyBanner: 'Historical shell — restart to attach a live PTY'
+        }, 'tp-hist', 'ts-sess-beta', 'term_tp_hist', 1),
+        'tp-sec': mkPane({ displayName: 'dev server', iconId: 'globe', cwd: '~/projects/puppet-master/ui', rendererEffective: 'canvas' }, 'tp-sec', 'ts-sess-gamma', 'term_tp_sec', 1),
+        'tp-v-cfg': mkPane({ displayName: 'tsconfig', iconId: 'code' }, 'tp-v-cfg', 'ts-sess-vite-cfg', 'term_tp_v_cfg', 2),
+        'tp-v-proxy': mkPane({ displayName: 'API proxy', iconId: 'cloud' }, 'tp-v-proxy', 'ts-sess-vite-proxy', 'term_tp_v_proxy', 3),
+        'tp-v-analyze': mkPane({ displayName: 'bundle scan', iconId: 'layers' }, 'tp-v-analyze', 'ts-sess-vite-analyze', 'term_tp_v_analyze', 4),
+        'tp-dk': mkPane({ displayName: 'compose stack', iconId: 'box' }, 'tp-dk', 'ts-sess-docker', 'term_tp_dk', 2),
+        'tp-dk-img': mkPane({ displayName: 'image layers', iconId: 'layers' }, 'tp-dk-img', 'ts-sess-dk-img', 'term_tp_dk_img', 3),
+        'tp-dk-vol': mkPane({ displayName: 'volumes', iconId: 'folder' }, 'tp-dk-vol', 'ts-sess-dk-vol', 'term_tp_dk_vol', 4),
+        'tp-dk-net': mkPane({ displayName: 'networks', iconId: 'wifi' }, 'tp-dk-net', 'ts-sess-dk-net', 'term_tp_dk_net', 1),
+        'tp-db': mkPane({ displayName: 'sql shell', iconId: 'database' }, 'tp-db', 'ts-sess-db', 'term_tp_db', 3),
+        'tp-db-mig': mkPane({ displayName: 'migrations', iconId: 'code' }, 'tp-db-mig', 'ts-sess-db-mig', 'term_tp_db_mig', 4),
+        'tp-db-exp': mkPane({ displayName: 'explain plan', iconId: 'cpu' }, 'tp-db-exp', 'ts-sess-db-exp', 'term_tp_db_exp', 1),
+        'tp-db-dump': mkPane({ displayName: 'logical backup', iconId: 'package' }, 'tp-db-dump', 'ts-sess-db-dump', 'term_tp_db_dump', 2),
+        'tp-ci': mkPane({ displayName: 'workflow', iconId: 'cpu' }, 'tp-ci', 'ts-sess-ci', 'term_tp_ci', 4),
+        'tp-ci-lint': mkPane({ displayName: 'eslint', iconId: 'bug' }, 'tp-ci-lint', 'ts-sess-ci-lint', 'term_tp_ci_lint', 1),
+        'tp-ci-test': mkPane({ displayName: 'unit matrix', iconId: 'layers' }, 'tp-ci-test', 'ts-sess-ci-test', 'term_tp_ci_test', 2),
+        'tp-ci-cover': mkPane({ displayName: 'coverage', iconId: 'shield' }, 'tp-ci-cover', 'ts-sess-ci-cover', 'term_tp_ci_cover', 3),
+        'tp-e2e': mkPane({ displayName: 'playwright', iconId: 'bug' }, 'tp-e2e', 'ts-sess-e2e', 'term_tp_e2e', 1),
+        'tp-e2-tr': mkPane({ displayName: 'trace viewer', iconId: 'radio' }, 'tp-e2-tr', 'ts-sess-e2-tr', 'term_tp_e2_tr', 2),
+        'tp-e2-fix': mkPane({ displayName: 'fixtures', iconId: 'folder' }, 'tp-e2-fix', 'ts-sess-e2-fix', 'term_tp_e2_fix', 3),
+        'tp-e2-snap': mkPane({ displayName: 'snapshots', iconId: 'sparkles' }, 'tp-e2-snap', 'ts-sess-e2-snap', 'term_tp_e2_snap', 4),
+        'tp-misc': mkPane({ displayName: 'microbench', iconId: 'package' }, 'tp-misc', 'ts-sess-misc', 'term_tp_misc', 2),
+        'tp-m-scp': mkPane({ displayName: 'scp bundle', iconId: 'cloud' }, 'tp-m-scp', 'ts-sess-m-scp', 'term_tp_m_scp', 3),
+        'tp-m-gen': mkPane({ displayName: 'codegen', iconId: 'code' }, 'tp-m-gen', 'ts-sess-m-gen', 'term_tp_m_gen', 4),
+        'tp-m-dep': mkPane({ displayName: 'dep graph', iconId: 'layers' }, 'tp-m-dep', 'ts-sess-m-dep', 'term_tp_m_dep', 1),
+        'tp-ps-env': mkPane({ displayName: 'env freeze', iconId: 'folder' }, 'tp-ps-env', 'ts-sess-ps-env', 'term_tp_ps_env', 1),
+        'tp-ps-crash': mkPane({ displayName: 'crash artifact', iconId: 'shield' }, 'tp-ps-crash', 'ts-sess-ps-crash', 'term_tp_ps_crash', 2),
+        'tp-ps-cold': mkPane({ displayName: 'cold boot', iconId: 'cpu' }, 'tp-ps-cold', 'ts-sess-ps-cold', 'term_tp_ps_cold', 3)
+      };
+      state.terminalGroups = [
+        { id: 'g1', title: 'Dev · cargo', accentColor: '#7ee787', iconId: 'zap',
+          tree: { type: 'col', children: [
+            { type: 'row', children: [{ type: 'leaf', paneId: 'tp-a' }, { type: 'leaf', paneId: 'tp-b' }] },
+            { type: 'row', children: [{ type: 'leaf', paneId: 'tp-c' }, { type: 'leaf', paneId: 'tp-d' }] }
+          ]}},
+        { id: 'g_prior', title: 'Prior shell', accentColor: '#79c0ff', iconId: 'clock',
+          tree: { type: 'col', children: [
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-hist' },
+              { type: 'leaf', paneId: 'tp-ps-env' }
+            ]},
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-ps-crash' },
+              { type: 'leaf', paneId: 'tp-ps-cold' }
+            ]}
+          ]}},
+        { id: 'g2', title: 'Vite', accentColor: '#56d4dd', iconId: 'globe',
+          tree: { type: 'col', children: [
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-sec' },
+              { type: 'leaf', paneId: 'tp-v-cfg' }
+            ]},
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-v-proxy' },
+              { type: 'leaf', paneId: 'tp-v-analyze' }
+            ]}
+          ]}},
+        { id: 'g3', title: 'Docker', accentColor: '#ffa657', iconId: 'box',
+          tree: { type: 'col', children: [
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-dk' },
+              { type: 'leaf', paneId: 'tp-dk-img' }
+            ]},
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-dk-vol' },
+              { type: 'leaf', paneId: 'tp-dk-net' }
+            ]}
+          ]}},
+        { id: 'g4', title: 'Database', accentColor: '#d2a8ff', iconId: 'database',
+          tree: { type: 'col', children: [
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-db' },
+              { type: 'leaf', paneId: 'tp-db-mig' }
+            ]},
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-db-exp' },
+              { type: 'leaf', paneId: 'tp-db-dump' }
+            ]}
+          ]}},
+        { id: 'g5', title: 'CI', accentColor: '#ff7b72', iconId: 'cpu',
+          tree: { type: 'col', children: [
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-ci' },
+              { type: 'leaf', paneId: 'tp-ci-lint' }
+            ]},
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-ci-test' },
+              { type: 'leaf', paneId: 'tp-ci-cover' }
+            ]}
+          ]}},
+        { id: 'g6', title: 'E2E', accentColor: '#e3b341', iconId: 'bug',
+          tree: { type: 'col', children: [
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-e2e' },
+              { type: 'leaf', paneId: 'tp-e2-tr' }
+            ]},
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-e2-fix' },
+              { type: 'leaf', paneId: 'tp-e2-snap' }
+            ]}
+          ]}},
+        { id: 'g7', title: 'Misc', accentColor: '#8b949e', iconId: 'package',
+          tree: { type: 'col', children: [
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-misc' },
+              { type: 'leaf', paneId: 'tp-m-scp' }
+            ]},
+            { type: 'row', children: [
+              { type: 'leaf', paneId: 'tp-m-gen' },
+              { type: 'leaf', paneId: 'tp-m-dep' }
+            ]}
+          ]}}
+      ];
+      function getGroup(id) { return state.terminalGroups.find(function(g) { return g.id === id; }); }
+      function getActiveGroup() { return getGroup(state.activeGroupId); }
+      function fillBarSlots() {
+        var order = state.barOrder;
+        var n = order.length;
+        if (n <= 4) state.barSlotIds = order.slice(0, n);
+        else state.barSlotIds = order.slice(0, 4).concat(['__overflow__']);
+      }
+      fillBarSlots();
+      function hiddenGroupIds() {
+        var shown = {};
+        state.barSlotIds.forEach(function(s) { if (s !== '__overflow__') shown[s] = true; });
+        return state.barOrder.filter(function(id) { return !shown[id]; });
+      }
+      function promoteGroupIntoBar(gid) {
+        if (gid !== state.activeGroupId) state.termStripAnim = true;
+        var order = state.barOrder;
+        var vis = state.barSlotIds.filter(function(x) { return x !== '__overflow__'; });
+        var ai = vis.indexOf(state.activeGroupId);
+        var slot = ai >= 0 ? ai : 1;
+        slot = Math.min(slot, vis.length - 1);
+        if (slot < 0) slot = 0;
+        var victim = vis[slot];
+        if (!victim || victim === gid) {
+          state.activeGroupId = gid;
+          renderAll();
+          syncTerminalTabBar('terminal');
+          return;
+        }
+        var iG = order.indexOf(gid);
+        var iV = order.indexOf(victim);
+        order[iG] = victim;
+        order[iV] = gid;
+        state.activeGroupId = gid;
+        fillBarSlots();
+        renderAll();
+        syncTerminalTabBar('terminal');
+      }
+      function findPaneLocation(paneId) {
+        for (var gi = 0; gi < state.terminalGroups.length; gi++) {
+          var g = state.terminalGroups[gi];
+          function walk(n) {
+            if (!n) return false;
+            if (n.type === 'leaf') return n.paneId === paneId;
+            return n.children.some(walk);
+          }
+          if (walk(g.tree)) return { group: g };
+        }
+        return null;
+      }
+      function collectPaneIdsFromTree(node, acc) {
+        acc = acc || [];
+        if (!node) return acc;
+        if (node.type === 'leaf') { acc.push(node.paneId); return acc; }
+        node.children.forEach(function(c) { collectPaneIdsFromTree(c, acc); });
+        return acc;
+      }
+      function killWorkgroup(gid) {
+        var g = getGroup(gid);
+        if (!g) return;
+        if (state.terminalGroups.length <= 1) {
+          var pids = collectPaneIdsFromTree(g.tree, []);
+          pids.forEach(function(pid) { delete state.panes[pid]; });
+          paneCounter++;
+          var np = 'tp-fresh-' + paneCounter;
+          state.panes[np] = mkPane({ displayName: 'shell', iconId: 'terminal' }, np, 'ts-fresh-' + paneCounter, 'alpha', 1);
+          g.tree = { type: 'leaf', paneId: np };
+          g.title = 'Shell';
+          g.accentColor = COLOR_PALETTE[0];
+          g.iconId = 'terminal';
+          state.focusedPaneId = np;
+          state.editorTerminalPanels = state.editorTerminalPanels.filter(function(ep) { return ep.groupId !== gid; });
+          fillBarSlots();
+          renderAll();
+          syncTerminalTabBar('terminal');
+          toast('Workgroup reset to fresh shell');
+          return;
+        }
+        var pids = collectPaneIdsFromTree(g.tree, []);
+        pids.forEach(function(pid) { delete state.panes[pid]; });
+        state.terminalGroups = state.terminalGroups.filter(function(x) { return x.id !== gid; });
+        state.barOrder = state.barOrder.filter(function(x) { return x !== gid; });
+        state.editorTerminalPanels = state.editorTerminalPanels.filter(function(ep) { return ep.groupId !== gid; });
+        if (state.activeGroupId === gid) {
+          state.activeGroupId = state.terminalGroups[0] ? state.terminalGroups[0].id : '';
+        }
+        fillBarSlots();
+        renderAll();
+        syncTerminalTabBar('terminal');
+      }
+      function findSessionLocation(sessionId) {
+        for (var pid in state.panes) {
+          if (state.panes[pid].sessionId === sessionId) {
+            var loc = findPaneLocation(pid);
+            if (loc) return { paneId: pid, group: loc.group };
+          }
+        }
+        return null;
+      }
+      function readTermPaneDragPayload(dt) {
+        if (!dt) return null;
+        try {
+          var raw = dt.getData(DND_MIME);
+          if (!raw) raw = dt.getData('text/plain');
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (e) { return null; }
+      }
+      function dragPayloadDuringDrag(dt) {
+        var pl = readTermPaneDragPayload(dt);
+        if (pl) return pl;
+        if (state.dragPayload && (state.dragPayload.kind === 'pane' || state.dragPayload.kind === 'subtab' || state.dragPayload.kind === 'group')) return state.dragPayload;
+        return null;
+      }
+      function scrubAllTerminalPaneCompositing() {
+        document.querySelectorAll(
+          '#bottomTerminalHost, #bottomTerminalHost .terminal-workspace, #pmEditorTerminalStack, ' +
+            '#bottomTerminalHost .terminal-pane, #bottomTerminalHost .terminal-pane-body, #bottomTerminalHost .pm-recovery-banner, ' +
+            '#pmEditorTerminalStack .terminal-pane, #pmEditorTerminalStack .terminal-pane-body, #pmEditorTerminalStack .pm-recovery-banner'
+        ).forEach(function(el) {
+          el.style.removeProperty('opacity');
+          el.style.removeProperty('filter');
+        });
+        document.querySelectorAll('.pane-container').forEach(function(el) {
+          el.style.removeProperty('opacity');
+        });
+      }
+      function clearTerminalDragVisuals() {
+        state.dragPayload = null;
+        var bh = document.getElementById('bottomTerminalHost');
+        if (bh) bh.classList.remove('pm-term-pane-drag-active');
+        var es = document.getElementById('pmEditorTerminalStack');
+        if (es) es.classList.remove('pm-term-pane-drag-active');
+        scrubAllTerminalPaneCompositing();
+        var ed = document.getElementById('editorView');
+        if (ed) ed.classList.remove('pm-editor-term-drop-hover');
+        document.querySelectorAll('.pm-term-dragging, .pm-term-drop-target, .pm-term-drop-hover, .pm-term-pane-drop-target').forEach(function(el) {
+          el.classList.remove('pm-term-dragging', 'pm-term-drop-target', 'pm-term-drop-hover', 'pm-term-pane-drop-target');
+        });
+      }
+      function scheduleTerminalDragCleanup(ev) {
+        if (ev && ev.target && ev.target.style) {
+          ev.target.style.removeProperty('opacity');
+          ev.target.style.removeProperty('filter');
+          var pane = ev.target.closest ? ev.target.closest('.terminal-pane') : null;
+          if (pane && pane !== ev.target && pane.style) {
+            pane.style.removeProperty('opacity');
+            pane.style.removeProperty('filter');
+          }
+        }
+        clearTerminalDragVisuals();
+        requestAnimationFrame(clearTerminalDragVisuals);
+        setTimeout(clearTerminalDragVisuals, 0);
+        setTimeout(clearTerminalDragVisuals, 50);
+      }
+      document.addEventListener('dragend', scheduleTerminalDragCleanup, true);
+      document.addEventListener('dragend', scheduleTerminalDragCleanup, false);
+      document.addEventListener('drop', function() { setTimeout(clearTerminalDragVisuals, 0); }, true);
+      function injectSplitAtPane(tree, targetPaneId, axis) {
+        var splitType = axis === 'horizontal' ? 'col' : 'row';
+        paneCounter++;
+        var np = 'tp-split-' + paneCounter;
+        var fp = state.panes[targetPaneId];
+        state.panes[np] = fp ? JSON.parse(JSON.stringify(fp)) : mkPane({}, np, 'ts-sess-split-' + paneCounter, 'alpha', 1);
+        state.panes[np].id = np;
+        state.panes[np].sessionId = 'ts-sess-split-' + paneCounter;
+        state.panes[np].lines = [{ t: 'line', c: '$ ' }];
+        var leaf = { type: 'leaf', paneId: targetPaneId };
+        var newLeaf = { type: 'leaf', paneId: np };
+        var branch = { type: splitType, children: [leaf, newLeaf] };
+        function inject(n) {
+          if (!n) return n;
+          if (n.type === 'leaf' && n.paneId === targetPaneId) return branch;
+          if (n.children) return { type: n.type, children: n.children.map(inject) };
+          return n;
+        }
+        return inject(tree);
+      }
+      function splitActive(axis) {
+        var g = getActiveGroup();
+        if (!g) return;
+        if (countLeaves(g.tree) >= 4) { toast('Max 4 panes in this workgroup'); return; }
+        var next = injectSplitAtPane(g.tree, state.focusedPaneId, axis);
+        if (!isValidQuadrantLayout(next)) { delete state.panes['tp-split-' + paneCounter]; paneCounter--; toast('Split would exceed 2×2 grid'); return; }
+        g.tree = next;
+        state.focusedPaneId = 'tp-split-' + paneCounter;
+        toast('Split pane · new terminal_session_id');
+        renderAll();
+        syncTerminalTabBar('terminal');
+      }
+      function addTabToActiveGroup() {
+        var g = getActiveGroup();
+        if (!g) return;
+        if (countLeaves(g.tree) >= 4) { toast('Grid full in this workgroup'); return; }
+        var leaves = collectLeafPaneIds(g.tree);
+        var tryOrder = leaves.indexOf(state.focusedPaneId) >= 0
+          ? [state.focusedPaneId].concat(leaves.filter(function(x) { return x !== state.focusedPaneId; }))
+          : leaves;
+        for (var li = 0; li < tryOrder.length; li++) {
+          for (var ax = 0; ax < 2; ax++) {
+            var axis = ax === 0 ? 'horizontal' : 'vertical';
+            var cand = injectSplitAtPane(g.tree, tryOrder[li], axis);
+            if (isValidQuadrantLayout(cand)) {
+              g.tree = cand;
+              state.focusedPaneId = 'tp-split-' + paneCounter;
+              toast('Added terminal');
+              renderAll();
+              syncTerminalTabBar('terminal');
+              return;
+            }
+            delete state.panes['tp-split-' + paneCounter];
+            paneCounter--;
+          }
+        }
+        toast('No valid split slot');
+      }
+      function addTerminalGroup() {
+        paneCounter++;
+        var gid = 'g-new-' + paneCounter;
+        var pid = 'tp-new-' + paneCounter;
+        state.panes[pid] = mkPane({ displayName: 'shell', iconId: 'terminal' }, pid, 'ts-new-' + paneCounter, 'alpha', 1);
+        state.terminalGroups.push({
+          id: gid, title: 'Workgroup ' + paneCounter, accentColor: COLOR_PALETTE[state.terminalGroups.length % COLOR_PALETTE.length], iconId: 'terminal',
+          tree: { type: 'leaf', paneId: pid }
+        });
+        state.barOrder.push(gid);
+        state.activeGroupId = gid;
+        state.termStripAnim = true;
+        fillBarSlots();
+        toast('New workgroup');
+        renderAll();
+        syncTerminalTabBar('terminal');
+      }
+      function closePane(paneId) {
+        var loc = findPaneLocation(paneId);
+        if (!loc) return;
+        var p = state.panes[paneId];
+        if (p && p.state === 'running') {
+          if (!confirm('Terminate session? OK = terminate, Cancel = layout only')) { /* demo still removes */ }
+        }
+        if (countLeaves(loc.group.tree) <= 1) {
+          killWorkgroup(loc.group.id);
+          return;
+        }
+        loc.group.tree = removeLeaf(loc.group.tree, paneId);
+        if (!loc.group.tree) return;
+        delete state.panes[paneId];
+        state.editorTerminalPanels = state.editorTerminalPanels.filter(function(ep) { return ep.paneId !== paneId; });
+        if (state.focusedPaneId === paneId) state.focusedPaneId = firstPaneIdInTree(loc.group.tree) || state.focusedPaneId;
+        renderAll();
+        syncTerminalTabBar('terminal');
+      }
+      function resolveGroupToDefaultPaneId(gid) {
+        var g = getGroup(gid);
+        if (!g || !g.tree) return null;
+        var leaves = collectLeafPaneIds(g.tree);
+        if (leaves.length === 0) return null;
+        if (gid === state.activeGroupId && leaves.indexOf(state.focusedPaneId) >= 0) return state.focusedPaneId;
+        return leaves[0];
+      }
+      function addEditorTerminalPanelFromPayload(pl) {
+        if (!pl) return;
+        var paneId = null;
+        var groupId = null;
+        var title = 'Terminal';
+        if (pl.kind === 'pane' || pl.kind === 'subtab') {
+          paneId = pl.paneId;
+          groupId = pl.groupId;
+        } else if (pl.kind === 'group') {
+          groupId = pl.id;
+          paneId = resolveGroupToDefaultPaneId(groupId);
+          var gx = getGroup(groupId);
+          if (gx) title = (gx.title || 'Workgroup') + ' · terminal';
+        } else return;
+        if (!paneId || !groupId) {
+          toast('Could not open terminal in editor');
+          return;
+        }
+        if (!state.panes[paneId]) {
+          toast('Terminal not found');
+          return;
+        }
+        title = paneChipLabel(paneId) || title;
+        if (state.editorTerminalPanels.some(function(x) { return x.paneId === paneId; })) {
+          toast('This terminal is already in the editor');
+          return;
+        }
+        state.editorPanelCounter++;
+        state.editorTerminalPanels.push({
+          id: 'edtp-' + state.editorPanelCounter,
+          paneId: paneId,
+          groupId: groupId,
+          title: title
+        });
+      }
+      function undockEditor() {
+        state.editorTerminalPanels = [];
+        renderAll();
+        syncTerminalTabBar('terminal');
+      }
+      function isDockedInEditor(paneId) {
+        return state.editorTerminalPanels.some(function(ep) { return ep.paneId === paneId; });
+      }
+      function renderTranscript(body, lines) {
+        body.innerHTML = '';
+        lines.forEach(function(l) {
+          var d = document.createElement('div');
+          d.className = l.t;
+          d.textContent = l.c;
+          body.appendChild(d);
+        });
+      }
+      function renderPane(paneId, ctx) {
+        var p = state.panes[paneId];
+        if (!p) return document.createElement('div');
+        var wrap = document.createElement('div');
+        wrap.className = 'terminal-pane pane-accent-' + p.accent + (state.focusedPaneId === paneId ? ' pm-pane-focused' : '');
+        wrap.dataset.paneId = paneId;
+        wrap.dataset.groupId = ctx.groupId;
+        var gPane = getGroup(ctx.groupId);
+        if (gPane) wrap.style.setProperty('--pane-wg-accent', gPane.accentColor || '#8b949e');
+        wrap.draggable = true;
+        wrap.tabIndex = state.focusedPaneId === paneId ? 0 : -1;
+        wrap.title = p.sessionId + ' — drag to editor to dock';
+        if (p.historyBanner) {
+          var ban = document.createElement('div');
+          ban.className = 'pm-recovery-banner';
+          ban.textContent = p.historyBanner;
+          wrap.appendChild(ban);
+        }
+        var body = document.createElement('div');
+        body.className = 'terminal-pane-body';
+        renderTranscript(body, p.lines);
+        wrap.appendChild(body);
+        wrap.onclick = function() {
+          state.focusedPaneId = paneId;
+          renderAll();
+          syncTerminalTabBar('terminal');
+        };
+        wrap.ondragstart = function(e) {
+          state.dragPayload = { kind: 'pane', paneId: paneId, groupId: ctx.groupId };
+          dragPayloadWrite(e.dataTransfer, state.dragPayload);
+          e.dataTransfer.effectAllowed = 'copyMove';
+          wrap.classList.add('pm-term-dragging');
+        };
+        wrap.ondragend = function() { scheduleTerminalDragCleanup(); };
+        /* Capture: dragover/drop must run while cursor is over .terminal-pane-body (descendant), or drop is rejected */
+        wrap.addEventListener('dragover', function(e) {
+          var pl = dragPayloadDuringDrag(e.dataTransfer);
+          if (!pl || pl.groupId !== ctx.groupId || pl.paneId === paneId) return;
+          if (pl.kind !== 'pane') return;
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          wrap.classList.add('pm-term-pane-drop-target');
+        }, true);
+        wrap.ondragleave = function(e) {
+          var rel = e.relatedTarget;
+          if (rel && wrap.contains(rel)) return;
+          wrap.classList.remove('pm-term-pane-drop-target');
+        };
+        wrap.addEventListener('drop', function(e) {
+          wrap.classList.remove('pm-term-pane-drop-target');
+          var pl = readTermPaneDragPayload(e.dataTransfer) || (state.dragPayload && state.dragPayload.kind === 'pane' ? state.dragPayload : null);
+          if (!pl || pl.kind !== 'pane' || pl.groupId !== ctx.groupId || pl.paneId === paneId) return;
+          e.preventDefault();
+          e.stopPropagation();
+          clearTerminalDragVisuals();
+          var g = getGroup(ctx.groupId);
+          if (!g) return;
+          swapPaneIdsInTree(g.tree, pl.paneId, paneId);
+          state.focusedPaneId = pl.paneId;
+          renderAll();
+          syncTerminalTabBar('terminal');
+        }, true);
+        return wrap;
+      }
+      function renderTree(node, ctx) {
+        if (!node) return document.createElement('div');
+        if (node.type === 'leaf') {
+          if (isDockedInEditor(node.paneId)) {
+            var ph = document.createElement('div');
+            ph.className = 'pm-term-docked-placeholder';
+            ph.textContent = 'Terminal in editor — drop here to remove from editor';
+            ph.ondragover = function(e) { e.preventDefault(); };
+            ph.ondrop = function(e) {
+              e.preventDefault();
+              clearTerminalDragVisuals();
+              state.editorTerminalPanels = state.editorTerminalPanels.filter(function(ep) { return ep.paneId !== node.paneId; });
+              renderAll();
+              syncTerminalTabBar('terminal');
+            };
+            return ph;
+          }
+          return renderPane(node.paneId, ctx);
+        }
+        var flexDir = node.type === 'row' ? 'row' : 'column';
+        var box = document.createElement('div');
+        /* Do not use pm-terminal-enter here: its opacity keyframes dim the whole split + all panes and can stick wrong after DnD */
+        box.className = 'terminal-split-node';
+        box.style.display = 'flex';
+        box.style.flexDirection = flexDir;
+        box.style.flex = '1';
+        box.style.minHeight = '0';
+        box.style.minWidth = '0';
+        box.style.gap = '1px';
+        node.children.forEach(function(ch, i) {
+          if (i > 0) {
+            var rz = document.createElement('div');
+            rz.className = node.type === 'row' ? 'resizer-col pm-term-pane-resizer' : 'resizer-row pm-term-pane-resizer';
+            box.appendChild(rz);
+          }
+          var inner = renderTree(ch, ctx);
+          inner.style.flex = '1';
+          box.appendChild(inner);
+        });
+        return box;
+      }
+      function renderEditorTerminalStack() {
+        var stack = document.getElementById('pmEditorTerminalStack');
+        if (!stack) return;
+        if (state.editorTerminalPanels.length === 0) {
+          stack.style.display = 'none';
+          stack.innerHTML = '';
+          return;
+        }
+        stack.style.display = 'flex';
+        stack.innerHTML = '';
+        state.editorTerminalPanels.forEach(function(ep) {
+          var panel = document.createElement('div');
+          panel.className = 'pm-editor-term-panel';
+          panel.dataset.editorPanelId = ep.id;
+          var bar = document.createElement('div');
+          bar.className = 'pm-editor-term-dock-bar';
+          var title = document.createElement('span');
+          title.textContent = ep.title;
+          bar.appendChild(title);
+          var u = document.createElement('button');
+          u.type = 'button';
+          u.className = 'pm-tiny-btn';
+          u.textContent = 'Close';
+          var epId = ep.id;
+          u.onclick = function() {
+            state.editorTerminalPanels = state.editorTerminalPanels.filter(function(x) { return x.id !== epId; });
+            renderAll();
+            syncTerminalTabBar('terminal');
+          };
+          bar.appendChild(u);
+          panel.appendChild(bar);
+          var host = document.createElement('div');
+          host.className = 'pm-editor-term-host';
+          var g = getGroup(ep.groupId);
+          if (g) host.appendChild(renderPane(ep.paneId, { groupId: ep.groupId }));
+          panel.appendChild(host);
+          stack.appendChild(panel);
+        });
+        setTimeout(function() { initPaneResizersIn(stack); }, 0);
+      }
+      function setupEditorDropTarget() {
+        var ev = document.getElementById('editorView');
+        if (!ev || ev.dataset.pmTermDrop) return;
+        ev.dataset.pmTermDrop = '1';
+        ev.addEventListener('dragover', function(e) {
+          var pl = dragPayloadDuringDrag(e.dataTransfer);
+          if (pl && (pl.kind === 'pane' || pl.kind === 'subtab' || pl.kind === 'group')) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+            ev.classList.add('pm-editor-term-drop-hover');
+          }
+        });
+        ev.addEventListener('dragleave', function(e) {
+          if (ev.contains(e.relatedTarget)) return;
+          ev.classList.remove('pm-editor-term-drop-hover');
+        });
+        ev.addEventListener('drop', function(e) {
+          var pl = readTermPaneDragPayload(e.dataTransfer) || state.dragPayload;
+          ev.classList.remove('pm-editor-term-drop-hover');
+          if (!pl || (pl.kind !== 'pane' && pl.kind !== 'subtab' && pl.kind !== 'group')) return;
+          e.preventDefault();
+          clearTerminalDragVisuals();
+          addEditorTerminalPanelFromPayload(pl);
+          renderAll();
+          syncTerminalTabBar('terminal');
+        });
+      }
+      function bindSubtabDnD(sb, pid, g) {
+        sb.ondragover = function(e) {
+          var pl = dragPayloadDuringDrag(e.dataTransfer);
+          if (!pl || pl.groupId !== g.id || pl.paneId === pid) return;
+          if (pl.kind === 'subtab' || pl.kind === 'pane') {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            sb.classList.add('pm-term-drop-hover');
+          }
+        };
+        sb.ondragleave = function(e) {
+          var rel = e.relatedTarget;
+          if (rel && sb.contains(rel)) return;
+          sb.classList.remove('pm-term-drop-hover');
+        };
+        sb.ondrop = function(e) {
+          sb.classList.remove('pm-term-drop-hover');
+          e.preventDefault();
+          var pl = readTermPaneDragPayload(e.dataTransfer) || state.dragPayload;
+          if (!pl || pl.groupId !== g.id || pl.paneId === pid) return;
+          if (pl.kind === 'subtab' || pl.kind === 'pane') {
+            clearTerminalDragVisuals();
+            swapPaneIdsInTree(g.tree, pl.paneId, pid);
+            state.focusedPaneId = pl.paneId;
+            renderAll();
+            syncTerminalTabBar('terminal');
+          }
+        };
+      }
+      function renderTerminalChromeBar() {
+        var doSubtabAnim = !!state.termStripAnim;
+        state.termStripAnim = false;
+        var center = document.getElementById('pmTerminalCenterWrap');
+        var chrome = document.getElementById('pmBottomTermChrome');
+        if (!center || !chrome) return;
+        center.innerHTML = '';
+        chrome.innerHTML = '';
+        var gActive = getActiveGroup();
+        if (!gActive) return;
+        var stripInner = document.createElement('div');
+        stripInner.className = 'pm-term-strip-inner';
+        state.barSlotIds.forEach(function(slot) {
+          if (slot === '__overflow__') {
+            var hid = hiddenGroupIds();
+            var ob = document.createElement('button');
+            ob.type = 'button';
+            ob.className = 'pm-term-overflow' + (hid.indexOf(state.activeGroupId) >= 0 ? ' active' : '');
+            ob.textContent = hid.indexOf(state.activeGroupId) >= 0 ? getGroup(state.activeGroupId).title + ' +' + hid.length : '+' + hid.length + ' more';
+            ob.onclick = function(ev) {
+              ev.stopPropagation();
+              var existing = document.querySelector('.pm-term-overflow-menu');
+              if (existing) { existing.remove(); return; }
+              var m = document.createElement('div');
+              m.className = 'pm-term-overflow-menu';
+              hid.forEach(function(gid) {
+                var gg = getGroup(gid);
+                if (!gg) return;
+                var it = document.createElement('button');
+                it.type = 'button';
+                it.textContent = gg.title;
+                it.onclick = function() { promoteGroupIntoBar(gid); m.remove(); };
+                m.appendChild(it);
+              });
+              document.body.appendChild(m);
+              var r = ob.getBoundingClientRect();
+              m.style.left = r.left + 'px';
+              m.style.top = (r.bottom + 4) + 'px';
+              setTimeout(function() {
+                function close() { m.remove(); document.removeEventListener('click', close); }
+                document.addEventListener('click', close);
+              }, 0);
+            };
+            stripInner.appendChild(ob);
+            return;
+          }
+          var gg = getGroup(slot);
+          if (!gg) return;
+          var cluster = document.createElement('div');
+          cluster.className = 'pm-term-wg-cluster';
+          cluster.style.setProperty('--wg-accent', gg.accentColor || '#8b949e');
+          var pill = document.createElement('button');
+          pill.type = 'button';
+          pill.className = 'pm-term-wg-tab' + (state.activeGroupId === gg.id ? ' pm-term-tab-active' : '');
+          pill.draggable = true;
+          pill.innerHTML = iconSvg(gg.iconId) + '<span>' + gg.title + '</span>';
+          pill.onclick = function() {
+            if (state.activeGroupId !== gg.id) state.termStripAnim = true;
+            state.activeGroupId = gg.id;
+            var leaves = collectLeafPaneIds(gg.tree);
+            if (leaves.length) state.focusedPaneId = leaves[0];
+            renderAll();
+            syncTerminalTabBar('terminal');
+          };
+          pill.oncontextmenu = function(ev) {
+            ev.preventDefault();
+            openTermCtxMenu(ev.clientX, ev.clientY, function(menu) {
+              var b1 = document.createElement('button');
+              b1.textContent = 'Rename workgroup…';
+              b1.onclick = function() {
+                var n = prompt('Workgroup name', gg.title);
+                if (n) { gg.title = n; closeTermCtxMenus(); renderAll(); syncTerminalTabBar('terminal'); }
+              };
+              menu.appendChild(b1);
+              var b2 = document.createElement('button');
+              b2.textContent = 'Tab color (border)…';
+              b2.onclick = function() {
+                menu.innerHTML = '';
+                var h = document.createElement('div');
+                h.className = 'pm-term-ctx-h';
+                h.textContent = 'Pick color';
+                menu.appendChild(h);
+                var row = document.createElement('div');
+                row.className = 'pm-term-ctx-swatches';
+                COLOR_PALETTE.forEach(function(hex) {
+                  var sw = document.createElement('button');
+                  sw.type = 'button';
+                  sw.className = 'pm-term-ctx-swatch';
+                  sw.style.background = hex;
+                  sw.onclick = function() {
+                    gg.accentColor = hex;
+                    closeTermCtxMenus();
+                    renderAll();
+                    syncTerminalTabBar('terminal');
+                  };
+                  row.appendChild(sw);
+                });
+                menu.appendChild(row);
+              };
+              menu.appendChild(b2);
+              var b3 = document.createElement('button');
+              b3.textContent = 'Change icon…';
+              b3.onclick = function() {
+                menu.innerHTML = '';
+                var h = document.createElement('div');
+                h.className = 'pm-term-ctx-h';
+                h.textContent = 'Icons';
+                menu.appendChild(h);
+                var row = document.createElement('div');
+                row.className = 'pm-term-ctx-icons';
+                ICON_CATALOG.forEach(function(ic) {
+                  var ib = document.createElement('button');
+                  ib.type = 'button';
+                  ib.className = 'pm-term-ctx-ic';
+                  ib.innerHTML = iconSvg(ic, 14);
+                  ib.onclick = function() {
+                    gg.iconId = ic;
+                    closeTermCtxMenus();
+                    renderAll();
+                    syncTerminalTabBar('terminal');
+                  };
+                  row.appendChild(ib);
+                });
+                menu.appendChild(row);
+              };
+              menu.appendChild(b3);
+              var b4 = document.createElement('button');
+              b4.textContent = 'Close workgroup';
+              b4.onclick = function() {
+                closeTermCtxMenus();
+                if (confirm('Close this workgroup and all its terminals?')) killWorkgroup(gg.id);
+              };
+              menu.appendChild(b4);
+            });
+          };
+          pill.ondragstart = function(e) {
+            state.dragPayload = { kind: 'group', id: gg.id };
+            dragPayloadWrite(e.dataTransfer, state.dragPayload);
+            e.dataTransfer.effectAllowed = 'move';
+          };
+          pill.ondragover = function(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+          };
+          pill.ondrop = function(e) {
+            e.preventDefault();
+            var pl = readTermPaneDragPayload(e.dataTransfer);
+            if (pl && pl.kind === 'group' && pl.id !== gg.id) reorderBarSlots(pl.id, gg.id);
+          };
+          cluster.appendChild(pill);
+          if (state.activeGroupId === gg.id) {
+            var subdock = document.createElement('div');
+            subdock.className = 'pm-term-subdock' + (doSubtabAnim ? '' : ' pm-term-subdock--static');
+            collectLeafPaneIds(gg.tree).forEach(function(pid, sidx) {
+              var p = state.panes[pid];
+              var subc = paneSubColor(gg, pid);
+              var sb = document.createElement('button');
+              sb.type = 'button';
+              sb.className = 'pm-term-subtab' + (state.focusedPaneId === pid ? ' pm-term-subtab-focused' : '');
+              sb.style.setProperty('--sub-accent', gg.accentColor || '#8b949e');
+              sb.style.setProperty('--sub-text', subc);
+              sb.draggable = true;
+              sb.innerHTML = iconSvg(p && p.iconId ? p.iconId : 'terminal', 9) + '<span>' + paneChipLabel(pid) + '</span>';
+              sb.onclick = function() { state.focusedPaneId = pid; renderAll(); syncTerminalTabBar('terminal'); };
+              sb.ondragstart = function(e) {
+                state.dragPayload = { kind: 'subtab', paneId: pid, groupId: gg.id };
+                dragPayloadWrite(e.dataTransfer, state.dragPayload);
+                e.dataTransfer.effectAllowed = 'move';
+              };
+              bindSubtabDnD(sb, pid, gg);
+              if (doSubtabAnim) {
+                sb.classList.add('pm-term-subtab--enter');
+                sb.style.animationDelay = (sidx * 0.055) + 's';
+              }
+              sb.oncontextmenu = function(ev) {
+                ev.preventDefault();
+                openTermCtxMenu(ev.clientX, ev.clientY, function(menu) {
+                  var r1 = document.createElement('button');
+                  r1.textContent = 'Rename terminal…';
+                  r1.onclick = function() {
+                    var n = prompt('Terminal label', paneChipLabel(pid));
+                    if (n && p) { p.displayName = n; closeTermCtxMenus(); renderAll(); syncTerminalTabBar('terminal'); }
+                  };
+                  menu.appendChild(r1);
+                  var r2 = document.createElement('button');
+                  r2.textContent = 'Subtab text color…';
+                  r2.onclick = function() {
+                    menu.innerHTML = '';
+                    var h = document.createElement('div');
+                    h.className = 'pm-term-ctx-h';
+                    h.textContent = 'Text color';
+                    menu.appendChild(h);
+                    var row = document.createElement('div');
+                    row.className = 'pm-term-ctx-swatches';
+                    COLOR_PALETTE.forEach(function(hex) {
+                      var sw = document.createElement('button');
+                      sw.type = 'button';
+                      sw.className = 'pm-term-ctx-swatch';
+                      sw.style.background = hex;
+                      sw.onclick = function() {
+                        if (p) p.subtabTextColor = hex;
+                        closeTermCtxMenus();
+                        renderAll();
+                        syncTerminalTabBar('terminal');
+                      };
+                      row.appendChild(sw);
+                    });
+                    menu.appendChild(row);
+                  };
+                  menu.appendChild(r2);
+                  var r3 = document.createElement('button');
+                  r3.textContent = 'Change icon…';
+                  r3.onclick = function() {
+                    menu.innerHTML = '';
+                    var h = document.createElement('div');
+                    h.className = 'pm-term-ctx-h';
+                    h.textContent = 'Icons';
+                    menu.appendChild(h);
+                    var row = document.createElement('div');
+                    row.className = 'pm-term-ctx-icons';
+                    ICON_CATALOG.forEach(function(ic) {
+                      var ib = document.createElement('button');
+                      ib.type = 'button';
+                      ib.className = 'pm-term-ctx-ic';
+                      ib.innerHTML = iconSvg(ic, 14);
+                      ib.onclick = function() {
+                        if (p) p.iconId = ic;
+                        closeTermCtxMenus();
+                        renderAll();
+                        syncTerminalTabBar('terminal');
+                      };
+                      row.appendChild(ib);
+                    });
+                    menu.appendChild(row);
+                  };
+                  menu.appendChild(r3);
+                  var r4 = document.createElement('button');
+                  r4.textContent = 'Close terminal';
+                  r4.onclick = function() {
+                    closeTermCtxMenus();
+                    closePane(pid);
+                  };
+                  menu.appendChild(r4);
+                });
+              };
+              subdock.appendChild(sb);
+            });
+            cluster.appendChild(subdock);
+          }
+          stripInner.appendChild(cluster);
+        });
+        center.appendChild(stripInner);
+        if (doSubtabAnim) {
+          stripInner.classList.add('pm-term-strip-flash');
+          setTimeout(function() { stripInner.classList.remove('pm-term-strip-flash'); }, 620);
+        }
+        var btnStack = document.createElement('button');
+        btnStack.type = 'button';
+        btnStack.className = 'pm-term-icon-btn';
+        btnStack.title = 'Split Active Tab Horizontally';
+        btnStack.innerHTML = splitIconSvg(true);
+        btnStack.onclick = function() { splitActive('horizontal'); };
+        chrome.appendChild(btnStack);
+        var btnSide = document.createElement('button');
+        btnSide.type = 'button';
+        btnSide.className = 'pm-term-icon-btn';
+        btnSide.title = 'Split Active Tab Vertically';
+        btnSide.innerHTML = splitIconSvg(false);
+        btnSide.onclick = function() { splitActive('vertical'); };
+        chrome.appendChild(btnSide);
+        var addB = document.createElement('button');
+        addB.type = 'button';
+        addB.className = 'pm-term-icon-btn';
+        addB.title = 'Add terminal';
+        addB.textContent = '+';
+        addB.onclick = addTabToActiveGroup;
+        chrome.appendChild(addB);
+        var ng = document.createElement('button');
+        ng.type = 'button';
+        ng.className = 'pm-term-icon-btn';
+        ng.title = 'New workgroup';
+        ng.setAttribute('aria-label', 'New workgroup');
+        ng.innerHTML = workgroupPlusSvg();
+        ng.onclick = addTerminalGroup;
+        chrome.appendChild(ng);
+      }
+      function reorderBarSlots(fromId, toId) {
+        var o = state.barOrder;
+        var i = o.indexOf(fromId);
+        var j = o.indexOf(toId);
+        if (i < 0 || j < 0) return;
+        o.splice(i, 1);
+        o.splice(j, 0, fromId);
+        fillBarSlots();
+        renderAll();
+        syncTerminalTabBar('terminal');
+      }
+      function initPaneResizersIn(root) {
+        if (!root) return;
+        root.querySelectorAll('.pm-term-pane-resizer').forEach(function(rz) {
+          if (rz.dataset.pmReg) return;
+          rz.dataset.pmReg = '1';
+          var prev = rz.previousElementSibling;
+          var next = rz.nextElementSibling;
+          if (prev && next && window.registerResizer) {
+            window.registerResizer(rz, {
+              isHorizontal: rz.classList.contains('resizer-col'),
+              onMove: function(e) {
+                if (rz.classList.contains('resizer-col') && prev.parentNode) {
+                  var total = prev.getBoundingClientRect().width + next.getBoundingClientRect().width;
+                  var pw = e.clientX - prev.getBoundingClientRect().left;
+                  if (pw > 80 && total - pw > 80) {
+                    prev.style.flex = 'none';
+                    next.style.flex = 'none';
+                    prev.style.width = pw + 'px';
+                    next.style.width = (total - pw) + 'px';
+                  }
+                } else if (!rz.classList.contains('resizer-col') && prev.parentNode) {
+                  var total = prev.getBoundingClientRect().height + next.getBoundingClientRect().height;
+                  var ph = e.clientY - prev.getBoundingClientRect().top;
+                  if (ph > 40 && total - ph > 40) {
+                    prev.style.flex = 'none';
+                    next.style.flex = 'none';
+                    prev.style.height = ph + 'px';
+                    next.style.height = (total - ph) + 'px';
+                  }
+                }
+              }
+            });
+          }
+        });
+      }
+      function renderAll() {
+        var host = document.getElementById('bottomTerminalHost');
+        if (!host) return;
+        try {
+          host.innerHTML = '';
+          var g = getActiveGroup();
+          if (!g) return;
+          var flex = document.createElement('div');
+          flex.className = 'terminal-workspace';
+          flex.style.cssText = 'display:flex;flex-direction:column;flex:1;min-height:0;width:100%;align-self:stretch;';
+          var ctx = { groupId: g.id };
+          flex.appendChild(renderTree(g.tree, ctx));
+          host.appendChild(flex);
+          setTimeout(function() { initPaneResizersIn(host); }, 0);
+          renderEditorTerminalStack();
+        } catch (err) {
+          if (typeof console !== 'undefined' && console.error) console.error('PM_TERMINAL_DEMO renderAll', err);
+        } finally {
+          /* After rebuild, clear DnD flags on <html> and scrub inline opacity/filter on terminal nodes */
+          clearTerminalDragVisuals();
+        }
+      }
+      function syncTerminalTabBar(tabName) {
+        var outer = document.getElementById('pmTermCenterOuter');
+        var wrap = document.getElementById('pmTerminalCenterWrap');
+        var chrome = document.getElementById('pmBottomTermChrome');
+        if (tabName === 'terminal') {
+          if (outer) outer.style.display = '';
+          if (wrap) wrap.style.display = '';
+          if (chrome) chrome.style.display = '';
+          renderTerminalChromeBar();
+        } else {
+          if (outer) outer.style.display = 'none';
+          if (wrap) wrap.style.display = 'none';
+          if (chrome) chrome.style.display = 'none';
+        }
+      }
+      function expandBottomIfCollapsed() {
+        var bp = document.getElementById('bottomPanel');
+        if (bp && bp.classList.contains('collapsed')) {
+          bp.classList.remove('collapsed');
+          var cb = document.getElementById('collapseBottom');
+          if (cb) cb.setAttribute('aria-expanded', 'true');
+        }
+      }

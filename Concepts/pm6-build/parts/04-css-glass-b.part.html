@@ -1,0 +1,241 @@
+    /* --- Glass Dark: colored tint backgrounds + neon glow --- */
+    /* PMConcept6 rebuild: per-variant identity. Base surfaces come from the
+       glass-a single-element recipe; this block only sets variant tokens,
+       zone tint casts (teal chrome / pink chat in dark, sky-blue in light)
+       and the chat composer redesign. All fills stay --glass-alpha-driven. */
+
+    /* ======================================================
+       VARIANT TOKENS (canonical values from design_system §2)
+       ====================================================== */
+    [data-theme="glass-dark"] {
+      --glass-tint-rgb: 16, 20, 34;
+      --glass-alpha: .60;
+      --glass-edge: rgba(255, 255, 255, .35);
+      --glass-hairline: rgba(255, 255, 255, .08);
+      --pm6-glass-a-rgb: 45, 212, 191;   /* teal identity */
+      --pm6-glass-b-rgb: 244, 114, 182;  /* pink identity */
+      --pm6-glass-sat: 1.5;
+      --pm6-glass-floor: rgba(255, 255, 255, .10);
+      --pm6-glass-drop: 0 8px 24px rgba(0, 0, 0, .38);
+    }
+    [data-theme="glass-light"] {
+      --glass-tint-rgb: 255, 255, 255;
+      --glass-alpha: .55;
+      --glass-edge: rgba(255, 255, 255, .85);
+      --glass-hairline: rgba(28, 34, 48, .08);
+      --pm6-glass-a-rgb: 14, 125, 216;   /* sky-blue identity */
+      --pm6-glass-b-rgb: 214, 55, 155;   /* magenta identity */
+      --pm6-glass-sat: 1.35;
+      --pm6-glass-floor: rgba(255, 255, 255, .35);
+      --pm6-glass-drop: 0 8px 24px rgba(40, 55, 90, .14);
+    }
+
+    /* ======================================================
+       GLASS DARK: zone tint casts (layered over the recipe fill)
+       ====================================================== */
+    [data-theme="glass-dark"] .title-bar,
+    [data-theme="glass-dark"] .files-panel,
+    [data-theme="glass-dark"] .left-panel,
+    [data-theme="glass-dark"] .status-bar {
+      background:
+        linear-gradient(180deg, rgba(45, 212, 191, .05), rgba(45, 212, 191, .02)),
+        linear-gradient(180deg,
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)),
+          rgba(var(--glass-tint-rgb), var(--glass-alpha)));
+    }
+    [data-theme="glass-dark"] .chat-panel {
+      background:
+        linear-gradient(180deg, rgba(244, 114, 182, .06), rgba(244, 114, 182, .02)),
+        linear-gradient(180deg,
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)),
+          rgba(var(--glass-tint-rgb), var(--glass-alpha)));
+    }
+    [data-theme="glass-dark"] .chat-thread-sidebar {
+      background:
+        linear-gradient(180deg, rgba(244, 114, 182, .04), rgba(244, 114, 182, .01)),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02));
+    }
+    [data-theme="glass-dark"] .floating-chat {
+      background:
+        linear-gradient(135deg, rgba(45, 212, 191, .06), rgba(244, 114, 182, .06)),
+        linear-gradient(180deg,
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)),
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02)));
+    }
+    [data-theme="glass-dark"] .bento-grid > .bento-card:nth-child(even) {
+      background:
+        linear-gradient(180deg, rgba(244, 114, 182, .05), rgba(244, 114, 182, .02)),
+        linear-gradient(180deg,
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16)),
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)));
+    }
+
+    /* ======================================================
+       GLASS LIGHT: zone tint casts (sky-blue wash)
+       ====================================================== */
+    [data-theme="glass-light"] .title-bar,
+    [data-theme="glass-light"] .files-panel,
+    [data-theme="glass-light"] .left-panel,
+    [data-theme="glass-light"] .status-bar {
+      background:
+        linear-gradient(180deg, rgba(14, 125, 216, .05), rgba(14, 125, 216, .02)),
+        linear-gradient(180deg,
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)),
+          rgba(var(--glass-tint-rgb), var(--glass-alpha)));
+    }
+    [data-theme="glass-light"] .chat-panel {
+      background:
+        linear-gradient(180deg, rgba(14, 125, 216, .04), rgba(14, 125, 216, .01)),
+        linear-gradient(180deg,
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)),
+          rgba(var(--glass-tint-rgb), var(--glass-alpha)));
+    }
+    [data-theme="glass-light"] .bento-grid > .bento-card:nth-child(even) {
+      background:
+        linear-gradient(180deg, rgba(214, 55, 155, .04), rgba(214, 55, 155, .01)),
+        linear-gradient(180deg,
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16)),
+          rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)));
+    }
+    /* Light legibility: active page tab reads as solid ink */
+    [data-theme="glass-light"] .title-bar .page-tabs .page-tab.active {
+      font-weight: 600;
+      text-shadow: none;
+    }
+
+    /* ======================================================
+       EDITOR PANE positional tinting (teal left / pink right)
+       ====================================================== */
+    [data-theme="glass-dark"] #editorPane1 .editor-area {
+      background: rgba(10, 40, 50, calc(var(--glass-alpha) + .05));
+    }
+    [data-theme="glass-dark"] #editorPane2 .editor-area {
+      background: rgba(40, 12, 38, calc(var(--glass-alpha) + .05));
+    }
+    [data-theme="glass-light"] #editorPane1 .editor-area {
+      background: rgba(14, 125, 216, .08);
+    }
+    [data-theme="glass-light"] #editorPane2 .editor-area {
+      background: rgba(214, 55, 155, .06);
+    }
+
+    /* ======================================================
+       CHAT COMPOSER REDESIGN (both glass variants)
+       ====================================================== */
+    [data-theme^="glass"] .chat-input-area {
+      border-top: none;
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02));
+      padding: 6px 10px;
+    }
+    [data-theme^="glass"] .chat-input-area textarea {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    [data-theme^="glass"] .chat-input-area textarea:focus {
+      border: none;
+      box-shadow: none;
+      outline: none;
+    }
+    /* Mode selector (Agent dropdown): plain text style, no box */
+    [data-theme^="glass"] .chat-input-area > div:first-of-type .chat-dropdown-btn {
+      background: transparent !important;
+      border: none !important;
+      border-color: transparent !important;
+      padding: 2px 8px !important;
+      min-width: 70px !important;
+    }
+    /* Vertical separator between Agent dropdown and ELI5/YOLO/CREW toggles */
+    [data-theme^="glass"] .chat-input-area > div:first-of-type div[style*="gap:var(--md)"] {
+      border-left: 1px solid var(--border-light);
+      padding-left: 14px !important;
+    }
+    /* Input container box — visible container around textarea + controls */
+    [data-theme^="glass"] .chat-input-area > div:first-of-type {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)) !important;
+      border: 1px solid var(--glass-hairline) !important;
+      border-radius: 8px !important;
+    }
+    /* Chat stream footer — same fill as input container */
+    [data-theme^="glass"] .chat-stream-footer {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      border: 1px solid var(--glass-hairline);
+      border-radius: 8px;
+      margin: 0 var(--sm) var(--xs);
+    }
+    /* Dropdown buttons — slightly lighter pre-baked fill */
+    [data-theme^="glass"] .chat-dropdown-btn {
+      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12)) !important;
+      border-color: var(--glass-hairline) !important;
+    }
+    /* Composer toggles */
+    [data-theme^="glass"] .chat-toggle-btn.toggle-eli5.active {
+      color: var(--accent-blue);
+    }
+    [data-theme^="glass"] .chat-toggle-btn.toggle-yolo.active {
+      color: var(--accent-orange);
+    }
+    [data-theme^="glass"] .chat-toggle-btn.toggle-crew.active {
+      color: var(--accent-magenta);
+    }
+
+    /* ── Glass Dark: diff tints, minimap, tab underline ── */
+    [data-theme="glass-dark"] {
+      --diff-added-bg: rgba(45,212,150,0.08); --diff-modified-bg: rgba(45,150,212,0.08);
+      --diff-deleted-bg: rgba(244,114,182,0.06); --diff-conflict-bg: rgba(251,146,60,0.08);
+      --diff-added-flash-bg: rgba(45,212,150,0.22); --diff-modified-flash-bg: rgba(45,150,212,0.22);
+      --diff-conflict-flash-bg: rgba(251,146,60,0.22);
+    }
+    [data-theme="glass-dark"] .editor-minimap { background: rgba(8,12,24,0.5); border-left: 1px solid rgba(255,255,255,0.04); }
+    [data-theme="glass-dark"] .minimap-heat-strip { box-shadow: 0 0 4px currentColor; }
+    [data-theme="glass-dark"] .minimap-viewport { background: rgba(45,212,191,0.06); border-color: rgba(45,212,191,0.15); }
+    [data-theme="glass-dark"] .cursor-line-highlight { background: rgba(45,212,191,0.03); }
+    [data-theme="glass-dark"] *:hover::-webkit-scrollbar-thumb { background: rgba(45,212,191,0.12); border: 2px solid transparent; background-clip: padding-box; }
+    [data-theme="glass-dark"] *::-webkit-scrollbar-thumb:hover { background: rgba(45,212,191,0.25); border: 2px solid transparent; background-clip: padding-box; }
+
+    /* ── Glass Light: diff tints, minimap ── */
+    [data-theme="glass-light"] {
+      --diff-added-bg: rgba(13,148,136,0.06); --diff-modified-bg: rgba(8,145,178,0.06);
+      --diff-deleted-bg: rgba(219,39,119,0.05); --diff-conflict-bg: rgba(234,88,12,0.06);
+      --diff-added-flash-bg: rgba(13,148,136,0.16); --diff-modified-flash-bg: rgba(8,145,178,0.16);
+      --diff-conflict-flash-bg: rgba(234,88,12,0.16);
+    }
+    [data-theme="glass-light"] .editor-minimap { background: rgba(240,248,255,0.6); border-left: 1px solid rgba(0,0,0,0.06); }
+    [data-theme="glass-light"] .minimap-heat-strip { opacity: 0.7; }
+    [data-theme="glass-light"] .minimap-viewport { background: rgba(8,145,178,0.08); border-color: rgba(8,145,178,0.15); }
+
+    /* ── Retro themes: diff tints, minimap, tab underline ── */
+    [data-theme="retro-dark"] {
+      --diff-added-bg: rgba(0,255,65,0.06); --diff-modified-bg: rgba(0,71,171,0.10);
+      --diff-deleted-bg: rgba(255,20,147,0.06); --diff-conflict-bg: rgba(255,127,39,0.08);
+      --diff-added-flash-bg: rgba(0,255,65,0.18); --diff-modified-flash-bg: rgba(0,71,171,0.22);
+      --diff-conflict-flash-bg: rgba(255,127,39,0.2);
+    }
+    [data-theme="retro-light"] {
+      --diff-added-bg: rgba(0,200,50,0.08); --diff-modified-bg: rgba(0,71,171,0.06);
+      --diff-deleted-bg: rgba(255,20,147,0.06); --diff-conflict-bg: rgba(255,127,39,0.07);
+      --diff-added-flash-bg: rgba(0,200,50,0.2); --diff-modified-flash-bg: rgba(0,71,171,0.16);
+      --diff-conflict-flash-bg: rgba(255,127,39,0.18);
+    }
+    [data-theme^="retro"] .editor-minimap { background: var(--surface); border-left: 2px solid var(--border-light); }
+    [data-theme^="retro"] .minimap-viewport { border: 1px solid var(--accent-lime); background: rgba(0,255,65,0.04); border-radius: 0; }
+    [data-theme^="retro"] .minimap-heat-strip { border-radius: 0; width: 4px; }
+    [data-theme^="retro"] .editor-tabs .tab.active::after { background: var(--accent-lime); }
+
+    /* ── Basic themes: diff tints, minimap ── */
+    [data-theme="basic-dark"] {
+      --diff-added-bg: rgba(61,214,140,0.07); --diff-modified-bg: rgba(100,181,246,0.07);
+      --diff-deleted-bg: rgba(255,105,180,0.06); --diff-conflict-bg: rgba(255,163,71,0.08);
+      --diff-added-flash-bg: rgba(61,214,140,0.18); --diff-modified-flash-bg: rgba(100,181,246,0.18);
+      --diff-conflict-flash-bg: rgba(255,163,71,0.2);
+    }
+    [data-theme="basic-light"] {
+      --diff-added-bg: rgba(11,128,67,0.06); --diff-modified-bg: rgba(0,86,179,0.05);
+      --diff-deleted-bg: rgba(211,47,47,0.05); --diff-conflict-bg: rgba(230,81,0,0.06);
+      --diff-added-flash-bg: rgba(11,128,67,0.16); --diff-modified-flash-bg: rgba(0,86,179,0.14);
+      --diff-conflict-flash-bg: rgba(230,81,0,0.16);
+    }
+    [data-theme^="basic"] .editor-minimap { background: var(--surface-elevated); }
+    [data-theme^="basic"] .minimap-viewport { background: rgba(100,181,246,0.06); border-color: rgba(100,181,246,0.15); }
+    [data-theme^="basic"] .minimap-heat-strip { border-radius: 2px; }
