@@ -63,7 +63,7 @@
     {
       "note": "Schema-valid repair decision row.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "845a418b87726502c58f77975fe4a8f80cb517fe43a495e29789badc586382e0"
+      "sha256": "baefd24e3406b029a8f5c6a2bd0dd0a85a0d490bf960be8df4ce21264becd166"
     },
     {
       "note": "P6 node repair refs.",
@@ -73,7 +73,7 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "e7952e265aaf7434669736234596d7d25c314cfc56aab009e89e528e208b97ec"
+      "sha256": "40c60b4afc3bc8c3d04af9dfb99fc4e7f226aee3befa5b6e79286b5c2681ee9f"
     },
     {
       "note": "Shard regeneration report.",
@@ -93,10 +93,10 @@
     {
       "note": "Project-local Codex config and agent TOMLs are explicitly trackable while other .codex scratch files remain ignored.",
       "path": ".gitignore",
-      "sha256": "2a82bb8759652fb70b61468e044778cad95423a0d9086689d50ae24d5ad0270c"
+      "sha256": "0c679ec54b34560d29edb5f9bfdaf0da85d77df94bfc5e9d9d6b8be4fca5cbfb"
     },
     {
-      "note": "Project-local Codex default model lock: gpt-5.5 with xhigh reasoning.",
+      "note": "Tracked project Codex config intentionally remains empty so the repository does not lock model, reasoning-effort, or subagent concurrency defaults.",
       "path": ".codex/config.toml",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "304e6e6a03b6aaa9feeb6a945f71e86a1e7f5b71a8e819224b03c2ebe6e29448"
+      "sha256": "823b8fb32f47c2e65af3a981bd53bf024e2dc4d013fa805ddc6d1318566636b1"
     }
   ],
   "checks": [

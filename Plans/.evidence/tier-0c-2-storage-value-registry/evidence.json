@@ -13,7 +13,7 @@
     {
       "note": "Generated buildability report must remain blocked.",
       "path": "Plans/.implementation_readiness/buildability_gate_report.json",
-      "sha256": "b5a06f0ffc9bdea5dafbd17c4f61bd1c71853c235a9baad668bef00266068bfa"
+      "sha256": "7519de0c07b946e06ee840e74ee91ed4b4ae6c3489f2638a87fcb54b3a2b49b7"
     },
     {
       "note": "Node readiness report remains runtime-disabled.",
@@ -23,7 +23,7 @@
     {
       "note": "Governance hash lock after refresh.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "e7952e265aaf7434669736234596d7d25c314cfc56aab009e89e528e208b97ec"
+      "sha256": "40c60b4afc3bc8c3d04af9dfb99fc4e7f226aee3befa5b6e79286b5c2681ee9f"
     }
   ],
   "checks": [
@@ -86,6 +86,11 @@
       "name": "final-fable-convergence-pnc019",
       "result": "PASS",
       "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
+    },
+    {
+      "name": "pm165-final-timeout-hardening",
+      "result": "PASS",
+      "details": "Restored tracked project Codex defaults, ignored and removed pytest caches, and made nested aggregate validators inherit the wrapper process group so timeout cleanup reaps the complete process tree."
     }
   ],
   "commands_run": [

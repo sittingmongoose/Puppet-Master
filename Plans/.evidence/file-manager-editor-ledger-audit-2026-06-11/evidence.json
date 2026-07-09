@@ -13,17 +13,17 @@
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "edadeb50b1e1592995cc8969c611827bfff99153e52c087a3ce3ae0c8318d8f7"
+      "sha256": "b0ebb5c23c34da4a3f65e861595d1a8eb9f8c9debc7a0e0026b2c4a2c43ea79b"
     },
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "e7952e265aaf7434669736234596d7d25c314cfc56aab009e89e528e208b97ec"
+      "sha256": "40c60b4afc3bc8c3d04af9dfb99fc4e7f226aee3befa5b6e79286b5c2681ee9f"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "845a418b87726502c58f77975fe4a8f80cb517fe43a495e29789badc586382e0"
+      "sha256": "baefd24e3406b029a8f5c6a2bd0dd0a85a0d490bf960be8df4ce21264becd166"
     },
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
@@ -270,6 +270,11 @@
       "name": "pm163-aggregate-gate-signoff-repair",
       "result": "PASS",
       "details": "Added plan_migration compact audit-governance reporting and regression coverage for aliases, compact payload completeness, and all aggregate timeout CLI paths without weakening process-group timeout behavior."
+    },
+    {
+      "name": "pm165-final-timeout-hardening",
+      "result": "PASS",
+      "details": "Project Codex config remains intentionally empty to avoid locking model or agent defaults; pytest cache cleanup and nested aggregate process-group timeout hardening remain complete."
     }
   ],
   "commands_run": [
