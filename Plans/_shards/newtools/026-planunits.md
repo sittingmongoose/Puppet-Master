@@ -4,7 +4,7 @@ Source: `Plans/newtools.md`
 
 Source lines: L1312-L8592
 
-Source SHA256: `8bc465e12530cbc1b1d845ce72491b6f94aa00f91ff9028cc00ce9729d4bc877`
+Source SHA256: `d484d6afecf59d42b70295ecb421962ddb740f85f1682fdc920384be9d4d67a6`
 
 ---
 
@@ -436,7 +436,7 @@ plan_unit_id: N2-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Playwright remains the web-based GUI path. Native/framework GUIs such as Iced, Dioxus, Qt, Electron, and Tauri need discoverable existing tools or a custom headless GUI tool with full debug logs.
+canonical_text: PM built-in browser automation is the primary web-based GUI test path; Playwright is optional, fallback, or project-native, not the native default. Native/framework GUIs such as Iced, Dioxus, Qt, Electron, and Tauri need discoverable existing tools or a custom headless GUI tool with full debug logs.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -529,7 +529,7 @@ plan_unit_id: N2-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Success requires detected non-web GUI frameworks to offer catalog/custom options, persisted choices to drive strategy and PRD content, agents to receive evidence paths, Doctor to check custom headless when chosen, MCP to be configurable, and unselected flows to preserve existing Playwright behavior.
+canonical_text: Success requires detected non-web GUI frameworks to offer catalog/custom options, persisted choices to drive strategy and PRD content, agents to receive evidence paths, Doctor to check custom headless when chosen, MCP to be configurable, and unselected flows to preserve existing Playwright (optional/fallback/project-native web test path) behavior while PM built-in browser automation remains the primary native web test path.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -666,7 +666,7 @@ plan_unit_id: N2-016
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: The current Playwright-only interviewer path leaves native/framework GUIs without reliable smoke tests or GUI-level verification.
+canonical_text: The current Playwright-as-default interviewer path leaves native/framework GUIs without reliable smoke tests or GUI-level verification, and does not yet treat PM built-in browser automation as the primary native web test path.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -893,7 +893,7 @@ plan_unit_id: N2-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Interview state/config persists use_playwright, use_framework_tools, plan_custom_headless_tool, and selected_framework_tools. Completion writes tasks for existing tool setup, custom headless build/adoption, and testing instructions with debug-log paths.
+canonical_text: Interview state/config persists use_playwright (the optional/fallback/project-native web test path, not the primary web path), use_framework_tools, plan_custom_headless_tool, and selected_framework_tools. Completion writes tasks for existing tool setup, custom headless build/adoption, and testing instructions with debug-log paths.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false
@@ -1354,7 +1354,7 @@ plan_unit_id: N2-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Testing & Verification looks up detected GUI frameworks in GuiToolCatalog, optionally research-populates sparse catalog entries, and offers Playwright, framework tools, and custom headless options.
+canonical_text: Testing & Verification looks up detected GUI frameworks in GuiToolCatalog, optionally research-populates sparse catalog entries, and offers the PM built-in browser (primary for web), Playwright (optional/fallback/project-native for web), framework tools, and custom headless options.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -1443,7 +1443,7 @@ plan_unit_id: N2-033
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: The tool-selection UI reuses existing widgets and accessible toggles, checkboxes, or multi-select controls for Playwright, per-framework existing tools, and the custom-headless option with tooltips and no one-off UI patterns.
+canonical_text: The tool-selection UI reuses existing widgets and accessible toggles, checkboxes, or multi-select controls for Playwright (optional/fallback/project-native for web), per-framework existing tools, and the custom-headless option with tooltips and no one-off UI patterns; the PM built-in browser remains the primary web test path.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -2058,7 +2058,7 @@ plan_unit_id: N2-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: PRD or execution plans include obtain/setup tasks for selected tools and custom-headless design/build tasks when selected. Acceptance criteria require Playwright, selected framework tools, and custom headless runs plus debug-log checks as applicable.
+canonical_text: PRD or execution plans include obtain/setup tasks for selected tools and custom-headless design/build tasks when selected. Acceptance criteria require the PM built-in browser (primary, if web) and/or Playwright (optional/fallback/project-native, if web), selected framework tools, and custom headless runs plus debug-log checks as applicable.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false

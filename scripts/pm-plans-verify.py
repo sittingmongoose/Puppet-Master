@@ -8,6 +8,7 @@ import fnmatch
 import hashlib
 import ipaddress
 import json
+import os
 import re
 import signal
 import subprocess
@@ -125,6 +126,86 @@ def report_status(name: str, failures: list[dict[str, Any]], **extra: Any) -> di
 
 class SubcheckTimeout(RuntimeError):
     pass
+
+
+def _terminate_process_group(proc: subprocess.Popen) -> tuple[bool, str]:
+    """Best-effort terminate a validator subprocess and any children holding its pipes.
+
+    Returns (group_killed, mechanism). On POSIX we kill the whole process group the child
+    started (start_new_session=True), so grandchildren inheriting stdout/stderr are reaped
+    too instead of keeping the pipe open and forcing communicate() to hang. We then fall back
+    to proc.kill() for non-POSIX / no-process-group cases.
+    """
+    group_killed = False
+    mechanism = "none"
+    try:
+        pgid = os.getpgid(proc.pid)
+        os.killpg(pgid, signal.SIGKILL)
+        group_killed = True
+        mechanism = f"os.killpg({pgid}, SIGKILL)"
+    except (ProcessLookupError, PermissionError, OSError):
+        pass
+    if not group_killed:
+        try:
+            proc.kill()
+            mechanism = "proc.kill()"
+        except Exception:  # pragma: no cover - defensive reap fallback
+            mechanism = "kill_failed"
+    return group_killed, mechanism
+
+
+def run_validator_subprocess(
+    check_name: str,
+    argv: list[str],
+    *,
+    timeout_seconds: int,
+    extra_failure_fields: dict[str, Any] | None = None,
+) -> tuple[subprocess.CompletedProcess | None, dict[str, Any] | None]:
+    """Run a validator subprocess for a run-gates/audit-governance gate.
+
+    Uses start_new_session=True so the child is its own process group; on timeout we kill the
+    whole group so grandchildren holding the stdout/stderr pipe cannot strand the parent's
+    communicate() call. Always returns instead of hanging.
+
+    Returns ``(completed_proc, None)`` on normal completion, or ``(None, report_status)``
+    with a structured ``subprocess_timeout`` report on timeout. Never raises.
+    """
+    extra_failure_fields = extra_failure_fields or {}
+    effective_timeout = timeout_seconds if timeout_seconds and timeout_seconds > 0 else None
+    proc = subprocess.Popen(
+        argv,
+        cwd=ROOT,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        start_new_session=True,
+    )
+    try:
+        out, err = proc.communicate(timeout=effective_timeout)
+        return subprocess.CompletedProcess(
+            args=argv, returncode=proc.returncode, stdout=out, stderr=err
+        ), None
+    except subprocess.TimeoutExpired:
+        group_killed, mechanism = _terminate_process_group(proc)
+        try:
+            out, err = proc.communicate(timeout=max(timeout_seconds or 1, 1))
+        except Exception:  # pragma: no cover - defensive reap fallback after group kill
+            out, err = (proc.stdout.read() if proc.stdout else "") or "", (proc.stderr.read() if proc.stderr else "") or ""
+        timeout_report = report_status(
+            check_name,
+            [
+                {
+                    "error": "subprocess_timeout",
+                    "timeout_seconds": timeout_seconds,
+                    "process_group_killed": group_killed,
+                    "kill_mechanism": mechanism,
+                    "stdout_excerpt": (out or "")[-4000:],
+                    "stderr_excerpt": (err or "")[-4000:],
+                    **extra_failure_fields,
+                }
+            ],
+        )
+        return None, timeout_report
 
 
 @contextmanager
@@ -891,29 +972,15 @@ def cmd_check_shards(args: argparse.Namespace) -> dict[str, Any]:
         report_path = str(temp_path)
         report_file = temp_path
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
-    try:
-        proc = subprocess.run(
-            [sys.executable, "scripts/pm-shard-plans.py", "--check", "--report", report_path],
-            cwd=ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=timeout_seconds if timeout_seconds > 0 else None,
-        )
-    except subprocess.TimeoutExpired as exc:
+    proc, timeout_report = run_validator_subprocess(
+        "check-shards",
+        [sys.executable, "scripts/pm-shard-plans.py", "--check", "--report", report_path],
+        timeout_seconds=timeout_seconds,
+    )
+    if timeout_report is not None:
         if temp_path is not None:
             temp_path.unlink(missing_ok=True)
-        return report_status(
-            "check-shards",
-            [
-                {
-                    "error": "subprocess_timeout",
-                    "timeout_seconds": timeout_seconds,
-                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
-                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
-                }
-            ],
-        )
+        return timeout_report
     report = load_json(report_file)
     if temp_path is not None:
         temp_path.unlink(missing_ok=True)
@@ -3001,12 +3068,15 @@ def cmd_validate_gui_asset_policy(args: argparse.Namespace) -> dict[str, Any]:
     if not validator.exists():
         return report_status("validate-gui-asset-policy", [{"path": rel(validator), "error": "missing_gui_asset_policy_validator"}])
 
-    proc = subprocess.run(
+    timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
+    proc, timeout_report = run_validator_subprocess(
+        "validate-gui-asset-policy",
         [sys.executable, str(validator), "validate"],
-        cwd=ROOT,
-        text=True,
-        capture_output=True,
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
     )
+    if timeout_report is not None:
+        return timeout_report
     raw_report: dict[str, Any] = {}
     try:
         parsed = json.loads(proc.stdout)
@@ -4951,6 +5021,33 @@ def cmd_validate_web_capability_contracts(args: argparse.Namespace) -> dict[str,
                         "error": "active_web_input_alias_in_canonical_web_surface",
                     }
                 )
+        # PM canon: the PM-managed built-in native browser / Site Reader is the primary
+        # GUI/browser runtime; Playwright/CDP is fallback/reference/project-native only.
+        # Reject active wording that re-asserts Playwright as the primary/default/standard/
+        # only web GUI/test path. Targeted multi-token phrases (not bare "Playwright") so
+        # legitimate fallback/reference/project-native mentions keep passing.
+        lowered = text.lower()
+        for primary_phrase in (
+            "playwright is the standard",
+            "playwright is the primary",
+            "playwright is the default",
+            "playwright is the only",
+            "playwright remains the web",
+            "playwright remains the web-based gui",
+            "playwright suffices",
+            "playwright is the web-based gui path",
+            "playwright is the web gui path",
+            "no (playwright is the standard)",
+            "no when playwright used",
+        ):
+            if primary_phrase in lowered:
+                failures.append(
+                    {
+                        "path": path_rel,
+                        "match": primary_phrase,
+                        "error": "playwright_as_primary_in_canonical_web_surface",
+                    }
+                )
 
     return report_status(
         "validate-web-capability-contracts",
@@ -5156,29 +5253,14 @@ def compact_gate_report(report: dict[str, Any], sample_limit: int = 10) -> dict[
 def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-prd-planning-runtime-validate.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
-    try:
-        proc = subprocess.run(
-            [sys.executable, str(validator)],
-            cwd=ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-            timeout=timeout_seconds if timeout_seconds > 0 else None,
-        )
-    except subprocess.TimeoutExpired as exc:
-        return report_status(
-            "validate-prd-planning-runtime-contracts",
-            [
-                {
-                    "path": rel(validator),
-                    "error": "subprocess_timeout",
-                    "timeout_seconds": timeout_seconds,
-                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
-                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
-                }
-            ],
-        )
+    proc, timeout_report = run_validator_subprocess(
+        "validate-prd-planning-runtime-contracts",
+        [sys.executable, str(validator)],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
     try:
         report = json.loads(proc.stdout)
     except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
@@ -5208,29 +5290,14 @@ def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dic
 def cmd_validate_implementation_readiness(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-implementation-readiness.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
-    try:
-        proc = subprocess.run(
-            [sys.executable, str(validator), "validate"],
-            cwd=ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-            timeout=timeout_seconds if timeout_seconds > 0 else None,
-        )
-    except subprocess.TimeoutExpired as exc:
-        return report_status(
-            "validate-implementation-readiness",
-            [
-                {
-                    "path": rel(validator),
-                    "error": "subprocess_timeout",
-                    "timeout_seconds": timeout_seconds,
-                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
-                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
-                }
-            ],
-        )
+    proc, timeout_report = run_validator_subprocess(
+        "validate-implementation-readiness",
+        [sys.executable, str(validator), "validate"],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
     try:
         report = json.loads(proc.stdout)
     except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
@@ -5263,30 +5330,14 @@ def cmd_validate_plan_migration(args: argparse.Namespace) -> dict[str, Any]:
     if not run_dir.is_absolute():
         run_dir = ROOT / run_dir
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
-    try:
-        proc = subprocess.run(
-            [sys.executable, str(validator), "validate", "--run-dir", rel(run_dir)],
-            cwd=ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-            timeout=timeout_seconds if timeout_seconds > 0 else None,
-        )
-    except subprocess.TimeoutExpired as exc:
-        return report_status(
-            "validate-plan-migration",
-            [
-                {
-                    "path": rel(validator),
-                    "run_dir": rel(run_dir),
-                    "error": "subprocess_timeout",
-                    "timeout_seconds": timeout_seconds,
-                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
-                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
-                }
-            ],
-        )
+    proc, timeout_report = run_validator_subprocess(
+        "validate-plan-migration",
+        [sys.executable, str(validator), "validate", "--run-dir", rel(run_dir)],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator), "run_dir": rel(run_dir)},
+    )
+    if timeout_report is not None:
+        return timeout_report
     try:
         report = json.loads(proc.stdout)
     except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
@@ -5317,29 +5368,14 @@ def cmd_validate_plan_migration(args: argparse.Namespace) -> dict[str, Any]:
 def cmd_validate_audit_status_index(args: argparse.Namespace) -> dict[str, Any]:
     validator = ROOT / "scripts" / "pm-audit-status-index.py"
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
-    try:
-        proc = subprocess.run(
-            [sys.executable, str(validator), "validate"],
-            cwd=ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-            timeout=timeout_seconds if timeout_seconds > 0 else None,
-        )
-    except subprocess.TimeoutExpired as exc:
-        return report_status(
-            "validate-audit-status-index",
-            [
-                {
-                    "path": rel(validator),
-                    "error": "subprocess_timeout",
-                    "timeout_seconds": timeout_seconds,
-                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
-                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
-                }
-            ],
-        )
+    proc, timeout_report = run_validator_subprocess(
+        "validate-audit-status-index",
+        [sys.executable, str(validator), "validate"],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if timeout_report is not None:
+        return timeout_report
     try:
         report = json.loads(proc.stdout)
     except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
@@ -5372,30 +5408,14 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
     if not registry.is_absolute():
         registry = ROOT / registry
     timeout_seconds = int(getattr(args, "subcheck_timeout_seconds", 0) or 0)
-    try:
-        proc = subprocess.run(
-            [sys.executable, str(validator), "validate", "--registry", rel(registry)],
-            cwd=ROOT,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-            timeout=timeout_seconds if timeout_seconds > 0 else None,
-        )
-    except subprocess.TimeoutExpired as exc:
-        return report_status(
-            "validate-audit-closure",
-            [
-                {
-                    "path": rel(validator),
-                    "registry": rel(registry),
-                    "error": "subprocess_timeout",
-                    "timeout_seconds": timeout_seconds,
-                    "stdout_excerpt": (exc.stdout or "")[-4000:] if isinstance(exc.stdout, str) else "",
-                    "stderr_excerpt": (exc.stderr or "")[-4000:] if isinstance(exc.stderr, str) else "",
-                }
-            ],
-        )
+    proc, timeout_report = run_validator_subprocess(
+        "validate-audit-closure",
+        [sys.executable, str(validator), "validate", "--registry", rel(registry)],
+        timeout_seconds=timeout_seconds,
+        extra_failure_fields={"path": rel(validator), "registry": rel(registry)},
+    )
+    if timeout_report is not None:
+        return timeout_report
     try:
         raw_report = json.loads(proc.stdout)
     except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.

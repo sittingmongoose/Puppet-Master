@@ -1,6 +1,6 @@
 # Shard Index: Plans/Section15_MVP_Promoted_Features_Spec.md
 
-Generated: 2026-07-09T16:45:37Z
+Generated: 2026-07-09T18:11:55Z
 
 Source SHA256: `c2e3721e4910120edde397fa014b807831c57621b234f0e81472ee4c5ad4e4fb`
 

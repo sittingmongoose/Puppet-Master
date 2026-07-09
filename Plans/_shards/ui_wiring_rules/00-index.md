@@ -1,6 +1,6 @@
 # Shard Index: Plans/UI_Wiring_Rules.md
 
-Generated: 2026-07-09T16:45:37Z
+Generated: 2026-07-09T18:11:55Z
 
 Source SHA256: `7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa`
 

@@ -1,6 +1,6 @@
 # Shard Index: Plans/GitHub_API_Auth_and_Flows.md
 
-Generated: 2026-07-09T16:45:37Z
+Generated: 2026-07-09T18:11:55Z
 
 Source SHA256: `bb36d0e03f358c2b87d6c8b91d33f7da5f62c36c45524c34dedaff8146caffd4`
 

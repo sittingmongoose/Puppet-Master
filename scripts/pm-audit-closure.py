@@ -29,7 +29,11 @@ OPEN_STATUSES = {"blocked_requires_user_decision", "reopened"}
 FINDING_LEVELS = {"blocker", "warning", "observation", "error", "info"}
 TERMINAL_CLASSIFICATIONS = {"exact_present", "equivalent_with_evidence", "previously_closed"}
 AUDIT_REF_FIELDS = ("audit_id", "ledger_id", "baseline_ref", "subject_ref", "observation_ref")
-ROW_SCOPED_REF_FIELDS = {"ledger_id", "subject_ref", "observation_ref"}
+# Per Codex_Prompts.md and Bootstrap_Planning_Workflow.md, audit artifacts must agree on all
+# AUDIT_REF_FIELDS. subject_ref (the audit-subject commit identity) and baseline_ref/audit_id
+# must always match audit_report.json. Only ledger_id/observation_ref may diverge in narrow
+# source row scopes, so they remain the only row-scoped exceptions.
+ROW_SCOPED_REF_FIELDS = {"ledger_id", "observation_ref"}
 AUDIT_SOURCE_FINDING_REQUIRED_FIELDS = {
     "finding_family",
     "ledger_id",

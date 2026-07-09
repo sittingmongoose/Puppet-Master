@@ -95,7 +95,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ## 1. Executive Summary
 
-Today, the interviewer can generate **Playwright** requirements and wire them into the test strategy so agents run E2E tests. Playwright only applies to **web-based GUIs**. Many projects use native or framework-specific GUIs (e.g. Iced, Dioxus, Qt, Electron, Tauri). For those:
+Today, the interviewer can generate **Playwright** requirements (an optional/fallback/project-native web test path) and wire them into the test strategy so agents run E2E tests. For **web-based GUIs**, the PM built-in browser automation is the primary native web test path; Playwright is optional, fallback, or project-native, not the native default. Many projects use native or framework-specific GUIs (e.g. Iced, Dioxus, Qt, Electron, Tauri). For those:
 
 - There may be **existing tools** (e.g. Dioxus hot reload + web preview, Iced headless runner, framework-specific test utilities) that the interviewer should **discover and offer**.
 - When no suitable tool exists, the interviewer should offer to **plan or build a custom headless GUI tool** that allows headless navigation and produces a **full debug log** after tests, so agents can run smoke tests and interpret results.
@@ -108,7 +108,7 @@ This plan adds:
 
 Result: **More thorough and deeper testing** across web and non-web projects, with agents using the right tools per framework and a consistent path for custom headless + debug logging when needed.
 
-**Success criteria (how we know the plan succeeded):** (1) When a non-web GUI framework is detected, the interview offers framework tools and the custom headless option from the catalog. (2) User choices are persisted and drive test strategy and PRD/plan content (tasks + instructions). (3) Agents receive test strategy that includes framework tools and/or custom headless instructions and evidence paths. (4) When the user chose custom headless, a Doctor check can verify the tool exists and runs (conditional on that choice). (5) MCP (e.g. Context7) is configurable for all supported providers via GUI and applied at run time. (6) Existing Playwright-only flow and existing test strategy behavior remain unchanged when no new options are selected (no regression).
+**Success criteria (how we know the plan succeeded):** (1) When a non-web GUI framework is detected, the interview offers framework tools and the custom headless option from the catalog. (2) User choices are persisted and drive test strategy and PRD/plan content (tasks + instructions). (3) Agents receive test strategy that includes framework tools and/or custom headless instructions and evidence paths. (4) When the user chose custom headless, a Doctor check can verify the tool exists and runs (conditional on that choice). (5) MCP (e.g. Context7) is configurable for all supported providers via GUI and applied at run time. (6) Existing Playwright flow (optional/fallback/project-native web test path) and existing test strategy behavior remain unchanged when no new options are selected (no regression); PM built-in browser automation remains the primary native web test path.
 
 ---
 
@@ -127,7 +127,7 @@ This plan extends the **interview** and **test strategy**; it does not replace t
 
 ## 3. Problem Statement
 
-- **Playwright** is the only GUI testing path currently offered in the interviewer flow. It is limited to projects with a web UI.
+- **Playwright** (optional/fallback/project-native for web) is the only GUI testing path currently surfaced in the interviewer flow, even though the PM built-in browser automation is the primary native web test path. The interview does not yet discover framework-specific tools for native GUIs.
 - **Native/framework GUIs** (Rust/Iced, Dioxus, Qt, Flutter, etc.) have no standardized path in the interview: no discovery of framework-specific tools (e.g. Dioxus devtools, Iced headless runner), and no option to plan or build a project-specific headless tool with full debug output.
 - Without a chosen tool or plan, agents cannot reliably run **smoke tests** or **GUI-level verification** on non-web projects, and testing remains shallow.
 
@@ -160,7 +160,7 @@ This plan extends the **interview** and **test strategy**; it does not replace t
   5. On interview completion, **write into plans/PRD and test strategy:**
      - Tasks to **obtain/set up** existing tools when selected.
      - Tasks to **plan or build** the custom headless tool when selected (with requirement: headless navigation + full debug log after test runs).
-     - **Testing instructions** that tell agents to use Playwright (web), selected framework tools, and/or the custom tool for smoke and GUI tests; reference debug log location and format where applicable.
+     - **Testing instructions** that tell agents to use the PM built-in browser (primary web path) or Playwright (optional/fallback/project-native for web), selected framework tools, and/or the custom tool for smoke and GUI tests; reference debug log location and format where applicable.
 
 ---
 
@@ -179,23 +179,23 @@ Introduce a **single source of truth** for "GUI framework → available tools" s
   - Merge precedence: **overlay wins** by stable IDs (`framework_id`, `tool_id`).
   - Research-populated entries are written to the **overlay** (never to the base catalog).
   ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2, PolicyRule:no_secrets_in_storage
-- **Content:** A catalog (e.g. struct + const data or table) that for each supported framework (or "web" for Playwright) provides:
+- **Content:** A catalog (e.g. struct + const data or table) that for each supported framework (or "web" for the PM built-in browser as the primary web test path, with Playwright optional/fallback/project-native) provides:
   - **Framework ID** (e.g. `web`, `iced`, `dioxus`, `qt`, `flutter`, `tauri`, `electron`).
   - **Display name** and optional **detection hints** (e.g. Cargo.toml crate name, package.json deps).
   - **Existing tools:** list of entries, each with: name, description, install/setup summary, capabilities (e.g. "hot reload", "web preview", "headless test", "real-time dev UI"), and optional doc URL.
-  - **Custom headless default:** whether to suggest "plan/build custom headless tool" by default for this framework (e.g. true for Iced when no headless runner in project; false for "web" when Playwright suffices).
+  - **Custom headless default:** whether to suggest "plan/build custom headless tool" by default for this framework (e.g. true for Iced when no headless runner in project; false for "web" because the PM built-in browser is the primary web test path and Playwright is optional/fallback/project-native).
 
 **Examples to seed the catalog:**
 
 | Framework | Existing tools (examples) | Custom headless suggestion |
 |-----------|---------------------------|----------------------------|
-| web       | Playwright (E2E, browsers) | No (Playwright is the standard) |
+| web       | PM built-in browser (primary), Playwright (optional/fallback/project-native) | No (PM built-in browser is the primary web test path) |
 | dioxus    | Dioxus devtools (web preview, hot reload, hot patching) | Optional (if more than preview needed) |
 | iced      | In-repo headless_runner (tiny-skia), GUI automation action catalog | Yes, if not already in project |
 | qt        | Qt Test, Squish, etc. (research and list) | Often |
 | flutter   | Flutter driver, integration_test | Optional |
 | tauri     | WebDriver + front-end; Tauri test utils | Optional |
-| electron  | Playwright (Electron support), Spectron legacy | No when Playwright used |
+| electron  | Playwright (Electron support, optional/fallback/project-native), Spectron legacy | No (Playwright optional/fallback/project-native) |
 
 Catalog MUST be **extensible** (add new frameworks/tools without changing interviewer flow logic). Implementation MUST provide **DRY:FN** helpers for "lookup by framework", "list tools for framework", "should suggest custom headless for framework".
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
@@ -238,7 +238,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-ca
 - After (or as part of) the **Testing & Verification** phase:
   1. **Lookup** detected GUI frameworks in the **GuiToolCatalog** (§6). If catalog is sparse for a framework, research may run to **populate or extend the catalog** (§6.2); the user is never shown a research-only result.
   2. **Build options:**
-     - **Playwright** (when "web" is in detected frameworks): keep current "Generate Playwright requirements" behavior; present as one option.
+     - **PM built-in browser** (when "web" is in detected frameworks): primary native web test path. **Playwright** is offered as an optional/fallback/project-native web test path: keep current "Generate Playwright requirements" behavior; present as one option.
      - **Framework tools:** For each detected non-web framework, list existing tools from the catalog; allow user to select which to use (e.g. "Dioxus devtools", "Iced headless runner if present").
      - **Custom headless tool:** Checkbox or option: "plan/build a custom headless GUI tool for the target project (headless navigation + full debug log for agent smoke tests)". Default can come from catalog ("custom headless default" per framework).
   3. **Persist** choices in interview config/state (e.g. `generate_playwright_requirements`, `selected_framework_tools: Vec<FrameworkToolChoice>`, `plan_custom_headless_tool: bool`). Ensure these are wired into `InterviewOrchestratorConfig` and used at completion when generating test strategy and plans (§10). At interview completion, write the Doctor-readable projection into project config: `tools.custom_headless` is written when `plan_custom_headless_tool == true` and removed when `plan_custom_headless_tool == false`.
@@ -246,7 +246,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-ca
 ### 7.3 UI for tool selection
 
 - Reuse existing widgets per **DRY** (`docs/gui-widget-catalog.md`, `src/widgets/`). Use toggles, checkboxes, or multi-select for:
-  - Playwright (existing).
+  - Playwright (existing, optional/fallback/project-native web test path); PM built-in browser is the primary web path.
   - Per-framework list of existing tools (select one or more).
   - "plan/build custom headless GUI tool" toggle.
 - Tooltips or short help: explain that existing tools come from the catalog; custom tool is full-featured (headless runner, action catalog, full evidence) like Puppet Master's automation. No new one-off UI patterns; tag new reusable widgets with `// DRY:WIDGET:...`. Follow existing accessibility and widget patterns (selectable labels, keyboard navigation, screen reader considerations per `docs/gui-widget-catalog.md`).
@@ -373,7 +373,7 @@ ContractRef: ContractName:AGENTS.md, SchemaID:evidence.schema.json
   - "Obtain/set up &lt;existing tool&gt;" when the user selected that tool.
   - "Plan and implement custom headless GUI tool (headless navigation + full debug log)" when the user selected custom tool.
   ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, SchemaID:evidence.schema.json
-- **Acceptance criteria** for testing nodes MUST reference: run Playwright (if web), run selected framework tools, run custom headless tool and check debug log. Prompt builder already loads test strategy; implementation MUST ensure new instructions and paths are included in context so **agents use the tools** during iterations.
+- **Acceptance criteria** for testing nodes MUST reference: run the PM built-in browser (primary, if web) and/or Playwright (optional/fallback/project-native, if web), run selected framework tools, run custom headless tool and check debug log. Prompt builder already loads test strategy; implementation MUST ensure new instructions and paths are included in context so **agents use the tools** during iterations.
   ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading, SchemaID:evidence.schema.json
 
 ### 10.3 Prompt and context
@@ -389,7 +389,7 @@ ContractRef: ContractName:AGENTS.md, SchemaID:evidence.schema.json
 - [ ] **6.2** Define research as input-only: catalog population and/or build-plan input; no research-only user outcome.
 - [ ] **6.3** MCP and tool invocation: ensure MCP is configurable and verifiable for all supported providers; document or implement how MCP config (enablement) and secrets (env/credential store) are applied at run start; tag catalog tools that require MCP; wire MCP config into runner/agent so selected tools are callable.
 - [ ] **7.1** Add GUI stack detection (from Architecture/UX or feature_detector); store `detected_gui_frameworks` in interview state.
-- [ ] **7.2** In Testing phase, call catalog (and optional research to populate catalog); build options (Playwright, framework tools, custom headless); persist user choices in interview config/state and wire into `InterviewOrchestratorConfig`.
+- [ ] **7.2** In Testing phase, call catalog (and optional research to populate catalog); build options (PM built-in browser primary for web, Playwright optional/fallback/project-native, framework tools, custom headless); persist user choices in interview config/state and wire into `InterviewOrchestratorConfig`.
 - [ ] **7.3** Add UI for tool selection using existing widgets; tag new widgets; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes.
 - [ ] **8.1** MCP settings in GUI: add **Settings → Advanced → MCP Configuration**; Context7 enabled by default; manage key via OS credential store; toggle to turn Context7 off; wire to GuiConfig and Option B run-config.
 - [ ] **8.2** Per-platform MCP: implement central MCP registry + derived adapter config for `CliBridge` providers; `DirectApi` providers use the central tool registry (no provider-side MCP config files). Context7 key is resolved via env/credential store and injected in-memory. See §8.2 and provider transport/auth taxonomy (§8.3).
@@ -1737,7 +1737,7 @@ plan_unit_id: N2-011
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Playwright remains the web-based GUI path. Native/framework GUIs such as Iced, Dioxus, Qt, Electron, and Tauri need discoverable existing tools or a custom headless GUI tool with full debug logs.
+canonical_text: PM built-in browser automation is the primary web-based GUI test path; Playwright is optional, fallback, or project-native, not the native default. Native/framework GUIs such as Iced, Dioxus, Qt, Electron, and Tauri need discoverable existing tools or a custom headless GUI tool with full debug logs.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -1830,7 +1830,7 @@ plan_unit_id: N2-013
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Success requires detected non-web GUI frameworks to offer catalog/custom options, persisted choices to drive strategy and PRD content, agents to receive evidence paths, Doctor to check custom headless when chosen, MCP to be configurable, and unselected flows to preserve existing Playwright behavior.
+canonical_text: Success requires detected non-web GUI frameworks to offer catalog/custom options, persisted choices to drive strategy and PRD content, agents to receive evidence paths, Doctor to check custom headless when chosen, MCP to be configurable, and unselected flows to preserve existing Playwright (optional/fallback/project-native web test path) behavior while PM built-in browser automation remains the primary native web test path.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -1967,7 +1967,7 @@ plan_unit_id: N2-016
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: The current Playwright-only interviewer path leaves native/framework GUIs without reliable smoke tests or GUI-level verification.
+canonical_text: The current Playwright-as-default interviewer path leaves native/framework GUIs without reliable smoke tests or GUI-level verification, and does not yet treat PM built-in browser automation as the primary native web test path.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -2194,7 +2194,7 @@ plan_unit_id: N2-021
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Interview state/config persists use_playwright, use_framework_tools, plan_custom_headless_tool, and selected_framework_tools. Completion writes tasks for existing tool setup, custom headless build/adoption, and testing instructions with debug-log paths.
+canonical_text: Interview state/config persists use_playwright (the optional/fallback/project-native web test path, not the primary web path), use_framework_tools, plan_custom_headless_tool, and selected_framework_tools. Completion writes tasks for existing tool setup, custom headless build/adoption, and testing instructions with debug-log paths.
 gui_related: false
 gui_classification_reason: The unit covers backend, policy, schema, or owner-boundary behavior rather than GUI presentation.
 split_recommended: false
@@ -2655,7 +2655,7 @@ plan_unit_id: N2-031
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: Testing & Verification looks up detected GUI frameworks in GuiToolCatalog, optionally research-populates sparse catalog entries, and offers Playwright, framework tools, and custom headless options.
+canonical_text: Testing & Verification looks up detected GUI frameworks in GuiToolCatalog, optionally research-populates sparse catalog entries, and offers the PM built-in browser (primary for web), Playwright (optional/fallback/project-native for web), framework tools, and custom headless options.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -2744,7 +2744,7 @@ plan_unit_id: N2-033
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: The tool-selection UI reuses existing widgets and accessible toggles, checkboxes, or multi-select controls for Playwright, per-framework existing tools, and the custom-headless option with tooltips and no one-off UI patterns.
+canonical_text: The tool-selection UI reuses existing widgets and accessible toggles, checkboxes, or multi-select controls for Playwright (optional/fallback/project-native for web), per-framework existing tools, and the custom-headless option with tooltips and no one-off UI patterns; the PM built-in browser remains the primary web test path.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
@@ -3359,7 +3359,7 @@ plan_unit_id: N2-046
 unit_type: requirement
 status: accepted
 owner_doc: Plans/newtools.md
-canonical_text: PRD or execution plans include obtain/setup tasks for selected tools and custom-headless design/build tasks when selected. Acceptance criteria require Playwright, selected framework tools, and custom headless runs plus debug-log checks as applicable.
+canonical_text: PRD or execution plans include obtain/setup tasks for selected tools and custom-headless design/build tasks when selected. Acceptance criteria require the PM built-in browser (primary, if web) and/or Playwright (optional/fallback/project-native, if web), selected framework tools, and custom headless runs plus debug-log checks as applicable.
 gui_related: true
 gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
 split_recommended: false
