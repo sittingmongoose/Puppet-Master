@@ -10,6 +10,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest import mock
 from pathlib import Path
 
 
@@ -260,6 +261,128 @@ class AggregateSubcheckSubprocessTests(unittest.TestCase):
         # In-process checks keep the underscore name (not normalized to hyphen).
         self.assertEqual(report["check"], "verify-spec-lock")
         self.assertIn(report["status"], {"pass", "fail"})
+
+
+class AggregateCommandMappingTests(unittest.TestCase):
+    """Covers aggregate subcheck name -> standalone CLI command routing."""
+
+    def _capture_aggregate_names(self, aggregate_func):
+        import argparse
+
+        captured: list[str] = []
+
+        def fake_run_named_check(name, func, namespace, *, progress, timeout_seconds):
+            captured.append(name)
+            return name, {"check": name.replace("_", "-"), "status": "pass", "failures": []}
+
+        args = argparse.Namespace(subcheck_timeout_seconds=17, quiet_progress=True)
+        with mock.patch.object(pm_plans_verify, "run_named_check", side_effect=fake_run_named_check):
+            report = aggregate_func(args)
+
+        self.assertEqual(report["status"], "pass")
+        self.assertGreater(len(captured), 0)
+        return captured
+
+    def test_run_gates_canonical_subchecks_map_to_registered_commands(self) -> None:
+        names = self._capture_aggregate_names(pm_plans_verify.cmd_run_gates)
+
+        for name in names:
+            command_id = pm_plans_verify._aggregate_subcheck_command_id(name)
+            self.assertIn(command_id, pm_plans_verify.COMMANDS, name)
+
+    def test_audit_governance_alias_subchecks_map_to_registered_commands(self) -> None:
+        names = self._capture_aggregate_names(pm_plans_verify.cmd_audit_governance)
+
+        for name in names:
+            command_id = pm_plans_verify._aggregate_subcheck_command_id(name)
+            self.assertIn(command_id, pm_plans_verify.COMMANDS, name)
+
+    def test_audit_governance_aliases_do_not_emit_invalid_choice_validator_no_output(self) -> None:
+        import argparse
+
+        names = self._capture_aggregate_names(pm_plans_verify.cmd_audit_governance)
+
+        def fake_run_validator_subprocess(check_name, argv, *, timeout_seconds, extra_failure_fields=None):
+            command_id = argv[2]
+            if command_id not in pm_plans_verify.COMMANDS:
+                return (
+                    subprocess.CompletedProcess(
+                        args=argv,
+                        returncode=2,
+                        stdout="",
+                        stderr=f"argument command: invalid choice: {command_id!r}",
+                    ),
+                    None,
+                )
+            return (
+                subprocess.CompletedProcess(
+                    args=argv,
+                    returncode=0,
+                    stdout=json.dumps({"check": command_id, "status": "pass", "failures": []}),
+                    stderr="",
+                ),
+                None,
+            )
+
+        with mock.patch.object(pm_plans_verify, "run_validator_subprocess", side_effect=fake_run_validator_subprocess):
+            for name in names:
+                if name in pm_plans_verify._INPROCESS_AGGREGATE_CHECKS:
+                    continue
+                _, report = pm_plans_verify.run_named_check(
+                    name,
+                    lambda ns: {"check": name, "status": "pass", "failures": []},
+                    argparse.Namespace(),
+                    progress=False,
+                    timeout_seconds=17,
+                )
+                failures = report.get("failures", [])
+                self.assertFalse(
+                    any(
+                        failure.get("error") == "validator_no_output"
+                        and "invalid choice" in failure.get("stderr_excerpt", "")
+                        for failure in failures
+                    ),
+                    name,
+                )
+
+    def test_aggregate_subcheck_cli_args_use_effective_timeout_for_empty_namespace(self) -> None:
+        import argparse
+
+        captured_argvs: list[list[str]] = []
+
+        def fake_run_validator_subprocess(check_name, argv, *, timeout_seconds, extra_failure_fields=None):
+            captured_argvs.append(argv)
+            return (
+                subprocess.CompletedProcess(
+                    args=argv,
+                    returncode=0,
+                    stdout=json.dumps({"check": argv[2], "status": "pass", "failures": []}),
+                    stderr="",
+                ),
+                None,
+            )
+
+        with mock.patch.object(pm_plans_verify, "run_validator_subprocess", side_effect=fake_run_validator_subprocess):
+            for name in (
+                "validate_plan_migration",
+                "plan_migration",
+                "validate_audit_closure",
+                "audit_closure",
+                "validate_audit_status_index",
+                "audit_status_index",
+            ):
+                pm_plans_verify.run_named_check(
+                    name,
+                    lambda ns: {"check": name, "status": "pass", "failures": []},
+                    argparse.Namespace(),
+                    progress=False,
+                    timeout_seconds=17,
+                )
+
+        self.assertEqual(len(captured_argvs), 6)
+        for argv in captured_argvs:
+            timeout_flag_index = argv.index("--subcheck-timeout-seconds")
+            self.assertEqual(argv[timeout_flag_index + 1], "17", argv)
 
 
 if __name__ == "__main__":
