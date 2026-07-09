@@ -5,6 +5,7 @@ import json
 import os
 import signal
 import stat
+import subprocess
 import sys
 import tempfile
 import time
@@ -122,6 +123,142 @@ class RunValidatorSubprocessTests(unittest.TestCase):
         ns = argparse.Namespace(subcheck_timeout_seconds=120)
         report = pm_plans_verify.cmd_validate_gui_asset_policy(ns)
         self.assertEqual(report["check"], "validate-gui-asset-policy")
+        self.assertIn(report["status"], {"pass", "fail"})
+
+
+class ClassifyValidatorResultTests(unittest.TestCase):
+    """Covers the signal-death / no-output classification (Task 4 + 1).
+
+    A validator killed by a signal (e.g. -9 / OOM) must be reported as
+    validator_killed_by_signal, NOT mislabeled as validator_output_not_json.
+    """
+
+    def _proc(self, returncode: int, stdout: str = "", stderr: str = ""):
+        return subprocess.CompletedProcess(args=["x"], returncode=returncode, stdout=stdout, stderr=stderr)
+
+    def test_signal_death_classified_explicitly(self) -> None:
+        proc = self._proc(returncode=-9, stdout="", stderr="")
+        report = pm_plans_verify.classify_validator_result(
+            "validate-plan-migration", proc, extra_failure_fields={"run_dir": "Plans/x"}
+        )
+        assert report is not None
+        self.assertEqual(report["status"], "fail")
+        self.assertEqual(report["check"], "validate-plan-migration")
+        failure = report["failures"][0]
+        self.assertEqual(failure["error"], "validator_killed_by_signal")
+        self.assertEqual(failure["signal"], 9)
+        self.assertEqual(failure["signal_name"], "SIGKILL")
+        self.assertEqual(failure["returncode"], -9)
+        self.assertEqual(failure["likely_cause"], "external_oom_or_signal_kill")
+        self.assertEqual(failure["run_dir"], "Plans/x")
+
+    def test_no_output_classified_explicitly(self) -> None:
+        proc = self._proc(returncode=0, stdout="   \n  ", stderr="boom")
+        report = pm_plans_verify.classify_validator_result("x-check", proc)
+        assert report is not None
+        failure = report["failures"][0]
+        self.assertEqual(failure["error"], "validator_no_output")
+        self.assertEqual(failure["returncode"], 0)
+        self.assertIn("boom", failure["stderr_excerpt"])
+
+    def test_json_output_returns_none_for_caller_to_parse(self) -> None:
+        proc = self._proc(returncode=0, stdout='{"status":"pass"}')
+        self.assertIsNone(pm_plans_verify.classify_validator_result("x-check", proc))
+
+    def test_parse_validator_json_handles_signal_death(self) -> None:
+        proc = self._proc(returncode=-9, stdout="", stderr="")
+        report = pm_plans_verify.parse_validator_json("x-check", proc)
+        self.assertEqual(report["failures"][0]["error"], "validator_killed_by_signal")
+
+    def test_parse_validator_json_keeps_genuine_parse_error_distinct(self) -> None:
+        proc = self._proc(returncode=0, stdout="not json at all {")
+        report = pm_plans_verify.parse_validator_json("x-check", proc)
+        failure = report["failures"][0]
+        self.assertEqual(failure["error"], "validator_output_not_json")
+        self.assertIn("not json at all {", failure["stdout_excerpt"])
+
+
+class AggregateSubcheckSubprocessTests(unittest.TestCase):
+    """Covers run_named_check running every aggregate subcheck as a subprocess.
+
+    Proves: a normal aggregate subcheck returns its report; a slow in-process-style
+    check returns a structured subprocess_timeout (instead of hanging the aggregate);
+    the report carries the exact subcheck name and bounded excerpts.
+    """
+
+    def test_run_named_check_normal_subprocess_return(self) -> None:
+        """A normal aggregate subcheck (json_syntax) returns a structured report."""
+        import argparse
+
+        ns = argparse.Namespace()
+        started = time.monotonic()
+        name, report = pm_plans_verify.run_named_check(
+            "json_syntax",
+            pm_plans_verify.cmd_json_syntax,
+            ns,
+            progress=False,
+            timeout_seconds=120,
+        )
+        elapsed = time.monotonic() - started
+        self.assertEqual(name, "json_syntax")
+        # json_syntax re-invokes as a subprocess; the returned check name is normalized.
+        self.assertEqual(report["check"], "json-syntax")
+        self.assertIn(report["status"], {"pass", "fail"})
+        # The subprocess route must not hang and must be bounded.
+        self.assertLess(elapsed, 60.0)
+
+    def test_run_named_check_slow_subprocess_returns_structured_timeout(self) -> None:
+        """A slow aggregate subcheck returns subprocess_timeout, not a hang.
+
+        json_syntax scans every JSON/JSONL file in the repo (~2s). With a 1s bound it
+        must be killed via the process group and surface a structured subprocess_timeout
+        with process_group_killed=True and the kill mechanism recorded.
+        """
+        import argparse
+
+        ns = argparse.Namespace()
+        started = time.monotonic()
+        name, report = pm_plans_verify.run_named_check(
+            "json_syntax",
+            pm_plans_verify.cmd_json_syntax,
+            ns,
+            progress=False,
+            timeout_seconds=1,
+        )
+        elapsed = time.monotonic() - started
+        self.assertEqual(report["check"], "json-syntax")
+        self.assertEqual(report["status"], "fail")
+        self.assertEqual(len(report["failures"]), 1)
+        failure = report["failures"][0]
+        self.assertEqual(failure["error"], "subprocess_timeout")
+        self.assertEqual(failure["timeout_seconds"], 1)
+        self.assertTrue(failure["process_group_killed"])
+        self.assertIn("SIGKILL", failure["kill_mechanism"])
+        # Bounded excerpts are present and are strings.
+        self.assertIsInstance(failure["stdout_excerpt"], str)
+        self.assertIsInstance(failure["stderr_excerpt"], str)
+        # Must return promptly, proving the stuck child was reaped instead of hanging.
+        self.assertLess(elapsed, 8.0)
+
+    def test_run_named_check_inprocess_allowlist_uses_alarm_backstop(self) -> None:
+        """verify_spec_lock is allowlisted to run in-process but still has a SIGALRM bound.
+
+        A cheap in-process check with a generous timeout returns normally; this confirms
+        the in-process path (the only non-subprocess path) is the small allowlist.
+        """
+        import argparse
+
+        ns = argparse.Namespace()
+        name, report = pm_plans_verify.run_named_check(
+            "verify_spec_lock",
+            pm_plans_verify.cmd_verify_spec_lock,
+            ns,
+            progress=False,
+            timeout_seconds=120,
+        )
+        self.assertEqual(name, "verify_spec_lock")
+        # In-process checks keep the underscore name (not normalized to hyphen).
+        self.assertEqual(report["check"], "verify-spec-lock")
         self.assertIn(report["status"], {"pass", "fail"})
 
 

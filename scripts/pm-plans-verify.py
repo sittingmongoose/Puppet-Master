@@ -227,12 +227,129 @@ def subcheck_alarm(seconds: int, name: str):
         signal.signal(signal.SIGALRM, old_handler)
 
 
+# How many characters of validator stdout/stderr we keep in aggregate reports.
+_EXCERPT_LIMIT = 8000
+
+
+def _signal_name(signum: int) -> str:
+    try:
+        return signal.Signals(signum).name
+    except ValueError:
+        return f"SIG{signum}"
+
+
+def classify_validator_result(
+    check_name: str,
+    proc: subprocess.CompletedProcess,
+    *,
+    extra_failure_fields: dict[str, Any] | None = None,
+) -> dict[str, Any] | None:
+    """Classify a finished validator subprocess result before attempting JSON parsing.
+
+    Returns a structured ``report_status`` failure when the result cannot be a clean
+    JSON report (process killed by a signal such as -9 / OOM, or empty output), and
+    ``None`` when the result looks like parseable JSON output (the caller should then
+    attempt ``json.loads``). This keeps a killed/OOMed validator from being mislabeled
+    as a generic ``validator_output_not_json`` JSON-parse defect.
+
+    On POSIX a negative returncode means the child was terminated by signal
+    ``-returncode`` (e.g. ``-9`` == SIGKILL, the signature of an external OOM-kill or
+    watchdog kill). Such a process can emit nothing, so we surface it explicitly.
+    """
+    extra_failure_fields = extra_failure_fields or {}
+    rc = proc.returncode
+    stdout = proc.stdout or ""
+    stderr = proc.stderr or ""
+    if rc is not None and rc < 0:
+        signum = -rc
+        return report_status(
+            check_name,
+            [
+                {
+                    "error": "validator_killed_by_signal",
+                    "signal": signum,
+                    "signal_name": _signal_name(signum),
+                    "returncode": rc,
+                    "likely_cause": "external_oom_or_signal_kill",
+                    "stdout_excerpt": stdout[-_EXCERPT_LIMIT:],
+                    "stderr_excerpt": stderr[-_EXCERPT_LIMIT:],
+                    **extra_failure_fields,
+                }
+            ],
+        )
+    if not stdout.strip():
+        return report_status(
+            check_name,
+            [
+                {
+                    "error": "validator_no_output",
+                    "returncode": rc,
+                    "stdout_excerpt": stdout[-_EXCERPT_LIMIT:],
+                    "stderr_excerpt": stderr[-_EXCERPT_LIMIT:],
+                    **extra_failure_fields,
+                }
+            ],
+        )
+    return None
+
+
+def parse_validator_json(
+    check_name: str,
+    proc: subprocess.CompletedProcess,
+    *,
+    extra_failure_fields: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Parse a validator subprocess JSON report with bounded, explicit error taxonomy.
+
+    Pre-classifies signal death and empty output (see ``classify_validator_result``)
+    so a killed/OOMed validator is never reported as a misleading JSON-parse defect.
+    On a genuine malformed-JSON case, emits ``validator_output_not_json`` with a
+    bounded stdout excerpt and the parse detail.
+    """
+    early_failure = classify_validator_result(
+        check_name, proc, extra_failure_fields=extra_failure_fields
+    )
+    if early_failure is not None:
+        return early_failure
+    extra_failure_fields = extra_failure_fields or {}
+    try:
+        report = json.loads(proc.stdout)
+    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
+        return report_status(
+            check_name,
+            [
+                {
+                    "error": "validator_output_not_json",
+                    "detail": str(exc),
+                    "returncode": proc.returncode,
+                    "stdout_excerpt": (proc.stdout or "")[-_EXCERPT_LIMIT:],
+                    "stderr_excerpt": (proc.stderr or "")[-_EXCERPT_LIMIT:],
+                    **extra_failure_fields,
+                }
+            ],
+        )
+    if proc.returncode != 0 and report.get("status") == "pass":
+        report["status"] = "fail"
+        report.setdefault("failures", []).append(
+            {"error": "validator_failed_without_reported_failures", "returncode": proc.returncode, **extra_failure_fields}
+        )
+    if proc.stderr:
+        report.setdefault("stderr", proc.stderr[-_EXCERPT_LIMIT:])
+    return report
+
+
 def progress_enabled(args: argparse.Namespace) -> bool:
     return not bool(getattr(args, "quiet_progress", False))
 
 
 def subcheck_timeout_seconds(args: argparse.Namespace) -> int:
     return int(getattr(args, "subcheck_timeout_seconds", 180) or 0)
+
+
+# Aggregate-gate subchecks that are intentionally run in-process (never re-forked).
+# These are cheap, do not scan the repo, and re-forking them would only add overhead
+# without improving reliability. Everything else is forced into its own subprocess.
+_INPROCESS_AGGREGATE_CHECKS = {"verify_spec_lock"}
 
 
 def run_named_check(
@@ -243,22 +360,172 @@ def run_named_check(
     progress: bool,
     timeout_seconds: int,
 ) -> tuple[str, dict[str, Any]]:
+    """Run one aggregate subcheck and return ``(name, report)``.
+
+    Every aggregate subcheck (in run-gates / audit-governance) runs in its own
+    subprocess so that a stuck in-process scan (e.g. lint_contractrefs,
+    validate_evidence) is a stuck *child* process that the process-group timeout
+    helper can SIGKILL cleanly instead of hanging the whole aggregate. The subcheck
+    is re-invoked as ``python3 scripts/pm-plans-verify.py <command> --report <tmp>``
+    in an isolated process group.
+
+    ``timeout_seconds <= 0`` disables the per-subcheck bound. A small allowlist of
+    cheap checks (``_INPROCESS_AGGREGATE_CHECKS``) stays in-process. A SIGALRM
+    backstop still wraps the in-process path for defense in depth.
+    """
     if progress:
         print(f"[pm-plans-verify] start {name}", file=sys.stderr, flush=True)
     started = time.monotonic()
-    try:
-        with subcheck_alarm(timeout_seconds, name):
-            setattr(namespace, "subcheck_timeout_seconds", timeout_seconds)
-            report = func(namespace)
-    except SubcheckTimeout as exc:
-        report = report_status(name, [{"check": name, "error": "subcheck_timeout", "timeout_seconds": timeout_seconds, "message": str(exc)}])
-    except Exception as exc:  # pragma: no cover - defensive gate wrapper
-        report = report_status(name, [{"check": name, "error": "subcheck_exception", "message": str(exc)}])
+    if name in _INPROCESS_AGGREGATE_CHECKS:
+        report = _run_inprocess_check(name, func, namespace, timeout_seconds=timeout_seconds)
+    else:
+        report = _run_subprocess_check(name, namespace, timeout_seconds=timeout_seconds)
     elapsed_ms = int((time.monotonic() - started) * 1000)
     report.setdefault("elapsed_ms", elapsed_ms)
     if progress:
         print(f"[pm-plans-verify] done {name} status={report.get('status')} elapsed_ms={elapsed_ms}", file=sys.stderr, flush=True)
     return name, report
+
+
+def _run_inprocess_check(
+    name: str,
+    func: Any,
+    namespace: argparse.Namespace,
+    *,
+    timeout_seconds: int,
+) -> dict[str, Any]:
+    """Run a cheap allowlisted subcheck in-process with a SIGALRM backstop."""
+    try:
+        with subcheck_alarm(timeout_seconds, name):
+            setattr(namespace, "subcheck_timeout_seconds", timeout_seconds)
+            report = func(namespace)
+    except SubcheckTimeout as exc:
+        report = report_status(
+            name,
+            [{"check": name, "error": "subcheck_timeout", "timeout_seconds": timeout_seconds, "message": str(exc)}],
+        )
+    except Exception as exc:  # pragma: no cover - defensive gate wrapper
+        report = report_status(
+            name,
+            [{"check": name, "error": "subcheck_exception", "message": str(exc)}],
+        )
+    return report
+
+
+def _run_subprocess_check(
+    name: str,
+    namespace: argparse.Namespace,
+    *,
+    timeout_seconds: int,
+) -> dict[str, Any]:
+    """Run an aggregate subcheck in an isolated subprocess with a process-group bound.
+
+    Re-invokes the verifier as ``python3 scripts/pm-plans-verify.py <command>`` (the
+    command id matching ``name``), writes its JSON report to a temp file, and parses
+    it back. On timeout the whole child process group is SIGKILLed so orphaned
+    children and pipe-holding grandchildren cannot strand the parent. Always returns a
+    structured report instead of hanging.
+    """
+    command_id = _AGGREGATE_NAME_TO_COMMAND.get(name, name.replace("_", "-"))
+    extra_cli_args = _aggregate_subcheck_cli_args(name, namespace)
+    temp_path: Path | None = None
+    try:
+        tmp = tempfile.NamedTemporaryFile(prefix=f"pm-subcheck-{name}-", suffix=".json", delete=False)
+        tmp.close()
+        temp_path = Path(tmp.name)
+        argv = [
+            sys.executable,
+            "scripts/pm-plans-verify.py",
+            command_id,
+            "--report",
+            str(temp_path),
+        ]
+        argv.extend(extra_cli_args)
+        proc, timeout_report = run_validator_subprocess(
+            name,
+            argv,
+            timeout_seconds=timeout_seconds,
+            extra_failure_fields={"command_id": command_id},
+        )
+        if timeout_report is not None:
+            # Rewrite the check name to the aggregate subcheck name the caller expects.
+            timeout_report["check"] = _aggregate_check_name(name)
+            return timeout_report
+        # The child wrote its report to the temp file; prefer that (it can be large),
+        # but fall back to stdout for validators that only print.
+        report: dict[str, Any] | None = None
+        if temp_path.exists() and temp_path.stat().st_size > 0:
+            try:
+                report = load_json(temp_path)
+            except Exception:  # noqa: BLE001 - fall through to stdout classification
+                report = None
+        if report is None:
+            report = parse_validator_json(
+                _aggregate_check_name(name),
+                proc,
+                extra_failure_fields={"command_id": command_id},
+            )
+        # Normalize the check name to the aggregate subcheck name the caller expects.
+        report["check"] = _aggregate_check_name(name)
+        return report
+    finally:
+        if temp_path is not None:
+            temp_path.unlink(missing_ok=True)
+
+
+def _aggregate_check_name(name: str) -> str:
+    """Aggregate subchecks are reported with hyphenated check names (e.g. json-syntax)."""
+    return name.replace("_", "-")
+
+
+# Map aggregate subcheck names (as used in run-gates/audit-governance check_specs)
+# to the standalone CLI command id, where they differ by more than the _ -> - swap.
+_AGGREGATE_NAME_TO_COMMAND = {
+    "json_syntax": "json-syntax",
+    "verify_spec_lock": "verify-spec-lock",
+    "validate_plan_graph": "validate-plan-graph",
+    "validate_auto_decisions": "validate-auto-decisions",
+    "validate_evidence": "validate-evidence",
+    "lint_contractrefs": "lint-contractrefs",
+    "lint_banned_phrases": "lint-banned-phrases",
+    "lint_path_refs": "lint-path-refs",
+    "check_project_artifact_requirements": "check-project-artifacts",
+    "validate_plans_to_code_handoff_schema": "validate-plans-to-code-handoff-schema",
+    "validate_prd_planning_runtime_contracts": "validate-prd-planning-runtime-contracts",
+    "validate_implementation_readiness": "validate-implementation-readiness",
+    "validate_plan_migration": "validate-plan-migration",
+    "validate_runtime_artifact_schemas": "validate-runtime-artifact-schemas",
+    "validate_goal_runtime_event_fixtures": "validate-goal-runtime-event-fixtures",
+    "validate_project_output_fixtures": "validate-project-output-fixtures",
+    "validate_usage_gui_fixtures": "validate-usage-gui-fixtures",
+    "validate_usage_contract_drift": "validate-usage-contract-drift",
+    "validate_gui_asset_policy": "validate-gui-asset-policy",
+    "validate_web_capability_contracts": "validate-web-capability-contracts",
+    "validate_filesafe_security_policy": "validate-filesafe-security-policy",
+    "validate_wiring_matrix": "validate-wiring-matrix",
+    "validate_audit_closure": "validate-audit-closure",
+    "validate_audit_status_index": "validate-audit-status-index",
+    "check_shards": "check-shards",
+}
+
+
+def _aggregate_subcheck_cli_args(name: str, namespace: argparse.Namespace) -> list[str]:
+    """Extra CLI args to pass when re-invoking an aggregate subcheck as a subprocess."""
+    if name == "validate_evidence":
+        # validate-evidence takes positional paths; aggregates pass an empty list.
+        return []
+    if name == "validate_plan_migration":
+        run_dir = getattr(namespace, "run_dir", None) or str(DEFAULT_PLAN_MIGRATION_RUN.relative_to(ROOT))
+        timeout_seconds = int(getattr(namespace, "subcheck_timeout_seconds", 0) or 0)
+        return ["--run-dir", str(run_dir), "--subcheck-timeout-seconds", str(timeout_seconds)]
+    if name == "validate_audit_closure":
+        registry = getattr(namespace, "registry", None) or "Plans/.audits/_semantic_closure_registry.jsonl"
+        timeout_seconds = int(getattr(namespace, "subcheck_timeout_seconds", 0) or 0)
+        return ["--registry", str(registry), "--subcheck-timeout-seconds", str(timeout_seconds)]
+    if name == "validate_audit_status_index":
+        timeout_seconds = int(getattr(namespace, "subcheck_timeout_seconds", 0) or 0)
+        return ["--subcheck-timeout-seconds", str(timeout_seconds)]
+    return []
 
 
 def json_type_matches(instance: Any, expected: str) -> bool:
@@ -3077,6 +3344,15 @@ def cmd_validate_gui_asset_policy(args: argparse.Namespace) -> dict[str, Any]:
     )
     if timeout_report is not None:
         return timeout_report
+    # Classify signal death / empty output explicitly so a killed/OOMed GUI asset
+    # validator is not mislabeled as a JSON defect.
+    early_failure = classify_validator_result(
+        "validate-gui-asset-policy",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
+    if early_failure is not None:
+        return early_failure
     raw_report: dict[str, Any] = {}
     try:
         parsed = json.loads(proc.stdout)
@@ -3090,7 +3366,9 @@ def cmd_validate_gui_asset_policy(args: argparse.Namespace) -> dict[str, Any]:
                 "path": rel(validator),
                 "error": "gui_asset_policy_report_invalid_json",
                 "detail": str(exc),
-                "stdout_excerpt": proc.stdout[:500],
+                "stdout_excerpt": (proc.stdout or "")[-_EXCERPT_LIMIT:],
+                "stderr_excerpt": (proc.stderr or "")[-_EXCERPT_LIMIT:],
+                "returncode": proc.returncode,
             }
         )
 
@@ -5261,30 +5539,11 @@ def cmd_validate_prd_planning_runtime_contracts(args: argparse.Namespace) -> dic
     )
     if timeout_report is not None:
         return timeout_report
-    try:
-        report = json.loads(proc.stdout)
-    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
-        return report_status(
-            "validate-prd-planning-runtime-contracts",
-            [
-                {
-                    "path": rel(validator),
-                    "error": "validator_output_not_json",
-                    "detail": str(exc),
-                    "stdout": proc.stdout,
-                    "stderr": proc.stderr,
-                    "returncode": proc.returncode,
-                }
-            ],
-        )
-    if proc.returncode != 0 and report.get("status") == "pass":
-        report["status"] = "fail"
-        report.setdefault("failures", []).append(
-            {"path": rel(validator), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
-        )
-    if proc.stderr:
-        report["stderr"] = proc.stderr
-    return report
+    return parse_validator_json(
+        "validate-prd-planning-runtime-contracts",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
 
 
 def cmd_validate_implementation_readiness(args: argparse.Namespace) -> dict[str, Any]:
@@ -5298,30 +5557,11 @@ def cmd_validate_implementation_readiness(args: argparse.Namespace) -> dict[str,
     )
     if timeout_report is not None:
         return timeout_report
-    try:
-        report = json.loads(proc.stdout)
-    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
-        return report_status(
-            "validate-implementation-readiness",
-            [
-                {
-                    "path": rel(validator),
-                    "error": "validator_output_not_json",
-                    "detail": str(exc),
-                    "stdout": proc.stdout,
-                    "stderr": proc.stderr,
-                    "returncode": proc.returncode,
-                }
-            ],
-        )
-    if proc.returncode != 0 and report.get("status") == "pass":
-        report["status"] = "fail"
-        report.setdefault("failures", []).append(
-            {"path": rel(validator), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
-        )
-    if proc.stderr:
-        report["stderr"] = proc.stderr
-    return report
+    return parse_validator_json(
+        "validate-implementation-readiness",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
 
 
 def cmd_validate_plan_migration(args: argparse.Namespace) -> dict[str, Any]:
@@ -5338,31 +5578,11 @@ def cmd_validate_plan_migration(args: argparse.Namespace) -> dict[str, Any]:
     )
     if timeout_report is not None:
         return timeout_report
-    try:
-        report = json.loads(proc.stdout)
-    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
-        return report_status(
-            "validate-plan-migration",
-            [
-                {
-                    "path": rel(validator),
-                    "run_dir": rel(run_dir),
-                    "error": "validator_output_not_json",
-                    "detail": str(exc),
-                    "stdout": proc.stdout,
-                    "stderr": proc.stderr,
-                    "returncode": proc.returncode,
-                }
-            ],
-        )
-    if proc.returncode != 0 and report.get("status") == "pass":
-        report["status"] = "fail"
-        report.setdefault("failures", []).append(
-            {"path": rel(validator), "run_dir": rel(run_dir), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
-        )
-    if proc.stderr:
-        report["stderr"] = proc.stderr
-    return report
+    return parse_validator_json(
+        "validate-plan-migration",
+        proc,
+        extra_failure_fields={"path": rel(validator), "run_dir": rel(run_dir)},
+    )
 
 
 def cmd_validate_audit_status_index(args: argparse.Namespace) -> dict[str, Any]:
@@ -5376,30 +5596,11 @@ def cmd_validate_audit_status_index(args: argparse.Namespace) -> dict[str, Any]:
     )
     if timeout_report is not None:
         return timeout_report
-    try:
-        report = json.loads(proc.stdout)
-    except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
-        return report_status(
-            "validate-audit-status-index",
-            [
-                {
-                    "path": rel(validator),
-                    "error": "validator_output_not_json",
-                    "detail": str(exc),
-                    "stdout": proc.stdout,
-                    "stderr": proc.stderr,
-                    "returncode": proc.returncode,
-                }
-            ],
-        )
-    if proc.returncode != 0 and report.get("status") == "pass":
-        report["status"] = "fail"
-        report.setdefault("failures", []).append(
-            {"path": rel(validator), "error": "validator_failed_without_reported_failures", "returncode": proc.returncode}
-        )
-    if proc.stderr:
-        report["stderr"] = proc.stderr
-    return report
+    return parse_validator_json(
+        "validate-audit-status-index",
+        proc,
+        extra_failure_fields={"path": rel(validator)},
+    )
 
 
 def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
@@ -5416,6 +5617,15 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
     )
     if timeout_report is not None:
         return timeout_report
+    # Classify signal death / empty output explicitly before parsing, so a killed
+    # validator is never mislabeled as a generic JSON-parse defect.
+    early_failure = classify_validator_result(
+        "validate-audit-closure",
+        proc,
+        extra_failure_fields={"path": rel(validator), "registry": rel(registry)},
+    )
+    if early_failure is not None:
+        return early_failure
     try:
         raw_report = json.loads(proc.stdout)
     except Exception as exc:  # noqa: BLE001 - verifier records malformed validator output.
@@ -5427,8 +5637,8 @@ def cmd_validate_audit_closure(args: argparse.Namespace) -> dict[str, Any]:
                     "registry": rel(registry),
                     "error": "validator_output_not_json",
                     "detail": str(exc),
-                    "stdout": proc.stdout[-8000:],
-                    "stderr": proc.stderr[-8000:],
+                    "stdout_excerpt": (proc.stdout or "")[-_EXCERPT_LIMIT:],
+                    "stderr_excerpt": (proc.stderr or "")[-_EXCERPT_LIMIT:],
                     "returncode": proc.returncode,
                 }
             ],
@@ -5639,6 +5849,19 @@ COMMANDS = {
 def main() -> int:
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command", required=True)
+    # Standalone validator commands whose check function reads subcheck_timeout_seconds
+    # (i.e. they route their inner validator through run_validator_subprocess). These
+    # must expose --subcheck-timeout-seconds on the CLI for consistency, so a stuck
+    # standalone validator is bounded the same way as inside run-gates/audit-governance.
+    _SUBPROCESS_VALIDATORS = {
+        "check-shards",
+        "validate-prd-planning-runtime-contracts",
+        "validate-implementation-readiness",
+        "validate-plan-migration",
+        "validate-gui-asset-policy",
+        "validate-audit-closure",
+        "validate-audit-status-index",
+    }
     for name in COMMANDS:
         sub = subparsers.add_parser(name)
         sub.add_argument("--report")
@@ -5649,10 +5872,15 @@ def main() -> int:
             sub.add_argument("--timeout-seconds", type=int, default=180, help="Maximum seconds per ledger validation.")
         if name == "validate-plan-migration":
             sub.add_argument("--run-dir", default=str(DEFAULT_PLAN_MIGRATION_RUN.relative_to(ROOT)))
-            sub.add_argument("--subcheck-timeout-seconds", type=int, default=180)
         if name == "validate-audit-closure":
             sub.add_argument("--registry", default="Plans/.audits/_semantic_closure_registry.jsonl")
-            sub.add_argument("--subcheck-timeout-seconds", type=int, default=180)
+        if name in _SUBPROCESS_VALIDATORS:
+            sub.add_argument(
+                "--subcheck-timeout-seconds",
+                type=int,
+                default=180,
+                help="Maximum seconds for the inner validator subprocess before reporting a structured timeout.",
+            )
         if name in {"run-gates", "audit-governance"}:
             sub.add_argument(
                 "--subcheck-timeout-seconds",
@@ -5662,6 +5890,8 @@ def main() -> int:
             )
             sub.add_argument("--quiet-progress", action="store_true", help="Suppress aggregate subcheck progress on stderr.")
     args = parser.parse_args()
+    if not hasattr(args, "subcheck_timeout_seconds"):
+        args.subcheck_timeout_seconds = 180
     if not hasattr(args, "paths"):
         args.paths = []
     report = COMMANDS[args.command](args)
