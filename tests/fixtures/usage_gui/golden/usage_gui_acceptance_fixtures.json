@@ -7,7 +7,7 @@
       "title": "missing usage renders unknown, not zero",
       "surfaces": ["Usage", "Ledger", "Dashboard Usage widget", "Context Detail Pane"],
       "source_lineage": ["Plans/usage-feature.md#UF-088"],
-      "must": ["source_class:unknown", "usage_reporting_state:unknown_or_unavailable", "raw_payload_ref:absent_or_redacted"],
+      "must": ["source_class:unknown", "source_confidence:unknown", "source_authority:unknown", "usage_reporting_state:unknown_or_unavailable", "raw_payload_ref:absent_or_redacted"],
       "must_not": ["zero_tokens", "zero_cost", "no_usage_success"]
     },
     {
@@ -15,7 +15,7 @@
       "title": "provider-reported zero remains reported zero",
       "surfaces": ["Usage", "Ledger", "provider/settings row"],
       "source_lineage": ["Plans/usage-feature.md#UF-088"],
-      "must": ["source_class:provider_reported", "settlement_status:settled_or_adjusted", "zero_buckets", "raw_payload_ref", "provider_payload_hash"],
+      "must": ["source_class:provider_reported", "source_confidence", "source_authority", "settlement_status:settled_or_adjusted", "zero_buckets", "raw_payload_ref", "provider_payload_hash"],
       "must_not": ["missing_usage", "null_usage", "unknown_usage"]
     },
     {
@@ -23,7 +23,7 @@
       "title": "unknown cost fails closed",
       "surfaces": ["Usage", "Ledger", "Dashboard Usage widget"],
       "source_lineage": ["Plans/usage-feature.md#UF-088"],
-      "must": ["cost_status:unknown", "cost_microdollars:null", "cost_minor_units:null", "unknown_cost_copy"],
+      "must": ["cost_status:unknown", "source_confidence", "source_authority", "cost_microdollars:null", "cost_minor_units:null", "unknown_cost_copy"],
       "must_not": ["$0.00", "provider_authoritative_cost", "priced_success"]
     },
     {
@@ -31,7 +31,7 @@
       "title": "BYOK and subscription costs are hidden, not estimated",
       "surfaces": ["Usage", "Ledger", "provider/settings row", "model row"],
       "source_lineage": ["Plans/usage-feature.md#UF-088"],
-      "must": ["usage_event_ref", "usage_record_id", "hidden_byok", "hidden_subscription", "display_cost_policy:suppress"],
+      "must": ["usage_event_ref", "usage_record_id", "source_confidence", "source_authority", "hidden_byok", "hidden_subscription", "display_cost_policy:suppress"],
       "must_not": ["fake_per_token_price", "pricing_snapshot_id_without_source", "cost_microdollars_fabricated"]
     },
     {
@@ -87,7 +87,7 @@
       "title": "Usage route opens object-first by usage event",
       "surfaces": ["Usage", "Ledger", "Runtime Artifacts"],
       "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/Wiring_Matrix.production.json:1"],
-      "must": ["route_target.object_kind:usage_event", "object_id:usage_event_ref", "usage_record_id", "provider_attempt_ref", "attempt_id", "trace_ref"],
+      "must": ["route_target.object_kind:usage_event", "object_id:usage_event_ref", "usage_record_id", "provider_attempt_ref", "attempt_id", "trace_ref", "source_class", "source_confidence", "source_authority", "settlement_status", "projection_freshness", "projection_health"],
       "must_not": ["timestamp_primary_route", "run_only_primary_route", "thread_only_primary_route", "tier_only_primary_route"]
     },
     {
@@ -95,7 +95,7 @@
       "title": "Raw and Curated usage views redact provider payloads",
       "surfaces": ["Runtime Artifacts", "Usage", "Ledger"],
       "source_lineage": ["Plans/usage-feature.md#UF-088", "Plans/Runtime_Artifacts_Panel.md#RAP-044"],
-      "must": ["Curated normalized fields", "Raw redacted refs", "provider_payload_hash", "omitted_counts", "permission_state"],
+      "must": ["Curated normalized fields", "source_class", "source_confidence", "source_authority", "Raw redacted refs", "provider_payload_hash", "omitted_counts", "permission_state"],
       "must_not": ["credentials", "account_identifiers", "local_paths", "raw_provider_secrets"]
     },
     {

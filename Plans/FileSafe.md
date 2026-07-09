@@ -909,7 +909,7 @@ The guard must work across all providers:
 Provider metadata and projection notes:
 - Non-JSON `codex exec` exposes `session id`, selected model `/provider/effort`, and a final `tokens used` summary; FileSafe may record those values as execution metadata but must not treat them as authorization by themselves.
 - provider-specific proxy/plugin patterns may support session-stickiness and quota-aware selection, but `/plugin` projection remains subordinate to FileSafe's PM-owned command/path checks.
-- `provider_usage_source_kind?` and `provider_signal_confidence?` may annotate usage evidence quality; they must not cram live overlay policy or full projection details into every runtime snapshot.
+- `provider_usage_source_kind?` and `provider_signal_confidence?` may annotate provider-discovery evidence quality only as compatibility/evidence-signal aliases. They normalize to `source_class`, `source_confidence`, and `source_authority` before UsageRecord persistence, accounting, GUI display, rollups, or runtime-artifact projection, and they must not become FileSafe permission authority, accounting authority, live overlay policy, or full projection details in every runtime snapshot.
 
 **Strategy:** 
 1. Check **compiled prompt** (after context compilation) at platform runner level
@@ -5446,7 +5446,9 @@ preserved_exact_tokens:
 negative_constraints:
 - "Provider metadata may be recorded as execution evidence but must not be treated as authorization."
 - "provider_usage_source_kind? and provider_signal_confidence? must not cram live overlay policy or full projection details into every runtime snapshot."
-compatibility_only_notes: []
+- "provider_usage_source_kind? and provider_signal_confidence? must normalize to source_class/source_confidence/source_authority before UsageRecord accounting, display, rollups, or runtime-artifact projection."
+compatibility_only_notes:
+- "provider_usage_source_kind? and provider_signal_confidence? are compatibility/evidence-signal aliases only and cannot become FileSafe permission authority or Usage accounting authority."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:

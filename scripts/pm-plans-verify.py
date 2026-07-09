@@ -1928,8 +1928,25 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
         for field in RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS[artifact_type]:
             if field not in type_payload and field not in payload:
                 failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_type_payload_field", "field": field})
-        if artifact_type == "cost_usage" and type_payload.get("reasoning_tokens", -1) < 0:
-            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "reasoning_tokens_negative"})
+        if artifact_type == "cost_usage":
+            if type_payload.get("reasoning_tokens", -1) < 0:
+                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "reasoning_tokens_negative"})
+            usage = type_payload.get("usage", {})
+            if not isinstance(usage, dict):
+                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "cost_usage_missing_usage_bucket_object"})
+            else:
+                if usage.get("reasoning_tokens") != type_payload.get("reasoning_tokens"):
+                    failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "reasoning_tokens_not_mirrored_from_usage_bucket"})
+                counting = usage.get("counting_semantics", {})
+                if not isinstance(counting, dict):
+                    failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "cost_usage_missing_counting_semantics"})
+                else:
+                    for field in ["input_total_includes_cache", "output_total_includes_reasoning", "provider_total_semantics"]:
+                        if field not in counting:
+                            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "field": field, "error": "cost_usage_missing_counting_semantics_field"})
+                    if counting.get("output_total_includes_reasoning") == "yes" and usage.get("output_total") is not None and usage.get("reasoning_tokens") is not None:
+                        if usage["output_total"] < usage["reasoning_tokens"]:
+                            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "reasoning_tokens_exceed_inclusive_output_total"})
         if artifact_type in {"hitl_approval", "failed_attempts"} and not payload.get("receipt_refs"):
             failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "receipt_like_artifact_missing_receipt_refs"})
 
@@ -2100,20 +2117,126 @@ USAGE_GUI_REQUIRED_FIXTURE_IDS = [
 ]
 
 USAGE_GUI_REQUIRED_FIXTURE_TOKENS = {
-    "GUI-USG-001": ["source_class:unknown", "usage_reporting_state:unknown_or_unavailable", "zero_tokens", "zero_cost"],
-    "GUI-USG-002": ["source_class:provider_reported", "settlement_status:settled_or_adjusted", "zero_buckets", "provider_payload_hash"],
-    "GUI-USG-003": ["cost_status:unknown", "cost_microdollars:null", "cost_minor_units:null", "$0.00"],
-    "GUI-USG-004": ["usage_event_ref", "usage_record_id", "hidden_byok", "hidden_subscription", "fake_per_token_price"],
+    "GUI-USG-001": ["source_class:unknown", "source_confidence:unknown", "source_authority:unknown", "usage_reporting_state:unknown_or_unavailable", "zero_tokens", "zero_cost"],
+    "GUI-USG-002": ["source_class:provider_reported", "source_confidence", "source_authority", "settlement_status:settled_or_adjusted", "zero_buckets", "provider_payload_hash"],
+    "GUI-USG-003": ["cost_status:unknown", "source_confidence", "source_authority", "cost_microdollars:null", "cost_minor_units:null", "$0.00"],
+    "GUI-USG-004": ["usage_event_ref", "usage_record_id", "source_confidence", "source_authority", "hidden_byok", "hidden_subscription", "fake_per_token_price"],
     "GUI-USG-005": ["quota_status:disabled", "disabled_reason", "zero_remaining", "reset_countdown"],
     "GUI-USG-006": ["cache_read:0", "cache_reporting_state:reported", "cache_reporting_state:not_exposed", "unsupported_cache_as_zero"],
     "GUI-USG-007": ["counting_semantics", "input_total_includes_cache", "output_total_includes_reasoning", "double_counted_total"],
     "GUI-USG-008": ["settlement_status:streaming_partial_or_failed", "stream_state:partial_or_aborted", "dedupe_key", "duplicate_partial_rollup"],
     "GUI-CBP-001": ["/stats", "/usage", "/quota", "/credits", "usage:unknown", "quota:not_exposed"],
     "GUI-CBP-002": ["provider_id:antigravity_cli", "route:agy", "G1 credits", "UseG1Credits", "provider_total_from_credits"],
-    "GUI-ROUTE-001": ["route_target.object_kind:usage_event", "object_id:usage_event_ref", "usage_record_id", "timestamp_primary_route"],
-    "GUI-RAW-001": ["Curated normalized fields", "Raw redacted refs", "provider_payload_hash", "raw_provider_secrets"],
+    "GUI-ROUTE-001": ["route_target.object_kind:usage_event", "object_id:usage_event_ref", "usage_record_id", "source_class", "source_confidence", "source_authority", "settlement_status", "projection_freshness", "projection_health", "timestamp_primary_route"],
+    "GUI-RAW-001": ["Curated normalized fields", "source_class", "source_confidence", "source_authority", "Raw redacted refs", "provider_payload_hash", "raw_provider_secrets"],
     "GUI-RAP-001": ["cost_usage", "tool_llm_trace", "envelope_plus_per_type", "envelope_only_valid", "arbitrary_non_empty_type_payload_valid"],
 }
+
+
+LEGACY_USAGE_TERMS = [
+    "input_tokens",
+    "output_tokens",
+    "cache_read_tokens",
+    "cache_write_tokens",
+    "cache_read_input_tokens",
+    "cache_creation_input_tokens",
+    "cached_input_tokens",
+    "estimated_cost_microdollars",
+    "final_cost_microdollars",
+    "cost_is_estimate",
+    "usage_source",
+    "usage_source_kind",
+    "provider_usage_source_kind",
+    "provider_signal_confidence",
+    "UnifiedUsageRecord",
+    "reasoning_tokens",
+]
+LEGACY_USAGE_TERM_RE = re.compile(
+    r"(?<![A-Za-z0-9_])("
+    + "|".join(re.escape(term) for term in sorted(LEGACY_USAGE_TERMS, key=len, reverse=True))
+    + r")(?![A-Za-z0-9_])"
+)
+USAGE_DRIFT_ALLOWED_CONTEXT_RE = re.compile(
+    r"\b("
+    r"compatibility|compatibility-only|legacy|alias|aliases|normalize|normalizes|normalized|"
+    r"maps?|mapping|mapper|migration|import|export|source-lineage|retired|stale|"
+    r"provider-native raw|raw mapper input|raw alias|raw aliases|redacted provider payload|"
+    r"schema|json schema|uf-085|must not|do not|not active|external-reference|external reference|"
+    r"preserved_exact_tokens|stale_retired_dispositions|negative_constraints|compatible with"
+    r")\b",
+    re.IGNORECASE,
+)
+USAGE_DRIFT_SOURCE_LINEAGE_DOCS = {
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+}
+
+
+def usage_drift_in_yaml_list(lines: list[str], index: int, keys: set[str]) -> bool:
+    """Return true when a line belongs to a source-lineage/preserved-token YAML list."""
+    for cursor in range(index, max(-1, index - 25), -1):
+        stripped = lines[cursor].strip()
+        if not stripped:
+            continue
+        if stripped in {"```", "```yaml"}:
+            return False
+        for key in keys:
+            if stripped.startswith(f"{key}:"):
+                return True
+        if re.match(r"^[A-Za-z_][A-Za-z0-9_ -]*:\s*(\[.*\])?$", stripped) and not stripped.startswith("- "):
+            return False
+    return False
+
+
+def cmd_validate_usage_contract_drift(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+    scanned_occurrences = 0
+    allowed_occurrences = 0
+    scanned_docs = 0
+    source_lineage_docs = 0
+    lineage_keys = {
+        "source_lineage",
+        "preserved_exact_tokens",
+        "compatibility_only_notes",
+        "stale_retired_dispositions",
+    }
+
+    for path in sorted(PLANS.glob("*.md")):
+        path_key = rel(path)
+        if path_key in USAGE_DRIFT_SOURCE_LINEAGE_DOCS:
+            source_lineage_docs += 1
+            continue
+        scanned_docs += 1
+        lines = path.read_text(encoding="utf-8").splitlines()
+        for index, line in enumerate(lines):
+            matches = sorted(set(LEGACY_USAGE_TERM_RE.findall(line)))
+            if not matches:
+                continue
+            scanned_occurrences += len(matches)
+            context = "\n".join(lines[max(0, index - 3) : min(len(lines), index + 4)])
+            if usage_drift_in_yaml_list(lines, index, lineage_keys):
+                allowed_occurrences += len(matches)
+                continue
+            if USAGE_DRIFT_ALLOWED_CONTEXT_RE.search(context):
+                allowed_occurrences += len(matches)
+                continue
+            failures.append(
+                {
+                    "path": path_key,
+                    "line": index + 1,
+                    "terms": matches,
+                    "error": "active_legacy_usage_vocabulary_without_mapping_or_retirement",
+                    "text": line.strip()[:240],
+                }
+            )
+
+    return report_status(
+        "validate-usage-contract-drift",
+        failures,
+        scanned_docs=scanned_docs,
+        source_lineage_docs=source_lineage_docs,
+        scanned_occurrences=scanned_occurrences,
+        allowed_occurrences=allowed_occurrences,
+    )
 
 
 def cmd_validate_usage_gui_fixtures(args: argparse.Namespace) -> dict[str, Any]:
@@ -2197,6 +2320,12 @@ USAGE_ROUTE_PASSTHROUGH_FIELDS = {
     "artifact_id",
     "run_id",
     "thread_id",
+    "source_class",
+    "source_confidence",
+    "source_authority",
+    "settlement_status",
+    "projection_freshness",
+    "projection_health",
 }
 
 
@@ -2987,6 +3116,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("validate_project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("validate_usage_gui_fixtures", cmd_validate_usage_gui_fixtures, argparse.Namespace()),
+        ("validate_usage_contract_drift", cmd_validate_usage_contract_drift, argparse.Namespace()),
         ("validate_gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
         ("validate_filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
@@ -3031,6 +3161,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("goal_runtime_event_fixtures", cmd_validate_goal_runtime_event_fixtures, argparse.Namespace()),
         ("project_output_fixtures", cmd_validate_project_output_fixtures, argparse.Namespace()),
         ("usage_gui_fixtures", cmd_validate_usage_gui_fixtures, argparse.Namespace()),
+        ("usage_contract_drift", cmd_validate_usage_contract_drift, argparse.Namespace()),
         ("gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
         ("filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
@@ -3064,6 +3195,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         goal_runtime_event_fixtures=compact_gate_report(check_map["goal_runtime_event_fixtures"]),
         project_output_fixtures=compact_gate_report(check_map["project_output_fixtures"]),
         usage_gui_fixtures=compact_gate_report(check_map["usage_gui_fixtures"]),
+        usage_contract_drift=compact_gate_report(check_map["usage_contract_drift"]),
         gui_asset_policy=compact_gate_report(check_map["gui_asset_policy"]),
         filesafe_security_policy=compact_gate_report(check_map["filesafe_security_policy"]),
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
@@ -3092,6 +3224,7 @@ COMMANDS = {
     "validate-goal-runtime-event-fixtures": cmd_validate_goal_runtime_event_fixtures,
     "validate-project-output-fixtures": cmd_validate_project_output_fixtures,
     "validate-usage-gui-fixtures": cmd_validate_usage_gui_fixtures,
+    "validate-usage-contract-drift": cmd_validate_usage_contract_drift,
     "validate-gui-asset-policy": cmd_validate_gui_asset_policy,
     "validate-filesafe-security-policy": cmd_validate_filesafe_security_policy,
     "validate-wiring-matrix": cmd_validate_wiring_matrix,

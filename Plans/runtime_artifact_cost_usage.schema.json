@@ -97,10 +97,12 @@
           "$ref": "#/$defs/nonNegativeIntegerOrNull"
         },
         "reasoning_tokens": {
-          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+          "$ref": "#/$defs/nonNegativeIntegerOrNull",
+          "description": "Runtime artifact JSON wire alias for the UF-085 reasoning/thoughts bucket; interpreted only through counting_semantics and not an independent UsageEvent accounting field."
         },
         "thoughts_tokens": {
-          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+          "$ref": "#/$defs/nonNegativeIntegerOrNull",
+          "description": "Provider thoughts-specific raw count when separately exposed; maps into the UF-085 reasoning/thoughts semantics and does not replace reasoning_tokens/counting_semantics."
         },
         "provider_total": {
           "$ref": "#/$defs/nonNegativeIntegerOrNull"
@@ -534,7 +536,8 @@
         },
         "reasoning_tokens": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "description": "Compatibility/wire alias mirrored from usage.reasoning_tokens for UF-085 reasoning/thoughts drill-through; not source authority or an extra total."
         },
         "total_tokens": {
           "$ref": "#/$defs/nonNegativeIntegerOrNull"

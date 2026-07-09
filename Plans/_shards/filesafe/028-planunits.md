@@ -2,9 +2,9 @@
 
 Source: `Plans/FileSafe.md`
 
-Source lines: L2838-L13173
+Source lines: L2838-L13175
 
-Source SHA256: `a7b6a7430d1b95fb4cf3a3896953797dcf2ffee60752c3b7b566446934cb2fd4`
+Source SHA256: `d5e5bac279f215379f79b061d0273bfdc217fe608cd0c264913f441cf8518113`
 
 ---
 
@@ -2619,7 +2619,9 @@ preserved_exact_tokens:
 negative_constraints:
 - "Provider metadata may be recorded as execution evidence but must not be treated as authorization."
 - "provider_usage_source_kind? and provider_signal_confidence? must not cram live overlay policy or full projection details into every runtime snapshot."
-compatibility_only_notes: []
+- "provider_usage_source_kind? and provider_signal_confidence? must normalize to source_class/source_confidence/source_authority before UsageRecord accounting, display, rollups, or runtime-artifact projection."
+compatibility_only_notes:
+- "provider_usage_source_kind? and provider_signal_confidence? are compatibility/evidence-signal aliases only and cannot become FileSafe permission authority or Usage accounting authority."
 stale_retired_dispositions: []
 owner_boundary_notes: []
 owner_hints:

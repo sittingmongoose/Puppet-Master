@@ -1,40 +1,40 @@
 # Shard Index: Plans/usage-feature.md
 
-Generated: 2026-07-09T09:46:21Z
+Generated: 2026-07-09T12:22:38Z
 
-Source SHA256: `0f850dcf9674989a11bc3adb101e6db90f01c07eceab680592d9fd9d9969142d`
+Source SHA256: `3db57d29d09e6ed7fd7caf1489bbc473314c94990c88e238e45142318f57cedc`
 
 Manifest: [`manifest.json`](manifest.json)
 
 ## Shards
 
-- [001 - Preamble](001-preamble.md) L1-L1 `813335b2fdc8b75395f337336bc076cf18105a5d9e65860476d95e4d12217bc1`
-- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L18 `8ca3e4bb08044f2818c2afe6554e726c2cbdb3ec58a56e3e85c2b2609fc1a1ab`
-- [003 - Plan Document Status](003-plan-document-status.md) L21-L27 `8315fd16276d11bd8d1487986683c4e7a790d82aa35b5807d627901a00d3a7e1`
-- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L29-L33 `28006b56e09d51a36a8c7b8e2f214d31d80e10eb2341573ce33f92257deb64c4`
-- [005 - Storage dependency (implementation)](005-storage-dependency-implementation.md) L35-L94 `722144a9abbe61e8b278c0bcea7f62e6c40efd0cd2996233ceaa79f450f1673c`
-- [006 - Executive Summary](006-executive-summary.md) L96-L98 `8227a753642f4b6b9f968efa729c04d5fb73e80bde8e57a74f1fe39c64811c39`
-- [007 - Relationship to Existing Docs](007-relationship-to-existing-docs.md) L100-L117 `597d60c4836778a3d7068f9d19020808af07f2cb4f2f0e4bd20de1f9e2978dd9`
-- [008 - External References (Competitive & Ecosystem)](008-external-references-competitive-ecosystem.md) L119-L127 `787da0880224b3ccd686999565a0dd00a376e7ebd666ac8a1a009088520369d6`
-- [009 - Scope of the Usage Feature](009-scope-of-the-usage-feature.md) L129-L373 `59c82007259c651b933f2b46e7b4ebbf4a53d5d91590650de3415059b8647ca1`
-- [010 - Data and Backend (conceptual)](010-data-and-backend-conceptual.md) L374-L414 `df27d90d2b2d1ac05a7afafa63feec93353916941f6e37dfcefd31d50bfbffe2`
-- [011 - GUI Placement Options](011-gui-placement-options.md) L415-L432 `72490c9ba5330a8331b29c6f3466a3694a6a6f0b679ad189725c70b56c50ed1d`
-- [012 - Gaps (Current State vs. Desired)](012-gaps-current-state-vs.-desired.md) L433-L645 `a05aab0c3f704d03325cedd9853a7d9b2f8f9dc27860687a8b334aa9ed6c68af`
-- [013 - Enhancements (Beyond Minimum)](013-enhancements-beyond-minimum.md) L647-L730 `f351dd2e94a1e65a1c779ac8a3ac6729c67d7dab11249ff08d6fe3f105cb4fb0`
-- [014 - Out of Scope for This Plan](014-out-of-scope-for-this-plan.md) L732-L736 `08876e1917dda22e3d462d08ee6933b123e77384b0b7832ee8f9a0e2c26d4097`
-- [015 - Success Criteria](015-success-criteria.md) L738-L745 `9c24bedf9efd00831ef3f8a1d2e643ef18eb4e853a97cda0d52a30073020fee5`
-- [016 - Version History](016-version-history.md) L747-L762 `88442bab73af726e986014408185ecaf34f95a160bdd3153c877a3188a887641`
-- [017 - Widget-Composed Page Layout (Addendum -- 2026-02-23)](017-widget-composed-page-layout-addendum-2026-02-23.md) L763-L868 `de8d752f3205a7145ad54f7679c5b4936acb1b9e52ea122d9cf985ccaee058cf`
-- [018 - Runtime Scheduler / Recovery Observability Addendum (2026-03-09)](018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) L870-L883 `c2a0742da157b583143341b8715682927213c6279774310756027fd60cc17f8a`
-- [019 - Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)](019-source-control-github-actions-and-docker-manager-cost-attributio.md) L884-L901 `67e3633927ca49ce48864c2a50425d2640679f15249e00f1c23519b87a0a61ed`
-- [020 - Cross-Surface Usage Routing Clarifications](020-cross-surface-usage-routing-clarifications.md) L903-L920 `eb2d37f6a9cec08da32dc5dcf16a9673d8ad59a66ea3eb1fce01211e008a9e94`
-- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L922-L926 `d554230ea1f333ce25d5f602b031446cf5db7fa68a03d2822edc3293acc57349`
-- [022 - PlanUnits](022-planunits.md) L928-L5013 `1241356c2e8baf0015b41728d187afa4fac0549ad095e1fec994bb7e488beb58`
-- [023 - Migration Coverage](023-migration-coverage.md) L5015-L5025 `ea2991a4c3703398750c239c7ef07e78a0bd29d738b7beacbd3cb767de48abd6`
-- [024 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L5027-L5115 `de47a60dfa4eb7e805d349f04a1e0fde7f35b944898299c8488c6bb6905489b1`
-- [025 - Ledger Compile Addendum - pldg-20260626-001-feature-name](025-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L5118-L5210 `1fe18d86fc6b6e424cd3494235bdf666a7ff90295512b55269e8bf124905c4fc`
-- [026 - Ledger Compile Addendum - pldg-20260629-001-feature-name](026-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L5212-L5328 `1ab056e996b540ac2bb74b28996efaad369a1f7f32e8875bee45e58cc7e359e8`
-- [027 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L5330-L5413 `4793b81cf84e491110aee1708e6cd598eff4277f51556318246368d287fa9bbd`
-- [028 - Usage GUI Propagation Addendum - 2026-07-09](028-usage-gui-propagation-addendum-2026-07-09.md) L5415-L5603 `e3dabeb6ef72a0338adabb1b519be1ce47590cdcd7e6ad114d6f51905aa495ec`
-- [029 - Usage Implementation-Ready Evidence Addendum - 2026-07-09](029-usage-implementation-ready-evidence-addendum-2026-07-09.md) L5605-L5802 `42e481d196a03bd2cdad04348135c9e54f66eedcd2f1384cd74bbf6d91ab7213`
-- [030 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L5804-L6169 `629e9134c7c04cfbce13a2f99427090b9bf928885cfc42955e6d89e0b56198a3`
+- [001 - Preamble](001-preamble.md) L1-L1 `34745ca9af2da9c6474b657898ccfd9e78d44ec6a5b2b05d3e5c52ed200ad558`
+- [002 - Canonical owner-section requirements](002-canonical-owner-section-requirements.md) L4-L18 `1d09446d502c2f7d54c625402ffaa0886061959b8799db120690b076131a2f2b`
+- [003 - Plan Document Status](003-plan-document-status.md) L21-L27 `55bfaaa1ce9b1ca8bf6cf4743ed2957f24aeb64e58b1f2b0c8fd5b7495d96a31`
+- [004 - Rewrite alignment (2026-02-21)](004-rewrite-alignment-2026-02-21.md) L29-L33 `1e7b3f16412567df81c43d85f9c4aa209b964de585f534c6c2ea0ccbc9da0cc6`
+- [005 - Storage dependency (implementation)](005-storage-dependency-implementation.md) L35-L94 `837854ab2270e7c7998f2ccf5685269c95e362e17d7f4ad07099e5377589b6ac`
+- [006 - Executive Summary](006-executive-summary.md) L96-L98 `ca978674bf67206bc01e57d53236b0d2e0a66f8d6f00422245af0b403320a108`
+- [007 - Relationship to Existing Docs](007-relationship-to-existing-docs.md) L100-L117 `4024bbfc168e09c022b0ca094fe9e39200cecd10dd80984151c3efb0edd8fd78`
+- [008 - External References (Competitive & Ecosystem)](008-external-references-competitive-ecosystem.md) L119-L127 `bfd8645f39f063d761764298219369a117d3e9d7b1b5ab187abfa39e936d82a3`
+- [009 - Scope of the Usage Feature](009-scope-of-the-usage-feature.md) L129-L373 `8f8a08d8a56e28d8a23f8d11ff010c8039945a10670b294efa60145efa63d1ef`
+- [010 - Data and Backend (conceptual)](010-data-and-backend-conceptual.md) L374-L414 `59c250b62dff32d22b60e4511fa43cf7c7322140a76c80a54513018c8c9c0152`
+- [011 - GUI Placement Options](011-gui-placement-options.md) L415-L432 `0f4c665f0ca89fde12b810fa7b9c0f8b313e7a7611314357b949f3bc131deb12`
+- [012 - Gaps (Current State vs. Desired)](012-gaps-current-state-vs.-desired.md) L433-L645 `e6700b9f8598f234276f2cf4444637036e442f0a0766f1953b28c5ff67cf27ce`
+- [013 - Enhancements (Beyond Minimum)](013-enhancements-beyond-minimum.md) L647-L730 `ada50e84e98710022a74cd83b2a05659dc1b83741bc0b6b5823deb5b5b72d97b`
+- [014 - Out of Scope for This Plan](014-out-of-scope-for-this-plan.md) L732-L736 `a054f5d941854ae94bede94b63cb69fbed97f514eab9404276e59456d352ee78`
+- [015 - Success Criteria](015-success-criteria.md) L738-L745 `0040addb1cdc7431ed5b95774e5241af7481371c2a4328b78164efed78dd7db9`
+- [016 - Version History](016-version-history.md) L747-L762 `d336e1e09ae2246ce4b67aa7de17bc47a65048b654c44804fd5d6aa87e909078`
+- [017 - Widget-Composed Page Layout (Addendum -- 2026-02-23)](017-widget-composed-page-layout-addendum-2026-02-23.md) L763-L868 `cd28061810d7d239b5542851016f7021080840fcae754d14e477de357acbe348`
+- [018 - Runtime Scheduler / Recovery Observability Addendum (2026-03-09)](018-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) L870-L883 `65d10eea0d3e309f849b666f6f7b515039e730556a4d8c17058b1760889d9f37`
+- [019 - Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)](019-source-control-github-actions-and-docker-manager-cost-attributio.md) L884-L901 `39339f30233e5cf6d87983639711efd19ef6480e56819a7faccdf73184597ee6`
+- [020 - Cross-Surface Usage Routing Clarifications](020-cross-surface-usage-routing-clarifications.md) L903-L920 `bb3716c774b2fd59d0ef782dfcb9d978e5938f31e2c99af916e22e2030da30fd`
+- [021 - Owner / Consumer Map](021-owner-consumer-map.md) L922-L926 `9a328b9c733aa8f4440d0b3d9a282fbcea04d4910a8727ed0ddc063ebd012d41`
+- [022 - PlanUnits](022-planunits.md) L928-L5013 `322ed214bec1385449b194e546366bbe69cf77ef96953307202f0e499b094530`
+- [023 - Migration Coverage](023-migration-coverage.md) L5015-L5025 `a77b20c4b92cbc1d071ccefe5130e002e4de95a73f690377f6585c89c7c3bc67`
+- [024 - Ledger Compile Addendum - pldg-20260624-001-provider-updates](024-ledger-compile-addendum-pldg-20260624-001-provider-updates.md) L5027-L5115 `22e9bbaff0f67189858083cbbd49e6f3992e7d1fdf436086a3afa3ee86b9eaab`
+- [025 - Ledger Compile Addendum - pldg-20260626-001-feature-name](025-ledger-compile-addendum-pldg-20260626-001-feature-name.md) L5118-L5210 `21185c0c8efb59fd726239e98a7dfd18d6ad78f4cd9c88bad04a006be93b9af6`
+- [026 - Ledger Compile Addendum - pldg-20260629-001-feature-name](026-ledger-compile-addendum-pldg-20260629-001-feature-name.md) L5212-L5328 `4277ba8fe5372770cd31df481ef13ba9dbc0a5a57f840452c3e803cea2ba24ff`
+- [027 - Ledger Compile Addendum - pldg-20260703-001-feature-intake](027-ledger-compile-addendum-pldg-20260703-001-feature-intake.md) L5330-L5413 `dbf3f34d7506b8a304e5bd24788111d2b5800937120bc7b204228bf303b5190e`
+- [028 - Usage GUI Propagation Addendum - 2026-07-09](028-usage-gui-propagation-addendum-2026-07-09.md) L5415-L5603 `ed02eef0195e165e496ff7bfed1698b0abf972f1bd12adcfd968c0b144db6152`
+- [029 - Usage Implementation-Ready Evidence Addendum - 2026-07-09](029-usage-implementation-ready-evidence-addendum-2026-07-09.md) L5605-L5802 `fc195d66d78c5cf8dea15904bbaccb6e7e9a1a6484848d7cf159c72baa11c9b0`
+- [030 - FABLE Deferred Action Concrete Repair Addendum - 2026-07-08](030-fable-deferred-action-concrete-repair-addendum-2026-07-08.md) L5804-L6169 `0c0c86299f465347c2e068746ee0c0a0c576c375b027b7f68d3cfb51bac62454`

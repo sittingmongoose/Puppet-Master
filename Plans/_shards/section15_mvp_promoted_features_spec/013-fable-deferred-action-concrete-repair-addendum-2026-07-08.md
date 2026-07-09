@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L8269-L9292
+Source lines: L8269-L9294
 
-Source SHA256: `4a0c010849d7c11503142570ab6bba2b95edcf48eb8c052c4a2356abc86119d3`
+Source SHA256: `c2e3721e4910120edde397fa014b807831c57621b234f0e81472ee4c5ad4e4fb`
 
 ---
 
@@ -56,11 +56,13 @@ The transform result records `from_family`, `to_family`, `collapsed_pane_ids[]`,
 
 Repairs row `sfk-d8a758adf1c768de6e1410a9`.
 
-Event name: `browser.streaming_usage_reported`.
+Legacy compatibility event name: `browser.streaming_usage_reported`.
 
-Fields: `event_id`, `browser_session_id`, `project_id`, `provider_id?`, `model_id?`, `input_tokens?`, `output_tokens?`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars?`, `usage_source`, `created_at_utc`, and `schema_version`.
+This browser payload is a pre-UF-085 compatibility/import shape only. It may be accepted at the browser boundary for migration or adapter interop, but it MUST map into a canonical UsageRecord before persistence, GUI display, Ledger/Usage drill-through, rollups, accounting checks, or runtime-artifact export.
 
-`usage_source` values are `provider_reported`, `estimated`, `corrected`, and `unavailable`.
+Compatibility fields are `event_id`, `browser_session_id`, `project_id`, `provider_id?`, `model_id?`, `input_tokens?`, `output_tokens?`, `cache_read_tokens?`, `cache_write_tokens?`, `estimated_cost_microdollars?`, `usage_source`, `created_at_utc`, and `schema_version`. The mapper emits or joins `usage_record_id`, `usage_event_ref`, provider/runtime refs, `source_class`, `source_confidence`, `source_authority`, `settlement_status`, `cost_status`, canonical UF-085 buckets, `counting_semantics`, and cost/quota packets. `input_tokens` maps to `input_total`, `output_tokens` maps to `output_total`, `cache_read_tokens` maps to `cache_read`, `cache_write_tokens` maps to `cache_write` plus `cache_write_1h` or provider TTL-specific `cache_write_ttl` only when exposed, and `estimated_cost_microdollars` maps to canonical cost fields with `cost_status = estimated` unless settlement evidence supersedes it.
+
+Legacy `usage_source` values `provider_reported`, `estimated`, `corrected`, and `unavailable` are source labels only. They normalize to UF-085 `source_class`, `source_confidence`, `source_authority`, and settlement/cost status before any UsageRecord/accounting/display authority is created.
 
 ### Terminal Fixture Matrix And Record Minima
 

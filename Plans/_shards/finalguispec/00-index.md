@@ -1,6 +1,6 @@
 # Shard Index: Plans/FinalGUISpec.md
 
-Generated: 2026-07-09T09:46:21Z
+Generated: 2026-07-09T12:22:38Z
 
 Source SHA256: `7236ee5f73d5999720dab50565a293e5e396ce8833679acb4b42393e21a9c585`
 

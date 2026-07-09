@@ -2,9 +2,9 @@
 
 Source: `Plans/Prompt_Pipeline.md`
 
-Source lines: L661-L3471
+Source lines: L661-L3475
 
-Source SHA256: `9949baba6d481b97dcc92dd4f4c05db820e683d864886982a90c732de54127f0`
+Source SHA256: `de24373d811638dc1fbdb8d49294a1654a39a2c03d2eda2c35693abdabe53e9a`
 
 ---
 
@@ -892,7 +892,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Reasoning-block payloads are replay-safe state: PM preserves or converts them before compaction, records provider reasoning_tokens on UsageEvent, tolerates out-of-order proxy delivery, and does not silently strip reasoning content due to adapter limitations.
+  Reasoning-block payloads are replay-safe state: PM preserves or converts them before compaction, maps provider-native reasoning_tokens into the UF-085 JSON-safe reasoning bucket / reasoning/thoughts display bucket with counting_semantics and no-double-count rules, tolerates out-of-order proxy delivery, and does not silently strip reasoning content due to adapter limitations.
 gui_related: false
 gui_classification_reason: This unit defines replay and usage preservation rather than visual presentation.
 split_recommended: false
@@ -924,8 +924,12 @@ preserved_exact_tokens:
   - "LiteLLM/Bedrock-style proxies"
 negative_constraints:
   - "PM MUST NOT silently strip thinking/reasoning content merely because an adapter lacks a native replay field."
+  - "Provider-native reasoning_tokens must not remain an independent active UsageEvent accounting field after UF-085 normalization."
+  - "PM must not add reasoning/thoughts to output_total when provider counting_semantics says output_total is already inclusive."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md"
+compatibility_only_notes:
+  - "reasoning_tokens is a provider-native raw/compatibility token name in Prompt Pipeline usage mapping; active UsageRecord accounting uses the JSON-safe reasoning bucket with the reasoning/thoughts display alias and counting_semantics."
 owner_hints:
   - "Plans/Prompt_Pipeline.md"
 ```

@@ -5522,18 +5522,18 @@ gui_classification_reason: The fixture matrix proves user-visible Usage behavior
 depends_on: [UF-085, UF-086, UF-087, CBP-027, RAP-043]
 unblocks: []
 acceptance_criteria:
-  - GUI-USG-001 missing usage carries source_class unknown and usage reporting state unknown or unavailable, with absent or redacted raw payload refs, and never renders zero tokens, zero cost, or no-usage success.
-  - GUI-USG-002 provider-reported zero carries source_class provider_reported, settlement_status settled or adjusted, zero buckets, and raw ref/hash evidence, and is not confused with missing or null usage.
+  - GUI-USG-001 missing usage carries source_class unknown, source_confidence unknown, source_authority unknown, and usage reporting state unknown or unavailable, with absent or redacted raw payload refs, and never renders zero tokens, zero cost, or no-usage success.
+  - GUI-USG-002 provider-reported zero carries source_class provider_reported, source_confidence, source_authority, settlement_status settled or adjusted, zero buckets, and raw ref/hash evidence, and is not confused with missing or null usage.
   - GUI-USG-003 unknown cost carries cost_status unknown with null cost fields and visible unknown/estimated copy, not `$0.00` or provider-authoritative copy.
-  - GUI-USG-004 BYOK/subscription hidden preserves usage_event_ref and UsageRecord identity while rendering hidden_byok or hidden_subscription cost state instead of fake per-token price.
+  - GUI-USG-004 BYOK/subscription hidden preserves usage_event_ref, UsageRecord identity, source_confidence, and source_authority while rendering hidden_byok or hidden_subscription cost state instead of fake per-token price.
   - GUI-USG-005 disabled quota bucket renders quota_status disabled without zero remaining, exhausted, success, reset countdown, or fabricated progress.
   - GUI-USG-006 cache zero versus unsupported proves reported cache_read = 0 is distinct from cache unsupported, not_exposed, or unknown.
   - GUI-USG-007 inclusive/exclusive no-double-count proves cache and reasoning buckets are not added to provider-inclusive totals and are added only when mapper counting_semantics proves exclusivity.
   - GUI-USG-008 partial/aborted stream preserves streaming_partial or failed settlement, trace lifecycle partial or aborted, dedupe_key, and accepted partial rollup once without showing final/settled copy.
   - GUI-CBP-001 Antigravity missing commands covers missing or broken `/stats`, `/usage`, `/quota`, and `/credits` as stats unavailable, usage unknown, quota not exposed, and credits not exposed.
   - GUI-CBP-002 Antigravity G1 credits carries provider_id antigravity_cli, route agy, credits status/remaining, and UseG1Credits without populating token, cost, quota, or provider_total fields.
-  - GUI-ROUTE-001 object-first usage route asserts route_target.object_kind = usage_event and object_id from usage_event_ref plus attempt/provider refs, and fails timestamp/run/thread/tier primary routing.
-  - GUI-RAW-001 Raw/Curated redaction shows normalized Curated fields and Raw redacted refs, hashes, omitted counts, and permission state with no credentials, account ids, local paths, or raw provider secrets.
+  - GUI-ROUTE-001 object-first usage route asserts route_target.object_kind = usage_event and object_id from usage_event_ref plus attempt/provider refs, source_class/source_confidence/source_authority, settlement_status, projection_freshness, and projection_health, and fails timestamp/run/thread/tier primary routing.
+  - GUI-RAW-001 Raw/Curated redaction shows normalized Curated fields including source_class/source_confidence/source_authority plus Raw redacted refs, hashes, omitted counts, and permission state with no credentials, account ids, local paths, or raw provider secrets.
   - GUI-RAP-001 envelope plus per-type validation rejects envelope-only or arbitrary non-empty type_payload artifacts for cost_usage and tool_llm_trace.
 validation_surfaces:
   - python3 scripts/pm-plan-index.py validate

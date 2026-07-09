@@ -290,7 +290,7 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged
 
 Reasoning-block payloads MUST be preserved through replay and compaction. PM MUST first prefer provider-compatible replay or conversion of reasoning/assistant state; lossy summarization is allowed only when the target surface cannot accept the original form, and the summary MUST remain explicit about being synthesized from prior reasoning.
 
-`/reasoning` blocks are `/replay`-safe state: PM preserves or converts them before compaction, records provider `reasoning_tokens` on each `UsageEvent`, and MUST NOT silently strip thinking/reasoning content merely because an adapter lacks a native replay field.
+`/reasoning` blocks are `/replay`-safe state: PM preserves or converts them before compaction, treats provider-native `reasoning_tokens` as raw mapper input, and normalizes that value into the UF-085 JSON-safe `reasoning` bucket (display/semantic alias `reasoning/thoughts`) with explicit `counting_semantics`. Raw `reasoning_tokens` may remain in redacted provider payload refs or compatibility metadata, but it is not an independent active `UsageEvent` accounting field and MUST NOT be added to `output_total` when provider semantics say output is already inclusive. PM MUST NOT silently strip thinking/reasoning content merely because an adapter lacks a native replay field.
 
 Out-of-order reasoning-block delivery through LiteLLM/Bedrock-style proxies is tolerated by the replay state machine: PM buffers or reorders provider-compatible reasoning state instead of crashing or collapsing it into lossy summary by default.
 
@@ -1542,7 +1542,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Prompt_Pipeline.md
 canonical_text: >-
-  Reasoning-block payloads are replay-safe state: PM preserves or converts them before compaction, records provider reasoning_tokens on UsageEvent, tolerates out-of-order proxy delivery, and does not silently strip reasoning content due to adapter limitations.
+  Reasoning-block payloads are replay-safe state: PM preserves or converts them before compaction, maps provider-native reasoning_tokens into the UF-085 JSON-safe reasoning bucket / reasoning/thoughts display bucket with counting_semantics and no-double-count rules, tolerates out-of-order proxy delivery, and does not silently strip reasoning content due to adapter limitations.
 gui_related: false
 gui_classification_reason: This unit defines replay and usage preservation rather than visual presentation.
 split_recommended: false
@@ -1574,8 +1574,12 @@ preserved_exact_tokens:
   - "LiteLLM/Bedrock-style proxies"
 negative_constraints:
   - "PM MUST NOT silently strip thinking/reasoning content merely because an adapter lacks a native replay field."
+  - "Provider-native reasoning_tokens must not remain an independent active UsageEvent accounting field after UF-085 normalization."
+  - "PM must not add reasoning/thoughts to output_total when provider counting_semantics says output_total is already inclusive."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md"
+compatibility_only_notes:
+  - "reasoning_tokens is a provider-native raw/compatibility token name in Prompt Pipeline usage mapping; active UsageRecord accounting uses the JSON-safe reasoning bucket with the reasoning/thoughts display alias and counting_semantics."
 owner_hints:
   - "Plans/Prompt_Pipeline.md"
 ```

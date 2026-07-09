@@ -13,7 +13,7 @@ Provide a **deterministic, testable** mechanism for Puppet Master to locate and 
 - Provider orchestration, authentication, or model discovery (owned by Provider layer). (ContractRef: Primitive:Provider)
 - Locating, installing, updating, uninstalling, or health-checking the PM-managed bundled browser runtime is out of scope; browser runtime distribution, including any CEF/`wef`/`cargo-wef` packaging path, is owned by the promoted browser/runtime docs. (ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/newtools.md)
 
-Usage source metadata emitted from binary/provider discovery uses the locked `usage_source_kind` vocabulary: `provider_runtime_usage`, `provider_quota_api`, `provider_usage_api`, `provider_error_hint`, and `project_rollup`. Binary location only reports which source kind is available or detected; canonical usage accounting remains owned by `Plans/usage-feature.md`.
+Usage source metadata emitted from binary/provider discovery may preserve the locked `usage_source_kind` vocabulary (`provider_runtime_usage`, `provider_quota_api`, `provider_usage_api`, `provider_error_hint`, and `project_rollup`) only as provider-discovery/evidence-signal aliases. Binary location reports which evidence source is available or detected, then consumers normalize that signal to `source_class`, `source_confidence`, and `source_authority` before UsageRecord persistence, accounting, display, rollups, or route/open behavior. `usage_source_kind` is not accounting authority, permission authority, display authority, or a replacement for `Plans/usage-feature.md` UF-085 source fields.
 
 BinaryLocator diagnostics must not define `/outcome` or reason-code taxonomies and must not own bridge-side `usage-field` or failure-class mapping. Those contracts remain in `Plans/Run_Modes.md` and `Plans/CLI_Bridged_Providers.md`; BinaryLocator only emits discovery traces that those owners can classify.
 
@@ -484,7 +484,7 @@ canonical_text: >-
   BinaryLocator remains the canonical Provider-owned location and validation
   spec for external Provider CLIs, preserving the Puppet Master naming rule,
   deterministic/testable purpose, official-install boundary, usage source
-  metadata boundary, and diagnostics non-ownership constraints.
+  metadata boundary, provider-signal alias normalization, and diagnostics non-ownership constraints.
 gui_related: false
 gui_classification_reason: Provider discovery scope, usage metadata routing, and diagnostics ownership are backend contract boundaries.
 split_recommended: false
@@ -494,7 +494,7 @@ acceptance_criteria:
   - The document title and compliance statement preserve the Puppet Master naming and deterministic-default requirements.
   - BinaryLocator locates and validates external Provider CLIs for Cursor Agent and Claude Code across Windows, macOS, and Linux.
   - BinaryLocator does not install, update, uninstall, crawl heuristically, orchestrate providers, authenticate, discover models, or own PM-managed browser runtime health.
-  - BinaryLocator only reports detected usage_source_kind availability and does not own canonical usage accounting.
+  - BinaryLocator only reports detected usage_source_kind availability as provider-discovery/evidence-signal aliases, which normalize to source_class/source_confidence/source_authority before UsageRecord accounting, display, rollups, or route/open behavior.
   - BinaryLocator diagnostics do not define /outcome, reason-code taxonomies, bridge-side usage-field mapping, or failure-class mapping.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -523,6 +523,9 @@ preserved_exact_tokens:
   - "Claude Code"
   - "official install methods"
   - "usage_source_kind"
+  - "source_class"
+  - "source_confidence"
+  - "source_authority"
   - "provider_runtime_usage"
   - "provider_quota_api"
   - "provider_usage_api"
@@ -533,6 +536,9 @@ preserved_exact_tokens:
   - "failure-class"
 negative_constraints:
   - "BinaryLocator must not install, update, or uninstall Provider CLIs."
+  - "usage_source_kind must not become accounting authority, permission authority, display authority, or a replacement for UF-085 source fields."
+compatibility_only_notes:
+  - "usage_source_kind and its provider_runtime_usage/provider_quota_api/provider_usage_api/provider_error_hint/project_rollup values are provider-discovery/evidence-signal aliases only and normalize to source_class, source_confidence, and source_authority before UsageRecord use."
   - "BinaryLocator must not perform filesystem crawling or heuristic best-guess scanning beyond enumerated probe layers."
   - "BinaryLocator must not own provider orchestration, authentication, model discovery, PM-managed browser runtime distribution, canonical usage accounting, /outcome taxonomies, bridge-side usage-field mapping, or failure-class mapping."
 owner_boundary_notes:

@@ -4,7 +4,7 @@ Source: `Plans/Wiring_Matrix.md`
 
 Source lines: L3321-L3385
 
-Source SHA256: `4bed1d67283305a42cd53100ac8bfc8c2fb542521d6c3427535f90b2a8059538`
+Source SHA256: `19194fcefd8d6cea265679176a05cf90c19065b8e276eb8accd9d94a7b8ae9c2`
 
 ---
 
@@ -20,7 +20,7 @@ unit_type: wiring_contract
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
 canonical_text: >-
-  Production wiring for Usage route/open commands consumes UI_Command_Catalog alias metadata. `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are retired compatibility aliases and must not appear as canonical production UICommand rows. Wiring evidence for `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` must prove route_open effect_kind, route_target.object_kind = usage_event when usage_event_ref is present, OpenSubject preservation, and correlation passthrough for usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id where present.
+  Production wiring for Usage route/open commands consumes UI_Command_Catalog alias metadata. `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are retired compatibility aliases and must not appear as canonical production UICommand rows. Wiring evidence for `cmd.nav.open_usage_subject`, `cmd.artifacts.show_in_usage`, and `cmd.artifacts.show_in_ledger` must prove route_open effect_kind, route_target.object_kind = usage_event when usage_event_ref is present, OpenSubject preservation, and correlation passthrough for usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health where present.
 gui_related: true
 gui_classification_reason: Wiring determines whether visible Usage navigation controls dispatch canonical commands.
 depends_on: [WM-034, WM-042, UCC-109, CV-316]

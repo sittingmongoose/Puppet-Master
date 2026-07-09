@@ -375,10 +375,12 @@
               "type": "boolean"
             },
             "provider_reported": {
-              "$ref": "#/$defs/boolOrNull"
+              "$ref": "#/$defs/boolOrNull",
+              "description": "Signal flag only. Source authority for Usage display joins through usage_record_id or usage_artifact_ref and must use source_class/source_confidence/source_authority."
             },
             "cli_reported": {
-              "$ref": "#/$defs/boolOrNull"
+              "$ref": "#/$defs/boolOrNull",
+              "description": "Signal flag only. Source authority for Usage display joins through usage_record_id or usage_artifact_ref and must use source_class/source_confidence/source_authority."
             }
           }
         }

@@ -2,9 +2,9 @@
 
 Source: `Plans/Provider_OpenCode.md`
 
-Source lines: L753-L3415
+Source lines: L753-L3417
 
-Source SHA256: `0d10caa7a05a9bdbf4423fb401b048c27f60f27b803fdc57523d3fc157cdd467`
+Source SHA256: `c3f57996c15e1de5676c46ca2a713d3858eee412952510097125cd471861ea3a`
 
 ---
 
@@ -338,6 +338,8 @@ preserved_exact_tokens:
   - "Connected in OpenCode"
   - "stale-state"
 negative_constraints: []
+compatibility_only_notes:
+  - "OpenCode message metadata names input_tokens and output_tokens are provider-native raw aliases only; active UsageRecord accounting normalizes them to UF-085 buckets before persistence, display, rollups, or accounting checks."
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md"
 stale_retired_dispositions:

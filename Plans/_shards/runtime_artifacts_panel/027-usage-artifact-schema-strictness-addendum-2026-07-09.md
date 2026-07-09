@@ -4,7 +4,7 @@ Source: `Plans/Runtime_Artifacts_Panel.md`
 
 Source lines: L1824-L1908
 
-Source SHA256: `6966f6f122a8c32dbebdf00ba927141f1c427e52cdf4898c5f0212d6704ee4cc`
+Source SHA256: `03b26780f7d24d2c09fe8367d65e0ef6c39f30277fd539cc69ca388c944d60fc`
 
 ---
 
@@ -20,14 +20,14 @@ unit_type: schema_contract
 status: accepted
 owner_doc: Plans/Runtime_Artifacts_Panel.md
 canonical_text: >-
-  The materialized `cost_usage` and `tool_llm_trace` runtime artifact schemas must reject arbitrary non-empty `type_payload` values. `cost_usage` requires canonical usage identity through `usage_event_ref`, provider/route/account/model identity, normalized usage token buckets and counting semantics, nonnegative `reasoning_tokens`, normalized cost fields, quota/window evidence, authority/source/confidence/settlement fields, raw provider payload/redaction refs, and flags for estimated, provider-reported, CLI-reported, local-context-estimated, BYOK, subscription-hidden, and unknown states. `tool_llm_trace` requires `trace_ref`, trace_kind, tool_call_id, llm_call_id or stream_id, provider_attempt_ref, usage_event_ref when available, stream lifecycle timestamps or refs for start/partial/final/error/abort, provider payload/redaction refs, usage settlement link, retry/escalation relation, and quota/usage refs. Schema-only JSON validation must fail if these required payload fields are absent; repo-specific validators may add fixtures but must not be the only line of defense.
+  The materialized `cost_usage` and `tool_llm_trace` runtime artifact schemas must reject arbitrary non-empty `type_payload` values. `cost_usage` requires canonical usage identity through `usage_event_ref`, provider/route/account/model identity, normalized usage token buckets and counting semantics, nonnegative `reasoning_tokens` as the JSON wire alias for UF-085 reasoning/thoughts, normalized cost fields, quota/window evidence, authority/source/confidence/settlement fields, raw provider payload/redaction refs, and flags for estimated, provider-reported, CLI-reported, local-context-estimated, BYOK, subscription-hidden, and unknown states. `tool_llm_trace` requires `trace_ref`, trace_kind, tool_call_id, llm_call_id or stream_id, provider_attempt_ref, usage_event_ref when available, stream lifecycle timestamps or refs for start/partial/final/error/abort, provider payload/redaction refs, usage settlement link, retry/escalation relation, and quota/usage refs; provider_reported/cli_reported flags are signal flags only, not source authority, and Curated trace views must join UsageRecord authority through `usage_record_id` or `usage_artifact_ref`. Schema-only JSON validation must fail if these required payload fields are absent; repo-specific validators may add fixtures but must not be the only line of defense.
 gui_related: true
 gui_classification_reason: Cost usage and tool/LLM trace artifacts are user-visible drill-through surfaces, and schema strictness protects their displayed Usage/Ledger behavior.
 depends_on: [RAP-016, RAP-017, RAP-018, UF-085, CBP-027]
 unblocks: []
 acceptance_criteria:
   - "`Plans/runtime_artifact_cost_usage.schema.json` rejects an artifact whose `type_payload` lacks provider, usage, cost, quota, authority, refs, or flags."
-  - "`Plans/runtime_artifact_cost_usage.schema.json` requires `usage_event_ref`, `usage_record_id`, and nonnegative `reasoning_tokens`."
+  - "`Plans/runtime_artifact_cost_usage.schema.json` requires `usage_event_ref`, `usage_record_id`, and nonnegative `reasoning_tokens` as the UF-085 reasoning/thoughts wire alias with counting_semantics."
   - "`Plans/runtime_artifact_tool_llm_trace.schema.json` rejects an artifact whose `type_payload` lacks `trace_ref`, `usage_record_id`, trace lifecycle, provider attempt linkage, usage settlement linkage, retry/escalation relation, or raw-payload/redaction refs."
   - Schema-only validation can distinguish missing, unknown, disabled, estimated, provider-reported, CLI-reported, BYOK, and subscription-hidden states without accepting arbitrary payloads.
   - Runtime Artifacts drill-through uses canonical `usage_event_ref`, `usage_record_id`, `provider_attempt_ref`, and `trace_ref` rather than timestamp heuristics or artifact-local cost models.
