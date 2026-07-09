@@ -1,0 +1,85 @@
+# Shard 058: Usage GUI Propagation Addendum - 2026-07-09
+
+Source: `Plans/assistant-chat-design.md`
+
+Source lines: L23561-L23635
+
+Source SHA256: `bd5b0c5cb02bdd93fdb204ad9e14ff65d3beba8942c13f0fddbe799977c2971d`
+
+---
+
+## Usage GUI Propagation Addendum - 2026-07-09
+
+This addendum binds Assistant Chat context and usage displays to the canonical UsageRecord projection. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### ACD-434 - Context Detail UsageRecord Projection Contract
+
+```yaml
+plan_unit_id: ACD-434
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat header context circle, hover status module, More Details action, Compact Now action, Context Detail Pane, message info-popover, and Raw/Curated views consume the same UsageRecord/context projection records used by Usage, Ledger, Runtime Artifacts, Run Graph, and Orchestrator. The context circle is an entrypoint and status disclosure, not a cost calculator. Hover shows stateful usage, tokens, context, cost, quota, freshness, and hidden/background contribution summaries from UsageRecord projections. More Details opens or focuses the editor-tab Context Detail Pane through canonical route/open. Compact Now dispatches only `cmd.chat.compact_context` and never recalculates usage. Message info-popovers link to the message-scoped UsageRecord/context rows by usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, raw_payload_ref, trace_ref, or receipt refs when available. Curated view renders normalized provider, token, context, cost, quota, authority, settlement, and source-confidence fields; Raw view renders redacted raw_payload_ref, redaction_status, provider_payload_hash, omitted evidence counts, and permission state without exposing secrets.
+gui_related: true
+gui_classification_reason: Defines visible chat context, usage, compact, detail-pane, and message inspection behavior.
+depends_on: [ACD-092, ACD-410, UF-085, UF-086, UF-087, RAP-043]
+unblocks: []
+acceptance_criteria:
+  - Context circle hover displays provider-authoritative, estimated, stale, partial, unknown, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state and source_confidence, not chat-local math.
+  - "`More Details` opens the editor-tab Context Detail Pane through route/open and preserves usage_event_ref plus attempt_id, provider_attempt_ref, node_id, tool_call_id, trace_ref, receipt refs, and raw_payload_ref when present."
+  - "`Compact Now` dispatches only `cmd.chat.compact_context`, preserves the context epoch, and does not mutate or recompute historical UsageRecord totals."
+  - Context Detail Pane displays cache_read, cache_write, cache_write_1h or cache_write_ttl, output_total, output_visible, reasoning/thoughts, provider_total, context_estimate, counting_semantics, settlement_status, and projection_freshness when present.
+  - Message info-popover shows human-readable fields first and deep-links to the message's canonical usage/context record rather than constructing a second message usage schema.
+  - Raw view shows redacted refs, hashes, omitted counts, and permissioned-unavailable states, and never displays credentials, account identifiers, unredacted provider payloads, or local machine paths.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - future GUI usage projection fixture suite
+risk_class: chat_usage_projection_false_pass
+reasoning_tier: high
+context_scope: assistant_chat_usage_projection
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: assistant_chat_usage_projection_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/assistant-chat-design.md:1217-1248"
+  - "Plans/assistant-chat-design.md:1706-1720"
+  - "Plans/usage-feature.md:156-194"
+  - "Plans/usage-feature.md:5412-5605"
+  - "Plans/Runtime_Artifacts_Panel.md:262-316"
+  - "uploaded:opencode-dev/packages/app/src/components/session-context-usage.tsx"
+  - "uploaded:opencode-dev/packages/app/src/components/session/session-context-tab.tsx"
+  - "https://github.com/anomalyco/opencode/issues/30649"
+preserved_exact_tokens:
+  - Context Detail Pane
+  - context circle
+  - More Details
+  - Compact Now
+  - Curated
+  - Raw
+  - UsageRecord
+  - usage_event_ref
+  - provider_attempt_ref
+  - raw_payload_ref
+  - source_confidence
+  - settlement_status
+  - counting_semantics
+negative_constraints:
+  - Do not implement a chat-local cost model or message-local usage schema.
+  - Do not treat context_estimate as billing, cost, quota, or provider authority.
+  - Do not make hover disclosure dispatch compaction or detail navigation without explicit user action.
+  - Do not expose unredacted raw provider payloads, credentials, account identifiers, or local paths in Raw view.
+  - Do not keep `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical chat commands.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+```

@@ -1,10 +1,10 @@
-# Shard 009: Migration Coverage
+# Shard 010: Migration Coverage
 
 Source: `Plans/Widget_System.md`
 
-Source lines: L1017-L1027
+Source lines: L1079-L1089
 
-Source SHA256: `a22f2b60d2cba7c1305b2e7c9240a92b54e71a79bcd00fdd9aada7e5ef3ca7ed`
+Source SHA256: `3a8059a5edfa121992f26764ec4703340ae46d48f8a67a727ceb95ff17e84b25`
 
 ---
 

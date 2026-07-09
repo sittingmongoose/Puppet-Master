@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-07-09T02:44:54Z",
+  "generated_at_utc": "2026-07-09T04:06:58Z",
   "index_path": "Plans/_shards/widget_system/00-index.md",
-  "index_sha256": "113f2dffd1bdc44e8748f9690f1d7cf398ff8379fe13b7493b3e737419c1e4c2",
+  "index_sha256": "0ee41324f77d07ebf3639726840c23542be8413a39c67939e3f624ff00625291",
   "manifest_path": "Plans/_shards/widget_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/widget_system/001-preamble.md",
-      "sha256": "229a2e0f26d22aec93990ef421bb0a409bc07e408a9a04397a331b6253a6af0c",
+      "sha256": "67dda0e47e808f6e470dbb54ae6cb681edb1b406700ba7ec4b66e9d604fd58fb",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Canonical owner-section requirements",
       "path": "Plans/_shards/widget_system/002-canonical-owner-section-requirements.md",
-      "sha256": "f5c17728e05053d2ae4e7a3a23d622806079573153cdacf585f65841b6c21204",
+      "sha256": "1d70cf38c88d4f493b79318d0c1ee664646de1b03021143e0bdf1768965d895f",
       "shard_id": "002",
       "source_line_end": 9,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Scope and non-scope",
       "path": "Plans/_shards/widget_system/003-1.-scope-and-non-scope.md",
-      "sha256": "9a10c665c79a00d9e67a8987dba94ff5a2f2bb7ca409c2f8c5dd547ff51cca97",
+      "sha256": "e4cae31d434bc8f541bd34868d69f7fa7d96cd0c173f003de8bb962739fb139a",
       "shard_id": "003",
       "source_line_end": 29,
       "source_line_start": 12,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Hostability and data contracts",
       "path": "Plans/_shards/widget_system/004-2.-hostability-and-data-contracts.md",
-      "sha256": "e2063cc3ab64aed580b8bd932285a959b1c0aa81ef90ae96bac8c27a17b1bfc7",
+      "sha256": "973a7bda326e5d75d09bea8b240336a36de1ffdbd119a46e01fafb80338026d5",
       "shard_id": "004",
       "source_line_end": 72,
       "source_line_start": 30,
@@ -44,7 +44,7 @@
     {
       "heading": "3. Layout persistence",
       "path": "Plans/_shards/widget_system/005-3.-layout-persistence.md",
-      "sha256": "cd23026c22d805d7b774439f85149419d12e2e73be5a575d4c214541e2319c89",
+      "sha256": "d8c6853e05fcbf12c0ac90058958b5d20c0daea2fa736bf1e490a4f918efb749",
       "shard_id": "005",
       "source_line_end": 83,
       "source_line_start": 74,
@@ -53,7 +53,7 @@
     {
       "heading": "4. Orchestrator Progress widget scope and catalog linkage",
       "path": "Plans/_shards/widget_system/006-4.-orchestrator-progress-widget-scope-and-catalog-linkage.md",
-      "sha256": "9a438de41c2806d0966d07fa6b189fcc6a1dbd75f2d7dfe5694a0d8a3204a9d5",
+      "sha256": "95e7bc3e6f3f7f7823d55f89dbd5cf956a320ddc95397316e28407c32a1cfb2d",
       "shard_id": "006",
       "source_line_end": 124,
       "source_line_start": 85,
@@ -62,7 +62,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/widget_system/007-owner-consumer-map.md",
-      "sha256": "dcd287fafc43936282de9663f71a1518289e951b84feb1b73514636cfd3e26c1",
+      "sha256": "2585bc2f201ccc0e4d10b8187a9a4f2313eed0c3102f217631a2353fa8192ec2",
       "shard_id": "007",
       "source_line_end": 130,
       "source_line_start": 126,
@@ -71,34 +71,43 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/widget_system/008-planunits.md",
-      "sha256": "b0595c05e62bd30fd3030993a2e7d1a0d06d24f550eac0a48a92ecff5cce2498",
+      "sha256": "d997fbeaf7bd8b8ded3178569526593ea7d72429b180f90c34402332d104bb79",
       "shard_id": "008",
       "source_line_end": 1015,
       "source_line_start": 132,
       "split_rule": "heading-##"
     },
     {
-      "heading": "Migration Coverage",
-      "path": "Plans/_shards/widget_system/009-migration-coverage.md",
-      "sha256": "0f1f01f5fb2f12f480c7c7aa61d736192ae37be2d660076a152ab03767f5fd70",
+      "heading": "Usage GUI Propagation Addendum - 2026-07-09",
+      "path": "Plans/_shards/widget_system/009-usage-gui-propagation-addendum-2026-07-09.md",
+      "sha256": "53f21e014a34018008866d8ad39e8b2caabe348ec283d4ad51d23861e8e32d8e",
       "shard_id": "009",
-      "source_line_end": 1027,
+      "source_line_end": 1077,
       "source_line_start": 1017,
       "split_rule": "heading-##"
     },
     {
-      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
-      "path": "Plans/_shards/widget_system/010-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "5486783a86b69a6dccbb48a95fcb76d4cd7574c2be4fc5e715f9d68a9c169c89",
+      "heading": "Migration Coverage",
+      "path": "Plans/_shards/widget_system/010-migration-coverage.md",
+      "sha256": "db4b71e54c89223bf2622b123d7b217f564a5139ac97136bdb9b572deac9f0d7",
       "shard_id": "010",
-      "source_line_end": 1036,
-      "source_line_start": 1029,
+      "source_line_end": 1089,
+      "source_line_start": 1079,
+      "split_rule": "heading-##"
+    },
+    {
+      "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
+      "path": "Plans/_shards/widget_system/011-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
+      "sha256": "4ba2e98ba5363301cbcdcfd0e608d861b2f31dec1c7fd6a2705c2029150df520",
+      "shard_id": "011",
+      "source_line_end": 1098,
+      "source_line_start": 1091,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 1036,
+    "line_count": 1098,
     "path": "Plans/Widget_System.md",
-    "sha256": "a22f2b60d2cba7c1305b2e7c9240a92b54e71a79bcd00fdd9aada7e5ef3ca7ed"
+    "sha256": "3a8059a5edfa121992f26764ec4703340ae46d48f8a67a727ceb95ff17e84b25"
   }
 }

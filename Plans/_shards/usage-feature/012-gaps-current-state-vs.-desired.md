@@ -2,9 +2,9 @@
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L432-L641
+Source lines: L432-L644
 
-Source SHA256: `77d66847d0a5a385f8c3d42f444e6c2c60046def1936ac1316ae2d4ba85731e7`
+Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d`
 
 ---
 
@@ -92,8 +92,11 @@ History inspector deref policy is on-demand only, never eager. History rows comb
 
 ### Canonical UsageRecord fields
 - For gap-001 lineage, this section is also the usage-side partial-transfer anchor for ``### Unified `UsageRecord` schema expectations`` and the queue-escaped alias ``### Unified \`UsageRecord\` schema expectations``; both resolve here rather than creating a second schema section.
-- UsageRecord includes `usage_id`, `created_at_utc`, `account_id`, `run_id`, `node_id`, `tool_id`, `input_tokens`, `output_tokens`, `cost_usd`, and `metadata`.
-- UsageRecord attribution fields also include `provider_id`, `model_id`, `thread_id?`, `parent_run_id?`, `effective_auth_mode?`, `usage_source_kind`, `billing_entity_id?`, `entitlement_class?`, `cache_hit?`, and `cache_strategy?` when known. `usage_source_kind` preserves source classes such as `provider_runtime_usage`, `provider_quota_api`, `provider_usage_api`, `provider_error_hint`, and `project_rollup`; provider-specific source detail such as `local-estimated`, `API-key-derived`, or `OAuth-quota-derived` remains visible through the shared usage attribution contract instead of being collapsed into one generic usage source.
+- UF-085 is the implementation-ready UsageRecord contract. Older field names in this section are compatibility, import, export, or display aliases unless they are repeated by UF-085.
+- `usage_id` resolves to `usage_record_id` or `usage_event_ref` according to the importing source; UI routes prefer `usage_event_ref` normalized through `object_kind = usage_event` and `object_id`.
+- `input_tokens` resolves to `input_total`; `output_tokens` resolves to `output_total`; older `cache_read_tokens`, `cached_input_tokens`, and `cache_creation_input_tokens` aliases resolve to `cache_read`, `cache_write`, `cache_write_1h`, or `cache_write_ttl` only when the provider mapper states the TTL and inclusive/exclusive semantics.
+- `cost_usd` is display or migration material only. Canonical cost authority uses `cost_microdollars`, provider minor units, currency, cost_status, pricing_snapshot_id/version/date/source, and custom-provider price row refs where applicable.
+- `usage_source_kind` remains source-lineage vocabulary and maps to UF-085 `source_class`, `source_confidence`, and `source_authority`; it does not replace the closed source classes `provider_reported`, `provider_header`, `cli_reported`, `local_estimated`, `pricing_estimated`, and `unknown`.
 - Usage field-name rules follow the storage naming contract: shared runtime and attribution fields keep stable meanings across usage aggregation, persistence, events, and Config consumers instead of reviving tier-era labels.
 - Cost-integrity display rules are `/clamp/derived-field` rules: sub-cent and sub-dollar display precision is derived from `cost_microdollars` or exact provider minor-unit receipts when available; the canonical display tiers are `<$0.01 = 6dp`, `<$1 = 4dp`, and otherwise 2dp, while `cost_usd` remains display/migration material and must not be the only canonical precision source.
 - `cost_usd = cost_microdollars / 1_000_000` is derived only at display/export boundaries or compatibility import/migration edges; it is not a persisted UsageRecord authority field.

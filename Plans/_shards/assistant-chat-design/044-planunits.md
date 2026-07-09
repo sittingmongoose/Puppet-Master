@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3500-L21918
+Source lines: L3500-L21919
 
-Source SHA256: `4fd3675adb0a6362669302310d9685d8c8392f3da3904c38c29dfa47e953ba79`
+Source SHA256: `bd5b0c5cb02bdd93fdb204ad9e14ff65d3beba8942c13f0fddbe799977c2971d`
 
 ---
 
@@ -18301,7 +18301,7 @@ plan_unit_id: ACD-410
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: CtA cards, blocked notices, search results, artifact pivots, thread usage jumps, command palette entries, FileManager, and `/Editor` opens resolve through the same internal target payload model; `cmd.chat.focus_thread_usage` focuses thread Usage detail and may dock/floating.
+canonical_text: CtA cards, blocked notices, search results, artifact pivots, thread usage jumps, command palette entries, FileManager, and `/Editor` opens resolve through the same internal target payload model; legacy `cmd.chat.focus_thread_usage` citations normalize to route/open Usage or the editor-tab Context Detail Pane and remain compatibility-only.
 gui_related: true
 gui_classification_reason: Target payload navigation affects visible CtA, blocked, search, artifact, FileManager, editor, and usage surfaces.
 depends_on: [ACD-402]
@@ -18309,7 +18309,7 @@ unblocks: []
 acceptance_criteria:
   - Chat target restores destination and scope using a shared internal payload model.
   - Command palette entries, search results, artifact deep-links, blocked notices, and FileManager/editor opens resolve through this target model.
-  - Thread usage focus command targets the thread Usage detail surface.
+  - Thread usage focus compatibility callers normalize to route/open Usage or the thread Context Detail Pane instead of dispatching `cmd.chat.focus_thread_usage`.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -18331,6 +18331,7 @@ preserved_exact_tokens:
   - "/floating"
   - "/Editor"
 negative_constraints:
+  - "`cmd.chat.focus_thread_usage` must not remain a canonical dispatch target."
   - "Assistant chat must not invent thread-local recovery semantics."
 owner_hints:
   - Plans/assistant-chat-design.md

@@ -1,10 +1,10 @@
-# Shard 028: Usage Implementation-Ready Evidence Addendum - 2026-07-09
+# Shard 029: Usage Implementation-Ready Evidence Addendum - 2026-07-09
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L5408-L5605
+Source lines: L5600-L5797
 
-Source SHA256: `77d66847d0a5a385f8c3d42f444e6c2c60046def1936ac1316ae2d4ba85731e7`
+Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d`
 
 ---
 

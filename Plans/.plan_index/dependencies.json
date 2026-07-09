@@ -5310,6 +5310,7 @@
     "C-046",
     "CRAU-060",
     "F3-401",
+    "UF-087",
     "RAP-031",
     "HITL-036",
     "EP-098",
@@ -5331,6 +5332,9 @@
     "CRAU-061",
     "CRAU-071",
     "ACD-424",
+    "ACD-434",
+    "F3-418",
+    "UF-088",
     "GRS-029",
     "CV-313",
     "EP-099",
@@ -5353,6 +5357,10 @@
     "CRAU-068",
     "CRAU-069",
     "CRAU-072",
+    "WS-015",
+    "CV-316",
+    "PP-073",
+    "RM-049",
     "CV-314",
     "EP-114",
     "GRS-041",
@@ -5373,6 +5381,7 @@
     "OP-028",
     "OSI-431",
     "CRAU-063",
+    "UCC-109",
     "CV-315",
     "0PI-056",
     "OP-023",
@@ -5392,6 +5401,8 @@
     "RGV-015",
     "CRAU-064",
     "CRAU-073",
+    "RAP-044",
+    "WM-043",
     "SP-233",
     "F3-395",
     "EP-103",
@@ -5405,6 +5416,7 @@
     "CRAU-065",
     "CRAU-074",
     "CRAU-075",
+    "RGV-016",
     "GRS-030",
     "POA-047",
     "SP-231",
@@ -5419,7 +5431,9 @@
     "CRAU-076",
     "CRAU-077",
     "CRAU-078",
+    "OP-029",
     "POA-048",
+    "SP-234",
     "MA-037",
     "OSI-385",
     "OSI-386",
@@ -5518,7 +5532,9 @@
     "MA-058",
     "MA-068",
     "MA-059",
-    "MA-001"
+    "MA-069",
+    "MA-001",
+    "MS-136"
   ],
   "build_order_blocked_nodes": [],
   "cycle_blockers": [],
@@ -8694,6 +8710,36 @@
       "edge_type": "depends_on",
       "from": "ACD-433",
       "to": "ACD-074"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-434",
+      "to": "ACD-092"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-434",
+      "to": "ACD-410"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-434",
+      "to": "RAP-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-434",
+      "to": "UF-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-434",
+      "to": "UF-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-434",
+      "to": "UF-087"
     },
     {
       "edge_type": "depends_on",
@@ -16742,6 +16788,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "CV-316",
+      "to": "CV-309"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-316",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CV-316",
+      "to": "UF-088"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "CW-003",
       "to": "CW-002"
     },
@@ -19712,6 +19773,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "F3-418",
+      "to": "CBP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-418",
+      "to": "RAP-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-418",
+      "to": "UF-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-418",
+      "to": "UF-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "F3-418",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "G-026",
       "to": "PP-056"
     },
@@ -21882,6 +21968,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "MA-069",
+      "to": "CBP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-069",
+      "to": "MA-067"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-069",
+      "to": "MA-068"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-069",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MA-069",
+      "to": "UF-088"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "MGAC-001",
       "to": "MGAC-043"
     },
@@ -23842,6 +23953,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "MS-136",
+      "to": "CBP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-136",
+      "to": "MA-069"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-136",
+      "to": "MS-134"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-136",
+      "to": "MS-135"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "MS-136",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "N-001",
       "to": "N-002"
     },
@@ -25464,6 +25600,41 @@
       "edge_type": "depends_on",
       "from": "OP-028",
       "to": "UCC-105"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-029",
+      "to": "CV-316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-029",
+      "to": "OP-026"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-029",
+      "to": "OP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-029",
+      "to": "RAP-044"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-029",
+      "to": "RGV-016"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-029",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-029",
+      "to": "UF-088"
     },
     {
       "edge_type": "depends_on",
@@ -34907,6 +35078,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "PP-073",
+      "to": "ACD-434"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-073",
+      "to": "PP-072"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-073",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PP-073",
+      "to": "UF-088"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "PRDB-008",
       "to": "PRDB-006"
     },
@@ -38992,6 +39183,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "RAP-044",
+      "to": "CV-316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-044",
+      "to": "RAP-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-044",
+      "to": "UCC-109"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-044",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RAP-044",
+      "to": "UF-088"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "RGV-002",
       "to": "RGV-001"
     },
@@ -39214,6 +39430,31 @@
       "edge_type": "depends_on",
       "from": "RGV-015",
       "to": "UCC-105"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-016",
+      "to": "CV-316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-016",
+      "to": "RAP-044"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-016",
+      "to": "RGV-006"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-016",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RGV-016",
+      "to": "UF-088"
     },
     {
       "edge_type": "depends_on",
@@ -41084,6 +41325,26 @@
       "edge_type": "depends_on",
       "from": "RM-048",
       "to": "RM-009"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-049",
+      "to": "RM-024"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-049",
+      "to": "RM-048"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-049",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "RM-049",
+      "to": "UF-088"
     },
     {
       "edge_type": "depends_on",
@@ -52457,6 +52718,31 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "SP-234",
+      "to": "CV-316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "to": "RAP-044"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "to": "SP-230"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "to": "SP-231"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "SP-234",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "SS-001",
       "to": "SS-002"
     },
@@ -57842,6 +58128,41 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "UCC-109",
+      "to": "ACD-434"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-109",
+      "to": "CV-316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-109",
+      "to": "F3-418"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-109",
+      "to": "RAP-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-109",
+      "to": "UCC-060"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-109",
+      "to": "UCC-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UCC-109",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "UF-001",
       "to": "UF-002"
     },
@@ -59834,6 +60155,51 @@
       "edge_type": "depends_on",
       "from": "UF-086",
       "to": "UF-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-087",
+      "to": "CBP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-087",
+      "to": "RAP-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-087",
+      "to": "UF-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-087",
+      "to": "UF-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-088",
+      "to": "CBP-027"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-088",
+      "to": "RAP-043"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-088",
+      "to": "UF-085"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-088",
+      "to": "UF-086"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "UF-088",
+      "to": "UF-087"
     },
     {
       "edge_type": "depends_on",
@@ -63907,6 +64273,26 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "WM-043",
+      "to": "CV-316"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-043",
+      "to": "UCC-109"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-043",
+      "to": "WM-034"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WM-043",
+      "to": "WM-042"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "WS-001",
       "to": "WS-002"
     },
@@ -64319,6 +64705,21 @@
       "edge_type": "depends_on",
       "from": "WS-014",
       "to": "WS-003"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WS-015",
+      "to": "F3-418"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WS-015",
+      "to": "UF-087"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "WS-015",
+      "to": "WS-013"
     },
     {
       "edge_type": "unblocks",
@@ -70807,6 +71208,16 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "CV-316",
+      "to": "SP-234"
+    },
+    {
+      "edge_type": "unblocks",
+      "from": "CV-316",
+      "to": "WM-043"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "CW-002",
       "to": "CW-003"
     },
@@ -74472,6 +74883,11 @@
     },
     {
       "edge_type": "unblocks",
+      "from": "UCC-109",
+      "to": "WM-043"
+    },
+    {
+      "edge_type": "unblocks",
       "from": "UF-074",
       "to": "F3-400"
     },
@@ -74631,7 +75047,7 @@
       "to": "PG-061"
     }
   ],
-  "generated_at_utc": "2026-07-09T02:40:24Z",
+  "generated_at_utc": "2026-07-09T04:14:00Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -82735,8 +83151,8 @@
       "source_location": {
         "heading": "ACD-411 - Route Catalog Determinism",
         "heading_level": 3,
-        "heading_line": 21829,
-        "line": 21831,
+        "heading_line": 21830,
+        "line": 21832,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82752,8 +83168,8 @@
       "source_location": {
         "heading": "ACD-412 - Assistant Chat Owner Consumer Preservation",
         "heading_level": 3,
-        "heading_line": 21879,
-        "line": 21881,
+        "heading_line": 21880,
+        "line": 21882,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82769,8 +83185,8 @@
       "source_location": {
         "heading": "ACD-413 - Extensibility And Traceability Recovery Compile Addendum",
         "heading_level": 3,
-        "heading_line": 21954,
-        "line": 21956,
+        "heading_line": 21955,
+        "line": 21957,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82786,8 +83202,8 @@
       "source_location": {
         "heading": "ACD-414 - Stale Newfeatures Reference Retargeting",
         "heading_level": 3,
-        "heading_line": 21993,
-        "line": 21995,
+        "heading_line": 21994,
+        "line": 21996,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82803,8 +83219,8 @@
       "source_location": {
         "heading": "ACD-415 - Extract Block Semantics Normalization",
         "heading_level": 3,
-        "heading_line": 22044,
-        "line": 22046,
+        "heading_line": 22045,
+        "line": 22047,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82820,8 +83236,8 @@
       "source_location": {
         "heading": "ACD-416 - Goal Mode Activation Status And Thread Controls",
         "heading_level": 3,
-        "heading_line": 22143,
-        "line": 22145,
+        "heading_line": 22144,
+        "line": 22146,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82837,8 +83253,8 @@
       "source_location": {
         "heading": "ACD-417 - Goal Task Tracker Replan And Blocked State Projection",
         "heading_level": 3,
-        "heading_line": 22253,
-        "line": 22255,
+        "heading_line": 22254,
+        "line": 22256,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82854,8 +83270,8 @@
       "source_location": {
         "heading": "ACD-418 - Goal Evidence Activity And Completion Reports",
         "heading_level": 3,
-        "heading_line": 22322,
-        "line": 22324,
+        "heading_line": 22323,
+        "line": 22325,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82871,8 +83287,8 @@
       "source_location": {
         "heading": "ACD-419 - Collapsible Child Goal Display",
         "heading_level": 3,
-        "heading_line": 22396,
-        "line": 22398,
+        "heading_line": 22397,
+        "line": 22399,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82888,8 +83304,8 @@
       "source_location": {
         "heading": "ACD-420 - Visible Chat Goal Boundary And Doc Builder Exclusion",
         "heading_level": 3,
-        "heading_line": 22457,
-        "line": 22459,
+        "heading_line": 22458,
+        "line": 22460,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82905,8 +83321,8 @@
       "source_location": {
         "heading": "ACD-421 - Planning Product Chat Reuse And Structured Handoff",
         "heading_level": 3,
-        "heading_line": 22529,
-        "line": 22531,
+        "heading_line": 22530,
+        "line": 22532,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82922,8 +83338,8 @@
       "source_location": {
         "heading": "ACD-422 - Assistant Chat Discovery Activity And Toggle",
         "heading_level": 3,
-        "heading_line": 22617,
-        "line": 22619,
+        "heading_line": 22618,
+        "line": 22620,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82939,8 +83355,8 @@
       "source_location": {
         "heading": "ACD-423 - Assistant Chat File Mention Discovery Routing",
         "heading_level": 3,
-        "heading_line": 22661,
-        "line": 22663,
+        "heading_line": 22662,
+        "line": 22664,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82973,8 +83389,8 @@
       "source_location": {
         "heading": "ACD-425 - Assistant Chat Vision Bridge Controls",
         "heading_level": 3,
-        "heading_line": 22708,
-        "line": 22710,
+        "heading_line": 22709,
+        "line": 22711,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -82990,8 +83406,8 @@
       "source_location": {
         "heading": "ACD-426 - Teach Teacher Threaded Guidance Workflow",
         "heading_level": 3,
-        "heading_line": 22842,
-        "line": 22844,
+        "heading_line": 22843,
+        "line": 22845,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -83007,8 +83423,8 @@
       "source_location": {
         "heading": "ACD-427 - Inline Visualizer V2 Stream And Host Bridge",
         "heading_level": 3,
-        "heading_line": 23084,
-        "line": 23086,
+        "heading_line": 23085,
+        "line": 23087,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -83024,8 +83440,8 @@
       "source_location": {
         "heading": "ACD-428 - Notification Trust Copy And Remote Action Boundary",
         "heading_level": 3,
-        "heading_line": 23171,
-        "line": 23173,
+        "heading_line": 23172,
+        "line": 23174,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -83041,8 +83457,8 @@
       "source_location": {
         "heading": "ACD-429 - DRY Method What And Why Disclosure",
         "heading_level": 3,
-        "heading_line": 23229,
-        "line": 23231,
+        "heading_line": 23230,
+        "line": 23232,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -83075,8 +83491,8 @@
       "source_location": {
         "heading": "ACD-431 - First-Run Teacher Handoff From Onboarding",
         "heading_level": 3,
-        "heading_line": 23297,
-        "line": 23299,
+        "heading_line": 23298,
+        "line": 23300,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -83092,8 +83508,8 @@
       "source_location": {
         "heading": "ACD-432 - P0-SESSION-DRAFT-ATTACHMENT-ISOLATION",
         "heading_level": 3,
-        "heading_line": 23378,
-        "line": 23380,
+        "heading_line": 23379,
+        "line": 23381,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -83109,8 +83525,25 @@
       "source_location": {
         "heading": "ACD-433 - FABLE Residual Chat Contract Mechanics",
         "heading_level": 3,
-        "heading_line": 23445,
-        "line": 23447,
+        "heading_line": 23446,
+        "line": 23448,
+        "path": "Plans/assistant-chat-design.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "assistant_chat_usage_projection",
+      "gui_related": true,
+      "owner_doc": "Plans/assistant-chat-design.md",
+      "plan_unit_id": "ACD-434",
+      "reasoning_tier": "high",
+      "risk_class": "chat_usage_projection_false_pass",
+      "source_location": {
+        "heading": "ACD-434 - Context Detail UsageRecord Projection Contract",
+        "heading_level": 3,
+        "heading_line": 23565,
+        "line": 23567,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -95708,6 +96141,23 @@
         "heading_level": 3,
         "heading_line": 20101,
         "line": 20103,
+        "path": "Plans/Contracts_V0.md"
+      },
+      "status": "accepted",
+      "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "gui_usage_route_payload",
+      "gui_related": true,
+      "owner_doc": "Plans/Contracts_V0.md",
+      "plan_unit_id": "CV-316",
+      "reasoning_tier": "high",
+      "risk_class": "usage_route_payload_identity_drift",
+      "source_location": {
+        "heading": "CV-316 - GUI Usage Route Subject Payload Contract",
+        "heading_level": 3,
+        "heading_line": 20160,
+        "line": 20162,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -114703,6 +115153,23 @@
       "unit_type": "decision"
     },
     {
+      "context_scope": "gui_usage_value_state",
+      "gui_related": true,
+      "owner_doc": "Plans/FinalGUISpec.md",
+      "plan_unit_id": "F3-418",
+      "reasoning_tier": "high",
+      "risk_class": "gui_usage_state_false_zero",
+      "source_location": {
+        "heading": "F3-418 - Usage Value-State Rendering And Identity Contract",
+        "heading_level": 3,
+        "heading_line": 27268,
+        "line": 27270,
+        "path": "Plans/FinalGUISpec.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/feature-list.md",
@@ -123220,6 +123687,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "multi_account_usage_display",
+      "gui_related": true,
+      "owner_doc": "Plans/Multi-Account.md",
+      "plan_unit_id": "MA-069",
+      "reasoning_tier": "high",
+      "risk_class": "provider_settings_usage_state_drift",
+      "source_location": {
+        "heading": "MA-069 - Provider Usage State Settings Display Contract",
+        "heading_level": 3,
+        "heading_line": 5093,
+        "line": 5095,
+        "path": "Plans/Multi-Account.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "residual_plan_standardization",
       "gui_related": false,
       "owner_doc": "Plans/Media_Generation_and_Capabilities.md",
@@ -127893,6 +128377,23 @@
       },
       "status": "accepted",
       "unit_type": "schema_contract"
+    },
+    {
+      "context_scope": "model_usage_signal_display",
+      "gui_related": true,
+      "owner_doc": "Plans/Models_System.md",
+      "plan_unit_id": "MS-136",
+      "reasoning_tier": "high",
+      "risk_class": "model_usage_authority_drift",
+      "source_location": {
+        "heading": "MS-136 - Model Capability Usage Signal Display Contract",
+        "heading_level": 3,
+        "heading_line": 9440,
+        "line": 9442,
+        "path": "Plans/Models_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     },
     {
       "context_scope": "residual_plan_standardization",
@@ -132785,6 +133286,23 @@
         "heading_level": 3,
         "heading_line": 457,
         "line": 459,
+        "path": "Plans/Orchestrator_Page.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "orchestrator_usage_projection",
+      "gui_related": true,
+      "owner_doc": "Plans/Orchestrator_Page.md",
+      "plan_unit_id": "OP-029",
+      "reasoning_tier": "high",
+      "risk_class": "orchestrator_usage_drillthrough_identity_drift",
+      "source_location": {
+        "heading": "OP-029 - Orchestrator Usage Drill-Through Contract",
+        "heading_level": 3,
+        "heading_line": 2338,
+        "line": 2340,
         "path": "Plans/Orchestrator_Page.md"
       },
       "status": "accepted",
@@ -146995,8 +147513,8 @@
       "source_location": {
         "heading": "PP-060 - P0-HISTORY-ADMISSION-SANITIZATION",
         "heading_level": 3,
-        "heading_line": 4111,
-        "line": 4113,
+        "heading_line": 4173,
+        "line": 4175,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147012,8 +147530,8 @@
       "source_location": {
         "heading": "PP-061 - P0-CONTEXT-EPOCH-BASELINE",
         "heading_level": 3,
-        "heading_line": 4195,
-        "line": 4197,
+        "heading_line": 4257,
+        "line": 4259,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147029,8 +147547,8 @@
       "source_location": {
         "heading": "PP-062 - P0-PROMPT-CACHE-POLICY",
         "heading_level": 3,
-        "heading_line": 4267,
-        "line": 4269,
+        "heading_line": 4329,
+        "line": 4331,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147046,8 +147564,8 @@
       "source_location": {
         "heading": "PP-063 - P0-VOLATILE-CONTEXT-QUARANTINE",
         "heading_level": 3,
-        "heading_line": 4338,
-        "line": 4340,
+        "heading_line": 4400,
+        "line": 4402,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147063,8 +147581,8 @@
       "source_location": {
         "heading": "PP-064 - P1-COMPACTION-CACHE-EFFECT",
         "heading_level": 3,
-        "heading_line": 4402,
-        "line": 4404,
+        "heading_line": 4464,
+        "line": 4466,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147080,8 +147598,8 @@
       "source_location": {
         "heading": "PP-065 - P1-PROVIDER-CAPABILITY-EPOCH-CACHE",
         "heading_level": 3,
-        "heading_line": 4471,
-        "line": 4473,
+        "heading_line": 4533,
+        "line": 4535,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147097,8 +147615,8 @@
       "source_location": {
         "heading": "PP-066 - P1-MODEL-SWITCH-REPLAY-SANITIZER",
         "heading_level": 3,
-        "heading_line": 4536,
-        "line": 4538,
+        "heading_line": 4598,
+        "line": 4600,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147114,8 +147632,8 @@
       "source_location": {
         "heading": "PP-067 - P1-LOCAL-LLM-CONTEXT-CAPS",
         "heading_level": 3,
-        "heading_line": 4603,
-        "line": 4605,
+        "heading_line": 4665,
+        "line": 4667,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147131,8 +147649,8 @@
       "source_location": {
         "heading": "PP-068 - P1-PROMPT-CACHE-STABILITY-LINTER",
         "heading_level": 3,
-        "heading_line": 4671,
-        "line": 4673,
+        "heading_line": 4733,
+        "line": 4735,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147148,8 +147666,8 @@
       "source_location": {
         "heading": "PP-069 - P1-INSTRUCTION-SOURCE-INTEGRITY-EPOCH",
         "heading_level": 3,
-        "heading_line": 4757,
-        "line": 4759,
+        "heading_line": 4819,
+        "line": 4821,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147165,8 +147683,8 @@
       "source_location": {
         "heading": "PP-070 - P0-CONTEXT-OBJECT-BUDGET",
         "heading_level": 3,
-        "heading_line": 4830,
-        "line": 4832,
+        "heading_line": 4892,
+        "line": 4894,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147182,8 +147700,8 @@
       "source_location": {
         "heading": "PP-071 - P1-INSTRUCTION-IMPORT-GRAPH",
         "heading_level": 3,
-        "heading_line": 4893,
-        "line": 4895,
+        "heading_line": 4955,
+        "line": 4957,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -147199,8 +147717,25 @@
       "source_location": {
         "heading": "PP-072 - context_epoch",
         "heading_level": 3,
-        "heading_line": 4958,
-        "line": 4960,
+        "heading_line": 5020,
+        "line": 5022,
+        "path": "Plans/Prompt_Pipeline.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "context_epoch_usage_projection",
+      "gui_related": true,
+      "owner_doc": "Plans/Prompt_Pipeline.md",
+      "plan_unit_id": "PP-073",
+      "reasoning_tier": "high",
+      "risk_class": "context_epoch_usage_projection_drift",
+      "source_location": {
+        "heading": "PP-073 - Context Epoch Usage Projection Contract",
+        "heading_level": 3,
+        "heading_line": 4109,
+        "line": 4111,
         "path": "Plans/Prompt_Pipeline.md"
       },
       "status": "accepted",
@@ -151066,6 +151601,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "runtime_artifact_usage_drillthrough",
+      "gui_related": true,
+      "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+      "plan_unit_id": "RAP-044",
+      "reasoning_tier": "high",
+      "risk_class": "runtime_artifact_usage_drillthrough_false_pass",
+      "source_location": {
+        "heading": "RAP-044 - Usage Artifact Drill-Through And Raw Curated Contract",
+        "heading_level": 3,
+        "heading_line": 1942,
+        "line": 1944,
+        "path": "Plans/Runtime_Artifacts_Panel.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "run_graph_owner_surface",
       "gui_related": true,
       "owner_doc": "Plans/Run_Graph_View.md",
@@ -151315,6 +151867,23 @@
         "heading_level": 3,
         "heading_line": 192,
         "line": 194,
+        "path": "Plans/Run_Graph_View.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "run_graph_usage_overlay",
+      "gui_related": true,
+      "owner_doc": "Plans/Run_Graph_View.md",
+      "plan_unit_id": "RGV-016",
+      "reasoning_tier": "high",
+      "risk_class": "run_graph_usage_identity_drift",
+      "source_location": {
+        "heading": "RGV-016 - Usage Cost Overlay Identity Contract",
+        "heading_level": 3,
+        "heading_line": 1088,
+        "line": 1090,
         "path": "Plans/Run_Graph_View.md"
       },
       "status": "accepted",
@@ -152131,6 +152700,23 @@
         "heading_level": 3,
         "heading_line": 1027,
         "line": 1029,
+        "path": "Plans/Run_Modes.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "run_mode_usage_settlement_projection",
+      "gui_related": false,
+      "owner_doc": "Plans/Run_Modes.md",
+      "plan_unit_id": "RM-049",
+      "reasoning_tier": "high",
+      "risk_class": "run_mode_usage_settlement_drift",
+      "source_location": {
+        "heading": "RM-049 - Usage Settlement And Background Contribution Run-Mode Projection",
+        "heading_level": 3,
+        "heading_line": 1116,
+        "line": 1118,
         "path": "Plans/Run_Modes.md"
       },
       "status": "accepted",
@@ -159226,6 +159812,23 @@
       "unit_type": "schema_contract"
     },
     {
+      "context_scope": "usage_projection_storage",
+      "gui_related": false,
+      "owner_doc": "Plans/storage-plan.md",
+      "plan_unit_id": "SP-234",
+      "reasoning_tier": "high",
+      "risk_class": "usage_projection_storage_alias_drift",
+      "source_location": {
+        "heading": "SP-234 - Usage Projection Storage And Alias Contract",
+        "heading_level": 3,
+        "heading_line": 16715,
+        "line": 16717,
+        "path": "Plans/storage-plan.md"
+      },
+      "status": "accepted",
+      "unit_type": "storage_contract"
+    },
+    {
       "context_scope": "skills_generated_tail_disposition",
       "gui_related": false,
       "owner_doc": "Plans/Skills_System.md",
@@ -164632,6 +165235,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "usage_route_command_contract",
+      "gui_related": true,
+      "owner_doc": "Plans/UI_Command_Catalog.md",
+      "plan_unit_id": "UCC-109",
+      "reasoning_tier": "high",
+      "risk_class": "usage_command_route_identity_drift",
+      "source_location": {
+        "heading": "UCC-109 - Usage Route Payload And Legacy Chat Usage Alias Contract",
+        "heading_level": 3,
+        "heading_line": 8122,
+        "line": 8124,
+        "path": "Plans/UI_Command_Catalog.md"
+      },
+      "status": "accepted",
+      "unit_type": "command_contract"
+    },
+    {
       "context_scope": "usage_feature_generated_tail_batch_197",
       "gui_related": false,
       "owner_doc": "Plans/usage-feature.md",
@@ -164641,8 +165261,8 @@
       "source_location": {
         "heading": "UF-001 - Usage Feature Source-Preserving Bridge Retired",
         "heading_level": 3,
-        "heading_line": 4881,
-        "line": 4883,
+        "heading_line": 4884,
+        "line": 4886,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164658,8 +165278,8 @@
       "source_location": {
         "heading": "UF-002 - Usage Feature Envelope",
         "heading_level": 3,
-        "heading_line": 926,
-        "line": 928,
+        "heading_line": 929,
+        "line": 931,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164675,8 +165295,8 @@
       "source_location": {
         "heading": "UF-003 - Rollup Backed Storage Dependency",
         "heading_level": 3,
-        "heading_line": 980,
-        "line": 982,
+        "heading_line": 983,
+        "line": 985,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164692,8 +165312,8 @@
       "source_location": {
         "heading": "UF-004 - Usage Storage Routing Identity",
         "heading_level": 3,
-        "heading_line": 1035,
-        "line": 1037,
+        "heading_line": 1038,
+        "line": 1040,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164709,8 +165329,8 @@
       "source_location": {
         "heading": "UF-005 - Usage Export Taxonomy",
         "heading_level": 3,
-        "heading_line": 1089,
-        "line": 1091,
+        "heading_line": 1092,
+        "line": 1094,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164726,8 +165346,8 @@
       "source_location": {
         "heading": "UF-006 - Projection Trust Blocking And Freshness",
         "heading_level": 3,
-        "heading_line": 1146,
-        "line": 1148,
+        "heading_line": 1149,
+        "line": 1151,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164743,8 +165363,8 @@
       "source_location": {
         "heading": "UF-007 - Account Switch Pressure And Bridge Identity",
         "heading_level": 3,
-        "heading_line": 1203,
-        "line": 1205,
+        "heading_line": 1206,
+        "line": 1208,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164760,8 +165380,8 @@
       "source_location": {
         "heading": "UF-008 - Widget Shell And Project Card Usage Consumers",
         "heading_level": 3,
-        "heading_line": 1261,
-        "line": 1263,
+        "heading_line": 1264,
+        "line": 1266,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164777,8 +165397,8 @@
       "source_location": {
         "heading": "UF-009 - Quota Visibility And Alerts",
         "heading_level": 3,
-        "heading_line": 1313,
-        "line": 1315,
+        "heading_line": 1316,
+        "line": 1318,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164794,8 +165414,8 @@
       "source_location": {
         "heading": "UF-010 - Ledger Analytics Reporting And Retention",
         "heading_level": 3,
-        "heading_line": 1367,
-        "line": 1369,
+        "heading_line": 1370,
+        "line": 1372,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164811,8 +165431,8 @@
       "source_location": {
         "heading": "UF-011 - Chat Context Circle Affordance",
         "heading_level": 3,
-        "heading_line": 1422,
-        "line": 1424,
+        "heading_line": 1425,
+        "line": 1427,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164828,8 +165448,8 @@
       "source_location": {
         "heading": "UF-012 - Context Detail Pane Inspection",
         "heading_level": 3,
-        "heading_line": 1483,
-        "line": 1485,
+        "heading_line": 1486,
+        "line": 1488,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164845,8 +165465,8 @@
       "source_location": {
         "heading": "UF-013 - Per Thread Estimated Cost Rule",
         "heading_level": 3,
-        "heading_line": 1540,
-        "line": 1542,
+        "heading_line": 1543,
+        "line": 1545,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164862,8 +165482,8 @@
       "source_location": {
         "heading": "UF-014 - Cursor Usage Account Augmentation",
         "heading_level": 3,
-        "heading_line": 1593,
-        "line": 1595,
+        "heading_line": 1596,
+        "line": 1598,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164879,8 +165499,8 @@
       "source_location": {
         "heading": "UF-015 - Codex Direct Provider Buckets",
         "heading_level": 3,
-        "heading_line": 1647,
-        "line": 1649,
+        "heading_line": 1650,
+        "line": 1652,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164896,8 +165516,8 @@
       "source_location": {
         "heading": "UF-016 - Copilot Billing Pressure Evidence",
         "heading_level": 3,
-        "heading_line": 1702,
-        "line": 1704,
+        "heading_line": 1705,
+        "line": 1707,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164913,8 +165533,8 @@
       "source_location": {
         "heading": "UF-017 - Copilot Status Disclosure",
         "heading_level": 3,
-        "heading_line": 1757,
-        "line": 1759,
+        "heading_line": 1760,
+        "line": 1762,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164930,8 +165550,8 @@
       "source_location": {
         "heading": "UF-018 - Claude Code Admin Api Usage",
         "heading_level": 3,
-        "heading_line": 1807,
-        "line": 1809,
+        "heading_line": 1810,
+        "line": 1812,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164947,8 +165567,8 @@
       "source_location": {
         "heading": "UF-019 - Gemini Direct Cli Separation",
         "heading_level": 3,
-        "heading_line": 1859,
-        "line": 1861,
+        "heading_line": 1862,
+        "line": 1864,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164964,8 +165584,8 @@
       "source_location": {
         "heading": "UF-020 - Gemini Direct Setup Usage",
         "heading_level": 3,
-        "heading_line": 1910,
-        "line": 1912,
+        "heading_line": 1913,
+        "line": 1915,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164981,8 +165601,8 @@
       "source_location": {
         "heading": "UF-021 - Retired Gemini CLI Usage Evidence",
         "heading_level": 3,
-        "heading_line": 1962,
-        "line": 1964,
+        "heading_line": 1965,
+        "line": 1967,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -164998,8 +165618,8 @@
       "source_location": {
         "heading": "UF-022 - Active Provider Family Pooling Capability Posture",
         "heading_level": 3,
-        "heading_line": 2024,
-        "line": 2026,
+        "heading_line": 2027,
+        "line": 2029,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165015,8 +165635,8 @@
       "source_location": {
         "heading": "UF-023 - Provider Source Confidence Augmentation",
         "heading_level": 3,
-        "heading_line": 2087,
-        "line": 2089,
+        "heading_line": 2090,
+        "line": 2092,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165032,8 +165652,8 @@
       "source_location": {
         "heading": "UF-024 - Direct Provider Status Probes",
         "heading_level": 3,
-        "heading_line": 2144,
-        "line": 2146,
+        "heading_line": 2147,
+        "line": 2149,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165049,8 +165669,8 @@
       "source_location": {
         "heading": "UF-025 - Cost Usage Artifact Routing",
         "heading_level": 3,
-        "heading_line": 2195,
-        "line": 2197,
+        "heading_line": 2198,
+        "line": 2200,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165066,8 +165686,8 @@
       "source_location": {
         "heading": "UF-026 - OpenCode Product Pipeline Reference",
         "heading_level": 3,
-        "heading_line": 2250,
-        "line": 2252,
+        "heading_line": 2253,
+        "line": 2255,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165083,8 +165703,8 @@
       "source_location": {
         "heading": "UF-027 - Backend Input Hierarchy",
         "heading_level": 3,
-        "heading_line": 2303,
-        "line": 2305,
+        "heading_line": 2306,
+        "line": 2308,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165100,8 +165720,8 @@
       "source_location": {
         "heading": "UF-028 - Usage Linked Planning Widget Consumer Boundary",
         "heading_level": 3,
-        "heading_line": 2362,
-        "line": 2364,
+        "heading_line": 2365,
+        "line": 2367,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165117,8 +165737,8 @@
       "source_location": {
         "heading": "UF-029 - Canonical Usage Placement And Exclusions",
         "heading_level": 3,
-        "heading_line": 2414,
-        "line": 2416,
+        "heading_line": 2417,
+        "line": 2419,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165134,8 +165754,8 @@
       "source_location": {
         "heading": "UF-030 - Canonical Usage Event Pipeline",
         "heading_level": 3,
-        "heading_line": 2472,
-        "line": 2474,
+        "heading_line": 2475,
+        "line": 2477,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165151,8 +165771,8 @@
       "source_location": {
         "heading": "UF-031 - Debug Investigation Phase Attribution",
         "heading_level": 3,
-        "heading_line": 2526,
-        "line": 2528,
+        "heading_line": 2529,
+        "line": 2531,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165168,8 +165788,8 @@
       "source_location": {
         "heading": "UF-032 - Billing Attribution Family And Pricing Metadata",
         "heading_level": 3,
-        "heading_line": 2576,
-        "line": 2578,
+        "heading_line": 2579,
+        "line": 2581,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165185,8 +165805,8 @@
       "source_location": {
         "heading": "UF-033 - Artifact Bridge And Inspector Routing",
         "heading_level": 3,
-        "heading_line": 2629,
-        "line": 2631,
+        "heading_line": 2632,
+        "line": 2634,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165202,8 +165822,8 @@
       "source_location": {
         "heading": "UF-034 - Notification Projection Health Gating",
         "heading_level": 3,
-        "heading_line": 2687,
-        "line": 2689,
+        "heading_line": 2690,
+        "line": 2692,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165219,8 +165839,8 @@
       "source_location": {
         "heading": "UF-035 - UsageRecord Schema Source Attribution",
         "heading_level": 3,
-        "heading_line": 2743,
-        "line": 2745,
+        "heading_line": 2746,
+        "line": 2748,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165236,8 +165856,8 @@
       "source_location": {
         "heading": "UF-036 - Cost Precision Display Boundary",
         "heading_level": 3,
-        "heading_line": 2799,
-        "line": 2801,
+        "heading_line": 2802,
+        "line": 2804,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165253,8 +165873,8 @@
       "source_location": {
         "heading": "UF-037 - Blocked Escalation Observability",
         "heading_level": 3,
-        "heading_line": 2851,
-        "line": 2853,
+        "heading_line": 2854,
+        "line": 2856,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165270,8 +165890,8 @@
       "source_location": {
         "heading": "UF-038 - Usage Secrets Fallback Source Labeling",
         "heading_level": 3,
-        "heading_line": 2910,
-        "line": 2912,
+        "heading_line": 2913,
+        "line": 2915,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165287,8 +165907,8 @@
       "source_location": {
         "heading": "UF-039 - Usage Api Refresh Rate Limiting",
         "heading_level": 3,
-        "heading_line": 2961,
-        "line": 2963,
+        "heading_line": 2964,
+        "line": 2966,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165304,8 +165924,8 @@
       "source_location": {
         "heading": "UF-040 - Canonical UsageRecord Write Path",
         "heading_level": 3,
-        "heading_line": 3011,
-        "line": 3013,
+        "heading_line": 3014,
+        "line": 3016,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165321,8 +165941,8 @@
       "source_location": {
         "heading": "UF-041 - Usage Window Model And Platform Semantics",
         "heading_level": 3,
-        "heading_line": 3064,
-        "line": 3066,
+        "heading_line": 3067,
+        "line": 3069,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165338,8 +165958,8 @@
       "source_location": {
         "heading": "UF-042 - Seglog Retention Rollup Freshness",
         "heading_level": 3,
-        "heading_line": 3121,
-        "line": 3123,
+        "heading_line": 3124,
+        "line": 3126,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165355,8 +165975,8 @@
       "source_location": {
         "heading": "UF-043 - Stale Data And Project Scope Disclosure",
         "heading_level": 3,
-        "heading_line": 3175,
-        "line": 3177,
+        "heading_line": 3178,
+        "line": 3180,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165372,8 +165992,8 @@
       "source_location": {
         "heading": "UF-044 - Deferred Time Window Selector",
         "heading_level": 3,
-        "heading_line": 3228,
-        "line": 3230,
+        "heading_line": 3231,
+        "line": 3233,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165389,8 +166009,8 @@
       "source_location": {
         "heading": "UF-045 - Deferred Reset Countdown",
         "heading_level": 3,
-        "heading_line": 3279,
-        "line": 3281,
+        "heading_line": 3282,
+        "line": 3284,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165406,8 +166026,8 @@
       "source_location": {
         "heading": "UF-046 - Deferred Per Run Config Usage",
         "heading_level": 3,
-        "heading_line": 3327,
-        "line": 3329,
+        "heading_line": 3330,
+        "line": 3332,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165423,8 +166043,8 @@
       "source_location": {
         "heading": "UF-047 - Deferred Usage Page Export",
         "heading_level": 3,
-        "heading_line": 3378,
-        "line": 3380,
+        "heading_line": 3381,
+        "line": 3383,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165440,8 +166060,8 @@
       "source_location": {
         "heading": "UF-048 - Deferred Compact Header Usage",
         "heading_level": 3,
-        "heading_line": 3427,
-        "line": 3429,
+        "heading_line": 3430,
+        "line": 3432,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165457,8 +166077,8 @@
       "source_location": {
         "heading": "UF-049 - Deferred Doctor Usage Integration",
         "heading_level": 3,
-        "heading_line": 3476,
-        "line": 3478,
+        "heading_line": 3479,
+        "line": 3481,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165474,8 +166094,8 @@
       "source_location": {
         "heading": "UF-050 - Deferred Cost Column",
         "heading_level": 3,
-        "heading_line": 3525,
-        "line": 3527,
+        "heading_line": 3528,
+        "line": 3530,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165491,8 +166111,8 @@
       "source_location": {
         "heading": "UF-051 - Deferred Alerts History",
         "heading_level": 3,
-        "heading_line": 3573,
-        "line": 3575,
+        "heading_line": 3576,
+        "line": 3578,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165508,8 +166128,8 @@
       "source_location": {
         "heading": "UF-052 - Out Of Scope Peer Benchmarks",
         "heading_level": 3,
-        "heading_line": 3622,
-        "line": 3624,
+        "heading_line": 3625,
+        "line": 3627,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165525,8 +166145,8 @@
       "source_location": {
         "heading": "UF-053 - Usage Plan Out Of Scope Constraints",
         "heading_level": 3,
-        "heading_line": 3670,
-        "line": 3672,
+        "heading_line": 3673,
+        "line": 3675,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165542,8 +166162,8 @@
       "source_location": {
         "heading": "UF-054 - Usage Success Criteria",
         "heading_level": 3,
-        "heading_line": 3722,
-        "line": 3724,
+        "heading_line": 3725,
+        "line": 3727,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165559,8 +166179,8 @@
       "source_location": {
         "heading": "UF-055 - Widget Composed Usage Page Scope",
         "heading_level": 3,
-        "heading_line": 3773,
-        "line": 3775,
+        "heading_line": 3776,
+        "line": 3778,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165576,8 +166196,8 @@
       "source_location": {
         "heading": "UF-056 - Default Usage Layout Non Empty Seed",
         "heading_level": 3,
-        "heading_line": 3829,
-        "line": 3831,
+        "heading_line": 3832,
+        "line": 3834,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165593,8 +166213,8 @@
       "source_location": {
         "heading": "UF-057 - Search Acceleration Analytics Signal",
         "heading_level": 3,
-        "heading_line": 3876,
-        "line": 3878,
+        "heading_line": 3879,
+        "line": 3881,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165610,8 +166230,8 @@
       "source_location": {
         "heading": "UF-058 - Default Usage Widget Layout Table",
         "heading_level": 3,
-        "heading_line": 3930,
-        "line": 3932,
+        "heading_line": 3933,
+        "line": 3935,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165627,8 +166247,8 @@
       "source_location": {
         "heading": "UF-059 - Usage Widget Responsive Grid Resizing",
         "heading_level": 3,
-        "heading_line": 3995,
-        "line": 3997,
+        "heading_line": 3998,
+        "line": 4000,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165644,8 +166264,8 @@
       "source_location": {
         "heading": "UF-060 - Usage Widget Configuration And Persistence",
         "heading_level": 3,
-        "heading_line": 4049,
-        "line": 4051,
+        "heading_line": 4052,
+        "line": 4054,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165661,8 +166281,8 @@
       "source_location": {
         "heading": "UF-061 - Multi Account Widget Observability Boundary",
         "heading_level": 3,
-        "heading_line": 4105,
-        "line": 4107,
+        "heading_line": 4108,
+        "line": 4110,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165678,8 +166298,8 @@
       "source_location": {
         "heading": "UF-062 - Dashboard Add Widget Reuse For Usage Widgets",
         "heading_level": 3,
-        "heading_line": 4171,
-        "line": 4173,
+        "heading_line": 4174,
+        "line": 4176,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165695,8 +166315,8 @@
       "source_location": {
         "heading": "UF-063 - Runtime Recovery Counters And Metrics Integrity",
         "heading_level": 3,
-        "heading_line": 4225,
-        "line": 4227,
+        "heading_line": 4228,
+        "line": 4230,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165712,8 +166332,8 @@
       "source_location": {
         "heading": "UF-064 - Cross Surface Cost Routing And View Ban",
         "heading_level": 3,
-        "heading_line": 4286,
-        "line": 4288,
+        "heading_line": 4289,
+        "line": 4291,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165729,8 +166349,8 @@
       "source_location": {
         "heading": "UF-065 - Reversibility Undo And High Cost Disclosure",
         "heading_level": 3,
-        "heading_line": 4346,
-        "line": 4348,
+        "heading_line": 4349,
+        "line": 4351,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165746,8 +166366,8 @@
       "source_location": {
         "heading": "UF-066 - Bulk Receipt Shape And Owner Precedence",
         "heading_level": 3,
-        "heading_line": 4412,
-        "line": 4414,
+        "heading_line": 4415,
+        "line": 4417,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165763,8 +166383,8 @@
       "source_location": {
         "heading": "UF-067 - Requested Account And Pressure Record Boundary",
         "heading_level": 3,
-        "heading_line": 4482,
-        "line": 4484,
+        "heading_line": 4485,
+        "line": 4487,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165780,8 +166400,8 @@
       "source_location": {
         "heading": "UF-068 - Usage Contract Evidence And Consolidation Gate",
         "heading_level": 3,
-        "heading_line": 4537,
-        "line": 4539,
+        "heading_line": 4540,
+        "line": 4542,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165797,8 +166417,8 @@
       "source_location": {
         "heading": "UF-069 - Subject Routing And Inspector History Focus",
         "heading_level": 3,
-        "heading_line": 4594,
-        "line": 4596,
+        "heading_line": 4597,
+        "line": 4599,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165814,8 +166434,8 @@
       "source_location": {
         "heading": "UF-070 - Export Labels And View Export Boundary",
         "heading_level": 3,
-        "heading_line": 4653,
-        "line": 4655,
+        "heading_line": 4656,
+        "line": 4658,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165831,8 +166451,8 @@
       "source_location": {
         "heading": "UF-071 - Source Control Views And History Dimensions",
         "heading_level": 3,
-        "heading_line": 4710,
-        "line": 4712,
+        "heading_line": 4713,
+        "line": 4715,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165848,8 +166468,8 @@
       "source_location": {
         "heading": "UF-072 - Effective Resolution Display Boundary",
         "heading_level": 3,
-        "heading_line": 4773,
-        "line": 4775,
+        "heading_line": 4776,
+        "line": 4778,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165865,8 +166485,8 @@
       "source_location": {
         "heading": "UF-073 - Provider Provenance Before Resolved Facts",
         "heading_level": 3,
-        "heading_line": 4828,
-        "line": 4830,
+        "heading_line": 4831,
+        "line": 4833,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165882,8 +166502,8 @@
       "source_location": {
         "heading": "UF-074 - Provider Usage Source Confidence And Missing-Vs-Zero Contract",
         "heading_level": 3,
-        "heading_line": 5024,
-        "line": 5026,
+        "heading_line": 5027,
+        "line": 5029,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165899,8 +166519,8 @@
       "source_location": {
         "heading": "UF-075 - Provider Plan Gating And Quota Pressure Presentation",
         "heading_level": 3,
-        "heading_line": 5067,
-        "line": 5069,
+        "heading_line": 5070,
+        "line": 5072,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165916,8 +166536,8 @@
       "source_location": {
         "heading": "UF-076 - Vision Bridge Usage Attribution",
         "heading_level": 3,
-        "heading_line": 5115,
-        "line": 5117,
+        "heading_line": 5118,
+        "line": 5120,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165933,8 +166553,8 @@
       "source_location": {
         "heading": "UF-077 - Free Models Paid Costed Fallback Gates And Budget Evidence",
         "heading_level": 3,
-        "heading_line": 5209,
-        "line": 5211,
+        "heading_line": 5212,
+        "line": 5214,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165950,8 +166570,8 @@
       "source_location": {
         "heading": "UF-078 - Free Models Fallback Receipts And Immutable Request Provenance",
         "heading_level": 3,
-        "heading_line": 5264,
-        "line": 5266,
+        "heading_line": 5267,
+        "line": 5269,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165967,8 +166587,8 @@
       "source_location": {
         "heading": "UF-079 - P1-CONTEXT-BUDGET-RECEIPTS-BY-SOURCE",
         "heading_level": 3,
-        "heading_line": 5327,
-        "line": 5329,
+        "heading_line": 5330,
+        "line": 5332,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -165984,8 +166604,8 @@
       "source_location": {
         "heading": "UF-080 - P0-CACHE-USAGE-ENVELOPE",
         "heading_level": 3,
-        "heading_line": 5615,
-        "line": 5617,
+        "heading_line": 5807,
+        "line": 5809,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -166001,8 +166621,8 @@
       "source_location": {
         "heading": "UF-081 - P2-CACHE-OBSERVABILITY-DASHBOARD",
         "heading_level": 3,
-        "heading_line": 5679,
-        "line": 5681,
+        "heading_line": 5871,
+        "line": 5873,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -166018,8 +166638,8 @@
       "source_location": {
         "heading": "UF-082 - P2-CACHE-PRIVACY-POLICY",
         "heading_level": 3,
-        "heading_line": 5741,
-        "line": 5743,
+        "heading_line": 5933,
+        "line": 5935,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -166035,8 +166655,8 @@
       "source_location": {
         "heading": "UF-083 - P1-USAGE-ANOMALY-QUOTA-GUARD",
         "heading_level": 3,
-        "heading_line": 5808,
-        "line": 5810,
+        "heading_line": 6000,
+        "line": 6002,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -166052,8 +166672,8 @@
       "source_location": {
         "heading": "UF-084 - P2-OTEL-EXPORT-OPTIONAL-ADAPTER",
         "heading_level": 3,
-        "heading_line": 5894,
-        "line": 5896,
+        "heading_line": 6086,
+        "line": 6088,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -166069,8 +166689,8 @@
       "source_location": {
         "heading": "UF-085 - Implementation Ready Usage Accounting Contract",
         "heading_level": 3,
-        "heading_line": 5412,
-        "line": 5414,
+        "heading_line": 5604,
+        "line": 5606,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -166086,8 +166706,42 @@
       "source_location": {
         "heading": "UF-086 - Provider Parser Fixture And Acceptance Contract",
         "heading_level": 3,
-        "heading_line": 5522,
-        "line": 5524,
+        "heading_line": 5714,
+        "line": 5716,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "acceptance_contract"
+    },
+    {
+      "context_scope": "usage_gui_projection",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-087",
+      "reasoning_tier": "high",
+      "risk_class": "usage_gui_projection_false_pass",
+      "source_location": {
+        "heading": "UF-087 - UsageRecord GUI Projection And Alias Contract",
+        "heading_level": 3,
+        "heading_line": 5415,
+        "line": 5417,
+        "path": "Plans/usage-feature.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
+      "context_scope": "usage_gui_acceptance_fixtures",
+      "gui_related": true,
+      "owner_doc": "Plans/usage-feature.md",
+      "plan_unit_id": "UF-088",
+      "reasoning_tier": "high",
+      "risk_class": "gui_usage_acceptance_false_pass",
+      "source_location": {
+        "heading": "UF-088 - GUI Usage Acceptance Fixture Matrix",
+        "heading_level": 3,
+        "heading_line": 5507,
+        "line": 5509,
         "path": "Plans/usage-feature.md"
       },
       "status": "accepted",
@@ -168177,8 +168831,8 @@
       "source_location": {
         "heading": "WM-040 - DRY Method Settings Wiring",
         "heading_level": 3,
-        "heading_line": 3481,
-        "line": 3483,
+        "heading_line": 3547,
+        "line": 3549,
         "path": "Plans/Wiring_Matrix.md"
       },
       "status": "accepted",
@@ -168194,8 +168848,8 @@
       "source_location": {
         "heading": "WM-041 - First-Run Onboarding CTA And Route Wiring",
         "heading_level": 3,
-        "heading_line": 3392,
-        "line": 3394,
+        "heading_line": 3458,
+        "line": 3460,
         "path": "Plans/Wiring_Matrix.md"
       },
       "status": "accepted",
@@ -168211,12 +168865,29 @@
       "source_location": {
         "heading": "WM-042 - FABLE Production Wiring Semantic Repair",
         "heading_level": 3,
+        "heading_line": 3391,
+        "line": 3393,
+        "path": "Plans/Wiring_Matrix.md"
+      },
+      "status": "accepted",
+      "unit_type": "validation_rule"
+    },
+    {
+      "context_scope": "usage_route_wiring",
+      "gui_related": true,
+      "owner_doc": "Plans/Wiring_Matrix.md",
+      "plan_unit_id": "WM-043",
+      "reasoning_tier": "high",
+      "risk_class": "usage_wiring_alias_false_certification",
+      "source_location": {
+        "heading": "WM-043 - Usage Route Wiring Alias And Correlation Gate",
+        "heading_level": 3,
         "heading_line": 3325,
         "line": 3327,
         "path": "Plans/Wiring_Matrix.md"
       },
       "status": "accepted",
-      "unit_type": "validation_rule"
+      "unit_type": "wiring_contract"
     },
     {
       "context_scope": "widget_system_generated_tail_batch_198",
@@ -168455,6 +169126,23 @@
       },
       "status": "accepted",
       "unit_type": "constraint"
+    },
+    {
+      "context_scope": "widget_usage_projection",
+      "gui_related": true,
+      "owner_doc": "Plans/Widget_System.md",
+      "plan_unit_id": "WS-015",
+      "reasoning_tier": "high",
+      "risk_class": "dashboard_usage_widget_false_zero",
+      "source_location": {
+        "heading": "WS-015 - Usage Widget Value-State Contract",
+        "heading_level": 3,
+        "heading_line": 1021,
+        "line": 1023,
+        "path": "Plans/Widget_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
     }
   ],
   "schema_id": "pm.plan_index.dependencies.v1",
@@ -168463,12 +169151,12 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 11759,
+    "depends_on_edge_count": 11836,
     "downstream_blocked_node_count": 0,
-    "edge_count": 13821,
-    "node_count": 5519,
+    "edge_count": 13901,
+    "node_count": 5535,
     "true_cycle_component_count": 0,
-    "unblocks_edge_count": 2062,
+    "unblocks_edge_count": 2065,
     "unresolved_reference_count": 0
   },
   "unresolved_references": []

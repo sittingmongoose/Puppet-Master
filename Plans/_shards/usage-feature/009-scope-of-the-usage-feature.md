@@ -4,7 +4,7 @@ Source: `Plans/usage-feature.md`
 
 Source lines: L128-L372
 
-Source SHA256: `77d66847d0a5a385f8c3d42f444e6c2c60046def1936ac1316ae2d4ba85731e7`
+Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d`
 
 ---
 
@@ -69,10 +69,10 @@ Required content:
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
 
 Estimated-cost rule:
-- per-thread chat cost uses the OpenCode-style normalization formula as the baseline approximation
-- reasoning tokens are charged at the output-token rate for the estimate
-- cache read and cache write buckets are included when pricing metadata exists
-- provider-sensitive cache normalization caveats must remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
+- per-thread chat cost consumes canonical UsageRecord projections first
+- OpenCode-style normalization is a display fallback only when the UsageRecord marks the value `pricing_estimated` or otherwise non-authoritative
+- reasoning/thoughts, cache read, cache write, cache_write_1h/TTL, output_visible, provider_total, and context_estimate display only under the provider mapper's inclusive/exclusive `counting_semantics`
+- provider-sensitive cache normalization caveats, source_class, source_confidence, settlement_status, freshness, and redaction state remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
 ### Cursor -- API (usage/account only; not for model invocation)

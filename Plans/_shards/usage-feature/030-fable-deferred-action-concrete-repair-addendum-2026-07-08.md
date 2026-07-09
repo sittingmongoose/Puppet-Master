@@ -1,10 +1,10 @@
-# Shard 029: FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+# Shard 030: FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
 
 Source: `Plans/usage-feature.md`
 
-Source lines: L5607-L5971
+Source lines: L5799-L6163
 
-Source SHA256: `77d66847d0a5a385f8c3d42f444e6c2c60046def1936ac1316ae2d4ba85731e7`
+Source SHA256: `cff0c06423b3a9a6670c68d5f8ddfa1985a23aa861cb547da65c4348293a907d`
 
 ---
 
