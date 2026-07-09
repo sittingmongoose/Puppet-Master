@@ -63,7 +63,7 @@
     {
       "note": "Schema-valid repair decision row.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "4e68dee324561ae79842570e010d9aa0052e5e9edce1a10edba0b19f861a78ca"
+      "sha256": "845a418b87726502c58f77975fe4a8f80cb517fe43a495e29789badc586382e0"
     },
     {
       "note": "P6 node repair refs.",
@@ -73,7 +73,7 @@
     {
       "note": "Spec Lock refreshed after repair.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "2edbf10eeede8ea3ba1140a286f0037e3258926b3717dc8c8d92474b9b6aed03"
+      "sha256": "e7952e265aaf7434669736234596d7d25c314cfc56aab009e89e528e208b97ec"
     },
     {
       "note": "Shard regeneration report.",
@@ -98,7 +98,7 @@
     {
       "note": "Project-local Codex default model lock: gpt-5.5 with xhigh reasoning.",
       "path": ".codex/config.toml",
-      "sha256": "3a28992f76b0112471671f3e6c6ee17c2668eee5f2bdd3302af74b691e0c42c4"
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "note": "Project-local PM agent lock: gpt-5.5 xhigh read-only.",
@@ -148,7 +148,7 @@
     {
       "note": "Updated File Manager/Editor compact evidence for audit-closed ledger state.",
       "path": "Plans/.evidence/file-manager-editor-ledger-audit-2026-06-11/evidence.json",
-      "sha256": "9b3fd43e003197f1634efcc153fba8f976856d5f5a8ce4f6ec3e9b8738cdff04"
+      "sha256": "304e6e6a03b6aaa9feeb6a945f71e86a1e7f5b71a8e819224b03c2ebe6e29448"
     }
   ],
   "checks": [
@@ -417,6 +417,11 @@
       "name": "final-fable-convergence-pnc019",
       "result": "PASS",
       "details": "PASS: final FABLE convergence repaired 5 deferred rows, preserved 8 explicitly deferred rows with lane reasons, refreshed PNC-019 certification receipt, regenerated node readiness/buildability reports, and created no WorkNodes, NodeSeeds, executable queues, final manifests, implementation files, or production build tasks."
+    },
+    {
+      "name": "pm163-aggregate-gate-signoff-repair",
+      "result": "PASS",
+      "details": "Added plan_migration compact audit-governance reporting and regression coverage for aliases, compact payload completeness, and all aggregate timeout CLI paths without weakening process-group timeout behavior."
     }
   ],
   "commands_run": [

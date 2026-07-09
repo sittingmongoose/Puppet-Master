@@ -297,6 +297,27 @@ class AggregateCommandMappingTests(unittest.TestCase):
             command_id = pm_plans_verify._aggregate_subcheck_command_id(name)
             self.assertIn(command_id, pm_plans_verify.COMMANDS, name)
 
+    def test_audit_governance_returns_compact_entry_for_every_subcheck(self) -> None:
+        names = self._capture_aggregate_names(pm_plans_verify.cmd_audit_governance)
+
+        import argparse
+
+        def fake_run_named_check(name, func, namespace, *, progress, timeout_seconds):
+            return name, {"check": name.replace("_", "-"), "status": "pass", "failures": []}
+
+        args = argparse.Namespace(subcheck_timeout_seconds=17, quiet_progress=True)
+        with mock.patch.object(pm_plans_verify, "run_named_check", side_effect=fake_run_named_check):
+            report = pm_plans_verify.cmd_audit_governance(args)
+
+        self.assertIn("plan_migration", names)
+        for name in names:
+            self.assertIn(name, report)
+            self.assertEqual(
+                report[name],
+                {"status": "pass", "failures": 0, "failure_samples": []},
+                name,
+            )
+
     def test_audit_governance_aliases_do_not_emit_invalid_choice_validator_no_output(self) -> None:
         import argparse
 
@@ -370,6 +391,14 @@ class AggregateCommandMappingTests(unittest.TestCase):
                 "audit_closure",
                 "validate_audit_status_index",
                 "audit_status_index",
+                "validate_implementation_readiness",
+                "implementation_readiness",
+                "validate_gui_asset_policy",
+                "gui_asset_policy",
+                "check_shards",
+                "shards",
+                "validate_prd_planning_runtime_contracts",
+                "prd_planning_runtime_contracts",
             ):
                 pm_plans_verify.run_named_check(
                     name,
@@ -379,7 +408,7 @@ class AggregateCommandMappingTests(unittest.TestCase):
                     timeout_seconds=17,
                 )
 
-        self.assertEqual(len(captured_argvs), 6)
+        self.assertEqual(len(captured_argvs), 14)
         for argv in captured_argvs:
             timeout_flag_index = argv.index("--subcheck-timeout-seconds")
             self.assertEqual(argv[timeout_flag_index + 1], "17", argv)
