@@ -3485,7 +3485,7 @@ Worker-facing handoff and `/retry` memory are project-scoped structured runtime 
 
 Graph and history consumers use viewport culling with overscan, table virtualization, per-generation layout caching, incremental row `/item` updates, and frame-cadence burst throttling; when rectangle-based rendering falls below target performance, the fallback is canvas-style rendering.
 
-A CtA card, blocked notice, search result, artifact pivot, thread usage jump, and `cmd.chat.focus_thread_usage` all restore destination and scope using the same internal payload model. Command palette entries, search results, artifact deep-links, blocked notices, and FileManager / `/Editor` opens all resolve through this internal target model rather than chat-local navigation. `cmd.chat.focus_thread_usage` focuses the thread Usage detail surface and may reuse side-panel docking or `/floating` realization. Blocked notices are rendered from `allowed_action_ids[]`, `allowed_action_ids`, and blocked metadata; `assistant-chat-design.md` / `assistant-chat-design` must not invent thread-local recovery semantics.
+A CtA card, blocked notice, search result, artifact pivot, thread usage jump, and legacy thread-usage command aliases all restore destination and scope using the same internal payload model. Command palette entries, search results, artifact deep-links, blocked notices, and FileManager / `/Editor` opens all resolve through this internal target model rather than chat-local navigation. Legacy `cmd.chat.focus_thread_usage` citations normalize to route/open Usage or the editor-tab Context Detail Pane; the old command ID is compatibility-only and must not remain a canonical dispatch target. Blocked notices are rendered from `allowed_action_ids[]`, `allowed_action_ids`, and blocked metadata; `assistant-chat-design.md` / `assistant-chat-design` must not invent thread-local recovery semantics.
 
 Route catalog policy is deterministic. Do not make a large public `cmd.nav.*` or `cmd.nav` family the main catalog-facing answer. Do not use hedge words such as `optional` or `maybe` when stating canonical direction. State allowed serialized data classes directly: wizard-step detail is a narrow serialized anchor, not a top-level base route field. `OpenFile` stays path `/editor` scoped; `OpenSubject` is the identity-open contract consumed by FileManager and assistant chat.
 
@@ -21790,7 +21790,7 @@ plan_unit_id: ACD-410
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: CtA cards, blocked notices, search results, artifact pivots, thread usage jumps, command palette entries, FileManager, and `/Editor` opens resolve through the same internal target payload model; `cmd.chat.focus_thread_usage` focuses thread Usage detail and may dock/floating.
+canonical_text: CtA cards, blocked notices, search results, artifact pivots, thread usage jumps, command palette entries, FileManager, and `/Editor` opens resolve through the same internal target payload model; legacy `cmd.chat.focus_thread_usage` citations normalize to route/open Usage or the editor-tab Context Detail Pane and remain compatibility-only.
 gui_related: true
 gui_classification_reason: Target payload navigation affects visible CtA, blocked, search, artifact, FileManager, editor, and usage surfaces.
 depends_on: [ACD-402]
@@ -21798,7 +21798,7 @@ unblocks: []
 acceptance_criteria:
   - Chat target restores destination and scope using a shared internal payload model.
   - Command palette entries, search results, artifact deep-links, blocked notices, and FileManager/editor opens resolve through this target model.
-  - Thread usage focus command targets the thread Usage detail surface.
+  - Thread usage focus compatibility callers normalize to route/open Usage or the thread Context Detail Pane instead of dispatching `cmd.chat.focus_thread_usage`.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -21820,6 +21820,7 @@ preserved_exact_tokens:
   - "/floating"
   - "/Editor"
 negative_constraints:
+  - "`cmd.chat.focus_thread_usage` must not remain a canonical dispatch target."
   - "Assistant chat must not invent thread-local recovery semantics."
 owner_hints:
   - Plans/assistant-chat-design.md
@@ -23556,3 +23557,79 @@ Operation card state transitions:
 | `running` | `cancel` | `cancelled` |
 
 Each transition record carries `operation_id`, `from_state`, `to_state`, `event_id`, `actor_ref`, and `created_at_utc`.
+
+## Usage GUI Propagation Addendum - 2026-07-09
+
+This addendum binds Assistant Chat context and usage displays to the canonical UsageRecord projection. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### ACD-434 - Context Detail UsageRecord Projection Contract
+
+```yaml
+plan_unit_id: ACD-434
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat header context circle, hover status module, More Details action, Compact Now action, Context Detail Pane, message info-popover, and Raw/Curated views consume the same UsageRecord/context projection records used by Usage, Ledger, Runtime Artifacts, Run Graph, and Orchestrator. The context circle is an entrypoint and status disclosure, not a cost calculator. Hover shows stateful usage, tokens, context, cost, quota, freshness, and hidden/background contribution summaries from UsageRecord projections. More Details opens or focuses the editor-tab Context Detail Pane through canonical route/open. Compact Now dispatches only `cmd.chat.compact_context` and never recalculates usage. Message info-popovers link to the message-scoped UsageRecord/context rows by usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, raw_payload_ref, trace_ref, or receipt refs when available. Curated view renders normalized provider, token, context, cost, quota, authority, settlement, and source-confidence fields; Raw view renders redacted raw_payload_ref, redaction_status, provider_payload_hash, omitted evidence counts, and permission state without exposing secrets.
+gui_related: true
+gui_classification_reason: Defines visible chat context, usage, compact, detail-pane, and message inspection behavior.
+depends_on: [ACD-092, ACD-410, UF-085, UF-086, UF-087, RAP-043]
+unblocks: []
+acceptance_criteria:
+  - Context circle hover displays provider-authoritative, estimated, stale, partial, unknown, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state and source_confidence, not chat-local math.
+  - "`More Details` opens the editor-tab Context Detail Pane through route/open and preserves usage_event_ref plus attempt_id, provider_attempt_ref, node_id, tool_call_id, trace_ref, receipt refs, and raw_payload_ref when present."
+  - "`Compact Now` dispatches only `cmd.chat.compact_context`, preserves the context epoch, and does not mutate or recompute historical UsageRecord totals."
+  - Context Detail Pane displays cache_read, cache_write, cache_write_1h or cache_write_ttl, output_total, output_visible, reasoning/thoughts, provider_total, context_estimate, counting_semantics, settlement_status, and projection_freshness when present.
+  - Message info-popover shows human-readable fields first and deep-links to the message's canonical usage/context record rather than constructing a second message usage schema.
+  - Raw view shows redacted refs, hashes, omitted counts, and permissioned-unavailable states, and never displays credentials, account identifiers, unredacted provider payloads, or local machine paths.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - future GUI usage projection fixture suite
+risk_class: chat_usage_projection_false_pass
+reasoning_tier: high
+context_scope: assistant_chat_usage_projection
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: assistant_chat_usage_projection_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/assistant-chat-design.md:1217-1248"
+  - "Plans/assistant-chat-design.md:1706-1720"
+  - "Plans/usage-feature.md:156-194"
+  - "Plans/usage-feature.md:5412-5605"
+  - "Plans/Runtime_Artifacts_Panel.md:262-316"
+  - "uploaded:opencode-dev/packages/app/src/components/session-context-usage.tsx"
+  - "uploaded:opencode-dev/packages/app/src/components/session/session-context-tab.tsx"
+  - "https://github.com/anomalyco/opencode/issues/30649"
+preserved_exact_tokens:
+  - Context Detail Pane
+  - context circle
+  - More Details
+  - Compact Now
+  - Curated
+  - Raw
+  - UsageRecord
+  - usage_event_ref
+  - provider_attempt_ref
+  - raw_payload_ref
+  - source_confidence
+  - settlement_status
+  - counting_semantics
+negative_constraints:
+  - Do not implement a chat-local cost model or message-local usage schema.
+  - Do not treat context_estimate as billing, cost, quota, or provider authority.
+  - Do not make hover disclosure dispatch compaction or detail navigation without explicit user action.
+  - Do not expose unredacted raw provider payloads, credentials, account identifiers, or local paths in Raw view.
+  - Do not keep `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, or `cmd.chat.close_thread_usage` as canonical chat commands.
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+```
