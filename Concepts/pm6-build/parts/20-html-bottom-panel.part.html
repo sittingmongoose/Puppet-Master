@@ -1,0 +1,179 @@
+        <div class="resizer-row" id="terminalResizer"></div>
+
+        <div class="bottom-panel pane-container" id="bottomPanel" style="position:relative;">
+          <div class="pane-header-drag" draggable="true" data-pane="bottomPanel" style="position:absolute; top:-8px; left:50%; transform:translateX(-50%); width:40px; height:6px; background:var(--border-light); border-radius:4px; cursor:grab; z-index:50;"></div>
+          <div class="bottom-tabs">
+            <div class="bottom-tabs-left" role="tablist" aria-label="Bottom runtime">
+              <span class="tab active" role="tab" aria-selected="true" tabindex="0" data-bottom-tab="terminal" onclick="switchBottomTab('terminal')">Terminal</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="problems" onclick="switchBottomTab('problems')">Problems</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="output" onclick="switchBottomTab('output')">Output</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="ports" onclick="switchBottomTab('ports')">Ports</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="browser" onclick="switchBottomTab('browser')">Browser</span>
+              <span class="tab" role="tab" aria-selected="false" tabindex="-1" data-bottom-tab="debug" onclick="switchBottomTab('debug')">Debug</span>
+            </div>
+            <div id="pmTermCenterOuter" class="pm-term-center-outer">
+              <div id="pmTerminalCenterWrap" class="pm-term-center-wrap" aria-label="Terminal workspace"></div>
+            </div>
+            <div id="pmBottomTermChrome" class="pm-term-bottom-chrome" role="toolbar" aria-label="Terminal split and add"></div>
+            <div class="bottom-tabs-right">
+              <button class="collapse-btn" id="collapseBottom" aria-expanded="true" aria-controls="bottomTabsContent">&#9660;</button>
+            </div>
+          </div>
+          <div class="bottom-tabs-content" id="bottomTabsContent">
+            <div class="bottom-host-panel active terminal-grid-flex" id="bottomTerminalHost" data-group="build" style="flex:1; min-height:0; background:var(--terminal-bg);"><span class="pm-terminal-host-placeholder" style="padding:var(--sm);font-size:11px;color:var(--text-muted);display:block;">Initializing terminal workspace…</span></div>
+
+            <div class="bottom-host-panel" id="bottomProblemsHost">
+              <div class="pm-bottom-linked-header">
+                <span>Linked <code>dev_session_id</code>: <strong id="pmProblemsDevId">dev-sess-vite-01</strong></span>
+                <span><code>terminal_session_id</code>: <strong id="pmProblemsTermId">ts-sess-alpha</strong></span>
+                <button type="button" class="pm-tiny-btn" title="cmd.terminal.show" onclick="PM_TERMINAL_DEMO.revealSession(PM_TERMINAL_DEMO.linkedSessions.problems)">Reveal in Terminal</button>
+                <button type="button" class="pm-tiny-btn" title="cmd.terminal.focus_session" onclick="PM_TERMINAL_DEMO.focusSession(PM_TERMINAL_DEMO.linkedSessions.problems)">Focus shell only</button>
+              </div>
+              <div style="flex:1; overflow:auto; padding: var(--sm);">
+                <table class="pm-problems-table" id="pmProblemsTable">
+                  <thead><tr><th>Sev</th><th>Code</th><th>Message</th><th>File</th></tr></thead>
+                  <tbody>
+                    <tr data-session="ts-sess-alpha" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')"><td>E</td><td>E0433</td><td>unresolved import `slint`</td><td>src/main.rs:12</td></tr>
+                    <tr data-session="ts-sess-alpha" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')"><td>W</td><td>unused</td><td>unused variable `cfg`</td><td>src/config.rs:4</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="bottom-host-panel" id="bottomOutputHost">
+              <div class="pm-bottom-linked-header">
+                <span>Build output &mdash; linked <code>ts-sess-alpha</code></span>
+                <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.focusSession('ts-sess-alpha')">Focus shell</button>
+                <span class="pm-degrade-warn" title="FinalGUISpec §11.3">Stream throttle: 33ms (30fps)</span>
+              </div>
+              <pre id="pmOutputPre" style="flex:1; margin:0; padding:var(--md); font-size:10px; overflow:auto; font-family:monospace; color:var(--text-primary);">   Compiling puppet-master v0.1.0
+   Compiling slint v1.5.1
+error[E0433]: unresolved import `slint`
+  --> src/main.rs:12:5
+   |
+12 | use slint;
+   |     ^^^^^</pre>
+            </div>
+
+            <div class="bottom-host-panel" id="bottomPortsHost">
+              <div class="pm-bottom-linked-header">
+                <span>Hot reload &mdash; <code id="pmPortsDevId">dev-sess-vite-01</code></span>
+                <label class="pm-tiny-btn" style="display:inline-flex;align-items:center;gap:4px;"><input type="checkbox" checked disabled> Watch active</label>
+                <span style="font-size:9px;color:var(--text-muted);">Excludes node_modules, target, .git, build &middot; cap 5000 paths</span>
+              </div>
+              <div style="flex:1; overflow:auto; padding: var(--sm);">
+                <table class="pm-ports-table">
+                  <thead><tr><th>Port</th><th>Process</th><th>Linked session</th><th>Action</th></tr></thead>
+                  <tbody>
+                    <tr><td>3000</td><td>vite</td><td>ts-sess-gamma</td><td><button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.revealSession('ts-sess-gamma')">Open</button></td></tr>
+                    <tr><td>54112</td><td>debug DAP</td><td>&mdash;</td><td><span style="color:var(--text-muted);">1 session / project</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Browser Bottom Content (Console / Network / Evidence) -->
+            <div class="browser-bottom-content bottom-host-panel" id="bottomBrowserContent" style="flex:1; min-height:0;">
+              <div class="pm-bottom-linked-header">
+                <span>Focused <code>browser_session</code>:</span>
+                <select id="pmBottomBrowserSessionSelect" style="font-size:10px;max-width:200px;">
+                  <option value="workspace_preview">workspace_preview &mdash; localhost:3000</option>
+                  <option value="automation_session">automation_session &mdash; test-runner</option>
+                </select>
+                <span style="font-size:9px;color:var(--text-muted);">Bottom panel = session-adjacent tools (not canonical browsing host)</span>
+              </div>
+              <div class="browser-bottom-subtabs">
+                <span class="subtab active" data-browser-subtab="console" onclick="switchBrowserSubtab('console')">Console</span>
+                <span class="subtab" data-browser-subtab="network" onclick="switchBrowserSubtab('network')">Network</span>
+                <span class="subtab" data-browser-subtab="evidence" onclick="switchBrowserSubtab('evidence')">Evidence</span>
+              </div>
+              <div class="browser-console-pane" id="browserConsolePane" style="flex:1; overflow-y:auto;">
+                <div class="console-line info">[HMR] Waiting for update signal from WDS...</div>
+                <div class="console-line">console.log("App initialized")</div>
+                <div class="console-line info">[HMR] Module updated: ./src/App.tsx</div>
+                <div class="console-line">fetch: GET /api/user &rarr; 200 (14ms)</div>
+                <div class="console-line">fetch: GET /api/config &rarr; 200 (8ms)</div>
+                <div class="console-line warn">Warning: Each child in a list should have a unique "key" prop.</div>
+                <div class="console-line">fetch: POST /api/auth/login &rarr; 200 (142ms)</div>
+                <div class="console-line error">console.error("Failed to load resource: /api/notifications 404")</div>
+                <div class="console-line">fetch: GET /api/dashboard &rarr; 200 (22ms)</div>
+                <div class="console-line info">[WDS] Live Reloading enabled.</div>
+              </div>
+              <div class="browser-network-pane" id="browserNetworkPane" style="display:none; flex:1; overflow-y:auto;">
+                <table class="network-table">
+                  <thead><tr><th>Status</th><th>Method</th><th>URL</th><th>Time</th><th>Size</th></tr></thead>
+                  <tbody>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/</td><td>42ms</td><td>3.2KB</td></tr>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/static/css/main.css</td><td>18ms</td><td>1.1KB</td></tr>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/static/js/bundle.js</td><td>56ms</td><td>142KB</td></tr>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/api/user</td><td>14ms</td><td>245B</td></tr>
+                    <tr><td class="status-ok">200</td><td>POST</td><td>/api/auth/login</td><td>142ms</td><td>1.8KB</td></tr>
+                    <tr><td class="status-redirect">304</td><td>GET</td><td>/favicon.ico</td><td>3ms</td><td>&mdash;</td></tr>
+                    <tr><td class="status-err">404</td><td>GET</td><td>/api/notifications</td><td>22ms</td><td>52B</td></tr>
+                    <tr><td class="status-ok">200</td><td>GET</td><td>/api/dashboard</td><td>22ms</td><td>890B</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="browser-evidence-pane" id="browserEvidencePane" style="display:none; flex:1; overflow-y:auto;">
+                <div class="evidence-item">
+                  <span class="ev-icon">&#128247;</span>
+                  <span class="ev-label">screenshot-login-page.png &mdash; Full page capture</span>
+                  <span class="ev-time">2m ago</span>
+                </div>
+                <div class="evidence-item">
+                  <span class="ev-icon">&#9670;</span>
+                  <span class="ev-label">&lt;button.login-submit-btn&gt; &mdash; Login form submit button</span>
+                  <span class="ev-time">3m ago</span>
+                </div>
+                <div class="evidence-item">
+                  <span class="ev-icon">&#9998;</span>
+                  <span class="ev-label">"Welcome to MyApp" &mdash; hero heading text selection</span>
+                  <span class="ev-time">5m ago</span>
+                </div>
+                <div class="evidence-item">
+                  <span class="ev-icon">&#128247;</span>
+                  <span class="ev-label">screenshot-error-state.png &mdash; Validation error capture</span>
+                  <span class="ev-time">8m ago</span>
+                </div>
+                <div class="evidence-item">
+                  <span class="ev-icon">&#128250;</span>
+                  <span class="ev-label">trace-login-flow.zip &mdash; Automation session recording</span>
+                  <span class="ev-time">12m ago</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bottom-host-panel" id="bottomDebugHost">
+              <div class="pm-bottom-linked-header">
+                <span>Debug (DAP) &mdash; linked workflow</span>
+                <button type="button" class="pm-tiny-btn" onclick="PM_TERMINAL_DEMO.dispatch('cmd.dev.show_problems',{})">Show Problems</button>
+                <span style="font-size:9px;color:var(--text-muted);">Evaluate timeout 10s &middot; Launch 30s &middot; max 1 debug session / project</span>
+              </div>
+              <div class="pm-debug-grid">
+                <div class="pm-debug-cell">
+                  <h4>Variables</h4>
+                  <div>self = MainWindow { }</div>
+                  <div>ctx = RenderContext</div>
+                </div>
+                <div class="pm-debug-cell">
+                  <h4>Call stack</h4>
+                  <div>main @ main.rs:1</div>
+                  <div>run @ lib.rs:42</div>
+                </div>
+                <div class="pm-debug-cell">
+                  <h4>Breakpoints</h4>
+                  <div><input type="checkbox" checked disabled> main.rs : 12</div>
+                  <div><input type="checkbox" disabled> lib.rs : 40</div>
+                </div>
+                <div class="pm-debug-cell">
+                  <h4>Debug console</h4>
+                  <div style="font-family:monospace;font-size:10px;">&gt; threads<br>1: main (stopped)<br>&gt; </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<span id="chat-panel" hidden></span>
+<span id="switchToChatThread" hidden></span>
+<div class="resizer-col hidden" id="chatResizer"></div>

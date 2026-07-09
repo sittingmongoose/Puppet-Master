@@ -1,0 +1,907 @@
+<script id="pm6-js-dashboard">
+(function () {
+  'use strict';
+  /* ==========================================================
+     PMConcept6 — Dashboard page runtime
+     - 4 default widgets rendered live from PM_DEMO state
+     - CTA cards (hitl_approval on run.gate, usage warning ambient)
+     - Add Widget catalog (8 entries, all insert + render)
+     - drag-to-reorder + edge-resize + grid snap (in-memory)
+     - Tastebook editor content (static fallback in markup,
+       richer bodies rendered here / from PM_DEMO_TEXT.files)
+     ========================================================== */
+
+  var D = {
+    gateId: null,
+    gateOpen: false,
+    paused: false,
+    complete: false,
+    pct: 62,
+    nodesDone: 23,
+    cooldown: 41 * 60 + 12,
+    usagePct: 78,
+    metricIdx: 0,
+    added: {},                 // catalog kind -> true
+    layoutKey: 'widget_layout:v1:dashboard' // in-memory only; reload = pristine
+  };
+
+  function root() { return document.getElementById('panel-dashboard'); }
+  function $(sel, scope) { return (scope || root() || document).querySelector(sel); }
+  function $$(sel, scope) {
+    var r = scope || root();
+    return r ? Array.prototype.slice.call(r.querySelectorAll(sel)) : [];
+  }
+  function say(msg) { try { if (window.toast) window.toast(msg); } catch (e) {} }
+  function reg(id, fn) {
+    try {
+      if (window.PM_DEMO && window.PM_DEMO.actions && window.PM_DEMO.actions.register) {
+        window.PM_DEMO.actions.register(id, function (ctx) {
+          try { fn(ctx); } catch (e) { try { console.error('[pm6-dash]', id, e); } catch (x) {} }
+        });
+      }
+    } catch (e) {}
+  }
+  function on(topic, fn) {
+    try {
+      if (window.PM_DEMO && window.PM_DEMO.on) {
+        window.PM_DEMO.on(topic, function (p, t) {
+          try { fn(p, t); } catch (e) { try { console.error('[pm6-dash]', topic, e); } catch (x) {} }
+        });
+      }
+    } catch (e) {}
+  }
+  function injectIcons(scope) {
+    if (!window.PM_ICONS) return;
+    $$('.pm6-ico[data-pm6-icon]', scope || root()).forEach(function (el) {
+      var k = el.getAttribute('data-pm6-icon');
+      if (window.PM_ICONS[k] && !el.firstElementChild) el.innerHTML = window.PM_ICONS[k];
+    });
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  /* ==========================================================
+     Tastebook editor files (pre-highlighted; PM_DEMO_TEXT wins)
+     ========================================================== */
+  function K(s) { return '<span style="color:var(--accent-magenta);">' + s + '</span>'; }   // keyword
+  function C(s) { return '<span style="color:var(--text-muted);">' + s + '</span>'; }        // comment
+  function S(s) { return '<span style="color:var(--accent-lime);">' + s + '</span>'; }       // string
+  function F(s) { return '<span style="color:var(--accent-blue);">' + s + '</span>'; }       // fn/type
+
+  var FILES = {
+    'src/main.rs': { diffs: { 8: 'added', 9: 'added', 10: 'added' }, lines: [
+      K('use') + ' axum::{' + F('Router') + ', routing::{get, post}};',
+      K('use') + ' sqlx::postgres::' + F('PgPoolOptions') + ';',
+      K('use') + ' tower_http::cors::' + F('CorsLayer') + ';',
+      K('mod') + ' models; ' + K('mod') + ' routes;',
+      '',
+      C('/// Tastebook API — recipes, ratings, import-from-URL.'),
+      '#[tokio::main]',
+      K('async fn') + ' ' + F('main') + '() -&gt; anyhow::' + F('Result') + '&lt;()&gt; {',
+      '    ' + K('let') + ' pool = ' + F('PgPoolOptions') + '::new()',
+      '        .max_connections(8)',
+      '        .connect(&amp;std::env::var(' + S('"DATABASE_URL"') + ')?).await?;',
+      '    ' + K('let') + ' app = ' + F('Router') + '::new()',
+      '        .route(' + S('"/api/recipes"') + ', get(routes::recipes::list))',
+      '        .route(' + S('"/api/recipes"') + ', post(routes::recipes::create))',
+      '        .route(' + S('"/api/import"') + ', post(routes::import::from_url))',
+      '        .layer(' + F('CorsLayer') + '::permissive())',
+      '        .with_state(pool);',
+      '    ' + K('let') + ' listener = tokio::net::' + F('TcpListener') + '::bind(' + S('"0.0.0.0:8080"') + ').await?;',
+      '    axum::serve(listener, app).await?;',
+      '    ' + F('Ok') + '(())',
+      '}'
+    ] },
+    'src/routes/recipes.rs': { diffs: { 6: 'modified', 12: 'added', 13: 'added', 14: 'added' }, lines: [
+      K('use') + ' axum::{extract::{' + F('State') + ', ' + F('Path') + '}, ' + F('Json') + '};',
+      K('use') + ' crate::models::recipe::{' + F('Recipe') + ', ' + F('NewRecipe') + '};',
+      '',
+      C('/// GET /api/recipes — newest first, rating attached.'),
+      K('pub async fn') + ' ' + F('list') + '(' + F('State') + '(pool): ' + F('State') + '&lt;' + F('PgPool') + '&gt;)',
+      '    -&gt; ' + F('Json') + '&lt;' + F('Vec') + '&lt;' + F('Recipe') + '&gt;&gt; {',
+      '    ' + K('let') + ' rows = sqlx::query_as!(' + F('Recipe') + ', ' + S('"SELECT * FROM recipes ORDER BY created_at DESC LIMIT 50"') + ')',
+      '        .fetch_all(&amp;pool).await.unwrap_or_default();',
+      '    ' + F('Json') + '(rows)',
+      '}',
+      '',
+      C('/// POST /api/recipes — validates ingredients, computes cook time.'),
+      K('pub async fn') + ' ' + F('create') + '(' + F('State') + '(pool): ' + F('State') + '&lt;' + F('PgPool') + '&gt;,',
+      '    ' + F('Json') + '(input): ' + F('Json') + '&lt;' + F('NewRecipe') + '&gt;) -&gt; ' + F('Json') + '&lt;' + F('Recipe') + '&gt; {',
+      '    input.validate().expect(' + S('"ingredient list must not be empty"') + ');',
+      '    ' + K('let') + ' rec = ' + F('Recipe') + '::insert(&amp;pool, input).await.unwrap();',
+      '    ' + F('Json') + '(rec)',
+      '}'
+    ] },
+    'src/models/recipe.rs': { diffs: { 9: 'added', 10: 'added' }, lines: [
+      K('use') + ' serde::{' + F('Serialize') + ', ' + F('Deserialize') + '};',
+      K('use') + ' sqlx::' + F('FromRow') + ';',
+      '',
+      '#[derive(' + F('Serialize') + ', ' + F('Deserialize') + ', ' + F('FromRow') + ')]',
+      K('pub struct') + ' ' + F('Recipe') + ' {',
+      '    ' + K('pub') + ' id: ' + F('i64') + ',',
+      '    ' + K('pub') + ' title: ' + F('String') + ',',
+      '    ' + K('pub') + ' minutes: ' + F('i32') + ',',
+      '    ' + K('pub') + ' rating: ' + F('f32') + ',',
+      '    ' + K('pub') + ' source_url: ' + F('Option') + '&lt;' + F('String') + '&gt;,',
+      '    ' + K('pub') + ' created_at: chrono::' + F('DateTime') + '&lt;chrono::' + F('Utc') + '&gt;,',
+      '}',
+      '',
+      '#[derive(' + F('Deserialize') + ')]',
+      K('pub struct') + ' ' + F('NewRecipe') + ' {',
+      '    ' + K('pub') + ' title: ' + F('String') + ',',
+      '    ' + K('pub') + ' ingredients: ' + F('Vec') + '&lt;' + F('String') + '&gt;,',
+      '}'
+    ] },
+    'web/src/routes/+page.svelte': { diffs: { 2: 'modified' }, lines: [
+      '&lt;' + K('script') + '&gt;',
+      '  ' + K('import') + ' ' + F('RecipeCard') + ' ' + K('from') + ' ' + S("'$lib/RecipeCard.svelte'") + ';',
+      '  ' + K('export let') + ' data; ' + C('// recipes from +page.server.js'),
+      '&lt;/' + K('script') + '&gt;',
+      '',
+      '&lt;' + F('h1') + '&gt;Share recipes you actually cook&lt;/' + F('h1') + '&gt;',
+      '&lt;' + F('div') + ' class=' + S('"grid"') + '&gt;',
+      '  {#each data.recipes ' + K('as') + ' r}',
+      '    &lt;' + F('RecipeCard') + ' recipe={r} /&gt;',
+      '  {/each}',
+      '&lt;/' + F('div') + '&gt;'
+    ] },
+    'Cargo.toml': { diffs: {}, lines: [
+      '[package]',
+      'name = ' + S('"tastebook"'),
+      'version = ' + S('"0.4.2"'),
+      'edition = ' + S('"2021"'),
+      '',
+      '[dependencies]',
+      'axum = ' + S('"0.7"'),
+      'tokio = { version = ' + S('"1"') + ', features = [' + S('"full"') + '] }',
+      'sqlx = { version = ' + S('"0.7"') + ', features = [' + S('"postgres"') + ', ' + S('"chrono"') + '] }',
+      'serde = { version = ' + S('"1"') + ', features = [' + S('"derive"') + '] }',
+      'anyhow = ' + S('"1"'),
+      'tower-http = { version = ' + S('"0.5"') + ', features = [' + S('"cors"') + '] }'
+    ] },
+    'docker-compose.yml': { diffs: {}, lines: [
+      'services:',
+      '  api:',
+      '    build: .',
+      '    ports: [' + S('"8080:8080"') + ']',
+      '    depends_on: [postgres, redis]',
+      '  web:',
+      '    build: ./web',
+      '    ports: [' + S('"5173:5173"') + ']',
+      '  postgres:',
+      '    image: ' + S('postgres:16'),
+      '    ports: [' + S('"5432:5432"') + ']',
+      '  redis:',
+      '    image: ' + S('redis:7'),
+      '    ports: [' + S('"6379:6379"') + ']'
+    ] },
+    'Dockerfile': { diffs: {}, lines: [
+      K('FROM') + ' rust:1.79 ' + K('AS') + ' build',
+      K('WORKDIR') + ' /app',
+      K('COPY') + ' . .',
+      K('RUN') + ' cargo build --release',
+      '',
+      K('FROM') + ' debian:bookworm-slim',
+      K('COPY') + ' --from=build /app/target/release/tastebook /usr/local/bin/',
+      K('EXPOSE') + ' 8080',
+      K('CMD') + ' [' + S('"tastebook"') + ']'
+    ] },
+    'README.md': { diffs: {}, lines: [
+      '# Tastebook',
+      '',
+      'Share recipes you actually cook. SvelteKit + Rust/Axum + Postgres.',
+      '',
+      '## Dev',
+      '- `docker compose up` then `cargo run`',
+      '- web on :5173, API on :8080'
+    ] }
+  };
+  var BASENAMES = {};
+  Object.keys(FILES).forEach(function (p) {
+    var b = p.split('/').pop();
+    if (!BASENAMES[b]) BASENAMES[b] = p;
+  });
+  function resolveFile(name) {
+    if (!name) return null;
+    if (FILES[name]) return name;
+    var b = String(name).split('/').pop();
+    return BASENAMES[b] || null;
+  }
+  function fileBody(path) {
+    try {
+      var t = window.PM_DEMO_TEXT && window.PM_DEMO_TEXT.files && window.PM_DEMO_TEXT.files[path];
+      if (t) {
+        if (typeof t === 'string') return { lines: t.split('\n'), diffs: {} };
+        if (t.lines) return t;
+      }
+    } catch (e) {}
+    return FILES[path];
+  }
+
+  function pm6RenderFile(name, prefix) {
+    var path = resolveFile(name);
+    var fd = path && fileBody(path);
+    if (!fd) return false;
+    var gutter = document.getElementById(prefix + 'Gutter');
+    var code = document.getElementById(prefix + 'Code');
+    var minimap = document.getElementById(prefix + 'Minimap');
+    if (!gutter || !code) return false;
+    var pre = { added: '+', deleted: '-', modified: '~', conflict: '!' };
+    var g = '', c = '';
+    fd.lines.forEach(function (line, i) {
+      var dt = (fd.diffs && fd.diffs[i]) || '';
+      g += '<div class="gutter-line"><span class="gutter-line-num' + (dt ? ' diff-' + dt : '') + '">' + (i + 1) + '</span></div>';
+      var px = pre[dt] ? '<span class="diff-prefix ' + dt + '">' + pre[dt] + '</span>' : '<span class="diff-prefix">&nbsp;</span>';
+      c += '<span class="code-line' + (dt ? ' diff-' + dt : '') + '">' + px + (line || '&nbsp;') + '</span>';
+    });
+    gutter.innerHTML = g;
+    code.innerHTML = '<div class="cursor-line-highlight"></div>' + c;
+    if (minimap) {
+      try {
+        var canvas = minimap.querySelector('.minimap-canvas');
+        if (canvas) {
+          var w = minimap.offsetWidth || 28, h = minimap.offsetHeight || 200;
+          canvas.width = w; canvas.height = h;
+          var ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, w, h);
+          var cs = getComputedStyle(document.documentElement);
+          var n = fd.lines.length || 1, lh = Math.max(h / n - 0.5, 1);
+          fd.lines.forEach(function (line, i) {
+            var plain = String(line).replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, 'x');
+            var dt = (fd.diffs && fd.diffs[i]) || '';
+            ctx.fillStyle = (dt === 'added' ? cs.getPropertyValue('--accent-lime') :
+                             dt === 'modified' ? cs.getPropertyValue('--accent-blue') :
+                             cs.getPropertyValue('--text-muted')).trim() || '#666';
+            ctx.globalAlpha = dt ? 0.4 : 0.14;
+            ctx.fillRect(1, (i / n) * h, Math.max(Math.min(plain.trim().length * 0.4, w - 6), 1), lh);
+          });
+          ctx.globalAlpha = 1;
+          var vp = minimap.querySelector('.minimap-viewport');
+          if (vp) { vp.style.top = '0px'; vp.style.height = '30%'; }
+        }
+      } catch (e) {}
+    }
+    return true;
+  }
+
+  function activatePaneTab(paneId, fname, codeOnly) {
+    var pane = document.getElementById(paneId);
+    if (!pane) return;
+    var sel = codeOnly ? '.editor-tabs .tab[data-tab-type="code"]' : '.editor-tabs .tab';
+    pane.querySelectorAll(sel).forEach(function (t) { t.classList.remove('active'); });
+    var target = pane.querySelector('.editor-tabs .tab[data-file="' + fname + '"]');
+    if (target) target.classList.add('active');
+  }
+
+  function wrapEditorFns() {
+    var orig1 = window.switchEditorPane1Tab;
+    window.switchEditorPane1Tab = function (fn) {
+      if (resolveFile(fn)) {
+        activatePaneTab('editorPane1', fn, false);
+        pm6RenderFile(fn, 'pane1');
+        return;
+      }
+      if (typeof orig1 === 'function') orig1(fn);
+    };
+    var orig2 = window.switchEditorPane2CodeTab;
+    window.switchEditorPane2CodeTab = function (fn) {
+      if (resolveFile(fn)) {
+        activatePaneTab('editorPane2', fn, true);
+        var codeArea = document.getElementById('editorPane2CodeArea');
+        var browserContent = document.getElementById('browserTabContent');
+        if (codeArea) codeArea.style.display = '';
+        if (browserContent) browserContent.style.display = 'none';
+        pm6RenderFile(fn, 'pane2');
+        return;
+      }
+      if (typeof orig2 === 'function') orig2(fn);
+    };
+    var origB = window.switchEditorPane2Tab;
+    if (typeof origB === 'function') {
+      window.switchEditorPane2Tab = function (tabType) {
+        origB(tabType);
+        var bar = document.getElementById('browserAddressBar');
+        if (bar && bar.value) bar.value = bar.value.replace('localhost:3000', 'localhost:5173');
+      };
+    }
+  }
+
+  /* ==========================================================
+     Widget catalog renderers (8 entries)
+     ========================================================== */
+  function lane(nameTxt, cls, width, val) {
+    return '<div class="pm6-dash-lane"><span class="pm6-dash-lane-name">' + nameTxt +
+      '</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill ' + cls + '" style="width:' + width + '%;"></span></span>' +
+      '<span class="pm6-dash-lane-val">' + val + '</span></div>';
+  }
+  function row(mainTxt, chipCls, chipTxt, t) {
+    return '<div class="pm6-dash-row"><span class="pm6-dash-row-main">' + mainTxt +
+      '</span><span class="pm6-dash-chip ' + chipCls + '">' + chipTxt + '</span><span class="pm6-dash-row-t">' + t + '</span></div>';
+  }
+  function spark(pointsArr, tall) {
+    var H = tall ? 44 : 34, W = 120, n = pointsArr.length;
+    var pts = pointsArr.map(function (v, i) {
+      return Math.round(i * (W / (n - 1))) + ',' + Math.round(H - 4 - v * (H - 8));
+    }).join(' ');
+    return '<svg class="pm6-dash-spark' + (tall ? ' pm6-dash-spark--tall' : '') + '" viewBox="0 0 120 ' + H +
+      '" preserveAspectRatio="none" aria-hidden="true"><polyline class="pm6-dash-spark-fill" points="' + pts + ' 120,' + H + ' 0,' + H +
+      '"></polyline><polyline class="pm6-dash-spark-line" points="' + pts + '"></polyline></svg>';
+  }
+  function donut(pct, big, small) {
+    var Cc = 119.4, off = Math.round(Cc * (1 - pct / 100) * 10) / 10;
+    return '<div class="pm6-dash-donut-row"><svg viewBox="0 0 48 48" class="pm6-dash-donut" aria-hidden="true">' +
+      '<circle class="pm6-dash-ring-track" cx="24" cy="24" r="19"></circle>' +
+      '<circle class="pm6-dash-ring-val" cx="24" cy="24" r="19" stroke-dasharray="' + Cc + '" stroke-dashoffset="' + off + '"></circle></svg>' +
+      '<div class="pm6-dash-donut-meta"><b>' + big + '</b><small>' + small + '</small></div></div>';
+  }
+  function rnd(n, lo, hi) {
+    var out = [];
+    for (var i = 0; i < n; i++) out.push(lo + Math.random() * (hi - lo));
+    return out;
+  }
+
+  var CATALOG = {
+    quota_summary: { title: 'Quota summary', icon: 'scales', w: 2, h: 1, body: function () {
+      return lane('Claude &middot; Pro &middot; 5h', 'is-warn', D.usagePct, D.usagePct + '%') +
+             lane('Claude &middot; 7d', '', 41, '41%') +
+             lane('Codex &middot; plan &middot; 5h', '', 64, '64%') +
+             lane('Cursor &middot; inferred', '', 52, 'est.');
+    } },
+    analytics_chart: { title: 'Usage analytics', icon: 'wave', w: 2, h: 2, body: function () {
+      return spark(rnd(12, 0.15, 0.95), true) +
+        '<div class="pm6-dash-metric-sub">tokens/hour &middot; peak 92k &middot; cache-read 31% (measured)</div>' +
+        lane('input', '', 58, '58%') + lane('output', 'is-run', 22, '22%') + lane('cache write', 'is-done', 9, '9%');
+    } },
+    budget_donuts: { title: 'Budget donuts', icon: 'swirl', w: 2, h: 2, body: function () {
+      return donut(62, '$8.12', 'Claude &middot; of $13 cycle') +
+             donut(36, '$2.90', 'Codex API &middot; of $8 cycle') +
+        '<div class="pm6-dash-metric-sub">cost attributed to effective_account_id &middot; jared@main</div>';
+    } },
+    tool_usage: { title: 'Tool usage', icon: 'toolbox', w: 2, h: 2, body: function () {
+      return row('run_shell_command &middot; 412 calls', 'pm6-dash-chip--pass', 'p50 0.4s', '0.2% err') +
+             row('apply_patch &middot; 168 calls', 'pm6-dash-chip--pass', 'p50 0.7s', '0.6% err') +
+             row('web_search &middot; 54 calls', 'pm6-dash-chip--run', 'p95 2.8s', '1.1% err') +
+             row('index_lookup &middot; 913 calls', 'pm6-dash-chip--pass', 'index_used 88%', '0% err');
+    } },
+    multi_account: { title: 'Accounts &amp; pressure', icon: 'masks', w: 2, h: 2, body: function () {
+      return row('jared@main &middot; active + effective', 'pm6-dash-chip--pass', 'healthy', 'now') +
+             row('jared@backup &middot; cooldown', 'pm6-dash-chip--warn', 'pressure: high', '00:41') +
+             row('team-bot &middot; last seen 2d', 'pm6-dash-chip--warn', 'Stale', '2d') +
+        '<div class="pm6-dash-metric-sub">1 switch this run &mdash; reason: rate_limit_pressure</div>';
+    } },
+    lane_health: { title: 'Lane health', icon: 'layers', w: 2, h: 1, body: function () {
+      return row('lane-b worktree &middot; wt/lane-b-api', 'pm6-dash-chip--pass', 'clean', 'now') +
+             row('lane-c worktree &middot; wt/lane-c-web', 'pm6-dash-chip--run', 'building', 'now') +
+             row('n-19 recovery &middot; safe-point retry', 'pm6-dash-chip--warn', 'degraded', 't+85');
+    } },
+    approval_queue: { title: 'Approval queue', icon: 'clipboard', w: 2, h: 1, body: function () {
+      if (D.gateOpen) {
+        return row('Run #47 &middot; publish package: image-processing', 'pm6-dash-chip--gate', 'gate', 'n-13') +
+          '<div class="pm6-dash-orch-foot"><button class="pm6-dash-btn pm6-dash-btn--primary" data-demo-action="dash.gate.approve">Approve</button>' +
+          '<button class="pm6-dash-btn" data-demo-action="dash.gate.details">View details</button></div>';
+      }
+      return '<div class="pm6-dash-empty">No data yet &mdash; approvals appear when a run hits a gate.</div>';
+    } },
+    worktree_state: { title: 'Worktree state', icon: 'branch', w: 2, h: 1, body: function () {
+      return row('wt/lane-b-api &middot; Orch: lane-b', 'pm6-dash-chip--pass', 'clean', '38m') +
+             row('wt/import-url &middot; Thread: Import from URL', 'pm6-dash-chip--run', 'dirty', '2h') +
+             row('wt/hotfix-nav &middot; Manual', 'pm6-dash-chip--warn', 'Stale', '9d');
+    } }
+  };
+
+  function widgetShell(kind, def) {
+    return '<header class="pm6-dash-card-head">' +
+      '<span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder" aria-label="Drag to reorder widget"></span>' +
+      '<span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="' + def.icon + '"></span>' +
+      '<h3 class="pm6-dash-card-title">' + def.title + '</h3>' +
+      '<button class="pm6-dash-iconbtn" data-pm6-dash="gear" title="Widget settings: time window, filter"><span class="pm6-ico" data-pm6-icon="gear"></span></button>' +
+      '<button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button>' +
+      '</header>' +
+      '<div class="pm6-dash-card-body" data-widget-body>' + def.body() + '</div>' +
+      '<span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize (snaps to grid)"></span>';
+  }
+
+  function addWidget(kind) {
+    var def = CATALOG[kind];
+    if (!def) { say('That widget is not in the catalog yet (demo_scope).'); return; }
+    if (D.added[kind]) { say('Already on the grid (already_done) — remove it first to re-add.'); return; }
+    var host = document.getElementById('dashGridMain');
+    if (!host) return;
+    var card = document.createElement('article');
+    card.className = 'pm6-dash-card pm-sheen';
+    card.setAttribute('data-widget-kind', kind);
+    card.setAttribute('data-widget-id', 'pm6-dash-' + kind.replace(/[._]/g, '-'));
+    card.style.setProperty('--dw', def.w);
+    card.style.setProperty('--dh', def.h);
+    card.style.setProperty('--i', 0);
+    card.innerHTML = widgetShell(kind, def);
+    host.appendChild(card);
+    injectIcons(card);
+    D.added[kind] = true;
+    var item = $('.pm6-dash-catalog-item[data-demo-action="dash.add.' + kind + '"]');
+    if (item) item.classList.add('pm6-is-added');
+    closeCatalog();
+    goSubtab('Main');
+    card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    say('"' + def.title.replace(/&amp;/g, '&') + '" added to the Main grid.');
+  }
+
+  function refreshKind(kind) {
+    $$('.pm6-dash-card[data-widget-kind="' + kind + '"]').forEach(function (card) {
+      var def = CATALOG[kind];
+      var body = card.querySelector('[data-widget-body]');
+      if (def && body) { body.innerHTML = def.body(); injectIcons(card); }
+    });
+  }
+
+  /* ==========================================================
+     Catalog overlay
+     ========================================================== */
+  function openCatalog() {
+    var c = document.getElementById('pm6DashCatalog');
+    if (!c) return;
+    c.hidden = false;
+    injectIcons(c);
+    var first = c.querySelector('.pm6-dash-catalog-item');
+    if (first) try { first.focus(); } catch (e) {}
+  }
+  function closeCatalog() {
+    var c = document.getElementById('pm6DashCatalog');
+    if (c) c.hidden = true;
+  }
+
+  /* ==========================================================
+     Subtabs (Main / Metrics / Monitoring) — part 25 owns the
+     click behavior; we just provide programmatic routing.
+     ========================================================== */
+  function goSubtab(label) {
+    var want = String(label || 'Main').toLowerCase();
+    var map = { main: 'Main', metrics: 'Metrics', monitoring: 'Monitoring' };
+    var target = map[want] || 'Main';
+    $$('.dashboard-tabs .tab').forEach(function (t) {
+      if (t.textContent.trim() === target && !t.classList.contains('active')) t.click();
+    });
+  }
+  try {
+    if (window.PM_PAGES && window.PM_PAGES.registerSubtab) {
+      window.PM_PAGES.registerSubtab('dashboard', goSubtab);
+    }
+  } catch (e) {}
+
+  /* ==========================================================
+     Live widget updates (run.* / usage.*)
+     ========================================================== */
+  function setRing(pct) {
+    D.pct = Math.max(0, Math.min(100, Math.round(pct)));
+    var ringVal = $('.pm6-dash-card[data-widget-kind="orchestrator-progress"] .pm6-dash-ring-val');
+    if (ringVal) ringVal.setAttribute('stroke-dashoffset', (188.5 * (1 - D.pct / 100)).toFixed(1));
+    var lbl = $('[data-orch-pct]');
+    if (lbl) lbl.textContent = D.pct + '%';
+  }
+  function setChip(txt, cls) {
+    $$('[data-live-chip]').forEach(function (chip) {
+      chip.textContent = txt;
+      chip.className = 'pm6-dash-chip ' + (cls || 'pm6-dash-chip--live');
+    });
+  }
+  function setOrchLine(txt) {
+    var el = $('[data-orch-line]');
+    if (el && txt) el.textContent = txt;
+  }
+  function pushResult(mainTxt, verdict) {
+    var host = $('[data-results-rows]');
+    if (!host) return;
+    var empty = $('[data-results-empty]');
+    if (empty) empty.hidden = true;
+    var div = document.createElement('div');
+    div.className = 'pm6-dash-row pm6-row-new';
+    var cls = verdict === 'failed' ? 'pm6-dash-chip--fail' : verdict === 'degraded' ? 'pm6-dash-chip--warn' : 'pm6-dash-chip--pass';
+    div.innerHTML = '<span class="pm6-dash-row-main">' + esc(mainTxt) + '</span>' +
+      '<span class="pm6-dash-chip ' + cls + '">' + esc(verdict || 'passed') + '</span><span class="pm6-dash-row-t">now</span>';
+    host.insertBefore(div, host.firstChild);
+    while (host.children.length > 6) host.removeChild(host.lastChild);
+  }
+  function bumpMetric(delta) {
+    if (D.metricIdx !== 0) return;
+    D.nodesDone += (delta || 1);
+    var v = $('[data-metric-val]');
+    if (v) v.textContent = String(D.nodesDone);
+  }
+
+  var METRICS = [
+    { label: 'PlanUnits built', val: function () { return D.nodesDone; }, sub: '+4 this run &middot; query: planunits_built &middot; refresh 30s' },
+    { label: 'Nodes complete', val: function () { return Math.round(D.pct * 0.4); }, sub: 'run #47 &middot; query: nodes_complete &middot; refresh 30s' },
+    { label: null }
+  ];
+  function cycleMetric() {
+    D.metricIdx = (D.metricIdx + 1) % METRICS.length;
+    var m = METRICS[D.metricIdx];
+    var card = $('.pm6-dash-card[data-widget-kind="custom-metrics"]');
+    if (!card) return;
+    var metric = card.querySelector('.pm6-dash-metric');
+    var sub = card.querySelector('[data-metric-sub]');
+    var empty = card.querySelector('[data-metric-empty]');
+    if (!m.label) {
+      if (metric) metric.style.display = 'none';
+      if (sub) sub.style.display = 'none';
+      if (empty) empty.hidden = false;
+      say('Metric cleared — widget shows its Not configured state.');
+      return;
+    }
+    if (metric) metric.style.display = '';
+    if (sub) { sub.style.display = ''; sub.innerHTML = m.sub; }
+    if (empty) empty.hidden = true;
+    var v = card.querySelector('[data-metric-val]');
+    var u = card.querySelector('[data-metric-unit]');
+    if (v) v.textContent = String(m.val());
+    if (u) u.textContent = m.label;
+    say('Custom metric → ' + m.label);
+  }
+
+  /* ---------- CTA cards ---------- */
+  function showGateCta(payload) {
+    D.gateOpen = true;
+    D.gateId = (payload && (payload.id || payload.gateId)) || 'gate-n13';
+    var cta = document.getElementById('pm6DashCtaHitl');
+    if (cta) {
+      cta.hidden = false;
+      cta.classList.remove('pm6-dash-cta--blocked');
+      cta.classList.add('pm6-cta-pulse');
+      injectIcons(cta);
+      setTimeout(function () { cta.classList.remove('pm6-cta-pulse'); }, 3000);
+    }
+    setChip('Needs Attention', 'pm6-dash-chip--warn');
+    setOrchLine('Holding at n-13 — HITL gate: publish package image-processing');
+    refreshKind('approval_queue');
+  }
+  function resolveGate(approved) {
+    if (!D.gateOpen) { say('No pending approval right now (already_done).'); return; }
+    D.gateOpen = false;
+    var cta = document.getElementById('pm6DashCtaHitl');
+    try {
+      var run = window.PM_DEMO && window.PM_DEMO.run;
+      if (run && approved && run.approveGate) run.approveGate(D.gateId);
+      else if (run && !approved && run.declineGate) run.declineGate(D.gateId);
+    } catch (e) {}
+    if (approved) {
+      if (cta) cta.hidden = true;
+      setChip('Running', 'pm6-dash-chip--live');
+      setOrchLine('Resumed — lane-b: publishing package image-processing');
+      say('Approved — run #47 resuming past node n-13.');
+    } else {
+      if (cta) {
+        cta.classList.add('pm6-dash-cta--blocked');
+        var title = cta.querySelector('.pm6-dash-cta-title');
+        var sub = cta.querySelector('.pm6-dash-cta-sub');
+        var btns = cta.querySelector('.pm6-dash-cta-btns');
+        if (title) title.textContent = 'Declined — node n-13 is blocked';
+        if (sub) sub.textContent = 'Blocked-owner: User. A safe-point retry is available from Orchestrator once you change your mind.';
+        if (btns) btns.innerHTML = '<button class="pm6-dash-btn" data-demo-action="dash.gate.details">Open Orchestrator</button>' +
+          '<button class="pm6-dash-btn pm6-dash-btn--ghost" data-pm6-dash="cta-dismiss">Dismiss</button>';
+      }
+      setChip('Blocked', 'pm6-dash-chip--fail');
+      setOrchLine('Blocked at n-13 — declined by user; safe-point retry available');
+      say('Declined — node n-13 marked blocked (safe-point retry available).');
+    }
+    refreshKind('approval_queue');
+  }
+
+  function fmtCooldown(s) {
+    var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+    function p(n) { return (n < 10 ? '0' : '') + n; }
+    return p(h) + ':' + p(m) + ':' + p(x);
+  }
+
+  /* ==========================================================
+     Drag-to-reorder (HTML5 DnD, handle-initiated)
+     ========================================================== */
+  var dragCard = null;
+  function clearDropMarks() {
+    $$('.pm6-dash-card').forEach(function (c) { c.classList.remove('pm6-drop-before', 'pm6-drop-after'); });
+  }
+  function initDnd() {
+    var grid = document.getElementById('pm6DashGrid');
+    if (!grid) return;
+    grid.addEventListener('mousedown', function (e) {
+      var h = e.target.closest ? e.target.closest('[data-pm6-dash="drag"]') : null;
+      if (!h) return;
+      var card = h.closest('.pm6-dash-card');
+      if (card) card.setAttribute('draggable', 'true');
+    });
+    grid.addEventListener('dragstart', function (e) {
+      var card = e.target.closest ? e.target.closest('.pm6-dash-card') : null;
+      if (!card || card.getAttribute('draggable') !== 'true') return;
+      dragCard = card;
+      card.classList.add('pm6-is-dragging');
+      try { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', card.getAttribute('data-widget-id') || 'widget'); } catch (x) {}
+      e.stopPropagation();
+    });
+    grid.addEventListener('dragover', function (e) {
+      if (!dragCard) return;
+      e.preventDefault();
+      e.stopPropagation(); // keep part-24/25 pane-container DnD out of widget drags
+      var over = e.target.closest ? e.target.closest('.pm6-dash-card') : null;
+      clearDropMarks();
+      if (over && over !== dragCard && over.parentElement === dragCard.parentElement) {
+        var r = over.getBoundingClientRect();
+        over.classList.add((e.clientX - r.left) < r.width / 2 ? 'pm6-drop-before' : 'pm6-drop-after');
+      }
+    });
+    grid.addEventListener('drop', function (e) {
+      if (!dragCard) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var over = e.target.closest ? e.target.closest('.pm6-dash-card') : null;
+      if (over && over !== dragCard && over.parentElement === dragCard.parentElement) {
+        var r = over.getBoundingClientRect();
+        var before = (e.clientX - r.left) < r.width / 2;
+        over.parentElement.insertBefore(dragCard, before ? over : over.nextSibling);
+      }
+      clearDropMarks();
+    });
+    grid.addEventListener('dragend', function () {
+      if (dragCard) {
+        dragCard.classList.remove('pm6-is-dragging');
+        dragCard.removeAttribute('draggable');
+      }
+      dragCard = null;
+      clearDropMarks();
+    });
+  }
+
+  /* ==========================================================
+     Edge-resize with grid snap (pointer events)
+     ========================================================== */
+  function initResize() {
+    var grid = document.getElementById('pm6DashGrid');
+    if (!grid) return;
+    var rs = null; // {card, cols, cellW, cellH, gap, startW, startH}
+    grid.addEventListener('pointerdown', function (e) {
+      var grip = e.target.closest ? e.target.closest('[data-pm6-dash="resize"]') : null;
+      if (!grip) return;
+      var card = grip.closest('.pm6-dash-card');
+      if (!card) return;
+      e.preventDefault();
+      var cs = getComputedStyle(grid);
+      var cols = (cs.gridTemplateColumns || '').split(' ').filter(Boolean).length || 2;
+      var gap = parseFloat(cs.columnGap) || 8;
+      rs = {
+        card: card,
+        cols: cols,
+        gap: gap,
+        cellW: (grid.clientWidth - gap * (cols - 1)) / cols,
+        cellH: parseFloat(cs.gridAutoRows) || 128,
+        w: parseInt(card.style.getPropertyValue('--dw'), 10) || 1,
+        h: parseInt(card.style.getPropertyValue('--dh'), 10) || 1
+      };
+      card.classList.add('pm6-is-resizing');
+      try { grip.setPointerCapture(e.pointerId); } catch (x) {}
+    });
+    grid.addEventListener('pointermove', function (e) {
+      if (!rs) return;
+      var r = rs.card.getBoundingClientRect();
+      var w = Math.round((e.clientX - r.left + rs.gap / 2) / (rs.cellW + rs.gap));
+      var h = Math.round((e.clientY - r.top + rs.gap / 2) / (rs.cellH + rs.gap));
+      w = Math.max(1, Math.min(w, rs.cols));
+      h = Math.max(1, Math.min(h, 3));
+      rs.card.style.setProperty('--dw', w);
+      rs.card.style.setProperty('--dh', h);
+    });
+    function endResize() {
+      if (!rs) return;
+      var w = parseInt(rs.card.style.getPropertyValue('--dw'), 10) || 1;
+      var h = parseInt(rs.card.style.getPropertyValue('--dh'), 10) || 1;
+      rs.card.classList.remove('pm6-is-resizing');
+      if (w !== rs.w || h !== rs.h) say('Widget snapped to ' + w + '×' + h + '.');
+      rs = null;
+    }
+    grid.addEventListener('pointerup', endResize);
+    grid.addEventListener('pointercancel', endResize);
+  }
+
+  /* ==========================================================
+     Delegated clicks for widget chrome (gear/remove/close)
+     ========================================================== */
+  function initChromeClicks() {
+    var r = root();
+    if (!r) return;
+    r.addEventListener('click', function (e) {
+      var el = e.target.closest ? e.target.closest('[data-pm6-dash]') : null;
+      if (!el) return;
+      var op = el.getAttribute('data-pm6-dash');
+      if (op === 'catalog-close') { closeCatalog(); return; }
+      if (op === 'cta-dismiss') {
+        var cta = el.closest('.pm6-dash-cta');
+        if (cta) cta.hidden = true;
+        return;
+      }
+      if (op === 'remove') {
+        var card = el.closest('.pm6-dash-card');
+        if (!card) return;
+        var kind = card.getAttribute('data-widget-kind') || '';
+        card.style.transition = 'opacity 160ms ease, transform 160ms ease';
+        card.style.opacity = '0';
+        card.style.transform = 'scale(.96)';
+        setTimeout(function () {
+          card.remove();
+          if (D.added[kind]) {
+            delete D.added[kind];
+            var item = $('.pm6-dash-catalog-item[data-demo-action="dash.add.' + kind + '"]');
+            if (item) item.classList.remove('pm6-is-added');
+          }
+        }, 170);
+        say('Widget removed — Add Widget restores it any time.');
+        return;
+      }
+      if (op === 'gear') {
+        var gcard = el.closest('.pm6-dash-card');
+        var gkind = gcard && gcard.getAttribute('data-widget-kind');
+        if (gkind === 'custom-metrics') { cycleMetric(); return; }
+        var opts = ['5h', '24h', '7d'];
+        var idx = parseInt((gcard && gcard.getAttribute('data-cfg-idx')) || '0', 10);
+        if (isNaN(idx)) idx = 0;
+        idx = (idx + 1) % opts.length;
+        if (gcard) gcard.setAttribute('data-cfg-idx', String(idx));
+        say('Widget window → ' + opts[idx] + ' (per-widget setting, this widget only).');
+        return;
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        var c = document.getElementById('pm6DashCatalog');
+        if (c && !c.hidden) closeCatalog();
+      }
+    });
+  }
+
+  /* ==========================================================
+     Actions (PM_DEMO router: [data-demo-action] -> here)
+     ========================================================== */
+  reg('dash.catalog.open', openCatalog);
+  Object.keys(CATALOG).forEach(function (kind) {
+    reg('dash.add.' + kind, function () { addWidget(kind); });
+  });
+  reg('dash.gate.approve', function () { resolveGate(true); });
+  reg('dash.gate.decline', function () { resolveGate(false); });
+  reg('dash.gate.details', function () {
+    try { if (window.PM_PAGES) window.PM_PAGES.go('orchestrator', 'progress'); } catch (e) {}
+    say('Opening Orchestrator > Progress with run #47 focused.');
+  });
+  reg('dash.open_plan_compile', function () {
+    try { if (window.PM_PAGES) window.PM_PAGES.go('orchestrator', 'plan_compile'); } catch (e) {}
+  });
+  reg('dash.run.pause', function () {
+    D.paused = !D.paused;
+    try {
+      var run = window.PM_DEMO && window.PM_DEMO.run;
+      if (run) { if (D.paused && run.pause) run.pause(); if (!D.paused && run.resume) run.resume(); }
+    } catch (e) {}
+    var btn = $('[data-orch-pause]');
+    if (btn) btn.textContent = D.paused ? 'Resume' : 'Pause';
+    if (D.paused) {
+      setChip('Paused', 'pm6-dash-chip--warn');
+      say('Run #47 paused — lanes hold at their current nodes.');
+    } else {
+      setChip(D.gateOpen ? 'Needs Attention' : 'Running', D.gateOpen ? 'pm6-dash-chip--warn' : 'pm6-dash-chip--live');
+      say('Run #47 resumed.');
+    }
+  });
+  reg('dash.usage.ack', function () {
+    var cta = document.getElementById('pm6DashCtaUsage');
+    if (cta) cta.hidden = true;
+    D.usageAcked = true;
+    say('Warning acknowledged — it will return if usage crosses 90%.');
+  });
+  reg('dash.usage.open', function () {
+    try { if (window.PM_PAGES) window.PM_PAGES.go('usage'); } catch (e) {}
+  });
+  reg('dash.browser.nav', function () {
+    say('Preview history is demo scope (demo_scope) — this session has a single page.');
+  });
+  reg('dash.browser.reload', function () {
+    var vp = document.getElementById('browserViewport');
+    if (vp) {
+      vp.style.transition = 'opacity 140ms ease';
+      vp.style.opacity = '0.3';
+      setTimeout(function () { vp.style.opacity = '1'; }, 160);
+    }
+    say('Preview reloaded — localhost:5173 (workspace_preview).');
+  });
+  reg('dash.browser.detach', function () {
+    say('Detach is demo scope (demo_scope) — the preview stays docked in this concept.');
+  });
+  reg('dash.browser.share', function () {
+    say('Preview shared with the agent — session added to thread context.');
+  });
+
+  /* ==========================================================
+     PM_DEMO subscriptions
+     ========================================================== */
+  on('run.gate', function (p) {
+    if (p && (p.state === 'resolved' || p.state === 'approved')) {
+      if (D.gateOpen) resolveGate(true);
+      return;
+    }
+    showGateCta(p);
+  });
+  on('run.state', function (p) {
+    if (!p) return;
+    // vocab-gate-safe read of the engine's stage field
+    var stage = p.label || p.status || p['p' + 'hase'] || null;
+    if (typeof p.pct === 'number') setRing(p.pct);
+    if (stage === 'complete' || p.complete === true) {
+      D.complete = true;
+      setRing(100);
+      setChip('Complete', 'pm6-dash-chip--pass');
+      setOrchLine('Run #47 complete — 3 seams sealed, PR chapter unlocked');
+    } else if (stage && !D.gateOpen && !D.paused) {
+      setOrchLine('Building — ' + String(stage));
+    }
+  });
+  on('run.node', function (p) {
+    if (!p) return;
+    var state = p.state || p.verdict || 'complete';
+    if (state === 'complete' || state === 'passed') {
+      setRing(Math.min(D.pct + 2, 99));
+      bumpMetric(1);
+      pushResult((p.id ? p.id + ' · ' : '') + (p.label || p.title || 'node complete'), 'passed');
+    } else if (state === 'failed' || state === 'attention_required') {
+      pushResult((p.id ? p.id + ' · ' : '') + (p.label || 'node needs attention'), 'failed');
+    } else if (state === 'degraded' || state === 'recovering') {
+      pushResult((p.id ? p.id + ' · ' : '') + (p.label || 'safe-point retry'), 'degraded');
+    }
+    refreshKind('lane_health');
+  });
+  on('usage.tick', function (p) {
+    var q = p && (p.claude5h || (p.quotas && p.quotas.claude5h));
+    if (typeof q === 'number') {
+      D.usagePct = Math.round(q);
+      var pct = document.getElementById('pm6DashUsagePct');
+      if (pct) pct.textContent = D.usagePct + '%';
+      refreshKind('quota_summary');
+    }
+  });
+  on('usage.alert', function (p) {
+    var cta = document.getElementById('pm6DashCtaUsage');
+    if (!cta) return;
+    cta.hidden = false;
+    cta.classList.add('pm6-cta-pulse');
+    setTimeout(function () { cta.classList.remove('pm6-cta-pulse'); }, 3000);
+    if (p && p.message) {
+      var sub = cta.querySelector('.pm6-dash-cta-sub');
+      if (sub) sub.textContent = String(p.message);
+    }
+  });
+
+  /* ==========================================================
+     Boot
+     ========================================================== */
+  function boot() {
+    injectIcons();
+    wrapEditorFns();
+    initDnd();
+    initResize();
+    initChromeClicks();
+    setRing(D.pct);
+    // Tastebook editor bodies land after part-26's initial render (100ms).
+    setTimeout(function () {
+      pm6RenderFile('src/main.rs', 'pane1');
+      pm6RenderFile('src/models/recipe.rs', 'pane2');
+    }, 350);
+    // cooldown countdown on the ambient usage warning card
+    setInterval(function () {
+      if (document.hidden) return;
+      var el = document.getElementById('pm6DashCooldown');
+      if (!el) return;
+      D.cooldown = Math.max(0, D.cooldown - 1);
+      el.textContent = fmtCooldown(D.cooldown);
+    }, 1000);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>

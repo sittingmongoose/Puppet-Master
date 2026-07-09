@@ -1,0 +1,1415 @@
+  function showPRDMock(id) {
+    const el = document.getElementById("prd-mock-content");
+    if(id === "prd") {
+      el.innerHTML = "<h1>Product Requirements Document</h1><p><strong>Status:</strong> Approved | <strong>Version:</strong> 1.0</p><h2>1. Executive Summary</h2><p>Puppet Master is a cross-platform desktop IDE designed to orchestrate AI agents for automated coding. It leverages Rust and Slint for a highly responsive user experience.</p><h2>2. Functional Requirements</h2><ul><li>FR1: The system shall support PRD Builder intake, Planning Wizard refinement, and Plan Compile handoff state.</li><li>FR2: It must integrate natively with multiple providers: Cursor, Gemini, Codex, Claude Code, Copilot.</li><li>FR3: Orchestrator must project Plan Compile progress before any later runtime handoff.</li><li>FR4: The Planning Wizard must capture requirements and preserve source refs for PlanUnits.</li></ul><h2>3. Non-Functional Requirements</h2><ul><li>NFR1: Native performance with application launch time under 500ms.</li><li>NFR2: The UI framework must be based on Slint for declarative performance.</li><li>NFR3: Agent memory scaling must not exceed token quotas (budget caps must be supported).</li></ul><h2>4. Auditor review loop</h2><p>The system integrates document validation and canonical alignment so PRD state can be compiled into PlanUnits before implementation work is dispatched.</p><h2>5. Out of Scope</h2><p>Mobile application and cloud deployment orchestration are deferred to version 2.0.</p>";
+    } else if(id === "seeds") {
+      el.innerHTML = "<h1>Contract Seeds</h1><p>These JSON artifacts lock in accepted PRD and Planning Wizard decisions before Plan Compile.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"schema_version\": \"1.0\",\n  \"compile_config\": {\n    \"auto_approve\": false,\n    \"handoff_target\": \"orchestrator.plan_compile\"\n  }\n}</pre>";
+    } else if(id === "arch") {
+      el.innerHTML = "<h1>Architecture Documentation</h1><h2>1. Core Systems</h2><p>We are using a Rust backend connected to a Slint UI via channels. Persistent state is maintained using `redb`.</p><h2>2. Component Diagram</h2><div class=\"mock-mermaid\">graph TD;<br>UI[Slint Window] -->|Events| Backend[Rust Core];<br>Backend --> DB[(Redb)];<br>Backend --> Agents{{Agent Subsystem}};<br></div>";
+    }
+    document.querySelectorAll(".prd-pill").forEach(p => p.classList.remove("active"));
+    document.getElementById("pill-" + id).classList.add("active");
+  }
+  function showExecMock(id) {
+    const el = document.getElementById("exec-mock-content");
+    if(id === "exec") {
+      el.innerHTML = "<h1>Plan Compile State</h1><h2>Stage: PRD Intake</h2><p><strong>Surface:</strong> PRD Builder</p><p>- Normalize requirements intake.<br>- Preserve accepted constraints, source refs, and out-of-scope notes.<br>- Prepare the Planning Wizard ledger snapshot.</p><h2>Stage: PlanUnits</h2><p><strong>Surface:</strong> Planning Wizard</p><p>- Draft stable PlanUnits from accepted planning state.<br>- Carry dependency, risk, validation, and GUI-routing metadata.<br>- Preserve source refs for compile traceability.</p><h2>Stage: Node Readiness</h2><p><strong>Surface:</strong> Plan Compile</p><p>- Produce node-readiness metadata only.<br>- Use the accepted PNC-007 compiler contract as the runtime-readiness boundary while this concept fixture remains non-emitting.<br>- Project compile progress into Orchestrator without making it scheduler truth.</p><h2>Stage: Orchestrator Handoff</h2><p><strong>Surface:</strong> Orchestrator Plan Compile</p><p>- Publish the approved compile state for later handoff.<br>- Materialize runtime artifacts only through compiler, Executor intake, activation, and Goal Runtime certification contracts.</p>";
+    } else if(id === "manifest") {
+      el.innerHTML = "<h1>Handoff Manifest</h1><p>This manifest records the approved compile state before Orchestrator handoff.</p><pre style=\"background:var(--surface); padding:var(--md); font-family:monospace; font-size:11px;\">{\n  \"state\": \"ready_for_plan_compile\",\n  \"handoff_target\": \"orchestrator.plan_compile\",\n  \"artifacts\": [\n    \"PlanUnit index\",\n    \"node-readiness report\",\n    \"source-ref matrix\"\n  ]\n}</pre>";
+    }
+    document.querySelectorAll(".exec-pill").forEach(p => p.classList.remove("active"));
+    document.getElementById("pill-" + id).classList.add("active");
+  }
+  window.showPRDMock = showPRDMock;
+  window.showExecMock = showExecMock;
+})();
+
+// Document Review & Annotations Logic
+(function() {
+  function runWhenReady(fn) {
+    if (document.readyState !== 'loading') {
+      fn();
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
+    }
+  }
+
+  runWhenReady(function() {
+  const palette = document.createElement('div');
+  palette.className = 'text-selection-palette';
+  palette.style.position = 'fixed';
+  palette.innerHTML = `
+    <button class="palette-action" data-action="comment"><svg class="icon-inline" style="margin-right:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>Comment / Ask</button>
+    <button class="palette-action" data-action="replace"><svg class="icon-inline" style="margin-right:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>Replace with...</button>
+    <button class="palette-action" data-action="remove"><svg class="icon-inline" style="margin-right:8px; color:var(--accent-magenta);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>Remove / Strike</button>
+    <button class="palette-action" data-action="send_chat"><svg class="icon-inline" style="margin-right:8px; color:var(--accent-lime);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>Send to chat</button>
+  `;
+  document.body.appendChild(palette);
+  palette.style.display = 'none';
+
+  let currentSelection = null;
+  let activePanelId = null;
+
+  function showPaletteAtRange(range, docView) {
+    palette.style.zIndex = '999999';
+    palette.style.position = 'fixed';
+    palette.style.visibility = 'hidden';
+    palette.style.display = 'flex';
+    const rect = range.getBoundingClientRect();
+    let top = rect.top - palette.offsetHeight - 10;
+    if (top < 10) top = rect.bottom + 10;
+    let left = rect.left + (rect.width / 2) - (palette.offsetWidth / 2);
+    if (left < 10) left = 10;
+    if (left + palette.offsetWidth > window.innerWidth - 10) left = window.innerWidth - palette.offsetWidth - 10;
+    if (top + palette.offsetHeight > window.innerHeight - 10) top = window.innerHeight - palette.offsetHeight - 10;
+    palette.style.top = top + 'px';
+    palette.style.left = left + 'px';
+    palette.style.visibility = 'visible';
+    const sel = window.getSelection();
+    currentSelection = { text: sel ? sel.toString() : '', docId: docView.id || 'unknown' };
+    const panel = docView.closest('.wizard-step-panel');
+    activePanelId = panel ? panel.dataset.wizardPanel : '3';
+  }
+
+  function rangeIntersectsDoc(range, el) {
+    try {
+      if (typeof range.intersectsNode === 'function') return range.intersectsNode(el);
+      var common = range.commonAncestorContainer;
+      var node = common.nodeType === 3 ? common.parentNode : common;
+      return el.contains(node);
+    } catch (e) { return false; }
+  }
+
+  function tryShowPaletteForSelection(optionalDocView) {
+    try {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+        palette.style.display = 'none';
+        return;
+      }
+      if (sel.rangeCount === 0) {
+        palette.style.display = 'none';
+        return;
+      }
+      const range = sel.getRangeAt(0);
+      var docView = null;
+      if (optionalDocView && rangeIntersectsDoc(range, optionalDocView)) {
+        docView = optionalDocView;
+      } else {
+        document.querySelectorAll('.selectable-doc').forEach(function(el) {
+          if (docView) return;
+          if (rangeIntersectsDoc(range, el)) docView = el;
+        });
+      }
+      if (!docView) {
+        palette.style.display = 'none';
+        return;
+      }
+      showPaletteAtRange(range, docView);
+    } catch (err) {
+      // Avoid noisy runtime console output.
+    }
+  }
+
+  // Defer so the browser has committed the selection (cross-browser / file:// timing).
+  function scheduleShowPalette(optionalDocView) {
+    setTimeout(function() {
+      tryShowPaletteForSelection(optionalDocView);
+    }, 0);
+  }
+
+  document.addEventListener('mouseup', (e) => {
+    if (palette.contains(e.target)) return;
+    var docEl = e.target && e.target.closest ? e.target.closest('.selectable-doc') : null;
+    scheduleShowPalette(docEl || undefined);
+  });
+
+  var selectionchangeTimer = null;
+  document.addEventListener('selectionchange', function() {
+    clearTimeout(selectionchangeTimer);
+    selectionchangeTimer = setTimeout(function() {
+      tryShowPaletteForSelection();
+    }, 80);
+  });
+
+  document.addEventListener('mousedown', (e) => {
+    if (!palette.contains(e.target)) {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.toString().trim()) {
+        palette.style.display = 'none';
+      }
+    }
+  });
+
+  // Prevent selection from clearing when clicking on the palette
+  palette.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+  });
+
+  palette.addEventListener('click', (e) => {
+    const actionBtn = e.target.closest('.palette-action');
+    if (!actionBtn || !currentSelection) return;
+
+    const action = actionBtn.dataset.action;
+    palette.classList.remove('visible');
+    
+    if (action === 'send_chat') {
+      addComposerChip(currentSelection.text);
+    } else {
+      addAnnotation(activePanelId, currentSelection.text, action);
+    }
+    
+    window.getSelection().removeAllRanges();
+    palette.style.display = 'none';
+  });
+
+  function addComposerChip(text) {
+    const shortText = text.length > 20 ? text.substring(0, 20) + '...' : text;
+    const chipHtml = '<div class="composer-chip"><span>\"' + shortText + '\"</span> <span class="close-chip" onclick=\"this.parentElement.remove()\">×</span></div>';
+    document.querySelectorAll('.composer-chips-container').forEach(c => {
+      c.innerHTML += chipHtml;
+    });
+  }
+
+  const annotationsState = {
+    '3': [],
+    '6': []
+  };
+
+  function addAnnotation(panelId, text, action) {
+    if (!annotationsState[panelId]) return;
+    
+    let title = "Note";
+    if (action === 'replace') title = "Replace Request";
+    if (action === 'remove') title = "Remove Request";
+    
+    const shortText = text.length > 30 ? text.substring(0, 30) + '...' : text;
+    
+    const ann = {
+      id: Math.random().toString(36).substr(2, 9),
+      title: title,
+      text: shortText,
+      resolved: false
+    };
+    
+    annotationsState[panelId].push(ann);
+    renderAnnotations(panelId);
+  }
+
+  window.resolveAnnotation = function(panelId, annId) {
+    const ann = annotationsState[panelId].find(a => a.id === annId);
+    if (ann) ann.resolved = true;
+    renderAnnotations(panelId);
+  };
+
+  function renderAnnotations(panelId) {
+    const drawer = document.getElementById('drawer' + panelId);
+    if (!drawer) return;
+    
+    const content = drawer.querySelector('.drawer-content');
+    const state = annotationsState[panelId];
+    
+    const openCount = state.filter(a => !a.resolved).length;
+    const openCountEl = drawer.querySelector('.open-count');
+    if (openCountEl) openCountEl.innerText = openCount;
+    
+    if (state.length === 0) {
+      content.innerHTML = '<div style="padding:var(--xl); text-align:center; color:var(--text-muted); font-size:11px;">Select text to add an annotation</div>';
+    } else {
+      var html = '';
+      state.forEach(function(a) {
+        var itemClasses = 'annotation-item' + (a.resolved ? ' resolved' : '');
+        html += '<div class="' + itemClasses + '">';
+        html +=   '<div style="display:flex; justify-content:space-between; align-items:start;">';
+        html +=     '<div style="font-weight:600;">' + a.title + '</div>';
+        if (a.resolved) {
+          html +=   '<span class="annotation-status resolved">Resolved</span>';
+        } else {
+          html +=   '<button style="font-size:10px; padding:2px 6px; cursor:pointer;" onclick="resolveAnnotation(\'' + panelId + '\', \'' + a.id + '\')">Resolve</button>';
+        }
+        html +=   '</div>';
+        html +=   '<div style="font-family:monospace; background:rgba(0,0,0,0.1); padding:4px; font-size:10px; margin-top:4px;">"' + a.text + '"</div>';
+        if (!a.resolved) {
+          html += '<div style="font-size:11px; margin-top:4px; color:var(--text-secondary);">Waiting for revision...</div>';
+        }
+        html += '</div>';
+      });
+      content.innerHTML = html;
+    }
+    
+    updateGatedButtons(panelId, openCount);
+  }
+
+  function updateGatedButtons(panelId, openCount) {
+    const approveBtn = document.getElementById('approveBtn' + panelId);
+    const resubmitBtn = document.getElementById('resubmitBtn' + panelId);
+    
+    if (!approveBtn) return;
+    
+    const gatedText = approveBtn.querySelector('.gated-text');
+    
+    if (openCount > 0) {
+      if (resubmitBtn) resubmitBtn.style.display = 'inline-flex';
+      approveBtn.style.opacity = '0.5';
+      approveBtn.style.pointerEvents = 'none';
+      if (gatedText) gatedText.innerText = '(Gated: ' + openCount + ' Open)';
+    } else {
+      if (resubmitBtn) resubmitBtn.style.display = 'none';
+      approveBtn.style.opacity = '1';
+      approveBtn.style.pointerEvents = 'auto';
+      if (gatedText) gatedText.innerText = annotationsState[panelId].length > 0 ? '(0 Open)' : '';
+    }
+  }
+
+  // Bind resubmit actions
+  ['3', '6'].forEach(pid => {
+    const btn = document.getElementById('resubmitBtn' + pid);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        btn.innerHTML = '<svg class="wizard-activity-pulse" style="margin-right:4px; width:10px; height:10px;"></svg> Revising...';
+        setTimeout(() => {
+          annotationsState[pid].forEach(a => a.resolved = true);
+          renderAnnotations(pid);
+          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 1 0 2.63-6.37L21 8"></path></svg> Resubmit with Annotations';
+        }, 1500);
+      });
+    }
+  });
+
+  // ── Search panel: filter results by query ──
+  window.filterSearchResults = function(query) {
+    var items = document.querySelectorAll('#panel-search .search-result-item');
+    var q = query.toLowerCase();
+    var visibleCount = 0;
+    items.forEach(function(item) {
+      var show = !q || item.textContent.toLowerCase().indexOf(q) !== -1;
+      item.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    var summary = document.getElementById('searchResultsSummary');
+    if (summary) summary.textContent = 'RESULTS (' + visibleCount + ' in 3 files)';
+  };
+
+  // ── File context menu ──
+  window.showFileContextMenu = function(event) {
+    event.preventDefault();
+    var menu = document.getElementById('fileContextMenu');
+    if (!menu) return;
+    menu.style.display = 'block';
+    var tree = event.currentTarget;
+    var rect = tree.getBoundingClientRect();
+    menu.style.left = Math.min(event.clientX - rect.left, 180) + 'px';
+    menu.style.top = (event.clientY - rect.top) + 'px';
+  };
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.context-menu-mock')) {
+      var m = document.getElementById('fileContextMenu');
+      if (m) m.style.display = 'none';
+    }
+  });
+
+  // ── Source Control subview switching ──
+  window.switchSCSubview = function(tabEl, viewName) {
+    tabEl.closest('.sc-subview-tabs').querySelectorAll('.sc-tab').forEach(function(t) { t.classList.remove('active'); });
+    tabEl.classList.add('active');
+    var panel = tabEl.closest('.panel-content');
+    panel.querySelectorAll('[data-sc-view]').forEach(function(v) {
+      v.style.display = v.getAttribute('data-sc-view') === viewName ? '' : 'none';
+    });
+  };
+
+  // ── Remote badge cycling (click to demo different states) ──
+  window.cycleBadge = function(el, states) {
+    var current = el.textContent.trim();
+    var idx = states.indexOf(current);
+    var next = states[(idx + 1) % states.length];
+    el.textContent = next;
+    states.forEach(function(s) { el.classList.remove(s.replace(/_/g, '-')); });
+    el.classList.add(next.replace(/_/g, '-'));
+  };
+
+  // ── LSP registry filtering ──
+  window.filterLSPRegistry = function(query) {
+    var rows = document.querySelectorAll('.lsp-registry-row');
+    var q = query.toLowerCase();
+    rows.forEach(function(row) {
+      row.style.display = (!q || row.textContent.toLowerCase().indexOf(q) !== -1) ? '' : 'none';
+    });
+  };
+
+  // ── File context menu → add chip to chat ──
+  window.addFileChipToChat = function(filename) {
+    var chipHtml = '<div class="composer-chip file-ref"><span>' + filename + '</span> <span class="close-chip" onclick="this.parentElement.remove()">&times;</span></div>';
+    document.querySelectorAll('.composer-chips-container').forEach(function(c) {
+      c.innerHTML += chipHtml;
+    });
+    if (typeof toast === 'function') toast('cmd.chat.add_file_reference → ' + filename);
+  };
+
+  // ── Toggle search replace row ──
+  window.toggleSearchReplace = function(btn) {
+    var row = document.getElementById('searchReplaceRow');
+    if (row) {
+      var showing = row.style.display !== 'none';
+      row.style.display = showing ? 'none' : 'flex';
+      btn.textContent = showing ? '▶' : '▼';
+    }
+  };
+
+  // ═══════════════════════════════════════════════════════════════
+  // ── Editor Rendering System: FILE_DATA + Render + Tabs ──────
+  // ═══════════════════════════════════════════════════════════════
+
+  var FILE_DATA = {
+    'app.rs': {
+      path: 'src/app.rs',
+      lines: [
+        'use std::sync::Arc;',
+        'use tokio::sync::RwLock;',
+        'use anyhow::{Result, Context};',
+        'use tracing::{info, warn, error};',
+        'use crate::config::Config;',
+        'use crate::orchestrator::Orchestrator;',
+        'use crate::workspace::WorkspaceManager;',
+        'use crate::types::{Theme, PanelKind, EditorMode};',
+        '',
+        '/// Core application state for the Puppet Master IDE.',
+        '/// Manages the lifecycle of the orchestrator, workspace, and dashboard.',
+        'pub struct App {',
+        '    config: Arc&lt;Config&gt;,',
+        '    orchestrator: Orchestrator,',
+        '    workspace: WorkspaceManager,',
+        '    dashboard: Dashboard,',
+        '    active_theme: Theme,',
+        '    session_id: u64,',
+        '}',
+        '',
+        '/// Tracks the current state of the dashboard layout.',
+        '/// Added to support dynamic panel management and persistence.',
+        'pub struct DashboardState {',
+        '    panels: Vec&lt;PanelKind&gt;,',
+        '    focused_panel: Option&lt;usize&gt;,',
+        '    split_ratios: Vec&lt;f64&gt;,',
+        '    is_maximized: bool,',
+        '    editor_mode: EditorMode,',
+        '    last_focused_file: Option&lt;String&gt;,',
+        '    sidebar_visible: bool,',
+        '}',
+        '',
+        'impl App {',
+        '    pub fn new(config: Config) -&gt; Result&lt;Self&gt; {',
+        '        let config = Arc::new(config);',
+        '        let orchestrator = Orchestrator::new(config.clone())?;',
+        '        let workspace = WorkspaceManager::new(&amp;config.workspace_root)?;',
+        '',
+        '        info!("Puppet Master initialized with {} workers", config.worker_count);',
+        '',
+        '        Ok(Self {',
+        '            config: config.clone(),',
+        '            orchestrator,',
+        '            workspace,',
+        '            dashboard: Dashboard::default(),',
+        '            active_theme: config.default_theme.clone(),',
+        '            session_id: rand::random(),',
+        '        })',
+        '    }',
+        '',
+        '    pub async fn run(&amp;mut self) -&gt; Result&lt;()&gt; {',
+        '        self.workspace.scan().await?;',
+        '        self.orchestrator.start_workers().await?;',
+        '        self.setup_panels()?;',
+        '',
+        '        info!("Starting event loop for session {}", self.session_id);',
+        '        loop {',
+        '            tokio::select! {',
+        '                event = self.workspace.next_event() =&gt; {',
+        '                    self.handle_event(event?).await?;',
+        '                }',
+        '                task = self.orchestrator.next_completion() =&gt; {',
+        '                    self.dashboard.update_widget(task?);',
+        '                }',
+        '                _ = tokio::signal::ctrl_c() =&gt; {',
+        '                    info!("Graceful shutdown requested");',
+        '                    self.shutdown().await?;',
+        '                    break;',
+        '                }',
+        '            }',
+        '        }',
+        '        Ok(())',
+        '    }',
+        '',
+        '    fn setup_panels(&amp;mut self) -&gt; Result&lt;()&gt; {',
+        '        let state = DashboardState {',
+        '            panels: vec![PanelKind::Editor, PanelKind::Terminal, PanelKind::Chat],',
+        '            focused_panel: Some(0),',
+        '            split_ratios: vec![0.6, 0.2, 0.2],',
+        '            is_maximized: false,',
+        '            editor_mode: EditorMode::Normal,',
+        '            last_focused_file: None,',
+        '            sidebar_visible: true,',
+        '        };',
+        '        self.dashboard.apply_layout(state);',
+        '        Ok(())',
+        '    }',
+        '',
+        '    async fn handle_event(&amp;mut self, event: WorkspaceEvent) -&gt; Result&lt;()&gt; {',
+        '        match event {',
+        '            WorkspaceEvent::FileChanged(path) =&gt; {',
+        '                self.orchestrator.schedule_analysis(&amp;path).await?;',
+        '                self.dashboard.mark_dirty(&amp;path);',
+        '            }',
+        '            WorkspaceEvent::FileCreated(path) =&gt; {',
+        '                self.workspace.index_file(&amp;path).await?;',
+        '                info!("New file indexed: {}", path.display());',
+        '            }',
+        '            WorkspaceEvent::FileDeleted(path) =&gt; {',
+        '                self.workspace.remove_from_index(&amp;path);',
+        '                self.dashboard.close_tab(&amp;path);',
+        '            }',
+        '        }',
+        '        Ok(())',
+        '    }',
+        '',
+        '    async fn shutdown(&amp;mut self) -&gt; Result&lt;()&gt; {',
+        '        self.orchestrator.stop_workers().await?;',
+        '        self.dashboard.save_state()?;',
+        '        info!("Session {} ended cleanly", self.session_id);',
+        '        Ok(())',
+        '    }',
+        '',
+        '    // DEPRECATED: Use App::new() instead',
+        '    fn legacy_init() -&gt; App {',
+        '        unimplemented!("removed in v2.0")',
+        '    }',
+        '',
+        '    // DEPRECATED: Old event loop without select!',
+        '    fn legacy_run_blocking(&amp;mut self) {',
+        '        unimplemented!("removed in v2.0")',
+        '    }',
+        '}'
+      ],
+      diffs: {5:'modified',6:'modified',18:'added',22:'added',23:'added',24:'added',25:'added',26:'added',27:'added',28:'added',34:'conflict',56:'modified',64:'added',65:'added',66:'added',67:'added',80:'added',81:'added',92:'modified',100:'added',101:'added',102:'added',103:'added',107:'deleted',108:'deleted',109:'deleted',110:'deleted',112:'deleted',113:'deleted',114:'deleted'}
+    },
+    'main.rs': {
+      path: 'src/main.rs',
+      lines: [
+        'use anyhow::Result;',
+        'use clap::Parser;',
+        'use tracing_subscriber::EnvFilter;',
+        'use tracing::info;',
+        '',
+        'use puppet_master::App;',
+        'use puppet_master::config::Config;',
+        '',
+        '/// Puppet Master \u2014 AI-powered IDE orchestrator.',
+        '/// Provides workspace management, task orchestration, and dashboard.',
+        '#[derive(Parser, Debug)]',
+        '#[command(version, about, long_about = None)]',
+        'struct Cli {',
+        '    /// Path to workspace root directory',
+        '    #[arg(short, long, default_value = ".")]',
+        '    workspace: String,',
+        '',
+        '    /// Enable experimental feature flags',
+        '    #[arg(long, value_delimiter = \',\')]',
+        '    features: Vec&lt;String&gt;,',
+        '',
+        '    /// Configuration file path (defaults to puppet-master.toml)',
+        '    #[arg(short, long)]',
+        '    config: Option&lt;String&gt;,',
+        '',
+        '    /// Run in headless mode (no UI, API only)',
+        '    #[arg(long)]',
+        '    headless: bool,',
+        '',
+        '    /// Override the default port',
+        '    #[arg(short, long)]',
+        '    port: Option&lt;u16&gt;,',
+        '}',
+        '',
+        '#[tokio::main]',
+        'async fn main() -&gt; Result&lt;()&gt; {',
+        '    tracing_subscriber::fmt()',
+        '        .with_env_filter(EnvFilter::from_default_env())',
+        '        .with_target(false)',
+        '        .compact()',
+        '        .init();',
+        '',
+        '    let cli = Cli::parse();',
+        '    info!("Puppet Master v{}", env!("CARGO_PKG_VERSION"));',
+        '',
+        '    let mut config = Config::load(cli.config.as_deref())?;',
+        '',
+        '    // Feature flag processing',
+        '    if !cli.features.is_empty() {',
+        '        let features: Vec&lt;&amp;str&gt; = cli.features.iter()',
+        '            .map(|s| s.as_str())',
+        '            .collect();',
+        '        config.enable_features(&amp;features)?;',
+        '        info!("Enabled {} feature flags", features.len());',
+        '    }',
+        '',
+        '    // Apply CLI overrides',
+        '    if let Some(port) = cli.port {',
+        '        config.port = Some(port);',
+        '    }',
+        '    if cli.headless {',
+        '        config.headless = true;',
+        '    }',
+        '',
+        '    config.validate()?;',
+        '',
+        '    let mut app = App::new(config)?;',
+        '    app.run().await',
+        '}',
+        '',
+        '/// Setup panic handler for clean error output',
+        'fn setup_panic_handler() {',
+        '    std::panic::set_hook(Box::new(|panic_info| {',
+        '        eprintln!("FATAL: {}", panic_info);',
+        '        if let Some(location) = panic_info.location() {',
+        '            eprintln!("  at {}:{}:{}", location.file(), location.line(), location.column());',
+        '        }',
+        '        std::process::exit(1);',
+        '    }));',
+        '}',
+        '',
+        '/// Validate environment before startup',
+        'fn check_environment() -&gt; Result&lt;()&gt; {',
+        '    if std::env::var("HOME").is_err() {',
+        '        anyhow::bail!("HOME environment variable not set");',
+        '    }',
+        '    Ok(())',
+        '}'
+      ],
+      diffs: {4:'added',18:'modified',19:'modified',20:'modified',26:'added',27:'added',28:'added',30:'deleted',31:'deleted',32:'deleted',39:'modified',40:'modified',44:'conflict',45:'modified',48:'added',49:'added',50:'added',51:'added',52:'modified',53:'modified',54:'added',57:'deleted',58:'deleted',59:'deleted',60:'deleted',61:'deleted',62:'deleted',70:'added',71:'added',72:'added',73:'modified',74:'added',75:'added',76:'added',77:'added',78:'deleted'}
+    },
+    'orchestrator.rs': {
+      path: 'src/orchestrator.rs',
+      lines: [
+        'use std::sync::Arc;',
+        'use tokio::sync::{mpsc, Mutex, RwLock};',
+        'use anyhow::{Result, bail};',
+        'use tracing::{info, warn, debug, instrument};',
+        '',
+        'use crate::config::Config;',
+        'use crate::types::TaskStatus;',
+        '',
+        'pub struct Orchestrator&lt;T: Send + Sync = ()&gt; {',
+        '    config: Arc&lt;Config&gt;,',
+        '    task_queue: Arc&lt;Mutex&lt;Vec&lt;Task&lt;T&gt;&gt;&gt;&gt;,',
+        '    workers: Vec&lt;WorkerHandle&gt;,',
+        '    completion_tx: mpsc::Sender&lt;TaskResult&gt;,',
+        '    completion_rx: Arc&lt;Mutex&lt;mpsc::Receiver&lt;TaskResult&gt;&gt;&gt;,',
+        '    state: Arc&lt;RwLock&lt;OrchestratorState&gt;&gt;,',
+        '    max_concurrent: usize,',
+        '    active_count: Arc&lt;std::sync::atomic::AtomicUsize&gt;,',
+        '}',
+        '',
+        '#[derive(Debug, Clone, PartialEq)]',
+        'pub enum OrchestratorState {',
+        '    Idle,',
+        '    Running { active_tasks: usize },',
+        '    Draining,',
+        '    ShuttingDown,',
+        '}',
+        '',
+        '#[derive(Debug, Clone)]',
+        'pub struct Task&lt;T: Send + Sync = ()&gt; {',
+        '    pub id: u64,',
+        '    pub kind: TaskKind,',
+        '    pub priority: u8,',
+        '    pub payload: T,',
+        '    pub retry_policy: RetryPolicy,',
+        '    pub created_at: std::time::Instant,',
+        '}',
+        '',
+        '#[derive(Debug, Clone, Copy, PartialEq)]',
+        'pub enum TaskKind {',
+        '    Analysis,',
+        '    Formatting,',
+        '    Linting,',
+        '    Build,',
+        '    Test,',
+        '    Custom(&amp;\'static str),',
+        '}',
+        '',
+        '/// Configurable retry behavior for failed tasks.',
+        '/// Supports exponential backoff with optional jitter.',
+        '#[derive(Debug, Clone)]',
+        'pub struct RetryPolicy {',
+        '    pub max_attempts: u32,',
+        '    pub backoff_ms: u64,',
+        '    pub exponential: bool,',
+        '    pub jitter: bool,',
+        '}',
+        '',
+        'impl Default for RetryPolicy {',
+        '    fn default() -&gt; Self {',
+        '        Self {',
+        '            max_attempts: 3,',
+        '            backoff_ms: 100,',
+        '            exponential: true,',
+        '            jitter: true,',
+        '        }',
+        '    }',
+        '}',
+        '',
+        'impl RetryPolicy {',
+        '    pub fn no_retry() -&gt; Self {',
+        '        Self { max_attempts: 1, backoff_ms: 0, exponential: false, jitter: false }',
+        '    }',
+        '',
+        '    pub fn delay_for_attempt(&amp;self, attempt: u32) -&gt; u64 {',
+        '        let base = if self.exponential {',
+        '            self.backoff_ms * 2u64.pow(attempt.saturating_sub(1))',
+        '        } else {',
+        '            self.backoff_ms',
+        '        };',
+        '        if self.jitter {',
+        '            base + (rand::random::&lt;u64&gt;() % (base / 4 + 1))',
+        '        } else {',
+        '            base',
+        '        }',
+        '    }',
+        '}',
+        '',
+        'impl&lt;T: Send + Sync + \'static&gt; Orchestrator&lt;T&gt; {',
+        '    pub fn new(config: Arc&lt;Config&gt;) -&gt; Result&lt;Self&gt; {',
+        '        let capacity = config.queue_capacity;',
+        '        let (tx, rx) = mpsc::channel(capacity);',
+        '        let max_concurrent = config.worker_count.unwrap_or(4);',
+        '        Ok(Self {',
+        '            config,',
+        '            task_queue: Arc::new(Mutex::new(Vec::new())),',
+        '            workers: Vec::new(),',
+        '            completion_tx: tx,',
+        '            completion_rx: Arc::new(Mutex::new(rx)),',
+        '            state: Arc::new(RwLock::new(OrchestratorState::Idle)),',
+        '            max_concurrent,',
+        '            active_count: Arc::new(std::sync::atomic::AtomicUsize::new(0)),',
+        '        })',
+        '    }',
+        '',
+        '    #[instrument(skip(self))]',
+        '    pub async fn dispatch(&amp;self, task: Task&lt;T&gt;) -&gt; Result&lt;u64&gt; {',
+        '        let id = task.id;',
+        '        let mut queue = self.task_queue.lock().await;',
+        '        queue.push(task);',
+        '        queue.sort_by(|a, b| b.priority.cmp(&amp;a.priority));',
+        '        debug!("Task {} queued, {} total pending", id, queue.len());',
+        '        Ok(id)',
+        '    }',
+        '',
+        '    pub async fn drain_queue(&amp;mut self) -&gt; Result&lt;Vec&lt;TaskResult&gt;&gt; {',
+        '        *self.state.write().await = OrchestratorState::Draining;',
+        '        let mut results = Vec::new();',
+        '        let mut queue = self.task_queue.lock().await;',
+        '        while let Some(task) = queue.pop() {',
+        '            let result = self.execute_task(task).await;',
+        '            results.push(result);',
+        '        }',
+        '        *self.state.write().await = OrchestratorState::Idle;',
+        '        info!("Drained {} tasks from queue", results.len());',
+        '        Ok(results)',
+        '    }',
+        '',
+        '    async fn execute_task(&amp;self, task: Task&lt;T&gt;) -&gt; TaskResult {',
+        '        let elapsed = task.created_at.elapsed();',
+        '        debug!("Executing task {} (waited {:?})", task.id, elapsed);',
+        '        TaskResult { id: task.id, status: TaskStatus::Complete }',
+        '    }',
+        '',
+        '    pub async fn stop_workers(&amp;mut self) -&gt; Result&lt;()&gt; {',
+        '        *self.state.write().await = OrchestratorState::ShuttingDown;',
+        '        for worker in self.workers.drain(..) {',
+        '            worker.join().await?;',
+        '        }',
+        '        Ok(())',
+        '    }',
+        '}'
+      ],
+      diffs: {8:'modified',9:'modified',16:'added',17:'added',20:'added',21:'added',22:'added',23:'added',24:'added',25:'added',26:'added',35:'added',38:'added',39:'added',40:'added',41:'added',42:'added',43:'added',44:'added',45:'added',46:'added',48:'modified',49:'added',67:'added',68:'added',69:'added',71:'added',72:'added',73:'added',74:'added',75:'added',76:'added',77:'added',78:'added',79:'added',80:'added',81:'added',86:'modified',87:'modified',107:'conflict',113:'added',118:'deleted',119:'deleted',120:'added',121:'added',122:'added',123:'added',124:'added'}
+    },
+    'workspace.rs': {
+      path: 'src/workspace.rs',
+      lines: [
+        'use std::path::{Path, PathBuf};',
+        'use std::collections::HashMap;',
+        'use tokio::sync::mpsc;',
+        'use notify::{Watcher, RecursiveMode, Event as NotifyEvent};',
+        'use anyhow::{Result, Context};',
+        'use tracing::{info, debug, warn};',
+        '',
+        'use crate::types::FileChangeEvent;',
+        '',
+        '/// Manages the workspace directory: file indexing, watching, and events.',
+        'pub struct WorkspaceManager {',
+        '    root_path: PathBuf,',
+        '    file_watcher: Option&lt;notify::RecommendedWatcher&gt;,',
+        '    index: FileIndex,',
+        '    event_tx: mpsc::Sender&lt;WorkspaceEvent&gt;,',
+        '    event_rx: mpsc::Receiver&lt;WorkspaceEvent&gt;,',
+        '    ignore_patterns: Vec&lt;String&gt;,',
+        '}',
+        '',
+        '#[derive(Debug, Clone)]',
+        'pub enum FileChangeEvent {',
+        '    ContentModified { path: PathBuf, hash: u64 },',
+        '    MetadataChanged { path: PathBuf },',
+        '    Renamed { from: PathBuf, to: PathBuf },',
+        '    Permissions { path: PathBuf, readonly: bool },',
+        '    Truncated { path: PathBuf },',
+        '    Symlink { path: PathBuf, target: PathBuf },',
+        '    BatchUpdate { paths: Vec&lt;PathBuf&gt; },',
+        '}',
+        '',
+        '#[derive(Debug)]',
+        'pub struct FileIndex {',
+        '    entries: HashMap&lt;PathBuf, FileMetadata&gt;,',
+        '    total_size_bytes: u64,',
+        '}',
+        '',
+        '#[derive(Debug, Clone)]',
+        'pub struct FileMetadata {',
+        '    pub size: u64,',
+        '    pub modified: std::time::SystemTime,',
+        '    pub is_binary: bool,',
+        '    pub language: Option&lt;String&gt;,',
+        '}',
+        '',
+        'impl FileIndex {',
+        '    pub fn new() -&gt; Self {',
+        '        Self { entries: HashMap::new(), total_size_bytes: 0 }',
+        '    }',
+        '',
+        '    pub fn len(&amp;self) -&gt; usize { self.entries.len() }',
+        '',
+        '    pub async fn add(&amp;mut self, path: PathBuf) -&gt; Result&lt;()&gt; {',
+        '        let metadata = tokio::fs::metadata(&amp;path).await?;',
+        '        let fm = FileMetadata {',
+        '            size: metadata.len(),',
+        '            modified: metadata.modified()?,',
+        '            is_binary: false,',
+        '            language: detect_language(&amp;path),',
+        '        };',
+        '        self.total_size_bytes += fm.size;',
+        '        self.entries.insert(path, fm);',
+        '        Ok(())',
+        '    }',
+        '}',
+        '',
+        'impl WorkspaceManager {',
+        '    pub fn new(root: &amp;Path) -&gt; Result&lt;Self&gt; {',
+        '        let (tx, rx) = mpsc::channel(256);',
+        '        Ok(Self {',
+        '            root_path: root.to_path_buf(),',
+        '            file_watcher: None,',
+        '            index: FileIndex::new(),',
+        '            event_tx: tx,',
+        '            event_rx: rx,',
+        '            ignore_patterns: vec!["target".into(), ".git".into(), "node_modules".into()],',
+        '        })',
+        '    }',
+        '',
+        '    pub async fn scan(&amp;mut self) -&gt; Result&lt;()&gt; {',
+        '        info!("Scanning workspace: {}", self.root_path.display());',
+        '        let entries = walkdir::WalkDir::new(&amp;self.root_path)',
+        '            .into_iter()',
+        '            .filter_map(|e| e.ok())',
+        '            .filter(|e| e.file_type().is_file())',
+        '            .filter(|e| !self.should_ignore(e.path()));',
+        '',
+        '        for entry in entries {',
+        '            let path = entry.path().to_path_buf();',
+        '            self.index.add(path.clone()).await?;',
+        '        }',
+        '        info!("Indexed {} files ({} bytes)", self.index.len(), self.index.total_size_bytes);',
+        '        Ok(())',
+        '    }',
+        '',
+        '    fn should_ignore(&amp;self, path: &amp;Path) -&gt; bool {',
+        '        let path_str = path.to_string_lossy();',
+        '        self.ignore_patterns.iter().any(|p| path_str.contains(p))',
+        '    }',
+        '',
+        '    pub fn resolve_path(&amp;self, relative: &amp;str) -&gt; PathBuf {',
+        '        self.root_path.join(relative.replace("\\\\", "/"))',
+        '    }',
+        '',
+        '    pub fn get_file_tree(&amp;self) -&gt; &amp;FileIndex {',
+        '        &amp;self.index',
+        '    }',
+        '',
+        '    pub async fn watch(&amp;mut self) -&gt; Result&lt;()&gt; {',
+        '        let tx = self.event_tx.clone();',
+        '        let mut watcher = notify::recommended_watcher(move |res| {',
+        '            if let Ok(event) = res {',
+        '                let _ = tx.blocking_send(WorkspaceEvent::from(event));',
+        '            }',
+        '        })?;',
+        '        watcher.watch(&amp;self.root_path, RecursiveMode::Recursive)?;',
+        '        self.file_watcher = Some(watcher);',
+        '        info!("File watcher active on {}", self.root_path.display());',
+        '        Ok(())',
+        '    }',
+        '}',
+        '',
+        'fn detect_language(path: &amp;Path) -&gt; Option&lt;String&gt; {',
+        '    path.extension()',
+        '        .and_then(|ext| ext.to_str())',
+        '        .map(|ext| match ext {',
+        '            "rs" =&gt; "rust",',
+        '            "ts" | "tsx" =&gt; "typescript",',
+        '            "js" | "jsx" =&gt; "javascript",',
+        '            "py" =&gt; "python",',
+        '            _ =&gt; "unknown",',
+        '        })',
+        '        .map(String::from)',
+        '}'
+      ],
+      diffs: {2:'added',17:'modified',20:'conflict',21:'conflict',22:'conflict',23:'added',24:'added',25:'added',26:'deleted',27:'deleted',28:'deleted',31:'modified',32:'modified',33:'modified',34:'added',35:'added',37:'deleted',38:'deleted',39:'deleted',40:'added',41:'added',42:'added',43:'added',45:'modified',46:'modified',47:'modified',48:'modified',50:'added',52:'modified',53:'modified',54:'deleted',55:'deleted',56:'deleted',57:'added',58:'added',59:'added',60:'added',61:'added',62:'added',63:'added',73:'modified',82:'modified',83:'conflict',88:'modified',91:'deleted',92:'deleted',93:'deleted',108:'added',112:'added',113:'modified',114:'modified',115:'deleted',116:'deleted',117:'added',118:'added',119:'modified',120:'added'}
+    },
+    'config.rs': {
+      path: 'src/config.rs',
+      lines: [
+        'use std::path::PathBuf;',
+        'use serde::{Deserialize, Serialize};',
+        'use anyhow::{Result, Context};',
+        '',
+        'use crate::types::Theme;',
+        '',
+        '/// Main application configuration, loaded from puppet-master.toml.',
+        '#[derive(Debug, Clone, Serialize, Deserialize)]',
+        'pub struct Config {',
+        '    pub workspace_root: PathBuf,',
+        '    pub host: Option&lt;String&gt;,',
+        '    pub port: Option&lt;u16&gt;,',
+        '    pub worker_count: Option&lt;usize&gt;,',
+        '    pub default_theme: Theme,',
+        '    pub lsp_servers: Vec&lt;LspServerConfig&gt;,',
+        '    pub remote_mode: Option&lt;RemoteConfig&gt;,',
+        '    pub queue_capacity: usize,',
+        '    pub telemetry: bool,',
+        '    pub headless: bool,',
+        '    pub log_level: Option&lt;String&gt;,',
+        '}',
+        '',
+        '#[derive(Debug, Clone, Serialize, Deserialize)]',
+        'pub struct LspServerConfig {',
+        '    pub name: String,',
+        '    pub command: String,',
+        '    pub args: Vec&lt;String&gt;,',
+        '    pub root_markers: Vec&lt;String&gt;,',
+        '    pub file_types: Vec&lt;String&gt;,',
+        '}',
+        '',
+        '#[derive(Debug, Clone, Serialize, Deserialize)]',
+        'pub struct RemoteConfig {',
+        '    pub host: String,',
+        '    pub user: String,',
+        '    pub port: u16,',
+        '    pub identity_file: Option&lt;PathBuf&gt;,',
+        '    pub forward_agent: bool,',
+        '}',
+        '',
+        'impl Config {',
+        '    pub fn load(path: Option&lt;&amp;str&gt;) -&gt; Result&lt;Self&gt; {',
+        '        let config_path = path',
+        '            .map(PathBuf::from)',
+        '            .unwrap_or_else(|| PathBuf::from("puppet-master.toml"));',
+        '',
+        '        let contents = std::fs::read_to_string(&amp;config_path)',
+        '            .with_context(|| format!("Failed to read config: {}", config_path.display()))?;',
+        '',
+        '        let config: Config = toml::from_str(&amp;contents)?;',
+        '        Ok(config)',
+        '    }',
+        '',
+        '    pub fn validate(&amp;self) -&gt; Result&lt;()&gt; {',
+        '        if self.worker_count.unwrap_or(4) == 0 {',
+        '            anyhow::bail!("worker_count must be &gt; 0");',
+        '        }',
+        '        if self.queue_capacity == 0 {',
+        '            anyhow::bail!("queue_capacity must be &gt; 0");',
+        '        }',
+        '        if !self.workspace_root.exists() {',
+        '            anyhow::bail!("workspace root does not exist: {}", self.workspace_root.display());',
+        '        }',
+        '        if let Some(ref remote) = self.remote_mode {',
+        '            if remote.host.is_empty() {',
+        '                anyhow::bail!("remote host cannot be empty");',
+        '            }',
+        '        }',
+        '        Ok(())',
+        '    }',
+        '',
+        '    pub fn enable_features(&amp;mut self, features: &amp;[&amp;str]) -&gt; Result&lt;()&gt; {',
+        '        for feature in features {',
+        '            match *feature {',
+        '                "headless" =&gt; self.headless = true,',
+        '                "telemetry" =&gt; self.telemetry = true,',
+        '                other =&gt; anyhow::bail!("Unknown feature flag: {}", other),',
+        '            }',
+        '        }',
+        '        Ok(())',
+        '    }',
+        '',
+        '    pub fn merge_env(&amp;mut self) {',
+        '        if let Ok(host) = std::env::var("PM_HOST") {',
+        '            self.host = Some(host);',
+        '        }',
+        '        if let Ok(port) = std::env::var("PM_PORT") {',
+        '            self.port = port.parse().ok();',
+        '        }',
+        '        if let Ok(level) = std::env::var("PM_LOG_LEVEL") {',
+        '            self.log_level = Some(level);',
+        '        }',
+        '    }',
+        '',
+        '    // Removed: hardcoded defaults now in puppet-master.toml',
+        '}'
+      ],
+      diffs: {11:'modified',12:'modified',13:'modified',19:'added',20:'added',29:'added',32:'added',33:'added',34:'added',35:'added',36:'added',37:'added',38:'added',39:'added',48:'modified',53:'added',54:'added',55:'added',56:'added',57:'added',58:'added',59:'added',60:'added',61:'added',62:'added',63:'added',64:'added',65:'added',66:'added',67:'added',69:'added',70:'added',71:'added',72:'added',73:'added',74:'added',75:'added',76:'added',78:'added',79:'added',80:'added',81:'added',82:'added',83:'added',84:'added',85:'added',86:'added',87:'added',89:'deleted'}
+    },
+    'types.rs': {
+      path: 'src/types.rs',
+      lines: [
+        'use serde::{Deserialize, Serialize};',
+        'use std::fmt;',
+        '',
+        '/// Visual theme for the Puppet Master UI.',
+        '#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]',
+        'pub enum Theme {',
+        '    RetroDark,',
+        '    RetroLight,',
+        '    BasicDark,',
+        '    BasicLight,',
+        '    GlassDark,',
+        '    GlassLight,',
+        '}',
+        '',
+        '/// Remote connection state projection.',
+        '/// Models the full lifecycle of a remote workspace session.',
+        '#[derive(Debug, Clone, PartialEq)]',
+        'pub enum RemoteState {',
+        '    Connected { host: String, latency_ms: u32 },',
+        '    Reconnecting { attempts: u32, max_attempts: u32 },',
+        '    Disconnected,',
+        '    Unavailable { reason: String },',
+        '    Degraded { host: String, packet_loss_pct: f32 },',
+        '}',
+        '',
+        '#[derive(Debug, Clone, Copy, PartialEq)]',
+        'pub enum PanelKind {',
+        '    Editor,',
+        '    Terminal,',
+        '    Chat,',
+        '    Files,',
+        '    Search,',
+        '    SourceControl,',
+        '    Settings,',
+        '    Extensions,',
+        '}',
+        '',
+        '#[derive(Debug, Clone, Copy, PartialEq)]',
+        'pub enum EditorMode {',
+        '    Normal,',
+        '    Insert,',
+        '    Visual { block: bool },',
+        '    Command,',
+        '    Replace,',
+        '}',
+        '',
+        '#[derive(Debug, Clone, PartialEq)]',
+        'pub enum TaskStatus {',
+        '    Queued,',
+        '    InProgress { progress_pct: Option&lt;u8&gt; },',
+        '    Complete,',
+        '    Failed { error: String, retriable: bool },',
+        '    Cancelled { reason: String },',
+        '    TimedOut { after_ms: u64 },',
+        '}',
+        '',
+        '/// Describes a renderable UI component.',
+        'pub trait Renderable: Send + Sync {',
+        '    fn render(&amp;self, theme: &amp;Theme) -&gt; RenderOutput;',
+        '    fn measure(&amp;self) -&gt; (u32, u32);',
+        '    fn invalidate(&amp;mut self);',
+        '}',
+        '',
+        '/// State serialization for crash recovery and workspace persistence.',
+        'pub trait Serializable: Send + Sync {',
+        '    fn serialize_state(&amp;self) -&gt; Vec&lt;u8&gt;;',
+        '    fn restore_state(data: &amp;[u8]) -&gt; Result&lt;Self, Box&lt;dyn std::error::Error&gt;&gt;',
+        '    where',
+        '        Self: Sized;',
+        '    fn state_version() -&gt; u32 { 1 }',
+        '}',
+        '',
+        'impl fmt::Display for Theme {',
+        '    fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;\'_&gt;) -&gt; fmt::Result {',
+        '        match self {',
+        '            Theme::RetroDark =&gt; write!(f, "retro-dark"),',
+        '            Theme::RetroLight =&gt; write!(f, "retro-light"),',
+        '            Theme::BasicDark =&gt; write!(f, "basic-dark"),',
+        '            Theme::BasicLight =&gt; write!(f, "basic-light"),',
+        '            Theme::GlassDark =&gt; write!(f, "glass-dark"),',
+        '            Theme::GlassLight =&gt; write!(f, "glass-light"),',
+        '        }',
+        '    }',
+        '}',
+        '',
+        'impl Theme {',
+        '    pub fn is_dark(&amp;self) -&gt; bool {',
+        '        matches!(self, Theme::RetroDark | Theme::BasicDark | Theme::GlassDark)',
+        '    }',
+        '',
+        '    pub fn all() -&gt; &amp;\'static [Theme] {',
+        '        &amp;[',
+        '            Theme::RetroDark, Theme::RetroLight,',
+        '            Theme::BasicDark, Theme::BasicLight,',
+        '            Theme::GlassDark, Theme::GlassLight,',
+        '        ]',
+        '    }',
+        '}',
+        '',
+        '#[derive(Debug, Clone)]',
+        'pub struct RenderOutput {',
+        '    pub content: String,',
+        '    pub dirty: bool,',
+        '}'
+      ],
+      diffs: {15:'added',16:'added',17:'added',18:'added',19:'added',20:'modified',21:'added',22:'added',23:'added',35:'added',42:'modified',44:'added',50:'modified',52:'modified',53:'modified',54:'added',57:'added',60:'modified',61:'added',63:'added',69:'added',83:'added',84:'added',85:'added',87:'added',88:'added',89:'added',90:'added',91:'added',92:'added',93:'added',95:'added',96:'added',97:'added',98:'added',99:'conflict'}
+    },
+    'errors.rs': {
+      path: 'src/errors.rs',
+      lines: [
+        'use std::io;',
+        'use thiserror::Error;',
+        '',
+        '/// Central error type for Puppet Master.',
+        '/// All modules use this as their primary error type.',
+        '#[derive(Error, Debug)]',
+        'pub enum PuppetMasterError {',
+        '    #[error("Configuration error: {0}")]',
+        '    ConfigError(String),',
+        '',
+        '    #[error("Orchestrator failure: {0}")]',
+        '    OrchestratorError(String),',
+        '',
+        '    #[error("Workspace error: {message}")]',
+        '    WorkspaceError {',
+        '        message: String,',
+        '        path: Option&lt;String&gt;,',
+        '    },',
+        '',
+        '    #[error("LSP server error: {server} \u2014 {detail}")]',
+        '    LspError {',
+        '        server: String,',
+        '        detail: String,',
+        '        recoverable: bool,',
+        '        session_key: Option&lt;String&gt;,',
+        '    },',
+        '',
+        '    #[error("Remote connection error: {host} \u2014 {reason}")]',
+        '    RemoteError {',
+        '        host: String,',
+        '        reason: String,',
+        '        retry_after_ms: Option&lt;u64&gt;,',
+        '        was_connected: bool,',
+        '    },',
+        '',
+        '    #[error("Task execution error: task {task_id} \u2014 {detail}")]',
+        '    TaskError {',
+        '        task_id: u64,',
+        '        detail: String,',
+        '        retriable: bool,',
+        '    },',
+        '',
+        '    #[error("IO error: {0}")]',
+        '    Io(#[from] io::Error),',
+        '',
+        '    #[error("Serialization error: {0}")]',
+        '    SerializationError(String),',
+        '',
+        '    #[error("Timeout after {elapsed_ms}ms")]',
+        '    Timeout { elapsed_ms: u64 },',
+        '',
+        '    // Removed: UnknownError variant was too generic',
+        '}',
+        '',
+        'impl PuppetMasterError {',
+        '    pub fn is_retriable(&amp;self) -&gt; bool {',
+        '        match self {',
+        '            Self::RemoteError { retry_after_ms, .. } =&gt; retry_after_ms.is_some(),',
+        '            Self::TaskError { retriable, .. } =&gt; *retriable,',
+        '            Self::LspError { recoverable, .. } =&gt; *recoverable,',
+        '            Self::Timeout { .. } =&gt; true,',
+        '            _ =&gt; false,',
+        '        }',
+        '    }',
+        '',
+        '    pub fn error_code(&amp;self) -&gt; &amp;\'static str {',
+        '        match self {',
+        '            Self::ConfigError(_) =&gt; "E001",',
+        '            Self::OrchestratorError(_) =&gt; "E002",',
+        '            Self::WorkspaceError { .. } =&gt; "E003",',
+        '            Self::LspError { .. } =&gt; "E004",',
+        '            Self::RemoteError { .. } =&gt; "E005",',
+        '            Self::TaskError { .. } =&gt; "E006",',
+        '            Self::Io(_) =&gt; "E007",',
+        '            Self::SerializationError(_) =&gt; "E008",',
+        '            Self::Timeout { .. } =&gt; "E009",',
+        '        }',
+        '    }',
+        '}',
+        '',
+        'impl From&lt;toml::de::Error&gt; for PuppetMasterError {',
+        '    fn from(e: toml::de::Error) -&gt; Self {',
+        '        PuppetMasterError::ConfigError(format!("TOML parse error: {}", e))',
+        '    }',
+        '}',
+        '',
+        'impl From&lt;serde_json::Error&gt; for PuppetMasterError {',
+        '    fn from(e: serde_json::Error) -&gt; Self {',
+        '        PuppetMasterError::SerializationError(format!("JSON error: {}", e))',
+        '    }',
+        '}'
+      ],
+      diffs: {5:'added',20:'modified',21:'modified',22:'added',23:'added',24:'deleted',25:'deleted',28:'added',29:'added',30:'conflict',31:'conflict',32:'added',33:'added',36:'added',37:'added',38:'deleted',39:'deleted',40:'deleted',41:'added',46:'modified',47:'modified',49:'added',50:'added',55:'added',56:'modified',57:'modified',58:'deleted',59:'deleted',60:'added',61:'added',62:'added',63:'conflict',64:'added',66:'modified',67:'modified',68:'added',69:'added',70:'deleted',71:'deleted',72:'added',73:'added',74:'modified',75:'added',76:'added'}
+    }
+  };
+
+  // ── Render Functions ──
+
+  window.renderFileToPane = function(filename, panePrefix, animate) {
+    var fd = FILE_DATA[filename];
+    if (!fd) return;
+    var gutterEl = document.getElementById(panePrefix + 'Gutter');
+    var codeEl = document.getElementById(panePrefix + 'Code');
+    var minimapEl = document.getElementById(panePrefix + 'Minimap');
+    if (!gutterEl || !codeEl) return;
+
+    gutterEl.innerHTML = '';
+    fd.lines.forEach(function(line, i) {
+      var div = document.createElement('div');
+      div.className = 'gutter-line';
+      var diffType = fd.diffs[i] || '';
+      var num = document.createElement('span');
+      num.className = 'gutter-line-num' + (diffType ? ' diff-' + diffType : '');
+      num.textContent = i + 1;
+      if (diffType) {
+        num.title = 'Line ' + (i+1) + ': ' + diffType;
+        num.style.cursor = 'pointer';
+        num.onclick = function() { toast('Diff at line ' + (i+1) + ' (' + diffType + '): ' + fd.path); };
+      }
+      div.appendChild(num);
+      gutterEl.appendChild(div);
+    });
+
+    codeEl.innerHTML = '';
+    codeEl.style.position = 'relative';
+    var highlight = document.createElement('div');
+    highlight.className = 'cursor-line-highlight';
+    codeEl.appendChild(highlight);
+
+    var prefixMap = {'added':'+','deleted':'-','modified':'~','conflict':'!'};
+    fd.lines.forEach(function(line, i) {
+      var span = document.createElement('span');
+      var diffType = fd.diffs[i] || '';
+      span.className = 'code-line' + (diffType ? ' diff-' + diffType : '');
+      var prefix = prefixMap[diffType];
+      if (prefix) {
+        span.innerHTML = '<span class="diff-prefix ' + diffType + '">' + prefix + '</span>' + (line || '&nbsp;');
+      } else {
+        span.innerHTML = '<span class="diff-prefix">&nbsp;</span>' + (line || '&nbsp;');
+      }
+      if (animate) {
+        span.classList.add('revealing');
+        span.style.animationDelay = (i * 8) + 'ms';
+      }
+      codeEl.appendChild(span);
+    });
+
+    codeEl.onmousemove = function(e) {
+      var rect = codeEl.getBoundingClientRect();
+      var y = e.clientY - rect.top + codeEl.scrollTop;
+      var lineY = Math.floor(y / 18) * 18;
+      highlight.style.top = lineY + 'px';
+      highlight.style.display = 'block';
+    };
+    codeEl.onmouseleave = function() { highlight.style.display = 'none'; };
+
+    // Sync gutter scroll with code scroll
+    codeEl.onscroll = function() {
+      gutterEl.scrollTop = codeEl.scrollTop;
+      if (minimapEl) {
+        requestAnimationFrame(function() { updateMinimapViewport(minimapEl, codeEl); });
+      }
+    };
+
+    if (minimapEl) {
+      renderMinimap(minimapEl, fd, animate);
+    }
+
+    setupDiffFlash(codeEl);
+  };
+
+  function renderMinimap(minimapEl, fd, animate) {
+    minimapEl.querySelectorAll('.minimap-heat-strip').forEach(function(el) { el.remove(); });
+    var canvas = minimapEl.querySelector('.minimap-canvas');
+    if (canvas) {
+      // Force canvas clear and redraw with fresh dimensions
+      canvas.width = canvas.width;
+      requestAnimationFrame(function() { drawMinimapCanvas(canvas, fd); });
+    }
+
+    var totalLines = fd.lines.length;
+    var stripDelay = 0;
+    var diffKeys = Object.keys(fd.diffs).sort(function(a, b) { return parseInt(a) - parseInt(b); });
+    for (var k = 0; k < diffKeys.length; k++) {
+      var idx = parseInt(diffKeys[k]);
+      var type = fd.diffs[idx];
+      if (type === 'deleted') continue;
+      var strip = document.createElement('div');
+      strip.className = 'minimap-heat-strip hs-' + type;
+      strip.style.top = ((idx / totalLines) * 100) + '%';
+      strip.style.height = Math.max(2, Math.round(100 / totalLines)) + 'px';
+      strip.title = 'Line ' + (idx + 1) + ': ' + type;
+      if (animate) {
+        strip.style.animation = 'editorHeatStripIn 0.3s ease-out ' + stripDelay + 'ms both';
+        stripDelay += 30;
+      }
+      minimapEl.appendChild(strip);
+    }
+
+    var viewport = minimapEl.querySelector('.minimap-viewport');
+    if (viewport) { viewport.style.top = '0px'; viewport.style.height = '30%'; }
+  }
+
+  function drawMinimapCanvas(canvas, fd) {
+    var container = canvas.parentElement;
+    var w = container.offsetWidth || 28;
+    var h = container.offsetHeight || 200;
+    canvas.width = w; canvas.height = h;
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, w, h);
+
+    var cs = getComputedStyle(document.documentElement);
+    var mutedColor = cs.getPropertyValue('--text-muted').trim() || '#666';
+    var totalLines = fd.lines.length;
+    if (totalLines === 0) return;
+    var lineH = Math.max(h / totalLines - 0.5, 1);
+
+    fd.lines.forEach(function(line, i) {
+      var y = (i / totalLines) * h;
+      var plain = line.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+      var barW = Math.min(plain.trim().length * 0.4, w - 6);
+      if (barW < 1) barW = 1;
+      var dt = fd.diffs[i];
+      if (dt === 'added') { ctx.fillStyle = cs.getPropertyValue('--accent-lime').trim() || '#3DD68C'; ctx.globalAlpha = 0.35; }
+      else if (dt === 'modified') { ctx.fillStyle = cs.getPropertyValue('--accent-blue').trim() || '#64B5F6'; ctx.globalAlpha = 0.35; }
+      else if (dt === 'conflict') { ctx.fillStyle = cs.getPropertyValue('--accent-orange').trim() || '#FFA347'; ctx.globalAlpha = 0.35; }
+      else if (dt === 'deleted') { ctx.fillStyle = cs.getPropertyValue('--accent-magenta').trim() || '#FF69B4'; ctx.globalAlpha = 0.25; }
+      else { ctx.fillStyle = mutedColor; ctx.globalAlpha = 0.12; }
+      ctx.fillRect(1, y, barW, lineH);
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function updateMinimapViewport(minimapEl, codeEl) {
+    var vp = minimapEl.querySelector('.minimap-viewport');
+    if (!vp) return;
+    var scrollRatio = codeEl.scrollTop / (codeEl.scrollHeight || 1);
+    var viewRatio = codeEl.clientHeight / (codeEl.scrollHeight || 1);
+    var mmH = minimapEl.offsetHeight || 200;
+    vp.style.top = (scrollRatio * mmH) + 'px';
+    vp.style.height = Math.max(viewRatio * mmH, 20) + 'px';
+  }
+
+  function setupDiffFlash(codeEl) {
+    if (!('IntersectionObserver' in window)) return;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting && !entry.target._flashed) {
+          entry.target._flashed = true;
+          entry.target.classList.add('diff-scroll-flash');
+          setTimeout(function() { entry.target.classList.remove('diff-scroll-flash'); }, 400);
+        }
+      });
+    }, { root: codeEl, threshold: 0.5 });
+    codeEl.querySelectorAll('.code-line.diff-added, .code-line.diff-modified, .code-line.diff-conflict').forEach(function(el) {
+      obs.observe(el);
+    });
+  }
+
+  // ── Tab Switching ──
+
+  window.switchEditorPane1Tab = function(filename) {
+    var pane = document.getElementById('editorPane1');
+    if (!pane) return;
+    pane.querySelectorAll('.editor-tabs .tab').forEach(function(t) { t.classList.remove('active'); });
+    var target = pane.querySelector('.editor-tabs .tab[data-file="' + filename + '"]');
+    if (target) target.classList.add('active');
+
+    var gutter = document.getElementById('pane1Gutter');
+    var code = document.getElementById('pane1Code');
+    var minimap = document.getElementById('pane1Minimap');
+    [gutter, code, minimap].forEach(function(el) { if (el) el.classList.add('editor-fade-out'); });
+    setTimeout(function() {
+      [gutter, code, minimap].forEach(function(el) { if (el) el.classList.remove('editor-fade-out'); });
+      renderFileToPane(filename, 'pane1', true);
+    }, 100);
+  };
+
+  window.switchEditorPane2CodeTab = function(filename) {
+    var pane = document.getElementById('editorPane2');
+    if (!pane) return;
+    pane.querySelectorAll('.editor-tabs .tab[data-tab-type="code"]').forEach(function(t) { t.classList.remove('active'); });
+    var target = pane.querySelector('.editor-tabs .tab[data-file="' + filename + '"]');
+    if (target) target.classList.add('active');
+    var codeArea = document.getElementById('editorPane2CodeArea');
+    var browserContent = document.getElementById('browserTabContent');
+    if (codeArea) codeArea.style.display = '';
+    if (browserContent) browserContent.style.display = 'none';
+
+    var gutter = document.getElementById('pane2Gutter');
+    var code = document.getElementById('pane2Code');
+    var minimap = document.getElementById('pane2Minimap');
+    [gutter, code, minimap].forEach(function(el) { if (el) el.classList.add('editor-fade-out'); });
+    setTimeout(function() {
+      [gutter, code, minimap].forEach(function(el) { if (el) el.classList.remove('editor-fade-out'); });
+      renderFileToPane(filename, 'pane2', true);
+    }, 100);
+  };
+
+  // ── Theme Change Observer ──
+  var editorThemeObs = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.attributeName === 'data-theme') {
+        document.querySelectorAll('.editor-minimap').forEach(function(mm) {
+          var canvas = mm.querySelector('.minimap-canvas');
+          if (!canvas) return;
+          var pane = mm.closest('.editor-pane');
+          if (!pane) return;
+          var activeTab = pane.querySelector('.editor-tabs .tab.active');
+          if (!activeTab) return;
+          var fn = activeTab.getAttribute('data-file') || activeTab.textContent.trim().split(' ')[0];
+          if (FILE_DATA[fn]) drawMinimapCanvas(canvas, FILE_DATA[fn]);
+        });
+      }
+    });
+  });
+  editorThemeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // ── Initial Editor Load ──
+  setTimeout(function() {
+    renderFileToPane('app.rs', 'pane1', true);
+    renderFileToPane('config.rs', 'pane2', true);
+  }, 100);
+
+  if (window.switchToChatThread) { window.switchToChatThread('thread0'); }
+  });
+})();
+</script>

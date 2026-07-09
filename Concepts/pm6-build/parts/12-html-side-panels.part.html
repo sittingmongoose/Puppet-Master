@@ -1,0 +1,619 @@
+          <div class="side-panel-view active" id="panel-files">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>FILES</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+            </div>
+            <!-- Worktree breadcrumb -->
+            <div class="fm-wt-breadcrumb">
+              <button style="background:none; border:none; color:var(--text-secondary); cursor:pointer; display:flex; align-items:center; gap:4px; font-size:10px; padding:0;" onclick="toggleFileManagerRoot(this)">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                <span style="color:var(--accent-blue);">feat/dashboard-v2</span>
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <span style="color:var(--text-muted);">/</span>
+              <span>puppet-master-rs</span>
+              <span style="color:var(--text-muted);">/</span>
+              <span>src</span>
+            </div>
+            <div class="files-search">
+              <div class="search-input-wrap">
+                <input type="text" placeholder="Search files..." class="wizard-input" style="flex:1;">
+                <button class="wizard-btn" style="font-size:11px;">Search</button>
+              </div>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKSPACE</summary>
+                <div class="file-tree" style="position:relative;" oncontextmenu="event.preventDefault(); showFileContextMenu(event)">
+                  <div class="folder">▼ src/</div>
+                  <div class="file" data-filename="app.rs" style="color:var(--accent-blue);">app.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
+                  <div class="file" data-filename="main.rs">main.rs</div>
+                  <div class="file" data-filename="orchestrator.rs">orchestrator.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
+                  <div class="file" data-filename="workspace.rs">workspace.rs</div>
+                  <div class="folder" style="padding-left:12px;">▼ core/</div>
+                  <div class="file" data-filename="config.rs" style="padding-left:24px;">config.rs <span class="git-status added" style="color:var(--accent-lime); float:right;">A</span></div>
+                  <div class="file" data-filename="types.rs" style="padding-left:24px;">types.rs <span class="git-status" style="color:var(--accent-orange); float:right;">M</span></div>
+                  <div class="file" data-filename="errors.rs" style="padding-left:24px;">errors.rs</div>
+                  <div class="folder">▼ tests/</div>
+                  <div class="file" style="padding-left:12px;">integration.rs</div>
+                  <div class="file">Cargo.toml</div>
+                  <div class="file">README.md</div>
+
+                  <!-- Context menu (right-click to show) -->
+                  <div class="context-menu-mock" id="fileContextMenu" style="display:none; position:absolute; z-index:200;">
+                    <div class="ctx-item" onclick="toast('cmd.file.new_file → prompting name...'); this.closest('.context-menu-mock').style.display='none'">New File</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.new_folder → prompting name...'); this.closest('.context-menu-mock').style.display='none'">New Folder</div>
+                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="toast('cmd.file.rename → prompting new name...'); this.closest('.context-menu-mock').style.display='none'">Rename</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.delete → confirm deletion?'); this.closest('.context-menu-mock').style.display='none'" style="color:var(--accent-magenta);">Delete</div>
+                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="toast('cmd.file.copy_full_path → ~/projects/puppet-master/src/app.rs'); this.closest('.context-menu-mock').style.display='none'">Copy Full Path</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.copy_relative_path → src/app.rs'); this.closest('.context-menu-mock').style.display='none'">Copy Relative Path</div>
+                    <div class="ctx-sep"></div>
+                    <div style="padding:2px var(--md); font-size:9px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">Clipboard (workspace-node)</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.copy_nodes → workspace clipboard (not system)'); this.closest('.context-menu-mock').style.display='none'">Copy</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.cut_nodes → armed for paste'); this.closest('.context-menu-mock').style.display='none'">Cut</div>
+                    <div class="ctx-item" onclick="toast('cmd.file.paste_nodes → validating target...'); this.closest('.context-menu-mock').style.display='none'">Paste</div>
+                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="addFileChipToChat('src/app.rs'); this.closest('.context-menu-mock').style.display='none'" style="color:var(--accent-blue);">Add to Chat</div>
+                    <div class="ctx-item" onclick="toast('cmd.terminal.show → opening at src/'); this.closest('.context-menu-mock').style.display='none'">Open in Terminal</div>
+                    <div class="ctx-sep"></div>
+                    <div style="padding:2px var(--md); font-size:9px; color:var(--text-muted); font-weight:600;">OPEN WITH...</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → source_editor'); this.closest('.context-menu-mock').style.display='none'">Source Editor</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → image_viewer'); this.closest('.context-menu-mock').style.display='none'">Image Viewer</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → workspace_preview'); this.closest('.context-menu-mock').style.display='none'">Workspace Preview</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → detached_preview'); this.closest('.context-menu-mock').style.display='none'">Detached Preview</div>
+                    <div class="ctx-item" style="padding-left:var(--lg);" onclick="toast('cmd.file.open_with → diff_review'); this.closest('.context-menu-mock').style.display='none'">Diff Review</div>
+                    <div class="ctx-sep"></div>
+                    <div class="ctx-item" onclick="toast('cmd.file.save_local_copy → saving to ~/Downloads/...'); this.closest('.context-menu-mock').style.display='none'">Save Local Copy</div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="side-panel-view" id="panel-search">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>SEARCH</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+
+              <!-- Query input -->
+              <div style="margin-bottom:var(--sm);">
+                <div style="display:flex; gap:var(--xs); align-items:center;">
+                  <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:11px; padding:2px;" onclick="toggleSearchReplace(this)">&#9654;</button>
+                  <input class="wizard-input" placeholder="Search in files..." style="flex:1; padding:4px; font-size:11px;" id="searchQueryInput" oninput="filterSearchResults(this.value)">
+                </div>
+                <div id="searchReplaceRow" style="display:none; gap:var(--xs); align-items:center; margin-top:var(--xs);">
+                  <span style="width:18px;"></span>
+                  <input class="wizard-input" placeholder="Replace..." style="flex:1; padding:4px; font-size:11px;" id="searchReplaceInput">
+                  <button class="wizard-btn primary" style="padding:2px 8px; font-size:10px;" onclick="toast('cmd.search.replace_all → Replaced 7 occurrences across 3 files')">All</button>
+                </div>
+              </div>
+
+              <!-- Flags -->
+              <div style="display:flex; gap:var(--xs); margin-bottom:var(--md); align-items:center;">
+                <span class="chat-toggle-btn" title="Regex" onclick="this.classList.toggle('active'); toast('Regex: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px; font-family:monospace;">.*</span>
+                <span class="chat-toggle-btn" title="Case Sensitive" onclick="this.classList.toggle('active'); toast('Case sensitive: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px;">Aa</span>
+                <span class="chat-toggle-btn" title="Whole Word" onclick="this.classList.toggle('active'); toast('Whole word: ' + (this.classList.contains('active') ? 'on' : 'off'))" style="font-size:10px; padding:2px 6px; font-family:monospace;">\\b</span>
+                <span style="flex:1;"></span>
+                <select class="wizard-select" style="padding:var(--xs); font-size:10px;" onchange="toast('cmd.search.set_scope → ' + this.value)">
+                  <option>All Files</option>
+                  <option>Open Files</option>
+                  <option>Custom</option>
+                </select>
+              </div>
+
+              <!-- Results -->
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);" id="searchResultsSummary">RESULTS (7 in 3 files)</summary>
+                <div style="padding:var(--sm); font-size:11px;">
+
+                  <!-- src/app.rs results -->
+                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); cursor:pointer;" onclick="toast('cmd.search.show → focus results for src/app.rs')">src/app.rs <span style="color:var(--text-muted); font-weight:normal;">(3)</span></div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:14')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">14</span> let app = <span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>::new();
+                  </div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:42')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">42</span> impl <span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span> {
+                  </div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/app.rs:89')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">89</span> pub fn run(<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>) -&gt;
+                  </div>
+
+                  <!-- src/config.rs results -->
+                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); margin-top:var(--sm); cursor:pointer;" onclick="toast('cmd.search.show → focus results for src/config.rs')">src/config.rs <span style="color:var(--text-muted); font-weight:normal;">(2)</span></div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/config.rs:3')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">3</span> use crate::<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>Config;
+                  </div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → src/config.rs:28')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">28</span> fn load_<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>_config()
+                  </div>
+
+                  <!-- tests/integration.rs results -->
+                  <div style="font-weight:600; padding:3px 0; color:var(--text-secondary); margin-top:var(--sm); cursor:pointer;" onclick="toast('cmd.search.show → focus results for tests/integration.rs')">tests/integration.rs <span style="color:var(--text-muted); font-weight:normal;">(2)</span></div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → tests/integration.rs:7')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">7</span> let test_<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span> = setup();
+                  </div>
+                  <div class="search-result-item" style="padding:2px var(--sm); cursor:pointer; border-left:2px solid transparent;" onclick="toast('cmd.search.open_result → tests/integration.rs:45')" onmouseenter="this.style.borderLeftColor='var(--accent-blue)'; this.style.background='rgba(0,71,171,0.08)'" onmouseleave="this.style.borderLeftColor='transparent'; this.style.background=''">
+                    <span style="color:var(--text-muted); font-family:monospace; font-size:10px; margin-right:var(--sm);">45</span> assert!(<span class="search-match" style="background:rgba(255,200,0,0.3); padding:0 2px; border-radius:2px;">App</span>::valid());
+                  </div>
+
+                </div>
+              </details>
+
+              <!-- Replace selected -->
+              <div style="display:flex; gap:var(--xs);">
+                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.replace_selected → replacing current match...')">Replace</button>
+                <button class="wizard-btn primary" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.replace_all → Replaced 7 across 3 files')">Replace All</button>
+              </div>
+              <div style="margin-top:var(--sm); display:flex; gap:var(--xs);">
+                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.previous_result')">&#9650; Prev</button>
+                <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;" onclick="toast('cmd.search.next_result')">&#9660; Next</button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="side-panel-view" id="panel-run">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>RUN & DEBUG</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+              <button class="wizard-btn primary" style="width:100%; margin-bottom:var(--md); padding:8px; font-weight:bold; font-size:11px; display:flex; justify-content:center; align-items:center; gap:var(--xs);">
+                ▶ Start Debugging (F5)
+              </button>
+              
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">VARIABLES</summary>
+                <div class="file-tree" style="padding:var(--sm); font-size:11px;">
+                  <div class="folder" style="font-weight:bold; padding:4px 0;">▼ Locals</div>
+                  <div class="file" style="padding:4px 0; padding-left:12px;">app: App { ... }</div>
+                  <div class="file" style="padding:4px 0; padding-left:12px;">config: String "dev"</div>
+                </div>
+              </details>
+
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CALL STACK</summary>
+                <div class="file-tree" style="padding:var(--sm); font-size:11px;">
+                  <div class="file" style="padding:4px 0; color:var(--accent-blue);">main.rs:14</div>
+                  <div class="file" style="padding:4px 0; color:var(--text-muted);">app.run() app.rs:42</div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="side-panel-view" id="panel-source">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>SOURCE CONTROL</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+
+              <!-- Accordion replaces tab strip for Source Control subviews -->
+              <div class="sc-accordion">
+
+              <!-- Worktrees section (new, at top) -->
+              <div class="sc-accordion-section open">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Worktrees</span>
+                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">5 active</span>
+                </div>
+                <div class="sc-accordion-body">
+                  <div class="sc-wt-filter-bar">
+                    <button class="sc-wt-filter-btn active" onclick="filterWorktrees(this,'all')">All</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'clean')">Clean</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'dirty')">Dirty</button>
+                    <button class="sc-wt-filter-btn" onclick="filterWorktrees(this,'conflict')">Conflict</button>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill clean">clean</span>
+                      <span style="font-weight:600;">feat/dashboard-v2</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread0</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +42 -8 &middot; 3 files &middot; Last commit: 4m ago</div>
+                      <div style="display:flex; gap:var(--xs); margin-top:4px;">
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Opening diff for feat/dashboard-v2')">Diff</button>
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); showMergeModal()">Merge</button>
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px; color:var(--accent-error);" onclick="event.stopPropagation(); toast('Removing worktree feat/dashboard-v2...')">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="dirty" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill dirty">2 dirty</span>
+                      <span style="font-weight:600;">feat/schema-update</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread2</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +80 -16 &middot; 5 files &middot; Last commit: 8m ago</div>
+                      <div style="display:flex; gap:var(--xs); margin-top:4px;">
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Opening diff for feat/schema-update')">Diff</button>
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); toast('Stashing changes...')">Stash</button>
+                        <button class="wizard-btn" style="font-size:9px; padding:1px 6px;" onclick="event.stopPropagation(); showMergeModal()">Merge</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill clean">clean</span>
+                      <span style="font-weight:600;">feat/oauth2-pkce</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-subagents</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +122 -11 &middot; 4 files &middot; Last commit: 1m ago</div>
+                    </div>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="dirty" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill dirty">1 dirty</span>
+                      <span style="font-weight:600;">feat/multi-tenant</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-worktree-merge</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +130 -4 &middot; 3 files &middot; Tests: 1 failing</div>
+                    </div>
+                  </div>
+                  <div class="sc-wt-row" data-wt-state="clean" onclick="this.classList.toggle('expanded')">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span class="wt-status-pill clean">clean</span>
+                      <span style="font-weight:600;">perf/analytics-opt</span>
+                      <span style="color:var(--text-muted); font-size:9px; margin-left:auto;">thread-escalation</span>
+                    </div>
+                    <div class="sc-wt-detail">
+                      <div style="font-size:10px; color:var(--text-secondary);">Base: main &middot; +0 -0 &middot; 2 files (read-only) &middot; Blocked</div>
+                    </div>
+                  </div>
+                  <button class="wizard-btn" style="width:100%; margin-top:var(--sm); font-size:10px;" onclick="showCreateWorktreeModal()">+ New Worktree</button>
+                </div>
+              </div>
+
+              <!-- Changes section (wraps existing content) -->
+              <div class="sc-accordion-section open">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Changes</span>
+                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">1 staged, 2 unstaged</span>
+                </div>
+                <div class="sc-accordion-body">
+
+              <!-- ═══ CHANGES subview (inside accordion) ═══ -->
+              <div data-sc-view="changes">
+                <div style="margin-bottom:var(--md);">
+                  <select class="wizard-select" style="padding:var(--xs); font-size:11px; width:100%;" onchange="toast('Branch: ' + this.value)">
+                    <option>main</option>
+                    <option>feature/gui-update</option>
+                    <option>hotfix/auth-bug</option>
+                  </select>
+                </div>
+
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">STAGED <span class="git-status" style="float:right; color:var(--accent-lime);">1</span></summary>
+                  <div class="file-tree" style="padding:var(--sm);">
+                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center;">
+                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → src/config.rs (staged)')">src/config.rs <span class="git-status added" style="color:var(--accent-lime);">A</span></span>
+                      <span style="display:flex; gap:2px;">
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.unstage_hunks → src/config.rs')" title="Unstage">−</button>
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → src/config.rs (confirm?)')" title="Discard">✕</button>
+                      </span>
+                    </div>
+                  </div>
+                </details>
+
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">UNSTAGED <span class="git-status" style="float:right; color:var(--accent-orange);">2</span></summary>
+                  <div class="file-tree" style="padding:var(--sm);">
+                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center;">
+                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → src/app.rs (unstaged)')">src/app.rs <span class="git-status" style="color:var(--accent-orange);">M</span></span>
+                      <span style="display:flex; gap:2px;">
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.stage_hunks → src/app.rs')" title="Stage">+</button>
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → src/app.rs')" title="Discard">✕</button>
+                      </span>
+                    </div>
+                    <div class="file" style="font-size:11px; padding:4px 0; display:flex; justify-content:space-between; align-items:center; color:var(--text-muted);">
+                      <span style="cursor:pointer;" onclick="toast('cmd.git.open_diff → Cargo.lock (unstaged)')">Cargo.lock <span class="git-status">U</span></span>
+                      <span style="display:flex; gap:2px;">
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('cmd.git.stage_hunks → Cargo.lock')" title="Stage">+</button>
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('cmd.git.discard_hunks → Cargo.lock')" title="Discard">✕</button>
+                      </span>
+                    </div>
+                    <div style="font-size:9px; color:var(--text-muted); padding:var(--xs) 0; font-style:italic;">Hunk-level stage/unstage/discard available in diff view</div>
+                  </div>
+                </details>
+
+                <div style="display:flex; gap:var(--xs); margin-bottom:var(--md);">
+                  <input type="text" class="wizard-input" id="scCommitMsg" placeholder="Commit message..." style="padding:4px; font-size:11px; flex:1;">
+                  <button class="wizard-btn primary" style="padding:4px 8px; font-size:11px;" onclick="var msg=document.getElementById('scCommitMsg').value||'(empty)'; toast('Committed: ' + msg)">Commit</button>
+                </div>
+
+                <div style="margin-bottom:var(--md);">
+                  <input class="wizard-input" placeholder="Search in diff (SC owned, not project Search)" style="width:100%; padding:4px; font-size:10px;" oninput="if(this.value.length>2) toast('cmd.git.diff_search → ' + this.value)">
+                </div>
+
+                <div style="font-size:9px; color:var(--text-muted); padding:var(--xs) 0; margin-bottom:var(--md); border-left:2px solid var(--accent-orange); padding-left:var(--sm);">Git mutations do not participate in editor undo</div>
+
+                <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CONFLICT REVIEW</summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="padding:4px 0; font-weight:600; color:var(--accent-magenta);">src/merge_target.rs <span style="font-weight:normal; color:var(--text-muted);">— 1 conflict</span></div>
+                    <div style="display:flex; gap:var(--xs); margin-top:var(--sm); font-size:9px; color:var(--text-secondary);">
+                      <span style="padding:2px 6px; border:1px solid var(--border-light); border-radius:3px;">base</span>
+                      <span style="padding:2px 6px; border:1px solid var(--accent-blue); border-radius:3px; color:var(--accent-blue);">ours</span>
+                      <span style="padding:2px 6px; border:1px solid var(--accent-orange); border-radius:3px; color:var(--accent-orange);">theirs</span>
+                    </div>
+                    <div style="display:flex; gap:var(--xs); margin-top:var(--sm);">
+                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('cmd.git.conflict_apply_resolution → Accept Ours')">Apply Ours</button>
+                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('cmd.git.conflict_apply_resolution → Accept Theirs')">Apply Theirs</button>
+                      <button class="wizard-btn" style="padding:2px 6px; font-size:9px;" onclick="toast('Opening merge tool...')">Merge Tool</button>
+                    </div>
+                  </div>
+                </details>
+
+                <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">REMOTE PROJECTION STATE</summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
+                      <span style="color:var(--text-secondary);">Freshness</span>
+                      <span class="remote-badge current" style="cursor:pointer;" onclick="cycleBadge(this, ['current','refreshing','stale']); toast('Freshness: ' + this.textContent)">current</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
+                      <span style="color:var(--text-secondary);">Health</span>
+                      <span class="remote-badge healthy" style="cursor:pointer;" onclick="cycleBadge(this, ['healthy','degraded','unavailable']); toast('Health: ' + this.textContent)">healthy</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0;">
+                      <span style="color:var(--text-secondary);">Write</span>
+                      <span class="remote-badge writable" style="cursor:pointer;" onclick="cycleBadge(this, ['writable','pending_write','blocked','read_only']); toast('Write: ' + this.textContent)">writable</span>
+                    </div>
+                    <button class="wizard-btn" style="width:100%; margin-top:var(--sm); padding:4px; font-size:10px; opacity:0.5;" onclick="toast('cmd.remote.reconnect → one bounded auto-retry...')">Reconnect</button>
+                    <div style="font-size:9px; color:var(--text-muted); margin-top:var(--xs);">Click badges to cycle states</div>
+                  </div>
+                </details>
+              </div>
+                </div><!-- /sc-accordion-body -->
+              </div><!-- /sc-accordion-section Changes -->
+
+              <!-- History accordion section -->
+              <div class="sc-accordion-section">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>History</span>
+                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">3 commits</span>
+                </div>
+                <div class="sc-accordion-body">
+
+              <!-- ═══ HISTORY subview ═══ -->
+              <div data-sc-view="history">
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">COMMITS</summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="padding:4px 0; border-bottom:1px solid var(--border-light); cursor:pointer;" onclick="toast('cmd.git.show_commit → abc12ef')">
+                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">abc12ef</span><span style="color:var(--text-muted); font-size:9px;">2h ago</span></div>
+                      <div>Initial commit</div>
+                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
+                    </div>
+                    <div style="padding:4px 0; border-bottom:1px solid var(--border-light); cursor:pointer;" onclick="toast('cmd.git.show_commit → def34ab')">
+                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">def34ab</span><span style="color:var(--text-muted); font-size:9px;">5h ago</span></div>
+                      <div>Update README and add config module</div>
+                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
+                    </div>
+                    <div style="padding:4px 0; cursor:pointer;" onclick="toast('cmd.git.show_commit → 789feed')">
+                      <div style="display:flex; justify-content:space-between;"><span style="color:var(--accent-blue); font-family:monospace;">789feed</span><span style="color:var(--text-muted); font-size:9px;">1d ago</span></div>
+                      <div>Set up Cargo workspace</div>
+                      <div style="color:var(--text-muted); font-size:9px;">Author: dev@puppet-master.io</div>
+                    </div>
+                  </div>
+                </details>
+                <div style="margin-bottom:var(--md);">
+                  <input class="wizard-input" placeholder="Filter commits..." style="width:100%; padding:4px; font-size:10px;" oninput="toast('Filtering: ' + this.value)">
+                </div>
+                <button class="wizard-btn" style="width:100%; padding:4px; font-size:10px;" onclick="toast('cmd.git.diff_set_compare_target → selecting compare base...')">Set Compare Target</button>
+              </div>
+                </div><!-- /sc-accordion-body -->
+              </div><!-- /sc-accordion-section History -->
+
+              <!-- Graph accordion section -->
+              <div class="sc-accordion-section">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Graph</span>
+                </div>
+                <div class="sc-accordion-body">
+              <div data-sc-view="graph">
+                <div style="padding:var(--xl); text-align:center; color:var(--text-muted); font-size:11px;">
+                  <div style="font-size:24px; margin-bottom:var(--sm);">&#9794;</div>
+                  <div>Lineage graph visualization</div>
+                  <div style="margin-top:var(--sm); font-size:9px;">Branch ancestry, merge points, commit selection handoff</div>
+                  <button class="wizard-btn" style="margin-top:var(--md); padding:4px 12px; font-size:10px;" onclick="toast('Opening full graph view...')">Open Full Graph</button>
+                </div>
+              </div>
+                </div>
+              </div>
+
+              <!-- Branches & Stash accordion section -->
+              <div class="sc-accordion-section">
+                <div class="sc-accordion-header">
+                  <span class="sa-chevron">&#9656;</span>
+                  <span>Branches & Stash</span>
+                  <span style="font-size:9px; color:var(--text-muted); margin-left:auto;">3 branches, 1 stash</span>
+                </div>
+                <div class="sc-accordion-body">
+              <div data-sc-view="branches">
+                <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">BRANCHES <span class="git-status" style="float:right;">3</span></summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="padding:3px 0; cursor:pointer; display:flex; justify-content:space-between;" onclick="toast('Switch to main')"><span style="font-weight:600;">main</span> <span style="color:var(--accent-lime); font-size:9px;">current</span></div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feature/gui-update')">feature/gui-update</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to hotfix/auth-bug')">hotfix/auth-bug</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/dashboard-v2')">feat/dashboard-v2</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/oauth2-pkce')">feat/oauth2-pkce</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to feat/multi-tenant')">feat/multi-tenant</div>
+                    <div style="padding:3px 0; cursor:pointer;" onclick="toast('Switch to perf/analytics-opt')">perf/analytics-opt</div>
+                  </div>
+                </details>
+                <details class="bento-widget" style="border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                  <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">STASH <span class="git-status" style="float:right;">1</span></summary>
+                  <div style="padding:var(--sm); font-size:11px;">
+                    <div style="padding:3px 0; display:flex; justify-content:space-between; align-items:center;">
+                      <span style="cursor:pointer;" onclick="toast('Applying stash@{0}...')">stash@{0}: WIP on main</span>
+                      <div style="display:flex; gap:2px;">
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px;" onclick="toast('git stash pop')">Pop</button>
+                        <button class="wizard-btn" style="padding:1px 4px; font-size:9px; color:var(--accent-magenta);" onclick="toast('git stash drop')">Drop</button>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+                </div>
+              </div>
+
+              </div><!-- /sc-accordion -->
+            </div>
+          </div>
+
+          <div class="side-panel-view" id="panel-git">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center; border-left-color:var(--accent-blue);">
+              <span>GITHUB ACTIONS</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CURRENT BRANCH RUNS</summary>
+                <div style="padding:var(--sm);">
+                  <div class="docker-container" style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid var(--border-light);">
+                    <div style="display:flex; gap:var(--xs); align-items:center;">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      <span style="font-size: 11px;">build-linux (#42)</span>
+                    </div>
+                    <a href="#" style="font-size:9px; color:var(--text-secondary);">Logs</a>
+                  </div>
+                  <div class="docker-container" style="display:flex; justify-content:space-between; align-items:center; padding:4px 0;">
+                    <div style="display:flex; gap:var(--xs); align-items:center;">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--accent-lime)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                      <span style="font-size: 11px;">tests-mac (#41)</span>
+                    </div>
+                    <a href="#" style="font-size:9px; color:var(--text-secondary);">Logs</a>
+                  </div>
+                </div>
+              </details>
+              
+              <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">WORKFLOWS</summary>
+                <div style="padding:var(--sm); font-size:11px;">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:var(--xs);">
+                    <span>CI Pipeline</span>
+                    <button class="wizard-btn" style="padding:2px 6px; font-size:9px;">Dispatch</button>
+                  </div>
+                  <div style="display:flex; justify-content:space-between;">
+                    <span>Release</span>
+                    <button class="wizard-btn" style="padding:2px 6px; font-size:9px;">Dispatch</button>
+                  </div>
+                </div>
+              </details>
+
+              <details class="bento-widget" style="border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">SETTINGS (SECRETS & VARS)</summary>
+                <div style="padding:var(--sm); font-size:11px; color:var(--text-secondary);">
+                  <div>DOCKER_USER (Secret) <span style="float:right; color:var(--accent-lime);">Set</span></div>
+                  <div style="margin-top:var(--xs);">DOCKER_PAT (Secret) <span style="float:right; color:var(--accent-magenta);">Missing</span></div>
+                  <button class="wizard-btn primary" style="width:100%; margin-top:var(--sm); padding:4px; font-size:10px;">Manage Secrets</button>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="side-panel-view" id="panel-docker">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center; border-left-color:var(--accent-orange);">
+              <span>DOCKER MANAGER</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">CONTAINERS</summary>
+                <div class="file-tree" style="padding:var(--sm);">
+                  <div class="file" style="color:var(--accent-lime); font-size:11px;">▶ puppet-master-dev <span style="color:var(--text-muted); float:right;">Up 2h</span></div>
+                  <div class="file" style="color:var(--text-muted); font-size:11px;">■ db-redis <span style="float:right;">Exited</span></div>
+                </div>
+              </details>
+
+              <details class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">IMAGES & REGISTRIES</summary>
+                <div class="file-tree" style="padding:var(--sm); font-size:11px;">
+                  <div class="file">sittingmongoose/puppet-master:latest</div>
+                  <div class="file" style="color:var(--text-muted);">node:18-alpine</div>
+                  <button class="wizard-btn" style="width:100%; margin-top:var(--sm); padding:4px; font-size:10px;">Browse DockerHub</button>
+                </div>
+              </details>
+              
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">BUILD / BAKE</summary>
+                <div style="padding:var(--sm); font-size:11px;">
+                  <div style="margin-bottom:var(--xs); display:flex; justify-content:space-between;">Target: <span style="color:var(--accent-blue);">default</span></div>
+                  <button class="wizard-btn primary" style="width:100%; padding:4px; font-size:10px;">Build Image</button>
+                </div>
+              </details>
+
+              <details open class="bento-widget" style="border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">PUBLISH / UNRAID</summary>
+                <div style="padding:var(--sm); font-size:11px;">
+                  <div style="margin-bottom:var(--xs); display:flex; justify-content:space-between;">Docker Auth: <span style="color:var(--accent-lime);">Authenticated</span></div>
+                  <div style="margin-bottom:var(--sm); display:flex; justify-content:space-between;">Unraid Repo: <span style="color:var(--accent-orange);">Dirty</span></div>
+                  <div style="display:flex; gap:var(--xs);">
+                    <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;">Push Image</button>
+                    <button class="wizard-btn" style="flex:1; padding:4px; font-size:10px;">Push XML</button>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="side-panel-view" id="panel-unraid">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>UNRAID TEMPLATES</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">MANAGED PUBLISHING</summary>
+                <div style="padding:var(--sm); font-size:11px;">
+                  <div style="display:flex; justify-content:space-between; margin-bottom:var(--xs);"><span style="color:var(--text-secondary);">Template Repo</span><span style="color:var(--accent-lime);">Ready</span></div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:var(--sm);"><span style="color:var(--text-secondary);">ca_profile.xml</span><span style="color:var(--accent-lime);">Valid</span></div>
+                  <button class="wizard-btn primary" style="width:100%; padding:4px; font-size:10px;">Sync Templates</button>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="side-panel-view" id="panel-artifacts">
+            <div class="files-panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <span>RUNTIME ARTIFACTS</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+            </div>
+            <div class="panel-content" style="flex:1; overflow-y:auto; padding:var(--md);">
+              <details open class="bento-widget" style="margin-bottom:var(--md); border: 1px solid var(--border-light); background:var(--surface); border-radius:4px;">
+                <summary style="padding:var(--sm) var(--md); font-weight:600; font-family:var(--display-font); font-size:10px; cursor:pointer; background:var(--surface-elevated);">RECENT ARTIFACTS</summary>
+                <div style="padding:var(--sm); font-size:11px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid var(--border-light);">
+                    <span style="color:var(--accent-blue);">plan_graph.json</span>
+                    <span style="color:var(--text-muted);">10:45 AM</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0; border-bottom:1px solid var(--border-light);">
+                    <span style="color:var(--accent-blue);">evidence_2.2.json</span>
+                    <span style="color:var(--text-muted);">10:38 AM</span>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:4px 0;">
+                    <span style="color:var(--accent-blue);">build_dist.zip</span>
+                    <span style="color:var(--text-muted);">Yesterday</span>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+

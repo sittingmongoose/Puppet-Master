@@ -1,0 +1,455 @@
+<script id="pm6-js-projects">
+(function () {
+  'use strict';
+  /* PMConcept6 — Projects page behavior (owner: projects agent).
+     All interactivity routes through PM_DEMO's [data-demo-action] click router;
+     handlers registered below. Listeners attached only inside #panel-projects. */
+  var root = document.getElementById('panel-projects');
+  if (!root) return;
+
+  function say(msg) { try { (window.toast || function () {})(msg); } catch (e) {} }
+  function $(sel, el) { return (el || root).querySelector(sel); }
+  function $all(sel, el) { return Array.prototype.slice.call((el || root).querySelectorAll(sel)); }
+
+  /* ---- icon injection (window.PM_ICONS -> .pm6-ico[data-ico]) ---- */
+  function paintIcons(scope) {
+    var icons = window.PM_ICONS || {};
+    $all('.pm6-ico[data-ico]', scope || root).forEach(function (el) {
+      var k = el.getAttribute('data-ico');
+      if (icons[k]) el.innerHTML = icons[k];
+    });
+  }
+  paintIcons();
+
+  /* ---- ctx helpers: the seed-shim router calls handlers with no ctx, so a
+     capturing listener remembers the last [data-demo-action] element. ---- */
+  var lastEl = null;
+  root.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('[data-demo-action]') : null;
+    if (t) lastEl = t;
+  }, true);
+  function ctxArg(ctx) {
+    if (ctx && ctx.arg) return ctx.arg;
+    if (ctx && ctx.el && ctx.el.dataset && ctx.el.dataset.demoArg) return ctx.el.dataset.demoArg;
+    return (lastEl && lastEl.dataset.demoArg) || '';
+  }
+
+  function card(id) { return root.querySelector('.pm6-proj-card[data-proj="' + id + '"]'); }
+  function nameOf(c) { return c ? (c.dataset.name || c.dataset.proj || 'project') : 'project'; }
+  function shake(c) {
+    if (!c) return;
+    c.classList.remove('pm6-proj-shake');
+    void c.offsetWidth;
+    c.classList.add('pm6-proj-shake');
+  }
+  function setActivity(c, text, cls) {
+    var t = c && c.querySelector('[data-role="activity-text"]');
+    if (!t) return;
+    t.textContent = text;
+    t.className = cls ? cls : '';
+  }
+  function setChip(c, text, classes) {
+    var chip = c && c.querySelector('[data-role="chip"]');
+    if (!chip) return;
+    chip.textContent = text;
+    chip.className = 'status-badge' + (classes ? ' ' + classes : '');
+  }
+
+  function reg(id, fn) {
+    try {
+      if (window.PM_DEMO && PM_DEMO.actions && PM_DEMO.actions.register) PM_DEMO.actions.register(id, fn);
+    } catch (e) {}
+  }
+
+  /* ================= open / settings ================= */
+  reg('proj.open', function (ctx) {
+    var id = ctxArg(ctx), c = card(id);
+    if (!c) { say('Unavailable: demo_scope — that project is not part of this demo.'); return; }
+    if (c.classList.contains('pm6-proj-archived')) {
+      say('Unavailable: stale — ' + nameOf(c) + ' is archived. Restore it (archive button) to open it.');
+      shake(c); return;
+    }
+    if (c.dataset.health === 'error') {
+      say('Unavailable: stale — ' + (c.dataset.path || 'its folder') + ' is missing. Fix the path in Project Settings, then try Open again.');
+      shake(c); return;
+    }
+    if (c.classList.contains('current')) {
+      say('Already the active project — ' + nameOf(c) + ' is open right now.');
+      return;
+    }
+    var prev = $('.pm6-proj-card.current');
+    if (prev) {
+      prev.classList.remove('current');
+      var po = prev.querySelector('[data-role="opened"]');
+      if (po) po.textContent = 'Just now';
+    }
+    c.classList.add('current');
+    var o = c.querySelector('[data-role="opened"]');
+    if (o) o.textContent = 'Active now';
+    say('Switched active project — panels, worktrees and terminals now point at ' + nameOf(c) + '.');
+  });
+
+  reg('proj.settings', function (ctx) {
+    var id = ctxArg(ctx), c = card(id);
+    var modal = document.getElementById('projectSettingsModal');
+    if (!modal) { say('Unavailable: not_configured — the settings surface has not loaded yet.'); return; }
+    var title = modal.querySelector('.s4-psm-title');
+    if (title && c) title.textContent = nameOf(c);
+    modal.classList.add('visible');
+  });
+
+  /* ================= archive / remove with inline confirm ================= */
+  var pending = null; /* { id, kind } */
+
+  function hideConfirms() {
+    $all('.pm6-proj-confirm').forEach(function (el) { el.hidden = true; el.innerHTML = ''; });
+    pending = null;
+  }
+
+  function guardCurrentBusy(c, verb) {
+    if (c && c.classList.contains('current')) {
+      say('Unavailable: busy — Run #47 is live on ' + nameOf(c) + '. Pause it in the Orchestrator before you ' + verb + '.');
+      shake(c);
+      return true;
+    }
+    return false;
+  }
+
+  function showConfirm(c, kind) {
+    hideConfirms();
+    var box = c.querySelector('[data-role="confirm"]');
+    if (!box) return;
+    var msg = kind === 'remove'
+      ? 'Remove <strong>' + nameOf(c) + '</strong> from Projects? Files on disk stay untouched.'
+      : 'Archive <strong>' + nameOf(c) + '</strong>? It stays on disk and can be restored any time.';
+    box.innerHTML =
+      '<span>' + msg + '</span>' +
+      '<span class="pm6-proj-confirm-btns">' +
+      '<button type="button" class="danger" data-demo-action="proj.confirm.yes">' + (kind === 'remove' ? 'Remove' : 'Archive') + '</button>' +
+      '<button type="button" data-demo-action="proj.confirm.no">Keep</button>' +
+      '</span>';
+    box.hidden = false;
+    pending = { id: c.dataset.proj, kind: kind };
+  }
+
+  reg('proj.archive', function (ctx) {
+    var id = ctxArg(ctx), c = card(id);
+    if (!c) return;
+    if (c.classList.contains('pm6-proj-archived')) { /* restore */
+      c.classList.remove('pm6-proj-archived');
+      setChip(c, c.dataset.prevChipText || 'Idle', c.dataset.prevChipCls || 'idle');
+      var b = c.querySelector('[data-demo-action="proj.archive"]');
+      if (b) b.title = 'Archive';
+      say(nameOf(c) + ' restored from the archive.');
+      return;
+    }
+    if (guardCurrentBusy(c, 'archive it')) return;
+    showConfirm(c, 'archive');
+  });
+
+  reg('proj.remove', function (ctx) {
+    var id = ctxArg(ctx), c = card(id);
+    if (!c) return;
+    if (guardCurrentBusy(c, 'remove it')) return;
+    showConfirm(c, 'remove');
+  });
+
+  reg('proj.confirm.yes', function () {
+    if (!pending) return;
+    var c = card(pending.id), kind = pending.kind;
+    hideConfirms();
+    if (!c) return;
+    if (kind === 'remove') {
+      c.classList.add('pm6-proj-leaving');
+      setTimeout(function () { try { c.remove(); } catch (e) {} applyFilters(); }, 260);
+      say(nameOf(c) + ' removed from Projects — the folder on disk is untouched.');
+    } else {
+      var chip = c.querySelector('[data-role="chip"]');
+      c.dataset.prevChipText = chip ? chip.textContent : 'Idle';
+      c.dataset.prevChipCls = chip ? chip.className.replace('status-badge', '').trim() : 'idle';
+      c.classList.add('pm6-proj-archived');
+      setChip(c, 'Archived', 'pm6-archived');
+      var b = c.querySelector('[data-demo-action="proj.archive"]');
+      if (b) b.title = 'Restore from archive';
+      say(nameOf(c) + ' archived — use the same button to restore it.');
+    }
+  });
+
+  reg('proj.confirm.no', function () { hideConfirms(); });
+
+  /* ================= New Project / Open Folder sheet ================= */
+  var sheet = $('#pm6-proj-sheet');
+  var sheetMode = 'create';
+
+  function openSheet(mode) {
+    if (!sheet) return;
+    sheetMode = mode;
+    var kicker = $('#pm6-proj-sheet-kicker'), title = $('#pm6-proj-sheet-title'),
+        hint = $('#pm6-proj-sheet-hint'), tpl = $('#pm6-proj-tpl-field'),
+        create = $('#pm6-proj-create'), nameIn = $('#pm6-proj-new-name'), pathIn = $('#pm6-proj-new-path');
+    if (nameIn) { nameIn.value = ''; nameIn.classList.remove('pm6-invalid'); }
+    if (pathIn) pathIn.value = '~/dev/';
+    if (mode === 'attach') {
+      if (kicker) kicker.textContent = 'Attach';
+      if (title) title.textContent = 'Open Folder';
+      if (hint) hint.textContent = 'Point at an existing folder — discovery scans it read-only (branch, frameworks, test commands).';
+      if (tpl) tpl.hidden = true;
+      if (create) create.textContent = 'Attach Project';
+    } else {
+      if (kicker) kicker.textContent = 'Create';
+      if (title) title.textContent = 'New Project';
+      if (hint) hint.textContent = 'The Planning Wizard picks the new project up as soon as it exists.';
+      if (tpl) tpl.hidden = false;
+      if (create) create.textContent = 'Create Project';
+    }
+    sheet.hidden = false;
+    setTimeout(function () { try { (mode === 'attach' ? pathIn : nameIn).focus(); } catch (e) {} }, 60);
+  }
+  function closeSheet() { if (sheet) sheet.hidden = true; }
+
+  reg('proj.new.open', function () { openSheet('create'); });
+  reg('proj.folder.open', function () { openSheet('attach'); });
+  reg('proj.new.close', function () { closeSheet(); });
+
+  if (sheet) {
+    sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
+  }
+  var tplChips = $('#pm6-proj-tpl-chips');
+  if (tplChips) {
+    tplChips.addEventListener('click', function (e) {
+      var chip = e.target && e.target.closest ? e.target.closest('.pm6-proj-chip') : null;
+      if (!chip) return;
+      $all('.pm6-proj-chip', tplChips).forEach(function (x) { x.classList.remove('active'); });
+      chip.classList.add('active');
+    });
+  }
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (sheet && !sheet.hidden) { closeSheet(); return; }
+      hideConfirms();
+    }
+    if (e.key === 'Enter' && sheet && !sheet.hidden && e.target && e.target.id === 'pm6-proj-new-name') {
+      var btn = $('#pm6-proj-create'); if (btn) btn.click();
+    }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.classList && e.target.classList.contains('pm6-proj-card')) {
+      e.preventDefault(); e.target.click();
+    }
+  });
+
+  var TPL_LANGS = {
+    blank: { labels: [], tokens: '' },
+    sveltekit: { labels: ['SvelteKit'], tokens: 'sveltekit jsts' },
+    axum: { labels: ['Rust · Axum'], tokens: 'rust' },
+    fullstack: { labels: ['SvelteKit', 'Rust · Axum', 'Docker'], tokens: 'sveltekit rust docker' }
+  };
+  var GLYPHS = ['plant', 'star', 'wand', 'dial', 'swirl'];
+  var createdCount = 0;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+
+  reg('proj.new.create', function () {
+    var nameIn = $('#pm6-proj-new-name'), pathIn = $('#pm6-proj-new-path');
+    var name = (nameIn && nameIn.value || '').trim();
+    var path = (pathIn && pathIn.value || '~/dev/').trim();
+    if (sheetMode === 'attach' && !name) {
+      name = (path.replace(/\/+$/, '').split('/').pop() || '').trim();
+    }
+    if (!name) {
+      if (nameIn) {
+        nameIn.classList.remove('pm6-invalid'); void nameIn.offsetWidth;
+        nameIn.classList.add('pm6-invalid');
+        try { nameIn.focus(); } catch (e) {}
+      }
+      say('Unavailable: not_configured — give the project a name first.');
+      return;
+    }
+    var id = name.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '') || ('proj-' + Date.now());
+    if (card(id)) { say('Unavailable: already_done — a project called ' + name + ' is already in the list.'); return; }
+    if (path === '~/dev/' || path === '') path = '~/dev/' + id;
+
+    var tplKey = 'blank';
+    var activeChip = tplChips && tplChips.querySelector('.pm6-proj-chip.active');
+    if (sheetMode === 'create' && activeChip) tplKey = activeChip.dataset.tpl || 'blank';
+    var tpl = TPL_LANGS[tplKey] || TPL_LANGS.blank;
+    var glyph = GLYPHS[createdCount % GLYPHS.length]; createdCount++;
+
+    var tags = tpl.labels.map(function (l) { return '<span class="lang-badge">' + esc(l) + '</span>'; }).join('');
+    if (!tags) tags = '<span class="lang-badge">Unscanned</span>';
+    var activity = sheetMode === 'attach'
+      ? 'Attached just now — discovery scanned ' + esc(path) + ' read-only'
+      : 'Created just now — plan it in the Planning Wizard';
+
+    var el = document.createElement('div');
+    el.className = 'project-card-bento pm-sheen pm6-proj-card';
+    el.setAttribute('data-proj', id);
+    el.setAttribute('data-name', name);
+    el.setAttribute('data-langs', tpl.tokens);
+    el.setAttribute('data-status', 'idle');
+    el.setAttribute('data-health', 'healthy');
+    el.setAttribute('data-order', '-1');
+    el.setAttribute('data-path', path);
+    el.setAttribute('data-demo-action', 'proj.open');
+    el.setAttribute('data-demo-arg', id);
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', 'Open project ' + name);
+    el.style.setProperty('--i', '0');
+    el.innerHTML =
+      '<div class="project-card-header">' +
+        '<div class="project-card-title-area">' +
+          '<span class="pm6-proj-glyph pm-hover-icon pm6-ico" data-ico="' + glyph + '" aria-hidden="true"></span>' +
+          '<div class="pm6-proj-titlewrap">' +
+            '<span class="project-card-title">' + esc(name) + '</span>' +
+            '<span class="pm6-proj-branch"><span class="pm6-ico" data-ico="branch" aria-hidden="true"></span>main</span>' +
+          '</div>' +
+        '</div>' +
+        '<span class="status-badge pm6-ready" data-role="chip">Ready</span>' +
+      '</div>' +
+      '<div class="project-card-path" title="' + esc(path) + '">' + esc(path) + '</div>' +
+      '<div class="project-card-tags">' + tags + '</div>' +
+      '<div class="pm6-proj-activity" data-role="activity"><span class="health-dot healthy" title="Healthy"></span><span data-role="activity-text">' + activity + '</span></div>' +
+      '<div class="project-card-footer">' +
+        '<span class="project-last-opened" data-role="opened">Just now</span>' +
+        '<div class="project-card-actions">' +
+          '<button type="button" class="project-action-btn" title="Open" aria-label="Open ' + esc(name) + '" data-demo-action="proj.open" data-demo-arg="' + id + '"><span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span></button>' +
+          '<button type="button" class="project-action-btn" title="Project settings" aria-label="Settings for ' + esc(name) + '" data-demo-action="proj.settings" data-demo-arg="' + id + '"><span class="pm6-ico" data-ico="gear" aria-hidden="true"></span></button>' +
+          '<button type="button" class="project-action-btn" title="Archive" aria-label="Archive ' + esc(name) + '" data-demo-action="proj.archive" data-demo-arg="' + id + '"><span class="pm6-ico" data-ico="layers" aria-hidden="true"></span></button>' +
+          '<button type="button" class="project-action-btn danger" title="Remove" aria-label="Remove ' + esc(name) + '" data-demo-action="proj.remove" data-demo-arg="' + id + '"><span class="pm6-ico" data-ico="close" aria-hidden="true"></span></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="pm6-proj-confirm" data-role="confirm" hidden></div>';
+
+    var grid = $('#pm6-proj-grid');
+    if (grid) grid.insertBefore(el, grid.firstChild);
+    paintIcons(el);
+    applyFilters();
+    closeSheet();
+    say(sheetMode === 'attach'
+      ? name + ' attached — discovery found no blockers.'
+      : name + ' created at ' + path + ' — open the Planning Wizard to plan the first build.');
+  });
+
+  /* ================= refresh ================= */
+  var refreshing = false;
+  reg('proj.refresh', function () {
+    if (refreshing) { say('Unavailable: busy — a rescan is already running.'); return; }
+    refreshing = true;
+    var btn = $('#pm6-proj-refresh');
+    var ico = btn && btn.querySelector('.pm6-ico');
+    if (ico) ico.classList.add('pm6-spin');
+    setTimeout(function () {
+      refreshing = false;
+      if (ico) ico.classList.remove('pm6-spin');
+      var total = $all('.pm6-proj-card').length;
+      var broken = $all('.pm6-proj-card[data-health="error"]').length;
+      say('Rescanned ' + total + ' project' + (total === 1 ? '' : 's') + ' — ' +
+        (broken ? broken + ' still need' + (broken === 1 ? 's' : '') + ' attention (folder missing).' : 'all healthy.'));
+    }, 800);
+  });
+
+  /* ================= sort / filter / search ================= */
+  var selSort = $('#projectsSortBy'), selLang = $('#projectsFilterLang'),
+      selStatus = $('#projectsFilterStatus'), search = $('#pm6-proj-search');
+  var STATUS_RANK = { running: 0, idle: 1, paused: 2, error: 3 };
+
+  function applyFilters() {
+    var grid = $('#pm6-proj-grid');
+    if (!grid) return;
+    var lang = selLang ? selLang.value : 'all';
+    var status = selStatus ? selStatus.value : 'all';
+    var q = (search && search.value || '').trim().toLowerCase();
+    var cards = $all('.pm6-proj-card', grid);
+
+    var mode = selSort ? selSort.value : 'opened';
+    cards.sort(function (a, b) {
+      if (mode === 'name') return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+      if (mode === 'status') {
+        var ra = STATUS_RANK[a.dataset.status], rb = STATUS_RANK[b.dataset.status];
+        return (ra === undefined ? 9 : ra) - (rb === undefined ? 9 : rb);
+      }
+      return parseFloat(a.dataset.order || '99') - parseFloat(b.dataset.order || '99');
+    });
+    cards.forEach(function (c, i) {
+      grid.appendChild(c);
+      c.style.setProperty('--i', String(Math.min(i, 8)));
+    });
+
+    var visible = 0;
+    cards.forEach(function (c) {
+      var okLang = lang === 'all' || (' ' + (c.dataset.langs || '') + ' ').indexOf(' ' + lang + ' ') !== -1;
+      var okStatus = status === 'all' || c.dataset.status === status;
+      var okSearch = !q || (c.dataset.name || '').toLowerCase().indexOf(q) !== -1 ||
+        (c.dataset.path || '').toLowerCase().indexOf(q) !== -1;
+      var show = okLang && okStatus && okSearch;
+      c.hidden = !show;
+      if (show) visible++;
+    });
+    var empty = $('#pm6-proj-empty');
+    if (empty) empty.hidden = visible !== 0;
+  }
+
+  reg('proj.filters.clear', function () {
+    if (selLang) selLang.value = 'all';
+    if (selStatus) selStatus.value = 'all';
+    if (selSort) selSort.value = 'opened';
+    if (search) search.value = '';
+    applyFilters();
+    say('Filters cleared — showing every project.');
+  });
+
+  [selSort, selLang, selStatus].forEach(function (el) {
+    if (el) el.addEventListener('change', applyFilters);
+  });
+  if (search) search.addEventListener('input', applyFilters);
+
+  /* ================= run #47 live wiring (Tastebook story) ================= */
+  var RUN_CHIP = {
+    pending: ['Run #47 · Ready', 'pm6-ready'],
+    compiling: ['Run #47 · Running', 'pm6-live'],
+    running: ['Run #47 · Running', 'pm6-live'],
+    attention_required: ['Run #47 · Needs Attention', 'pm6-attn'],
+    paused: ['Run #47 · Paused', 'paused'],
+    blocked: ['Run #47 · Blocked', 'error'],
+    recovering: ['Run #47 · Recovering', 'pm6-attn pm6-live'],
+    degraded: ['Run #47 · Degraded', 'pm6-attn'],
+    complete: ['Run #47 · Complete', '']
+  };
+  var RUN_ACTIVITY = {
+    compiling: 'Run #47 compiling seam graph · just now',
+    running: 'Run #47 · lanes progressing · just now',
+    attention_required: 'Run #47 waiting on a package gate — approve it in the Orchestrator',
+    paused: 'Run #47 paused — resume from the Orchestrator',
+    blocked: 'Run #47 blocked — open the Orchestrator for the safe-point retry',
+    recovering: 'Run #47 recovering node n-19 from safe point · just now',
+    degraded: 'Run #47 finished degraded — evidence linked in the Orchestrator',
+    complete: 'Run #47 complete — PR ready in Source Control'
+  };
+  function onRunState(p) {
+    try {
+      var c = card('tastebook');
+      if (!c) return;
+      var s = (p && (p.state || p.status)) || '';
+      s = String(s).toLowerCase();
+      var chip = RUN_CHIP[s];
+      if (chip) setChip(c, chip[0], chip[1]);
+      if (RUN_ACTIVITY[s]) setActivity(c, RUN_ACTIVITY[s]);
+    } catch (e) {}
+  }
+  try {
+    if (window.PM_DEMO && PM_DEMO.on) {
+      PM_DEMO.on('run.state', onRunState);
+      PM_DEMO.on('run.gate', function () {
+        var c = card('tastebook');
+        if (!c) return;
+        setChip(c, 'Run #47 · Needs Attention', 'pm6-attn');
+        setActivity(c, 'Run #47 waiting on a package gate — approve it in the Orchestrator');
+      });
+      onRunState(null); /* pick up whatever state the engine already holds */
+    }
+  } catch (e) {}
+})();
+</script>

@@ -264,7 +264,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Accoun
 
 **cost_usage artifact:** Attribution record only. It uses the same canonical usage identity and normalized fields as the app-wide Usage page, the thread-scoped Context Detail Pane, Ledger, Run Graph, and Orchestrator usage displays.
 
-The artifact view must preserve segregated LLM usage buckets for input, output, cache_read, cache_write, and reasoning tokens. The display LESSON is that background ops and subagent LLM calls remain visible through the same usage identity; the panel may show parent totals, but it must also preserve the child/subagent event links that explain how costs aggregate to the parent.
+The artifact view must preserve segregated LLM usage buckets for input, output, cache_read, cache_write, cache_write_1h/TTL where exposed, output_visible, and reasoning tokens. The display LESSON is that background ops and subagent LLM calls remain visible through the same usage identity; the panel may show parent totals, but it must also preserve the child/subagent event links that explain how costs aggregate to the parent.
 
 Required actions for `cost_usage` items:
 - **Show in Ledger** — navigate to the canonical Ledger surface with the matching usage identity in scope
@@ -277,19 +277,21 @@ Rules:
 - thread-scoped cost_usage artifacts land on the same Context Detail Pane used by the chat context indicator `More Details` action
 - app-wide cost_usage artifacts land on the canonical Usage page
 - when cost is derived from normalized token buckets rather than authoritative provider pricing, user-facing thread surfaces label it as `Estimated Cost`
+- `cost_usage` type_payload MUST carry normalized `provider`, `usage`, `cost`, `quota`, `authority`, `refs`, and `flags` objects so raw provider payload retention/redaction, source confidence, settlement status, token-bucket semantics, pricing snapshot, unknown cost/quota, BYOK, subscription-hidden cost display, and provider-attempt correlation are schema-visible.
 - `cost_usage` artifacts MUST carry `usage_event_ref` whenever available (`usage_event_ref?` in older optional notation). When traceable, they also carry `attempt_id`, `node_id`, and `provider_attempt_ref` so Usage, Ledger, Run Graph, and the Artifacts panel can explain who produced the artifact and why it exists in the execution graph.
 - `Show in Ledger` and `Show in Usage` prefer `usage_event_ref` plus receipt/attempt/node identity over timestamp heuristics, run-only filters, or tier-only filters. `tier_id` may remain derived display/grouping compatibility only; it is not the primary cross-surface key for usage correlation.
+- `tool_llm_trace` type_payload MUST carry a stable `trace_ref`, trace lifecycle fields, provider_attempt_ref, usage_event_ref when available, stream start/partial/final/error/abort timestamps or refs, raw provider payload/redaction refs, settlement link, and retry/escalation relation. It cannot pass validation with an unrelated non-empty payload.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 ## 7. JSON schemas (all required)
 
 **Envelope:** Plans/runtime_artifact_envelope.schema.json (`$id`: pm.runtime_artifact.envelope.v1). Common payload fields for all runtime artifact events.
 
-**Per-type:** One file per artifact type, e.g. Plans/runtime_artifact_code_diff.schema.json through Plans/runtime_artifact_artifact_version.schema.json, with `$id`: pm.runtime_artifact.<type>.v1. Each payload is validated against the envelope plus the corresponding type schema. The cost_usage schema MUST include required reasoning_tokens (integer, minimum 0). All 19 type schemas are required; no optional schema files.
+**Per-type:** One file per artifact type, e.g. Plans/runtime_artifact_code_diff.schema.json through Plans/runtime_artifact_artifact_version.schema.json, with `$id`: pm.runtime_artifact.<type>.v1. Each payload is validated against the envelope plus the corresponding type schema. The cost_usage schema MUST include required `usage_event_ref`, normalized provider/usage/cost/quota/authority/refs/flags objects, and required `reasoning_tokens` (integer, minimum 0). The tool_llm_trace schema MUST include required `trace_ref`, trace lifecycle, provider-attempt, usage-settlement, retry/escalation, and raw-payload/redaction refs. All 19 type schemas are required; no optional schema files.
 
 Implementation MUST validate every runtime_artifact.* event payload against the envelope and the matching type schema before appending to seglog and before writing to the artifacts index.
 
-Schema-file materialization note: `Plans/runtime_artifact_envelope.schema.json` and the 19 per-type `Plans/runtime_artifact_<type>.schema.json` files are required implementation artifacts, not current live doc targets until those files exist. Until materialized, this section is the normative schema requirement; `Plans/storage-plan.md` owns the registered storage key families `artifacts_index.v1:{project_id}:{artifact_id}`, `artifacts_project_state.v1:{project_id}`, and `projector.checkpoint.runtime_artifacts:{project_id}`.
+Schema-file materialization note: `Plans/runtime_artifact_envelope.schema.json` and the 19 per-type `Plans/runtime_artifact_<type>.schema.json` files are current live doc targets now that they exist. This section remains normative for semantics, and the schema files must enforce the required per-type payload fields directly rather than allowing arbitrary non-empty `type_payload` objects. `Plans/storage-plan.md` owns the registered storage key families `artifacts_index.v1:{project_id}:{artifact_id}`, `artifacts_project_state.v1:{project_id}`, and `projector.checkpoint.runtime_artifacts:{project_id}`.
 
 ### Runtime-artifact envelope ownership
 
@@ -1815,6 +1817,92 @@ owner_hints:
   - Plans/Runtime_Artifacts_Panel.md
   - Plans/Automated_Testing_System.md
   - Plans/Executor_Protocol.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+## Usage Artifact Schema Strictness Addendum - 2026-07-09
+
+This addendum tightens already-materialized runtime artifact schema expectations for usage-bearing artifacts. It creates no runtime artifacts, WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, final manifests, or PNC-019 receipts.
+
+### RAP-043 - Usage And Tool Trace Schema Strictness
+
+```yaml
+plan_unit_id: RAP-043
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Runtime_Artifacts_Panel.md
+canonical_text: >-
+  The materialized `cost_usage` and `tool_llm_trace` runtime artifact schemas must reject arbitrary non-empty `type_payload` values. `cost_usage` requires canonical usage identity through `usage_event_ref`, provider/route/account/model identity, normalized usage token buckets and counting semantics, nonnegative `reasoning_tokens`, normalized cost fields, quota/window evidence, authority/source/confidence/settlement fields, raw provider payload/redaction refs, and flags for estimated, provider-reported, CLI-reported, local-context-estimated, BYOK, subscription-hidden, and unknown states. `tool_llm_trace` requires `trace_ref`, trace_kind, tool_call_id, llm_call_id or stream_id, provider_attempt_ref, usage_event_ref when available, stream lifecycle timestamps or refs for start/partial/final/error/abort, provider payload/redaction refs, usage settlement link, retry/escalation relation, and quota/usage refs. Schema-only JSON validation must fail if these required payload fields are absent; repo-specific validators may add fixtures but must not be the only line of defense.
+gui_related: true
+gui_classification_reason: Cost usage and tool/LLM trace artifacts are user-visible drill-through surfaces, and schema strictness protects their displayed Usage/Ledger behavior.
+depends_on: [RAP-016, RAP-017, RAP-018, UF-085, CBP-027]
+unblocks: []
+acceptance_criteria:
+  - "`Plans/runtime_artifact_cost_usage.schema.json` rejects an artifact whose `type_payload` lacks provider, usage, cost, quota, authority, refs, or flags."
+  - "`Plans/runtime_artifact_cost_usage.schema.json` requires `usage_event_ref` and nonnegative `reasoning_tokens`."
+  - "`Plans/runtime_artifact_tool_llm_trace.schema.json` rejects an artifact whose `type_payload` lacks `trace_ref`, trace lifecycle, provider attempt linkage, usage settlement linkage, retry/escalation relation, or raw-payload/redaction refs."
+  - Schema-only validation can distinguish missing, unknown, disabled, estimated, provider-reported, CLI-reported, BYOK, and subscription-hidden states without accepting arbitrary payloads.
+  - Runtime Artifacts drill-through uses canonical `usage_event_ref`, `provider_attempt_ref`, and `trace_ref` rather than timestamp heuristics or artifact-local cost models.
+  - No WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, production build tasks, generated governance artifacts, final manifests, or PNC-019 receipts are created by this PlanUnit.
+validation_surfaces:
+  - python3 -m json.tool Plans/runtime_artifact_cost_usage.schema.json
+  - python3 -m json.tool Plans/runtime_artifact_tool_llm_trace.schema.json
+  - python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-shard-plans.py --check
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: runtime_artifact_schema_false_pass
+reasoning_tier: high
+context_scope: runtime_artifact_usage_schema
+implementation_surfaces:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/runtime_artifact_cost_usage.schema.json
+  - Plans/runtime_artifact_tool_llm_trace.schema.json
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_runtime_artifact_schema_strictness
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/Runtime_Artifacts_Panel.md:262-292"
+  - "Plans/runtime_artifact_cost_usage.schema.json:1"
+  - "Plans/runtime_artifact_tool_llm_trace.schema.json:1"
+  - "uploaded:Puppet-Master-main/Plans/runtime_artifact_cost_usage.schema.json:1"
+  - "uploaded:Puppet-Master-main/Plans/runtime_artifact_tool_llm_trace.schema.json:1"
+  - "uploaded:opencode-dev/packages/llm/src/schema/events.ts:7-69"
+  - "uploaded:cline-main/sdk/packages/llms/fixtures/usage.json:1-56"
+  - "uploaded:pi-main/packages/ai/src/types.ts:352-375"
+  - "uploaded:pi-main/packages/ai/src/api/anthropic-messages.ts:546-559"
+  - "uploaded:antigravity-cli-main/CHANGELOG.md:122-136"
+preserved_exact_tokens:
+  - cost_usage
+  - tool_llm_trace
+  - type_payload
+  - usage_event_ref
+  - provider_attempt_ref
+  - trace_ref
+  - reasoning_tokens
+  - provider_reported
+  - provider_header
+  - cli_reported
+  - local_estimated
+  - pricing_estimated
+  - unknown
+  - streaming_partial
+  - settled
+  - adjusted
+  - failed
+  - BYOK
+  - subscription-hidden
+negative_constraints:
+  - Do not accept arbitrary non-empty `type_payload` as a valid cost_usage or tool_llm_trace artifact.
+  - Do not rely only on custom repo validators when JSON Schema itself can express required payload fields.
+  - Do not create an artifact-local usage model separate from canonical UsageRecord.
+  - Do not use timestamp heuristics, run-only filters, or tier-only filters as the primary usage/cost join.
+owner_hints:
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/usage-feature.md
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
 ```

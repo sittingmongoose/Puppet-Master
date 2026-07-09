@@ -1,0 +1,499 @@
+          <div class="page page-dashboard active" id="panel-dashboard">
+          <div class="resizer-col" id="leftPanelResizer"></div>
+            <div class="editor-view pane-container" id="editorView" style="display:flex; flex-direction:column; gap:0; flex:1; position:relative;">
+            <div class="pane-header-drag" draggable="true" data-pane="editorView" style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); width:40px; height:10px; background:var(--border-light); border-radius:4px; cursor:grab; z-index:50;"></div>
+            <div id="pmEditorTerminalStack" class="pm-editor-term-stack" style="display:none;" aria-label="Editor terminal panels"></div>
+            <div style="display:flex; flex-direction:row; gap:2px; flex:1; min-height:0;">
+            <div class="editor-pane" id="editorPane1">
+              <div class="editor-tabs">
+                <span class="tab active" data-file="src/main.rs" onclick="switchEditorPane1Tab('src/main.rs')">main.rs <span class="dot">*</span> <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab" data-file="src/routes/recipes.rs" onclick="switchEditorPane1Tab('src/routes/recipes.rs')">recipes.rs <span class="dot">*</span> <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab" data-file="web/src/routes/+page.svelte" onclick="switchEditorPane1Tab('web/src/routes/+page.svelte')">+page.svelte <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab" data-file="Cargo.toml" onclick="switchEditorPane1Tab('Cargo.toml')">Cargo.toml <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+              </div>
+              <div class="editor-area">
+                <div class="editor-gutter" id="pane1Gutter"></div>
+                <div class="editor-code" id="pane1Code"><span class="code-line"><span style="color:var(--accent-magenta);">use</span> axum::{Router, routing::get};</span><span class="code-line"><span style="color:var(--accent-magenta);">use</span> tastebook::routes::recipes;</span><span class="code-line">&nbsp;</span><span class="code-line"><span style="color:var(--text-muted);">// Tastebook API entrypoint — loading&hellip;</span></span></div>
+                <div class="editor-minimap" id="pane1Minimap"><canvas class="minimap-canvas"></canvas><div class="minimap-viewport"></div></div>
+              </div>
+            </div>
+
+            <div class="resizer-col" id="editorSplitResizer"></div>
+
+            <div class="editor-pane" id="editorPane2">
+              <div class="editor-tabs">
+                <span class="tab active" data-tab-type="code" data-file="src/models/recipe.rs" id="configRsTab" onclick="switchEditorPane2CodeTab('src/models/recipe.rs')">recipe.rs <span class="dot">*</span> <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab" data-tab-type="code" data-file="docker-compose.yml" onclick="switchEditorPane2CodeTab('docker-compose.yml')">docker-compose.yml <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab" data-tab-type="code" data-file="Dockerfile" onclick="switchEditorPane2CodeTab('Dockerfile')">Dockerfile <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+                <span class="tab" data-tab-type="browser" data-session-class="workspace_preview" id="browserPreviewTab" onclick="switchEditorPane2Tab('browser')">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:2px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  localhost:5173
+                  <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </span>
+                <span class="tab" data-tab-type="automation" data-session-class="automation_session" id="automationBrowserTab" onclick="switchEditorPane2Tab('automation')" style="display:none;">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="2" style="vertical-align:middle; margin-right:2px;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                  [auto] test-runner
+                </span>
+              </div>
+              <div class="editor-area" id="editorPane2CodeArea">
+                <div class="editor-gutter" id="pane2Gutter"></div>
+                <div class="editor-code" id="pane2Code"><span class="code-line"><span style="color:var(--accent-magenta);">pub struct</span> Recipe {</span><span class="code-line">    <span style="color:var(--accent-magenta);">pub</span> id: RecipeId,</span><span class="code-line">    <span style="color:var(--accent-magenta);">pub</span> title: String,</span><span class="code-line">}</span></div>
+                <div class="editor-minimap" id="pane2Minimap"><canvas class="minimap-canvas"></canvas><div class="minimap-viewport"></div></div>
+              </div>
+
+              <!-- Browser Tab Content (hidden until browser tab clicked) -->
+              <div class="browser-tab-content" id="browserTabContent" style="display:none; flex:1; flex-direction:column;">
+                <!-- Browser Toolbar -->
+                <div class="browser-toolbar">
+                  <button class="browser-nav-btn" title="Back" data-demo-action="dash.browser.nav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+                  <button class="browser-nav-btn" title="Forward" data-demo-action="dash.browser.nav"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                  <button class="browser-nav-btn" title="Reload" data-demo-action="dash.browser.reload"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+                  <input class="browser-address-bar" id="browserAddressBar" value="http://localhost:5173" readonly>
+                  <span class="browser-session-badge workspace" id="browserSessionBadge">workspace_preview</span>
+                  <span class="browser-cap-indicator">Tabs: 1/4</span>
+                  <div class="browser-toolbar-sep"></div>
+                  <button class="browser-action-btn" title="Pick Element for Chat" onclick="addBrowserChipToChat('element-pick','&lt;button.save-recipe&gt;')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="M13 13l6 6"/></svg></button>
+                  <button class="browser-action-btn" title="Add Selection to Chat" onclick="addBrowserChipToChat('browser-selection','Recipe card styles')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"/><path d="M20 7V4h-3"/><path d="M4 17v3h3"/><path d="M20 17v3h-3"/></svg></button>
+                  <button id="Screenshot-to-Chat" class="browser-action-btn" title="Screenshot to Chat" aria-label="Screenshot to Chat" onclick="addBrowserChipToChat('screenshot-chip','screenshot-tastebook.png')"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></button>
+                  <div class="browser-toolbar-sep"></div>
+                  <button class="browser-action-btn" title="Toggle DevTools" onclick="toggleBottomBrowserTab()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></button>
+                  <button class="browser-action-btn" title="Detach to Window" data-demo-action="dash.browser.detach"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+                  <button class="browser-action-btn" title="Share with Agent" data-demo-action="dash.browser.share" data-command="cmd.browser.share_with_agent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>
+                  <button class="browser-action-btn" title="Permissions" onclick="document.getElementById('browserPermissionsPanel').style.display = document.getElementById('browserPermissionsPanel').style.display === 'none' ? 'block' : 'none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></button>
+                </div>
+
+                <!-- Permissions Panel (collapsible) -->
+                <div class="browser-permissions-panel" id="browserPermissionsPanel" style="display:none;">
+                  <div class="perm-title">REQUESTED vs EFFECTIVE</div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">browser_runtime</span><span class="perm-kv-value matched">chromium-headless &rarr; chromium-headless</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">capabilities</span><span class="perm-kv-value degraded">[nav, cookies, localStorage, devtools] &rarr; [nav, cookies, localStorage]</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">degradation</span><span class="perm-kv-value blocked">devtools &mdash; permission_not_granted</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">blocked_actions</span><span class="perm-kv-value matched">none</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">permission_level</span><span class="perm-kv-value">standard</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">profile_scope</span><span class="perm-kv-value">project</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">restore_policy</span><span class="perm-kv-value">reopen_on_restart</span></div>
+                  <div class="perm-kv-row"><span class="perm-kv-label">takeover_state</span><span class="perm-kv-value matched">user_control</span></div>
+                </div>
+
+                <!-- Automation Banner (hidden by default) -->
+                <div class="browser-automation-banner" id="automationBanner" style="display:none;">
+                  <div class="auto-status">
+                    <div class="wizard-activity-pulse" id="autoPulse" style="width:6px; height:6px;"></div>
+                    <span id="autoStatusText">Agent Controlling Browser &mdash; Running test: login flow verification</span>
+                  </div>
+                  <div class="auto-controls">
+                    <button class="browser-takeover-btn" onclick="handleTakeover('pause')">Pause Agent</button>
+                    <button class="browser-takeover-btn" onclick="handleTakeover('continue')">Let Agent Continue</button>
+                    <button class="browser-takeover-btn danger" onclick="handleTakeover('stop')">Stop Agent &amp; Keep Browser</button>
+                  </div>
+                </div>
+
+                <!-- Fake Website Viewport: Tastebook -->
+                <div class="browser-viewport" id="browserViewport">
+                  <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #2a2118; margin: 0; background: #fffdf9;">
+                    <!-- Navbar -->
+                    <nav data-pickable style="display:flex; justify-content:space-between; align-items:center; padding:12px 24px; background:#2a2118; color:#fff;">
+                      <div style="font-weight:700; font-size:16px; letter-spacing:0.5px;">Tastebook</div>
+                      <div style="display:flex; gap:20px; font-size:13px;">
+                        <a data-pickable href="#" style="color:#e8ddcf; text-decoration:none;" onmouseover="this.style.color='#ffb454'" onmouseout="this.style.color='#e8ddcf'">Explore</a>
+                        <a data-pickable href="#" style="color:#e8ddcf; text-decoration:none;" onmouseover="this.style.color='#ffb454'" onmouseout="this.style.color='#e8ddcf'">My Recipes</a>
+                        <a data-pickable href="#" style="color:#e8ddcf; text-decoration:none;" onmouseover="this.style.color='#ffb454'" onmouseout="this.style.color='#e8ddcf'">Sign In</a>
+                      </div>
+                    </nav>
+                    <!-- Hero -->
+                    <section data-pickable style="padding:36px 24px; text-align:center; background:linear-gradient(135deg,#ff8c42 0%,#d1495b 100%); color:#fff;">
+                      <h1 data-pickable style="font-size:28px; margin:0 0 8px 0; font-weight:700;">Share recipes you actually cook</h1>
+                      <p data-pickable style="font-size:14px; margin:0 0 16px 0; opacity:0.92;">Save, remix, and rate dishes from cooks you trust.</p>
+                      <button data-pickable class="save-recipe" style="background:#fff; color:#d1495b; border:none; padding:10px 24px; font-size:13px; font-weight:600; border-radius:6px; cursor:pointer;" onmouseover="this.style.background='#ffe9d6'" onmouseout="this.style.background='#fff'">Start a Recipe</button>
+                    </section>
+                    <!-- Recipe cards -->
+                    <section data-pickable style="display:flex; gap:16px; padding:24px; max-width:720px; margin:0 auto;">
+                      <div data-pickable style="flex:1; padding:0 0 12px 0; background:#fff; border:1px solid #eee2d2; border-radius:8px; overflow:hidden; text-align:left;">
+                        <div style="height:64px; background:linear-gradient(120deg,#ffd166,#ff8c42);"></div>
+                        <h3 data-pickable style="font-size:14px; margin:10px 12px 2px;">Miso Butter Salmon</h3>
+                        <p style="font-size:11px; color:#8a7a66; margin:0 12px;">24 min &middot; rated 4.8 by 212 cooks</p>
+                      </div>
+                      <div data-pickable style="flex:1; padding:0 0 12px 0; background:#fff; border:1px solid #eee2d2; border-radius:8px; overflow:hidden; text-align:left;">
+                        <div style="height:64px; background:linear-gradient(120deg,#8fd694,#4f9d69);"></div>
+                        <h3 data-pickable style="font-size:14px; margin:10px 12px 2px;">Green Curry Ramen</h3>
+                        <p style="font-size:11px; color:#8a7a66; margin:0 12px;">35 min &middot; rated 4.6 by 98 cooks</p>
+                      </div>
+                      <div data-pickable style="flex:1; padding:0 0 12px 0; background:#fff; border:1px solid #eee2d2; border-radius:8px; overflow:hidden; text-align:left;">
+                        <div style="height:64px; background:linear-gradient(120deg,#d1495b,#7a2e3f);"></div>
+                        <h3 data-pickable style="font-size:14px; margin:10px 12px 2px;">One-Pan Shakshuka</h3>
+                        <p style="font-size:11px; color:#8a7a66; margin:0 12px;">18 min &middot; rated 4.9 by 341 cooks</p>
+                      </div>
+                    </section>
+                    <!-- Import banner -->
+                    <section data-pickable style="max-width:688px; margin:0 auto 24px; padding:14px 16px; background:#fff6ec; border:1px dashed #e5b98a; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+                      <span data-pickable style="font-size:12px; color:#6d5a42;">Found a recipe online? Paste a URL and Tastebook imports the ingredients for you.</span>
+                      <button data-pickable style="background:#2a2118; color:#fff; border:none; padding:8px 16px; font-size:12px; font-weight:600; border-radius:6px; cursor:pointer;">Import from URL</button>
+                    </section>
+                    <!-- Footer -->
+                    <footer data-pickable style="text-align:center; padding:16px; font-size:11px; color:#b0a18c; border-top:1px solid #eee2d2;">
+                      &copy; 2026 Tastebook &middot; <a href="#" style="color:#d1495b;">Privacy</a> &middot; <a href="#" style="color:#d1495b;">Terms</a>
+                    </footer>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Context Detail Pane (hidden until "More Details" clicked) -->
+            <div class="editor-pane context-detail-pane" id="contextDetailPane" style="display:none;">
+              <div class="editor-tabs">
+                <span class="tab active" style="color:var(--accent-blue);">Context: Import from URL <svg class="tab-close" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="document.getElementById('contextDetailPane').style.display='none';"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>
+              </div>
+              <div style="flex:1; overflow-y:auto; background:var(--surface);">
+                <!-- View toggle tabs -->
+                <div class="cdp-tab-bar">
+                  <div class="cdp-tab active" onclick="this.parentElement.querySelectorAll('.cdp-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active'); this.closest('.context-detail-pane').querySelector('.cdp-curated').style.display='block'; this.closest('.context-detail-pane').querySelector('.cdp-raw-view').style.display='none';">Curated</div>
+                  <div class="cdp-tab" onclick="this.parentElement.querySelectorAll('.cdp-tab').forEach(t=>t.classList.remove('active')); this.classList.add('active'); this.closest('.context-detail-pane').querySelector('.cdp-curated').style.display='none'; this.closest('.context-detail-pane').querySelector('.cdp-raw-view').style.display='block';">Raw</div>
+                </div>
+
+                <!-- Curated View -->
+                <div class="cdp-curated">
+                  <!-- Overview -->
+                  <div class="cdp-section">
+                    <div class="cdp-section-title">Overview</div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Thread</span><span class="cdp-kv-value">Import from URL</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Messages</span><span class="cdp-kv-value">6</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Provider</span><span class="cdp-kv-value">Claude</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Model</span><span class="cdp-kv-value">Sonnet 4.6</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Mode</span><span class="cdp-kv-value">Agent</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Persona</span><span class="cdp-kv-value">product-manager</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Worker</span><span class="cdp-kv-value">assistant</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Tokens</span><span class="cdp-kv-value">42,180 / 128,000</span></div>
+                  </div>
+
+                  <!-- Breakdown -->
+                  <div class="cdp-section" style="border-top: 1px solid var(--border-light);">
+                    <div class="cdp-section-title">Breakdown</div>
+                    <div style="font-size:10px; color:var(--text-muted); margin-bottom:var(--xs);">Context Usage</div>
+                    <div class="cdp-bar">
+                      <div class="cdp-bar-segment" style="width:19.5%; background:var(--accent-blue);"></div>
+                      <div class="cdp-bar-segment" style="width:29.4%; background:var(--accent-lime);"></div>
+                      <div class="cdp-bar-segment" style="width:43%; background:var(--accent-orange);"></div>
+                      <div class="cdp-bar-segment" style="width:8.1%; background:var(--accent-magenta);"></div>
+                    </div>
+                    <div style="display:flex; gap:var(--md); font-size:10px; flex-wrap:wrap; margin-bottom:var(--sm);">
+                      <span><span style="display:inline-block; width:8px; height:8px; background:var(--accent-blue); border-radius:2px; margin-right:3px;"></span>System 8.2k</span>
+                      <span><span style="display:inline-block; width:8px; height:8px; background:var(--accent-lime); border-radius:2px; margin-right:3px;"></span>User 12.4k</span>
+                      <span><span style="display:inline-block; width:8px; height:8px; background:var(--accent-orange); border-radius:2px; margin-right:3px;"></span>Assistant 18.1k</span>
+                      <span><span style="display:inline-block; width:8px; height:8px; background:var(--accent-magenta); border-radius:2px; margin-right:3px;"></span>Tool 3.5k</span>
+                    </div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">By Role</span><span class="cdp-kv-value"></span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">User</span><span class="cdp-kv-value">12,400</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">Assistant</span><span class="cdp-kv-value">18,100</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">System</span><span class="cdp-kv-value">8,200</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">Tool</span><span class="cdp-kv-value">3,480</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">Reasoning</span><span class="cdp-kv-value">4,200</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">Cache Read</span><span class="cdp-kv-value">2,100</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">Cache Write</span><span class="cdp-kv-value">800</span></div>
+                  </div>
+
+                  <!-- Browser Context -->
+                  <div class="cdp-section" style="border-top: 1px solid var(--border-light);">
+                    <div class="cdp-section-title">Browser Context</div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Active Sessions</span><span class="cdp-kv-value">2</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">workspace_preview</span><span class="cdp-kv-value" style="color:var(--accent-lime);">localhost:5173</span></div>
+                    <div class="cdp-kv-row" style="padding-left:var(--md);"><span class="cdp-kv-label">automation_session</span><span class="cdp-kv-value" style="color:var(--accent-orange);">test-runner (paused)</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Captured Elements</span><span class="cdp-kv-value">3</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Screenshots</span><span class="cdp-kv-value">1</span></div>
+                    <div class="cdp-kv-row"><span class="cdp-kv-label">Traces</span><span class="cdp-kv-value">1</span></div>
+                  </div>
+
+                  <!-- Messages -->
+                  <div class="cdp-section" style="border-top: 1px solid var(--border-light);">
+                    <div class="cdp-section-title">Messages</div>
+                    <div class="cdp-msg-row" onclick="this.nextElementSibling.classList.toggle('expanded')">
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span style="color:var(--accent-lime);">user</span> <span class="sep" style="opacity:0.4;">|</span> Agent <span class="sep" style="opacity:0.4;">|</span> Sonnet 4.6</span>
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span>1,240 tok</span></span>
+                    </div>
+                    <div class="cdp-msg-detail">
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Provider</span><span class="cdp-kv-value">Claude</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Model</span><span class="cdp-kv-value">Sonnet 4.6</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Effort</span><span class="cdp-kv-value">High</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Persona</span><span class="cdp-kv-value">default</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Input Tokens</span><span class="cdp-kv-value">1,240</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Context at Send</span><span class="cdp-kv-value">8,200 / 128,000</span></div>
+                    </div>
+                    <div class="cdp-msg-row" onclick="this.nextElementSibling.classList.toggle('expanded')">
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span style="color:var(--accent-blue);">assistant</span> <span class="sep" style="opacity:0.4;">|</span> Agent <span class="sep" style="opacity:0.4;">|</span> Sonnet 4.6 <span class="sep" style="opacity:0.4;">|</span> 12s</span>
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span>8,420 tok</span></span>
+                    </div>
+                    <div class="cdp-msg-detail expanded">
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Provider</span><span class="cdp-kv-value">Claude</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Model</span><span class="cdp-kv-value">Sonnet 4.6</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Effort</span><span class="cdp-kv-value">High</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Persona</span><span class="cdp-kv-value">product-manager</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Input Tokens</span><span class="cdp-kv-value">9,440</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Output Tokens</span><span class="cdp-kv-value">8,420</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Thinking</span><span class="cdp-kv-value">12s</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Context at Send</span><span class="cdp-kv-value">9,440 / 128,000</span></div>
+                      <div id="requested-effective-model" class="cdp-kv-row" style="border-top:1px dashed var(--border-light); padding-top:var(--xs); margin-top:var(--xs);"><span class="cdp-kv-label">Requested Model</span><span class="cdp-kv-value">Opus 4</span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Effective Model</span><span class="cdp-kv-value" style="color:var(--accent-orange);">Sonnet 4.6 <span style="font-size:9px; font-weight:400;">(fallback: rate_limit_5h)</span></span></div>
+                      <div class="cdp-kv-row"><span class="cdp-kv-label">Reasoning Tokens</span><span class="cdp-kv-value">1,840</span></div>
+                      <div style="margin-top:var(--sm); padding-top:var(--xs); border-top:1px dashed var(--border-light); font-size:9px; color:var(--text-muted);">Tools: run_shell_command (0.4s), web_search (1.2s)</div>
+                    </div>
+                    <div class="cdp-msg-row">
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span style="color:var(--accent-blue);">assistant</span> <span class="sep" style="opacity:0.4;">|</span> Agent <span class="sep" style="opacity:0.4;">|</span> Sonnet 4.6 <span class="sep" style="opacity:0.4;">|</span> 4s</span>
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span>3,200 tok</span></span>
+                    </div>
+                    <div class="cdp-msg-row">
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span style="color:var(--accent-lime);">user</span> <span class="sep" style="opacity:0.4;">|</span> Agent <span class="sep" style="opacity:0.4;">|</span> Sonnet 4.6</span>
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span>980 tok</span></span>
+                    </div>
+                    <div class="cdp-msg-row">
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span style="color:var(--accent-blue);">assistant</span> <span class="sep" style="opacity:0.4;">|</span> Agent <span class="sep" style="opacity:0.4;">|</span> Sonnet 4.6 <span class="sep" style="opacity:0.4;">|</span> 8s</span>
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span>6,340 tok</span></span>
+                    </div>
+                    <div class="cdp-msg-row">
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span style="color:var(--accent-lime);">user</span> <span class="sep" style="opacity:0.4;">|</span> Agent <span class="sep" style="opacity:0.4;">|</span> Sonnet 4.6</span>
+                      <span style="display:flex; gap:var(--sm); align-items:center;"><span>1,100 tok</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Raw View -->
+                <div class="cdp-raw-view">
+{
+  "thread_id": "thread0",
+  "title": "Import from URL",
+  "project": "Tastebook",
+  "provider": "Claude",
+  "model": "Sonnet 4.6",
+  "mode": "agent",
+  "persona": "product-manager",
+  "requested_model_provider_id": "anthropic",
+  "effective_model_provider_id": "anthropic",
+  "requested_runtime_platform_id": "claude_api",
+  "effective_runtime_platform_id": "claude_api",
+  "context": {
+    "used": 42180,
+    "limit": 128000,
+    "input_tokens": 38200,
+    "output_tokens": 3980,
+    "reasoning_tokens": 4200,
+    "cache_read_tokens": 2100,
+    "cache_write_tokens": 800
+  },
+  "messages": [
+    { "role": "user", "tokens": 1240, "requested_model": "anthropic/claude-opus-4", "effective_model": "anthropic/claude-sonnet-4-6" },
+    { "role": "assistant", "tokens": 8420, "tools": ["run_shell_command", "web_search"], "reasoning_tokens": 1840 },
+    { "role": "assistant", "tokens": 3200 },
+    { "role": "user", "tokens": 980 },
+    { "role": "assistant", "tokens": 6340, "reasoning_tokens": 2360 },
+    { "role": "user", "tokens": 1100 }
+  ]
+}</div>
+              </div>
+            </div>
+            </div>
+
+          </div>
+          <div class="resizer-col" id="editorDashResizer"></div>
+          <div class="dashboard-view pane-container" id="dashboardView">
+          <div class="dashboard-header pane-header-drag" draggable="true" data-pane="dashboardView">
+            <div class="dashboard-tabs">
+              <span class="tab active">Main</span>
+              <span class="tab">Metrics</span>
+              <span class="tab">Monitoring</span>
+            </div>
+            <div class="pm6-dash-actions">
+              <button class="pm6-dash-add" id="pm6DashAddBtn" data-demo-action="dash.catalog.open" data-command="cmd.dashboard.catalog" title="Add a widget from the catalog"><span class="pm6-ico" data-pm6-icon="layers"></span><span>Add Widget</span></button>
+            </div>
+          </div>
+          <div class="pm6-dash-scroll" id="pm6DashScroll">
+            <!-- CTA rail: elevated cards with accent left border; chat-addressable -->
+            <div class="pm6-dash-cta-rail" id="pm6DashCtaRail">
+              <div class="pm6-dash-cta pm6-dash-cta--hitl" id="pm6DashCtaHitl" hidden data-card-kind="hitl_approval" data-card-id="cta-gate-n13" style="--i:0;">
+                <span class="pm6-ico pm6-dash-cta-ico" data-pm6-icon="shield"></span>
+                <div class="pm6-dash-cta-copy">
+                  <div class="pm6-dash-cta-title">Approval needed &mdash; publish package: image-processing</div>
+                  <div class="pm6-dash-cta-sub" id="pm6DashCtaHitlSub">Run #47 is holding at node n-13. A chat thread &ldquo;Approval: Package Gate&rdquo; was opened &mdash; resolve here or there.</div>
+                </div>
+                <div class="pm6-dash-cta-btns">
+                  <button class="pm6-dash-btn pm6-dash-btn--primary" data-demo-action="dash.gate.approve">Approve</button>
+                  <button class="pm6-dash-btn" data-demo-action="dash.gate.decline">Decline</button>
+                  <button class="pm6-dash-btn pm6-dash-btn--ghost" data-demo-action="dash.gate.details">View details</button>
+                </div>
+              </div>
+              <div class="pm6-dash-cta pm6-dash-cta--warning" id="pm6DashCtaUsage" data-card-kind="warning" data-card-id="cta-usage-80" style="--i:1;">
+                <span class="pm6-ico pm6-dash-cta-ico" data-pm6-icon="warning"></span>
+                <div class="pm6-dash-cta-copy">
+                  <div class="pm6-dash-cta-title">Claude 5h window at <span id="pm6DashUsagePct">78%</span></div>
+                  <div class="pm6-dash-cta-sub">Heaviest lane: lane-b (API). Cooldown resets in <span id="pm6DashCooldown">00:41:12</span>. Consider routing lane-d to Codex.</div>
+                </div>
+                <div class="pm6-dash-cta-btns">
+                  <button class="pm6-dash-btn" data-demo-action="dash.usage.ack" data-command="cmd.alert.acknowledge">Acknowledge</button>
+                  <button class="pm6-dash-btn pm6-dash-btn--ghost" data-demo-action="dash.usage.open">Open Usage</button>
+                </div>
+              </div>
+            </div>
+            <!-- Widget grid: 8px gutters, drag-reorder + edge-resize + snap; layout key widget_layout:v1:dashboard (in-memory) -->
+            <div class="pm6-dash-grid" id="pm6DashGrid">
+              <div id="dashGridMain" style="display:contents;">
+                <article class="pm6-dash-card pm-sheen" data-widget-id="pm6-dash-orchestrator-progress" data-widget-kind="orchestrator-progress" style="--dw:2; --dh:2; --i:0;">
+                  <header class="pm6-dash-card-head">
+                    <span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder" aria-label="Drag to reorder widget"></span>
+                    <span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="rocket"></span>
+                    <h3 class="pm6-dash-card-title">Orchestrator progress</h3>
+                    <span class="pm6-dash-chip pm6-dash-chip--live" data-live-chip>Running</span>
+                    <button class="pm6-dash-iconbtn" data-pm6-dash="gear" title="Widget settings: time window, chart type"><span class="pm6-ico" data-pm6-icon="gear"></span></button>
+                    <button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button>
+                  </header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <div class="pm6-dash-orch">
+                      <div class="pm6-dash-ring-wrap">
+                        <svg class="pm6-dash-ring" viewBox="0 0 72 72" aria-hidden="true"><circle class="pm6-dash-ring-track" cx="36" cy="36" r="30"></circle><circle class="pm6-dash-ring-val" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="71.6"></circle></svg>
+                        <div class="pm6-dash-ring-label"><b data-orch-pct>62%</b><small>23 nodes</small></div>
+                      </div>
+                      <div class="pm6-dash-orch-meta">
+                        <div class="pm6-dash-orch-run">Run #47 &middot; Tastebook</div>
+                        <div class="pm6-dash-orch-line" data-orch-line>Building &mdash; lane-b: recipes API &middot; freshness: current</div>
+                        <div class="pm6-dash-orch-dots" aria-label="Lane states">
+                          <span class="pm6-dash-dot is-done" title="lane-a data-model: complete">&#9679;</span>
+                          <span class="pm6-dash-dot is-run" title="lane-b API: running">&#9679;</span>
+                          <span class="pm6-dash-dot is-run" title="lane-c frontend: running">&#9679;</span>
+                          <span class="pm6-dash-dot is-queue" title="lane-d infra: queued">&#9679;</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pm6-dash-orch-foot">
+                      <button class="pm6-dash-btn pm6-dash-btn--primary" data-demo-action="dash.open_plan_compile" data-command="cmd.plan_compile.open_build">Open Plan Compile &rarr;</button>
+                      <button class="pm6-dash-btn" data-demo-action="dash.run.pause" data-command="cmd.orchestrator.pause" data-orch-pause>Pause</button>
+                    </div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize (snaps to grid)"></span>
+                </article>
+
+                <article class="pm6-dash-card pm-sheen" data-widget-id="pm6-dash-active-lanes" data-widget-kind="active-lanes" style="--dw:2; --dh:1; --i:1;">
+                  <header class="pm6-dash-card-head">
+                    <span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder" aria-label="Drag to reorder widget"></span>
+                    <span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="layers"></span>
+                    <h3 class="pm6-dash-card-title">Active lanes</h3>
+                    <button class="pm6-dash-iconbtn" data-pm6-dash="gear" title="Widget settings: lane filter"><span class="pm6-ico" data-pm6-icon="gear"></span></button>
+                    <button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button>
+                  </header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <div class="pm6-dash-lane"><span class="pm6-dash-lane-name">lane-a &middot; data-model</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill is-done" style="width:100%;"></span></span><span class="pm6-dash-lane-val">6/6 &#10003;</span></div>
+                    <div class="pm6-dash-lane"><span class="pm6-dash-lane-name">lane-b &middot; API</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill is-run" style="width:78%;"></span></span><span class="pm6-dash-lane-val">7/9</span></div>
+                    <div class="pm6-dash-lane"><span class="pm6-dash-lane-name">lane-c &middot; frontend</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill is-run" style="width:63%;"></span></span><span class="pm6-dash-lane-val">5/8</span></div>
+                    <div class="pm6-dash-lane"><span class="pm6-dash-lane-name">lane-d &middot; infra</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill is-queue" style="width:8%;"></span></span><span class="pm6-dash-lane-val">queued</span></div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize (snaps to grid)"></span>
+                </article>
+
+                <article class="pm6-dash-card pm-sheen" data-widget-id="pm6-dash-recent-results" data-widget-kind="recent-results" style="--dw:2; --dh:1; --i:2;">
+                  <header class="pm6-dash-card-head">
+                    <span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder" aria-label="Drag to reorder widget"></span>
+                    <span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="checkCircle"></span>
+                    <h3 class="pm6-dash-card-title">Recent results</h3>
+                    <button class="pm6-dash-iconbtn" data-pm6-dash="gear" title="Widget settings: result filter"><span class="pm6-ico" data-pm6-icon="gear"></span></button>
+                    <button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button>
+                  </header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <div class="pm6-dash-rows" data-results-rows>
+                      <div class="pm6-dash-row"><span class="pm6-dash-row-main">n-12 &middot; recipes API contract tests</span><span class="pm6-dash-chip pm6-dash-chip--pass">passed</span><span class="pm6-dash-row-t">2m</span></div>
+                      <div class="pm6-dash-row"><span class="pm6-dash-row-main">n-09 &middot; media upload seam check</span><span class="pm6-dash-chip pm6-dash-chip--pass">passed</span><span class="pm6-dash-row-t">6m</span></div>
+                      <div class="pm6-dash-row"><span class="pm6-dash-row-main">n-07 &middot; schema migration 0002</span><span class="pm6-dash-chip pm6-dash-chip--pass">passed</span><span class="pm6-dash-row-t">11m</span></div>
+                    </div>
+                    <div class="pm6-dash-empty" data-results-empty hidden>No data yet &mdash; results appear as nodes complete.</div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize (snaps to grid)"></span>
+                </article>
+
+                <article class="pm6-dash-card pm-sheen" data-widget-id="pm6-dash-custom-metrics" data-widget-kind="custom-metrics" style="--dw:2; --dh:1; --i:3;">
+                  <header class="pm6-dash-card-head">
+                    <span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder" aria-label="Drag to reorder widget"></span>
+                    <span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="dial"></span>
+                    <h3 class="pm6-dash-card-title">Custom metrics</h3>
+                    <button class="pm6-dash-iconbtn" data-pm6-dash="gear" title="Widget settings: metric, unit, refresh interval"><span class="pm6-ico" data-pm6-icon="gear"></span></button>
+                    <button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button>
+                  </header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <div class="pm6-dash-metric">
+                      <div class="pm6-dash-metric-num"><b data-metric-val>23</b><span class="pm6-dash-metric-unit" data-metric-unit>PlanUnits built</span></div>
+                      <svg class="pm6-dash-spark" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true" data-metric-spark><polyline class="pm6-dash-spark-fill" points="0,32 12,28 24,29 36,24 48,25 60,18 72,20 84,14 96,12 108,8 120,6 120,34 0,34"></polyline><polyline class="pm6-dash-spark-line" points="0,32 12,28 24,29 36,24 48,25 60,18 72,20 84,14 96,12 108,8 120,6"></polyline></svg>
+                    </div>
+                    <div class="pm6-dash-metric-sub" data-metric-sub>+4 this run &middot; query: planunits_built &middot; refresh 30s</div>
+                    <div class="pm6-dash-empty" data-metric-empty hidden>Not configured &mdash; pick a metric in widget settings.</div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize (snaps to grid)"></span>
+                </article>
+              </div>
+              <div id="dashGridMetrics" style="display:none;">
+                <article class="pm6-dash-card pm-sheen" data-widget-kind="usage.quota_summary" style="--dw:2; --dh:1;">
+                  <header class="pm6-dash-card-head"><span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder"></span><span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="scales"></span><h3 class="pm6-dash-card-title">Quota summary</h3><button class="pm6-dash-iconbtn" data-pm6-dash="gear" title="Widget settings"><span class="pm6-ico" data-pm6-icon="gear"></span></button><button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button></header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <div class="pm6-dash-lane"><span class="pm6-dash-lane-name">Claude &middot; Pro &middot; 5h</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill is-warn" style="width:78%;"></span></span><span class="pm6-dash-lane-val">78%</span></div>
+                    <div class="pm6-dash-lane"><span class="pm6-dash-lane-name">Claude &middot; 7d</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill" style="width:41%;"></span></span><span class="pm6-dash-lane-val">41%</span></div>
+                    <div class="pm6-dash-lane"><span class="pm6-dash-lane-name">Codex &middot; plan &middot; 5h</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill" style="width:64%;"></span></span><span class="pm6-dash-lane-val">64%</span></div>
+                    <div class="pm6-dash-lane"><span class="pm6-dash-lane-name">Cursor &middot; inferred</span><span class="pm6-dash-bar"><span class="pm6-dash-bar-fill" style="width:52%;"></span></span><span class="pm6-dash-lane-val">est.</span></div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize"></span>
+                </article>
+                <article class="pm6-dash-card pm-sheen" data-widget-kind="usage.budget_donuts" style="--dw:1; --dh:1;">
+                  <header class="pm6-dash-card-head"><span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder"></span><span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="swirl"></span><h3 class="pm6-dash-card-title">Budget</h3><button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button></header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <div class="pm6-dash-donut-row">
+                      <svg viewBox="0 0 48 48" class="pm6-dash-donut" aria-hidden="true"><circle class="pm6-dash-ring-track" cx="24" cy="24" r="19"></circle><circle class="pm6-dash-ring-val" cx="24" cy="24" r="19" stroke-dasharray="119.4" stroke-dashoffset="45.4"></circle></svg>
+                      <div class="pm6-dash-donut-meta"><b>$8.12</b><small>of $13 cycle &middot; effective_account: jared@main</small></div>
+                    </div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize"></span>
+                </article>
+                <article class="pm6-dash-card pm-sheen" data-widget-kind="usage.analytics_chart" style="--dw:1; --dh:1;">
+                  <header class="pm6-dash-card-head"><span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder"></span><span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="wave"></span><h3 class="pm6-dash-card-title">Tokens / hour</h3><button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button></header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <svg class="pm6-dash-spark pm6-dash-spark--tall" viewBox="0 0 120 44" preserveAspectRatio="none" aria-hidden="true"><polyline class="pm6-dash-spark-fill" points="0,40 15,34 30,36 45,26 60,29 75,17 90,21 105,10 120,13 120,44 0,44"></polyline><polyline class="pm6-dash-spark-line" points="0,40 15,34 30,36 45,26 60,29 75,17 90,21 105,10 120,13"></polyline></svg>
+                    <div class="pm6-dash-metric-sub">peak 92k tok/h &middot; cache-read 31% (measured)</div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize"></span>
+                </article>
+              </div>
+              <div id="dashGridMonitoring" style="display:none;">
+                <article class="pm6-dash-card pm-sheen" data-widget-kind="orch.lane_health" style="--dw:2; --dh:1;">
+                  <header class="pm6-dash-card-head"><span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder"></span><span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="layers"></span><h3 class="pm6-dash-card-title">Lane health</h3><button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button></header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <div class="pm6-dash-row"><span class="pm6-dash-row-main">lane-b worktree &middot; wt/lane-b-api</span><span class="pm6-dash-chip pm6-dash-chip--pass">clean</span><span class="pm6-dash-row-t">now</span></div>
+                    <div class="pm6-dash-row"><span class="pm6-dash-row-main">lane-c worktree &middot; wt/lane-c-web</span><span class="pm6-dash-chip pm6-dash-chip--run">building</span><span class="pm6-dash-row-t">now</span></div>
+                    <div class="pm6-dash-row"><span class="pm6-dash-row-main">n-19 recovery &middot; safe-point retry</span><span class="pm6-dash-chip pm6-dash-chip--warn">degraded</span><span class="pm6-dash-row-t">t+85</span></div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize"></span>
+                </article>
+                <article class="pm6-dash-card pm-sheen" data-widget-kind="docker.containers" style="--dw:2; --dh:1;">
+                  <header class="pm6-dash-card-head"><span class="pm6-dash-drag" data-pm6-dash="drag" title="Drag to reorder"></span><span class="pm6-ico pm6-dash-card-ico pm-hover-icon" data-pm6-icon="toolbox"></span><h3 class="pm6-dash-card-title">Containers</h3><button class="pm6-dash-iconbtn" data-pm6-dash="remove" title="Remove widget">&#10005;</button></header>
+                  <div class="pm6-dash-card-body" data-widget-body>
+                    <div class="pm6-dash-row"><span class="pm6-dash-row-main">tastebook-postgres</span><span class="pm6-dash-chip pm6-dash-chip--pass">running</span><span class="pm6-dash-row-t">:5432</span></div>
+                    <div class="pm6-dash-row"><span class="pm6-dash-row-main">tastebook-redis</span><span class="pm6-dash-chip pm6-dash-chip--pass">running</span><span class="pm6-dash-row-t">:6379</span></div>
+                    <div class="pm6-dash-row"><span class="pm6-dash-row-main">tastebook-worker</span><span class="pm6-dash-chip pm6-dash-chip--warn">restarting</span><span class="pm6-dash-row-t">&#8635;</span></div>
+                  </div>
+                  <span class="pm6-dash-resize" data-pm6-dash="resize" title="Drag to resize"></span>
+                </article>
+              </div>
+            </div>
+          </div>
+          <!-- Add Widget catalog overlay -->
+          <div class="pm6-dash-catalog" id="pm6DashCatalog" hidden>
+            <div class="pm6-dash-catalog-scrim" data-pm6-dash="catalog-close"></div>
+            <div class="pm6-dash-catalog-panel" role="dialog" aria-label="Widget catalog">
+              <div class="pm6-dash-catalog-head">
+                <h3>Add a widget</h3>
+                <span class="pm6-dash-catalog-hint">Pick one &mdash; it lands on the Main grid with live demo data. Drag to reorder, pull the corner to resize.</span>
+                <button class="pm6-dash-iconbtn" data-pm6-dash="catalog-close" title="Close catalog">&#10005;</button>
+              </div>
+              <div class="pm6-dash-catalog-grid">
+                <button class="pm6-dash-catalog-item" data-demo-action="dash.add.quota_summary"><span class="pm6-ico" data-pm6-icon="scales"></span><b>Quota summary</b><small>5h / 7d windows per platform, plan type</small><span class="pm6-dash-size-chip">2&times;1</span></button>
+                <button class="pm6-dash-catalog-item" data-demo-action="dash.add.analytics_chart"><span class="pm6-ico" data-pm6-icon="wave"></span><b>Usage analytics</b><small>Tokens over time, cache-read share</small><span class="pm6-dash-size-chip">2&times;2</span></button>
+                <button class="pm6-dash-catalog-item" data-demo-action="dash.add.budget_donuts"><span class="pm6-ico" data-pm6-icon="swirl"></span><b>Budget donuts</b><small>Spend vs cycle budget, per provider</small><span class="pm6-dash-size-chip">2&times;2</span></button>
+                <button class="pm6-dash-catalog-item" data-demo-action="dash.add.tool_usage"><span class="pm6-ico" data-pm6-icon="toolbox"></span><b>Tool usage</b><small>Invocations, latency p50/p95, error rate</small><span class="pm6-dash-size-chip">2&times;2</span></button>
+                <button class="pm6-dash-catalog-item" data-demo-action="dash.add.multi_account"><span class="pm6-ico" data-pm6-icon="masks"></span><b>Accounts &amp; pressure</b><small>Active vs effective account, cooldowns</small><span class="pm6-dash-size-chip">2&times;2</span></button>
+                <button class="pm6-dash-catalog-item" data-demo-action="dash.add.lane_health"><span class="pm6-ico" data-pm6-icon="layers"></span><b>Lane health</b><small>Worktree state and recovery per lane</small><span class="pm6-dash-size-chip">2&times;1</span></button>
+                <button class="pm6-dash-catalog-item" data-demo-action="dash.add.approval_queue"><span class="pm6-ico" data-pm6-icon="clipboard"></span><b>Approval queue</b><small>Pending gates across runs</small><span class="pm6-dash-size-chip">2&times;1</span></button>
+                <button class="pm6-dash-catalog-item" data-demo-action="dash.add.worktree_state"><span class="pm6-ico" data-pm6-icon="branch"></span><b>Worktree state</b><small>Owner, branch, age for each worktree</small><span class="pm6-dash-size-chip">2&times;1</span></button>
+              </div>
+            </div>
+          </div>
+          </div>
+          </div> <!-- End page-dashboard -->

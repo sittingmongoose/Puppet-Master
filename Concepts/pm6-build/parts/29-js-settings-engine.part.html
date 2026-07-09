@@ -1,0 +1,1142 @@
+(function () {
+  'use strict';
+
+  // PM_ICONS — shared inline-SVG icon library (no emoji anywhere in deliverables).
+  // 24x24 viewBox, stroke currentColor: icons inherit text color; size via .s4-ico.
+  const PM_ICONS = (() => {
+    const w = (body) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>';
+    return {
+      // ---- category icons (keys match PM_SETTINGS_DATA categories[].icon) ----
+      palette: w('<path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3c-.9-1-.2-2.7 1.2-2.7H18a3 3 0 0 0 3-3c0-5-4-9-9-9z"/><circle cx="7.5" cy="11" r="0.6" fill="currentColor"/><circle cx="10.5" cy="7" r="0.6" fill="currentColor"/><circle cx="15" cy="7.5" r="0.6" fill="currentColor"/>'),
+      brain: w('<path d="M11 5.5A2.5 2.5 0 0 0 8.5 3 2.5 2.5 0 0 0 6 5.5v.6A3.4 3.4 0 0 0 3.6 9.4c0 .7.2 1.3.6 1.9A3.6 3.6 0 0 0 3 14c0 1.7 1.2 3.2 2.9 3.5A2.9 2.9 0 0 0 8.8 21c1.2 0 2.2-.7 2.2-1.8V5.5z"/><path d="M13 5.5A2.5 2.5 0 0 1 15.5 3 2.5 2.5 0 0 1 18 5.5v.6a3.4 3.4 0 0 1 2.4 3.3c0 .7-.2 1.3-.6 1.9A3.6 3.6 0 0 1 21 14c0 1.7-1.2 3.2-2.9 3.5A2.9 2.9 0 0 1 15.2 21c-1.2 0-2.2-.7-2.2-1.8V5.5z"/>'),
+      shield: w('<path d="M12 3l7 3v5.2c0 4.4-2.9 7.8-7 9.8-4.1-2-7-5.4-7-9.8V6l7-3z"/>'),
+      terminal: w('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9l3 3-3 3"/><path d="M13 15h4"/>'),
+      puzzle: w('<path d="M4 7h4V5.6A1.6 1.6 0 0 1 9.6 4c.9 0 1.6.7 1.6 1.6V7H15v4h1.4a1.6 1.6 0 0 1 0 3.2H15V18h-3.8v-1.4a1.6 1.6 0 0 0-3.2 0V18H4v-3.8h1.4a1.6 1.6 0 0 0 0-3.2H4V7z"/>'),
+      clipboard: w('<rect x="6" y="5" width="12" height="16" rx="2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 11h6M9 15h4"/>'),
+      branch: w('<circle cx="6" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="8" r="2.2"/><path d="M6 8.2v7.6"/><path d="M18 10.2c0 3-2.5 4.3-5.5 4.6-2 .2-3.5.7-4.3 1.9"/>'),
+      film: w('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v14M16 5v14M3 9.5h5M3 14.5h5M16 9.5h5M16 14.5h5"/>'),
+      globe: w('<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3.6 9h16.8M3.6 15h16.8"/>'),
+      masks: w('<path d="M4 4.5c2.3.8 4.7.8 7 0v5.3c0 2.6-1.6 4.7-3.5 4.7S4 12.4 4 9.8V4.5z"/><path d="M6 7.5h.01M9 7.5h.01" stroke-width="2.2"/><path d="M6 11c.9.8 2.1.8 3 0"/><path d="M13 9.7c2.3.8 4.7.8 7 0V15c0 2.6-1.6 4.7-3.5 4.7S13 17.6 13 15V9.7z"/><path d="M15 12.5h.01M18 12.5h.01" stroke-width="2.2"/><path d="M18 16.5c-.9-.8-2.1-.8-3 0"/>'),
+      toolbox: w('<rect x="3" y="8" width="18" height="11" rx="2"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h7m4 0h7"/><path d="M10 11.5h4v3h-4z"/>'),
+      gear: w('<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8l1.2 2.4 2.6-.5 .6 2.6 2.6.6-.5 2.6 2.4 1.2-1.6 2.1 1.6 2.1-2.4 1.2.5 2.6-2.6.6-.6 2.6-2.6-.5L12 21.2l-1.2-2.4-2.6.5-.6-2.6-2.6-.6.5-2.6L3.1 12l1.6-2.1L3.1 7.8l2.4-1.2-.5-2.6 2.6-.6.6-2.6 2.6.5L12 2.8z"/>'),
+      // ---- utility icons ----
+      wave: w('<path d="M7.5 11.5V5.8a1.3 1.3 0 0 1 2.6 0v4.4V4.3a1.3 1.3 0 0 1 2.6 0v5.9V5.3a1.3 1.3 0 0 1 2.6 0v5.9-3.9a1.3 1.3 0 0 1 2.6 0v7.2c0 3.6-2.4 6.5-6 6.5-2.8 0-4.4-1.2-5.8-3.6L4 13.6a1.4 1.4 0 0 1 2.4-1.4l1.1 1.8"/>'),
+      search: w('<circle cx="11" cy="11" r="7"/><path d="M20.2 20.2L16 16"/>'),
+      star: w('<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.9L12 3.5z"/>'),
+      scales: w('<path d="M12 4v16"/><path d="M5.5 6.5h13"/><path d="M5.5 6.5L3 12.5a2.8 2.8 0 0 0 5 0L5.5 6.5z"/><path d="M18.5 6.5L16 12.5a2.8 2.8 0 0 0 5 0l-2.5-6z"/><path d="M8.5 20h7"/>'),
+      sparkle: w('<path d="M11 4l1.5 4.2L16.7 9.7l-4.2 1.5L11 15.4 9.5 11.2 5.3 9.7l4.2-1.5L11 4z"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8L18 14z"/>'),
+      restart: w('<path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 3.5V8h-4.5"/>'),
+      check: w('<path d="M4.5 12.5l5 5 10-11"/>'),
+      checkCircle: w('<circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.4 9"/>'),
+      close: w('<path d="M6 6l12 12M18 6L6 18"/>'),
+      soundOn: w('<path d="M4 10v4h3.5L12 17.5v-11L7.5 10H4z"/><path d="M15 9.5a3.6 3.6 0 0 1 0 5"/><path d="M17.5 7a7 7 0 0 1 0 10"/>'),
+      soundOff: w('<path d="M4 10v4h3.5L12 17.5v-11L7.5 10H4z"/><path d="M16 10l4 4M20 10l-4 4"/>'),
+      folder: w('<path d="M3 7a2 2 0 0 1 2-2h4l2 2.2h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>'),
+      home: w('<path d="M3.5 11L12 4l8.5 7"/><path d="M6 9.8V20h12V9.8"/>'),
+      robot: w('<rect x="5" y="8" width="14" height="11" rx="2.5"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><path d="M9 12.5h.01M15 12.5h.01" stroke-width="2.4"/><path d="M9.5 16h5"/><path d="M3 12v4M21 12v4"/>'),
+      wand: w('<path d="M5 19L15.5 8.5"/><path d="M17.5 4v2.6M16.2 5.3h2.6"/><path d="M20 9.5v1.8M19.1 10.4h1.8"/><path d="M14 3.5v1.4M13.3 4.2h1.4"/>'),
+      plant: w('<path d="M12 21v-8"/><path d="M12 13C12 8.6 8.8 6 4.5 6c0 4.4 3.2 7 7.5 7z"/><path d="M12 10.5c0-3.3 2.4-5.3 5.6-5.3 0 3.3-2.4 5.3-5.6 5.3z"/>'),
+      party: w('<path d="M6.5 11.5L3 21l9.5-3.5-6-6z"/><path d="M9 9.5c1.5-3 5-4 8-2.5"/><path d="M13 13c3-1.5 6.5-.5 7.5 2.5" /><circle cx="15" cy="4.5" r="0.7" fill="currentColor"/><circle cx="20" cy="9" r="0.7" fill="currentColor"/><circle cx="11" cy="5.5" r="0.7" fill="currentColor"/>'),
+      plug: w('<path d="M9 7V3M15 7V3"/><path d="M7 7h10v3.5a5 5 0 0 1-10 0V7z"/><path d="M12 15.5V21"/>'),
+      bolt: w('<path d="M13 2.5L5 13.5h5.5L10 21.5l8-11h-5.5L13 2.5z"/>'),
+      telescope: w('<path d="M3.5 12.2L17 5.5l2.5 5L6 17.2l-2.5-5z"/><path d="M17 5.5l2.5 5"/><circle cx="11.5" cy="14.8" r="1.2"/><path d="M10.5 16.5L7.5 21.5M12.5 16.5l3 5"/>'),
+      dial: w('<circle cx="12" cy="12" r="8.5"/><path d="M12 12l4.2-4.2"/><path d="M12 4.5v1.5M19.5 12H18M12 19.5V18M4.5 12H6"/>'),
+      swirl: w('<path d="M12 3a9 9 0 1 1-9 9"/><path d="M12 7a5 5 0 1 1-5 5"/><circle cx="12" cy="12" r="1" fill="currentColor"/>'),
+      warning: w('<path d="M12 4L2.8 19.5h18.4L12 4z"/><path d="M12 10v4.5"/><path d="M12 17.2h.01" stroke-width="2.4"/>'),
+      rocket: w('<path d="M12 3c3.5 2.8 5 6.5 5 10.5l-2.6 2.6H9.6L7 13.5C7 9.5 8.5 5.8 12 3z"/><circle cx="12" cy="9.5" r="1.6"/><path d="M9.6 16l-1 4 3.4-2 3.4 2-1-4"/><path d="M7 13.5l-3 2 2.5 1"/><path d="M17 13.5l3 2-2.5 1"/>'),
+      info: w('<circle cx="12" cy="12" r="9"/><path d="M12 10.8V16"/><path d="M12 7.8h.01" stroke-width="2.4"/>'),
+      layers: w('<path d="M12 3l9 4.5-9 4.5-9-4.5L12 3z"/><path d="M3.5 12.5L12 16.7l8.5-4.2"/><path d="M3.5 16.5L12 20.7l8.5-4.2"/>'),
+    };
+  })();
+  var DATA = window.PM_SETTINGS_DATA || { categories: [], settings: [] };
+  var CATS = DATA.categories;
+  var ALL = DATA.settings;
+  var REDUCED = false;
+  try { REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  function say(msg) { if (typeof window.toast === 'function') { window.toast(msg); } }
+  function clone(v) { return (v === undefined) ? undefined : JSON.parse(JSON.stringify(v)); }
+  function esc(t) {
+    return String(t == null ? '' : t)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* ---------- state ---------- */
+  var state = new Map();      // id -> current value
+  var byId = new Map();       // id -> setting
+  var byCat = {};             // catId -> settings[]
+  var catInfo = {};           // catId -> category meta
+  ALL.forEach(function (s) {
+    byId.set(s.id, s);
+    var v = (s.value !== undefined) ? s.value : s.default;
+    state.set(s.id, clone(v));
+    var cat = s.id.split('.')[0];
+    (byCat[cat] = byCat[cat] || []).push(s);
+  });
+  CATS.forEach(function (c) { catInfo[c.id] = c; });
+
+  var recents = ['general.visual.theme', 'general.visual.ui-scale']
+    .filter(function (id) { return byId.has(id); });
+  ALL.some(function (s) {
+    if (s.curated && recents.indexOf(s.id) < 0) { recents.push(s.id); }
+    return recents.length >= 3;
+  });
+
+  /* ---------- dom refs ---------- */
+  function $(id) { return document.getElementById(id); }
+  var stage = $('s4-stage'), bar = $('s4-bar'), input = $('s4-search'), ghost = $('s4-ghost'),
+      clearBtn = $('s4-clear'), chipsEl = $('s4-chips'), resultsEl = $('s4-results'),
+      shelvesEl = $('s4-shelves'), bloom = $('s4-bloom'), panel = $('s4-panel'),
+      backdrop = $('s4-bloomBackdrop');
+
+  /* ---------- fuzzy search ---------- */
+  function subseq(hay, needle) {
+    var idx = [], j = 0, i;
+    for (i = 0; i < hay.length && j < needle.length; i++) {
+      if (hay.charAt(i) === needle.charAt(j)) { idx.push(i); j++; }
+    }
+    return j === needle.length ? idx : null;
+  }
+  function tokenScore(s, tok) {
+    var label = s._label, descr = s._desc, terms = s._terms;
+    var i = label.indexOf(tok);
+    if (i >= 0) { return 1000 - i * 2; }
+    var seq = subseq(label, tok);
+    if (seq) {
+      var gaps = seq[seq.length - 1] - seq[0] - (tok.length - 1);
+      if (gaps <= tok.length * 3 + 6) { return 640 - gaps * 6; }
+    }
+    if (terms.indexOf(tok) >= 0) { return 520; }
+    var t;
+    for (t = 0; t < s._termList.length; t++) {
+      if (s._termList[t].indexOf(tok) >= 0) { return 470; }
+    }
+    if (s._catTitle.indexOf(tok) >= 0) { return 340; }
+    i = descr.indexOf(tok);
+    if (i >= 0) { return 300 - Math.min(i, 200); }
+    return null;
+  }
+  ALL.forEach(function (s) {
+    s._label = String(s.label || '').toLowerCase();
+    s._desc = String(s.desc || '').toLowerCase();
+    s._termList = (s.search || []).map(function (x) { return String(x).toLowerCase(); });
+    s._terms = s._termList.join(' | ');
+    s._catTitle = (catInfo[s.id.split('.')[0]] || { title: '' }).title.toLowerCase();
+  });
+  function scoreSetting(s, tokens) {
+    var total = 0, k, sc;
+    for (k = 0; k < tokens.length; k++) {
+      sc = tokenScore(s, tokens[k]);
+      if (sc == null) { return null; }
+      total += sc;
+    }
+    if (s.curated) { total += 40; }
+    if (s.tier === 'simple') { total += 22; }
+    if (s.status && s.status.state !== 'ok') { total += 10; }
+    return total;
+  }
+  function hiLabel(text, tokens) {
+    var lower = text.toLowerCase(), tok = null, k, i;
+    for (k = 0; k < tokens.length; k++) {
+      if (lower.indexOf(tokens[k]) >= 0) { tok = tokens[k]; break; }
+    }
+    if (tok) {
+      i = lower.indexOf(tok);
+      return esc(text.slice(0, i)) + '<mark class="s4-hl">' + esc(text.slice(i, i + tok.length)) + '</mark>' + esc(text.slice(i + tok.length));
+    }
+    for (k = 0; k < tokens.length; k++) {
+      var seq = subseq(lower, tokens[k]);
+      if (seq) {
+        var out = '', prev = 0, j;
+        for (j = 0; j < seq.length; j++) {
+          out += esc(text.slice(prev, seq[j])) + '<mark class="s4-hl">' + esc(text.charAt(seq[j])) + '</mark>';
+          prev = seq[j] + 1;
+        }
+        return out + esc(text.slice(prev));
+      }
+    }
+    return esc(text);
+  }
+  function hiSub(text, tokens) {
+    var lower = text.toLowerCase(), k, i;
+    for (k = 0; k < tokens.length; k++) {
+      i = lower.indexOf(tokens[k]);
+      if (i >= 0) {
+        return esc(text.slice(0, i)) + '<mark class="s4-hl">' + esc(text.slice(i, i + tokens[k].length)) + '</mark>' + esc(text.slice(i + tokens[k].length));
+      }
+    }
+    return esc(text);
+  }
+
+  /* ---------- value formatting ---------- */
+  function summarize(id) {
+    var s = byId.get(id), v = state.get(id);
+    if (!s) { return ''; }
+    if (s.type === 'toggle') { return v ? 'On' : 'Off'; }
+    if (Array.isArray(v)) { return v.length + ' chosen'; }
+    if (v && typeof v === 'object') { return Object.keys(v).length + ' pairs'; }
+    return String(v == null ? '' : v);
+  }
+
+  /* ---------- controls ---------- */
+  function markEdited(s, rowEl, quiet) {
+    if (rowEl) {
+      rowEl.classList.remove('s4-glow');
+      void rowEl.offsetWidth;
+      rowEl.classList.add('s4-glow');
+    }
+    if (s.id.indexOf('psm.') !== 0) {
+      var i = recents.indexOf(s.id);
+      if (i >= 0) { recents.splice(i, 1); }
+      recents.unshift(s.id);
+      if (recents.length > 8) { recents.pop(); }
+      shelvesDirty = true;
+    }
+    if (!quiet && s.badges && s.badges.indexOf('restart') >= 0) {
+      say(s.label + ' takes effect after a restart');
+    }
+  }
+
+  function mkToggle(s, row) {
+    var b = document.createElement('button');
+    b.className = 's4-toggle';
+    b.setAttribute('role', 'switch');
+    b.setAttribute('aria-pressed', state.get(s.id) ? 'true' : 'false');
+    b.title = s.label;
+    b.innerHTML = '<span class="s4-knob"></span>';
+    b.addEventListener('click', function () {
+      var nv = !state.get(s.id);
+      state.set(s.id, nv);
+      b.setAttribute('aria-pressed', nv ? 'true' : 'false');
+      markEdited(s, row());
+    });
+    return b;
+  }
+
+  function mkSelect(s, row) {
+    var sel = document.createElement('select');
+    sel.className = 's4-select';
+    var cur = state.get(s.id);
+    var opts = (s.options || []).slice();
+    if (cur != null && cur !== '' && opts.indexOf(cur) < 0) { opts.unshift(cur); }
+    if (!opts.length) { opts = [String(cur == null ? '' : cur)]; }
+    opts.forEach(function (o) {
+      var op = document.createElement('option');
+      op.value = o; op.textContent = o;
+      if (String(o) === String(cur)) { op.selected = true; }
+      sel.appendChild(op);
+    });
+    sel.addEventListener('change', function () {
+      state.set(s.id, sel.value);
+      markEdited(s, row());
+    });
+    return sel;
+  }
+
+  function mkRadio(s, row) {
+    var wrap = document.createElement('div');
+    wrap.className = 's4-seg';
+    var cur = String(state.get(s.id));
+    (s.options || []).forEach(function (o) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = o;
+      if (String(o) === cur) { b.classList.add('active'); }
+      b.addEventListener('click', function () {
+        Array.prototype.forEach.call(wrap.children, function (c) { c.classList.remove('active'); });
+        b.classList.add('active');
+        state.set(s.id, o);
+        markEdited(s, row());
+      });
+      wrap.appendChild(b);
+    });
+    return wrap;
+  }
+
+  function parseSliderVal(v) {
+    var str = String(v == null ? '' : v);
+    var num = parseFloat(str);
+    if (isNaN(num)) { num = 0; }
+    var suffix = str.replace(/^[\s0-9.+-]+/, '');
+    return { num: num, suffix: suffix };
+  }
+  function mkSlider(s, row) {
+    var wrap = document.createElement('div');
+    wrap.className = 's4-sliderwrap';
+    var p = parseSliderVal(state.get(s.id));
+    var min = 0, max = 100, step = 1;
+    if (p.suffix === '%') { min = 25; max = 200; step = 5; }
+    else if (p.num <= 1) { min = 0; max = 1; step = 0.05; }
+    else if (p.num <= 10) { min = 0; max = 10; step = 0.5; }
+    else { min = 0; max = Math.max(Math.ceil(p.num * 2), 100); step = Math.max(1, Math.round(max / 100)); }
+    var r = document.createElement('input');
+    r.type = 'range'; r.className = 's4-slider';
+    r.min = min; r.max = max; r.step = step; r.value = p.num;
+    var bub = document.createElement('span');
+    bub.className = 's4-bubble';
+    bub.textContent = p.num + p.suffix;
+    r.addEventListener('input', function () { bub.textContent = r.value + p.suffix; });
+    r.addEventListener('change', function () {
+      state.set(s.id, r.value + p.suffix);
+      markEdited(s, row());
+    });
+    wrap.appendChild(r); wrap.appendChild(bub);
+    return wrap;
+  }
+
+  function mkText(s, row, kind) {
+    var wrap, inp = document.createElement('input');
+    inp.className = kind === 'number' ? 's4-num' : 's4-text';
+    inp.type = kind === 'number' ? 'number' : 'text';
+    inp.value = state.get(s.id) == null ? '' : state.get(s.id);
+    inp.addEventListener('change', function () {
+      state.set(s.id, kind === 'number' ? Number(inp.value) : inp.value);
+      markEdited(s, row());
+    });
+    if (kind === 'path') {
+      wrap = document.createElement('div');
+      wrap.className = 's4-pathwrap';
+      var b = document.createElement('button');
+      b.className = 's4-browse'; b.title = 'Browse…'; b.innerHTML = '<span class="s4-ico">' + PM_ICONS.folder + '</span>';
+      b.addEventListener('click', function () { say('File browser is mocked in this concept'); });
+      wrap.appendChild(inp); wrap.appendChild(b);
+      return wrap;
+    }
+    return inp;
+  }
+
+  function mkColor(s, row) {
+    var wrap = document.createElement('div');
+    wrap.className = 's4-swatchwrap';
+    var c = document.createElement('input');
+    c.type = 'color'; c.className = 's4-swatch';
+    var v = String(state.get(s.id) || '#888888');
+    if (/^#[0-9a-fA-F]{6}$/.test(v)) { c.value = v; }
+    c.addEventListener('change', function () {
+      state.set(s.id, c.value);
+      markEdited(s, row());
+    });
+    wrap.appendChild(c);
+    return wrap;
+  }
+
+  function actionLabels(s) {
+    var l = (s.label || '').toLowerCase();
+    if (l.indexOf('sign') >= 0) { return ['Sign in', 'Signing in…', 'Signed in ✓']; }
+    if (l.indexOf('test') >= 0 || l.indexOf('check') >= 0) { return ['Test', 'Testing…', 'Looks good ✓']; }
+    if (l.indexOf('rebuild') >= 0 || l.indexOf('refresh') >= 0 || l.indexOf('sync') >= 0) { return ['Refresh', 'Refreshing…', 'Up to date ✓']; }
+    if (l.indexOf('clear') >= 0 || l.indexOf('reset') >= 0 || l.indexOf('delete') >= 0 || l.indexOf('remove') >= 0) { return ['Clear', 'Clearing…', 'Cleared ✓']; }
+    if (l.indexOf('export') >= 0 || l.indexOf('download') >= 0) { return ['Export', 'Exporting…', 'Saved ✓']; }
+    if (l.indexOf('open') >= 0 || l.indexOf('view') >= 0 || l.indexOf('show') >= 0) { return ['Open', 'Opening…', 'Done ✓']; }
+    return ['Run', 'Working…', 'Done ✓'];
+  }
+  function mkAction(s, row) {
+    var L = actionLabels(s);
+    var b = document.createElement('button');
+    b.className = 's4-action';
+    b.textContent = L[0];
+    b.addEventListener('click', function () {
+      if (b.classList.contains('s4-working')) { return; }
+      b.classList.add('s4-working');
+      b.textContent = L[1];
+      setTimeout(function () {
+        b.classList.remove('s4-working');
+        b.classList.add('s4-done');
+        b.textContent = L[2];
+        say(s.label + ': ' + L[2]);
+        markEdited(s, row(), true);
+        setTimeout(function () {
+          b.classList.remove('s4-done');
+          b.textContent = L[0];
+        }, 2400);
+      }, 1100 + Math.random() * 700);
+    });
+    return b;
+  }
+
+  function mkExpandable(s, row, expandHost, kind) {
+    var b = document.createElement('button');
+    b.className = 's4-editbtn';
+    function label() {
+      var v = state.get(s.id);
+      var n = Array.isArray(v) ? v.length : (v && typeof v === 'object' ? Object.keys(v).length : 0);
+      if (kind === 'multiselect') { return '<span class="s4-count">' + n + ' chosen ·</span> Edit'; }
+      if (kind === 'keyvalue') { return '<span class="s4-count">' + n + ' pairs ·</span> Edit'; }
+      return '<span class="s4-count">' + n + ' items ·</span> Edit';
+    }
+    b.innerHTML = label();
+    var built = false;
+    b.addEventListener('click', function () {
+      var box = expandHost();
+      if (!box) { return; }
+      if (!built) {
+        built = true;
+        box.querySelector('.s4-expand-inner').appendChild(buildEditor(s, function () {
+          b.innerHTML = label();
+          markEdited(s, row());
+        }, kind));
+      }
+      box.classList.toggle('open');
+    });
+    return b;
+  }
+
+  function buildEditor(s, onChange, kind) {
+    var ed = document.createElement('div');
+    ed.className = 's4-editor';
+    function rebuild() {
+      ed.innerHTML = '';
+      var v = state.get(s.id);
+      if (kind === 'multiselect') {
+        var cur = Array.isArray(v) ? v.slice() : [];
+        var chips = document.createElement('div');
+        chips.className = 's4-mchips';
+        chips.style.maxWidth = 'none';
+        chips.style.justifyContent = 'flex-start';
+        (s.options || cur).forEach(function (o) {
+          var c = document.createElement('button');
+          c.className = 's4-mchip' + (cur.indexOf(o) >= 0 ? ' on' : '');
+          c.textContent = o;
+          c.addEventListener('click', function () {
+            var arr = state.get(s.id);
+            arr = Array.isArray(arr) ? arr.slice() : [];
+            var i = arr.indexOf(o);
+            if (i >= 0) { arr.splice(i, 1); } else { arr.push(o); }
+            state.set(s.id, arr);
+            c.classList.toggle('on');
+            onChange();
+          });
+          chips.appendChild(c);
+        });
+        ed.appendChild(chips);
+        return;
+      }
+      if (kind === 'keyvalue') {
+        var obj = (v && typeof v === 'object' && !Array.isArray(v)) ? v : {};
+        Object.keys(obj).forEach(function (k) {
+          ed.appendChild(kvRow(k, obj[k]));
+        });
+        ed.appendChild(addBtn('＋ Add pair', function () {
+          var o = state.get(s.id);
+          o = (o && typeof o === 'object' && !Array.isArray(o)) ? clone(o) : {};
+          var name = 'new-key', n = 1;
+          while (o[name] !== undefined) { name = 'new-key-' + (++n); }
+          o[name] = '';
+          state.set(s.id, o); onChange(); rebuild();
+        }));
+        return;
+      }
+      var arr = Array.isArray(v) ? v : [];
+      arr.forEach(function (item, i) {
+        ed.appendChild(listRow(item, i));
+      });
+      ed.appendChild(addBtn('＋ Add item', function () {
+        var a = state.get(s.id);
+        a = Array.isArray(a) ? a.slice() : [];
+        a.push('New item');
+        state.set(s.id, a); onChange(); rebuild();
+      }));
+    }
+    function kvRow(k, val) {
+      var r = document.createElement('div');
+      r.className = 's4-editor-row';
+      var ki = document.createElement('input');
+      ki.className = 's4-text s4-editor-key'; ki.value = k;
+      var vi = document.createElement('input');
+      vi.className = 's4-text'; vi.value = String(val == null ? '' : val);
+      function commit() {
+        var o = clone(state.get(s.id)) || {};
+        delete o[k];
+        o[ki.value || 'key'] = vi.value;
+        k = ki.value || 'key';
+        state.set(s.id, o); onChange();
+      }
+      ki.addEventListener('change', commit);
+      vi.addEventListener('change', commit);
+      var del = delBtn(function () {
+        var o = clone(state.get(s.id)) || {};
+        delete o[k];
+        state.set(s.id, o); onChange(); rebuild();
+      });
+      r.appendChild(ki); r.appendChild(vi); r.appendChild(del);
+      return r;
+    }
+    function listRow(item, i) {
+      var r = document.createElement('div');
+      r.className = 's4-editor-row';
+      var inp = document.createElement('input');
+      inp.className = 's4-text'; inp.value = String(item);
+      inp.addEventListener('change', function () {
+        var a = state.get(s.id).slice();
+        a[i] = inp.value;
+        state.set(s.id, a); onChange();
+      });
+      var del = delBtn(function () {
+        var a = state.get(s.id).slice();
+        a.splice(i, 1);
+        state.set(s.id, a); onChange(); rebuild();
+      });
+      r.appendChild(inp); r.appendChild(del);
+      return r;
+    }
+    function delBtn(fn) {
+      var d = document.createElement('button');
+      d.className = 's4-editor-del'; d.title = 'Remove'; d.textContent = '✕';
+      d.addEventListener('click', fn);
+      return d;
+    }
+    function addBtn(text, fn) {
+      var a = document.createElement('button');
+      a.className = 's4-editor-add'; a.textContent = text;
+      a.addEventListener('click', fn);
+      return a;
+    }
+    rebuild();
+    return ed;
+  }
+
+  /* ---------- row renderer ---------- */
+  function badgeHtml(s) {
+    var out = '';
+    (s.badges || []).forEach(function (b) {
+      if (b === 'restart') { out += '<span class="s4-badge restart" title="Restart needed for this to apply"><span class="s4-ico">' + PM_ICONS.restart + '</span> restart</span>'; }
+      if (b === 'adjudication') { out += '<span class="s4-badge adjudication" title="Default pending team decision"><span class="s4-ico">' + PM_ICONS.scales + '</span></span>'; }
+      if (b === 'new') { out += '<span class="s4-badge new" title="Recently added"><span class="s4-ico">' + PM_ICONS.sparkle + '</span> new</span>'; }
+    });
+    return out;
+  }
+  function pillHtml(st) {
+    if (!st || !st.state) { return ''; }
+    var label = st.state === 'ok' ? 'ok' : (st.state === 'needs-setup' ? 'needs setup' : 'attention');
+    return '<span class="s4-pill ' + esc(st.state) + '" title="' + esc(st.note || '') + '">' + label + '</span>';
+  }
+  function scopeHtml(s) {
+    return (s.scope || []).map(function (sc) {
+      return '<span class="s4-scope">' + esc(sc) + '</span>';
+    }).join('');
+  }
+
+  function renderRow(s, opts) {
+    opts = opts || {};
+    var tokens = opts.tokens || null;
+    var item = document.createElement('div');
+    item.className = 's4-item';
+    var row = document.createElement('div');
+    row.className = 's4-row';
+    row.setAttribute('data-sid', s.id);
+    if (opts.delay) { row.style.animationDelay = opts.delay + 'ms'; }
+
+    var labelHtml = tokens ? hiLabel(s.label, tokens) : esc(s.label);
+    var descHtml = tokens ? hiSub(s.desc || '', tokens) : esc(s.desc || '');
+    var origin = '';
+    if ((s.scope || []).indexOf('project') >= 0 && (s.scope || []).indexOf('global') >= 0) {
+      origin = '<div class="s4-row-origin">inheriting from Global — projects can override</div>';
+    }
+    row.innerHTML =
+      '<div class="s4-row-main"' + (opts.clickCat ? ' title="Show in ' + esc(s._catTitleRaw || '') + '"' : '') + '>' +
+        '<div class="s4-row-labelline"><span class="s4-row-label">' + labelHtml + '</span>' +
+          badgeHtml(s) + pillHtml(s.status) + scopeHtml(s) +
+        '</div>' +
+        '<div class="s4-row-desc">' + descHtml + '</div>' + origin +
+      '</div>' +
+      '<div class="s4-row-ctl"></div>';
+
+    var ctlHost = row.querySelector('.s4-row-ctl');
+    var expand = null;
+    function rowRef() { return row; }
+    function expandRef() {
+      if (!expand) {
+        expand = document.createElement('div');
+        expand.className = 's4-expand';
+        expand.innerHTML = '<div class="s4-expand-inner"></div>';
+        item.appendChild(expand);
+      }
+      return expand;
+    }
+    var ctl;
+    switch (s.type) {
+      case 'toggle': ctl = mkToggle(s, rowRef); break;
+      case 'select': ctl = mkSelect(s, rowRef); break;
+      case 'radio': ctl = mkRadio(s, rowRef); break;
+      case 'slider': ctl = mkSlider(s, rowRef); break;
+      case 'number': ctl = mkText(s, rowRef, 'number'); break;
+      case 'path': ctl = mkText(s, rowRef, 'path'); break;
+      case 'color': ctl = mkColor(s, rowRef); break;
+      case 'action': ctl = mkAction(s, rowRef); break;
+      case 'multiselect': ctl = mkExpandable(s, rowRef, expandRef, 'multiselect'); break;
+      case 'list': ctl = mkExpandable(s, rowRef, expandRef, 'list'); break;
+      case 'keyvalue': ctl = mkExpandable(s, rowRef, expandRef, 'keyvalue'); break;
+      default: ctl = mkText(s, rowRef, 'text');
+    }
+    ctlHost.appendChild(ctl);
+
+    if (s.status && s.status.state === 'needs-setup' && s.type !== 'action') {
+      row.classList.add('s4-locked');
+      ctlHost.title = 'Needs setup first: ' + (s.status.note || 'finish setup to use this');
+    }
+    if (opts.clickCat) {
+      row.querySelector('.s4-row-main').addEventListener('click', function () {
+        openBloom(s.id.split('.')[0], s.id);
+      });
+      row.querySelector('.s4-row-main').style.cursor = 'pointer';
+    }
+    item.appendChild(row);
+    return item;
+  }
+  ALL.forEach(function (s) {
+    s._catTitleRaw = (catInfo[s.id.split('.')[0]] || { title: '' }).title;
+  });
+
+  /* ---------- ghost placeholder cycle ---------- */
+  var SUGGESTIONS = [
+    'try: dark theme', 'try: spending limit', 'try: ask before deleting',
+    'try: bigger text', 'try: auto-save', 'try: model fallback', 'try: quieter alerts'
+  ];
+  var ghostIdx = 0;
+  if (ghost) {
+    ghost.textContent = SUGGESTIONS[0];
+    if (REDUCED) {
+      ghost.style.animation = 'none';
+    } else {
+      ghost.addEventListener('animationiteration', function () {
+        ghostIdx = (ghostIdx + 1) % SUGGESTIONS.length;
+        ghost.textContent = SUGGESTIONS[ghostIdx];
+      });
+    }
+  }
+
+  /* ---------- chips ---------- */
+  var chipEls = {};
+  CATS.forEach(function (c, i) {
+    var hasIssue = (byCat[c.id] || []).some(function (s) {
+      return s.status && (s.status.state === 'needs-setup' || s.status.state === 'attention');
+    });
+    var b = document.createElement('button');
+    b.className = 's4-chip';
+    b.style.animationDelay = (0.15 + i * 0.035) + 's';
+    b.innerHTML = '<span class="s4-ico s4-chip-ico">' + (PM_ICONS[c.icon] || PM_ICONS.gear) + '</span>' + esc(c.title) +
+      (hasIssue ? '<span class="s4-chip-dot" title="Something in here needs your attention"></span>' : '');
+    b.title = c.description || c.title;
+    b.addEventListener('click', function () { openBloom(c.id, null); });
+    chipEls[c.id] = b;
+    chipsEl.appendChild(b);
+  });
+
+  /* ---------- shelves ---------- */
+  var shelvesDirty = false;
+  function cardFor(s, extraNote) {
+    var c = catInfo[s.id.split('.')[0]] || {};
+    var card = document.createElement('button');
+    card.className = 's4-card';
+    card.innerHTML =
+      '<div class="s4-card-top"><span class="s4-ico">' + (PM_ICONS[c.icon] || PM_ICONS.gear) + '</span><span>' + esc(c.title || '') + '</span></div>' +
+      '<div class="s4-card-label">' + esc(s.label) + '</div>' +
+      '<div class="s4-card-note">' + (extraNote || esc(s.desc || '')) + '</div>';
+    card.addEventListener('click', function () { openBloom(s.id.split('.')[0], s.id); });
+    return card;
+  }
+  function renderShelves() {
+    shelvesEl.innerHTML = '';
+    var fixes = ALL.filter(function (s) {
+      return s.status && (s.status.state === 'attention' || s.status.state === 'needs-setup');
+    }).sort(function (a, b) {
+      return (a.status.state === 'attention' ? 0 : 1) - (b.status.state === 'attention' ? 0 : 1);
+    }).slice(0, 12);
+    var suggested = ALL.filter(function (s) { return s.curated; }).slice(0, 12);
+
+    function shelf(title, sub, items, noteFn) {
+      if (!items.length) { return; }
+      var sec = document.createElement('div');
+      sec.className = 's4-shelf';
+      sec.innerHTML = '<div class="s4-shelf-head"><span class="s4-shelf-title">' + title +
+        '</span><span class="s4-shelf-sub">' + sub + '</span></div>';
+      var rail = document.createElement('div');
+      rail.className = 's4-rail';
+      items.forEach(function (s) { rail.appendChild(cardFor(s, noteFn ? noteFn(s) : null)); });
+      sec.appendChild(rail);
+      shelvesEl.appendChild(sec);
+    }
+    shelf('Fix these', 'a few things need a hand', fixes, function (s) {
+      return pillHtml(s.status) + ' <span>' + esc(s.status.note || '') + '</span>';
+    });
+    shelf('Recents', 'you touched these lately', recents.map(function (id) { return byId.get(id); }).filter(Boolean), function (s) {
+      return 'Now: <b>' + esc(summarize(s.id)) + '</b>';
+    });
+    shelf('Suggested', 'good ones to know about', suggested, null);
+    shelvesDirty = false;
+  }
+  renderShelves();
+
+  /* ---------- search / results ---------- */
+  var activeIdx = -1, resultRows = [], searching = false;
+
+  function setMode(on) {
+    if (searching === on) { return; }
+    searching = on;
+    var apply = function () {
+      stage.classList.toggle('s4-searching', on);
+      resultsEl.hidden = !on;
+      shelvesEl.classList.toggle('s4-hidden', on);
+      if (!on && shelvesDirty) { renderShelves(); }
+    };
+    if (document.startViewTransition && !REDUCED) {
+      document.startViewTransition(apply);
+    } else {
+      apply();
+    }
+  }
+
+  function runSearch(q) {
+    var tokens = q.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!tokens.length) {
+      setMode(false);
+      resultsEl.innerHTML = '';
+      return;
+    }
+    setMode(true);
+    var matches = [];
+    ALL.forEach(function (s) {
+      var sc = scoreSetting(s, tokens);
+      if (sc != null) { matches.push({ s: s, sc: sc }); }
+    });
+    matches.sort(function (a, b) { return b.sc - a.sc; });
+    var total = matches.length;
+    matches = matches.slice(0, 60);
+
+    // group by category, ordered by each group's best score
+    var groups = {}, order = [];
+    matches.forEach(function (m) {
+      var cat = m.s.id.split('.')[0];
+      if (!groups[cat]) { groups[cat] = []; order.push(cat); }
+      groups[cat].push(m);
+    });
+
+    resultsEl.innerHTML = '';
+    resultRows = [];
+    activeIdx = -1;
+    if (!total) {
+      resultsEl.innerHTML = '<div class="s4-res-empty"><span class="s4-ico s4-res-empty-ico">' + PM_ICONS.telescope + '</span>' +
+        'No settings match “' + esc(q) + '”.<br>Try a simpler word — or browse the categories above.</div>';
+      return;
+    }
+    var frag = document.createDocumentFragment(), n = 0;
+    order.forEach(function (cat) {
+      var c = catInfo[cat] || { title: cat, icon: '' };
+      var head = document.createElement('div');
+      head.className = 's4-res-cat';
+      head.style.animationDelay = Math.min(n * 18, 400) + 'ms';
+      head.innerHTML = '<span class="s4-ico">' + (PM_ICONS[c.icon] || PM_ICONS.gear) + '</span><span>' + esc(c.title) + '</span>';
+      frag.appendChild(head);
+      groups[cat].forEach(function (m) {
+        var item = renderRow(m.s, { tokens: tokens, delay: Math.min(n * 18, 420), clickCat: true });
+        frag.appendChild(item);
+        resultRows.push(item.querySelector('.s4-row'));
+        n++;
+      });
+    });
+    var count = document.createElement('div');
+    count.className = 's4-res-count';
+    count.textContent = total > 60
+      ? 'Showing the best 60 of ' + total + ' matches — keep typing to narrow it down'
+      : total + ' match' + (total === 1 ? '' : 'es');
+    frag.appendChild(count);
+    resultsEl.appendChild(frag);
+  }
+
+  function setActive(i) {
+    if (activeIdx >= 0 && resultRows[activeIdx]) { resultRows[activeIdx].classList.remove('s4-active'); }
+    activeIdx = i;
+    if (activeIdx >= 0 && resultRows[activeIdx]) {
+      resultRows[activeIdx].classList.add('s4-active');
+      resultRows[activeIdx].scrollIntoView({ block: 'nearest', behavior: REDUCED ? 'auto' : 'smooth' });
+    }
+  }
+  function primaryActivate(row) {
+    if (!row) { return; }
+    var t = row.querySelector('.s4-toggle, .s4-action, .s4-editbtn');
+    if (t) { t.click(); return; }
+    var f = row.querySelector('select, input, .s4-seg button.active, .s4-seg button');
+    if (f) { f.focus(); }
+  }
+
+  var debounce = null;
+  input.addEventListener('input', function () {
+    var q = input.value;
+    ghost.classList.toggle('s4-off', q.length > 0);
+    clearBtn.hidden = q.length === 0;
+    clearTimeout(debounce);
+    debounce = setTimeout(function () { runSearch(q.trim()); }, 80);
+  });
+  input.addEventListener('focus', function () { bar.classList.add('s4-focus'); ghost.classList.toggle('s4-off', input.value.length > 0); });
+  input.addEventListener('blur', function () { bar.classList.remove('s4-focus'); });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (resultRows.length) { setActive(Math.min(activeIdx + 1, resultRows.length - 1)); }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (resultRows.length) { setActive(Math.max(activeIdx - 1, 0)); }
+    } else if (e.key === 'Enter') {
+      if (activeIdx >= 0) {
+        e.preventDefault();
+        primaryActivate(resultRows[activeIdx]);
+      } else if (resultRows.length) {
+        e.preventDefault();
+        setActive(0);
+      }
+    } else if (e.key === 'Escape') {
+      if (input.value) {
+        input.value = '';
+        ghost.classList.remove('s4-off');
+        clearBtn.hidden = true;
+        runSearch('');
+      } else {
+        input.blur();
+      }
+    }
+  });
+  clearBtn.addEventListener('click', function () {
+    input.value = '';
+    clearBtn.hidden = true;
+    ghost.classList.remove('s4-off');
+    runSearch('');
+    input.focus();
+  });
+
+  /* ---------- bloom panel ---------- */
+  var openCat = null, panelCache = {}, lastChip = null;
+
+  function inspectorHtml() {
+    return '<div class="s4-inspector">' +
+      '<div class="s4-inspector-title"><span class="s4-ico">' + PM_ICONS.search + '</span> What actually ran last time</div>' +
+      '<div class="s4-inspector-grid">' +
+        '<div class="s4-insp-cell"><div class="s4-insp-k">You asked for</div><div class="s4-insp-v">Claude Sonnet · Personal plan</div></div>' +
+        '<div class="s4-insp-arrow">→</div>' +
+        '<div class="s4-insp-cell"><div class="s4-insp-k">What ran</div><div class="s4-insp-v changed">Claude Haiku · Work API key</div></div>' +
+      '</div>' +
+      '<div class="s4-insp-why"><b>Why it switched:</b> your personal plan hit its usage window, so Puppet Master followed your fallback order. It switches back automatically at 6:00 PM.</div>' +
+    '</div>';
+  }
+
+  function buildPanelContent(catId) {
+    var c = catInfo[catId];
+    var wrap = document.createElement('div');
+    wrap.className = 's4-panel-body';
+    if (catId === 'ai') { wrap.innerHTML = inspectorHtml(); }
+    var settings = byCat[catId] || [];
+    (c.subgroups || []).forEach(function (sg, sgi) {
+      var inSg = settings.filter(function (s) { return s.id.split('.')[1] === sg.id; });
+      if (!inSg.length) { return; }
+      var simple = inSg.filter(function (s) { return s.tier === 'simple'; });
+      var adv = inSg.filter(function (s) { return s.tier !== 'simple'; });
+      var sec = document.createElement('div');
+      sec.className = 's4-sub';
+      sec.innerHTML = '<div class="s4-sub-head"><div class="s4-sub-title">' + esc(sg.title) +
+        '</div><div class="s4-sub-desc">' + esc(sg.description || '') + '</div></div>';
+      simple.forEach(function (s, i) {
+        sec.appendChild(renderRow(s, { delay: Math.min((sgi * 3 + i) * 22, 380) }));
+      });
+      if (adv.length) {
+        var more = document.createElement('button');
+        more.className = 's4-morebtn';
+        more.innerHTML = 'Show ' + adv.length + ' advanced option' + (adv.length === 1 ? '' : 's') + ' <span class="s4-caret">▾</span>';
+        var advBox = document.createElement('div');
+        advBox.className = 's4-expand';
+        advBox.innerHTML = '<div class="s4-expand-inner"></div>';
+        advBox.setAttribute('data-advfor', sg.id);
+        var advBuilt = false;
+        more.addEventListener('click', function () {
+          if (!advBuilt) {
+            advBuilt = true;
+            var inner = advBox.querySelector('.s4-expand-inner');
+            adv.forEach(function (s, i) {
+              inner.appendChild(renderRow(s, { delay: Math.min(i * 16, 320) }));
+            });
+          }
+          advBox.classList.toggle('open');
+          more.classList.toggle('open');
+          more.firstChild.textContent = (advBox.classList.contains('open') ? 'Hide ' : 'Show ') +
+            adv.length + ' advanced option' + (adv.length === 1 ? '' : 's') + ' ';
+        });
+        advBox._s4Open = function () {
+          if (!advBox.classList.contains('open')) { more.click(); }
+        };
+        sec.appendChild(more);
+        sec.appendChild(advBox);
+      }
+      sec._s4AdvBox = sec.querySelector('.s4-expand[data-advfor]');
+      wrap.appendChild(sec);
+    });
+    return wrap;
+  }
+
+  function panelHead(catId) {
+    var c = catInfo[catId];
+    var head = document.createElement('div');
+    head.className = 's4-panel-head';
+    head.innerHTML =
+      '<span class="s4-ico s4-panel-ico">' + (PM_ICONS[c.icon] || PM_ICONS.gear) + '</span>' +
+      '<div class="s4-panel-titles"><div class="s4-panel-title">' + esc(c.title) + '</div>' +
+      '<div class="s4-panel-desc">' + esc(c.description || '') + '</div></div>' +
+      '<button class="s4-reset" title="Put every setting in this category back to its default">Reset to defaults</button>' +
+      '<button class="s4-panel-x" title="Close (Esc)">✕</button>';
+    var resetBtn = head.querySelector('.s4-reset');
+    var confirmTimer = null;
+    resetBtn.addEventListener('click', function () {
+      var n = (byCat[catId] || []).length;
+      if (!resetBtn.classList.contains('confirm')) {
+        resetBtn.classList.add('confirm');
+        resetBtn.textContent = 'Reset all ' + n + '? Click again';
+        confirmTimer = setTimeout(function () {
+          resetBtn.classList.remove('confirm');
+          resetBtn.textContent = 'Reset to defaults';
+        }, 4000);
+        return;
+      }
+      clearTimeout(confirmTimer);
+      (byCat[catId] || []).forEach(function (s) { state.set(s.id, clone(s.default)); });
+      delete panelCache[catId];
+      var body = panel.querySelector('.s4-panel-body');
+      if (body) {
+        var fresh = buildPanelContent(catId);
+        panelCache[catId] = fresh;
+        panel.replaceChild(fresh, body);
+      }
+      resetBtn.classList.remove('confirm');
+      resetBtn.textContent = 'Reset to defaults';
+      say(catInfo[catId].title + ' reset to defaults');
+      shelvesDirty = true;
+    });
+    head.querySelector('.s4-panel-x').addEventListener('click', closeBloom);
+    return head;
+  }
+
+  function openBloom(catId, focusId) {
+    if (!catInfo[catId]) { return; }
+    openCat = catId;
+    lastChip = chipEls[catId] || null;
+    panel.innerHTML = '';
+    panel.appendChild(panelHead(catId));
+    if (!panelCache[catId]) { panelCache[catId] = buildPanelContent(catId); }
+    panel.appendChild(panelCache[catId]);
+    panel.setAttribute('tabindex', '-1');
+    bloom.hidden = false;
+
+    // morph from chip rect
+    if (lastChip && !REDUCED) {
+      var first = lastChip.getBoundingClientRect();
+      panel.classList.remove('s4-morph');
+      panel.style.transform = 'translate(-50%, -50%)';
+      var last = panel.getBoundingClientRect();
+      var dx = first.left - last.left, dy = first.top - last.top;
+      var sx = Math.max(first.width / last.width, 0.04);
+      var sy = Math.max(first.height / last.height, 0.04);
+      panel.style.transform = 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(' + sx + ', ' + sy + ')';
+      void panel.offsetWidth;
+      panel.classList.add('s4-morph');
+      panel.style.transform = 'translate(-50%, -50%)';
+    }
+    requestAnimationFrame(function () {
+      bloom.classList.add('s4-open');
+      panel.focus({ preventScroll: true });
+    });
+
+    if (focusId) {
+      var target = byId.get(focusId);
+      setTimeout(function () {
+        var body = panelCache[catId];
+        if (target && target.tier !== 'simple') {
+          var advBox = body.querySelector('.s4-expand[data-advfor="' + focusId.split('.')[1] + '"]');
+          if (advBox && advBox._s4Open) { advBox._s4Open(); }
+        }
+        setTimeout(function () {
+          var row = body.querySelector('.s4-row[data-sid="' + focusId + '"]');
+          if (row) {
+            row.scrollIntoView({ block: 'center', behavior: REDUCED ? 'auto' : 'smooth' });
+            row.classList.add('s4-flash');
+            setTimeout(function () { row.classList.remove('s4-flash'); }, 3000);
+          }
+        }, 120);
+      }, REDUCED ? 30 : 350);
+    }
+  }
+
+  function closeBloom() {
+    if (bloom.hidden) { return; }
+    bloom.classList.remove('s4-open');
+    if (lastChip && !REDUCED) {
+      var first = panel.getBoundingClientRect();
+      var chipR = lastChip.getBoundingClientRect();
+      var dx = chipR.left - first.left, dy = chipR.top - first.top;
+      var sx = Math.max(chipR.width / first.width, 0.04);
+      var sy = Math.max(chipR.height / first.height, 0.04);
+      panel.style.transform = 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(' + sx + ', ' + sy + ')';
+      setTimeout(function () {
+        bloom.hidden = true;
+        panel.classList.remove('s4-morph');
+        panel.style.transform = '';
+        if (shelvesDirty && !searching) { renderShelves(); }
+      }, 300);
+    } else {
+      bloom.hidden = true;
+      if (shelvesDirty && !searching) { renderShelves(); }
+    }
+    if (lastChip) { lastChip.focus({ preventScroll: true }); }
+    openCat = null;
+  }
+  backdrop.addEventListener('click', closeBloom);
+  bloom.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      e.stopPropagation();
+      closeBloom();
+    }
+  });
+
+  /* ================= PSM — project settings palette ================= */
+  var psmState = new Map();
+  var PSM_ROWS = {
+    general: [
+      { id: 'psm.name', label: 'Project name', desc: 'What this project is called across the app.', type: 'text', value: 'SaaS Dashboard', inherit: false },
+      { id: 'psm.dir', label: 'Working directory', desc: 'Where this project’s files live on your computer.', type: 'path', value: '~/Projects/saas-dashboard', inherit: false },
+      { id: 'psm.autosave', label: 'Auto-save files', desc: 'Save your work automatically as agents make changes.', type: 'toggle', value: true, inherit: true },
+      { id: 'psm.hitl', label: 'Human-in-the-loop approval', desc: 'Pause and ask you before big or risky changes go through.', type: 'toggle', value: true, inherit: false }
+    ],
+    env: [
+      { id: 'psm.node', label: 'Node version', desc: 'Which Node.js the project’s tools run on.', type: 'select', options: ['Node 18', 'Node 20', 'Node 22'], value: 'Node 20', inherit: true },
+      { id: 'psm.pkg', label: 'Package manager', desc: 'The tool used to install this project’s dependencies.', type: 'radio', options: ['npm', 'pnpm', 'yarn'], value: 'pnpm', inherit: false },
+      { id: 'psm.envvars', label: 'Environment variables', desc: 'Secret-free values handed to the project when it runs.', type: 'keyvalue', value: { API_URL: 'https://api.example.dev', FEATURE_FLAGS: 'beta-ui', LOG_LEVEL: 'info' }, inherit: false },
+      { id: 'psm.dotenv', label: 'Load .env automatically', desc: 'Read the project’s .env file at startup.', type: 'toggle', value: true, inherit: true }
+    ],
+    agents: [
+      { id: 'psm.model', label: 'Model for this project', desc: 'Which AI model handles this project’s work.', type: 'select', options: ['Use global default (Claude Sonnet)', 'Claude Opus', 'Claude Haiku'], value: 'Use global default (Claude Sonnet)', inherit: true },
+      { id: 'psm.care', label: 'How careful should agents be?', desc: 'More careful means more check-ins before acting.', type: 'radio', options: ['Ask a lot', 'Balanced', 'Move fast'], value: 'Balanced', inherit: false },
+      { id: 'psm.parallel', label: 'Agents working at once', desc: 'How many agents can work on this project in parallel.', type: 'slider', value: '3', inherit: true },
+      { id: 'psm.cmds', label: 'Allowed shell commands', desc: 'Commands agents may run here without asking first.', type: 'list', value: ['npm test', 'npm run build', 'git status', 'git diff', 'ls'], inherit: false }
+    ]
+  };
+
+  function psmRow(def) {
+    psmState.set(def.id, clone(def.value));
+    var fake = {
+      id: def.id, label: def.label, desc: def.desc, type: def.type,
+      options: def.options, default: def.value, scope: [], badges: []
+    };
+    // temporarily register in maps so shared factories work
+    byId.set(def.id, fake);
+    state.set(def.id, clone(def.value));
+
+    var item = document.createElement('div');
+    item.className = 's4-item';
+    var row = document.createElement('div');
+    row.className = 's4-row';
+    row.setAttribute('data-psmrow', '1');
+    row.setAttribute('data-hay', (def.label + ' ' + def.desc).toLowerCase());
+    var badge = def.inherit
+      ? '<span class="s4-psm-inherit" title="Using the app-wide value from Settings. Change it here to override for this project.">Inheriting from Global</span>'
+      : '<span class="s4-psm-inherit overridden" title="This project uses its own value instead of the global one.">Project override</span>';
+    row.innerHTML =
+      '<div class="s4-row-main"><div class="s4-row-labelline">' +
+        '<span class="s4-row-label" data-basetext="' + esc(def.label) + '">' + esc(def.label) + '</span>' + badge +
+      '</div><div class="s4-row-desc">' + esc(def.desc) + '</div></div>' +
+      '<div class="s4-row-ctl"></div>';
+    var host = row.querySelector('.s4-row-ctl');
+    var expand = null;
+    function rowRef() {
+      var b = row.querySelector('.s4-psm-inherit');
+      if (b && !b.classList.contains('overridden')) {
+        b.classList.add('overridden');
+        b.textContent = 'Project override';
+        b.title = 'This project uses its own value instead of the global one.';
+      }
+      return row;
+    }
+    function expandRef() {
+      if (!expand) {
+        expand = document.createElement('div');
+        expand.className = 's4-expand';
+        expand.innerHTML = '<div class="s4-expand-inner"></div>';
+        item.appendChild(expand);
+      }
+      return expand;
+    }
+    var ctl;
+    switch (def.type) {
+      case 'toggle': ctl = mkToggle(fake, rowRef); break;
+      case 'select': ctl = mkSelect(fake, rowRef); break;
+      case 'radio': ctl = mkRadio(fake, rowRef); break;
+      case 'slider': ctl = mkSlider(fake, rowRef); break;
+      case 'path': ctl = mkText(fake, rowRef, 'path'); break;
+      case 'keyvalue': ctl = mkExpandable(fake, rowRef, expandRef, 'keyvalue'); break;
+      case 'list': ctl = mkExpandable(fake, rowRef, expandRef, 'list'); break;
+      default: ctl = mkText(fake, rowRef, 'text');
+    }
+    host.appendChild(ctl);
+    item.appendChild(row);
+    return item;
+  }
+
+  var psmBody = $('s4-psm-body');
+  if (psmBody) {
+    ['general', 'env', 'agents'].forEach(function (key) {
+      var pane = psmBody.querySelector('[data-psmpane="' + key + '"]');
+      PSM_ROWS[key].forEach(function (def) { pane.appendChild(psmRow(def)); });
+    });
+
+    var tabs = $('s4-psm-tabs'), ink = $('s4-psm-ink');
+    function moveInk(btn) {
+      if (!btn || !ink) { return; }
+      ink.style.left = btn.offsetLeft + 'px';
+      ink.style.width = btn.offsetWidth + 'px';
+    }
+    tabs.addEventListener('click', function (e) {
+      var btn = e.target.closest('.s4-psm-tabbtn');
+      if (!btn) { return; }
+      tabs.querySelectorAll('.s4-psm-tabbtn').forEach(function (t) { t.classList.remove('active'); });
+      btn.classList.add('active');
+      moveInk(btn);
+      var key = btn.getAttribute('data-psmtab');
+      psmBody.querySelectorAll('.s4-psm-pane').forEach(function (p) {
+        p.classList.toggle('active', p.getAttribute('data-psmpane') === key);
+      });
+    });
+    setTimeout(function () { moveInk(tabs.querySelector('.s4-psm-tabbtn.active')); }, 60);
+
+    var psmSearch = $('s4-psm-search'), psmClear = $('s4-psm-clear'), psmEmpty = $('s4-psm-empty');
+    function psmFilter() {
+      var q = psmSearch.value.trim().toLowerCase();
+      psmClear.hidden = !q;
+      psmBody.classList.toggle('s4-psm-searching', !!q);
+      var any = false;
+      psmBody.querySelectorAll('.s4-row[data-psmrow]').forEach(function (row) {
+        var hit = !q || row.getAttribute('data-hay').indexOf(q) >= 0;
+        row.parentElement.classList.toggle('s4-hide', !hit);
+        if (hit) { any = true; }
+        var lab = row.querySelector('.s4-row-label');
+        var base = lab.getAttribute('data-basetext');
+        if (q && hit) { lab.innerHTML = hiSub(base, [q]); } else { lab.textContent = base; }
+      });
+      psmEmpty.hidden = any || !q;
+      if (!any && q) { $('s4-psm-empty-q').textContent = psmSearch.value.trim(); }
+    }
+    psmSearch.addEventListener('input', psmFilter);
+    psmSearch.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && psmSearch.value) {
+        e.stopPropagation();
+        psmSearch.value = '';
+        psmFilter();
+      }
+    });
+    psmClear.addEventListener('click', function () {
+      psmSearch.value = '';
+      psmFilter();
+      psmSearch.focus();
+    });
+
+    $('s4-psm-save').addEventListener('click', function () {
+      say('Project settings saved');
+      document.getElementById('projectSettingsModal').classList.remove('visible');
+    });
+  }
+})();
+
+</script>

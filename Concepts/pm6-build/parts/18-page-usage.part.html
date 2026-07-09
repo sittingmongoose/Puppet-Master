@@ -1,0 +1,1061 @@
+          <div class="page page-usage" id="panel-usage">
+            <style>
+              /* ===== USAGE PAGE (PMConcept6) — widget-composed grid ===== */
+              .pm6-usage-wrap{display:flex;flex-direction:column;height:100%;overflow:hidden}
+              .pm6-usage-head{display:flex;align-items:flex-end;gap:var(--lg);padding:var(--lg) var(--xl);border-bottom:var(--border-width) solid var(--border);background:var(--surface);flex-shrink:0;flex-wrap:wrap}
+              .pm6-usage-kicker{font-size:var(--fs-2xs);letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--text-muted);margin-bottom:2px}
+              .pm6-usage-title{font-family:var(--display-font);font-size:var(--fs-xl);font-weight:800;color:var(--text-primary);line-height:var(--lh-tight);margin:0}
+              .pm6-usage-sub{font-size:var(--fs-sm);color:var(--text-secondary);max-width:620px;line-height:var(--lh-body)}
+              .pm6-usage-head-actions{display:flex;gap:var(--sm);margin-left:auto;align-items:center}
+              .pm6-usage-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;font-size:var(--fs-xs);font-weight:600;font-family:var(--body-font);background:transparent;color:var(--text-secondary);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--motion-fast) var(--ease-default)}
+              .pm6-usage-btn:hover{border-color:var(--accent-primary);color:var(--accent-primary)}
+              .pm6-usage-btn:focus-visible{outline:2px solid var(--accent-primary);outline-offset:1px}
+              .pm6-usage-btn.primary{background:var(--accent-soft);color:var(--accent-primary);border-color:transparent}
+              .pm6-usage-btn[disabled]{opacity:.55;cursor:not-allowed}
+              .pm6-usage-btn.spinning .pm6-ico{animation:pm6-usage-spin 1s linear infinite}
+              @keyframes pm6-usage-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+              .pm6-usage-scroll{flex:1;overflow-y:auto;padding:var(--xl)}
+              .pm6-usage-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--grid-gap);align-content:start}
+
+              /* Widget shell */
+              .pm6-usage-w{position:relative;overflow:hidden;background:var(--surface-elevated);border:var(--border-width) solid var(--border);border-radius:var(--radius-lg);padding:var(--xl);display:flex;flex-direction:column;gap:var(--md);box-shadow:var(--elev-1);animation:pm-enter-up var(--motion-med) var(--ease-default) both;animation-delay:calc(var(--i,0)*50ms)}
+              .pm6-usage-w.span-2{grid-column:span 2}
+              .pm6-usage-w.span-4{grid-column:span 4}
+              .pm6-usage-wh{display:flex;align-items:center;gap:var(--sm)}
+              .pm6-usage-wt{font-family:var(--display-font);font-size:var(--fs-xs);font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-primary);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+              .pm6-usage-wt .pm6-ico{color:var(--accent-primary);font-size:14px}
+              .pm6-usage-wmeta{font-size:var(--fs-2xs);color:var(--text-muted);margin-left:auto;font-weight:600;letter-spacing:.04em;white-space:nowrap}
+              .pm6-usage-gear{background:transparent;border:none;color:var(--text-muted);cursor:pointer;opacity:0;padding:4px;border-radius:var(--radius-sm);display:inline-flex;font-size:14px;transition:opacity var(--motion-fast) ease,color var(--motion-fast) ease}
+              .pm6-usage-w:hover .pm6-usage-gear,.pm6-usage-gear:focus-visible{opacity:1}
+              .pm6-usage-gear:hover{color:var(--text-primary)}
+              .pm6-usage-gear:focus-visible{outline:2px solid var(--accent-primary)}
+              .pm6-usage-wb{flex:1;display:flex;flex-direction:column;gap:var(--sm);min-height:0}
+
+              /* Chips */
+              .pm6-usage-chip{display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:var(--radius-pill);font-size:var(--fs-2xs);font-weight:700;letter-spacing:.04em;white-space:nowrap}
+              .pm6-usage-chip.measured{background:color-mix(in srgb,var(--accent-lime) 14%,transparent);color:var(--accent-lime)}
+              .pm6-usage-chip.estimated{background:color-mix(in srgb,var(--accent-orange) 14%,transparent);color:var(--accent-orange)}
+              .pm6-usage-chip.unsupported{background:color-mix(in srgb,var(--text-muted) 14%,transparent);color:var(--text-muted);border:1px dashed color-mix(in srgb,var(--text-muted) 45%,transparent)}
+              .pm6-usage-chip.plan{background:var(--accent-soft);color:var(--accent-primary)}
+              .pm6-usage-chip.ok{background:color-mix(in srgb,var(--accent-lime) 14%,transparent);color:var(--accent-lime)}
+              .pm6-usage-chip.warn{background:color-mix(in srgb,var(--accent-orange) 14%,transparent);color:var(--accent-orange)}
+              .pm6-usage-chip.hot{background:color-mix(in srgb,var(--accent-error) 14%,transparent);color:var(--accent-error)}
+              .pm6-usage-chip.blocked{background:color-mix(in srgb,var(--accent-error) 16%,transparent);color:var(--accent-error)}
+              .pm6-usage-chip.allowed{background:color-mix(in srgb,var(--accent-lime) 14%,transparent);color:var(--accent-lime)}
+              .pm6-usage-reason{display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-2xs);color:var(--text-muted)}
+              .pm6-usage-reason code{font-family:var(--mono-font);font-size:var(--fs-2xs);padding:1px 5px;border-radius:var(--radius-xs);background:color-mix(in srgb,var(--text-muted) 12%,transparent);color:var(--text-secondary)}
+
+              /* Quota rows */
+              .pm6-usage-qrow{display:grid;grid-template-columns:minmax(120px,1.15fr) auto 2fr 34px;gap:var(--sm);align-items:center;padding:5px 0;border-bottom:1px solid var(--border-light)}
+              .pm6-usage-qrow:last-child{border-bottom:none}
+              .pm6-usage-qname{font-size:var(--fs-sm);color:var(--text-primary);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+              .pm6-usage-qbars{display:flex;flex-direction:column;gap:3px}
+              .pm6-usage-qbar{display:flex;align-items:center;gap:6px}
+              .pm6-usage-qbar b{font-size:9px;font-weight:700;color:var(--text-muted);width:16px;letter-spacing:.02em}
+              .pm6-usage-track{flex:1;height:6px;background:var(--border-light);border-radius:var(--radius-pill);overflow:hidden}
+              .pm6-usage-fill{height:100%;border-radius:var(--radius-pill);width:0;transition:width .8s var(--ease-smooth)}
+              .pm6-usage-fill.ok{background:var(--accent-lime)}
+              .pm6-usage-fill.warn{background:var(--accent-orange)}
+              .pm6-usage-fill.hot{background:var(--accent-error)}
+              .pm6-usage-qpct{font-size:var(--fs-2xs);font-weight:700;color:var(--text-secondary);text-align:right}
+              .pm6-usage-qnote{grid-column:1/-1;font-size:var(--fs-2xs);color:var(--text-muted);margin-top:-2px}
+
+              /* Alert thresholds */
+              .pm6-usage-alert{display:flex;flex-direction:column;gap:6px;padding:var(--md);background:var(--surface);border-radius:var(--radius-md);border-left:3px solid var(--accent-orange)}
+              .pm6-usage-alert.hot{border-left-color:var(--accent-error)}
+              .pm6-usage-alert.quiet{border-left-color:var(--border)}
+              .pm6-usage-alert-h{display:flex;align-items:center;gap:var(--sm);font-size:var(--fs-sm);color:var(--text-primary);font-weight:600}
+              .pm6-usage-alert-h .pm6-ico{color:var(--accent-orange);font-size:14px;flex:none}
+              .pm6-usage-alert.hot .pm6-usage-alert-h .pm6-ico{color:var(--accent-error)}
+              .pm6-usage-alert-body{font-size:var(--fs-xs);color:var(--text-secondary);line-height:var(--lh-body)}
+              .pm6-usage-alert-actions{display:flex;gap:var(--sm);flex-wrap:wrap;align-items:center}
+              .pm6-usage-thresh{display:flex;align-items:center;gap:6px;font-size:var(--fs-2xs);color:var(--text-muted);margin-top:2px}
+              .pm6-usage-thresh-chip{padding:1px 8px;border-radius:var(--radius-pill);border:1px solid var(--border-light);cursor:pointer;color:var(--text-muted);font-weight:600;transition:all var(--motion-fast) ease}
+              .pm6-usage-thresh-chip.active{background:var(--accent-soft);border-color:transparent;color:var(--accent-primary)}
+              .pm6-usage-thresh-chip:hover{color:var(--text-primary)}
+
+              /* Analytics chart */
+              .pm6-usage-chart{display:flex;align-items:flex-end;gap:4px;height:160px;padding-top:var(--sm)}
+              .pm6-usage-col{flex:1;display:flex;flex-direction:column;align-items:stretch;gap:3px;min-width:0;position:relative}
+              .pm6-usage-colstack{display:flex;flex-direction:column-reverse;height:140px;gap:1px}
+              .pm6-usage-colstack i{display:block;width:100%;border-radius:var(--radius-xs);background:currentColor;height:0;transition:height .7s var(--ease-smooth);min-height:0}
+              .pm6-usage-colstack .s-inp{color:var(--accent-blue)}
+              .pm6-usage-colstack .s-out{color:var(--accent-magenta)}
+              .pm6-usage-colstack .s-rea{color:var(--accent-orange)}
+              .pm6-usage-colstack .s-cache{color:var(--accent-lime)}
+              .pm6-usage-w[data-ctype="outline"] .pm6-usage-colstack i{background:color-mix(in srgb,currentColor 20%,transparent);box-shadow:inset 0 2px 0 currentColor}
+              .pm6-usage-col b{font-size:9px;font-weight:600;color:var(--text-muted);text-align:center;white-space:nowrap;overflow:hidden}
+              .pm6-usage-col .pm6-usage-tip{position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:var(--surface-elevated);border:1px solid var(--border-light);padding:4px 8px;border-radius:var(--radius-sm);font-size:var(--fs-2xs);color:var(--text-primary);white-space:nowrap;pointer-events:none;opacity:0;transition:opacity var(--motion-fast) ease;z-index:10;box-shadow:var(--elev-2)}
+              .pm6-usage-col:hover .pm6-usage-tip{opacity:1}
+              .pm6-usage-legend{display:flex;gap:var(--md);font-size:var(--fs-2xs);color:var(--text-secondary);flex-wrap:wrap}
+              .pm6-usage-legend span{display:inline-flex;align-items:center;gap:4px;cursor:pointer;transition:opacity var(--motion-fast) ease}
+              .pm6-usage-legend span.muted{opacity:.3}
+              .pm6-usage-swatch{width:9px;height:9px;border-radius:var(--radius-xs);display:inline-block}
+
+              /* Donuts + spend counter */
+              .pm6-usage-spendrow{display:flex;align-items:baseline;gap:var(--sm)}
+              .pm6-usage-big{font-family:var(--display-font);font-size:var(--fs-3xl);font-weight:800;color:var(--accent-lime);line-height:1}
+              .pm6-usage-big-label{font-size:var(--fs-xs);color:var(--text-muted)}
+              .pm6-usage-donuts{display:flex;gap:var(--md);justify-content:space-between;align-items:flex-end;flex-wrap:wrap;margin-top:var(--sm)}
+              .pm6-usage-donut{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:60px}
+              .pm6-usage-donut svg{width:60px;height:60px}
+              .pm6-usage-donut .dbg{fill:none;stroke:var(--border-light);stroke-width:6}
+              .pm6-usage-donut .dfill{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 1.1s var(--ease-smooth);transform:rotate(-90deg);transform-origin:center}
+              .pm6-usage-donut text{font-family:var(--display-font);font-size:12px;font-weight:700;fill:var(--text-primary);text-anchor:middle;dominant-baseline:central}
+              .pm6-usage-donut small{font-size:var(--fs-2xs);color:var(--text-secondary);max-width:72px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+              /* Cache observability */
+              .pm6-usage-cachegrid{display:flex;flex-direction:column}
+              .pm6-usage-crow{display:grid;grid-template-columns:minmax(110px,1.1fr) auto 1.4fr auto auto;gap:var(--sm);align-items:center;padding:6px 0;border-bottom:1px solid var(--border-light);font-size:var(--fs-xs)}
+              .pm6-usage-crow:last-child{border-bottom:none}
+              .pm6-usage-cname{color:var(--text-primary);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+              .pm6-usage-cnums{font-family:var(--mono-font);font-size:var(--fs-2xs);color:var(--text-secondary);white-space:nowrap;text-align:right}
+              .pm6-usage-csave{font-weight:700;color:var(--accent-lime);white-space:nowrap;text-align:right}
+              .pm6-usage-csave.zero{color:var(--text-secondary)}
+              .pm6-usage-csave.na{color:var(--text-muted);font-weight:500}
+              .pm6-usage-cfoot{font-size:var(--fs-2xs);color:var(--text-muted);line-height:var(--lh-body);padding-top:var(--sm);border-top:1px solid var(--border-light);display:flex;gap:6px;align-items:flex-start}
+              .pm6-usage-cfoot .pm6-ico{flex:none;margin-top:1px}
+
+              /* Tables (tool usage + ledger) */
+              .pm6-usage-tblwrap{border:1px solid var(--border-light);border-radius:var(--radius-md);overflow:auto;background:var(--surface)}
+              .pm6-usage-tbl{width:100%;border-collapse:collapse;font-size:var(--fs-xs)}
+              .pm6-usage-tbl thead th{position:sticky;top:0;background:var(--surface-elevated);padding:var(--sm) var(--md);text-align:left;font-weight:700;color:var(--text-secondary);border-bottom:var(--border-width) solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;font-size:var(--fs-2xs);text-transform:uppercase;letter-spacing:.04em;z-index:2}
+              .pm6-usage-tbl thead th:hover{color:var(--text-primary)}
+              .pm6-usage-tbl thead th .arr{opacity:.35;font-size:8px;margin-left:2px}
+              .pm6-usage-tbl thead th.sorted .arr{opacity:1;color:var(--accent-primary)}
+              .pm6-usage-tbl td{padding:var(--sm) var(--md);border-bottom:1px solid var(--border-light);color:var(--text-primary);vertical-align:middle;white-space:nowrap}
+              .pm6-usage-tbl tbody tr{transition:background var(--motion-fast) ease}
+              .pm6-usage-tbl tbody tr:hover{background:color-mix(in srgb,var(--text-primary) 4%,transparent)}
+              .pm6-usage-tbl .mono{font-family:var(--mono-font);font-size:var(--fs-2xs)}
+              .pm6-usage-tbl .num{text-align:right;font-family:var(--mono-font);font-size:var(--fs-2xs)}
+              .pm6-usage-tbl .dim{color:var(--text-muted)}
+              .pm6-usage-tbl tr.pm6-usage-new{animation:pm6-usage-flash 1.6s var(--ease-smooth) both}
+              @keyframes pm6-usage-flash{0%{background:var(--accent-soft)}100%{background:transparent}}
+              .pm6-usage-detailrow td{background:var(--surface);white-space:normal}
+              .pm6-usage-dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:var(--sm);padding:2px 0}
+              .pm6-usage-di{display:flex;flex-direction:column;gap:2px}
+              .pm6-usage-di b{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+              .pm6-usage-di span{font-size:var(--fs-xs);color:var(--text-primary)}
+              .pm6-usage-caret{cursor:pointer;color:var(--text-muted);width:20px;text-align:center;user-select:none;transition:transform var(--motion-fast) ease;display:inline-block}
+              .pm6-usage-caret.open{transform:rotate(90deg)}
+              .pm6-usage-mix{display:inline-flex;align-items:center;gap:5px}
+              .pm6-usage-mixbar{width:56px;height:5px;border-radius:var(--radius-pill);background:color-mix(in srgb,var(--text-muted) 22%,transparent);overflow:hidden;display:inline-block;vertical-align:middle}
+              .pm6-usage-mixbar i{display:block;height:100%;background:var(--accent-lime)}
+              .pm6-usage-err{padding:1px 6px;border-radius:var(--radius-xs);font-size:var(--fs-2xs);font-weight:700}
+              .pm6-usage-err.good{background:color-mix(in srgb,var(--accent-lime) 12%,transparent);color:var(--accent-lime)}
+              .pm6-usage-err.warn{background:color-mix(in srgb,var(--accent-orange) 12%,transparent);color:var(--accent-orange)}
+              .pm6-usage-err.bad{background:color-mix(in srgb,var(--accent-error) 12%,transparent);color:var(--accent-error)}
+
+              /* Multi-account */
+              .pm6-usage-acct{display:flex;flex-direction:column;gap:6px;padding:var(--md);background:var(--surface);border-radius:var(--radius-md);border:1px solid var(--border-light)}
+              .pm6-usage-acct.effective{border-color:color-mix(in srgb,var(--accent-lime) 45%,transparent)}
+              .pm6-usage-acct-h{display:flex;align-items:center;gap:var(--sm);flex-wrap:wrap}
+              .pm6-usage-acct-name{font-size:var(--fs-sm);font-weight:700;color:var(--text-primary)}
+              .pm6-usage-acct-mail{font-size:var(--fs-2xs);color:var(--text-muted);font-family:var(--mono-font)}
+              .pm6-usage-acct-status{font-size:var(--fs-xs);color:var(--text-secondary);display:flex;align-items:center;gap:6px;line-height:var(--lh-body)}
+              .pm6-usage-dot{width:8px;height:8px;border-radius:50%;flex:none}
+              .pm6-usage-dot.working{background:var(--accent-lime);animation:pm6-usage-pulse 2s ease-in-out infinite}
+              .pm6-usage-dot.resting{background:var(--accent-orange)}
+              .pm6-usage-dot.standby{background:var(--text-muted)}
+              .pm6-usage-dot.pressure{background:var(--accent-error);animation:pm6-usage-pulse 1.2s ease-in-out infinite}
+              @keyframes pm6-usage-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+              .pm6-usage-cd{font-family:var(--mono-font);font-weight:700;font-size:var(--fs-sm);color:var(--accent-orange);letter-spacing:.05em}
+              .pm6-usage-acct-foot{display:flex;align-items:center;gap:var(--sm);flex-wrap:wrap}
+              .pm6-usage-marker{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-2xs);font-weight:700;padding:1px 7px;border-radius:var(--radius-pill)}
+              .pm6-usage-marker.req{background:color-mix(in srgb,var(--accent-blue) 14%,transparent);color:var(--accent-blue)}
+              .pm6-usage-marker.eff{background:color-mix(in srgb,var(--accent-lime) 14%,transparent);color:var(--accent-lime)}
+              .pm6-usage-mlegend{font-size:var(--fs-2xs);color:var(--text-muted);line-height:var(--lh-body);padding-top:var(--sm);border-top:1px solid var(--border-light)}
+
+              /* Anomaly guard */
+              .pm6-usage-anom{display:flex;flex-direction:column;gap:var(--sm);padding:var(--md);border-radius:var(--radius-md);background:var(--surface);border:1px solid color-mix(in srgb,var(--accent-error) 35%,transparent)}
+              .pm6-usage-anom.allowed{border-color:var(--border-light)}
+              .pm6-usage-anom-h{display:flex;align-items:center;gap:var(--sm);flex-wrap:wrap}
+              .pm6-usage-anom-h .pm6-ico{color:var(--accent-error);font-size:15px;flex:none}
+              .pm6-usage-anom.allowed .pm6-usage-anom-h .pm6-ico{color:var(--accent-lime)}
+              .pm6-usage-anom-name{font-family:var(--mono-font);font-size:var(--fs-xs);font-weight:700;color:var(--text-primary)}
+              .pm6-usage-anom-body{font-size:var(--fs-xs);color:var(--text-secondary);line-height:var(--lh-body)}
+              .pm6-usage-why{border:1px solid var(--border-light);border-radius:var(--radius-sm);overflow:hidden}
+              .pm6-usage-why-t{display:flex;align-items:center;gap:6px;padding:6px var(--md);font-size:var(--fs-2xs);font-weight:700;color:var(--text-secondary);cursor:pointer;user-select:none;background:color-mix(in srgb,var(--text-primary) 3%,transparent)}
+              .pm6-usage-why-t:hover{color:var(--text-primary)}
+              .pm6-usage-why-t .pm6-usage-caret{width:auto}
+              .pm6-usage-why-b{display:none;padding:var(--sm) var(--md) var(--md)}
+              .pm6-usage-why.open .pm6-usage-why-b{display:block}
+              .pm6-usage-anom-actions{display:flex;gap:var(--sm);flex-wrap:wrap}
+
+              /* Ledger controls */
+              .pm6-usage-lctrl{display:flex;gap:var(--sm);flex-wrap:wrap;align-items:center}
+              .pm6-usage-search{padding:6px 12px;font-size:var(--fs-xs);background:var(--surface);color:var(--text-primary);border:1px solid var(--border-light);border-radius:var(--radius-sm);font-family:var(--body-font);flex:1;min-width:160px;max-width:300px;transition:border-color var(--motion-fast) ease}
+              .pm6-usage-search:focus{outline:none;border-color:var(--accent-primary)}
+              .pm6-usage-search::placeholder{color:var(--text-muted)}
+              .pm6-usage-sel{padding:5px 9px;font-size:var(--fs-2xs);background:var(--surface);color:var(--text-primary);border:1px solid var(--border-light);border-radius:var(--radius-sm);font-family:var(--body-font);cursor:pointer}
+              .pm6-usage-lfoot{display:flex;justify-content:space-between;align-items:center;font-size:var(--fs-2xs);color:var(--text-muted);gap:var(--sm);flex-wrap:wrap}
+              .pm6-usage-live{display:inline-flex;align-items:center;gap:5px;color:var(--accent-lime);font-weight:700}
+              .pm6-usage-live .pm6-usage-dot{width:6px;height:6px}
+
+              /* Gear popover */
+              .pm6-usage-pop{position:absolute;z-index:60;min-width:220px;background:var(--surface-elevated);border:1px solid var(--border);border-radius:var(--radius-md);box-shadow:var(--elev-3);padding:var(--md);display:flex;flex-direction:column;gap:var(--sm);animation:pm-enter-scale var(--motion-fast) var(--ease-default) both}
+              .pm6-usage-pop[hidden]{display:none}
+              .pm6-usage-pop-t{font-size:var(--fs-2xs);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)}
+              .pm6-usage-pop-row{display:flex;gap:6px;flex-wrap:wrap}
+              .pm6-usage-pop-chip{padding:3px 10px;border-radius:var(--radius-pill);border:1px solid var(--border-light);font-size:var(--fs-2xs);font-weight:600;color:var(--text-secondary);cursor:pointer;background:transparent;font-family:var(--body-font);transition:all var(--motion-fast) ease}
+              .pm6-usage-pop-chip:hover{color:var(--text-primary)}
+              .pm6-usage-pop-chip.active{background:var(--accent-soft);border-color:transparent;color:var(--accent-primary)}
+              .pm6-usage-pop-note{font-size:var(--fs-2xs);color:var(--text-muted);line-height:var(--lh-body)}
+
+              /* ---- theme overrides (scoped) ---- */
+              [data-theme^="friendly"] .pm6-usage-w{border-color:transparent;box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.04)}
+              [data-theme="friendly-light"] .pm6-usage-w{box-shadow:var(--shadow)}
+              [data-theme^="glass"] .pm6-usage-w,[data-theme^="glass"] .pm6-usage-pop{background:rgba(var(--glass-tint-rgb),calc(var(--glass-alpha) + .10));border-color:var(--glass-hairline);box-shadow:inset 0 1px 0 var(--glass-edge),inset 0 0 0 1px var(--glass-hairline),0 8px 24px rgba(0,0,0,.25)}
+              [data-theme^="glass"] .pm6-usage-acct,[data-theme^="glass"] .pm6-usage-alert,[data-theme^="glass"] .pm6-usage-anom,[data-theme^="glass"] .pm6-usage-tblwrap{background:rgba(var(--glass-tint-rgb),calc(var(--glass-alpha) + .04))}
+              [data-theme="glass-light"] .pm6-usage-w{box-shadow:inset 0 1px 0 var(--glass-edge),inset 0 0 0 1px var(--glass-hairline),0 8px 24px rgba(40,55,90,.14)}
+              [data-theme^="retro"] .pm6-usage-w,[data-theme^="retro"] .pm6-usage-pop,[data-theme^="retro"] .pm6-usage-tblwrap,[data-theme^="retro"] .pm6-usage-acct,[data-theme^="retro"] .pm6-usage-alert,[data-theme^="retro"] .pm6-usage-anom{border-radius:0}
+              [data-theme^="retro"] .pm6-usage-chip,[data-theme^="retro"] .pm6-usage-marker,[data-theme^="retro"] .pm6-usage-thresh-chip,[data-theme^="retro"] .pm6-usage-pop-chip,[data-theme^="retro"] .pm6-usage-btn,[data-theme^="retro"] .pm6-usage-track,[data-theme^="retro"] .pm6-usage-fill,[data-theme^="retro"] .pm6-usage-search,[data-theme^="retro"] .pm6-usage-sel{border-radius:2px}
+              [data-theme="retro-dark"] .pm6-usage-w{box-shadow:3px 3px 0 rgba(224,224,224,.35)}
+              [data-theme="retro-light"] .pm6-usage-w{box-shadow:3px 3px 0 rgba(26,26,26,.30)}
+              [data-theme^="retro"] .pm6-usage-w{border-width:2px}
+              [data-theme^="retro"] .pm6-usage-wt{font-size:12px}
+              [data-theme^="basic"] .pm6-usage-w{border-radius:var(--radius-sm);box-shadow:none}
+
+              /* responsive */
+              @media(max-width:1200px){.pm6-usage-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pm6-usage-w.span-4{grid-column:span 2}}
+              @media(max-width:768px){.pm6-usage-grid{grid-template-columns:minmax(0,1fr)}.pm6-usage-w.span-2,.pm6-usage-w.span-4{grid-column:span 1}.pm6-usage-head{flex-direction:column;align-items:flex-start}.pm6-usage-head-actions{margin-left:0}}
+            </style>
+
+            <div class="pm6-usage-wrap">
+              <header class="pm6-usage-head">
+                <div>
+                  <div class="pm6-usage-kicker">System &middot; Usage</div>
+                  <h1 class="pm6-usage-title">Usage</h1>
+                  <div class="pm6-usage-sub">What your AI helpers are spending on <strong>Tastebook</strong> &mdash; quotas, cost, cache savings and safety guards. Refreshes every 5 minutes; history kept for 90 days.</div>
+                </div>
+                <div class="pm6-usage-head-actions">
+                  <button class="pm6-usage-btn" id="pm6UsageRefresh" data-demo-action="usage.refresh" title="Re-read usage from every provider"><span class="pm6-ico" data-pm-ico="restart"></span>Refresh</button>
+                  <button class="pm6-usage-btn primary" id="pm6UsageExport" data-demo-action="usage.export_json" title="Download everything on this page as JSON"><span class="pm6-ico" data-pm-ico="clipboard"></span>Export JSON</button>
+                </div>
+              </header>
+
+              <div class="pm6-usage-scroll">
+                <div class="pm6-usage-grid" id="pm6UsageGrid">
+
+                  <!-- widget.quota_summary -->
+                  <section class="pm6-usage-w pm-sheen span-2" data-uw="quota_summary" style="--i:0">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="dial"></span>Quota summary</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>5h + 7d windows</span>
+                      <button class="pm6-usage-gear" data-uw-gear="quota_summary" title="Widget options" aria-label="Configure quota summary widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-wb" data-uw-body="quota_summary"></div>
+                  </section>
+
+                  <!-- widget.alert_thresholds -->
+                  <section class="pm6-usage-w pm-sheen span-2" data-uw="alert_thresholds" style="--i:1">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="warning"></span>Alerts &amp; thresholds</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>warn at 80%</span>
+                      <button class="pm6-usage-gear" data-uw-gear="alert_thresholds" title="Widget options" aria-label="Configure alerts widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-wb" data-uw-body="alert_thresholds"></div>
+                  </section>
+
+                  <!-- widget.analytics_chart -->
+                  <section class="pm6-usage-w pm-sheen span-2" data-uw="analytics_chart" data-ctype="bars" style="--i:2">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="wave"></span>Token analytics</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>last 24h</span>
+                      <button class="pm6-usage-gear" data-uw-gear="analytics_chart" title="Widget options" aria-label="Configure analytics widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-wb" data-uw-body="analytics_chart"></div>
+                  </section>
+
+                  <!-- widget.budget_donuts -->
+                  <section class="pm6-usage-w pm-sheen span-2" data-uw="budget_donuts" style="--i:3">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="swirl"></span>Budgets &amp; spend</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>last 5h</span>
+                      <button class="pm6-usage-gear" data-uw-gear="budget_donuts" title="Widget options" aria-label="Configure budgets widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-wb" data-uw-body="budget_donuts"></div>
+                  </section>
+
+                  <!-- cache observability (UF-081) -->
+                  <section class="pm6-usage-w pm-sheen span-2" data-uw="cache" style="--i:4">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="layers"></span>Prompt-cache savings</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>per provider</span>
+                      <button class="pm6-usage-gear" data-uw-gear="cache" title="Widget options" aria-label="Configure cache widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-wb" data-uw-body="cache"></div>
+                  </section>
+
+                  <!-- widget.tool_usage -->
+                  <section class="pm6-usage-w pm-sheen span-2" data-uw="tool_usage" style="--i:5">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="toolbox"></span>Tool usage</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>last 24h</span>
+                      <button class="pm6-usage-gear" data-uw-gear="tool_usage" title="Widget options" aria-label="Configure tool usage widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-wb" data-uw-body="tool_usage"></div>
+                  </section>
+
+                  <!-- widget.multi_account -->
+                  <section class="pm6-usage-w pm-sheen span-2" data-uw="multi_account" style="--i:6">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="masks"></span>Accounts</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>requested vs effective</span>
+                      <button class="pm6-usage-gear" data-uw-gear="multi_account" title="Widget options" aria-label="Configure accounts widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-wb" data-uw-body="multi_account"></div>
+                  </section>
+
+                  <!-- UsageAnomalyGuard (UF-083) -->
+                  <section class="pm6-usage-w pm-sheen span-2" data-uw="anomaly" style="--i:7">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="shield"></span>Anomaly guard</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>spike limit 3.0&times; / 1h</span>
+                      <button class="pm6-usage-gear" data-uw-gear="anomaly" title="Widget options" aria-label="Configure anomaly guard widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-wb" data-uw-body="anomaly"></div>
+                  </section>
+
+                  <!-- widget.ledger_table -->
+                  <section class="pm6-usage-w span-4" data-uw="ledger_table" style="--i:7">
+                    <div class="pm6-usage-wh">
+                      <span class="pm6-usage-wt"><span class="pm6-ico pm-hover-icon" data-pm-ico="clipboard"></span>Event ledger</span>
+                      <span class="pm6-usage-wmeta" data-uw-meta>cost lands on the effective account</span>
+                      <button class="pm6-usage-gear" data-uw-gear="ledger_table" title="Widget options" aria-label="Configure ledger widget"><span class="pm6-ico" data-pm-ico="gear"></span></button>
+                    </div>
+                    <div class="pm6-usage-lctrl">
+                      <input type="text" class="pm6-usage-search" id="pm6UsageLedgerSearch" placeholder="Search platform, model, run, lane&hellip;">
+                      <select class="pm6-usage-sel" id="pm6UsageLedgerPlat" aria-label="Filter by platform"><option value="">All platforms</option></select>
+                      <select class="pm6-usage-sel" id="pm6UsageLedgerType" aria-label="Filter by event type">
+                        <option value="">All events</option>
+                        <option value="completion">Completion</option>
+                        <option value="tool">Tool call</option>
+                        <option value="error">Error</option>
+                        <option value="guard">Guard</option>
+                        <option value="switch">Account switch</option>
+                      </select>
+                      <select class="pm6-usage-sel" id="pm6UsageLedgerRep" aria-label="Filter by reporting state">
+                        <option value="">Any reporting</option>
+                        <option value="measured">Measured</option>
+                        <option value="estimated">Estimated</option>
+                        <option value="unsupported">Unsupported</option>
+                      </select>
+                      <button class="pm6-usage-btn" id="pm6UsageLedgerJson" data-demo-action="usage.ledger_json" title="Download the filtered ledger as JSON"><span class="pm6-ico" data-pm-ico="clipboard"></span>JSON</button>
+                    </div>
+                    <div class="pm6-usage-tblwrap" style="max-height:420px">
+                      <table class="pm6-usage-tbl" id="pm6UsageLedgerTbl">
+                        <thead><tr>
+                          <th style="width:24px" aria-label="Expand"></th>
+                          <th data-sort="t">Time <span class="arr">&#9662;</span></th>
+                          <th data-sort="ev">Event <span class="arr">&#9662;</span></th>
+                          <th data-sort="run">Run &middot; lane <span class="arr">&#9662;</span></th>
+                          <th data-sort="prov">Platform <span class="arr">&#9662;</span></th>
+                          <th data-sort="model">Model <span class="arr">&#9662;</span></th>
+                          <th data-sort="acct">Effective acct <span class="arr">&#9662;</span></th>
+                          <th data-sort="tin" class="num">In <span class="arr">&#9662;</span></th>
+                          <th data-sort="tout" class="num">Out <span class="arr">&#9662;</span></th>
+                          <th data-sort="cin" class="num" title="cached_input tokens">Cached in <span class="arr">&#9662;</span></th>
+                          <th data-sort="cw" class="num" title="cache_write tokens">Cache w <span class="arr">&#9662;</span></th>
+                          <th data-sort="cr" class="num" title="cache_read tokens">Cache r <span class="arr">&#9662;</span></th>
+                          <th data-sort="rep">Report <span class="arr">&#9662;</span></th>
+                          <th data-sort="cost" class="num">Cost <span class="arr">&#9662;</span></th>
+                        </tr></thead>
+                        <tbody id="pm6UsageLedgerBody"></tbody>
+                      </table>
+                    </div>
+                    <div class="pm6-usage-lfoot">
+                      <span id="pm6UsageLedgerCount">&nbsp;</span>
+                      <span class="pm6-usage-live"><span class="pm6-usage-dot working"></span>live &mdash; new events append as the run works</span>
+                    </div>
+                  </section>
+
+                </div><!-- grid -->
+              </div><!-- scroll -->
+
+              <div class="pm6-usage-pop" id="pm6UsagePop" hidden role="dialog" aria-label="Widget options"></div>
+            </div><!-- wrap -->
+
+            <script>
+            (function pm6UsagePageInit() {
+              'use strict';
+              var UP = document.getElementById('panel-usage');
+              if (!UP) return;
+
+              /* ================= data (ambient baseline; PM_DEMO overlays via refresh()) ================= */
+              var D = {
+                spend: { '5h': 14.27, '24h': 28.41, '7d': 142.83 },
+                quotas: [
+                  { id: 'claude',      name: 'Claude',           plan: 'Pro',         five: 78, seven: 61, rep: 'measured' },
+                  { id: 'claude-code', name: 'Claude Code',      plan: 'Max',         five: 64, seven: 52, rep: 'measured' },
+                  { id: 'codex-plan',  name: 'Codex &middot; Plus plan', plan: 'Plan-backed', five: 34, seven: 33, rep: 'measured' },
+                  { id: 'codex-api',   name: 'Codex &middot; API key',   plan: 'API-billed',  five: 17, seven: 12, rep: 'measured' },
+                  { id: 'copilot',     name: 'Copilot',          plan: 'Business',    five: 91, seven: 66, rep: 'measured' },
+                  { id: 'gemini',      name: 'Gemini Direct',    plan: 'AI Studio',   five: 41, seven: 30, rep: 'estimated' },
+                  { id: 'antigravity', name: 'Antigravity CLI',  plan: 'Preview',     five: 28, seven: 21, rep: 'measured' },
+                  { id: 'cursor',      name: 'Cursor',           plan: 'Business',    five: 56, seven: 44, rep: 'estimated', note: 'inferred locally &mdash; Cursor does not report usage itself' },
+                  { id: 'opencode',    name: 'OpenCode',         plan: 'Passthrough', five: 12, seven: 9,  rep: 'estimated' }
+                ],
+                donuts: [
+                  { name: 'Claude',      pct: 78, tone: 'warn' },
+                  { name: 'Copilot',     pct: 91, tone: 'hot'  },
+                  { name: 'Codex',       pct: 34, tone: 'ok'   },
+                  { name: 'Gemini',      pct: 41, tone: 'ok'   },
+                  { name: 'Cursor',      pct: 56, tone: 'ok'   },
+                  { name: 'Antigravity', pct: 28, tone: 'ok'   }
+                ],
+                cache: [
+                  { name: 'Claude',          state: 'measured',    hit: 72,  cin: 412800, cw: 38200, cr: 371400, save: 3.84 },
+                  { name: 'Codex (Plus)',    state: 'measured',    hit: 0,   cin: 0,      cw: 0,     cr: 0,      save: 0,    zeroNote: 'measured zero &mdash; caching idle right now, not missing' },
+                  { name: 'Copilot',         state: 'estimated',   hit: 38,  cin: 96400,  cw: 12100, cr: 84200,  save: 0.61 },
+                  { name: 'Gemini Direct',   state: 'estimated',   hit: 45,  cin: 71300,  cw: 9800,  cr: 61500,  save: 0.48 },
+                  { name: 'Antigravity CLI', state: 'measured',    hit: 51,  cin: 44100,  cw: 6200,  cr: 37900,  save: 0.42 },
+                  { name: 'Cursor',          state: 'unsupported' }
+                ],
+                tools: [
+                  { tool: 'search',       calls: 458, p50: 45,   p95: 210,   err: 0.2,  idx: 92 },
+                  { tool: 'file_edit',    calls: 842, p50: 12,   p95: 34,    err: 0.4,  idx: null },
+                  { tool: 'terminal_run', calls: 607, p50: 340,  p95: 2180,  err: 3.6,  idx: null },
+                  { tool: 'web_fetch',    calls: 263, p50: 820,  p95: 4500,  err: 6.8,  idx: null },
+                  { tool: 'lsp_rename',   calls: 124, p50: 28,   p95: 95,    err: 0,    idx: 88 },
+                  { tool: 'git_commit',   calls: 62,  p50: 180,  p95: 450,   err: 1.6,  idx: null }
+                ],
+                accounts: [
+                  { prov: 'Claude', name: 'Account 1', mail: 'dev@tastebook.app', requested: true, effective: true,
+                    dot: 'working', status: 'Working &mdash; building the image-processing package (node n-13, lane-b-api)',
+                    note: 'Took over from Account 2 at 14:07 &mdash; switch reason: rate_limit_pressure' },
+                  { prov: 'Claude', name: 'Account 2', mail: 'builds@tastebook.app', requested: false, effective: false,
+                    dot: 'resting', status: 'Resting &mdash; hit the 5h limit; back at 15:12', cooldown: 2472,
+                    disabledReason: 'rate_limited', hint: 'cooling down &mdash; retry when the timer ends' },
+                  { prov: 'Codex', name: 'Plus plan', mail: 'dev@tastebook.app', requested: false, effective: false,
+                    dot: 'standby', status: 'Standing by &mdash; picks up work if Claude accounts are busy' },
+                  { prov: 'Copilot', name: 'CI account', mail: 'ci@tastebook.app', requested: false, effective: false,
+                    dot: 'pressure', status: 'Under pressure &mdash; 9 premium requests left before the monthly cap' }
+                ],
+                anomalies: [
+                  { kind: 'token_spike', state: 'blocked', title: 'token_spike &mdash; spending paused',
+                    body: 'Node n-19 (lane-b-api) retried in a tight loop and token spend jumped 4.6&times; in 12 minutes. The guard paused paid calls on that node; the run continued from its safe point.',
+                    why: [ ['Rule', 'token_spike &mdash; block above 3.0&times; the 1h baseline'],
+                           ['Observed', '4.6&times; baseline (13:58&ndash;14:10)'],
+                           ['Where', 'run pcr-47 &middot; lane-b-api &middot; node n-19'],
+                           ['Cost avoided', '&asymp; $1.84 (estimated)'],
+                           ['Charged to', 'dev@tastebook.app (effective account)'] ] },
+                  { kind: 'output_spike', state: 'allowed', title: 'output_spike &mdash; allowed',
+                    body: 'The compile step streamed a large seam graph (2.4&times; normal output). That is under the 3.0&times; limit, so nothing was blocked &mdash; shown here so you can see how the guard decides.',
+                    why: [ ['Rule', 'output_spike &mdash; block above 3.0&times; the 1h baseline'],
+                           ['Observed', '2.4&times; baseline (13:41&ndash;13:44)'],
+                           ['Where', 'run pcr-47 &middot; plan compile'],
+                           ['Decision', 'allowed &mdash; below the limit, no action taken'] ] }
+                ],
+                chart: {
+                  '5h':  { cols: [['10a',34,22,8,12],['11a',45,30,10,16],['12p',52,36,12,18],['1p',49,33,11,17],['2p',60,40,14,22],['3p',44,29,10,15]], note: 'last 5h' },
+                  '24h': { cols: [['6a',18,12,5,8],['8a',54,38,12,18],['9a',81,52,15,22],['10a',100,68,20,28],['12p',90,63,18,25],['2p',100,68,22,30],['3p',88,60,19,26],['4p',55,35,10,14],['6p',36,23,8,11],['8p',19,12,5,7],['10p',17,10,4,6],['11p',8,5,2,4]], note: 'last 24h' },
+                  '7d':  { cols: [['Tue',62,41,14,20],['Wed',74,50,17,24],['Thu',58,38,12,19],['Fri',91,60,20,30],['Sat',22,14,6,9],['Sun',18,11,4,7],['Mon',86,57,18,27]], note: 'last 7d' }
+                },
+                ledger: [
+                  { t: '14:42', ev: 'completion', run: 'pcr-47', lane: 'lane-b-api',       prov: 'Claude',          model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 3240, tout: 1890, cin: 2210, cw: 0,    cr: 820,  rep: 'measured',  cost: 0.08, lat: '2.4s', detail: { Node: 'n-21 &middot; recipe import parser', Persona: 'engineer', Effort: 'standard' } },
+                  { t: '14:41', ev: 'tool',       run: 'pcr-47', lane: 'lane-b-api',       prov: 'Claude',          model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 0,    tout: 0,    cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0,    lat: '0.3s', detail: { Tool: 'file_edit', Target: 'src/routes/recipes.rs:142', Result: 'success' } },
+                  { t: '14:39', ev: 'completion', run: 'pcr-47', lane: 'lane-c-frontend',  prov: 'Copilot',         model: 'gpt-4.1',         acct: 'ci@tastebook.app',  tin: 4810, tout: 2340, cin: 1200, cw: 340,  cr: 860,  rep: 'measured',  cost: 0.14, lat: '3.8s', detail: { Node: 'n-27 &middot; recipe card component', 'Request class': 'Premium (#96 of 100)' } },
+                  { t: '14:37', ev: 'completion', run: 'pcr-47', lane: 'lane-a-data-model',prov: 'Codex (Plus)',    model: 'o4-mini',         acct: 'dev@tastebook.app', tin: 2180, tout: 1420, cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0.05, lat: '1.9s', detail: { Node: 'n-08 &middot; ratings migration', Billing: 'Plan-backed (Plus)' } },
+                  { t: '14:35', ev: 'guard',      run: 'pcr-47', lane: 'lane-b-api',       prov: 'Claude',          model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 0,    tout: 0,    cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0,    lat: '&mdash;', detail: { Guard: 'token_spike blocked node n-19', 'Cost avoided': '&asymp; $1.84', Next: 'safe-point retry' } },
+                  { t: '14:33', ev: 'completion', run: 'pcr-47', lane: 'lane-d-infra',     prov: 'Gemini Direct',   model: 'gemini-2.5-pro',  acct: 'dev@tastebook.app', tin: 5620, tout: 3180, cin: 2100, cw: 580,  cr: 1420, rep: 'estimated', cost: 0.11, lat: '2.1s', detail: { Node: 'n-33 &middot; backup cron template', Confidence: 'estimated locally' } },
+                  { t: '14:31', ev: 'tool',       run: 'pcr-47', lane: 'lane-b-api',       prov: 'Claude',          model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 0,    tout: 0,    cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0,    lat: '0.2s', detail: { Event: 'HITL gate reached &mdash; publish package: image-processing (n-13)', Waited: 'approved from Dashboard' } },
+                  { t: '14:29', ev: 'completion', run: 'pcr-47', lane: 'plan',             prov: 'Claude',          model: 'claude-opus-4',   acct: 'dev@tastebook.app', tin: 8420, tout: 4210, cin: 3200, cw: 1100, cr: 2400, rep: 'measured',  cost: 0.38, lat: '6.2s', detail: { Step: 'Auditor review loop &mdash; findings repair', Effort: 'high' } },
+                  { t: '14:27', ev: 'completion', run: 'pcr-47', lane: 'lane-c-frontend',  prov: 'Cursor',          model: 'cursor-small',    acct: 'team@tastebook.app', tin: 1920, tout: 980, cin: null, cw: null, cr: null, rep: 'unsupported', cost: 0.02, lat: '0.9s', detail: { Note: 'Cursor does not report cache fields &mdash; shown as not reported, never as zero' } },
+                  { t: '14:25', ev: 'completion', run: 'pcr-47', lane: 'lane-d-infra',     prov: 'OpenCode',        model: 'deepseek-v3',     acct: 'dev@tastebook.app', tin: 3100, tout: 1840, cin: 0,    cw: 0,    cr: 0,    rep: 'estimated', cost: 0.02, lat: '1.4s', detail: { Server: 'opencode.local:8080', Upstream: 'DeepSeek V3 passthrough' } },
+                  { t: '14:23', ev: 'error',      run: 'pcr-47', lane: 'lane-b-api',       prov: 'Claude Code',     model: 'claude-sonnet-4', acct: 'builds@tastebook.app', tin: 1840, tout: 0,  cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0.01, lat: '0.8s', detail: { Error: '429 rate limit', Action: 'rotated to Claude &middot; Account 1' } },
+                  { t: '14:21', ev: 'completion', run: 'pcr-47', lane: 'lane-a-data-model',prov: 'Antigravity CLI', model: 'gemini-2.5-pro',  acct: 'dev@tastebook.app', tin: 2760, tout: 1310, cin: 900,  cw: 210,  cr: 640,  rep: 'measured',  cost: 0.04, lat: '1.6s', detail: { Node: 'n-05 &middot; seed data generator' } },
+                  { t: '14:19', ev: 'tool',       run: 'pcr-47', lane: 'lane-b-api',       prov: 'Claude',          model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 0,    tout: 0,    cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0,    lat: '41s',  detail: { Tool: 'terminal_run', Command: 'cargo test -p tastebook-api', Result: '1 failure &rarr; retried' } },
+                  { t: '14:17', ev: 'completion', run: 'pcr-47', lane: 'lane-c-frontend',  prov: 'Copilot',         model: 'claude-haiku-3.5',acct: 'ci@tastebook.app',  tin: 2010, tout: 1180, cin: 640,  cw: 0,    cr: 480,  rep: 'measured',  cost: 0.02, lat: '1.1s', detail: { Node: 'n-24 &middot; search box styles' } },
+                  { t: '14:15', ev: 'completion', run: 'pcr-47', lane: 'lane-b-api',       prov: 'Claude',          model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 3890, tout: 2140, cin: 2600, cw: 480,  cr: 1900, rep: 'measured',  cost: 0.09, lat: '2.7s', detail: { Node: 'n-19 &middot; import-from-URL fetcher' } },
+                  { t: '14:13', ev: 'tool',       run: 'pcr-47', lane: 'lane-a-data-model',prov: 'Claude',          model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 0,    tout: 0,    cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0,    lat: '45ms', detail: { Tool: 'search', Query: 'ingredient unit conversion', Index: 'index_used = true (tantivy)' } },
+                  { t: '14:11', ev: 'completion', run: 'pcr-47', lane: 'lane-d-infra',     prov: 'Codex (API)',     model: 'codex-mini',      acct: 'dev@tastebook.app', tin: 1420, tout: 890,  cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0.03, lat: '1.2s', detail: { Node: 'n-31 &middot; Dockerfile refinement', Billing: 'API usage (metered)' } },
+                  { t: '14:09', ev: 'completion', run: 'pcr-47', lane: 'lane-d-infra',     prov: 'Gemini Direct',   model: 'gemini-2.5-pro',  acct: 'dev@tastebook.app', tin: 2340, tout: 1210, cin: 800,  cw: 190,  cr: 560,  rep: 'estimated', cost: 0.05, lat: '1.8s', detail: { Node: 'n-30 &middot; compose healthchecks' } },
+                  { t: '14:07', ev: 'switch',     run: 'pcr-47', lane: '&mdash;',          prov: 'Claude',          model: '&mdash;',         acct: 'dev@tastebook.app', tin: 0,    tout: 0,    cin: 0,    cw: 0,    cr: 0,    rep: 'measured',  cost: 0,    lat: '&mdash;', detail: { Event: 'account switch &mdash; builds@tastebook.app &rarr; dev@tastebook.app', Reason: 'rate_limit_pressure', Effect: 'requested account unchanged; effective account updated' } },
+                  { t: '14:05', ev: 'completion', run: 'pcr-47', lane: 'lane-a-data-model',prov: 'Claude',          model: 'claude-sonnet-4', acct: 'builds@tastebook.app', tin: 4180, tout: 2310, cin: 1900, cw: 620, cr: 1300, rep: 'measured', cost: 0.10, lat: '2.9s', detail: { Node: 'n-04 &middot; recipe schema constraints' } }
+                ],
+                livePool: [
+                  { ev: 'completion', run: 'pcr-47', lane: 'lane-b-api',      prov: 'Claude',        model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 2870, tout: 1540, cin: 1800, cw: 220, cr: 1420, rep: 'measured',  cost: 0.07, lat: '2.2s', detail: { Node: 'n-22 &middot; pagination for recipe feed' } },
+                  { ev: 'tool',       run: 'pcr-47', lane: 'lane-c-frontend', prov: 'Copilot',       model: 'gpt-4.1',         acct: 'ci@tastebook.app',  tin: 0,    tout: 0,    cin: 0,    cw: 0,   cr: 0,    rep: 'measured',  cost: 0,    lat: '0.4s', detail: { Tool: 'file_edit', Target: 'web/src/routes/+page.svelte' } },
+                  { ev: 'completion', run: 'pcr-47', lane: 'lane-d-infra',    prov: 'Gemini Direct', model: 'gemini-2.5-pro',  acct: 'dev@tastebook.app', tin: 1980, tout: 1050, cin: 700,  cw: 160, cr: 490,  rep: 'estimated', cost: 0.04, lat: '1.5s', detail: { Node: 'n-34 &middot; volume mount audit' } },
+                  { ev: 'completion', run: 'pcr-47', lane: 'lane-a-data-model', prov: 'Codex (Plus)', model: 'o4-mini',        acct: 'dev@tastebook.app', tin: 1640, tout: 920,  cin: 0,    cw: 0,   cr: 0,    rep: 'measured',  cost: 0.03, lat: '1.3s', detail: { Node: 'n-09 &middot; tag taxonomy seeds' } },
+                  { ev: 'tool',       run: 'pcr-47', lane: 'lane-b-api',      prov: 'Claude',        model: 'claude-sonnet-4', acct: 'dev@tastebook.app', tin: 0,    tout: 0,    cin: 0,    cw: 0,   cr: 0,    rep: 'measured',  cost: 0,    lat: '52ms', detail: { Tool: 'search', Index: 'index_used = true (tantivy)' } }
+                ]
+              };
+
+              /* widget config (gear popover state) */
+              var CFG = {
+                quota_summary:    { win: '5h' },
+                alert_thresholds: { win: '5h', thresh: 80 },
+                analytics_chart:  { win: '24h', ctype: 'bars' },
+                budget_donuts:    { win: '5h' },
+                cache:            { win: '24h' },
+                tool_usage:       { win: '24h' },
+                multi_account:    { win: '5h' },
+                anomaly:          { win: '24h' },
+                ledger_table:     { win: '5h' }
+              };
+
+              /* merge PM_DEMO usage state over the baseline when the engine provides it */
+              function sourceData() {
+                try {
+                  var u = window.PM_DEMO && window.PM_DEMO.state && window.PM_DEMO.state.usage;
+                  if (u && typeof u === 'object') {
+                    ['quotas', 'ledger', 'anomalies', 'accounts', 'cache', 'tools', 'donuts'].forEach(function (k) {
+                      if (Array.isArray(u[k]) && u[k].length) D[k] = u[k];
+                    });
+                    if (u.spend) D.spend = u.spend;
+                  }
+                } catch (e) { /* renderers must never die on bad state */ }
+                return D;
+              }
+
+              function body(id) { return UP.querySelector('[data-uw-body="' + id + '"]'); }
+              function meta(id) {
+                var w = UP.querySelector('[data-uw="' + id + '"] [data-uw-meta]');
+                return w;
+              }
+              function esc(s) { return String(s == null ? '' : s); }
+              function fmtNum(n) { return n == null ? '&mdash;' : Number(n).toLocaleString('en-US'); }
+              function fillTone(p) { return p >= 90 ? 'hot' : p >= 70 ? 'warn' : 'ok'; }
+
+              /* ================= renderers ================= */
+              function renderQuota() {
+                var el = body('quota_summary'); if (!el) return;
+                var rows = sourceData().quotas.map(function (q) {
+                  var note = q.note ? '<div class="pm6-usage-qnote">' + q.note + '</div>' : '';
+                  return '<div class="pm6-usage-qrow">' +
+                    '<span class="pm6-usage-qname">' + q.name + '</span>' +
+                    '<span class="pm6-usage-chip plan">' + q.plan + '</span>' +
+                    '<span class="pm6-usage-qbars">' +
+                      '<span class="pm6-usage-qbar"><b>5h</b><span class="pm6-usage-track"><span class="pm6-usage-fill ' + fillTone(q.five) + '" data-fill="' + q.five + '"></span></span></span>' +
+                      '<span class="pm6-usage-qbar"><b>7d</b><span class="pm6-usage-track"><span class="pm6-usage-fill ' + fillTone(q.seven) + '" data-fill="' + q.seven + '"></span></span></span>' +
+                    '</span>' +
+                    '<span class="pm6-usage-qpct">' + q.five + '%<br><span style="color:var(--text-muted);font-weight:600">' + q.seven + '%</span></span>' +
+                    note +
+                  '</div>';
+                }).join('');
+                el.innerHTML = rows;
+              }
+
+              function renderAlerts() {
+                var el = body('alert_thresholds'); if (!el) return;
+                var th = CFG.alert_thresholds.thresh;
+                el.innerHTML =
+                  '<div class="pm6-usage-alert hot">' +
+                    '<div class="pm6-usage-alert-h"><span class="pm6-ico" data-pm-ico="warning"></span>Copilot crossed ' + th + '% &mdash; now at 91% of its 5h window</div>' +
+                    '<div class="pm6-usage-alert-body">Suggested action: route new frontend work to Codex (Plus plan) until the window resets at 17:05. Nothing stops on its own &mdash; this is a heads-up.</div>' +
+                    '<div class="pm6-usage-alert-actions">' +
+                      '<button class="pm6-usage-btn primary" data-demo-action="usage.alert_route" data-demo-arg="copilot">Route to Codex</button>' +
+                      '<button class="pm6-usage-btn" data-demo-action="usage.alert_ack" data-demo-arg="copilot-80">Acknowledge</button>' +
+                      '<button class="pm6-usage-btn" data-demo-action="usage.alert_snooze" data-demo-arg="copilot-80">Snooze 1h</button>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="pm6-usage-alert">' +
+                    '<div class="pm6-usage-alert-h"><span class="pm6-ico" data-pm-ico="warning"></span>Claude is at 78% &mdash; approaching the ' + th + '% warning line</div>' +
+                    '<div class="pm6-usage-alert-body">At the current pace it crosses ' + th + '% in about 25 minutes. If it does, a card appears on the Dashboard too.</div>' +
+                  '</div>' +
+                  '<div class="pm6-usage-alert quiet">' +
+                    '<div class="pm6-usage-alert-h"><span class="pm6-ico" data-pm-ico="bolt"></span>Rate-limit hits: 1 today</div>' +
+                    '<div class="pm6-usage-alert-body">14:23 &mdash; Claude Code was rate-limited mid-node. Puppet Master switched to Claude &middot; Account 1 automatically; nothing was lost.</div>' +
+                  '</div>' +
+                  '<div class="pm6-usage-thresh">Warn me at' +
+                    [70, 80, 90].map(function (p) {
+                      return '<button class="pm6-usage-thresh-chip' + (p === th ? ' active' : '') + '" data-thresh="' + p + '">' + p + '%</button>';
+                    }).join('') +
+                  'of any window</div>';
+                el.querySelectorAll('[data-thresh]').forEach(function (b) {
+                  b.addEventListener('click', function () {
+                    CFG.alert_thresholds.thresh = parseInt(b.dataset.thresh, 10);
+                    renderAlerts();
+                    if (window.toast) window.toast('Alert threshold set to ' + b.dataset.thresh + '% (demo)');
+                  });
+                });
+              }
+
+              var mutedSeries = {};
+              function renderChart() {
+                var el = body('analytics_chart'); if (!el) return;
+                var cfg = CFG.analytics_chart;
+                var ds = sourceData().chart[cfg.win] || D.chart['24h'];
+                var w = UP.querySelector('[data-uw="analytics_chart"]');
+                if (w) w.setAttribute('data-ctype', cfg.ctype);
+                var m = meta('analytics_chart'); if (m) m.textContent = ds.note + ' · ' + (cfg.ctype === 'bars' ? 'stacked bars' : 'outline');
+                var series = [['inp', 'Input'], ['out', 'Output'], ['rea', 'Reasoning'], ['cache', 'Cache r/w']];
+                var cols = ds.cols.map(function (c) {
+                  return '<div class="pm6-usage-col">' +
+                    '<span class="pm6-usage-tip">' + c[0] + ': ' + c[1] + '% in · ' + c[2] + '% out</span>' +
+                    '<span class="pm6-usage-colstack">' +
+                      '<i class="s-inp" data-h="' + c[1] + '"></i>' +
+                      '<i class="s-out" data-h="' + c[2] + '"></i>' +
+                      '<i class="s-rea" data-h="' + c[3] + '"></i>' +
+                      '<i class="s-cache" data-h="' + c[4] + '"></i>' +
+                    '</span><b>' + c[0] + '</b>' +
+                  '</div>';
+                }).join('');
+                var swatchVar = { inp: '--accent-blue', out: '--accent-magenta', rea: '--accent-orange', cache: '--accent-lime' };
+                el.innerHTML = '<div class="pm6-usage-chart">' + cols + '</div>' +
+                  '<div class="pm6-usage-legend">' + series.map(function (s) {
+                    return '<span data-series="' + s[0] + '" class="' + (mutedSeries[s[0]] ? 'muted' : '') + '"><span class="pm6-usage-swatch" style="background:var(' + swatchVar[s[0]] + ')"></span>' + s[1] + '</span>';
+                  }).join('') + '</div>';
+                el.querySelectorAll('[data-series]').forEach(function (it) {
+                  it.addEventListener('click', function () {
+                    var k = it.dataset.series;
+                    mutedSeries[k] = !mutedSeries[k];
+                    it.classList.toggle('muted', !!mutedSeries[k]);
+                    el.querySelectorAll('.s-' + k).forEach(function (seg) { seg.style.opacity = mutedSeries[k] ? '.12' : '1'; });
+                  });
+                });
+                requestAnimationFrame(function () { animateChart(el); });
+              }
+
+              function renderDonuts() {
+                var el = body('budget_donuts'); if (!el) return;
+                var d = sourceData();
+                var spend = d.spend[CFG.budget_donuts.win] != null ? d.spend[CFG.budget_donuts.win] : d.spend['5h'];
+                var m = meta('budget_donuts'); if (m) m.textContent = 'last ' + CFG.budget_donuts.win;
+                var toneVar = { ok: 'var(--accent-lime)', warn: 'var(--accent-orange)', hot: 'var(--accent-error)' };
+                el.innerHTML =
+                  '<div class="pm6-usage-spendrow"><span class="pm6-usage-big" data-counter="' + spend + '" data-prefix="$">$0.00</span>' +
+                  '<span class="pm6-usage-big-label">estimated spend · attributed to each effective account</span></div>' +
+                  '<div class="pm6-usage-donuts">' + d.donuts.map(function (x) {
+                    return '<span class="pm6-usage-donut"><svg viewBox="0 0 64 64" role="img" aria-label="' + x.name + ' budget ' + x.pct + '%">' +
+                      '<circle class="dbg" cx="32" cy="32" r="26"></circle>' +
+                      '<circle class="dfill" cx="32" cy="32" r="26" stroke="' + toneVar[x.tone] + '" data-pct="' + x.pct + '" style="stroke-dasharray:163.4;stroke-dashoffset:163.4"></circle>' +
+                      '<text x="32" y="33">' + x.pct + '%</text></svg><small>' + x.name + '</small></span>';
+                  }).join('') + '</div>';
+                requestAnimationFrame(function () { animateDonuts(el); animateCounters(el); });
+              }
+
+              function renderCache() {
+                var el = body('cache'); if (!el) return;
+                var total = 0;
+                var rows = sourceData().cache.map(function (c) {
+                  if (c.state === 'unsupported') {
+                    return '<div class="pm6-usage-crow">' +
+                      '<span class="pm6-usage-cname">' + c.name + '</span>' +
+                      '<span class="pm6-usage-chip unsupported">not reported</span>' +
+                      '<span class="pm6-usage-cnums dim">provider does not expose cache fields</span>' +
+                      '<span class="pm6-usage-cnums dim">&mdash;</span>' +
+                      '<span class="pm6-usage-csave na">&mdash;</span>' +
+                    '</div>';
+                  }
+                  total += c.save || 0;
+                  var zero = (c.save || 0) === 0;
+                  var noteRow = c.zeroNote ? '<div class="pm6-usage-qnote" style="grid-column:1/-1">' + c.zeroNote + '</div>' : '';
+                  return '<div class="pm6-usage-crow">' +
+                    '<span class="pm6-usage-cname">' + c.name + '</span>' +
+                    '<span class="pm6-usage-chip ' + c.state + '">' + c.state + '</span>' +
+                    '<span class="pm6-usage-qbar"><span class="pm6-usage-track"><span class="pm6-usage-fill ok" data-fill="' + c.hit + '"></span></span></span>' +
+                    '<span class="pm6-usage-cnums">' + c.hit + '% hit · r ' + fmtNum(c.cr) + ' · w ' + fmtNum(c.cw) + '</span>' +
+                    '<span class="pm6-usage-csave' + (zero ? ' zero' : '') + '">' + (zero ? '$0.00' : '&minus;$' + c.save.toFixed(2)) + '</span>' +
+                    noteRow +
+                  '</div>';
+                }).join('');
+                el.innerHTML = '<div class="pm6-usage-cachegrid">' + rows + '</div>' +
+                  '<div class="pm6-usage-cfoot"><span class="pm6-ico" data-pm-ico="info"></span><span>Saved about <strong>$' + total.toFixed(2) + '</strong> today from provider caches. Figures come from provider receipts; Puppet Master cannot clear provider caches &mdash; entries expire on their own (roughly 5 minutes to 1 hour).</span></div>';
+                requestAnimationFrame(function () { animateFills(el); });
+              }
+
+              function renderTools() {
+                var el = body('tool_usage'); if (!el) return;
+                var rows = sourceData().tools.map(function (t) {
+                  var errCls = t.err >= 5 ? 'bad' : t.err >= 2 ? 'warn' : 'good';
+                  var mix = t.idx == null
+                    ? '<span class="dim" title="index mix does not apply to this tool">&mdash;</span>'
+                    : '<span class="pm6-usage-mix"><span class="pm6-usage-mixbar"><i style="width:' + t.idx + '%"></i></span>' + t.idx + '%</span>';
+                  return '<tr><td class="mono">' + t.tool + '</td><td class="num">' + fmtNum(t.calls) + '</td>' +
+                    '<td class="num">' + t.p50 + 'ms</td><td class="num">' + fmtNum(t.p95) + 'ms</td>' +
+                    '<td><span class="pm6-usage-err ' + errCls + '">' + t.err.toFixed(1) + '%</span></td>' +
+                    '<td>' + mix + '</td></tr>';
+                }).join('');
+                el.innerHTML = '<div class="pm6-usage-tblwrap"><table class="pm6-usage-tbl">' +
+                  '<thead><tr><th data-sort="tool">Tool <span class="arr">&#9662;</span></th><th data-sort="calls" class="num">Calls <span class="arr">&#9662;</span></th>' +
+                  '<th data-sort="p50" class="num">p50 <span class="arr">&#9662;</span></th><th data-sort="p95" class="num">p95 <span class="arr">&#9662;</span></th>' +
+                  '<th data-sort="err">Error rate <span class="arr">&#9662;</span></th><th title="Share of calls answered from the tantivy index">index_used <span class="arr">&#9662;</span></th></tr></thead>' +
+                  '<tbody>' + rows + '</tbody></table></div>';
+                wireSort(el.querySelector('table'));
+              }
+
+              function renderAccounts() {
+                var el = body('multi_account'); if (!el) return;
+                var cards = sourceData().accounts.map(function (a) {
+                  var markers = '';
+                  if (a.requested) markers += '<span class="pm6-usage-marker req" title="The account you picked">&#9679; requested</span>';
+                  if (a.effective) markers += '<span class="pm6-usage-marker eff" title="The account actually serving calls right now">&#10003; effective</span>';
+                  var cd = a.cooldown != null ? ' <span class="pm6-usage-cd" id="pm6UsageCd" data-seconds="' + a.cooldown + '">' + fmtCd(a.cooldown) + '</span>' : '';
+                  var foot = '';
+                  if (a.disabledReason) {
+                    foot = '<div class="pm6-usage-acct-foot">' +
+                      '<button class="pm6-usage-btn" disabled title="Unavailable: ' + a.disabledReason + '">Make active</button>' +
+                      '<span class="pm6-usage-reason"><code>' + a.disabledReason + '</code>' + esc(a.hint) + '</span></div>';
+                  } else if (!a.effective) {
+                    foot = '<div class="pm6-usage-acct-foot"><button class="pm6-usage-btn" data-demo-action="usage.switch_account" data-demo-arg="' + a.mail + '">Make active</button></div>';
+                  }
+                  var note = a.note ? '<div class="pm6-usage-acct-status" style="color:var(--text-muted)"><span class="pm6-ico" data-pm-ico="info"></span>' + a.note + '</div>' : '';
+                  return '<div class="pm6-usage-acct' + (a.effective ? ' effective' : '') + '">' +
+                    '<div class="pm6-usage-acct-h"><span class="pm6-usage-acct-name">' + a.prov + ' &middot; ' + a.name + '</span>' +
+                    '<span class="pm6-usage-acct-mail">' + a.mail + '</span>' + markers + '</div>' +
+                    '<div class="pm6-usage-acct-status"><span class="pm6-usage-dot ' + a.dot + '"></span><span>' + a.status + cd + '</span></div>' +
+                    note + foot +
+                  '</div>';
+                }).join('');
+                el.innerHTML = cards +
+                  '<div class="pm6-usage-mlegend"><strong>Requested</strong> is the account you chose; <strong>effective</strong> is the one actually doing the work. They can differ when Puppet Master rotates around a busy account &mdash; cost always lands on the effective one.</div>';
+              }
+
+              function renderAnomalies() {
+                var el = body('anomaly'); if (!el) return;
+                el.innerHTML = sourceData().anomalies.map(function (a, i) {
+                  var chip = a.state === 'blocked'
+                    ? '<span class="pm6-usage-chip blocked">blocked</span>'
+                    : '<span class="pm6-usage-chip allowed">allowed</span>';
+                  var why = '<div class="pm6-usage-why" data-why="' + i + '">' +
+                    '<div class="pm6-usage-why-t"><span class="pm6-usage-caret">&#9656;</span>Why was this ' + a.state + '?</div>' +
+                    '<div class="pm6-usage-why-b"><div class="pm6-usage-dgrid">' + a.why.map(function (kv) {
+                      return '<div class="pm6-usage-di"><b>' + kv[0] + '</b><span>' + kv[1] + '</span></div>';
+                    }).join('') + '</div></div></div>';
+                  var actions = a.state === 'blocked'
+                    ? '<div class="pm6-usage-anom-actions">' +
+                        '<button class="pm6-usage-btn primary" data-demo-action="usage.anomaly_keep" data-demo-arg="' + a.kind + '">Looks right &mdash; keep blocking</button>' +
+                        '<button class="pm6-usage-btn" data-demo-action="usage.anomaly_allow" data-demo-arg="' + a.kind + '">It was expected &mdash; allow once</button>' +
+                      '</div>'
+                    : '';
+                  return '<div class="pm6-usage-anom' + (a.state === 'allowed' ? ' allowed' : '') + '">' +
+                    '<div class="pm6-usage-anom-h"><span class="pm6-ico" data-pm-ico="' + (a.state === 'blocked' ? 'warning' : 'checkCircle') + '"></span>' +
+                    '<span class="pm6-usage-anom-name">' + a.title + '</span>' + chip + '</div>' +
+                    '<div class="pm6-usage-anom-body">' + a.body + '</div>' + why + actions +
+                  '</div>';
+                }).join('');
+                el.querySelectorAll('.pm6-usage-why-t').forEach(function (t) {
+                  t.addEventListener('click', function () {
+                    var box = t.parentElement;
+                    box.classList.toggle('open');
+                    var c = t.querySelector('.pm6-usage-caret');
+                    if (c) c.classList.toggle('open', box.classList.contains('open'));
+                  });
+                });
+              }
+
+              /* ---- ledger ---- */
+              var LFILTER = { q: '', plat: '', type: '', rep: '' };
+              function repChip(rep) { return '<span class="pm6-usage-chip ' + rep + '">' + rep + '</span>'; }
+              function cacheCell(v, rep) {
+                if (rep === 'unsupported' || v == null) return '<td class="num dim" title="not reported by this provider">&mdash;</td>';
+                return '<td class="num">' + fmtNum(v) + '</td>';
+              }
+              function ledgerRowHtml(r, idx, fresh) {
+                var evLabel = { completion: 'Completion', tool: 'Tool call', error: 'Error', guard: 'Guard', switch: 'Acct switch' }[r.ev] || r.ev;
+                var evStyle = r.ev === 'error' ? ' style="color:var(--accent-error)"' : r.ev === 'guard' ? ' style="color:var(--accent-orange)"' : r.ev === 'switch' ? ' style="color:var(--accent-blue)"' : '';
+                var main = '<tr class="pm6-usage-lrow' + (fresh ? ' pm6-usage-new' : '') + '" data-lrow="' + idx + '">' +
+                  '<td><span class="pm6-usage-caret" role="button" tabindex="0" aria-label="Show details">&#9656;</span></td>' +
+                  '<td class="mono">' + r.t + '</td>' +
+                  '<td' + evStyle + '>' + evLabel + '</td>' +
+                  '<td class="mono">' + r.run + ' &middot; ' + r.lane + '</td>' +
+                  '<td>' + r.prov + '</td>' +
+                  '<td class="mono">' + r.model + '</td>' +
+                  '<td class="mono">' + r.acct + '</td>' +
+                  '<td class="num">' + fmtNum(r.tin) + '</td>' +
+                  '<td class="num">' + fmtNum(r.tout) + '</td>' +
+                  cacheCell(r.cin, r.rep) + cacheCell(r.cw, r.rep) + cacheCell(r.cr, r.rep) +
+                  '<td>' + repChip(r.rep) + '</td>' +
+                  '<td class="num">' + (r.cost ? '$' + r.cost.toFixed(2) : '$0.00') + '</td>' +
+                '</tr>';
+                var kv = r.detail || {};
+                var cells = Object.keys(kv).map(function (k) {
+                  return '<div class="pm6-usage-di"><b>' + k + '</b><span>' + kv[k] + '</span></div>';
+                }).join('') + '<div class="pm6-usage-di"><b>Latency</b><span>' + r.lat + '</span></div>';
+                var det = '<tr class="pm6-usage-detailrow" data-ldetail="' + idx + '" hidden><td></td><td colspan="13"><div class="pm6-usage-dgrid">' + cells + '</div></td></tr>';
+                return main + det;
+              }
+              function ledgerMatches(r) {
+                if (LFILTER.plat && r.prov !== LFILTER.plat) return false;
+                if (LFILTER.type && r.ev !== LFILTER.type) return false;
+                if (LFILTER.rep && r.rep !== LFILTER.rep) return false;
+                if (LFILTER.q) {
+                  var hay = (r.t + ' ' + r.ev + ' ' + r.run + ' ' + r.lane + ' ' + r.prov + ' ' + r.model + ' ' + r.acct).toLowerCase();
+                  if (hay.indexOf(LFILTER.q) === -1) return false;
+                }
+                return true;
+              }
+              function renderLedger() {
+                var tbody = UP.querySelector('#pm6UsageLedgerBody'); if (!tbody) return;
+                var d = sourceData();
+                var shown = 0;
+                tbody.innerHTML = d.ledger.map(function (r, i) {
+                  if (!ledgerMatches(r)) return '';
+                  shown++;
+                  return ledgerRowHtml(r, i, false);
+                }).join('');
+                var cnt = UP.querySelector('#pm6UsageLedgerCount');
+                if (cnt) cnt.textContent = 'Showing ' + shown + ' of ' + d.ledger.length + ' events · window: last ' + CFG.ledger_table.win;
+                wireLedgerRows(tbody);
+                /* platform filter options (once) */
+                var plat = UP.querySelector('#pm6UsageLedgerPlat');
+                if (plat && plat.options.length <= 1) {
+                  var provs = {};
+                  d.ledger.forEach(function (r) { provs[r.prov] = 1; });
+                  Object.keys(provs).sort().forEach(function (p) {
+                    var o = document.createElement('option');
+                    o.value = p; o.textContent = p;
+                    plat.appendChild(o);
+                  });
+                }
+              }
+              function wireLedgerRows(tbody) {
+                tbody.querySelectorAll('.pm6-usage-lrow').forEach(function (row) {
+                  var caret = row.querySelector('.pm6-usage-caret');
+                  function tog() {
+                    var det = tbody.querySelector('[data-ldetail="' + row.dataset.lrow + '"]');
+                    if (!det) return;
+                    det.hidden = !det.hidden;
+                    caret.classList.toggle('open', !det.hidden);
+                  }
+                  caret.addEventListener('click', tog);
+                  caret.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+                });
+              }
+              var liveIdx = 0;
+              function appendLedger(rowOpt) {
+                var d = sourceData();
+                var src = rowOpt || d.livePool[liveIdx++ % d.livePool.length];
+                var now = new Date();
+                var r = {};
+                Object.keys(src).forEach(function (k) { r[k] = src[k]; });
+                r.t = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                d.ledger.unshift(r);
+                if (d.ledger.length > 40) d.ledger.pop();
+                if (!ledgerMatches(r)) return;
+                var tbody = UP.querySelector('#pm6UsageLedgerBody'); if (!tbody) return;
+                var tmp = document.createElement('tbody');
+                tmp.innerHTML = ledgerRowHtml(r, 'L' + Date.now(), true);
+                while (tmp.firstChild) tbody.insertBefore(tmp.firstChild, tbody.firstChild);
+                /* re-bind only the new row */
+                wireLedgerRows(tbody);
+                var cnt = UP.querySelector('#pm6UsageLedgerCount');
+                if (cnt) cnt.textContent = 'Showing ' + tbody.querySelectorAll('.pm6-usage-lrow').length + ' of ' + d.ledger.length + ' events · window: last ' + CFG.ledger_table.win;
+              }
+
+              /* ================= animation helpers (kept from PMConcept4, re-sourced) ================= */
+              function animateCounters(scope) {
+                (scope || UP).querySelectorAll('[data-counter]').forEach(function (el) {
+                  var target = parseFloat(el.dataset.counter) || 0;
+                  var prefix = el.dataset.prefix || '';
+                  var start = performance.now(), dur = 1100;
+                  function tick(now) {
+                    var p = Math.min((now - start) / dur, 1);
+                    var ease = 1 - Math.pow(1 - p, 3);
+                    el.textContent = prefix + (target * ease).toFixed(2);
+                    if (p < 1) requestAnimationFrame(tick);
+                  }
+                  requestAnimationFrame(tick);
+                });
+              }
+              function animateFills(scope) {
+                (scope || UP).querySelectorAll('.pm6-usage-fill[data-fill]').forEach(function (el, i) {
+                  setTimeout(function () { el.style.width = el.dataset.fill + '%'; }, i * 50);
+                });
+              }
+              function animateDonuts(scope) {
+                (scope || UP).querySelectorAll('.dfill[data-pct]').forEach(function (c, i) {
+                  var pct = parseFloat(c.dataset.pct) || 0;
+                  var circ = 163.4;
+                  setTimeout(function () { c.style.strokeDashoffset = circ * (1 - pct / 100); }, i * 120);
+                });
+              }
+              function animateChart(scope) {
+                (scope || UP).querySelectorAll('.pm6-usage-colstack i[data-h]').forEach(function (seg, i) {
+                  var h = (parseFloat(seg.dataset.h) || 0) * 0.6; /* scale into the 140px stack, 4 series share it */
+                  setTimeout(function () { seg.style.height = Math.min(h, 58) + '%'; }, i * 18);
+                });
+              }
+
+              /* ================= table sort ================= */
+              function wireSort(table) {
+                if (!table) return;
+                table.querySelectorAll('th[data-sort]').forEach(function (th) {
+                  th.addEventListener('click', function () {
+                    var tbody = table.querySelector('tbody');
+                    var idx = Array.prototype.indexOf.call(th.parentNode.children, th);
+                    var asc = !th.classList.contains('sorted-asc');
+                    table.querySelectorAll('th').forEach(function (h) { h.classList.remove('sorted', 'sorted-asc'); });
+                    th.classList.add('sorted'); if (asc) th.classList.add('sorted-asc');
+                    var rows = Array.prototype.filter.call(tbody.querySelectorAll('tr'), function (tr) { return !tr.classList.contains('pm6-usage-detailrow'); });
+                    rows.sort(function (a, b) {
+                      var va = ((a.children[idx] || {}).textContent || '').replace(/[,$%]/g, '').trim();
+                      var vb = ((b.children[idx] || {}).textContent || '').replace(/[,$%]/g, '').trim();
+                      var na = parseFloat(va), nb = parseFloat(vb);
+                      if (!isNaN(na) && !isNaN(nb)) return asc ? na - nb : nb - na;
+                      return asc ? va.localeCompare(vb) : vb.localeCompare(va);
+                    });
+                    rows.forEach(function (r) {
+                      tbody.appendChild(r);
+                      var det = tbody.querySelector('[data-ldetail="' + (r.dataset.lrow || '') + '"]');
+                      if (det) tbody.appendChild(det);
+                    });
+                  });
+                });
+              }
+
+              /* ================= gear popover ================= */
+              var POP = UP.querySelector('#pm6UsagePop');
+              var popFor = null;
+              var WINDOWS = ['5h', '24h', '7d'];
+              function openPop(gearBtn, widgetId) {
+                if (!POP) return;
+                popFor = widgetId;
+                var cfg = CFG[widgetId] || { win: '5h' };
+                var rows = '<div class="pm6-usage-pop-t">Time window</div><div class="pm6-usage-pop-row">' +
+                  WINDOWS.map(function (w) {
+                    return '<button class="pm6-usage-pop-chip' + (cfg.win === w ? ' active' : '') + '" data-pop-win="' + w + '">' + w + '</button>';
+                  }).join('') + '</div>';
+                if (widgetId === 'analytics_chart') {
+                  rows += '<div class="pm6-usage-pop-t">Chart type</div><div class="pm6-usage-pop-row">' +
+                    [['bars', 'Stacked bars'], ['outline', 'Outline']].map(function (t) {
+                      return '<button class="pm6-usage-pop-chip' + (cfg.ctype === t[0] ? ' active' : '') + '" data-pop-ctype="' + t[0] + '">' + t[1] + '</button>';
+                    }).join('') + '</div>';
+                }
+                rows += '<div class="pm6-usage-pop-note">Changes apply to this widget only. The same widget can live on your Dashboard.</div>';
+                POP.innerHTML = rows;
+                POP.hidden = false;
+                var wrapRect = UP.querySelector('.pm6-usage-wrap').getBoundingClientRect();
+                var r = gearBtn.getBoundingClientRect();
+                POP.style.top = (r.bottom - wrapRect.top + 6) + 'px';
+                POP.style.left = Math.max(8, Math.min(r.left - wrapRect.left - 160, wrapRect.width - 250)) + 'px';
+                POP.querySelectorAll('[data-pop-win]').forEach(function (b) {
+                  b.addEventListener('click', function () {
+                    CFG[popFor].win = b.dataset.popWin;
+                    var mm = meta(popFor); if (mm) mm.textContent = 'last ' + b.dataset.popWin;
+                    rerender(popFor);
+                    closePop();
+                    if (window.toast) window.toast('Widget window set to ' + b.dataset.popWin);
+                  });
+                });
+                POP.querySelectorAll('[data-pop-ctype]').forEach(function (b) {
+                  b.addEventListener('click', function () {
+                    CFG.analytics_chart.ctype = b.dataset.popCtype;
+                    rerender('analytics_chart');
+                    closePop();
+                  });
+                });
+              }
+              function closePop() { if (POP) { POP.hidden = true; popFor = null; } }
+              UP.querySelectorAll('[data-uw-gear]').forEach(function (g) {
+                g.addEventListener('click', function (e) {
+                  e.stopPropagation();
+                  if (!POP.hidden && popFor === g.dataset.uwGear) { closePop(); return; }
+                  openPop(g, g.dataset.uwGear);
+                });
+              });
+              document.addEventListener('click', function (e) {
+                if (POP && !POP.hidden && !POP.contains(e.target)) closePop();
+              });
+              document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+
+              function rerender(id) {
+                try {
+                  if (id === 'quota_summary') renderQuota();
+                  else if (id === 'alert_thresholds') renderAlerts();
+                  else if (id === 'analytics_chart') renderChart();
+                  else if (id === 'budget_donuts') renderDonuts();
+                  else if (id === 'cache') renderCache();
+                  else if (id === 'tool_usage') renderTools();
+                  else if (id === 'multi_account') renderAccounts();
+                  else if (id === 'anomaly') renderAnomalies();
+                  else if (id === 'ledger_table') renderLedger();
+                } catch (err) { try { console.error('[usage rerender]', id, err); } catch (e2) {} }
+              }
+
+              /* ================= ledger filters ================= */
+              var search = UP.querySelector('#pm6UsageLedgerSearch');
+              if (search) search.addEventListener('input', function () { LFILTER.q = search.value.toLowerCase(); renderLedger(); });
+              [['#pm6UsageLedgerPlat', 'plat'], ['#pm6UsageLedgerType', 'type'], ['#pm6UsageLedgerRep', 'rep']].forEach(function (pair) {
+                var el = UP.querySelector(pair[0]);
+                if (el) el.addEventListener('change', function () { LFILTER[pair[1]] = el.value; renderLedger(); });
+              });
+
+              /* ================= cooldown (00:41:12 ticking) ================= */
+              function fmtCd(s) {
+                var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60;
+                return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(x).padStart(2, '0');
+              }
+              var cooldown = { seconds: 2472, external: false };
+              function tickCooldown() {
+                if (cooldown.seconds <= 0) return;
+                cooldown.seconds--;
+                var el = UP.querySelector('#pm6UsageCd');
+                if (el) {
+                  el.textContent = fmtCd(cooldown.seconds);
+                  if (cooldown.seconds === 0) { renderAccounts(); if (window.toast) window.toast('Claude · Account 2 finished cooling down'); }
+                }
+              }
+              setInterval(function () {
+                if (document.visibilityState !== 'visible') return;
+                if (!cooldown.external) tickCooldown();
+              }, 1000);
+
+              /* ================= live ledger appends ================= */
+              setInterval(function () {
+                if (document.visibilityState !== 'visible') return;
+                if (!UP.classList.contains('active')) return;
+                appendLedger();
+              }, 9000);
+
+              /* ================= JSON export (mock download of real page data) ================= */
+              function exportJson(scope) {
+                try {
+                  var d = sourceData();
+                  var payload = scope === 'ledger'
+                    ? { exported: new Date().toISOString(), kind: 'usage_ledger', filter: LFILTER, events: d.ledger.filter(ledgerMatches) }
+                    : { exported: new Date().toISOString(), kind: 'usage_snapshot', spend: d.spend, quotas: d.quotas, cache: d.cache, tools: d.tools, accounts: d.accounts, anomalies: d.anomalies, ledger: d.ledger };
+                  var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+                  var a = document.createElement('a');
+                  a.href = URL.createObjectURL(blob);
+                  a.download = scope === 'ledger' ? 'tastebook-usage-ledger.json' : 'tastebook-usage.json';
+                  document.body.appendChild(a); a.click(); a.remove();
+                  setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+                  return true;
+                } catch (e) { return false; }
+              }
+
+              /* ================= refresh ================= */
+              function refreshAll() {
+                ['quota_summary', 'alert_thresholds', 'analytics_chart', 'budget_donuts', 'cache', 'tool_usage', 'multi_account', 'anomaly', 'ledger_table'].forEach(rerender);
+                requestAnimationFrame(function () { animateFills(UP); });
+                injectIcons();
+              }
+
+              /* ================= icon injection (PM_ICONS may load after this block) ================= */
+              function injectIcons() {
+                var map = window.PM_ICONS;
+                if (!map) return;
+                UP.querySelectorAll('.pm6-ico[data-pm-ico]').forEach(function (el) {
+                  if (!el.firstChild) el.innerHTML = map[el.dataset.pmIco] || map.gear || '';
+                });
+              }
+
+              /* ================= public surface for pm6-js-usage ================= */
+              window.PM6_USAGE = {
+                refresh: refreshAll,
+                rerender: rerender,
+                exportJson: exportJson,
+                appendLedger: appendLedger,
+                injectIcons: injectIcons,
+                cooldown: cooldown,
+                tickCooldown: tickCooldown,
+                spinRefresh: function () {
+                  var b = UP.querySelector('#pm6UsageRefresh');
+                  if (!b) return;
+                  b.classList.add('spinning');
+                  setTimeout(function () { b.classList.remove('spinning'); refreshAll(); }, 900);
+                },
+                cfg: CFG,
+                data: D
+              };
+
+              /* first paint */
+              refreshAll();
+            })();
+            </script>
+
+          </div><!-- page-usage -->

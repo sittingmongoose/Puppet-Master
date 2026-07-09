@@ -1,0 +1,317 @@
+          <div class="page page-orchestrator" id="panel-orchestrator">
+            <div class="orch-header pm6-orch-header">
+              <span class="orch-title">Orchestrator</span>
+              <button type="button" class="pm6-orch-run-chip" id="pm6OrchRunChip" data-demo-action="orch.copyRunId" title="focused_run_id pcr-47 (click to copy)">
+                <span class="pm6-ico" data-ico="bolt" aria-hidden="true"></span>
+                <span id="pm6OrchRunChipId">pcr-47</span>
+                <span class="pm6-orch-run-mode" id="pm6OrchRunMode" data-mode="live">live</span>
+              </button>
+              <span class="orch-status-badge pm6-orch-status" id="pm6OrchStatusBadge" data-state="running">Running</span>
+              <span class="orch-elapsed" id="pm6OrchElapsed" title="Elapsed since PlanCompileRun bind">14:02</span>
+              <span class="pm6-orch-fresh-chip" id="pm6OrchFreshChip" data-fresh="current" title="Projection freshness">
+                <span class="pm6-orch-fresh-dot" aria-hidden="true"></span>
+                <span id="pm6OrchFreshLabel">Projection: current</span>
+              </span>
+              <span class="pm6-orch-header-spacer"></span>
+              <button type="button" class="pm6-orch-ctl" id="pm6OrchPauseBtn" data-demo-action="orch.pause" data-command="cmd.orchestrator.pause" title="Pause the focused run at the next safe point">
+                <span class="pm6-ico" data-ico="dial" aria-hidden="true"></span>Pause
+              </button>
+              <button type="button" class="pm6-orch-ctl" id="pm6OrchResumeBtn" data-demo-action="orch.resume" data-command="cmd.orchestrator.resume" disabled data-reason="already_done" title="Run is already live">
+                <span class="pm6-ico" data-ico="restart" aria-hidden="true"></span>Resume
+              </button>
+            </div>
+            <div class="pm6-orch-banner pm6-orch-banner-hist" id="pm6OrchHistBanner" hidden>
+              <span class="pm6-ico" data-ico="telescope" aria-hidden="true"></span>
+              <span id="pm6OrchHistBannerText">Viewing historical run — read-only snapshot.</span>
+              <button type="button" class="pm6-orch-banner-btn" data-demo-action="orch.focusLive">Back to live run pcr-47 →</button>
+            </div>
+            <div class="pm6-orch-banner pm6-orch-banner-fresh" id="pm6OrchFreshBanner" hidden>
+              <span class="pm6-ico" data-ico="info" aria-hidden="true"></span>
+              <span id="pm6OrchFreshBannerText">Projection refreshing — figures may lag the run by a few seconds.</span>
+            </div>
+            <div class="orch-tabs" role="tablist" aria-label="Orchestrator views">
+              <span class="orch-tab active" id="orch-tab-progress" role="tab" tabindex="0" aria-selected="true" aria-controls="orch-panel-progress" data-tab="progress">Progress<span class="orch-tab-badge" id="orchTabBadgeProgress" aria-hidden="true"></span></span>
+              <span class="orch-tab" id="orch-tab-plan_compile" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-plan_compile" data-tab="plan_compile">Plan Compile</span>
+              <span class="orch-tab" id="orch-tab-seams" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-seams" data-tab="seams">Seams</span>
+              <span class="orch-tab" id="orch-tab-node_graph" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-node_graph" data-tab="node_graph">Node Graph<span class="orch-tab-badge orch-tab-badge-dot" id="orchTabBadgeNodeGraph" aria-hidden="true" title="Approval pending" style="display: none;"></span></span>
+              <span class="orch-tab" id="orch-tab-evidence" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-evidence" data-tab="evidence">Evidence<span class="orch-tab-badge" id="orchTabBadgeEvidence" aria-hidden="true"></span></span>
+              <span class="orch-tab" id="orch-tab-history" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-history" data-tab="history">History</span>
+              <span class="orch-tab" id="orch-tab-ledger" role="tab" tabindex="0" aria-selected="false" aria-controls="orch-panel-ledger" data-tab="ledger">Ledger<span class="orch-tab-badge" id="orchTabBadgeLedger" aria-hidden="true"></span></span>
+            </div>
+            <div class="orch-content pm6-orch-content">
+
+              <!-- ============ PROGRESS (widget-composed) ============ -->
+              <div class="orch-tab-content active pm6-orch-pane" id="orch-panel-progress" data-tab="progress">
+                <div class="pm6-orch-cta-slot" id="pm6OrchCtaSlot" aria-live="polite"></div>
+                <div class="pm6-orch-grid" id="pm6OrchProgressGrid">
+                  <section class="pm6-orch-widget pm6-orch-w2 pm-sheen" data-widget="run-overview" style="--i:0">
+                    <header class="pm6-orch-w-head">
+                      <span class="pm6-ico pm-hover-icon" data-ico="layers" aria-hidden="true"></span>
+                      <span class="pm6-orch-w-title">Run overview</span>
+                      <span class="pm6-orch-w-kicker" id="pm6OrchWOverviewKicker">execution tree</span>
+                    </header>
+                    <div class="pm6-orch-w-body" id="pm6OrchWRunOverview"><div class="pm6-orch-empty">Projection loading…</div></div>
+                  </section>
+                  <section class="pm6-orch-widget pm-sheen" data-widget="current-node" style="--i:1">
+                    <header class="pm6-orch-w-head">
+                      <span class="pm6-ico pm-hover-icon" data-ico="telescope" aria-hidden="true"></span>
+                      <span class="pm6-orch-w-title">Current node</span>
+                      <span class="pm6-orch-w-kicker">live inspector</span>
+                    </header>
+                    <div class="pm6-orch-w-body" id="pm6OrchWCurrentNode"><div class="pm6-orch-empty">No node running yet.</div></div>
+                  </section>
+                  <section class="pm6-orch-widget pm-sheen" data-widget="approval-queue" style="--i:2">
+                    <header class="pm6-orch-w-head">
+                      <span class="pm6-ico pm-hover-icon" data-ico="checkCircle" aria-hidden="true"></span>
+                      <span class="pm6-orch-w-title">Approval queue</span>
+                      <span class="pm6-orch-w-kicker" id="pm6OrchWApprovalsKicker">0 waiting</span>
+                    </header>
+                    <div class="pm6-orch-w-body" id="pm6OrchWApprovals"><div class="pm6-orch-empty">No approvals pending. Gates will surface here the moment a node needs you.</div></div>
+                  </section>
+                  <section class="pm6-orch-widget pm6-orch-w2 pm-sheen" data-widget="lane-health" style="--i:3">
+                    <header class="pm6-orch-w-head">
+                      <span class="pm6-ico pm-hover-icon" data-ico="wave" aria-hidden="true"></span>
+                      <span class="pm6-orch-w-title">Lane health</span>
+                      <span class="pm6-orch-w-kicker">4 parallel lanes</span>
+                    </header>
+                    <div class="pm6-orch-w-body" id="pm6OrchWLanes"></div>
+                  </section>
+                  <section class="pm6-orch-widget pm-sheen" data-widget="blocked-concerns" style="--i:4">
+                    <header class="pm6-orch-w-head">
+                      <span class="pm6-ico pm-hover-icon" data-ico="warning" aria-hidden="true"></span>
+                      <span class="pm6-orch-w-title">Blocked &amp; concerns</span>
+                      <span class="pm6-orch-w-kicker" id="pm6OrchWConcernsKicker">0 active</span>
+                    </header>
+                    <div class="pm6-orch-w-body" id="pm6OrchWConcerns"><div class="pm6-orch-empty">Nothing blocked. All concerns resolved or dismissed.</div></div>
+                  </section>
+                  <section class="pm6-orch-widget pm-sheen" data-widget="recovery-status" style="--i:5">
+                    <header class="pm6-orch-w-head">
+                      <span class="pm6-ico pm-hover-icon" data-ico="restart" aria-hidden="true"></span>
+                      <span class="pm6-orch-w-title">Recovery status</span>
+                      <span class="pm6-orch-w-kicker" id="pm6OrchWRecoveryKicker">stable</span>
+                    </header>
+                    <div class="pm6-orch-w-body" id="pm6OrchWRecovery"><div class="pm6-orch-empty">No recoveries in flight. Safe points are being written at every node boundary.</div></div>
+                  </section>
+                  <section class="pm6-orch-widget pm-sheen" data-widget="account-switches" style="--i:6">
+                    <header class="pm6-orch-w-head">
+                      <span class="pm6-ico pm-hover-icon" data-ico="plug" aria-hidden="true"></span>
+                      <span class="pm6-orch-w-title">Account switches</span>
+                      <span class="pm6-orch-w-kicker" id="pm6OrchWAccountsKicker">requested vs effective</span>
+                    </header>
+                    <div class="pm6-orch-w-body" id="pm6OrchWAccounts"></div>
+                  </section>
+                  <section class="pm6-orch-widget pm-sheen" data-widget="attention-summary" style="--i:7">
+                    <header class="pm6-orch-w-head">
+                      <span class="pm6-ico pm-hover-icon" data-ico="star" aria-hidden="true"></span>
+                      <span class="pm6-orch-w-title">Attention summary</span>
+                      <span class="pm6-orch-w-kicker">alert rollup</span>
+                    </header>
+                    <div class="pm6-orch-w-body" id="pm6OrchWAttention"></div>
+                  </section>
+                </div>
+              </div>
+
+              <!-- ============ PLAN COMPILE ============ -->
+              <div class="orch-tab-content pm6-orch-pane" id="orch-panel-plan_compile" data-tab="plan_compile">
+                <div class="pm6-orch-pc-pending" id="pm6OrchPcPending" hidden>
+                  <div class="pm6-orch-pc-ring" aria-hidden="true"><span></span></div>
+                  <div class="pm6-orch-pc-pending-title">Waiting for PlanApproved…</div>
+                  <div class="pm6-orch-pc-pending-sub">The approval receipt from the Planning Wizard is being reconciled. A durable PlanCompileRun binds the moment it lands.</div>
+                  <div class="pm6-orch-pc-recon" id="pm6OrchPcRecon">
+                    <div class="pm6-orch-pc-recon-row" data-step="receipt"><span class="pm6-orch-pc-recon-dot"></span>approval_cas_receipt received</div>
+                    <div class="pm6-orch-pc-recon-row" data-step="hashes"><span class="pm6-orch-pc-recon-dot"></span>Currency hashes verified (PlanUnit idx 8f3a91, testing policy c41d20)</div>
+                    <div class="pm6-orch-pc-recon-row" data-step="bind"><span class="pm6-orch-pc-recon-dot"></span>Binding durable PlanCompileRun…</div>
+                  </div>
+                </div>
+                <div class="pm6-orch-pc-main" id="pm6OrchPcMain">
+                  <div class="pm6-orch-pc-feedcol">
+                    <div class="pm6-orch-pc-feedhead">
+                      <span class="pm6-orch-w-title">Compile stream</span>
+                      <span class="pm6-orch-w-kicker" id="pm6OrchPcFeedKicker">8 topics → PlanUnits → seam graph</span>
+                      <button type="button" class="pm6-orch-mini-btn" id="pm6OrchPcReplayBtn" data-demo-action="orch.replayCompile" title="Replay the compile projection">Replay</button>
+                    </div>
+                    <div class="pm6-orch-pc-feed" id="pm6OrchPcFeed" aria-live="polite"></div>
+                  </div>
+                  <div class="pm6-orch-pc-sidecol">
+                    <div class="pm6-orch-pc-stat">
+                      <span class="pm6-orch-pc-stat-num" id="pm6OrchPcTopics">0<span class="pm6-orch-pc-stat-den">/8</span></span>
+                      <span class="pm6-orch-pc-stat-label">topics compiled</span>
+                    </div>
+                    <div class="pm6-orch-pc-stat">
+                      <span class="pm6-orch-pc-stat-num" id="pm6OrchPcUnits">0<span class="pm6-orch-pc-stat-den">/23</span></span>
+                      <span class="pm6-orch-pc-stat-label">PlanUnits emitted</span>
+                    </div>
+                    <div class="pm6-orch-pc-stat">
+                      <span class="pm6-orch-pc-stat-num" id="pm6OrchPcSeams">0<span class="pm6-orch-pc-stat-den">/3</span></span>
+                      <span class="pm6-orch-pc-stat-label">seams in graph</span>
+                    </div>
+                    <div class="pm6-orch-pc-bind" id="pm6OrchPcBindCard">
+                      <div class="pm6-orch-pc-bind-title"><span class="pm6-ico" data-ico="check" aria-hidden="true"></span>PlanCompileRun bound</div>
+                      <div class="pm6-orch-kv"><span>run id</span><b>pcr-47</b></div>
+                      <div class="pm6-orch-kv"><span>ApprovedPlanPack</span><b>rev 12 · topic map v9</b></div>
+                      <div class="pm6-orch-kv"><span>PlanUnit index</span><b class="pm6-orch-mono">8f3a91…</b></div>
+                      <div class="pm6-orch-kv"><span>testing policy</span><b class="pm6-orch-mono">c41d20…</b></div>
+                    </div>
+                    <div class="pm6-orch-pc-seamsvg" id="pm6OrchPcSeamMini" aria-label="Seam graph summary"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ============ SEAMS ============ -->
+              <div class="orch-tab-content pm6-orch-pane" id="orch-panel-seams" data-tab="seams">
+                <div class="pm6-orch-toolbar">
+                  <span class="pm6-orch-toolbar-label">Seam rollups — packages expand on demand; node problems listed inline.</span>
+                  <span class="pm6-orch-header-spacer"></span>
+                  <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.seamsExpandAll">Expand all</button>
+                  <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.seamsCollapseAll">Collapse all</button>
+                </div>
+                <div class="pm6-orch-seams" id="pm6OrchSeamsList"></div>
+              </div>
+
+              <!-- ============ NODE GRAPH ============ -->
+              <div class="orch-tab-content pm6-orch-pane pm6-orch-pane-flush" id="orch-panel-node_graph" data-tab="node_graph">
+                <div class="orch-rungraph-full pm6-orch-rungraph" id="orchDagPreview">
+                  <div class="pm6-orch-graph-toolbar">
+                    <span class="pm6-orch-graph-runid" id="pm6OrchGraphRunId" title="Focused run">pcr-47</span>
+                    <span class="pm6-orch-graph-counts" id="pm6OrchGraphCounts">—</span>
+                    <span class="pm6-orch-header-spacer"></span>
+                    <input type="text" class="pm6-orch-graph-search" id="pm6OrchGraphSearch" placeholder="Search nodes…" aria-label="Search nodes">
+                    <button type="button" class="pm6-orch-mini-btn pm6-orch-graph-filterbtn" id="pm6OrchGraphOnlyProblems" data-demo-action="orch.graphOnlyProblems" aria-pressed="false" title="Show only attention, blocked, recovering and degraded nodes">Problems only</button>
+                    <span class="pm6-orch-graph-zoomgrp" data-command="cmd.run_graph.zoom">
+                      <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.graphZoomOut" title="Zoom out">−</button>
+                      <span class="pm6-orch-graph-zoompct" id="pm6OrchGraphZoomPct">100%</span>
+                      <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.graphZoomIn" title="Zoom in">+</button>
+                      <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.graphFit" title="Fit graph to view">Fit</button>
+                    </span>
+                  </div>
+                  <div class="pm6-orch-graph-body">
+                    <div class="pm6-orch-graph-canvas" id="pm6OrchGraphCanvas" tabindex="0" role="application" aria-label="Run graph. Arrow keys move the node selection, Enter opens evidence, Escape clears.">
+                      <div class="pm6-orch-graph-svgmount" id="pm6OrchGraphMount"></div>
+                      <div class="pm6-orch-legend" aria-hidden="true">
+                        <span data-state="queued">queued</span><span data-state="running">running</span><span data-state="attention_required">attention</span><span data-state="blocked">blocked</span><span data-state="recovering">recovering</span><span data-state="degraded">degraded</span><span data-state="complete">complete</span>
+                      </div>
+                      <div class="pm6-orch-minimap" id="pm6OrchMinimap" title="Minimap — click to pan">
+                        <div class="pm6-orch-minimap-svg" id="pm6OrchMinimapSvg" aria-hidden="true"></div>
+                        <div class="minimap-viewport pm6-orch-minimap-vp" id="pm6OrchMinimapVp"></div>
+                      </div>
+                    </div>
+                    <aside class="pm6-orch-inspector" id="pm6OrchInspector" aria-label="Node inspector">
+                      <div class="pm6-orch-inspector-head">
+                        <span class="pm6-ico" data-ico="search" aria-hidden="true"></span>
+                        <span>Node inspector</span>
+                        <span class="pm6-orch-inspector-nodeid" id="pm6OrchInspNodeId"></span>
+                      </div>
+                      <div class="pm6-orch-inspector-body" id="orchGraphDetailBody">
+                        <div class="pm6-orch-empty">Select a node in the graph — click it or use the arrow keys.</div>
+                      </div>
+                    </aside>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ============ EVIDENCE ============ -->
+              <div class="orch-tab-content pm6-orch-pane" id="orch-panel-evidence" data-tab="evidence">
+                <div class="pm6-orch-toolbar">
+                  <select class="pm6-orch-select" id="pm6OrchEvFamily" aria-label="Filter by artifact family">
+                    <option value="">Family: all</option>
+                    <option value="validation_test">validation_test</option>
+                    <option value="code_diff">code_diff</option>
+                    <option value="screenshot">screenshot</option>
+                    <option value="evidence">evidence</option>
+                    <option value="cost_usage">cost_usage</option>
+                    <option value="restore_point">restore_point</option>
+                    <option value="hitl_approval">hitl_approval</option>
+                  </select>
+                  <input type="text" class="pm6-orch-graph-search" id="pm6OrchEvSearch" placeholder="Search evidence…" aria-label="Search evidence">
+                  <span class="pm6-orch-evfilter-chip" id="pm6OrchEvNodeChip" hidden>
+                    <span id="pm6OrchEvNodeChipLabel">node</span>
+                    <button type="button" data-demo-action="orch.evidenceClearNode" title="Clear node filter">✕</button>
+                  </span>
+                  <span class="pm6-orch-header-spacer"></span>
+                  <span class="pm6-orch-toolbar-label" id="pm6OrchEvCount"></span>
+                </div>
+                <div class="pm6-orch-evlist" id="pm6OrchEvList"></div>
+              </div>
+
+              <!-- ============ HISTORY ============ -->
+              <div class="orch-tab-content pm6-orch-pane" id="orch-panel-history" data-tab="history">
+                <div class="pm6-orch-toolbar">
+                  <span class="pm6-orch-toolbar-label">Durable runs for Tastebook — newest first. Focusing an older run switches this page to a read-only historical snapshot.</span>
+                </div>
+                <div class="pm6-orch-history" id="pm6OrchHistoryList">
+                  <div class="pm6-orch-hist-row pm6-orch-hist-live" data-run="pcr-47">
+                    <span class="pm6-orch-hist-dot" data-state="running" aria-hidden="true"></span>
+                    <span class="pm6-orch-hist-id">pcr-47</span>
+                    <span class="pm6-orch-hist-name">Tastebook · initial build from ApprovedPlanPack rev 12</span>
+                    <span class="pm6-orch-hist-meta" id="pm6OrchHist47Meta">live · 40 nodes · 4 lanes</span>
+                    <span class="pm6-orch-hist-state" id="pm6OrchHist47State">Running</span>
+                    <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.focusLive">Focus</button>
+                  </div>
+                  <div class="pm6-orch-hist-row" data-run="pcr-46">
+                    <span class="pm6-orch-hist-dot" data-state="complete" aria-hidden="true"></span>
+                    <span class="pm6-orch-hist-id">pcr-46</span>
+                    <span class="pm6-orch-hist-name">Import-from-URL hardening</span>
+                    <span class="pm6-orch-hist-meta">yesterday · 38 nodes · 41m · 1 retry</span>
+                    <span class="pm6-orch-hist-state">Complete</span>
+                    <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.focusRun" data-demo-arg="pcr-46">Focus</button>
+                  </div>
+                  <div class="pm6-orch-hist-row" data-run="pcr-45">
+                    <span class="pm6-orch-hist-dot" data-state="degraded" aria-hidden="true"></span>
+                    <span class="pm6-orch-hist-id">pcr-45</span>
+                    <span class="pm6-orch-hist-name">Search relevance tuning</span>
+                    <span class="pm6-orch-hist-meta">2 days ago · 22 nodes · 28m · finished degraded (2 accepted risks)</span>
+                    <span class="pm6-orch-hist-state">Complete · degraded</span>
+                    <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.focusRun" data-demo-arg="pcr-45">Focus</button>
+                  </div>
+                  <div class="pm6-orch-hist-row" data-run="pcr-44">
+                    <span class="pm6-orch-hist-dot" data-state="complete" aria-hidden="true"></span>
+                    <span class="pm6-orch-hist-id">pcr-44</span>
+                    <span class="pm6-orch-hist-name">Auth session refactor</span>
+                    <span class="pm6-orch-hist-meta">3 days ago · 31 nodes · 52m · 2 safe-point retries</span>
+                    <span class="pm6-orch-hist-state">Complete</span>
+                    <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.focusRun" data-demo-arg="pcr-44">Focus</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ============ LEDGER ============ -->
+              <div class="orch-tab-content pm6-orch-pane" id="orch-panel-ledger" data-tab="ledger">
+                <div class="pm6-orch-toolbar">
+                  <select class="pm6-orch-select" id="pm6OrchLedgerFilter" aria-label="Filter ledger by event family">
+                    <option value="">Events: all</option>
+                    <option value="run">run.*</option>
+                    <option value="gate">gate</option>
+                    <option value="promotion">promotion</option>
+                    <option value="account">account</option>
+                    <option value="recovery">recovery</option>
+                  </select>
+                  <span class="pm6-orch-toolbar-label">Exact applied-event record for the focused run. Every row is routeable by id.</span>
+                  <span class="pm6-orch-header-spacer"></span>
+                  <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.ledgerExport" title="Download the visible ledger as JSON">Export JSON</button>
+                </div>
+                <div class="pm6-orch-ledger-wrap">
+                  <table class="pm6-orch-table" aria-label="Run event ledger">
+                    <thead>
+                      <tr><th>t</th><th>event</th><th>subject</th><th>detail</th></tr>
+                    </thead>
+                    <tbody id="pm6OrchLedgerBody"></tbody>
+                  </table>
+                  <div class="pm6-orch-empty" id="pm6OrchLedgerEmpty">No events yet — the ledger fills as the run progresses.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- safe-point retry confirmation -->
+            <div class="pm6-orch-modal-scrim" id="pm6OrchSpModal" hidden>
+              <div class="pm6-orch-modal" role="dialog" aria-modal="true" aria-labelledby="pm6OrchSpModalTitle">
+                <div class="pm6-orch-modal-title" id="pm6OrchSpModalTitle"><span class="pm6-ico" data-ico="restart" aria-hidden="true"></span>Retry from safe point</div>
+                <div class="pm6-orch-modal-body" id="pm6OrchSpModalBody">
+                  Restore <b id="pm6OrchSpModalSp">sp-000</b> and retry node <b id="pm6OrchSpModalNode">n-00</b>? Work after the safe point is discarded; everything before it is kept.
+                </div>
+                <div class="pm6-orch-modal-actions">
+                  <button type="button" class="pm6-orch-mini-btn" data-demo-action="orch.safePointCancel">Cancel</button>
+                  <button type="button" class="pm6-orch-ctl pm6-orch-ctl-primary" data-demo-action="orch.safePointConfirm" data-command="cmd.orchestrator.safe_point_retry">Restore and retry</button>
+                </div>
+              </div>
+            </div>
+          </div>
