@@ -175,7 +175,201 @@
             ],
             "type_payload": {
                 "browser_session_id": "browser-session-001",
-                "recording_ref": "recordings/session.webm"
+                "invocation": {
+                    "invocation_source": "agent_initiated",
+                    "agent_reason": "fixture dynamic page evidence"
+                },
+      "session_class": "testing",
+      "state": "active",
+      "show_when_possible": true,
+      "open_watch_state": "open_available",
+      "recording_ref": "recordings/session.webm",
+                "runtime_state": {
+                    "runtime_state": "available",
+                    "requested_runtime": "pm_native_browser",
+                    "effective_runtime": "pm_native_browser",
+                    "playwright_cdp_role": "fallback_only"
+                },
+                "actions": [
+                    {
+                        "browser_session_id": "browser-session-001",
+                        "action": {
+                            "action_type": "navigate",
+                            "url": "https://example.com"
+                        },
+                        "invocation": {
+                            "invocation_source": "agent_initiated",
+                            "agent_reason": "fixture dynamic page evidence"
+                        },
+                        "success": true,
+                        "page_representation_ref": "page:example",
+                        "page_representation": {
+                            "page_representation_id": "page:example",
+                            "url": "https://example.com",
+                            "title": "Example PM Site Reader fixture",
+                            "detail_level": "full",
+                            "observe_ref": "observe:page-example-001",
+                            "find_results_ref": "find:page-example-001",
+                            "detail_ref": "detail:page-example-001",
+                            "accessibility_tree_ref": "a11y:page-example-001",
+                            "layout_bounds_ref": "layout:page-example-001",
+                            "form_refs": [
+                                "form:signup"
+                            ],
+                            "iframe_refs": [
+                                "iframe:embedded-docs"
+                            ],
+                            "console_ref": "console:browser-session-001",
+                            "network_ref": "network:browser-session-001",
+                            "screenshot_artifact_ref": "artifact:browser-screenshot-001",
+                            "pdf_artifact_ref": "artifact:browser-pdf-001",
+                            "prompt_injection_detected": true,
+                            "prompt_injection_chips": [
+                                "chip:prompt-injection-visible-001"
+                            ],
+                            "visible_card_ref": "web-card-session-001",
+                            "observed_at_utc": "2026-07-02T00:00:00Z",
+                            "redaction_profile_id": "redaction-profile-default"
+                        },
+                        "redaction_status": "not_needed",
+                        "created_at_utc": "2026-07-02T00:00:00Z"
+                    },
+                    {
+                        "browser_session_id": "browser-session-001",
+                        "action": {
+                            "action_type": "fill_form",
+                            "input_action_label": "fill form",
+                            "selector": "#signup",
+                            "form_values": {
+                                "email": "redacted@example.com"
+                            },
+                            "timeout_ms": 5000
+                        },
+                        "invocation": {
+                            "invocation_source": "agent_initiated",
+                            "agent_reason": "fixture dynamic page evidence"
+                        },
+                        "success": true,
+                        "redaction_status": "applied",
+                        "created_at_utc": "2026-07-02T00:00:01Z"
+                    },
+                    {
+                        "browser_session_id": "browser-session-001",
+                        "action": {
+                            "action_type": "select_option",
+                            "input_action_label": "select option",
+                            "selector": "#tier",
+                            "option_value": "team",
+                            "timeout_ms": 5000
+                        },
+                        "invocation": {
+                            "invocation_source": "agent_initiated",
+                            "agent_reason": "fixture dynamic page evidence"
+                        },
+                        "success": true,
+                        "redaction_status": "not_needed",
+                        "created_at_utc": "2026-07-02T00:00:02Z"
+                    },
+                    {
+                        "browser_session_id": "browser-session-001",
+                        "action": {
+                            "action_type": "upload_file",
+                            "input_action_label": "file upload",
+                            "selector": "#attachment",
+                            "file_refs": [
+                                "artifact:redacted-upload-001"
+                            ],
+                            "timeout_ms": 10000
+                        },
+                        "invocation": {
+                            "invocation_source": "agent_initiated",
+                            "agent_reason": "fixture dynamic page evidence"
+                        },
+                        "success": true,
+                        "redaction_status": "applied",
+                        "created_at_utc": "2026-07-02T00:00:03Z"
+                    },
+                    {
+                        "browser_session_id": "browser-session-001",
+                        "action": {
+                            "action_type": "handle_dialog",
+                            "input_action_label": "dialog handle",
+                            "dialog_action": "accept",
+                            "timeout_ms": 5000
+                        },
+                        "invocation": {
+                            "invocation_source": "agent_initiated",
+                            "agent_reason": "fixture dynamic page evidence"
+                        },
+                        "success": true,
+                        "redaction_status": "not_needed",
+                        "created_at_utc": "2026-07-02T00:00:04Z"
+                    },
+                    {
+                        "browser_session_id": "browser-session-001",
+                        "action": {
+                            "action_type": "verify_text",
+                            "input_action_label": "verify visible text",
+                            "selector": "main",
+                            "verification_expected": "Fixture",
+                            "timeout_ms": 5000
+                        },
+                        "invocation": {
+                            "invocation_source": "agent_initiated",
+                            "agent_reason": "fixture dynamic page evidence"
+                        },
+                        "success": true,
+                        "redaction_status": "not_needed",
+                        "created_at_utc": "2026-07-02T00:00:05Z"
+                    }
+                ],
+                "artifact_refs": [
+                    "artifact:screenshot-001"
+                ],
+                "redaction_profile_id": "redaction-profile-default"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.browser_recording.schema.v1",
+            "artifact_id": "artifact-browser-recording-unavailable-001",
+            "artifact_type": "browser_recording",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "degraded",
+            "retention_class": "project",
+            "routing_refs": [
+                "artifact:artifact-browser-recording-unavailable-001"
+            ],
+            "type_payload": {
+                "browser_session_id": "browser-session-unavailable-001",
+                "invocation": {
+                    "invocation_source": "agent_initiated",
+                    "agent_reason": "fixture proves unavailable native browser remediation"
+                },
+      "session_class": "testing",
+      "state": "runtime_unavailable",
+      "show_when_possible": true,
+      "open_watch_state": "unavailable",
+      "recording_ref": "recordings/browser-unavailable.json",
+                "runtime_state": {
+                    "runtime_state": "runtime_unavailable",
+                    "requested_runtime": "pm_native_browser",
+                    "effective_runtime": "none",
+                    "disabled_reason_code": "pm_native_browser_unavailable",
+                    "remediation_action_ids": [
+                        "open_settings_browser_runtime",
+                        "retry_with_plain_fetch"
+                    ],
+                    "playwright_cdp_role": "fallback_only"
+                },
+                "actions": [],
+                "artifact_refs": [
+                    "artifact:browser-runtime-unavailable-001"
+                ],
+                "redaction_profile_id": "redaction-profile-default"
             }
         },
         {
@@ -519,9 +713,399 @@
                 "artifact:artifact-api-web-call-001"
             ],
             "type_payload": {
-                "source_system": "example-api",
+                "source_system": "pm.web_operation",
                 "redacted_request_ref": "api/request-redacted.json",
-                "redacted_response_ref": "api/response-redacted.json"
+                "redacted_response_ref": "api/response-redacted.json",
+                "web_operation": "read",
+                "tool_id": "webfetch",
+                "operation_input": {
+                    "web_operation": "read",
+                    "tool_id": "webfetch",
+                    "url": "https://example.com",
+                    "formats": [
+                        "markdown"
+                    ]
+                },
+                "invocation": {
+                    "invocation_source": "nl_user",
+                    "agent_reason": "fixture URL read evidence"
+                },
+                "success": true,
+                "support_tier": "pm_composed",
+                "execution_path": "pm_site_reader",
+                "requested_adapter_id": "pm.site_reader",
+                "effective_adapter_id": "pm.site_reader",
+                "provider_fallback_occurred": false,
+                "content_ref": "api/response-redacted.json",
+                "page_representation_ref": "page:example",
+                "browser_session_id": "browser-session-001",
+                "cache_state": "miss",
+                "read_receipt_refs": [
+                    "receipt:webfetch-001"
+                ],
+                "citation_refs": [
+                    "citation:example-001"
+                ]
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+            "artifact_id": "artifact-api-web-call-search-001",
+            "artifact_type": "api_web_call",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-api-web-call-search-001"
+            ],
+            "type_payload": {
+                "source_system": "pm.web_operation",
+                "redacted_request_ref": "api/search-request-redacted.json",
+                "redacted_response_ref": "api/search-response-redacted.json",
+                "web_operation": "search",
+                "tool_id": "websearch",
+                "operation_input": {
+                    "web_operation": "search",
+                    "tool_id": "websearch",
+                    "query": "latest provider docs",
+                    "max_results": 5
+                },
+                "invocation": {
+                    "invocation_source": "slash",
+                    "source_user_message_id": "msg-slash-001"
+                },
+                "success": true,
+                "support_tier": "native",
+                "execution_path": "provider_search_native",
+                "requested_adapter_id": "provider.exa",
+                "effective_adapter_id": "provider.exa",
+                "provider_fallback_occurred": false,
+                "source_count": 5,
+                "sources_ref": "sources:websearch-001"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+            "artifact_id": "artifact-api-web-call-extract-001",
+            "artifact_type": "api_web_call",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-api-web-call-extract-001"
+            ],
+            "type_payload": {
+                "source_system": "pm.web_operation",
+                "redacted_request_ref": "api/extract-request-redacted.json",
+                "redacted_response_ref": "api/extract-response-redacted.json",
+                "web_operation": "extract",
+                "tool_id": "webextract",
+                "operation_input": {
+                    "web_operation": "extract",
+                    "tool_id": "webextract",
+                    "url": "https://example.com/pricing",
+                    "detail_hint": "balanced",
+                    "schema_ref": "schema:pricing-extract",
+                    "schema_mode": "strict",
+                    "actions": [
+                        {
+                            "action_type": "fill_form",
+                            "input_action_label": "fill form",
+                            "selector": "#zip",
+                            "form_values": {
+                                "zip": "10001"
+                            },
+                            "timeout_ms": 5000
+                        },
+                        {
+                            "action_type": "select_option",
+                            "input_action_label": "select option",
+                            "selector": "#plan",
+                            "option_value": "pro",
+                            "timeout_ms": 5000
+                        },
+                        {
+                            "action_type": "upload_file",
+                            "input_action_label": "file upload",
+                            "selector": "#quote",
+                            "file_refs": [
+                                "artifact:quote-input-redacted"
+                            ],
+                            "timeout_ms": 10000
+                        },
+                        {
+                            "action_type": "handle_dialog",
+                            "input_action_label": "dialog handle",
+                            "dialog_action": "accept",
+                            "timeout_ms": 5000
+                        }
+                    ],
+                    "actions_total_timeout_ms": 25000
+                },
+                "invocation": {
+                    "invocation_source": "palette",
+                    "source_user_message_id": "msg-palette-001"
+                },
+                "success": true,
+                "support_tier": "pm_composed",
+                "execution_path": "pm_extract_composed",
+                "requested_adapter_id": "pm.site_reader",
+                "effective_adapter_id": "pm.site_reader",
+                "provider_fallback_occurred": false,
+                "content_ref": "extracts/pricing.json",
+                "citation_refs": [
+                    "citation:pricing-001"
+                ]
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+            "artifact_id": "artifact-api-web-call-research-001",
+            "artifact_type": "api_web_call",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-api-web-call-research-001"
+            ],
+            "type_payload": {
+                "source_system": "pm.web_operation",
+                "redacted_request_ref": "api/research-request-redacted.json",
+                "redacted_response_ref": "api/research-response-redacted.json",
+                "web_operation": "research",
+                "tool_id": "webresearch",
+                "operation_input": {
+                    "web_operation": "research",
+                    "tool_id": "webresearch",
+                    "task": "compare current web extraction providers",
+                    "research_mode": "standard",
+                    "max_sources": 4,
+                    "auto_read_cap": 4
+                },
+                "invocation": {
+                    "invocation_source": "agent_initiated",
+                    "agent_reason": "fixture comparison requires current external evidence"
+                },
+                "success": true,
+                "support_tier": "pm_composed",
+                "execution_path": "pm_research_composed",
+                "requested_adapter_id": "pm.research",
+                "effective_adapter_id": "pm.research",
+                "provider_fallback_occurred": false,
+                "source_count": 4,
+                "sources_ref": "sources:webresearch-001",
+                "answer_summary_ref": "summaries/webresearch-001.md",
+                "research_run_ref": "research:webresearch-001",
+                "read_receipt_refs": [
+                    "receipt:webresearch-001"
+                ],
+                "citation_refs": [
+                    "citation:research-001"
+                ]
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+            "artifact_id": "artifact-api-web-call-deep-research-001",
+            "artifact_type": "api_web_call",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-api-web-call-deep-research-001"
+            ],
+            "type_payload": {
+                "source_system": "pm.web_operation",
+                "redacted_request_ref": "api/deep-research-request-redacted.json",
+                "redacted_response_ref": "api/deep-research-response-redacted.json",
+                "web_operation": "deep_research",
+                "tool_id": "webresearch",
+                "operation_input": {
+                    "web_operation": "deep_research",
+                    "tool_id": "webresearch",
+                    "task": "deeply compare browser automation evidence models",
+                    "research_mode": "deep",
+                    "max_sources": 8,
+                    "auto_read_cap": 8,
+                    "autonomous": true
+                },
+                "invocation": {
+                    "invocation_source": "goal",
+                    "agent_reason": "fixture Goal run needed broader source closure",
+                    "source_goal_id": "goal-001"
+                },
+                "success": true,
+                "support_tier": "pm_composed",
+                "execution_path": "pm_research_composed",
+                "requested_adapter_id": "pm.deep_research",
+                "effective_adapter_id": "pm.deep_research",
+                "provider_fallback_occurred": false,
+                "source_count": 8,
+                "sources_ref": "sources:deep-research-001",
+                "answer_summary_ref": "summaries/deep-research-001.md",
+                "research_run_ref": "research:deep-research-001",
+                "read_receipt_refs": [
+                    "receipt:deep-research-001"
+                ],
+                "citation_refs": [
+                    "citation:deep-research-001"
+                ]
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+            "artifact_id": "artifact-api-web-call-crawl-001",
+            "artifact_type": "api_web_call",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-api-web-call-crawl-001"
+            ],
+            "type_payload": {
+                "source_system": "pm.web_operation",
+                "redacted_request_ref": "api/crawl-request-redacted.json",
+                "redacted_response_ref": "api/crawl-response-redacted.json",
+                "web_operation": "crawl",
+                "tool_id": "webcrawl",
+                "operation_input": {
+                    "web_operation": "crawl",
+                    "tool_id": "webcrawl",
+                    "root_url": "https://example.com/docs",
+                    "max_pages": 10,
+                    "max_depth": 2,
+                    "same_origin_only": true,
+                    "respect_robots": true
+                },
+                "invocation": {
+                    "invocation_source": "prd",
+                    "agent_reason": "fixture PRD source intake needs docs coverage",
+                    "source_prd_id": "prd-001"
+                },
+                "success": true,
+                "support_tier": "pm_composed",
+                "execution_path": "pm_crawl_composed",
+                "requested_adapter_id": "pm.crawler",
+                "effective_adapter_id": "pm.crawler",
+                "provider_fallback_occurred": false,
+                "source_count": 10,
+                "sources_ref": "sources:webcrawl-001",
+                "ledger_source_evidence_ref": "ledger-source:prd-webcrawl-001"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+            "artifact_id": "artifact-api-web-call-map-001",
+            "artifact_type": "api_web_call",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-api-web-call-map-001"
+            ],
+            "type_payload": {
+                "source_system": "pm.web_operation",
+                "redacted_request_ref": "api/map-request-redacted.json",
+                "redacted_response_ref": "api/map-response-redacted.json",
+                "web_operation": "map",
+                "tool_id": "webmap",
+                "operation_input": {
+                    "web_operation": "map",
+                    "tool_id": "webmap",
+                    "root_url": "https://example.com",
+                    "max_pages": 20,
+                    "max_depth": 2,
+                    "same_origin_only": true
+                },
+                "invocation": {
+                    "invocation_source": "planning_wizard",
+                    "agent_reason": "fixture Planning Wizard needs site topology",
+                    "source_planning_run_id": "planning-run-001"
+                },
+                "success": true,
+                "support_tier": "pm_composed",
+                "execution_path": "pm_map_composed",
+                "requested_adapter_id": "pm.mapper",
+                "effective_adapter_id": "pm.mapper",
+                "provider_fallback_occurred": false,
+                "map_ref": "maps/site-map-001.json",
+                "plan_source_evidence_ref": "plan-source:planning-webmap-001"
+            }
+        },
+        {
+            "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+            "artifact_id": "artifact-api-web-call-subagent-fetch-001",
+            "artifact_type": "api_web_call",
+            "project_id": "fixture-project",
+            "run_id": "run-001",
+            "attempt_id": "attempt-001",
+            "created_at_utc": "2026-07-02T00:00:00Z",
+            "projection_freshness": "current",
+            "projection_health": "healthy",
+            "retention_class": "debug_retained",
+            "routing_refs": [
+                "artifact:artifact-api-web-call-subagent-fetch-001"
+            ],
+            "type_payload": {
+                "source_system": "pm.web_operation",
+                "redacted_request_ref": "api/subagent-fetch-request-redacted.json",
+                "redacted_response_ref": "api/subagent-fetch-response-redacted.json",
+                "web_operation": "read",
+                "tool_id": "webfetch",
+                "operation_input": {
+                    "web_operation": "read",
+                    "tool_id": "webfetch",
+                    "url": "https://example.com/issues/1",
+                    "formats": [
+                        "markdown",
+                        "screenshot"
+                    ]
+                },
+                "invocation": {
+                    "invocation_source": "subagent",
+                    "agent_reason": "fixture subagent verifies URL evidence",
+                    "source_subagent_id": "subagent-001"
+                },
+                "success": true,
+                "support_tier": "pm_composed",
+                "execution_path": "pm_site_reader",
+                "requested_adapter_id": "pm.site_reader",
+                "effective_adapter_id": "pm.site_reader",
+                "provider_fallback_occurred": false,
+                "content_ref": "api/subagent-fetch-response-redacted.json",
+                "page_representation_ref": "page:issue-1",
+                "browser_session_id": "browser-session-001",
+                "cache_state": "miss",
+                "read_receipt_refs": [
+                    "receipt:webfetch-subagent-001"
+                ],
+                "citation_refs": [
+                    "citation:subagent-fetch-001"
+                ]
             }
         },
         {
@@ -790,6 +1374,544 @@
                 ],
                 "type_payload": {
                     "approval_scope_key": "approval:fixture"
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_agentic_invocation_missing_reason",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-agent-reason",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-agent-reason"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-agent-reason-request-redacted.json",
+                    "redacted_response_ref": "api/bad-agent-reason-response-redacted.json",
+                    "web_operation": "search",
+                    "tool_id": "websearch",
+                    "operation_input": {
+                        "web_operation": "search",
+                        "tool_id": "websearch",
+                        "query": "current docs"
+                    },
+                    "invocation": {
+                        "invocation_source": "agent_initiated"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_top_level_nested_mismatch",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-mismatch",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-mismatch"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-request-redacted.json",
+                    "redacted_response_ref": "api/bad-response-redacted.json",
+                    "web_operation": "read",
+                    "tool_id": "webfetch",
+                    "operation_input": {
+                        "web_operation": "search",
+                        "tool_id": "websearch",
+                        "query": "mismatched route"
+                    },
+                    "invocation": {
+                        "invocation_source": "nl_user"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_extract_actions_over_limit",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-extract-actions-over-limit",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-extract-actions-over-limit"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-extract-actions-request-redacted.json",
+                    "redacted_response_ref": "api/bad-extract-actions-response-redacted.json",
+                    "web_operation": "extract",
+                    "tool_id": "webextract",
+                    "operation_input": {
+                        "web_operation": "extract",
+                        "tool_id": "webextract",
+                        "url": "https://example.com/form",
+                        "actions": [
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"},
+                            {"action_type": "click"}
+                        ],
+                        "actions_total_timeout_ms": 30000
+                    },
+                    "invocation": {
+                        "invocation_source": "nl_user"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_extract_actions_timeout_over_limit",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-extract-actions-timeout",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-extract-actions-timeout"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-extract-timeout-request-redacted.json",
+                    "redacted_response_ref": "api/bad-extract-timeout-response-redacted.json",
+                    "web_operation": "extract",
+                    "tool_id": "webextract",
+                    "operation_input": {
+                        "web_operation": "extract",
+                        "tool_id": "webextract",
+                        "url": "https://example.com/form",
+                        "actions": [
+                            {"action_type": "fill_form", "form_values": {"query": "fixture"}}
+                        ],
+                        "actions_total_timeout_ms": 30001
+                    },
+                    "invocation": {
+                        "invocation_source": "nl_user"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_crawl_webmap_mismatch",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-crawl-map",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-crawl-map"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-crawl-map-request-redacted.json",
+                    "redacted_response_ref": "api/bad-crawl-map-response-redacted.json",
+                    "web_operation": "crawl",
+                    "tool_id": "webmap",
+                    "operation_input": {
+                        "web_operation": "crawl",
+                        "tool_id": "webmap",
+                        "root_url": "https://example.com"
+                    },
+                    "invocation": {
+                        "invocation_source": "agent_initiated"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_research_deep_mode_mismatch",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-research-deep",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-research-deep"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-research-deep-request-redacted.json",
+                    "redacted_response_ref": "api/bad-research-deep-response-redacted.json",
+                    "web_operation": "research",
+                    "tool_id": "webresearch",
+                    "operation_input": {
+                        "web_operation": "research",
+                        "tool_id": "webresearch",
+                        "task": "standard research cannot claim deep mode",
+                        "research_mode": "deep"
+                    },
+                    "invocation": {
+                        "invocation_source": "agent_initiated"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_research_missing_read_backed_citation",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-research-missing-read-backed-citation",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-research-missing-read-backed-citation"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-research-missing-read-request-redacted.json",
+                    "redacted_response_ref": "api/bad-research-missing-read-response-redacted.json",
+                    "web_operation": "research",
+                    "tool_id": "webresearch",
+                    "operation_input": {
+                        "web_operation": "research",
+                        "tool_id": "webresearch",
+                        "task": "research must cite read or extract backed sources",
+                        "research_mode": "standard"
+                    },
+                    "invocation": {
+                        "invocation_source": "agent_initiated",
+                        "agent_reason": "fixture should fail without read-backed citations"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false,
+                    "sources_ref": "sources:bad-research",
+                    "answer_summary_ref": "summaries/bad-research.md",
+                    "citation_refs": [
+                        "citation:snippet-only"
+                    ]
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_prd_missing_source_evidence",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-prd-source-evidence",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-prd-source-evidence"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-prd-request-redacted.json",
+                    "redacted_response_ref": "api/bad-prd-response-redacted.json",
+                    "web_operation": "crawl",
+                    "tool_id": "webcrawl",
+                    "operation_input": {
+                        "web_operation": "crawl",
+                        "tool_id": "webcrawl",
+                        "root_url": "https://example.com/docs"
+                    },
+                    "invocation": {
+                        "invocation_source": "prd",
+                        "agent_reason": "fixture PRD source intake should require ledger or plan source evidence",
+                        "source_prd_id": "prd-bad-001"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false,
+                    "sources_ref": "sources:bad-prd-crawl"
+                }
+            }
+        },
+        {
+            "case_id": "api_web_call_planning_missing_source_evidence",
+            "artifact_type": "api_web_call",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.api_web_call.schema.v1",
+                "artifact_id": "bad-api-web-call-planning-source-evidence",
+                "artifact_type": "api_web_call",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "debug_retained",
+                "routing_refs": [
+                    "artifact:bad-api-web-call-planning-source-evidence"
+                ],
+                "type_payload": {
+                    "source_system": "pm.web_operation",
+                    "redacted_request_ref": "api/bad-planning-request-redacted.json",
+                    "redacted_response_ref": "api/bad-planning-response-redacted.json",
+                    "web_operation": "map",
+                    "tool_id": "webmap",
+                    "operation_input": {
+                        "web_operation": "map",
+                        "tool_id": "webmap",
+                        "root_url": "https://example.com"
+                    },
+                    "invocation": {
+                        "invocation_source": "planning_wizard",
+                        "agent_reason": "fixture Planning Wizard source intake should require source evidence",
+                        "source_planning_run_id": "planning-bad-001"
+                    },
+                    "success": true,
+                    "provider_fallback_occurred": false,
+                    "map_ref": "maps/bad-planning-map.json"
+                }
+            }
+        },
+        {
+            "case_id": "browser_recording_legacy_action_type_without_session",
+            "artifact_type": "browser_recording",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.browser_recording.schema.v1",
+                "artifact_id": "bad-browser-recording-action",
+                "artifact_type": "browser_recording",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-browser-recording-action"
+                ],
+                "type_payload": {
+                    "browser_session_id": "browser-session-001",
+                    "invocation": {
+                        "invocation_source": "agent_initiated"
+                    },
+                    "session_class": "testing",
+                    "state": "active",
+                    "recording_ref": "recordings/session.webm",
+                    "actions": [
+                        {
+                            "action_type": "navigate",
+                            "invocation": {
+                                "invocation_source": "agent_initiated"
+                            },
+                            "success": true,
+                            "redaction_status": "not_needed",
+                            "created_at_utc": "2026-07-02T00:00:00Z"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "case_id": "browser_recording_agentic_invocation_missing_reason",
+            "artifact_type": "browser_recording",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.browser_recording.schema.v1",
+                "artifact_id": "bad-browser-recording-agent-reason",
+                "artifact_type": "browser_recording",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "healthy",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-browser-recording-agent-reason"
+                ],
+                "type_payload": {
+                    "browser_session_id": "browser-session-001",
+                    "invocation": {
+                        "invocation_source": "agent_initiated"
+                    },
+                    "session_class": "testing",
+                    "state": "active",
+                    "recording_ref": "recordings/session.webm",
+                    "actions": []
+                }
+            }
+        },
+        {
+            "case_id": "browser_recording_runtime_unavailable_missing_remediation",
+            "artifact_type": "browser_recording",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.browser_recording.schema.v1",
+                "artifact_id": "bad-browser-recording-unavailable",
+                "artifact_type": "browser_recording",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "degraded",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-browser-recording-unavailable"
+                ],
+                "type_payload": {
+                    "browser_session_id": "browser-session-unavailable-001",
+                    "invocation": {
+                        "invocation_source": "agent_initiated",
+                        "agent_reason": "fixture missing remediation should fail"
+                    },
+                    "session_class": "testing",
+                    "state": "runtime_unavailable",
+                    "recording_ref": "recordings/browser-unavailable.json",
+                    "runtime_state": {
+                        "runtime_state": "runtime_unavailable",
+                        "requested_runtime": "pm_native_browser",
+                        "effective_runtime": "none",
+                        "playwright_cdp_role": "fallback_only"
+                    },
+                    "actions": []
+                }
+            }
+        },
+        {
+            "case_id": "browser_recording_runtime_unavailable_missing_runtime_state",
+            "artifact_type": "browser_recording",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.browser_recording.schema.v1",
+                "artifact_id": "bad-browser-recording-unavailable-missing-runtime-state",
+                "artifact_type": "browser_recording",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "degraded",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-browser-recording-unavailable-missing-runtime-state"
+                ],
+                "type_payload": {
+                    "browser_session_id": "browser-session-unavailable-missing-runtime-state",
+                    "invocation": {
+                        "invocation_source": "agent_initiated",
+                        "agent_reason": "fixture unavailable state must carry runtime_state"
+                    },
+                    "session_class": "testing",
+                    "state": "runtime_unavailable",
+                    "show_when_possible": true,
+                    "open_watch_state": "unavailable",
+                    "recording_ref": "recordings/browser-unavailable.json",
+                    "actions": [],
+                    "artifact_refs": [
+                        "artifact:browser-runtime-unavailable-missing-runtime-state"
+                    ],
+                    "redaction_profile_id": "redaction-profile-default"
+                }
+            }
+        },
+        {
+            "case_id": "browser_recording_fallback_open_missing_route",
+            "artifact_type": "browser_recording",
+            "payload": {
+                "schema_id": "pm.runtime_artifact.browser_recording.schema.v1",
+                "artifact_id": "bad-browser-recording-fallback-open-missing-route",
+                "artifact_type": "browser_recording",
+                "project_id": "fixture-project",
+                "run_id": "run-001",
+                "attempt_id": "attempt-001",
+                "created_at_utc": "2026-07-02T00:00:00Z",
+                "projection_freshness": "current",
+                "projection_health": "degraded",
+                "retention_class": "project",
+                "routing_refs": [
+                    "artifact:bad-browser-recording-fallback-open-missing-route"
+                ],
+                "type_payload": {
+                    "browser_session_id": "browser-session-fallback-open-missing-route",
+                    "invocation": {
+                        "invocation_source": "agent_initiated",
+                        "agent_reason": "fixture fallback Open state must name the route"
+                    },
+                    "session_class": "testing",
+                    "state": "detached",
+                    "show_when_possible": true,
+                    "open_watch_state": "fallback_open_external",
+                    "recording_ref": "recordings/browser-fallback.json",
+                    "runtime_state": {
+                        "runtime_state": "degraded",
+                        "requested_runtime": "pm_native_browser",
+                        "effective_runtime": "external_browser",
+                        "playwright_cdp_role": "fallback_only"
+                    },
+                    "actions": [],
+                    "artifact_refs": [
+                        "artifact:browser-fallback-open"
+                    ],
+                    "redaction_profile_id": "redaction-profile-default"
                 }
             }
         }

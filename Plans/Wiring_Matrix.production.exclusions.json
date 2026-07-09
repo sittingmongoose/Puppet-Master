@@ -4,6 +4,8 @@
     "cmd.actions",
     "cmd.alert",
     "cmd.browser",
+    "cmd.browser.evaluate",
+    "cmd.browser.run_code",
     "cmd.chat",
     "cmd.chat.close_thread_usage",
     "cmd.chat.focus_thread_usage",
@@ -28,7 +30,8 @@
     "cmd.source_control",
     "cmd.theme",
     "cmd.web",
+    "cmd.web.*",
     "cmd.widget"
   ],
-  "reason": "Excluded from production wiring JSON because token is a parser artifact, invalid historical alias, generic family root, or compatibility-only namespace root. Concrete production commands remain in Wiring_Matrix.production.json and are not excluded by broad prefix tokens."
+  "reason": "Excluded from production wiring JSON because token is a parser artifact, invalid historical alias, generic family root, or compatibility-only namespace root. Web capability production commands are canonical under cmd.chat.web.*; cmd.web.* rows are compatibility-only and must not hide active chat, NL, palette, or agent-routed web capability."
 }

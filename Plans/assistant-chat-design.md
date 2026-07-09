@@ -333,7 +333,7 @@ Core rules:
 - Bare `/web` is /help-only autocomplete and dispatches `cmd.chat.web.help`; executable web intents must resolve to an explicit subcommand and must not create slash-only or search-only event families.
 - Legacy `/what` lineage is compatibility/help-only and may surface usage or autocomplete guidance, but it does not bypass the explicit `/web` subcommand grammar.
 - `/web` UI-command schemas mirror the normalized web inputs: search uses `{ query }`, fetch/extract use `{ url }`, research uses `{ task }`, and crawl/map use `{ root_url, max_pages?, max_depth?, same_origin_only? }` with `root_url`, `max_pages`, `max_depth`, and `same_origin_only` surfaced as command-help fields.
-- Direct slash execution uses the concrete grammar `/web search <query>`, `/web extract <url>`, `/web research <task>`, `/web crawl <url>`, and `/web map <url>`; `<query>` and `<task>` consume the remaining text verbatim, `<url>` / `URL` normalize to an absolute URL before dispatch, and parse failure shows usage help rather than guessing.
+- Direct slash execution uses the concrete grammar `/web search <query>`, `/web fetch <url>`, `/web extract <url>`, `/web research <task>`, `/web crawl <url>`, and `/web map <url>`; `<query>` and `<task>` consume the remaining text verbatim, `<url>` / `URL` normalize to an absolute URL before dispatch, and parse failure shows usage help rather than guessing.
 - Assistant Chat command-routing consumes `Plans/UI_Command_Catalog.md` for `/web`, `/skill`, reserved built-ins, and source obligation carry-through for `obl-037`, `obl-046`, `obl-047`, `obl-048`, and `obl-051`; stale local summaries are `/retire` lineage until the command-catalog owner promotes an active command ID.
 
 Fields:
@@ -1446,7 +1446,7 @@ Core rules:
 - The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; same URL change tracking requires a previous fetch in cache/storage and returns `change_status: "new" | "same" | "changed" | "removed"` in output rather than disappearing silently.
 - Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.
 - The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.
-- Denied web-operation activity preserves `tool.denied.payload.meta` with `web_operation`, `web_input`, `denial_reason_code`, `denial_source` (`policy` | `permission` | `mode` | `user`), `suggested_recovery_action`, requested adapter/projection fields, `allowed_action_ids[]`, and `headless_denied` when present.
+- Denied web-operation activity preserves `tool.denied.payload.meta` with `web_operation`, canonical `operation_input`, derived `operation_input_preview?`, `invocation_source`, optional `agent_reason`, source IDs when present, `denial_reason_code`, `denial_source` (`policy` | `permission` | `mode` | `user`), `suggested_recovery_action`, requested adapter/projection fields, `allowed_action_ids[]`, and `headless_denied` when present. Legacy `web_input` and `blocked_reason_code` child payload aliases normalize to `operation_input` and `denial_reason_code` before chat renders them.
 - The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
 - Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
 - All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
@@ -1457,6 +1457,7 @@ Core rules:
 - Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
 - `web_operation = "read"` is the semantic audit value for site/page reading while the underlying tool invocation remains `webfetch`; consumers must map between `read` and `webfetch` rather than treating them as separate operations.
 - Expanded web activity-card details show operation input, requested/effective runtime delta when relevant, support tier, fallback disclosure when relevant, source count or scope summary, and warning or error text.
+- Web operation cards include operation/progress, denied, partial, fallback, refs/sources, settings-health/cost/credentials, approval, session, and batch variants. Each card names the command/tool ID actually dispatched, shows slash/palette/NL/agent provenance when useful, and keeps autonomous agent capability visible even when the user did not type a slash command.
 - Collapsed web activity labels use the specific operation label: `Searching Web: <query>`, `Fetching Site: <url> (via <provider>)`, `Reading Site: <url>`, `Extracting Site: <url>`, `Researching Web: <task>`, `Crawling Site: <url>`, and `Mapping Site: <url>`.
 - `Reading Site: <url>` is reserved EXCLUSIVELY for the PM-native Site Reader path; provider-routed or provider-delegated fetch uses `Fetching Site: <url> (via <provider>)` and must not reuse the reserved native Site Reader identity.
 - Provenance badges are locked to the concrete evidence family when known: `search snippet`, `site extract`, `site reader`, `research synthesis`, `crawl result`, or `map result`.
@@ -1504,7 +1505,8 @@ Fields:
 - projection_health
 - tool.denied.payload.meta
 - web_operation
-- web_input
+- operation_input
+- operation_input_preview
 
 Permission rules:
 - single confirmation prompt showing all unique domains in the batch
@@ -4372,13 +4374,13 @@ plan_unit_id: ACD-019
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: Natural-language web intents and slash commands use the same dispatcher. Site or page reading intents route to webfetch rather than websearch or provider extract.
+canonical_text: Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents use the same dispatcher. Site or page reading intents route to webfetch rather than websearch or provider extract.
 gui_related: true
 gui_classification_reason: Dispatcher parity affects user-visible command routing, help, and activity behavior.
 depends_on: [ACD-015]
 unblocks: []
 acceptance_criteria:
-  - Natural-language and slash-command web intents resolve through the same dispatcher.
+  - Slash, palette, natural-language, assistant-initiated, subagent, Goal Runtime, PRD Builder, and Planning Wizard web intents resolve through the same dispatcher.
   - Reading intents such as read this URL and fetch this page resolve to webfetch, not websearch.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -8949,10 +8951,11 @@ status: accepted
 owner_doc: Plans/assistant-chat-design.md
 canonical_text: >-
   Denied web-operation activity preserves `tool.denied.payload.meta` with
-  `web_operation`, `web_input`, `denial_reason_code`, `denial_source`,
-  `suggested_recovery_action`, requested adapter/projection fields,
-  `allowed_action_ids[]`, and `headless_denied`; web error applicability stays
-  aligned with canonical provider-to-PM error mapping.
+  `web_operation`, canonical `operation_input`, `operation_input_preview?`,
+  `invocation_source`, optional `agent_reason`, `denial_reason_code`,
+  `denial_source`, `suggested_recovery_action`, requested adapter/projection
+  fields, `allowed_action_ids[]`, and `headless_denied`; web error
+  applicability stays aligned with canonical provider-to-PM error mapping.
 gui_related: false
 gui_classification_reason: Denied payload metadata and error taxonomy are contract/runtime behavior.
 depends_on: [ACD-109, ACD-107]
@@ -8979,7 +8982,9 @@ source_lineage:
 preserved_exact_tokens:
   - "tool.denied.payload.meta"
   - "web_operation"
-  - "web_input"
+  - "operation_input"
+  - "operation_input_preview"
+  - "invocation_source"
   - "denial_reason_code"
   - "denial_source"
   - "suggested_recovery_action"
@@ -8987,6 +8992,8 @@ preserved_exact_tokens:
   - "headless_denied"
   - "adapter_unavailable"
   - "unsupported_operation"
+compatibility_only_notes:
+  - "Legacy `web_input` normalizes to `operation_input` before chat renders denied web-operation activity."
   - "content_blocked"
   - "content_not_found"
   - "unsupported_source"
@@ -23576,7 +23583,7 @@ gui_classification_reason: Defines visible chat context, usage, compact, detail-
 depends_on: [ACD-092, ACD-410, UF-085, UF-086, UF-087, RAP-043]
 unblocks: []
 acceptance_criteria:
-  - Context circle hover displays provider-authoritative, estimated, stale, partial, unknown, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state and source_confidence, not chat-local math.
+  - Context circle hover displays provider authority, estimated cost or value state, stale projection state, partial settlement state, unknown confidence or value state, hidden_byok, hidden_subscription, disabled, and not_exposed states using UsageRecord value_state, projection state, settlement_status, cost_status, source_class, source_authority, and source_confidence values high, medium, low, or unknown, not chat-local math.
   - "`More Details` opens the editor-tab Context Detail Pane through route/open and preserves usage_event_ref plus attempt_id, provider_attempt_ref, node_id, tool_call_id, trace_ref, receipt refs, and raw_payload_ref when present."
   - "`Compact Now` dispatches only `cmd.chat.compact_context`, preserves the context epoch, and does not mutate or recompute historical UsageRecord totals."
   - Context Detail Pane displays cache_read, cache_write, cache_write_1h or cache_write_ttl, output_total, output_visible, reasoning/thoughts, provider_total, context_estimate, counting_semantics, settlement_status, and projection_freshness when present.

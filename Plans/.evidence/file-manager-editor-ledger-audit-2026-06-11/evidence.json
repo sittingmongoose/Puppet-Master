@@ -13,22 +13,22 @@
     {
       "note": "Verifier file enumeration now honors git tracked/non-ignored files before fallback scanning.",
       "path": "scripts/pm-plans-verify.py",
-      "sha256": "ef64a69415f0bea11569d932cccd11c54c9c1bf1f538a0c8330ac5c9bbac117c"
+      "sha256": "91432123a9d6bd61c82b0713c88f19d265903903daae169bc9b218ea8ac15a94"
     },
     {
       "note": "Spec Lock hashes refreshed after support and owner-doc changes.",
       "path": "Plans/Spec_Lock.json",
-      "sha256": "05c14cf736262b9c07ab1f23c048dc6740d14c1919e1788d86f7bb413b28abf0"
+      "sha256": "dfe5a146e4cb8124281effd727c53bb72e644dd06d3b6986e674fa6ab2efcd3f"
     },
     {
       "note": "Schema-valid auto-decision row for the audit result.",
       "path": "Plans/auto_decisions.jsonl",
-      "sha256": "797794d7ae32cc1b6df7cd603d9d400e68d3dc3aeac7625f75a4b06ff32e20ac"
+      "sha256": "4e68dee324561ae79842570e010d9aa0052e5e9edce1a10edba0b19f861a78ca"
     },
     {
       "note": "Shard regeneration report after Architecture_Invariants.md changed.",
       "path": "Plans/.evidence/plan-sharding-2026-06-09/reports/shard_report.json",
-      "sha256": "4ddd47cfd7d5be2a9dc046459df3cf5f41f2c03e053c57ac40f574ff41aad1bb"
+      "sha256": "dfbddbe68eff0045c51be1ff0f8e251eddf2037906abd6f59922b6af93a62f14"
     },
     {
       "note": "P6 File Manager/Editor ledger metadata closed as audit-only source-lineage memory.",
@@ -571,6 +571,18 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-web-capability-contracts",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-contract-drift",
       "exit_code": 0
     }
   ],

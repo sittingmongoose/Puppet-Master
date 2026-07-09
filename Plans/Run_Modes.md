@@ -479,6 +479,7 @@ Rules:
 - read-only delegated child runs remain allowed when they stay within the parent mode ceiling
 - read-only planning tools such as `todoread`, `todowrite`, limited read-only `task`, read/navigation-only `lsp`, and external-read `/web` family operations go through the normal permission stack in Plan mode rather than being auto-denied as a family
 - `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` remain ask-gated rather than auto-denied
+- Ask, Plan, and Deep Plan may self-initiate read-only web, Site Reader, and browser-evidence actions when current, external, URL, visual, dynamic-page, docs/issues/PR, compare, research, or deep-research evidence matters. Strict no-network, admin policy, private-host, robots, or mode-specific denial still blocks execution, but the block is rendered as a visible denied/unavailable card with recovery actions rather than silently hiding the capability.
 - Deep Plan's question-driven loop feeds the same normalized TODO projection used by execution
 ### 9.3 `regular`
 

@@ -1,0 +1,373 @@
+{
+  "schema_id": "pm.web_provider_projection_fixtures.v1",
+  "status": "canonical_fixture_no_secrets",
+  "source_registry_ref": "Plans/web_provider_adapter_registry.seed.json",
+  "projection_fixtures": [
+    {
+      "projection_id": "mcp_projection.firecrawl.claude",
+      "target_runtime": "claude_code_cli",
+      "target_config_path": ".claude/mcp.json",
+      "target_surface": "mcp_config",
+      "config_key_path": "mcpServers.firecrawl",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["firecrawl"],
+      "capability_refs": ["webreg.firecrawl.direct_api.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "secret_refs_only",
+      "credential_refs": ["secret_ref:provider.firecrawl.default"],
+      "health_refs": ["health:web.firecrawl"],
+      "egress_policy_refs": ["egress:web.provider_public_only"],
+      "projected_config": {
+        "mcpServers": {
+          "firecrawl": {
+            "ownership": "pm_projected",
+            "enabled_state": "unconfigured_until_secret_available",
+            "transport_kind": "local",
+            "command_ref": "provider_mcp.firecrawl.command",
+            "args_ref": "provider_mcp.firecrawl.args",
+            "env": {
+              "FIRECRAWL_API_KEY": "secret_ref:provider.firecrawl.default"
+            },
+            "capability_refs": ["webreg.firecrawl.direct_api.v1"],
+            "health_ref": "health:web.firecrawl",
+            "egress_policy_ref": "egress:web.provider_public_only"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "mcp_projection.jina.claude",
+      "target_runtime": "claude_code_cli",
+      "target_config_path": ".claude/mcp.json",
+      "target_surface": "mcp_config",
+      "config_key_path": "mcpServers.jina",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["jina"],
+      "capability_refs": ["webreg.jina.direct_api.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "secret_refs_only",
+      "credential_refs": ["secret_ref:provider.jina.default"],
+      "health_refs": ["health:web.jina"],
+      "egress_policy_refs": ["egress:web.provider_public_only"],
+      "projected_config": {
+        "mcpServers": {
+          "jina": {
+            "ownership": "pm_projected",
+            "enabled_state": "unconfigured_until_secret_available",
+            "transport_kind": "local",
+            "command_ref": "provider_mcp.jina.command",
+            "args_ref": "provider_mcp.jina.args",
+            "env": {
+              "JINA_API_KEY": "secret_ref:provider.jina.default"
+            },
+            "capability_refs": ["webreg.jina.direct_api.v1"],
+            "health_ref": "health:web.jina",
+            "egress_policy_ref": "egress:web.provider_public_only"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "mcp_projection.exa.claude",
+      "target_runtime": "claude_code_cli",
+      "target_config_path": ".claude/mcp.json",
+      "target_surface": "mcp_config",
+      "config_key_path": "mcpServers.exa",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["exa"],
+      "capability_refs": ["webreg.exa.direct_api.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "secret_refs_only",
+      "credential_refs": ["secret_ref:provider.exa.default"],
+      "health_refs": ["health:web.exa"],
+      "egress_policy_refs": ["egress:web.provider_public_only"],
+      "projected_config": {
+        "mcpServers": {
+          "exa": {
+            "ownership": "pm_projected",
+            "enabled_state": "unconfigured_until_secret_available",
+            "transport_kind": "local",
+            "command_ref": "provider_mcp.exa.command",
+            "args_ref": "provider_mcp.exa.args",
+            "env": {
+              "EXA_API_KEY": "secret_ref:provider.exa.default"
+            },
+            "capability_refs": ["webreg.exa.direct_api.v1"],
+            "health_ref": "health:web.exa",
+            "egress_policy_ref": "egress:web.provider_public_only"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "mcp_projection.tavily.claude",
+      "target_runtime": "claude_code_cli",
+      "target_config_path": ".claude/mcp.json",
+      "target_surface": "mcp_config",
+      "config_key_path": "mcpServers.tavily",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["tavily"],
+      "capability_refs": ["webreg.tavily.direct_api.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "secret_refs_only",
+      "credential_refs": ["secret_ref:provider.tavily.default"],
+      "health_refs": ["health:web.tavily"],
+      "egress_policy_refs": ["egress:web.provider_public_only"],
+      "projected_config": {
+        "mcpServers": {
+          "tavily": {
+            "ownership": "pm_projected",
+            "enabled_state": "unconfigured_until_secret_available",
+            "transport_kind": "local",
+            "command_ref": "provider_mcp.tavily.command",
+            "args_ref": "provider_mcp.tavily.args",
+            "env": {
+              "TAVILY_API_KEY": "secret_ref:provider.tavily.default"
+            },
+            "capability_refs": ["webreg.tavily.direct_api.v1"],
+            "health_ref": "health:web.tavily",
+            "egress_policy_ref": "egress:web.provider_public_only"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "mcp_projection.firecrawl.cursor",
+      "target_runtime": "cursor_cli",
+      "target_config_path": ".cursor/mcp.json",
+      "target_surface": "mcp_config",
+      "config_key_path": "mcpServers.firecrawl",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["firecrawl"],
+      "capability_refs": ["webreg.firecrawl.direct_api.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "secret_refs_only",
+      "credential_refs": ["secret_ref:provider.firecrawl.default"],
+      "health_refs": ["health:web.firecrawl"],
+      "egress_policy_refs": ["egress:web.provider_public_only"],
+      "projected_config": {
+        "mcpServers": {
+          "firecrawl": {
+            "ownership": "pm_projected",
+            "enabled_state": "unconfigured_until_secret_available",
+            "transport_kind": "local",
+            "command_ref": "provider_mcp.firecrawl.command",
+            "args_ref": "provider_mcp.firecrawl.args",
+            "env": {
+              "FIRECRAWL_API_KEY": "secret_ref:provider.firecrawl.default"
+            },
+            "capability_refs": ["webreg.firecrawl.direct_api.v1"],
+            "health_ref": "health:web.firecrawl",
+            "egress_policy_ref": "egress:web.provider_public_only"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "mcp_projection.exa.cursor",
+      "target_runtime": "cursor_cli",
+      "target_config_path": ".cursor/mcp.json",
+      "target_surface": "mcp_config",
+      "config_key_path": "mcpServers.exa",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["exa"],
+      "capability_refs": ["webreg.exa.direct_api.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "secret_refs_only",
+      "credential_refs": ["secret_ref:provider.exa.default"],
+      "health_refs": ["health:web.exa"],
+      "egress_policy_refs": ["egress:web.provider_public_only"],
+      "projected_config": {
+        "mcpServers": {
+          "exa": {
+            "ownership": "pm_projected",
+            "enabled_state": "unconfigured_until_secret_available",
+            "transport_kind": "local",
+            "command_ref": "provider_mcp.exa.command",
+            "args_ref": "provider_mcp.exa.args",
+            "env": {
+              "EXA_API_KEY": "secret_ref:provider.exa.default"
+            },
+            "capability_refs": ["webreg.exa.direct_api.v1"],
+            "health_ref": "health:web.exa",
+            "egress_policy_ref": "egress:web.provider_public_only"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "mcp_projection.tavily.cursor",
+      "target_runtime": "cursor_cli",
+      "target_config_path": ".cursor/mcp.json",
+      "target_surface": "mcp_config",
+      "config_key_path": "mcpServers.tavily",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["tavily"],
+      "capability_refs": ["webreg.tavily.direct_api.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "secret_refs_only",
+      "credential_refs": ["secret_ref:provider.tavily.default"],
+      "health_refs": ["health:web.tavily"],
+      "egress_policy_refs": ["egress:web.provider_public_only"],
+      "projected_config": {
+        "mcpServers": {
+          "tavily": {
+            "ownership": "pm_projected",
+            "enabled_state": "unconfigured_until_secret_available",
+            "transport_kind": "local",
+            "command_ref": "provider_mcp.tavily.command",
+            "args_ref": "provider_mcp.tavily.args",
+            "env": {
+              "TAVILY_API_KEY": "secret_ref:provider.tavily.default"
+            },
+            "capability_refs": ["webreg.tavily.direct_api.v1"],
+            "health_ref": "health:web.tavily",
+            "egress_policy_ref": "egress:web.provider_public_only"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "mcp_projection.jina.cursor",
+      "target_runtime": "cursor_cli",
+      "target_config_path": ".cursor/mcp.json",
+      "target_surface": "mcp_config",
+      "config_key_path": "mcpServers.jina",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["jina"],
+      "capability_refs": ["webreg.jina.direct_api.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "secret_refs_only",
+      "credential_refs": ["secret_ref:provider.jina.default"],
+      "health_refs": ["health:web.jina"],
+      "egress_policy_refs": ["egress:web.provider_public_only"],
+      "projected_config": {
+        "mcpServers": {
+          "jina": {
+            "ownership": "pm_projected",
+            "enabled_state": "unconfigured_until_secret_available",
+            "transport_kind": "local",
+            "command_ref": "provider_mcp.jina.command",
+            "args_ref": "provider_mcp.jina.args",
+            "env": {
+              "JINA_API_KEY": "secret_ref:provider.jina.default"
+            },
+            "capability_refs": ["webreg.jina.direct_api.v1"],
+            "health_ref": "health:web.jina",
+            "egress_policy_ref": "egress:web.provider_public_only"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "mcp_projection.pm_site_reader.codex",
+      "target_runtime": "codex",
+      "target_config_path": ".codex/config.toml",
+      "target_surface": "codex_config",
+      "config_key_path": "pm_native_web",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["pm_native"],
+      "capability_refs": ["webreg.pm_site_reader.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "no_secrets_required",
+      "health_refs": ["health:web.pm_site_reader"],
+      "egress_policy_refs": ["egress:web.public_http_only"],
+      "projected_config": {
+        "pm_native_web": {
+          "ownership": "pm_projected",
+          "enabled_state": "enabled_when_runtime_available",
+          "runtime_ref": "pm.site_reader",
+          "capability_refs": ["webreg.pm_site_reader.v1"],
+          "health_ref": "health:web.pm_site_reader",
+          "egress_policy_ref": "egress:web.public_http_only"
+        }
+      }
+    },
+    {
+      "projection_id": "model_native_projection.openai.codex",
+      "target_runtime": "codex",
+      "target_config_path": ".codex/config.toml",
+      "target_surface": "codex_config",
+      "config_key_path": "model_native_web.openai",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["openai"],
+      "capability_refs": ["webreg.openai.model_native.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "external_managed",
+      "credential_refs": [],
+      "health_refs": ["health:web.openai_model_native"],
+      "egress_policy_refs": ["egress:web.model_native"],
+      "projected_config": {
+        "model_native_web": {
+          "openai": {
+            "ownership": "pm_projected",
+            "enabled_state": "configured_by_selected_account",
+            "account_ref": "provider_account:openai.selected",
+            "capability_refs": ["webreg.openai.model_native.v1"],
+            "health_ref": "health:web.openai_model_native",
+            "egress_policy_ref": "egress:web.model_native"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "model_native_projection.anthropic.claude",
+      "target_runtime": "claude_code_cli",
+      "target_config_path": ".claude/model-native-web.json",
+      "target_surface": "model_native",
+      "config_key_path": "model_native_web.anthropic",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["anthropic"],
+      "capability_refs": ["webreg.anthropic.model_native.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "external_managed",
+      "credential_refs": [],
+      "health_refs": ["health:web.anthropic_model_native"],
+      "egress_policy_refs": ["egress:web.model_native"],
+      "projected_config": {
+        "model_native_web": {
+          "anthropic": {
+            "ownership": "pm_projected",
+            "enabled_state": "configured_by_selected_account",
+            "account_ref": "provider_account:anthropic.selected",
+            "capability_refs": ["webreg.anthropic.model_native.v1"],
+            "health_ref": "health:web.anthropic_model_native",
+            "egress_policy_ref": "egress:web.model_native"
+          }
+        }
+      }
+    },
+    {
+      "projection_id": "directapi_projection.zai_coding_plan.codex",
+      "target_runtime": "codex",
+      "target_config_path": ".codex/config.toml",
+      "target_surface": "codex_config",
+      "config_key_path": "provider_projection.zai_coding_plan",
+      "projection_state": "generated_fixture",
+      "provider_ids": ["zai_coding_plan"],
+      "capability_refs": ["webreg.zai_coding_plan.directapi_projection.v1"],
+      "no_secret_serialization": true,
+      "credential_binding": "external_managed",
+      "credential_refs": [],
+      "health_refs": ["health:web.zai_coding_plan"],
+      "egress_policy_refs": ["egress:web.public_http_only"],
+      "projected_config": {
+        "provider_projection": {
+          "zai_coding_plan": {
+            "ownership": "pm_projected",
+            "enabled_state": "configured_by_selected_account",
+            "account_ref": "provider_account:zai_coding_plan.selected",
+            "capability_refs": ["webreg.zai_coding_plan.directapi_projection.v1"],
+            "health_ref": "health:web.zai_coding_plan",
+            "egress_policy_ref": "egress:web.public_http_only"
+          }
+        }
+      }
+    }
+  ],
+  "negative_constraints": [
+    "Projection fixtures are generator targets and must not serialize raw API keys, OAuth tokens, cookies, bearer headers, local machine paths, or decrypted env values.",
+    "Workspace-local .claude, .cursor, and .codex files are projection outputs or profile adapters, not the PM provider registry source of truth.",
+    "A failed or unconfigured provider-facing projection does not erase PM-native Site Reader capability or direct/model-native registry rows."
+  ]
+}

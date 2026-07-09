@@ -1352,7 +1352,7 @@ Common web payloads carry `source_refs[]`, `citation_refs[]`, `provenance_refs[]
 
 `result_quality_hint` is an optional common web output field with exact values `search_snippets_only`, `extracted_pages`, `site_reader_pages`, and `research_synthesis`. It describes the evidence depth behind the returned result so consumers can distinguish snippet-only search results, provider-extracted page bodies, PM Site Reader page reads, and synthesized multi-source research.
 
-`web_input` is a structured object containing the normalized request/input facts used for routing, audit, replay, and provenance joins; it is not a preview string and must not be flattened into display text. Web result payloads also carry `provenance_badge?: string`, with the canonical underscore values `site_reader`, `search_snippet`, `site_extract`, `research_synthesis`, `crawl_result`, and `map_result`; `provider_scrape` is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization and must be marked as such wherever a narrowed locked set is required. Narrowed TypeScript-style consumers may render the owner-owned subset as `provenance_badge?: 'site_reader' | 'provider_scrape'` only when they also preserve that proposed-extension caveat. Underscore values are required for code-friendliness and stable joins across contracts, storage, and web activity displays.
+`operation_input` is the structured object containing normalized web request/input facts used for routing, audit, replay, and provenance joins; it is not a preview string and must not be flattened into display text. Legacy `web_input` normalizes to `operation_input` at ingress and remains compatibility/source-lineage only. Web result payloads also carry `provenance_badge?: string`, with the canonical underscore values `site_reader`, `search_snippet`, `site_extract`, `research_synthesis`, `crawl_result`, and `map_result`; `provider_scrape` is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization and must be marked as such wherever a narrowed locked set is required. Narrowed TypeScript-style consumers may render the owner-owned subset as `provenance_badge?: 'site_reader' | 'provider_scrape'` only when they also preserve that proposed-extension caveat. Underscore values are required for code-friendliness and stable joins across contracts, storage, and web activity displays.
 
 Prompt-based web action payloads use `prompt: string` for natural-language browser/research instructions, keep the action path agent-friendly, and record provider cost dimensions such as credits per `/min` or `/clicks/extracts` when the provider reports them.
 
@@ -1374,11 +1374,11 @@ Subagents MUST NOT invoke the `question` tool to address users directly; they es
 
 Web operations MUST use the existing `tool.invoked` and `tool.denied` event families. `tool.invoked` records successful or attempted-completed web operations; `tool.denied` records policy/user-denied web operations. The `web.operation` / `web.operation.*` vocabulary is reserved for payload classification only; creating a parallel `web.operation.*` seglog event family is an explicit prohibition unless a future analytics contract explicitly introduces one. Web-specific fields live under `payload.meta` so tool, denial, usage, and audit joins remain consistent.
 
-For `tool.invoked.payload.meta`, common web fields are `web_operation`, `web_input_preview`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `result_quality_hint?`, `warnings_count?: number`, and `error_code?: string` when `success = false`. Result-shape hints by operation remain lightweight: `websearch` may include `query_preview` and `results_count`; `webextract` may include `url`, `content_format?`, and `content_length_hint?`; `webresearch` may include `task_preview`, `sources_used_count?`, and `answer_summary_ref?`; `webcrawl` may include `root_url`, `pages_visited_count?`, `pages_returned_count?`, `max_pages?`, and `max_depth?`; `webmap` may include `root_url`, `nodes_count?`, `edges_count?`, `max_pages?`, and `max_depth?`.
+For `tool.invoked.payload.meta`, common web fields are `web_operation`, `tool_id`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source`, `agent_reason?`, source IDs when present, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `result_quality_hint?`, `warnings_count?: number`, and `error_code?: string` when `success = false`. Result-shape hints by operation remain lightweight: `websearch` may include `query_preview` and `results_count`; `webfetch`/semantic `read` may include `url`, `final_url?`, `status?`, `formats_returned?`, `content_ref?`, `page_representation_ref?`, `browser_session_id?`, `cache_state?`, `read_receipt_refs?`, and `citation_refs?`; `webextract` may include `url`, `content_format?`, `content_length_hint?`, `content_ref?`, `extract_receipt_ref?`, and `citation_refs?`; `webresearch` and `deep_research` may include `task_preview`, `research_run_ref?`, `sources_used_count?`, `read_receipt_refs?`, `citation_refs?`, `subagent_refs?`, `closure_state?`, and `answer_summary_ref?`; `webcrawl` may include `root_url`, `pages_visited_count?`, `pages_returned_count?`, `max_pages?`, and `max_depth?`; `webmap` may include `root_url`, `nodes_count?`, `edges_count?`, `max_pages?`, and `max_depth?`.
 
 For fallback caused by provider rate-limit or outage, `provider_fallback_summary?` records the failed provider, cause (`rate-limit` or `outage`), and next same-operation provider attempted. Audit wording must match the chat activity fallback disclosure rather than hiding the route behind `effective_adapter_id`.
 
-Web result and denial payloads use the same lightweight `/meta` shape. `tool.denied.payload.meta` for web operations may carry `web_operation?`, `web_input_preview?`, `requested_adapter_id?`, `projection_freshness?`, `projection_health?`, `blocked_reason_code?`, `allowed_action_ids[]?`, and `headless_denied?`. Operation-specific inline meta includes `task_preview`, `sources_used_count?`, and `answer_summary_ref?` for `webresearch`; `root_url`, `pages_visited_count?`, `pages_returned_count?`, `max_pages?`, and `max_depth?` for `webcrawl`; and `root_url`, `nodes_count?`, `edges_count?`, `max_pages?`, and `max_depth?` for `webmap`.
+Web result and denial payloads use the same lightweight `/meta` shape. `tool.denied.payload.meta` for web operations may carry `web_operation?`, `tool_id?`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source?`, `agent_reason?`, source IDs when present, `requested_adapter_id?`, `projection_freshness?`, `projection_health?`, `denial_reason_code?`, `allowed_action_ids[]?`, and `headless_denied?`. Legacy web child payload aliases `web_input`, `web_input_preview`, and `blocked_reason_code` normalize to `operation_input`, `operation_input_preview`, and `denial_reason_code`; only top-level runtime blocked payloads may keep the shared `blocked_reason_code`. Operation-specific inline meta includes URL/status/cache/read receipt refs for `webfetch`/semantic `read`; task preview, sources count, citation refs, closure state, and answer summary refs for `webresearch` and `deep_research`; `root_url`, `pages_visited_count?`, `pages_returned_count?`, `max_pages?`, and `max_depth?` for `webcrawl`; and `root_url`, `nodes_count?`, `edges_count?`, `max_pages?`, and `max_depth?` for `webmap`.
 
 Inline event/meta fields are short previews, counts, enum-like routing/provenance values, and stable error codes. Full extracted page bodies, long research synthesis notes, large source sets, crawl page inventories, and map graph payloads must move by ref or `/blob` rather than being duplicated into every event projection.
 
@@ -8009,7 +8009,7 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-### CV-105 - Web Input Quality And Provenance Badge Contract
+### CV-105 - Web Operation Input Quality And Provenance Badge Contract
 
 ```yaml
 plan_unit_id: CV-105
@@ -8017,7 +8017,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Web output preserves result_quality_hint, structured web_input, and
+  Web output preserves result_quality_hint, structured operation_input, and
   underscore provenance_badge values for stable joins across contracts, storage,
   and web activity displays, while provider_scrape remains a proposed extension
   caveat where narrowed locked sets are required.
@@ -8028,7 +8028,7 @@ depends_on: [CV-103]
 unblocks: [CV-112]
 acceptance_criteria:
   - result_quality_hint preserves search_snippets_only, extracted_pages, site_reader_pages, and research_synthesis.
-  - web_input remains a structured object for routing, audit, replay, and provenance joins.
+  - operation_input remains a structured object for routing, audit, replay, and provenance joins.
   - provenance_badge uses canonical underscore values for stable joins.
   - provider_scrape remains marked as a provider-specific proposed extension pending harmonization where narrowed locked sets are required.
 validation_surfaces:
@@ -8036,7 +8036,7 @@ validation_surfaces:
   - python3 scripts/pm-plan-index.py validate
 risk_class: web_provenance_badge_drift
 reasoning_tier: high
-context_scope: web_input_quality_provenance_badge
+context_scope: web_operation_input_quality_provenance_badge
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/storage-plan.md
@@ -8052,14 +8052,15 @@ preserved_exact_tokens:
   - "`extracted_pages`"
   - "`site_reader_pages`"
   - "`research_synthesis`"
-  - "`web_input`"
+  - "`operation_input`"
   - "`provenance_badge`"
   - "`site_reader`"
   - "`provider_scrape`"
 compatibility_only_notes:
+  - "Legacy `web_input` normalizes to `operation_input`."
   - "provider_scrape is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization."
 negative_constraints:
-  - "web_input is not a preview string and must not be flattened into display text."
+  - "operation_input is not a preview string and must not be flattened into display text."
 owner_hints:
   - Plans/Contracts_V0.md
 ```
@@ -8366,19 +8367,20 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: >-
-  Web operation payload.meta preserves invoked result hints and denial meta
-  fields as lightweight previews, counts, enum-like routing/provenance values,
-  and stable error codes for websearch, webextract, webresearch, webcrawl, and
-  webmap operations.
+  Web operation payload.meta preserves invoked result hints, operation_input
+  refs/previews, invocation provenance, and denial meta fields as lightweight
+  previews, counts, enum-like routing/provenance values, and stable error codes
+  for websearch, webfetch/read, webextract, webresearch/deep_research, webcrawl,
+  and webmap operations.
 gui_related: false
 gui_classification_reason: This unit defines event meta fields for web operations.
 split_recommended: true
 depends_on: [CV-105, CV-111]
 unblocks: [CV-113, CV-114]
 acceptance_criteria:
-  - tool.invoked.payload.meta preserves common web fields including web_operation, web_input_preview, support_tier, execution_path, adapter IDs, projection state, fallback flags, counts, quality hints, warnings, and error_code.
-  - Operation-specific hints are preserved for websearch, webextract, webresearch, webcrawl, and webmap.
-  - tool.denied.payload.meta preserves web operation, input preview, requested adapter, projection, blocked reason, allowed_action_ids[]?, and headless_denied?.
+  - tool.invoked.payload.meta preserves common web fields including web_operation, tool_id, operation_input_ref, operation_input_preview, invocation_source, support_tier, execution_path, adapter IDs, projection state, fallback flags, counts, quality hints, warnings, and error_code.
+  - Operation-specific hints are preserved for websearch, webfetch/read, webextract, webresearch/deep_research, webcrawl, and webmap.
+  - tool.denied.payload.meta preserves web operation, input preview, requested adapter, projection, denial_reason_code, allowed_action_ids[]?, and headless_denied?.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -8396,15 +8398,20 @@ source_lineage:
   - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0041
 preserved_exact_tokens:
   - "`web_operation`"
-  - "`web_input_preview`"
+  - "`operation_input_preview`"
+  - "`operation_input_ref`"
+  - "`invocation_source`"
   - "`support_tier`"
   - "`execution_path`"
   - "`projection_freshness?`"
   - "`provider_fallback_occurred`"
   - "`warnings_count?: number`"
-  - "`blocked_reason_code?`"
+  - "`denial_reason_code?`"
   - "`allowed_action_ids[]?`"
   - "`headless_denied?`"
+compatibility_only_notes:
+  - "`web_input` and `web_input_preview` normalize to `operation_input` and `operation_input_preview`."
+  - "Legacy web child payload `blocked_reason_code?` normalizes to `denial_reason_code?`."
 owner_hints:
   - Plans/Contracts_V0.md
 ```

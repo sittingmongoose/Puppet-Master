@@ -56,6 +56,8 @@ Task-tool delegation must honor per-target deny rules and must reject unsafe sel
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
 
+Subagents may self-initiate read-only web/search/fetch/extract/research/deep-research/crawl/map work only within the parent-granted child permission ceiling and only when delegated source reading, bounded crawl/map, dynamic-page visual state, iframe/form evidence, console/network diagnostics, or source currentness is material to the assignment. These calls route through the PM WebOperation/BrowserAction dispatcher with `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, or `BrowserAction/Site Reader`; each record carries `invocation_source = subagent`, required `agent_reason`, source_subagent_id lineage, permission/capability gates, visible operation cards, and `subagent_evidence_receipts`. Subagent web/browser evidence is advisory to the parent and must not create WorkNodes, NodeSeeds, runtime queues, implementation files, build tasks, hidden inter-agent channels, or permission escalation beyond the parent envelope.
+
 #### Task tool contract alignment
 
 Task and question escalation remain parent-owned. Subagents may request clarification only by escalating through the parent orchestrator; they do not address users directly, and task alignment follows the parent `/question` flow plus the child lifecycle contract instead of a child-local ask channel.

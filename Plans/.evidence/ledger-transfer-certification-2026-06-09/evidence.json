@@ -337,6 +337,26 @@
     {
       "cmd": "python3 scripts/pm-plans-verify.py validate-filesafe-security-policy",
       "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-web-capability-contracts",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-plan-migration",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-contract-drift",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
+      "exit_code": 0
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-usage-gui-fixtures",
+      "exit_code": 0
     }
   ],
   "contract_refs_satisfied": [

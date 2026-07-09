@@ -980,21 +980,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.add_full_screenshot_to_chat",
       "handler_location": "handlers::browser::add_full_screenshot_to_chat",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "runtime_artifact.created"
+      ],
       "acceptance_checks": [
         "cmd.browser.add_full_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_full_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_full_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.add_full_screenshot_to_chat must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.add_full_screenshot_to_chat must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.add_full_screenshot_to_chat must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.add_full_screenshot_to_chat must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.add_full_screenshot_to_chat; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_add_full_screenshot_to_chat.availability",
       "disabled_reason_projection": "state.commands.browser_add_full_screenshot_to_chat.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.add_full_screenshot_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.add_full_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "runtime_artifact.created",
           "cmd.browser.add_full_screenshot_to_chat.dispatch_receipt"
         ]
       },
@@ -1018,16 +1021,21 @@
         {
           "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_full_screenshot_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.add_full_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_full_screenshot_to_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.add_full_screenshot_to_chat emits expected event(s): runtime_artifact.created."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_full_screenshot_to_chat records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.add_full_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_add_screenshot_to_chat": {
@@ -1035,21 +1043,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.add_screenshot_to_chat",
       "handler_location": "handlers::browser::add_screenshot_to_chat",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "runtime_artifact.created"
+      ],
       "acceptance_checks": [
         "cmd.browser.add_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.add_screenshot_to_chat must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.add_screenshot_to_chat must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.add_screenshot_to_chat must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.add_screenshot_to_chat must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.add_screenshot_to_chat; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_add_screenshot_to_chat.availability",
       "disabled_reason_projection": "state.commands.browser_add_screenshot_to_chat.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.add_screenshot_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.add_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "runtime_artifact.created",
           "cmd.browser.add_screenshot_to_chat.dispatch_receipt"
         ]
       },
@@ -1073,16 +1084,21 @@
         {
           "test_id": "wiring.catalog.browser_add_screenshot_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_screenshot_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.add_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_add_screenshot_to_chat.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_screenshot_to_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.add_screenshot_to_chat emits expected event(s): runtime_artifact.created."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_screenshot_to_chat records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.add_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_add_selection_full_screenshot_to_chat": {
@@ -1090,21 +1106,26 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.add_selection_full_screenshot_to_chat",
       "handler_location": "handlers::browser::add_selection_full_screenshot_to_chat",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.context_captured",
+        "runtime_artifact.created"
+      ],
       "acceptance_checks": [
         "cmd.browser.add_selection_full_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_selection_full_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_selection_full_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.add_selection_full_screenshot_to_chat must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.add_selection_full_screenshot_to_chat must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.add_selection_full_screenshot_to_chat must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.add_selection_full_screenshot_to_chat must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.add_selection_full_screenshot_to_chat; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_add_selection_full_screenshot_to_chat.availability",
       "disabled_reason_projection": "state.commands.browser_add_selection_full_screenshot_to_chat.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.add_selection_full_screenshot_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.add_selection_full_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.context_captured",
+          "runtime_artifact.created",
           "cmd.browser.add_selection_full_screenshot_to_chat.dispatch_receipt"
         ]
       },
@@ -1128,16 +1149,22 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_full_screenshot_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_selection_full_screenshot_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.add_selection_full_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_add_selection_full_screenshot_to_chat.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_selection_full_screenshot_to_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.add_selection_full_screenshot_to_chat emits expected event(s): browser.context_captured, runtime_artifact.created."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_selection_full_screenshot_to_chat records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.add_selection_full_screenshot_to_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
+        "Assert cmd.browser.add_selection_full_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_add_selection_screenshot_to_chat": {
@@ -1145,21 +1172,26 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.add_selection_screenshot_to_chat",
       "handler_location": "handlers::browser::add_selection_screenshot_to_chat",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.context_captured",
+        "runtime_artifact.created"
+      ],
       "acceptance_checks": [
         "cmd.browser.add_selection_screenshot_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_selection_screenshot_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_selection_screenshot_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.add_selection_screenshot_to_chat must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.add_selection_screenshot_to_chat must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.add_selection_screenshot_to_chat must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.add_selection_screenshot_to_chat must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.add_selection_screenshot_to_chat; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_add_selection_screenshot_to_chat.availability",
       "disabled_reason_projection": "state.commands.browser_add_selection_screenshot_to_chat.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.add_selection_screenshot_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.add_selection_screenshot_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.context_captured",
+          "runtime_artifact.created",
           "cmd.browser.add_selection_screenshot_to_chat.dispatch_receipt"
         ]
       },
@@ -1183,16 +1215,22 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_screenshot_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_selection_screenshot_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.add_selection_screenshot_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_add_selection_screenshot_to_chat.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_selection_screenshot_to_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.add_selection_screenshot_to_chat emits expected event(s): browser.context_captured, runtime_artifact.created."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_selection_screenshot_to_chat records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.add_selection_screenshot_to_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
+        "Assert cmd.browser.add_selection_screenshot_to_chat emits runtime_artifact.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_add_selection_to_chat": {
@@ -1200,21 +1238,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.add_selection_to_chat",
       "handler_location": "handlers::browser::add_selection_to_chat",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.context_captured"
+      ],
       "acceptance_checks": [
         "cmd.browser.add_selection_to_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.add_selection_to_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.add_selection_to_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.add_selection_to_chat must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.add_selection_to_chat must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.add_selection_to_chat must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.add_selection_to_chat must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.add_selection_to_chat; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_add_selection_to_chat.availability",
       "disabled_reason_projection": "state.commands.browser_add_selection_to_chat.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.add_selection_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.add_selection_to_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.context_captured",
           "cmd.browser.add_selection_to_chat.dispatch_receipt"
         ]
       },
@@ -1238,16 +1279,21 @@
         {
           "test_id": "wiring.catalog.browser_add_selection_to_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.add_selection_to_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.add_selection_to_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_add_selection_to_chat.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_add_selection_to_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.add_selection_to_chat emits expected event(s): browser.context_captured."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.add_selection_to_chat records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.add_selection_to_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_detach_browser_tab": {
@@ -1255,21 +1301,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.detach_browser_tab",
       "handler_location": "handlers::browser::detach_browser_tab",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.state_changed"
+      ],
       "acceptance_checks": [
         "cmd.browser.detach_browser_tab must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.detach_browser_tab must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.detach_browser_tab dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.detach_browser_tab must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.detach_browser_tab must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.detach_browser_tab must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.detach_browser_tab must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.detach_browser_tab; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_detach_browser_tab.availability",
       "disabled_reason_projection": "state.commands.browser_detach_browser_tab.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.detach_browser_tab has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.detach_browser_tab emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.state_changed",
           "cmd.browser.detach_browser_tab.dispatch_receipt"
         ]
       },
@@ -1293,71 +1342,21 @@
         {
           "test_id": "wiring.catalog.browser_detach_browser_tab.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.detach_browser_tab has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.detach_browser_tab emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_detach_browser_tab.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_detach_browser_tab.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.detach_browser_tab emits expected event(s): browser.session.state_changed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.detach_browser_tab records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.browser_evaluate": {
-      "ui_element_id": "catalog.browser_evaluate",
-      "ui_location": "Browser preview and visible testing surfaces",
-      "ui_command_id": "cmd.browser.evaluate",
-      "handler_location": "handlers::browser::evaluate",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.browser.evaluate must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.browser.evaluate must expose projected state selector and disabled reason before dispatch",
-        "cmd.browser.evaluate dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.evaluate must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.evaluate must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.browser.evaluate; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.browser_evaluate.availability",
-      "disabled_reason_projection": "state.commands.browser_evaluate.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.evaluate has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.browser.evaluate.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.browser_evaluate exposes a stable role/name/description matching cmd.browser.evaluate.",
-        "keyboard_access": "catalog.browser_evaluate is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.browser_evaluate preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.browser_evaluate surfaces state.commands.browser_evaluate.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.browser_evaluate.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.browser.evaluate reaches handlers::browser::evaluate with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.browser_evaluate.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.browser_evaluate.availability and disabled copy reads state.commands.browser_evaluate.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.browser_evaluate.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.evaluate has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.browser_evaluate.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.browser.evaluate records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.detach_browser_tab emits browser.session.state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_focus_browser_tab": {
@@ -1378,7 +1377,7 @@
       "disabled_reason_projection": "state.commands.browser_focus_browser_tab.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.browser.focus_browser_tab has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.browser.focus_browser_tab is layout/UI state only per Plans/UI_Command_Catalog.md and records a no-persist dispatch receipt without fabricating domain events.",
         "receipt_or_event_refs": [
           "cmd.browser.focus_browser_tab.dispatch_receipt"
         ]
@@ -1412,7 +1411,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.focus_browser_tab records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.focus_browser_tab records a no-persist dispatch receipt and emits no browser/runtime domain event."
       ]
     },
     "catalog.browser_keep_closed": {
@@ -1420,21 +1419,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.keep_closed",
       "handler_location": "handlers::browser::keep_closed",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.closed"
+      ],
       "acceptance_checks": [
         "cmd.browser.keep_closed must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.keep_closed must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.keep_closed dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.keep_closed must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.keep_closed must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.keep_closed must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.keep_closed must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.keep_closed; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_keep_closed.availability",
       "disabled_reason_projection": "state.commands.browser_keep_closed.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.keep_closed has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.keep_closed emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.closed",
           "cmd.browser.keep_closed.dispatch_receipt"
         ]
       },
@@ -1458,16 +1460,21 @@
         {
           "test_id": "wiring.catalog.browser_keep_closed.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.keep_closed has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.keep_closed emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_keep_closed.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_keep_closed.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.keep_closed emits expected event(s): browser.session.closed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.keep_closed records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.keep_closed emits browser.session.closed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_let_agent_continue": {
@@ -1475,21 +1482,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.let_agent_continue",
       "handler_location": "handlers::browser::let_agent_continue",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.takeover_state_changed"
+      ],
       "acceptance_checks": [
         "cmd.browser.let_agent_continue must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.let_agent_continue must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.let_agent_continue dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.let_agent_continue must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.let_agent_continue must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.let_agent_continue must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.let_agent_continue must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.let_agent_continue; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_let_agent_continue.availability",
       "disabled_reason_projection": "state.commands.browser_let_agent_continue.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.let_agent_continue has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.let_agent_continue emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.takeover_state_changed",
           "cmd.browser.let_agent_continue.dispatch_receipt"
         ]
       },
@@ -1513,16 +1523,21 @@
         {
           "test_id": "wiring.catalog.browser_let_agent_continue.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.let_agent_continue has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.let_agent_continue emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_let_agent_continue.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_let_agent_continue.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.let_agent_continue emits expected event(s): browser.session.takeover_state_changed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.let_agent_continue records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.let_agent_continue emits browser.session.takeover_state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_open_detached_preview": {
@@ -1530,21 +1545,26 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.open_detached_preview",
       "handler_location": "handlers::browser::open_detached_preview",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
       "acceptance_checks": [
         "cmd.browser.open_detached_preview must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.open_detached_preview must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.open_detached_preview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.open_detached_preview must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.open_detached_preview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.open_detached_preview must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.open_detached_preview must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.open_detached_preview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_open_detached_preview.availability",
       "disabled_reason_projection": "state.commands.browser_open_detached_preview.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.open_detached_preview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.open_detached_preview emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.created",
+          "browser.session.state_changed",
           "cmd.browser.open_detached_preview.dispatch_receipt"
         ]
       },
@@ -1568,16 +1588,22 @@
         {
           "test_id": "wiring.catalog.browser_open_detached_preview.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.open_detached_preview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.open_detached_preview emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_open_detached_preview.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_open_detached_preview.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.open_detached_preview emits expected event(s): browser.session.created, browser.session.state_changed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.open_detached_preview records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.open_detached_preview emits browser.session.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
+        "Assert cmd.browser.open_detached_preview emits browser.session.state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_open_devtools": {
@@ -1598,7 +1624,7 @@
       "disabled_reason_projection": "state.commands.browser_open_devtools.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.browser.open_devtools has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.browser.open_devtools is layout/UI state only per Plans/UI_Command_Catalog.md and records a no-persist dispatch receipt without fabricating domain events.",
         "receipt_or_event_refs": [
           "cmd.browser.open_devtools.dispatch_receipt"
         ]
@@ -1632,7 +1658,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.open_devtools records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.open_devtools records a no-persist dispatch receipt and emits no browser/runtime domain event."
       ]
     },
     "catalog.browser_open_workspace_preview": {
@@ -1640,21 +1666,26 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.open_workspace_preview",
       "handler_location": "handlers::browser::open_workspace_preview",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.created",
+        "browser.session.state_changed"
+      ],
       "acceptance_checks": [
         "cmd.browser.open_workspace_preview must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.open_workspace_preview must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.open_workspace_preview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.open_workspace_preview must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.open_workspace_preview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.open_workspace_preview must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.open_workspace_preview must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.open_workspace_preview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_open_workspace_preview.availability",
       "disabled_reason_projection": "state.commands.browser_open_workspace_preview.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.open_workspace_preview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.open_workspace_preview emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.created",
+          "browser.session.state_changed",
           "cmd.browser.open_workspace_preview.dispatch_receipt"
         ]
       },
@@ -1678,16 +1709,22 @@
         {
           "test_id": "wiring.catalog.browser_open_workspace_preview.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.open_workspace_preview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.open_workspace_preview emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_open_workspace_preview.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_open_workspace_preview.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.open_workspace_preview emits expected event(s): browser.session.created, browser.session.state_changed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.open_workspace_preview records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.open_workspace_preview emits browser.session.created with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
+        "Assert cmd.browser.open_workspace_preview emits browser.session.state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_pause_agent": {
@@ -1695,21 +1732,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.pause_agent",
       "handler_location": "handlers::browser::pause_agent",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.takeover_state_changed"
+      ],
       "acceptance_checks": [
         "cmd.browser.pause_agent must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.pause_agent must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.pause_agent dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.pause_agent must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.pause_agent must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.pause_agent must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.pause_agent must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.pause_agent; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_pause_agent.availability",
       "disabled_reason_projection": "state.commands.browser_pause_agent.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.pause_agent has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.pause_agent emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.takeover_state_changed",
           "cmd.browser.pause_agent.dispatch_receipt"
         ]
       },
@@ -1733,16 +1773,21 @@
         {
           "test_id": "wiring.catalog.browser_pause_agent.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.pause_agent has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.pause_agent emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_pause_agent.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_pause_agent.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.pause_agent emits expected event(s): browser.session.takeover_state_changed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.pause_agent records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.pause_agent emits browser.session.takeover_state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_pick_element_for_chat": {
@@ -1750,21 +1795,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.pick_element_for_chat",
       "handler_location": "handlers::browser::pick_element_for_chat",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.context_captured"
+      ],
       "acceptance_checks": [
         "cmd.browser.pick_element_for_chat must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.pick_element_for_chat must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.pick_element_for_chat dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.pick_element_for_chat must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.pick_element_for_chat must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.pick_element_for_chat must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.pick_element_for_chat must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.pick_element_for_chat; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_pick_element_for_chat.availability",
       "disabled_reason_projection": "state.commands.browser_pick_element_for_chat.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.pick_element_for_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.pick_element_for_chat emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.context_captured",
           "cmd.browser.pick_element_for_chat.dispatch_receipt"
         ]
       },
@@ -1788,16 +1836,21 @@
         {
           "test_id": "wiring.catalog.browser_pick_element_for_chat.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.pick_element_for_chat has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.pick_element_for_chat emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_pick_element_for_chat.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_pick_element_for_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.pick_element_for_chat emits expected event(s): browser.context_captured."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.pick_element_for_chat records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.pick_element_for_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_promote_to_normal_browsing": {
@@ -1805,21 +1858,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.promote_to_normal_browsing",
       "handler_location": "handlers::browser::promote_to_normal_browsing",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.promoted"
+      ],
       "acceptance_checks": [
         "cmd.browser.promote_to_normal_browsing must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.promote_to_normal_browsing must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.promote_to_normal_browsing dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.promote_to_normal_browsing must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.promote_to_normal_browsing must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.promote_to_normal_browsing must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.promote_to_normal_browsing must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.promote_to_normal_browsing; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_promote_to_normal_browsing.availability",
       "disabled_reason_projection": "state.commands.browser_promote_to_normal_browsing.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.promote_to_normal_browsing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.promote_to_normal_browsing emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.promoted",
           "cmd.browser.promote_to_normal_browsing.dispatch_receipt"
         ]
       },
@@ -1843,16 +1899,21 @@
         {
           "test_id": "wiring.catalog.browser_promote_to_normal_browsing.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.promote_to_normal_browsing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.promote_to_normal_browsing emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_promote_to_normal_browsing.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_promote_to_normal_browsing.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.promote_to_normal_browsing emits expected event(s): browser.session.promoted."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.promote_to_normal_browsing records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.promote_to_normal_browsing emits browser.session.promoted with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_reopen": {
@@ -1860,21 +1921,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.reopen",
       "handler_location": "handlers::browser::reopen",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.state_changed"
+      ],
       "acceptance_checks": [
         "cmd.browser.reopen must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.reopen must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.reopen dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.reopen must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.reopen must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.reopen must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.reopen must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.reopen; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_reopen.availability",
       "disabled_reason_projection": "state.commands.browser_reopen.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.reopen has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.reopen emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.state_changed",
           "cmd.browser.reopen.dispatch_receipt"
         ]
       },
@@ -1898,16 +1962,21 @@
         {
           "test_id": "wiring.catalog.browser_reopen.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.reopen has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.reopen emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_reopen.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_reopen.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.reopen emits expected event(s): browser.session.state_changed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.reopen records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.reopen emits browser.session.state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_retry": {
@@ -1915,21 +1984,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.retry",
       "handler_location": "handlers::browser::retry",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.state_changed"
+      ],
       "acceptance_checks": [
         "cmd.browser.retry must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.retry must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.retry dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.retry must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.retry must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.retry must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.retry must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.retry; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_retry.availability",
       "disabled_reason_projection": "state.commands.browser_retry.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.retry has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.retry emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.state_changed",
           "cmd.browser.retry.dispatch_receipt"
         ]
       },
@@ -1953,16 +2025,21 @@
         {
           "test_id": "wiring.catalog.browser_retry.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.retry has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.retry emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_retry.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_retry.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.retry emits expected event(s): browser.session.state_changed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.retry records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.retry emits browser.session.state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_revoke_share_with_agent": {
@@ -1970,21 +2047,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.revoke_share_with_agent",
       "handler_location": "handlers::browser::revoke_share_with_agent",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.context_share_revoked"
+      ],
       "acceptance_checks": [
         "cmd.browser.revoke_share_with_agent must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.revoke_share_with_agent must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.revoke_share_with_agent dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.revoke_share_with_agent must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.revoke_share_with_agent must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.revoke_share_with_agent must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.revoke_share_with_agent must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.revoke_share_with_agent; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_revoke_share_with_agent.availability",
       "disabled_reason_projection": "state.commands.browser_revoke_share_with_agent.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.revoke_share_with_agent has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.revoke_share_with_agent emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.context_share_revoked",
           "cmd.browser.revoke_share_with_agent.dispatch_receipt"
         ]
       },
@@ -2008,71 +2088,21 @@
         {
           "test_id": "wiring.catalog.browser_revoke_share_with_agent.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.revoke_share_with_agent has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.revoke_share_with_agent emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_revoke_share_with_agent.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_revoke_share_with_agent.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.revoke_share_with_agent emits expected event(s): browser.context_share_revoked."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.revoke_share_with_agent records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.browser_run_code": {
-      "ui_element_id": "catalog.browser_run_code",
-      "ui_location": "Browser preview and visible testing surfaces",
-      "ui_command_id": "cmd.browser.run_code",
-      "handler_location": "handlers::browser::run_code",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.browser.run_code must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.browser.run_code must expose projected state selector and disabled reason before dispatch",
-        "cmd.browser.run_code dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.run_code must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.run_code must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.browser.run_code; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.browser_run_code.availability",
-      "disabled_reason_projection": "state.commands.browser_run_code.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.run_code has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.browser.run_code.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.browser_run_code exposes a stable role/name/description matching cmd.browser.run_code.",
-        "keyboard_access": "catalog.browser_run_code is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.browser_run_code preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.browser_run_code surfaces state.commands.browser_run_code.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.browser_run_code.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.browser.run_code reaches handlers::browser::run_code with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.browser_run_code.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.browser_run_code.availability and disabled copy reads state.commands.browser_run_code.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.browser_run_code.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.run_code has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.browser_run_code.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.browser.run_code records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.revoke_share_with_agent emits browser.context_share_revoked with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_share_with_agent": {
@@ -2080,21 +2110,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.share_with_agent",
       "handler_location": "handlers::browser::share_with_agent",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.context_shared"
+      ],
       "acceptance_checks": [
         "cmd.browser.share_with_agent must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.share_with_agent must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.share_with_agent dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.share_with_agent must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.share_with_agent must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.share_with_agent must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.share_with_agent must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.share_with_agent; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_share_with_agent.availability",
       "disabled_reason_projection": "state.commands.browser_share_with_agent.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.share_with_agent has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.share_with_agent emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.context_shared",
           "cmd.browser.share_with_agent.dispatch_receipt"
         ]
       },
@@ -2118,16 +2151,21 @@
         {
           "test_id": "wiring.catalog.browser_share_with_agent.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.share_with_agent has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.share_with_agent emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_share_with_agent.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_share_with_agent.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.share_with_agent emits expected event(s): browser.context_shared."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.share_with_agent records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.share_with_agent emits browser.context_shared with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_stop_agent_keep_browser": {
@@ -2135,21 +2173,26 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.stop_agent_keep_browser",
       "handler_location": "handlers::browser::stop_agent_keep_browser",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.takeover_state_changed",
+        "dev.session.stopped"
+      ],
       "acceptance_checks": [
         "cmd.browser.stop_agent_keep_browser must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.stop_agent_keep_browser must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.stop_agent_keep_browser dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.stop_agent_keep_browser must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.stop_agent_keep_browser must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.stop_agent_keep_browser must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.stop_agent_keep_browser must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.stop_agent_keep_browser; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_stop_agent_keep_browser.availability",
       "disabled_reason_projection": "state.commands.browser_stop_agent_keep_browser.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.stop_agent_keep_browser has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.stop_agent_keep_browser emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.takeover_state_changed",
+          "dev.session.stopped",
           "cmd.browser.stop_agent_keep_browser.dispatch_receipt"
         ]
       },
@@ -2173,16 +2216,22 @@
         {
           "test_id": "wiring.catalog.browser_stop_agent_keep_browser.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.stop_agent_keep_browser has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.stop_agent_keep_browser emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_stop_agent_keep_browser.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_stop_agent_keep_browser.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.stop_agent_keep_browser emits expected event(s): browser.session.takeover_state_changed, dev.session.stopped."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.stop_agent_keep_browser records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.stop_agent_keep_browser emits browser.session.takeover_state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
+        "Assert cmd.browser.stop_agent_keep_browser emits dev.session.stopped with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_take_over": {
@@ -2190,21 +2239,24 @@
       "ui_location": "Browser preview and visible testing surfaces",
       "ui_command_id": "cmd.browser.take_over",
       "handler_location": "handlers::browser::take_over",
-      "expected_event_types": [],
+      "expected_event_types": [
+        "browser.session.takeover_state_changed"
+      ],
       "acceptance_checks": [
         "cmd.browser.take_over must be registered in the UICommand dispatcher with typed args and result contract",
         "cmd.browser.take_over must expose projected state selector and disabled reason before dispatch",
         "cmd.browser.take_over dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.browser.take_over must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.browser.take_over must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+        "cmd.browser.take_over must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.take_over must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
       ],
       "evidence_required": "Production wiring contract for cmd.browser.take_over; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
       "state_selector": "state.commands.browser_take_over.availability",
       "disabled_reason_projection": "state.commands.browser_take_over.disabled_reason",
       "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.browser.take_over has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "effect_kind": "event",
+        "description": "cmd.browser.take_over emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
         "receipt_or_event_refs": [
+          "browser.session.takeover_state_changed",
           "cmd.browser.take_over.dispatch_receipt"
         ]
       },
@@ -2228,16 +2280,21 @@
         {
           "test_id": "wiring.catalog.browser_take_over.effect",
           "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.browser.take_over has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+          "requirement": "cmd.browser.take_over emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
         },
         {
           "test_id": "wiring.catalog.browser_take_over.accessibility",
           "evidence_kind": "accessibility_regression",
           "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_take_over.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.take_over emits expected event(s): browser.session.takeover_state_changed."
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.take_over records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.take_over emits browser.session.takeover_state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
       ]
     },
     "catalog.browser_toggle_devtools_dock": {
@@ -2258,7 +2315,7 @@
       "disabled_reason_projection": "state.commands.browser_toggle_devtools_dock.disabled_reason",
       "effect_contract": {
         "effect_kind": "receipt",
-        "description": "cmd.browser.toggle_devtools_dock has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "description": "cmd.browser.toggle_devtools_dock is layout/UI state only per Plans/UI_Command_Catalog.md and records a no-persist dispatch receipt without fabricating domain events.",
         "receipt_or_event_refs": [
           "cmd.browser.toggle_devtools_dock.dispatch_receipt"
         ]
@@ -2292,7 +2349,7 @@
         }
       ],
       "event_test_requirements": [
-        "Assert cmd.browser.toggle_devtools_dock records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+        "Assert cmd.browser.toggle_devtools_dock records a no-persist dispatch receipt and emits no browser/runtime domain event."
       ]
     },
     "catalog.catalog_install_item": {
@@ -26001,226 +26058,6 @@
       ],
       "event_test_requirements": [
         "Assert cmd.theme.set_mode emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
-      ]
-    },
-    "catalog.web_extract": {
-      "ui_element_id": "catalog.web_extract",
-      "ui_location": "Web surface > Extract",
-      "ui_command_id": "cmd.web.extract",
-      "handler_location": "handlers::web::extract",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.web.extract must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.web.extract must expose projected state selector and disabled reason before dispatch",
-        "cmd.web.extract dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.web.extract must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.web.extract must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.web.extract; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.web_extract.availability",
-      "disabled_reason_projection": "state.commands.web_extract.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.web.extract has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.web.extract.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.web_extract exposes a stable role/name/description matching cmd.web.extract.",
-        "keyboard_access": "catalog.web_extract is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.web_extract preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.web_extract surfaces state.commands.web_extract.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.web_extract.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.web.extract reaches handlers::web::extract with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.web_extract.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.web_extract.availability and disabled copy reads state.commands.web_extract.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.web_extract.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.web.extract has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.web_extract.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.web.extract records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.web_fetch": {
-      "ui_element_id": "catalog.web_fetch",
-      "ui_location": "Web surface > Fetch",
-      "ui_command_id": "cmd.web.fetch",
-      "handler_location": "handlers::web::fetch",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.web.fetch must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.web.fetch must expose projected state selector and disabled reason before dispatch",
-        "cmd.web.fetch dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.web.fetch must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.web.fetch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.web.fetch; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.web_fetch.availability",
-      "disabled_reason_projection": "state.commands.web_fetch.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.web.fetch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.web.fetch.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.web_fetch exposes a stable role/name/description matching cmd.web.fetch.",
-        "keyboard_access": "catalog.web_fetch is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.web_fetch preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.web_fetch surfaces state.commands.web_fetch.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.web_fetch.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.web.fetch reaches handlers::web::fetch with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.web_fetch.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.web_fetch.availability and disabled copy reads state.commands.web_fetch.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.web_fetch.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.web.fetch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.web_fetch.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.web.fetch records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.web_research": {
-      "ui_element_id": "catalog.web_research",
-      "ui_location": "Web surface > Research",
-      "ui_command_id": "cmd.web.research",
-      "handler_location": "handlers::web::research",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.web.research must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.web.research must expose projected state selector and disabled reason before dispatch",
-        "cmd.web.research dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.web.research must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.web.research must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.web.research; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.web_research.availability",
-      "disabled_reason_projection": "state.commands.web_research.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.web.research has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.web.research.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.web_research exposes a stable role/name/description matching cmd.web.research.",
-        "keyboard_access": "catalog.web_research is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.web_research preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.web_research surfaces state.commands.web_research.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.web_research.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.web.research reaches handlers::web::research with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.web_research.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.web_research.availability and disabled copy reads state.commands.web_research.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.web_research.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.web.research has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.web_research.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.web.research records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
-      ]
-    },
-    "catalog.web_search": {
-      "ui_element_id": "catalog.web_search",
-      "ui_location": "Web surface > Search",
-      "ui_command_id": "cmd.web.search",
-      "handler_location": "handlers::web::search",
-      "expected_event_types": [],
-      "acceptance_checks": [
-        "cmd.web.search must be registered in the UICommand dispatcher with typed args and result contract",
-        "cmd.web.search must expose projected state selector and disabled reason before dispatch",
-        "cmd.web.search dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
-        "cmd.web.search must have a typed payload/result contract or explicit route/open no-persist disposition",
-        "cmd.web.search must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
-      ],
-      "evidence_required": "Production wiring contract for cmd.web.search; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
-      "state_selector": "state.commands.web_search.availability",
-      "disabled_reason_projection": "state.commands.web_search.disabled_reason",
-      "effect_contract": {
-        "effect_kind": "receipt",
-        "description": "cmd.web.search has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-        "receipt_or_event_refs": [
-          "cmd.web.search.dispatch_receipt"
-        ]
-      },
-      "accessibility_contract": {
-        "role_or_semantics": "catalog.web_search exposes a stable role/name/description matching cmd.web.search.",
-        "keyboard_access": "catalog.web_search is reachable and activatable by keyboard where the control is visible.",
-        "focus_management": "catalog.web_search preserves visible focus and returns focus deterministically after dispatch or error.",
-        "disabled_announcement": "catalog.web_search surfaces state.commands.web_search.disabled_reason to assistive technology when unavailable."
-      },
-      "test_evidence": [
-        {
-          "test_id": "wiring.catalog.web_search.dispatcher",
-          "evidence_kind": "dispatcher_fixture",
-          "requirement": "Dispatching cmd.web.search reaches handlers::web::search with typed args/result contract."
-        },
-        {
-          "test_id": "wiring.catalog.web_search.state_projection",
-          "evidence_kind": "state_projection",
-          "requirement": "Availability reads state.commands.web_search.availability and disabled copy reads state.commands.web_search.disabled_reason."
-        },
-        {
-          "test_id": "wiring.catalog.web_search.effect",
-          "evidence_kind": "receipt_or_event_assertion",
-          "requirement": "cmd.web.search has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-        },
-        {
-          "test_id": "wiring.catalog.web_search.accessibility",
-          "evidence_kind": "accessibility_regression",
-          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
-        }
-      ],
-      "event_test_requirements": [
-        "Assert cmd.web.search records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
       ]
     },
     "catalog.widget_add": {

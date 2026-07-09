@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import hashlib
+import ipaddress
 import json
 import re
 import signal
@@ -18,6 +19,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from typing import Any
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -250,10 +252,14 @@ def validate_schema(instance: Any, schema: Any, root_schema: dict[str, Any] | No
     if isinstance(instance, (int, float)) and not isinstance(instance, bool):
         if "minimum" in schema and instance < schema["minimum"]:
             errors.append(f"{path}: below minimum {schema['minimum']}")
+        if "maximum" in schema and instance > schema["maximum"]:
+            errors.append(f"{path}: above maximum {schema['maximum']}")
 
     if isinstance(instance, list):
         if "minItems" in schema and len(instance) < schema["minItems"]:
             errors.append(f"{path}: fewer than minItems {schema['minItems']}")
+        if "maxItems" in schema and len(instance) > schema["maxItems"]:
+            errors.append(f"{path}: more than maxItems {schema['maxItems']}")
         if schema.get("uniqueItems"):
             seen = set()
             for item in instance:
@@ -1877,7 +1883,7 @@ RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS = {
     "evidence": ["evidence_kind"],
     "document": ["document_ref"],
     "restore_point": ["safe_point_id"],
-    "browser_recording": ["browser_session_id"],
+    "browser_recording": ["browser_session_id", "runtime_state", "open_watch_state", "artifact_refs", "redaction_profile_id", "show_when_possible"],
     "tool_llm_trace": ["trace_ref", "usage_record_id"],
     "context_snapshot": ["snapshot_ref"],
     "cost_usage": ["usage_event_ref", "usage_record_id", "reasoning_tokens"],
@@ -1905,7 +1911,10 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
     envelope = load_json(envelope_path)
     fixtures = load_json(fixture_path)
     valid_payloads = fixtures.get("valid_payloads", [])
-    payloads_by_type = {payload.get("artifact_type"): payload for payload in valid_payloads if isinstance(payload, dict)}
+    payloads_by_type: dict[str, list[dict[str, Any]]] = {}
+    for payload in valid_payloads:
+        if isinstance(payload, dict) and isinstance(payload.get("artifact_type"), str):
+            payloads_by_type.setdefault(payload["artifact_type"], []).append(payload)
 
     for artifact_type in RUNTIME_ARTIFACT_TYPES:
         schema_path = PLANS / f"runtime_artifact_{artifact_type}.schema.json"
@@ -1916,39 +1925,41 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
         expected_id = f"pm.runtime_artifact.{artifact_type}.schema.v1"
         if schema.get("$id") != expected_id:
             failures.append({"path": rel(schema_path), "artifact_type": artifact_type, "error": "wrong_schema_id", "expected": expected_id})
-        payload = payloads_by_type.get(artifact_type)
-        if payload is None:
+        payloads = payloads_by_type.get(artifact_type, [])
+        if not payloads:
             failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_valid_payload_fixture"})
             continue
-        for error in validate_schema(payload, envelope, envelope):
-            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "schema": rel(envelope_path), "error": error})
-        for error in validate_schema(payload, schema, schema):
-            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "schema": rel(schema_path), "error": error})
-        type_payload = payload.get("type_payload", {})
-        for field in RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS[artifact_type]:
-            if field not in type_payload and field not in payload:
-                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_type_payload_field", "field": field})
-        if artifact_type == "cost_usage":
-            if type_payload.get("reasoning_tokens", -1) < 0:
-                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "reasoning_tokens_negative"})
-            usage = type_payload.get("usage", {})
-            if not isinstance(usage, dict):
-                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "cost_usage_missing_usage_bucket_object"})
-            else:
-                if usage.get("reasoning_tokens") != type_payload.get("reasoning_tokens"):
-                    failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "reasoning_tokens_not_mirrored_from_usage_bucket"})
-                counting = usage.get("counting_semantics", {})
-                if not isinstance(counting, dict):
-                    failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "cost_usage_missing_counting_semantics"})
+        for payload_index, payload in enumerate(payloads):
+            fixture_ref = f"{artifact_type}[{payload_index}]"
+            for error in validate_schema(payload, envelope, envelope):
+                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "schema": rel(envelope_path), "error": error})
+            for error in validate_schema(payload, schema, schema):
+                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "schema": rel(schema_path), "error": error})
+            type_payload = payload.get("type_payload", {})
+            for field in RUNTIME_ARTIFACT_REQUIRED_PAYLOAD_FIELDS[artifact_type]:
+                if field not in type_payload and field not in payload:
+                    failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "error": "missing_type_payload_field", "field": field})
+            if artifact_type == "cost_usage":
+                if type_payload.get("reasoning_tokens", -1) < 0:
+                    failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "error": "reasoning_tokens_negative"})
+                usage = type_payload.get("usage", {})
+                if not isinstance(usage, dict):
+                    failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "error": "cost_usage_missing_usage_bucket_object"})
                 else:
-                    for field in ["input_total_includes_cache", "output_total_includes_reasoning", "provider_total_semantics"]:
-                        if field not in counting:
-                            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "field": field, "error": "cost_usage_missing_counting_semantics_field"})
-                    if counting.get("output_total_includes_reasoning") == "yes" and usage.get("output_total") is not None and usage.get("reasoning_tokens") is not None:
-                        if usage["output_total"] < usage["reasoning_tokens"]:
-                            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "reasoning_tokens_exceed_inclusive_output_total"})
-        if artifact_type in {"hitl_approval", "failed_attempts"} and not payload.get("receipt_refs"):
-            failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "receipt_like_artifact_missing_receipt_refs"})
+                    if usage.get("reasoning_tokens") != type_payload.get("reasoning_tokens"):
+                        failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "error": "reasoning_tokens_not_mirrored_from_usage_bucket"})
+                    counting = usage.get("counting_semantics", {})
+                    if not isinstance(counting, dict):
+                        failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "error": "cost_usage_missing_counting_semantics"})
+                    else:
+                        for field in ["input_total_includes_cache", "output_total_includes_reasoning", "provider_total_semantics"]:
+                            if field not in counting:
+                                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "field": field, "error": "cost_usage_missing_counting_semantics_field"})
+                        if counting.get("output_total_includes_reasoning") == "yes" and usage.get("output_total") is not None and usage.get("reasoning_tokens") is not None:
+                            if usage["output_total"] < usage["reasoning_tokens"]:
+                                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "error": "reasoning_tokens_exceed_inclusive_output_total"})
+            if artifact_type in {"hitl_approval", "failed_attempts"} and not payload.get("receipt_refs"):
+                failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "fixture": fixture_ref, "error": "receipt_like_artifact_missing_receipt_refs"})
 
     event_records = fixtures.get("event_records", [])
     event_types = {record.get("artifact_type") for record in event_records if isinstance(record, dict)}
@@ -1956,7 +1967,77 @@ def cmd_validate_runtime_artifact_schemas(args: argparse.Namespace) -> dict[str,
         if artifact_type not in event_types:
             failures.append({"path": rel(fixture_path), "artifact_type": artifact_type, "error": "missing_event_record_fixture"})
 
-    for invalid in fixtures.get("invalid_payloads", []):
+    browser_fixture_actions: set[str] = set()
+    browser_page_representations: list[dict[str, Any]] = []
+    extract_fixture_actions: set[str] = set()
+    for payload in valid_payloads:
+        if not isinstance(payload, dict):
+            continue
+        type_payload = payload.get("type_payload", {})
+        if not isinstance(type_payload, dict):
+            continue
+        if payload.get("artifact_type") == "browser_recording":
+            for action_result in type_payload.get("actions", []):
+                if isinstance(action_result, dict):
+                    action = action_result.get("action", {})
+                    if isinstance(action, dict) and isinstance(action.get("action_type"), str):
+                        browser_fixture_actions.add(action["action_type"])
+                    page_representation = action_result.get("page_representation")
+                    if isinstance(page_representation, dict):
+                        browser_page_representations.append(page_representation)
+        if payload.get("artifact_type") == "api_web_call":
+            operation_input = type_payload.get("operation_input", {})
+            if isinstance(operation_input, dict) and operation_input.get("web_operation") == "extract":
+                for action in operation_input.get("actions", []):
+                    if isinstance(action, dict) and isinstance(action.get("action_type"), str):
+                        extract_fixture_actions.add(action["action_type"])
+    for action_type in ["fill_form", "select_option", "upload_file", "handle_dialog", "verify_text"]:
+        if action_type not in browser_fixture_actions:
+            failures.append({"path": rel(fixture_path), "artifact_type": "browser_recording", "action_type": action_type, "error": "missing_positive_browser_action_fixture"})
+    for action_type in ["fill_form", "select_option", "upload_file", "handle_dialog"]:
+        if action_type not in extract_fixture_actions:
+            failures.append({"path": rel(fixture_path), "artifact_type": "api_web_call", "web_operation": "extract", "action_type": action_type, "error": "missing_positive_extract_browser_action_fixture"})
+    page_representation_required_fields = {
+        "observe_ref",
+        "find_results_ref",
+        "detail_ref",
+        "accessibility_tree_ref",
+        "layout_bounds_ref",
+        "form_refs",
+        "iframe_refs",
+        "console_ref",
+        "network_ref",
+        "screenshot_artifact_ref",
+        "pdf_artifact_ref",
+        "prompt_injection_chips",
+        "visible_card_ref",
+        "redaction_profile_id",
+    }
+    if not any(page_representation_required_fields <= set(page) for page in browser_page_representations):
+        failures.append({"path": rel(fixture_path), "artifact_type": "browser_recording", "error": "missing_positive_page_representation_evidence_fixture"})
+
+    invalid_payloads = fixtures.get("invalid_payloads", [])
+    invalid_case_ids = {
+        invalid.get("case_id")
+        for invalid in invalid_payloads
+        if isinstance(invalid, dict)
+    }
+    required_invalid_case_ids = {
+        "api_web_call_agentic_invocation_missing_reason",
+        "api_web_call_extract_actions_over_limit",
+        "api_web_call_extract_actions_timeout_over_limit",
+        "api_web_call_research_missing_read_backed_citation",
+        "api_web_call_prd_missing_source_evidence",
+        "api_web_call_planning_missing_source_evidence",
+        "browser_recording_agentic_invocation_missing_reason",
+        "browser_recording_fallback_open_missing_route",
+        "browser_recording_runtime_unavailable_missing_remediation",
+        "browser_recording_runtime_unavailable_missing_runtime_state",
+    }
+    for case_id in sorted(required_invalid_case_ids - invalid_case_ids):
+        failures.append({"path": rel(fixture_path), "invalid_fixture": case_id, "error": "missing_required_runtime_invalid_fixture"})
+
+    for invalid in invalid_payloads:
         artifact_type = invalid.get("artifact_type")
         payload = invalid.get("payload", {})
         schema_path = PLANS / f"runtime_artifact_{artifact_type}.schema.json"
@@ -2085,6 +2166,50 @@ def cmd_validate_project_output_fixtures(args: argparse.Namespace) -> dict[str, 
         for error in validate_against_schema(instance_path, schema_path):
             failures.append({"path": str(instance_path.relative_to(ROOT)), "schema": schema_rel, "error": error})
 
+    gui_manifest = load_json(fixture_root / "schema_payloads/gui_automation_manifest.json")
+    browser_sessions = gui_manifest.get("browser_sessions", []) if isinstance(gui_manifest, dict) else []
+    if not isinstance(browser_sessions, list) or not browser_sessions:
+        failures.append({"path": str((fixture_root / "schema_payloads/gui_automation_manifest.json").relative_to(ROOT)), "error": "missing_positive_browser_session_fixture"})
+    else:
+        browser_session_ids = {
+            session.get("browser_session_id")
+            for session in browser_sessions
+            if isinstance(session, dict)
+        }
+        artifact_rows = gui_manifest.get("artifacts", []) if isinstance(gui_manifest, dict) else []
+        browser_artifacts = [
+            artifact for artifact in artifact_rows
+            if isinstance(artifact, dict) and artifact.get("kind") in {"browser_screenshot", "browser_pdf", "console", "network"}
+        ]
+        artifact_session_ids = {
+            artifact.get("browser_session_id")
+            for artifact in browser_artifacts
+            if isinstance(artifact, dict)
+        }
+        for required_kind in ["browser_screenshot", "browser_pdf", "console", "network"]:
+            if required_kind not in {artifact.get("kind") for artifact in browser_artifacts}:
+                failures.append({"path": str((fixture_root / "schema_payloads/gui_automation_manifest.json").relative_to(ROOT)), "kind": required_kind, "error": "missing_positive_browser_artifact_fixture"})
+        for artifact in browser_artifacts:
+            redaction_status = artifact.get("redaction_status")
+            if redaction_status not in {"not_needed", "applied", "blocked"}:
+                failures.append({
+                    "path": str((fixture_root / "schema_payloads/gui_automation_manifest.json").relative_to(ROOT)),
+                    "artifact_id": artifact.get("artifact_id"),
+                    "redaction_status": redaction_status,
+                    "error": "browser_artifact_missing_or_failed_redaction_status",
+                })
+        if not browser_session_ids.intersection(artifact_session_ids):
+            failures.append({"path": str((fixture_root / "schema_payloads/gui_automation_manifest.json").relative_to(ROOT)), "error": "browser_artifacts_not_linked_to_browser_session"})
+        runtime_unavailable_sessions = [
+            session for session in browser_sessions
+            if isinstance(session, dict) and session.get("visibility_state") == "runtime_unavailable"
+        ]
+        if not runtime_unavailable_sessions:
+            failures.append({"path": str((fixture_root / "schema_payloads/gui_automation_manifest.json").relative_to(ROOT)), "error": "missing_runtime_unavailable_browser_session_fixture"})
+        for session in runtime_unavailable_sessions:
+            if not session.get("disabled_reason_code") or not session.get("remediation_action_ids"):
+                failures.append({"path": str((fixture_root / "schema_payloads/gui_automation_manifest.json").relative_to(ROOT)), "browser_session_id": session.get("browser_session_id"), "error": "runtime_unavailable_browser_session_missing_remediation"})
+
     coverage = load_json(fixture_root / ".puppet-master/project/traceability/requirements_coverage.json")
     md_path = fixture_root / ".puppet-master/project/traceability/requirements_coverage.md"
     json_req_ids = {row.get("req_id") for row in coverage.get("requirements", [])}
@@ -2169,6 +2294,36 @@ USAGE_DRIFT_ALLOWED_CONTEXT_RE = re.compile(
 USAGE_DRIFT_SOURCE_LINEAGE_DOCS = {
     "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
 }
+USAGE_SOURCE_CONFIDENCE_VALUES = {"high", "medium", "low", "unknown"}
+USAGE_SOURCE_CONFIDENCE_ASSIGNMENT_RE = re.compile(
+    r"(?P<key_quote>[\"']?)source_confidence(?P=key_quote)\s*[:=]\s*"
+    r"(?P<value_quote>[\"']?)(?P<value>[A-Za-z0-9_-]+)(?P=value_quote)"
+)
+USAGE_SOURCE_CONFIDENCE_ALLOWED_CONTEXT_RE = re.compile(
+    r"\b("
+    r"compatibility|compatibility-only|legacy|retired|source-lineage|source lineage|"
+    r"external-reference|external reference|preserved_exact_tokens|source_lineage|"
+    r"compatibility_only_notes|stale_retired_dispositions"
+    r")\b",
+    re.IGNORECASE,
+)
+USAGE_SOURCE_CONFIDENCE_CONTEXT_KEYS = {
+    "source_lineage",
+    "preserved_exact_tokens",
+    "compatibility_only_notes",
+    "stale_retired_dispositions",
+    "external_reference",
+    "external_references",
+}
+USAGE_SOURCE_CONFIDENCE_EXCLUDED_PLAN_DIRS = {
+    "_shards",
+    "ledgers",
+    ".audits",
+    ".evidence",
+    ".implementation_readiness",
+    ".plan_index",
+    ".plan_migration",
+}
 
 
 def usage_drift_in_yaml_list(lines: list[str], index: int, keys: set[str]) -> bool:
@@ -2187,10 +2342,217 @@ def usage_drift_in_yaml_list(lines: list[str], index: int, keys: set[str]) -> bo
     return False
 
 
+def source_confidence_failure(
+    *,
+    path: str,
+    line: int | None,
+    value: str,
+    text: str,
+    location: str | None = None,
+) -> dict[str, Any]:
+    failure: dict[str, Any] = {
+        "path": path,
+        "field": "source_confidence",
+        "value": value,
+        "allowed_values": sorted(USAGE_SOURCE_CONFIDENCE_VALUES),
+        "error": "active_source_confidence_value_outside_canonical_enum",
+        "text": text.strip()[:240],
+    }
+    if line is not None:
+        failure["line"] = line
+    if location:
+        failure["location"] = location
+    return failure
+
+
+def source_confidence_scan_text_assignments(
+    *,
+    text: str,
+    path_key: str,
+    start_line: int,
+    allowed_context: bool,
+) -> tuple[list[dict[str, Any]], int, int]:
+    failures: list[dict[str, Any]] = []
+    scanned = 0
+    allowed = 0
+    for offset, line in enumerate(text.splitlines()):
+        for match in USAGE_SOURCE_CONFIDENCE_ASSIGNMENT_RE.finditer(line):
+            scanned += 1
+            value = match.group("value")
+            if value in USAGE_SOURCE_CONFIDENCE_VALUES:
+                continue
+            if allowed_context:
+                allowed += 1
+                continue
+            failures.append(
+                source_confidence_failure(
+                    path=path_key,
+                    line=start_line + offset,
+                    value=value,
+                    text=line,
+                )
+            )
+    return failures, scanned, allowed
+
+
+def source_confidence_scan_json_value(
+    *,
+    value: Any,
+    path_key: str,
+    location: str,
+    context_allowed: bool = False,
+) -> tuple[list[dict[str, Any]], int, int]:
+    failures: list[dict[str, Any]] = []
+    scanned = 0
+    allowed = 0
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_location = f"{location}/{key}"
+            if key == "source_confidence" and isinstance(child, str):
+                scanned += 1
+                if child not in USAGE_SOURCE_CONFIDENCE_VALUES:
+                    if context_allowed:
+                        allowed += 1
+                    else:
+                        failures.append(
+                            source_confidence_failure(
+                                path=path_key,
+                                line=None,
+                                value=child,
+                                text=f"{key}: {child}",
+                                location=child_location,
+                            )
+                        )
+                continue
+            child_failures, child_scanned, child_allowed = source_confidence_scan_json_value(
+                value=child,
+                path_key=path_key,
+                location=child_location,
+                context_allowed=context_allowed or key in USAGE_SOURCE_CONFIDENCE_CONTEXT_KEYS,
+            )
+            failures.extend(child_failures)
+            scanned += child_scanned
+            allowed += child_allowed
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            child_failures, child_scanned, child_allowed = source_confidence_scan_json_value(
+                value=child,
+                path_key=path_key,
+                location=f"{location}/{index}",
+                context_allowed=context_allowed,
+            )
+            failures.extend(child_failures)
+            scanned += child_scanned
+            allowed += child_allowed
+    return failures, scanned, allowed
+
+
+def source_confidence_scan_markdown(
+    path: Path,
+) -> tuple[list[dict[str, Any]], int, int]:
+    path_key = rel(path)
+    lines = path.read_text(encoding="utf-8").splitlines()
+    failures: list[dict[str, Any]] = []
+    scanned = 0
+    allowed = 0
+    in_fence = False
+    fence_lang = ""
+    fence_start = 0
+    fence_lines: list[str] = []
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            if in_fence:
+                if fence_lang in {"json", "yaml", "yml"}:
+                    context = "\n".join(lines[max(0, fence_start - 4) : min(len(lines), index + 4)])
+                    block = "\n".join(fence_lines)
+                    block_failures, block_scanned, block_allowed = source_confidence_scan_text_assignments(
+                        text=block,
+                        path_key=path_key,
+                        start_line=fence_start + 2,
+                        allowed_context=bool(USAGE_SOURCE_CONFIDENCE_ALLOWED_CONTEXT_RE.search(context)),
+                    )
+                    failures.extend(block_failures)
+                    scanned += block_scanned
+                    allowed += block_allowed
+                in_fence = False
+                fence_lang = ""
+                fence_lines = []
+                continue
+            fence_lang = stripped.removeprefix("```").strip().lower()
+            in_fence = True
+            fence_start = index
+            fence_lines = []
+            continue
+        if in_fence:
+            fence_lines.append(line)
+    return failures, scanned, allowed
+
+
+def active_usage_source_confidence_paths() -> list[Path]:
+    paths: list[Path] = []
+    for path in PLANS.rglob("*"):
+        if not path.is_file():
+            continue
+        if path.suffix.lower() not in {".md", ".json", ".jsonl", ".yaml", ".yml"}:
+            continue
+        relative_parts = path.relative_to(PLANS).parts
+        if relative_parts and relative_parts[0] in USAGE_SOURCE_CONFIDENCE_EXCLUDED_PLAN_DIRS:
+            continue
+        paths.append(path)
+    return sorted(paths)
+
+
+def source_confidence_scan_active_examples() -> tuple[list[dict[str, Any]], int, int]:
+    failures: list[dict[str, Any]] = []
+    scanned = 0
+    allowed = 0
+    for path in active_usage_source_confidence_paths():
+        path_key = rel(path)
+        suffix = path.suffix.lower()
+        if suffix == ".md":
+            path_failures, path_scanned, path_allowed = source_confidence_scan_markdown(path)
+        elif suffix == ".json":
+            path_failures, path_scanned, path_allowed = source_confidence_scan_json_value(
+                value=load_json(path),
+                path_key=path_key,
+                location="$",
+            )
+        elif suffix == ".jsonl":
+            path_failures = []
+            path_scanned = 0
+            path_allowed = 0
+            for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+                if not line.strip():
+                    continue
+                line_failures, line_scanned, line_allowed = source_confidence_scan_json_value(
+                    value=json.loads(line),
+                    path_key=path_key,
+                    location=f"${line_number}",
+                )
+                path_failures.extend(line_failures)
+                path_scanned += line_scanned
+                path_allowed += line_allowed
+        else:
+            context_allowed = bool(USAGE_SOURCE_CONFIDENCE_ALLOWED_CONTEXT_RE.search(path.read_text(encoding="utf-8")))
+            path_failures, path_scanned, path_allowed = source_confidence_scan_text_assignments(
+                text=path.read_text(encoding="utf-8"),
+                path_key=path_key,
+                start_line=1,
+                allowed_context=context_allowed,
+            )
+        failures.extend(path_failures)
+        scanned += path_scanned
+        allowed += path_allowed
+    return failures, scanned, allowed
+
+
 def cmd_validate_usage_contract_drift(args: argparse.Namespace) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     scanned_occurrences = 0
     allowed_occurrences = 0
+    scanned_source_confidence_assignments = 0
+    allowed_source_confidence_assignments = 0
     scanned_docs = 0
     source_lineage_docs = 0
     lineage_keys = {
@@ -2199,6 +2561,28 @@ def cmd_validate_usage_contract_drift(args: argparse.Namespace) -> dict[str, Any
         "compatibility_only_notes",
         "stale_retired_dispositions",
     }
+    schema_path = PLANS / "runtime_artifact_cost_usage.schema.json"
+    try:
+        cost_usage_schema = load_json(schema_path)
+        schema_values = set(
+            cost_usage_schema.get("$defs", {})
+            .get("authorityFields", {})
+            .get("properties", {})
+            .get("source_confidence", {})
+            .get("enum", [])
+        )
+    except Exception as exc:  # noqa: BLE001
+        failures.append({"path": rel(schema_path), "error": "source_confidence_schema_read_failed", "detail": str(exc)})
+        schema_values = set()
+    if schema_values != USAGE_SOURCE_CONFIDENCE_VALUES:
+        failures.append(
+            {
+                "path": rel(schema_path),
+                "error": "source_confidence_enum_mismatch",
+                "expected": sorted(USAGE_SOURCE_CONFIDENCE_VALUES),
+                "actual": sorted(schema_values),
+            }
+        )
 
     for path in sorted(PLANS.glob("*.md")):
         path_key = rel(path)
@@ -2208,26 +2592,29 @@ def cmd_validate_usage_contract_drift(args: argparse.Namespace) -> dict[str, Any
         scanned_docs += 1
         lines = path.read_text(encoding="utf-8").splitlines()
         for index, line in enumerate(lines):
+            context: str | None = None
             matches = sorted(set(LEGACY_USAGE_TERM_RE.findall(line)))
-            if not matches:
-                continue
-            scanned_occurrences += len(matches)
-            context = "\n".join(lines[max(0, index - 3) : min(len(lines), index + 4)])
-            if usage_drift_in_yaml_list(lines, index, lineage_keys):
-                allowed_occurrences += len(matches)
-                continue
-            if USAGE_DRIFT_ALLOWED_CONTEXT_RE.search(context):
-                allowed_occurrences += len(matches)
-                continue
-            failures.append(
-                {
-                    "path": path_key,
-                    "line": index + 1,
-                    "terms": matches,
-                    "error": "active_legacy_usage_vocabulary_without_mapping_or_retirement",
-                    "text": line.strip()[:240],
-                }
-            )
+            if matches:
+                scanned_occurrences += len(matches)
+                context = "\n".join(lines[max(0, index - 3) : min(len(lines), index + 4)])
+                if usage_drift_in_yaml_list(lines, index, lineage_keys):
+                    allowed_occurrences += len(matches)
+                elif USAGE_DRIFT_ALLOWED_CONTEXT_RE.search(context):
+                    allowed_occurrences += len(matches)
+                else:
+                    failures.append(
+                        {
+                            "path": path_key,
+                            "line": index + 1,
+                            "terms": matches,
+                            "error": "active_legacy_usage_vocabulary_without_mapping_or_retirement",
+                            "text": line.strip()[:240],
+                        }
+                    )
+    source_confidence_failures, source_confidence_scanned, source_confidence_allowed = source_confidence_scan_active_examples()
+    failures.extend(source_confidence_failures)
+    scanned_source_confidence_assignments += source_confidence_scanned
+    allowed_source_confidence_assignments += source_confidence_allowed
 
     return report_status(
         "validate-usage-contract-drift",
@@ -2236,6 +2623,8 @@ def cmd_validate_usage_contract_drift(args: argparse.Namespace) -> dict[str, Any
         source_lineage_docs=source_lineage_docs,
         scanned_occurrences=scanned_occurrences,
         allowed_occurrences=allowed_occurrences,
+        scanned_source_confidence_assignments=scanned_source_confidence_assignments,
+        allowed_source_confidence_assignments=allowed_source_confidence_assignments,
     )
 
 
@@ -2301,10 +2690,41 @@ RETIRED_CHAT_USAGE_COMMAND_IDS = {
     "cmd.chat.focus_thread_usage",
     "cmd.chat.close_thread_usage",
 }
+RETIRED_WEB_COMMAND_RE = re.compile(r"^cmd\.web(?:\.|$)")
 USAGE_ROUTE_COMMAND_IDS = {
     "cmd.nav.open_usage_subject",
     "cmd.artifacts.show_in_usage",
     "cmd.artifacts.show_in_ledger",
+}
+BROWSER_COMMAND_EXPECTED_EVENTS = {
+    "cmd.browser.open_workspace_preview": ["browser.session.created", "browser.session.state_changed"],
+    "cmd.browser.open_detached_preview": ["browser.session.created", "browser.session.state_changed"],
+    "cmd.browser.detach_browser_tab": ["browser.session.state_changed"],
+    "cmd.browser.pick_element_for_chat": ["browser.context_captured"],
+    "cmd.browser.add_selection_to_chat": ["browser.context_captured"],
+    "cmd.browser.add_selection_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.created"],
+    "cmd.browser.add_selection_full_screenshot_to_chat": ["browser.context_captured", "runtime_artifact.created"],
+    "cmd.browser.add_screenshot_to_chat": ["runtime_artifact.created"],
+    "cmd.browser.add_full_screenshot_to_chat": ["runtime_artifact.created"],
+    "cmd.browser.share_with_agent": ["browser.context_shared"],
+    "cmd.browser.revoke_share_with_agent": ["browser.context_share_revoked"],
+    "cmd.browser.take_over": ["browser.session.takeover_state_changed"],
+    "cmd.browser.pause_agent": ["browser.session.takeover_state_changed"],
+    "cmd.browser.let_agent_continue": ["browser.session.takeover_state_changed"],
+    "cmd.browser.stop_agent_keep_browser": ["browser.session.takeover_state_changed", "dev.session.stopped"],
+    "cmd.browser.promote_to_normal_browsing": ["browser.session.promoted"],
+    "cmd.browser.reopen": ["browser.session.state_changed"],
+    "cmd.browser.retry": ["browser.session.state_changed"],
+    "cmd.browser.keep_closed": ["browser.session.closed"],
+}
+BROWSER_LAYOUT_ONLY_COMMAND_IDS = {
+    "cmd.browser.focus_browser_tab",
+    "cmd.browser.open_devtools",
+    "cmd.browser.toggle_devtools_dock",
+}
+BROWSER_FORBIDDEN_PRODUCTION_COMMAND_IDS = {
+    "cmd.browser.run_code",
+    "cmd.browser.evaluate",
 }
 USAGE_ROUTE_PASSTHROUGH_FIELDS = {
     "usage_event_ref",
@@ -2383,6 +2803,10 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
         production_commands.add(command_id)
         if command_id in RETIRED_CHAT_USAGE_COMMAND_IDS:
             failures.append({"path": row_path, "command_id": command_id, "error": "retired_chat_usage_alias_in_production_wiring"})
+        if RETIRED_WEB_COMMAND_RE.match(command_id):
+            failures.append({"path": row_path, "command_id": command_id, "error": "retired_web_command_alias_in_production_wiring"})
+        if command_id in BROWSER_FORBIDDEN_PRODUCTION_COMMAND_IDS:
+            failures.append({"path": row_path, "command_id": command_id, "error": "browser_page_evaluation_command_in_production_wiring"})
         if row.get("ui_element_id") != key:
             failures.append({"path": row_path, "error": "ui_element_id_key_mismatch", "ui_element_id": row.get("ui_element_id")})
         if row.get("example") is True:
@@ -2433,6 +2857,20 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
                 failures.append({"path": row_path, "command_id": command_id, "error": "event_row_missing_event_test_evidence"})
             if not isinstance(event_requirements, list) or not event_requirements:
                 failures.append({"path": row_path, "command_id": command_id, "error": "event_row_missing_event_test_requirements"})
+            stale_no_event_tokens = ["no declared persisted event", "no-persist", "emits no unexpected persisted domain event"]
+            for item in test_evidence:
+                if not isinstance(item, dict):
+                    continue
+                requirement_text = str(item.get("requirement", ""))
+                if any(token in requirement_text for token in stale_no_event_tokens):
+                    failures.append(
+                        {
+                            "path": row_path,
+                            "command_id": command_id,
+                            "test_id": item.get("test_id"),
+                            "error": "event_row_contains_no_persist_assertion_text",
+                        }
+                    )
             for event_type in expected_events:
                 if event_type not in effect_refs:
                     failures.append(
@@ -2446,6 +2884,42 @@ def cmd_validate_wiring_matrix(args: argparse.Namespace) -> dict[str, Any]:
         elif not isinstance(event_requirements, list) or not event_requirements:
             failures.append({"path": row_path, "command_id": command_id, "error": "no_event_row_missing_no_persist_test_requirement"})
 
+        if command_id in BROWSER_COMMAND_EXPECTED_EVENTS:
+            expected_browser_events = BROWSER_COMMAND_EXPECTED_EVENTS[command_id]
+            if expected_events != expected_browser_events:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "command_id": command_id,
+                        "expected": expected_browser_events,
+                        "actual": expected_events,
+                        "error": "browser_wiring_events_not_catalog_canonical",
+                    }
+                )
+            if effect_kind != "event":
+                failures.append(
+                    {
+                        "path": row_path,
+                        "command_id": command_id,
+                        "effect_kind": effect_kind,
+                        "error": "browser_event_command_not_event_effect",
+                    }
+                )
+            if "event_test" not in evidence_kinds:
+                failures.append({"path": row_path, "command_id": command_id, "error": "browser_event_command_missing_event_test"})
+        elif command_id in BROWSER_LAYOUT_ONLY_COMMAND_IDS:
+            if expected_events:
+                failures.append(
+                    {
+                        "path": row_path,
+                        "command_id": command_id,
+                        "actual": expected_events,
+                        "error": "browser_layout_only_command_declares_domain_event",
+                    }
+                )
+            description = str(effect_contract.get("description", "")) if isinstance(effect_contract, dict) else ""
+            if "layout/UI state only" not in description:
+                failures.append({"path": row_path, "command_id": command_id, "error": "browser_layout_only_command_missing_layout_disposition"})
         if command_id in USAGE_ROUTE_COMMAND_IDS:
             if effect_kind not in {"route_open", "mixed"}:
                 failures.append(
@@ -2582,6 +3056,1908 @@ def cmd_validate_gui_asset_policy(args: argparse.Namespace) -> dict[str, Any]:
     if proc.stderr:
         report["stderr"] = proc.stderr
     return report
+
+
+def cmd_validate_web_capability_contracts(args: argparse.Namespace) -> dict[str, Any]:
+    failures: list[dict[str, Any]] = []
+
+    web_schema_path = PLANS / "web_operation_contracts.schema.json"
+    evidence_schema_path = PLANS / "evidence.schema.json"
+    api_schema_path = PLANS / "runtime_artifact_api_web_call.schema.json"
+    browser_schema_path = PLANS / "runtime_artifact_browser_recording.schema.json"
+    gui_manifest_schema_path = PLANS / "gui_automation_manifest.schema.json"
+    provider_seed_path = PLANS / "web_provider_adapter_registry.seed.json"
+    projection_fixture_path = PLANS / "web_provider_projection_fixtures.json"
+    source_packet_receipt_path = PLANS / "web_capability_source_packet_receipt.json"
+    source_packet_receipt_schema_path = PLANS / "web_capability_source_packet_receipt.schema.json"
+    findings_coverage_path = PLANS / "web_capability_findings_coverage.json"
+    findings_coverage_schema_path = PLANS / "web_capability_findings_coverage.schema.json"
+    card_fixture_path = PLANS / "web_operation_card_fixtures.json"
+    job_fixture_path = PLANS / "web_operation_job_fixtures.json"
+    agent_policy_fixture_path = PLANS / "web_agent_policy_fixtures.json"
+    research_fixture_path = PLANS / "web_research_run_fixtures.json"
+    intent_fixture_path = PLANS / "web_intent_routing_fixtures.json"
+    policy_fixture_path = PLANS / "web_policy_negative_fixtures.json"
+    policy_fixture_schema_path = PLANS / "web_policy_negative_fixtures.schema.json"
+    required_paths = [
+        web_schema_path,
+        evidence_schema_path,
+        api_schema_path,
+        browser_schema_path,
+        gui_manifest_schema_path,
+        provider_seed_path,
+        projection_fixture_path,
+        source_packet_receipt_path,
+        source_packet_receipt_schema_path,
+        findings_coverage_path,
+        findings_coverage_schema_path,
+        card_fixture_path,
+        job_fixture_path,
+        agent_policy_fixture_path,
+        research_fixture_path,
+        intent_fixture_path,
+        policy_fixture_path,
+        policy_fixture_schema_path,
+    ]
+    for path in required_paths:
+        if not path.exists():
+            failures.append({"path": rel(path), "error": "missing_web_capability_contract_input"})
+    if failures:
+        return report_status("validate-web-capability-contracts", failures)
+
+    web_schema = load_json(web_schema_path)
+    evidence_schema = load_json(evidence_schema_path)
+    api_schema = load_json(api_schema_path)
+    browser_schema = load_json(browser_schema_path)
+    gui_manifest_schema = load_json(gui_manifest_schema_path)
+    provider_seed = load_json(provider_seed_path)
+    projection_fixtures = load_json(projection_fixture_path)
+    source_packet_receipt = load_json(source_packet_receipt_path)
+    source_packet_receipt_schema = load_json(source_packet_receipt_schema_path)
+    findings_coverage = load_json(findings_coverage_path)
+    findings_coverage_schema = load_json(findings_coverage_schema_path)
+    card_fixtures = load_json(card_fixture_path)
+    job_fixtures = load_json(job_fixture_path)
+    agent_policy_fixtures = load_json(agent_policy_fixture_path)
+    research_fixtures = load_json(research_fixture_path)
+    intent_fixtures = load_json(intent_fixture_path)
+    policy_fixtures = load_json(policy_fixture_path)
+    policy_fixture_schema = load_json(policy_fixture_schema_path)
+
+    required_defs = {
+        "InvocationProvenance",
+        "WebActionInput",
+        "WebActionResult",
+        "WebPermissionDecision",
+        "WebProviderAdapterRegistry",
+        "ProviderCapability",
+        "ProviderSupportTier",
+        "McpProjection",
+        "ProviderProjectionArtifact",
+        "CachePolicy",
+        "CacheRecord",
+        "WebOperationJob",
+        "WebEgressPolicy",
+        "ReadReceipt",
+        "CitationRecord",
+        "ResearchSource",
+        "ResearchSynthesisStep",
+        "ResearchSubagentRecord",
+        "ResearchRun",
+        "DeepResearchRun",
+        "PageRepresentation",
+        "BrowserSession",
+        "BrowserRuntimeState",
+        "BrowserActionInput",
+        "BrowserActionResult",
+        "BrowserRecordingArtifact",
+        "ResearchProgressCard",
+        "WebDeniedOperationCard",
+        "WebBatchOperationCard",
+        "WebOperationCard",
+        "TestingBrowserManifest",
+    }
+    web_defs = web_schema.get("$defs", {})
+    evidence_defs = evidence_schema.get("$defs", {})
+    api_defs = api_schema.get("$defs", {})
+    for def_name in sorted(required_defs):
+        if def_name not in web_defs:
+            failures.append({"path": rel(web_schema_path), "definition": def_name, "error": "missing_web_contract_definition"})
+    for def_name in ["WebOperationJob", "ResearchSynthesisStep", "ResearchSubagentRecord"]:
+        if def_name not in evidence_defs:
+            failures.append({"path": rel(evidence_schema_path), "definition": def_name, "error": "missing_web_evidence_contract_definition"})
+    if "WebOperationJob" not in api_defs:
+        failures.append({"path": rel(api_schema_path), "definition": "WebOperationJob", "error": "missing_api_web_call_job_definition"})
+
+    invocation_sources = set(
+        web_defs.get("InvocationProvenance", {})
+        .get("properties", {})
+        .get("invocation_source", {})
+        .get("enum", [])
+    )
+    required_sources = {"slash", "palette", "nl_user", "agent_initiated", "goal", "prd", "planning_wizard", "subagent"}
+    for source in sorted(required_sources - invocation_sources):
+        failures.append({"path": rel(web_schema_path), "invocation_source": source, "error": "missing_invocation_source"})
+
+    for error in validate_schema(findings_coverage, findings_coverage_schema, findings_coverage_schema):
+        failures.append({"path": rel(findings_coverage_path), "schema": rel(findings_coverage_schema_path), "error": error})
+    for error in validate_schema(source_packet_receipt, source_packet_receipt_schema, source_packet_receipt_schema):
+        failures.append({"path": rel(source_packet_receipt_path), "schema": rel(source_packet_receipt_schema_path), "error": error})
+    for error in validate_schema(policy_fixtures, policy_fixture_schema, policy_fixture_schema):
+        failures.append({"path": rel(policy_fixture_path), "schema": rel(policy_fixture_schema_path), "error": error})
+
+    bad_agentic_invocation = {"invocation_source": "agent_initiated"}
+    if not validate_schema(bad_agentic_invocation, web_defs.get("InvocationProvenance", {}), web_schema, "$.bad_agentic_invocation"):
+        failures.append({"path": rel(web_schema_path), "definition": "InvocationProvenance", "error": "agentic_invocation_without_reason_unexpectedly_valid"})
+    mirrored_invocation_defs = [
+        (evidence_schema_path, evidence_schema, evidence_schema.get("$defs", {}).get("InvocationProvenance", {}), "evidence_agentic_invocation_without_reason_unexpectedly_valid"),
+        (api_schema_path, api_schema, api_schema.get("$defs", {}).get("InvocationProvenance", {}), "api_web_call_agentic_invocation_without_reason_unexpectedly_valid"),
+        (browser_schema_path, browser_schema, browser_schema.get("$defs", {}).get("InvocationProvenance", {}), "browser_recording_agentic_invocation_without_reason_unexpectedly_valid"),
+    ]
+    for schema_path, schema_root, invocation_def, error_code in mirrored_invocation_defs:
+        if not validate_schema(bad_agentic_invocation, invocation_def, schema_root, "$.bad_agentic_invocation"):
+            failures.append({"path": rel(schema_path), "definition": "InvocationProvenance", "error": error_code})
+
+    web_operations = set(web_defs.get("WebOperation", {}).get("enum", []))
+    for operation in ["search", "read", "extract", "research", "deep_research", "crawl", "map"]:
+        if operation not in web_operations:
+            failures.append({"path": rel(web_schema_path), "web_operation": operation, "error": "missing_web_operation"})
+
+    support_tiers = set(web_defs.get("ProviderSupportTier", {}).get("enum", []))
+    required_support_tiers = {"native", "model_native", "native_ish", "near_native", "pm_composed", "partial", "fallback_only", "unsupported", "unavailable"}
+    for support_tier in sorted(required_support_tiers - support_tiers):
+        failures.append({"path": rel(web_schema_path), "support_tier": support_tier, "error": "missing_provider_support_tier"})
+
+    web_tool_ids = set(web_defs.get("WebToolId", {}).get("enum", []))
+    for tool_id in ["websearch", "webfetch", "webextract", "webresearch", "webcrawl", "webmap"]:
+        if tool_id not in web_tool_ids:
+            failures.append({"path": rel(web_schema_path), "tool_id": tool_id, "error": "missing_web_tool_id"})
+    required_web_tool_labels = {"websearch", "webfetch", "webextract", "webresearch", "webcrawl", "webmap", "BrowserAction/Site Reader"}
+
+    if agent_policy_fixtures.get("schema_id") != "pm.web_agent_policy_fixtures.v1":
+        failures.append({"path": rel(agent_policy_fixture_path), "error": "invalid_web_agent_policy_fixture_schema_id"})
+    if agent_policy_fixtures.get("dispatcher") != "PM WebOperation/BrowserAction dispatcher":
+        failures.append({"path": rel(agent_policy_fixture_path), "error": "web_agent_policy_dispatcher_not_pm_dispatcher"})
+    affordance = agent_policy_fixtures.get("capability_affordance", {}) if isinstance(agent_policy_fixtures, dict) else {}
+    if affordance.get("slice_id") != "WebCapabilityAffordance":
+        failures.append({"path": rel(agent_policy_fixture_path), "field": "capability_affordance.slice_id", "error": "missing_web_capability_affordance_fixture"})
+    affordance_ops = set(affordance.get("operations", [])) if isinstance(affordance.get("operations"), list) else set()
+    for operation in sorted(required_web_tool_labels - affordance_ops):
+        failures.append({"path": rel(agent_policy_fixture_path), "operation": operation, "error": "web_capability_affordance_missing_operation"})
+    if affordance.get("provider_catalog_mode") != "lazy_registry_summary":
+        failures.append({"path": rel(agent_policy_fixture_path), "field": "capability_affordance.provider_catalog_mode", "error": "web_capability_affordance_not_lazy_registry_summary"})
+    if affordance.get("native_browser_runtime") != "pm_managed_native_browser":
+        failures.append({"path": rel(agent_policy_fixture_path), "field": "capability_affordance.native_browser_runtime", "error": "web_capability_affordance_not_pm_native_browser"})
+    if affordance.get("playwright_cdp_status") != "fallback_reference_only":
+        failures.append({"path": rel(agent_policy_fixture_path), "field": "capability_affordance.playwright_cdp_status", "error": "playwright_cdp_not_marked_fallback_reference_only"})
+    forbidden_affordance_data = set(affordance.get("must_not_include", [])) if isinstance(affordance.get("must_not_include"), list) else set()
+    for forbidden in ["raw_secrets", "full_provider_config", "provider_private_prompt_files"]:
+        if forbidden not in forbidden_affordance_data:
+            failures.append({"path": rel(agent_policy_fixture_path), "forbidden": forbidden, "error": "web_capability_affordance_missing_forbidden_data_boundary"})
+
+    persona_policies = agent_policy_fixtures.get("persona_policies", []) if isinstance(agent_policy_fixtures, dict) else []
+    if not isinstance(persona_policies, list) or not persona_policies:
+        failures.append({"path": rel(agent_policy_fixture_path), "error": "missing_web_agent_persona_policies"})
+        persona_policies = []
+    required_policy_surfaces = {
+        "assistant",
+        "collaborator",
+        "researcher",
+        "deep_researcher",
+        "goal_runtime",
+        "prd_builder",
+        "planning_wizard",
+        "orchestrator",
+        "subagent",
+    }
+    seen_policy_surfaces = {policy.get("surface") for policy in persona_policies if isinstance(policy, dict)}
+    for surface in sorted(required_policy_surfaces - seen_policy_surfaces):
+        failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "error": "missing_web_agent_policy_surface"})
+    source_by_surface = {
+        "assistant": "agent_initiated",
+        "collaborator": "agent_initiated",
+        "researcher": "agent_initiated",
+        "deep_researcher": "agent_initiated",
+        "goal_runtime": "goal",
+        "prd_builder": "prd",
+        "planning_wizard": "planning_wizard",
+        "orchestrator": "goal",
+        "subagent": "subagent",
+    }
+    for policy in persona_policies:
+        if not isinstance(policy, dict):
+            failures.append({"path": rel(agent_policy_fixture_path), "error": "invalid_web_agent_policy_row"})
+            continue
+        surface = policy.get("surface")
+        policy_id = policy.get("policy_id")
+        if policy.get("dispatcher") != "PM WebOperation/BrowserAction dispatcher":
+            failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "error": "web_agent_policy_dispatcher_mismatch"})
+        expected_source = source_by_surface.get(surface)
+        if expected_source and policy.get("invocation_source") != expected_source:
+            failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "expected": expected_source, "actual": policy.get("invocation_source"), "error": "web_agent_policy_invocation_source_mismatch"})
+        if policy.get("agent_reason_required") is not True:
+            failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "error": "web_agent_policy_reason_not_required"})
+        if policy.get("permission_gate") != "required":
+            failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "error": "web_agent_policy_permission_gate_not_required"})
+        if policy.get("visible_card_required") is not True:
+            failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "error": "web_agent_policy_missing_visible_card_requirement"})
+        if policy.get("read_only_default") is not True or policy.get("mutating_tools_denied") is not True:
+            failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "error": "web_agent_policy_not_read_only"})
+        allowed_tools = set(policy.get("allowed_tools", [])) if isinstance(policy.get("allowed_tools"), list) else set()
+        for tool_label in sorted(required_web_tool_labels - allowed_tools):
+            failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "tool": tool_label, "error": "web_agent_policy_missing_allowed_tool"})
+        triggers = set(policy.get("self_initiates_when", [])) if isinstance(policy.get("self_initiates_when"), list) else set()
+        if not triggers:
+            failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "error": "web_agent_policy_missing_self_initiation_triggers"})
+        if surface in {"prd_builder", "planning_wizard"}:
+            if policy.get("evidence_destination") != "ledger_or_plan_source_evidence":
+                failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "error": "planning_web_policy_wrong_evidence_destination"})
+            forbidden_targets = set(policy.get("must_not_create", [])) if isinstance(policy.get("must_not_create"), list) else set()
+            for forbidden in ["WorkNode", "NodeSeed", "runtime_queue", "build_task"]:
+                if forbidden not in forbidden_targets:
+                    failures.append({"path": rel(agent_policy_fixture_path), "policy_id": policy_id, "forbidden": forbidden, "error": "planning_web_policy_missing_forbidden_runtime_target"})
+
+    agent_run_mode_assertions = agent_policy_fixtures.get("run_mode_policy_assertions", []) if isinstance(agent_policy_fixtures, dict) else []
+    if not isinstance(agent_run_mode_assertions, list) or not agent_run_mode_assertions:
+        failures.append({"path": rel(agent_policy_fixture_path), "error": "missing_web_agent_run_mode_assertions"})
+        agent_run_mode_assertions = []
+    required_agent_run_mode_cases = {
+        "ask_mode_websearch_visible_ask",
+        "plan_mode_webfetch_visible_ask",
+        "deep_plan_research_visible_ask",
+        "no_network_denies_with_visible_card",
+    }
+    seen_agent_run_mode_cases = {case.get("case_id") for case in agent_run_mode_assertions if isinstance(case, dict)}
+    for case_id in sorted(required_agent_run_mode_cases - seen_agent_run_mode_cases):
+        failures.append({"path": rel(agent_policy_fixture_path), "case_id": case_id, "error": "missing_web_agent_run_mode_assertion"})
+    for assertion in agent_run_mode_assertions:
+        if not isinstance(assertion, dict):
+            continue
+        case_id = assertion.get("case_id")
+        if assertion.get("run_mode") not in {"ask", "plan", "regular", "yolo"}:
+            failures.append({"path": rel(agent_policy_fixture_path), "case_id": case_id, "run_mode": assertion.get("run_mode"), "error": "web_agent_run_mode_not_canonical_runtime_mode"})
+        if assertion.get("effective_overlay") == "deep_plan" and assertion.get("normalized_runtime_mode") != "plan":
+            failures.append({"path": rel(agent_policy_fixture_path), "case_id": case_id, "error": "deep_plan_overlay_not_normalized_to_plan"})
+        expected_decision = "deny" if assertion.get("network_policy") == "deny" else "ask"
+        if assertion.get("expected_decision") != expected_decision:
+            failures.append({"path": rel(agent_policy_fixture_path), "case_id": case_id, "expected": expected_decision, "actual": assertion.get("expected_decision"), "error": "web_agent_run_mode_decision_mismatch"})
+        if assertion.get("must_show_card") is not True:
+            failures.append({"path": rel(agent_policy_fixture_path), "case_id": case_id, "error": "web_agent_run_mode_missing_visible_card"})
+
+    parity_rows = agent_policy_fixtures.get("surface_owner_policy_parity", []) if isinstance(agent_policy_fixtures, dict) else []
+    if not isinstance(parity_rows, list) or not parity_rows:
+        failures.append({"path": rel(agent_policy_fixture_path), "error": "missing_surface_owner_policy_parity"})
+        parity_rows = []
+    required_parity_surfaces = {"prd_builder", "planning_wizard", "orchestrator", "subagent", "personas", "run_modes", "prompt_pipeline"}
+    seen_parity_surfaces = {row.get("surface") for row in parity_rows if isinstance(row, dict)}
+    for surface in sorted(required_parity_surfaces - seen_parity_surfaces):
+        failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "error": "missing_surface_owner_policy_parity_row"})
+    policies_by_id = {policy.get("policy_id"): policy for policy in persona_policies if isinstance(policy, dict)}
+    for row in parity_rows:
+        if not isinstance(row, dict):
+            failures.append({"path": rel(agent_policy_fixture_path), "error": "invalid_surface_owner_policy_parity_row"})
+            continue
+        surface = row.get("surface")
+        owner_doc = row.get("owner_doc")
+        if not isinstance(owner_doc, str) or owner_doc.startswith("/"):
+            failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "owner_doc": owner_doc, "error": "invalid_surface_owner_policy_owner_doc"})
+            continue
+        owner_path = ROOT / owner_doc
+        if not owner_path.exists():
+            failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "owner_doc": owner_doc, "error": "missing_surface_owner_policy_owner_doc"})
+            continue
+        owner_text = owner_path.read_text(encoding="utf-8")
+        for token in row.get("required_owner_tokens", []):
+            if token not in owner_text:
+                failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "owner_doc": owner_doc, "token": token, "error": "surface_owner_policy_required_token_missing"})
+        policy_ids: list[str] = []
+        if isinstance(row.get("policy_id"), str):
+            policy_ids.append(row["policy_id"])
+        if isinstance(row.get("policy_ids"), list):
+            policy_ids.extend(policy_id for policy_id in row["policy_ids"] if isinstance(policy_id, str))
+        required_tools_for_row = set(row.get("required_tools", [])) if isinstance(row.get("required_tools"), list) else set()
+        for policy_id in policy_ids:
+            policy = policies_by_id.get(policy_id)
+            if not isinstance(policy, dict):
+                failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "policy_id": policy_id, "error": "surface_owner_policy_missing_policy"})
+                continue
+            policy_tools = set(policy.get("allowed_tools", [])) if isinstance(policy.get("allowed_tools"), list) else set()
+            for tool_label in sorted(required_tools_for_row - policy_tools):
+                failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "policy_id": policy_id, "tool": tool_label, "error": "surface_owner_policy_tool_mismatch"})
+            if row.get("invocation_source") and policy.get("invocation_source") != row.get("invocation_source"):
+                failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "policy_id": policy_id, "expected": row.get("invocation_source"), "actual": policy.get("invocation_source"), "error": "surface_owner_policy_invocation_source_mismatch"})
+            if row.get("evidence_destination") and policy.get("evidence_destination") != row.get("evidence_destination"):
+                failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "policy_id": policy_id, "expected": row.get("evidence_destination"), "actual": policy.get("evidence_destination"), "error": "surface_owner_policy_evidence_destination_mismatch"})
+        if surface == "run_modes":
+            if row.get("runtime_mode") not in {"ask", "plan", "regular", "yolo"}:
+                failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "run_mode": row.get("runtime_mode"), "error": "surface_owner_policy_run_mode_not_canonical"})
+            if row.get("effective_overlay") == "deep_plan" and row.get("normalized_runtime_mode") != "plan":
+                failures.append({"path": rel(agent_policy_fixture_path), "surface": surface, "error": "surface_owner_policy_deep_plan_not_normalized_to_plan"})
+
+    agent_negative_cases = agent_policy_fixtures.get("negative_cases", []) if isinstance(agent_policy_fixtures, dict) else []
+    if not isinstance(agent_negative_cases, list) or not agent_negative_cases:
+        failures.append({"path": rel(agent_policy_fixture_path), "error": "missing_web_agent_policy_negative_cases"})
+        agent_negative_cases = []
+    required_agent_negative_cases = {
+        "prompt_affordance_raw_secret_leakage",
+        "persona_policy_missing_agent_reason",
+        "plan_mode_web_silent_deny",
+        "planning_policy_runtime_queue_leakage",
+        "deep_researcher_mutating_tool_leakage",
+        "browser_primary_runtime_not_pm_native",
+        "slash_help_hides_agent_capability",
+    }
+    seen_agent_negative_cases = {case.get("case_id") for case in agent_negative_cases if isinstance(case, dict)}
+    for case_id in sorted(required_agent_negative_cases - seen_agent_negative_cases):
+        failures.append({"path": rel(agent_policy_fixture_path), "case_id": case_id, "error": "missing_web_agent_policy_negative_case"})
+
+    required_finding_ids = {
+        "WGUI-001",
+        "WGUI-002",
+        "WGUI-003",
+        "WSCH-001",
+        "WSCH-002",
+        "WPERM-001",
+        "WGUI-004",
+        "WBRO-001",
+        "WBRO-002",
+        "WPROV-001",
+        "WRES-001",
+        "WSEC-001",
+        "WPLAN-001",
+        "WROUTE-002",
+        "WAGENT-001",
+        "WAGENT-002",
+        "WAGENT-003",
+        "WAGENT-004",
+        "WAGENT-005",
+    }
+    allowed_finding_statuses = {
+        "covered_by_contracts_and_validators",
+        "fixture_projection_ready_live_projection_sync_pending",
+    }
+    allowed_validator_surfaces = {
+        "validate-web-capability-contracts",
+        "validate-runtime-artifact-schemas",
+        "validate-wiring-matrix",
+        "validate-project-output-fixtures",
+    }
+    finding_rows = findings_coverage.get("findings", []) if isinstance(findings_coverage, dict) else []
+    source_packet = findings_coverage.get("source_packet", {}) if isinstance(findings_coverage, dict) else {}
+    if isinstance(source_packet, dict):
+        for key in ["review", "matrix", "receipt"]:
+            value = source_packet.get(key)
+            if not isinstance(value, str) or value.startswith("/"):
+                failures.append({"path": rel(findings_coverage_path), "field": f"source_packet.{key}", "error": "web_capability_coverage_source_packet_must_not_be_absolute_local_path"})
+        if source_packet.get("receipt") != rel(source_packet_receipt_path):
+            failures.append({"path": rel(findings_coverage_path), "field": "source_packet.receipt", "expected": rel(source_packet_receipt_path), "actual": source_packet.get("receipt"), "error": "web_capability_source_packet_receipt_ref_mismatch"})
+    packet_files = source_packet_receipt.get("files", []) if isinstance(source_packet_receipt, dict) else []
+    if not isinstance(packet_files, list) or not packet_files:
+        failures.append({"path": rel(source_packet_receipt_path), "error": "missing_web_capability_source_packet_files"})
+        packet_files = []
+    packet_file_by_name = {row.get("artifact_name"): row for row in packet_files if isinstance(row, dict)}
+    expected_packet_files = {
+        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md": "review_addendum",
+        "FINDINGS_MATRIX_V3.json": "findings_matrix",
+        "CODEX_GOAL_PROMPT_UNDER_4000.txt": "goal_prompt",
+        "pm_web_capability_codex_packet_v3.zip": "source_packet_archive",
+    }
+    for artifact_name, artifact_role in expected_packet_files.items():
+        row = packet_file_by_name.get(artifact_name)
+        if not isinstance(row, dict):
+            failures.append({"path": rel(source_packet_receipt_path), "artifact_name": artifact_name, "error": "missing_web_capability_source_packet_file"})
+            continue
+        if row.get("artifact_role") != artifact_role:
+            failures.append({"path": rel(source_packet_receipt_path), "artifact_name": artifact_name, "expected": artifact_role, "actual": row.get("artifact_role"), "error": "web_capability_source_packet_role_mismatch"})
+        if "/" in artifact_name or artifact_name.startswith("."):
+            failures.append({"path": rel(source_packet_receipt_path), "artifact_name": artifact_name, "error": "web_capability_source_packet_artifact_name_not_basename"})
+    receipt_text = json.dumps(source_packet_receipt, sort_keys=True)
+    for forbidden in ["/Users/", "jaredsmacbookair", "Downloads/", "api_key", "access_token", "refresh_token", "client_secret", "cookie", "authorization_header"]:
+        if forbidden in receipt_text:
+            failures.append({"path": rel(source_packet_receipt_path), "token": forbidden, "error": "web_capability_source_packet_receipt_leaks_local_or_secret_state"})
+    if not isinstance(finding_rows, list) or not finding_rows:
+        failures.append({"path": rel(findings_coverage_path), "error": "missing_web_capability_findings_coverage_rows"})
+        finding_rows = []
+    seen_finding_ids = {row.get("finding_id") for row in finding_rows if isinstance(row, dict)}
+    packet_finding_ids = set(
+        source_packet_receipt.get("finding_matrix", {}).get("finding_ids", [])
+        if isinstance(source_packet_receipt.get("finding_matrix", {}), dict)
+        else []
+    )
+    if packet_finding_ids != required_finding_ids:
+        failures.append({"path": rel(source_packet_receipt_path), "missing": sorted(required_finding_ids - packet_finding_ids), "extra": sorted(packet_finding_ids - required_finding_ids), "error": "web_capability_source_packet_finding_id_set_mismatch"})
+    if packet_finding_ids and seen_finding_ids != packet_finding_ids:
+        failures.append({"path": rel(findings_coverage_path), "missing": sorted(packet_finding_ids - seen_finding_ids), "extra": sorted(seen_finding_ids - packet_finding_ids), "error": "web_capability_findings_coverage_not_aligned_to_packet_receipt"})
+    for finding_id in sorted(required_finding_ids - seen_finding_ids):
+        failures.append({"path": rel(findings_coverage_path), "finding_id": finding_id, "error": "missing_v3_finding_coverage"})
+    for finding_id in sorted(seen_finding_ids - required_finding_ids):
+        failures.append({"path": rel(findings_coverage_path), "finding_id": finding_id, "error": "unknown_v3_finding_coverage"})
+    for row in finding_rows:
+        if not isinstance(row, dict):
+            failures.append({"path": rel(findings_coverage_path), "error": "invalid_v3_finding_coverage_row"})
+            continue
+        finding_id = row.get("finding_id")
+        status = row.get("status")
+        if status not in allowed_finding_statuses:
+            failures.append({"path": rel(findings_coverage_path), "finding_id": finding_id, "status": status, "error": "invalid_v3_finding_coverage_status"})
+        evidence_files = row.get("evidence_files", [])
+        if not isinstance(evidence_files, list) or not evidence_files:
+            failures.append({"path": rel(findings_coverage_path), "finding_id": finding_id, "error": "missing_v3_finding_evidence_files"})
+        else:
+            for evidence_file in evidence_files:
+                if not isinstance(evidence_file, str) or evidence_file.startswith("/"):
+                    failures.append({"path": rel(findings_coverage_path), "finding_id": finding_id, "evidence_file": evidence_file, "error": "invalid_v3_finding_evidence_path"})
+                    continue
+                evidence_path = ROOT / evidence_file
+                if not evidence_path.exists():
+                    failures.append({"path": rel(findings_coverage_path), "finding_id": finding_id, "evidence_file": evidence_file, "error": "missing_v3_finding_evidence_file"})
+        validators = row.get("validator_surfaces", [])
+        if not isinstance(validators, list) or not validators:
+            failures.append({"path": rel(findings_coverage_path), "finding_id": finding_id, "error": "missing_v3_finding_validator_surfaces"})
+        else:
+            for validator in validators:
+                if validator not in allowed_validator_surfaces:
+                    failures.append({"path": rel(findings_coverage_path), "finding_id": finding_id, "validator": validator, "error": "unknown_v3_finding_validator_surface"})
+    for validator in [
+        "python3 scripts/pm-plans-verify.py validate-web-capability-contracts",
+        "python3 scripts/pm-plans-verify.py validate-runtime-artifact-schemas",
+        "python3 scripts/pm-plans-verify.py validate-wiring-matrix",
+        "python3 scripts/pm-plans-verify.py validate-project-output-fixtures",
+    ]:
+        if validator not in findings_coverage.get("required_validator_surfaces", []):
+            failures.append({"path": rel(findings_coverage_path), "validator": validator, "error": "missing_required_web_capability_validator_surface"})
+
+    permission_required = set(web_defs.get("WebPermissionDecision", {}).get("required", []))
+    if "invocation" not in permission_required:
+        failures.append({"path": rel(web_schema_path), "definition": "WebPermissionDecision", "field": "invocation", "error": "web_permission_decision_missing_invocation_provenance"})
+    bad_denied_permission = {
+        "permission_snapshot_id": "perm:web-denied-bad",
+        "decision": "deny",
+        "invocation": {"invocation_source": "goal", "agent_reason": "fixture denial path"},
+    }
+    if not validate_schema(bad_denied_permission, web_defs.get("WebPermissionDecision", {}), web_schema, "$.bad_denied_permission"):
+        failures.append({"path": rel(web_schema_path), "definition": "WebPermissionDecision", "error": "denied_permission_without_reason_unexpectedly_valid"})
+
+    citation_required = set(web_defs.get("CitationRecord", {}).get("required", []))
+    if "snippet_only" not in citation_required:
+        failures.append({"path": rel(web_schema_path), "definition": "CitationRecord", "field": "snippet_only", "error": "shared_citation_record_snippet_only_not_required"})
+
+    for schema_path, defs in [
+        (web_schema_path, web_defs),
+        (evidence_schema_path, evidence_defs),
+        (api_schema_path, api_defs),
+    ]:
+        job_required = set(defs.get("WebOperationJob", {}).get("required", []))
+        if "not_runtime_queue" not in job_required:
+            failures.append({"path": rel(schema_path), "definition": "WebOperationJob", "field": "not_runtime_queue", "error": "web_operation_job_non_queue_marker_not_required"})
+    for schema_path, defs in [
+        (web_schema_path, web_defs),
+        (evidence_schema_path, evidence_defs),
+    ]:
+        result_props = defs.get("WebActionResult", {}).get("properties", {})
+        for field in ["job_ref", "job"]:
+            if field not in result_props:
+                failures.append({"path": rel(schema_path), "definition": "WebActionResult", "field": field, "error": "web_action_result_missing_job_field"})
+        research_props = defs.get("ResearchRun", {}).get("properties", {})
+        for field in ["synthesis_steps", "subagent_records"]:
+            if field not in research_props:
+                failures.append({"path": rel(schema_path), "definition": "ResearchRun", "field": field, "error": "research_run_missing_synthesis_or_subagent_field"})
+    job_fixture_owner = job_fixtures.get("owner_schema") if isinstance(job_fixtures, dict) else None
+    if job_fixture_owner != "Plans/web_operation_contracts.schema.json#/$defs/WebOperationJob":
+        failures.append({"path": rel(job_fixture_path), "owner_schema": job_fixture_owner, "error": "web_operation_job_fixture_owner_schema_mismatch"})
+    valid_jobs = job_fixtures.get("valid_jobs", []) if isinstance(job_fixtures, dict) else []
+    if not isinstance(valid_jobs, list) or not valid_jobs:
+        failures.append({"path": rel(job_fixture_path), "error": "missing_valid_web_operation_job_fixtures"})
+        valid_jobs = []
+    seen_job_statuses: set[str] = set()
+    seen_job_operations: set[str] = set()
+    for job in valid_jobs:
+        if not isinstance(job, dict):
+            failures.append({"path": rel(job_fixture_path), "error": "invalid_web_operation_job_fixture_row"})
+            continue
+        case_id = job.get("case_id")
+        job_payload = {key: value for key, value in job.items() if key != "case_id"}
+        for error in validate_schema(job_payload, web_defs.get("WebOperationJob", {}), web_schema, f"$.valid_jobs[{case_id}]"):
+            failures.append({"path": rel(job_fixture_path), "case_id": case_id, "error": "valid_web_operation_job_fixture_rejected", "detail": error})
+        if job_payload.get("not_runtime_queue") is not True:
+            failures.append({"path": rel(job_fixture_path), "case_id": case_id, "error": "valid_web_operation_job_not_marked_non_queue"})
+        if isinstance(job_payload.get("status"), str):
+            seen_job_statuses.add(job_payload["status"])
+        if isinstance(job_payload.get("web_operation"), str):
+            seen_job_operations.add(job_payload["web_operation"])
+    for status in ["polling", "timeout"]:
+        if status not in seen_job_statuses:
+            failures.append({"path": rel(job_fixture_path), "status": status, "error": "missing_web_operation_job_status_fixture"})
+    for operation in ["crawl", "research"]:
+        if operation not in seen_job_operations:
+            failures.append({"path": rel(job_fixture_path), "web_operation": operation, "error": "missing_web_operation_job_operation_fixture"})
+    invalid_jobs = job_fixtures.get("invalid_jobs", []) if isinstance(job_fixtures, dict) else []
+    if not isinstance(invalid_jobs, list) or not invalid_jobs:
+        failures.append({"path": rel(job_fixture_path), "error": "missing_invalid_web_operation_job_fixtures"})
+        invalid_jobs = []
+    invalid_job_ids = {case.get("case_id") for case in invalid_jobs if isinstance(case, dict)}
+    for case_id in ["failed_job_missing_failure_reason", "job_missing_non_queue_marker"]:
+        if case_id not in invalid_job_ids:
+            failures.append({"path": rel(job_fixture_path), "case_id": case_id, "error": "missing_invalid_web_operation_job_fixture"})
+    for invalid in invalid_jobs:
+        if not isinstance(invalid, dict):
+            continue
+        job_payload = invalid.get("job", {})
+        if not validate_schema(job_payload, web_defs.get("WebOperationJob", {}), web_schema, f"$.invalid_jobs[{invalid.get('case_id')}]"):
+            failures.append({"path": rel(job_fixture_path), "case_id": invalid.get("case_id"), "error": "invalid_web_operation_job_fixture_unexpectedly_valid"})
+    constraints_text = "\n".join(job_fixtures.get("negative_constraints", [])) if isinstance(job_fixtures, dict) else ""
+    for token in ["WorkNodes", "NodeSeeds", "runtime queues", "build tasks", "PM registry source of truth"]:
+        if token not in constraints_text:
+            failures.append({"path": rel(job_fixture_path), "token": token, "error": "web_operation_job_negative_constraint_missing_token"})
+
+    bad_stored_cache = {"cache_state": "stored", "ttl_seconds": 3600, "no_secret_verified": True}
+    if not validate_schema(bad_stored_cache, web_defs.get("CacheRecord", {}), web_schema, "$.bad_stored_cache"):
+        failures.append({"path": rel(web_schema_path), "definition": "CacheRecord", "error": "stored_cache_without_redaction_profile_unexpectedly_valid"})
+    if not validate_schema(bad_stored_cache, evidence_schema.get("$defs", {}).get("CacheRecord", {}), evidence_schema, "$.bad_stored_cache"):
+        failures.append({"path": rel(evidence_schema_path), "definition": "CacheRecord", "error": "evidence_stored_cache_without_redaction_profile_unexpectedly_valid"})
+    bad_stored_cache_secret_unverified = {
+        "cache_state": "stored",
+        "ttl_seconds": 3600,
+        "no_secret_verified": False,
+        "redaction_profile_id": "redaction:web.default",
+    }
+    if not validate_schema(bad_stored_cache_secret_unverified, web_defs.get("CacheRecord", {}), web_schema, "$.bad_stored_cache_secret_unverified"):
+        failures.append({"path": rel(web_schema_path), "definition": "CacheRecord", "error": "stored_cache_with_no_secret_verified_false_unexpectedly_valid"})
+    if not validate_schema(bad_stored_cache_secret_unverified, evidence_schema.get("$defs", {}).get("CacheRecord", {}), evidence_schema, "$.bad_stored_cache_secret_unverified"):
+        failures.append({"path": rel(evidence_schema_path), "definition": "CacheRecord", "error": "evidence_stored_cache_with_no_secret_verified_false_unexpectedly_valid"})
+
+    bad_snippet_citation = {
+        "citation_id": "citation:bad-snippet",
+        "url": "https://example.com",
+        "source_ref": "source:snippet",
+        "read_receipt_ref": "receipt:read-001",
+        "evidence_kind": "read",
+        "snippet_only": True,
+    }
+    if not validate_schema(bad_snippet_citation, web_defs.get("CitationRecord", {}), web_schema, "$.bad_snippet_citation"):
+        failures.append({"path": rel(web_schema_path), "definition": "CitationRecord", "error": "snippet_only_citation_unexpectedly_valid"})
+
+    shared_mismatch_result = {
+        "web_operation": "search",
+        "tool_id": "websearch",
+        "invocation": {"invocation_source": "nl_user"},
+        "operation_input": {"web_operation": "read", "tool_id": "webfetch", "url": "https://example.com"},
+        "success": True,
+        "provider_fallback_occurred": False,
+    }
+    if not validate_schema(shared_mismatch_result, web_defs.get("WebActionResult", {}), web_schema, "$.shared_mismatch_result"):
+        failures.append({"path": rel(web_schema_path), "definition": "WebActionResult", "error": "web_action_result_mismatch_unexpectedly_valid"})
+
+    evidence_mismatch_result = {
+        "web_operation": "search",
+        "tool_id": "websearch",
+        "invocation": {"invocation_source": "nl_user"},
+        "operation_input": {"web_operation": "read", "tool_id": "webfetch"},
+        "success": True,
+        "provider_fallback_occurred": False,
+    }
+    if not validate_schema(evidence_mismatch_result, evidence_schema.get("$defs", {}).get("WebActionResult", {}), evidence_schema, "$.evidence_mismatch_result"):
+        failures.append({"path": rel(evidence_schema_path), "definition": "WebActionResult", "error": "evidence_web_action_result_mismatch_unexpectedly_valid"})
+
+    bad_prompt_injection_page = {
+        "page_representation_id": "page:bad-prompt-injection",
+        "url": "https://example.com",
+        "detail_level": "standard",
+        "prompt_injection_detected": True,
+        "observed_at_utc": "2026-07-09T00:00:00Z",
+    }
+    if not validate_schema(bad_prompt_injection_page, web_defs.get("PageRepresentation", {}), web_schema, "$.bad_prompt_injection_page"):
+        failures.append({"path": rel(web_schema_path), "definition": "PageRepresentation", "error": "prompt_injection_without_visible_chips_unexpectedly_valid"})
+
+    bad_runtime_unavailable_manifest = {
+        "browser_session_id": "browser:runtime-unavailable-bad",
+        "visibility_state": "runtime_unavailable",
+        "open_watch_state": "unavailable",
+        "evidence_refs": ["evidence:browser-unavailable"],
+        "redaction_manifest_ref": "redaction:browser-unavailable",
+    }
+    if not validate_schema(bad_runtime_unavailable_manifest, gui_manifest_schema.get("$defs", {}).get("TestingBrowserManifest", {}), gui_manifest_schema, "$.bad_runtime_unavailable_manifest"):
+        failures.append({"path": rel(gui_manifest_schema_path), "definition": "TestingBrowserManifest", "error": "runtime_unavailable_without_remediation_unexpectedly_valid"})
+    if not validate_schema(bad_runtime_unavailable_manifest, web_defs.get("TestingBrowserManifest", {}), web_schema, "$.bad_runtime_unavailable_manifest"):
+        failures.append({"path": rel(web_schema_path), "definition": "TestingBrowserManifest", "error": "shared_testing_runtime_unavailable_without_remediation_unexpectedly_valid"})
+    gui_artifact_schema = gui_manifest_schema.get("properties", {}).get("artifacts", {}).get("items", {})
+    bad_browser_artifact_missing_redaction = {
+        "artifact_id": "browser-artifact-missing-redaction",
+        "kind": "browser_screenshot",
+        "relative_path": "artifacts/browser/screenshot.png",
+        "mime_type": "image/png",
+        "sha256": "0" * 64,
+        "size_bytes": 12,
+    }
+    if not validate_schema(bad_browser_artifact_missing_redaction, gui_artifact_schema, gui_manifest_schema, "$.bad_browser_artifact_missing_redaction"):
+        failures.append({"path": rel(gui_manifest_schema_path), "definition": "artifacts.items", "error": "browser_artifact_without_redaction_status_unexpectedly_valid"})
+    bad_browser_artifact_failed_redaction = {
+        **bad_browser_artifact_missing_redaction,
+        "artifact_id": "browser-artifact-failed-redaction",
+        "redaction_status": "failed",
+    }
+    if not validate_schema(bad_browser_artifact_failed_redaction, gui_artifact_schema, gui_manifest_schema, "$.bad_browser_artifact_failed_redaction"):
+        failures.append({"path": rel(gui_manifest_schema_path), "definition": "artifacts.items", "error": "browser_artifact_failed_redaction_unexpectedly_valid"})
+    bad_runtime_unavailable_state = {
+        "runtime_state": "runtime_unavailable",
+        "requested_runtime": "pm_native_browser",
+        "effective_runtime": "none",
+    }
+    if not validate_schema(bad_runtime_unavailable_state, web_defs.get("BrowserRuntimeState", {}), web_schema, "$.bad_runtime_unavailable_state"):
+        failures.append({"path": rel(web_schema_path), "definition": "BrowserRuntimeState", "error": "browser_runtime_state_unavailable_without_remediation_unexpectedly_valid"})
+    browser_runtime_state_schema = (
+        browser_schema.get("$defs", {})
+        .get("BrowserRecordingPayload", {})
+        .get("properties", {})
+        .get("runtime_state", {})
+    )
+    if not validate_schema(bad_runtime_unavailable_state, browser_runtime_state_schema, browser_schema, "$.bad_runtime_unavailable_state"):
+        failures.append({"path": rel(browser_schema_path), "definition": "BrowserRecordingPayload.runtime_state", "error": "browser_recording_runtime_unavailable_without_remediation_unexpectedly_valid"})
+
+    bad_planning_research_run = {
+        "research_run_id": "research:bad-planning-source-evidence",
+        "mode": "standard",
+        "task": "verify current platform support",
+        "invocation": {
+            "invocation_source": "planning_wizard",
+            "agent_reason": "Planning Wizard question depends on current support."
+        },
+        "sources": [
+            {"source_id": "source:one", "url": "https://example.com", "selection_reason": "fixture", "read_state": "read", "read_receipt_ref": "receipt:one"}
+        ],
+        "read_receipts": [
+            {"receipt_id": "receipt:one", "url": "https://example.com", "web_operation": "read", "tool_id": "webfetch", "content_ref": "content:one", "read_at_utc": "2026-07-09T00:00:00Z"}
+        ],
+        "citations": [
+            {"citation_id": "citation:one", "url": "https://example.com", "source_ref": "source:one", "read_receipt_ref": "receipt:one", "evidence_kind": "read", "snippet_only": False}
+        ],
+        "closure_state": "sufficient"
+    }
+    if not validate_schema(bad_planning_research_run, web_defs.get("ResearchRun", {}), web_schema, "$.bad_planning_research_run"):
+        failures.append({"path": rel(web_schema_path), "definition": "ResearchRun", "error": "planning_research_without_source_evidence_unexpectedly_valid"})
+    if not validate_schema(bad_planning_research_run, evidence_schema.get("$defs", {}).get("ResearchRun", {}), evidence_schema, "$.bad_planning_research_run"):
+        failures.append({"path": rel(evidence_schema_path), "definition": "ResearchRun", "error": "evidence_planning_research_without_source_evidence_unexpectedly_valid"})
+    bad_planning_research_leakage = {
+        "research_run_id": "research:bad-planning-worknode-leakage",
+        "mode": "standard",
+        "task": "verify current platform support",
+        "invocation": {
+            "invocation_source": "planning_wizard",
+            "agent_reason": "Planning Wizard question depends on current support."
+        },
+        "sources": [
+            {"source_id": "source:one", "url": "https://example.com", "selection_reason": "fixture", "read_state": "read", "read_receipt_ref": "receipt:one"}
+        ],
+        "read_receipts": [
+            {"receipt_id": "receipt:one", "url": "https://example.com", "web_operation": "read", "tool_id": "webfetch", "content_ref": "content:one", "read_at_utc": "2026-07-09T00:00:00Z"}
+        ],
+        "citations": [
+            {"citation_id": "citation:one", "url": "https://example.com", "source_ref": "source:one", "read_receipt_ref": "receipt:one", "evidence_kind": "read", "snippet_only": False}
+        ],
+        "closure_state": "sufficient",
+        "ledger_source_evidence_ref": "ledger-source:one",
+        "WorkNode": "forbidden"
+    }
+    if not validate_schema(bad_planning_research_leakage, evidence_schema.get("$defs", {}).get("ResearchRun", {}), evidence_schema, "$.bad_planning_research_leakage"):
+        failures.append({"path": rel(evidence_schema_path), "definition": "ResearchRun", "error": "evidence_planning_research_worknode_leakage_unexpectedly_valid"})
+    valid_research_with_synthesis = {
+        "research_run_id": "research:valid-synthesis-subagent",
+        "mode": "standard",
+        "task": "compare current docs with release notes",
+        "invocation": {
+            "invocation_source": "goal",
+            "agent_reason": "Goal requires current external evidence before answering."
+        },
+        "provider_mode": "pm_composed",
+        "sources": [
+            {
+                "source_id": "source:docs",
+                "url": "https://example.com/docs",
+                "selection_reason": "Official documentation source.",
+                "read_state": "read",
+                "read_receipt_ref": "receipt:docs"
+            }
+        ],
+        "read_receipts": [
+            {
+                "receipt_id": "receipt:docs",
+                "url": "https://example.com/docs",
+                "web_operation": "read",
+                "tool_id": "webfetch",
+                "content_ref": "content:docs",
+                "read_at_utc": "2026-07-09T00:00:00Z"
+            }
+        ],
+        "citations": [
+            {
+                "citation_id": "citation:docs",
+                "url": "https://example.com/docs",
+                "source_ref": "source:docs",
+                "read_receipt_ref": "receipt:docs",
+                "evidence_kind": "read",
+                "snippet_only": False
+            }
+        ],
+        "synthesis_steps": [
+            {
+                "step_id": "synthesis:source-selection",
+                "step_kind": "source_selection",
+                "input_source_refs": ["source:docs"],
+                "read_receipt_refs": ["receipt:docs"],
+                "citation_refs": ["citation:docs"],
+                "output_ref": "research-output:source-selection",
+                "created_at_utc": "2026-07-09T00:00:05Z"
+            },
+            {
+                "step_id": "synthesis:closure",
+                "step_kind": "closure_check",
+                "input_source_refs": ["source:docs"],
+                "citation_refs": ["citation:docs"],
+                "output_ref": "research-output:closure",
+                "created_at_utc": "2026-07-09T00:00:10Z"
+            }
+        ],
+        "subagent_records": [
+            {
+                "subagent_record_id": "research-subagent:docs",
+                "source_subagent_id": "agent:read-only-research",
+                "assignment": "Read selected documentation source and return evidence refs only.",
+                "source_scope_refs": ["source:docs"],
+                "status": "completed",
+                "result_ref": "research-output:docs-subagent",
+                "created_at_utc": "2026-07-09T00:00:00Z",
+                "finished_at_utc": "2026-07-09T00:00:09Z"
+            }
+        ],
+        "coverage_report_ref": "research-coverage:docs",
+        "closure_state": "sufficient"
+    }
+    for schema_path, schema_root, research_def in [
+        (web_schema_path, web_schema, web_defs.get("ResearchRun", {})),
+        (evidence_schema_path, evidence_schema, evidence_defs.get("ResearchRun", {})),
+    ]:
+        for error in validate_schema(valid_research_with_synthesis, research_def, schema_root, "$.valid_research_with_synthesis"):
+            failures.append({"path": rel(schema_path), "definition": "ResearchRun", "error": "valid_research_synthesis_subagent_fixture_rejected", "detail": error})
+    if research_fixtures.get("schema_id") != "pm.web_research_run_fixtures.v1":
+        failures.append({"path": rel(research_fixture_path), "error": "invalid_web_research_run_fixture_schema_id"})
+    if research_fixtures.get("owner_schema") != "Plans/web_operation_contracts.schema.json#/$defs/ResearchRun":
+        failures.append({"path": rel(research_fixture_path), "owner_schema": research_fixtures.get("owner_schema"), "error": "web_research_fixture_owner_schema_mismatch"})
+    valid_research_runs = research_fixtures.get("valid_runs", []) if isinstance(research_fixtures, dict) else []
+    if not isinstance(valid_research_runs, list) or not valid_research_runs:
+        failures.append({"path": rel(research_fixture_path), "error": "missing_valid_web_research_run_fixtures"})
+        valid_research_runs = []
+    def research_semantic_errors(run: dict[str, Any]) -> list[str]:
+        semantic_errors: list[str] = []
+        sources = run.get("sources", [])
+        read_receipts = run.get("read_receipts", [])
+        citations = run.get("citations", [])
+        source_ids = {
+            source.get("source_id")
+            for source in sources
+            if isinstance(source, dict) and isinstance(source.get("source_id"), str)
+        }
+        source_urls = {
+            source.get("source_id"): source.get("url")
+            for source in sources
+            if isinstance(source, dict) and isinstance(source.get("source_id"), str) and isinstance(source.get("url"), str)
+        }
+        read_receipt_ids = {
+            receipt.get("receipt_id")
+            for receipt in read_receipts
+            if isinstance(receipt, dict) and isinstance(receipt.get("receipt_id"), str)
+        }
+        read_receipt_urls = {
+            receipt.get("receipt_id"): receipt.get("url")
+            for receipt in read_receipts
+            if isinstance(receipt, dict) and isinstance(receipt.get("receipt_id"), str) and isinstance(receipt.get("url"), str)
+        }
+        citation_ids = {
+            citation.get("citation_id")
+            for citation in citations
+            if isinstance(citation, dict) and isinstance(citation.get("citation_id"), str)
+        }
+        for source in sources if isinstance(sources, list) else []:
+            if not isinstance(source, dict):
+                continue
+            source_id = source.get("source_id")
+            if source.get("read_state") == "read" and source.get("read_receipt_ref") not in read_receipt_ids:
+                semantic_errors.append(f"source_read_receipt_ref_missing:{source_id}")
+            if source.get("read_state") == "extracted" and not (source.get("extract_receipt_ref") or source.get("read_receipt_ref") in read_receipt_ids):
+                semantic_errors.append(f"source_extract_or_read_receipt_ref_missing:{source_id}")
+        for citation in citations if isinstance(citations, list) else []:
+            if not isinstance(citation, dict):
+                continue
+            citation_id = citation.get("citation_id")
+            if citation.get("source_ref") not in source_ids:
+                semantic_errors.append(f"citation_source_ref_missing:{citation_id}")
+            elif citation.get("url") != source_urls.get(citation.get("source_ref")):
+                semantic_errors.append(f"citation_source_url_mismatch:{citation_id}")
+            if citation.get("read_receipt_ref") and citation.get("read_receipt_ref") not in read_receipt_ids:
+                semantic_errors.append(f"citation_read_receipt_ref_missing:{citation_id}")
+            elif citation.get("read_receipt_ref") and citation.get("url") != read_receipt_urls.get(citation.get("read_receipt_ref")):
+                semantic_errors.append(f"citation_read_receipt_url_mismatch:{citation_id}")
+        for step in run.get("synthesis_steps", []) if isinstance(run.get("synthesis_steps", []), list) else []:
+            if not isinstance(step, dict):
+                continue
+            step_id = step.get("step_id")
+            for source_ref in step.get("input_source_refs", []) if isinstance(step.get("input_source_refs", []), list) else []:
+                if source_ref not in source_ids:
+                    semantic_errors.append(f"synthesis_source_ref_missing:{step_id}:{source_ref}")
+            for receipt_ref in step.get("read_receipt_refs", []) if isinstance(step.get("read_receipt_refs", []), list) else []:
+                if receipt_ref not in read_receipt_ids:
+                    semantic_errors.append(f"synthesis_read_receipt_ref_missing:{step_id}:{receipt_ref}")
+            for citation_ref in step.get("citation_refs", []) if isinstance(step.get("citation_refs", []), list) else []:
+                if citation_ref not in citation_ids:
+                    semantic_errors.append(f"synthesis_citation_ref_missing:{step_id}:{citation_ref}")
+        return semantic_errors
+
+    seen_research_schemas: set[str] = set()
+    seen_provider_modes: set[str] = set()
+    for fixture in valid_research_runs:
+        if not isinstance(fixture, dict):
+            failures.append({"path": rel(research_fixture_path), "error": "invalid_web_research_run_fixture_row"})
+            continue
+        case_id = fixture.get("case_id")
+        schema_name = fixture.get("schema")
+        run = fixture.get("run", {})
+        if isinstance(schema_name, str):
+            seen_research_schemas.add(schema_name)
+        if isinstance(run, dict) and isinstance(run.get("provider_mode"), str):
+            seen_provider_modes.add(run["provider_mode"])
+        if not isinstance(run, dict):
+            failures.append({"path": rel(research_fixture_path), "case_id": case_id, "error": "web_research_run_fixture_payload_not_object"})
+            continue
+        if schema_name not in {"ResearchRun", "DeepResearchRun"}:
+            failures.append({"path": rel(research_fixture_path), "case_id": case_id, "schema": schema_name, "error": "unknown_web_research_run_fixture_schema"})
+            continue
+        for schema_path, schema_root, defs in [
+            (web_schema_path, web_schema, web_defs),
+            (evidence_schema_path, evidence_schema, evidence_defs),
+        ]:
+            for error in validate_schema(run, defs.get(schema_name, {}), schema_root, f"$.valid_runs[{case_id}]"):
+                failures.append({"path": rel(research_fixture_path), "schema_path": rel(schema_path), "case_id": case_id, "schema": schema_name, "error": "valid_web_research_run_fixture_rejected", "detail": error})
+        for field in ["sources", "read_receipts", "citations", "synthesis_steps", "subagent_records"]:
+            if not run.get(field):
+                failures.append({"path": rel(research_fixture_path), "case_id": case_id, "field": field, "error": "valid_web_research_run_missing_required_evidence_flow"})
+        if run.get("invocation", {}).get("invocation_source") in {"prd", "planning_wizard"} and not (run.get("ledger_source_evidence_ref") or run.get("plan_source_evidence_ref")):
+            failures.append({"path": rel(research_fixture_path), "case_id": case_id, "error": "planning_web_research_missing_source_evidence_destination"})
+        for error in research_semantic_errors(run):
+            failures.append({"path": rel(research_fixture_path), "case_id": case_id, "error": error})
+    for schema_name in ["ResearchRun", "DeepResearchRun"]:
+        if schema_name not in seen_research_schemas:
+            failures.append({"path": rel(research_fixture_path), "schema": schema_name, "error": "missing_valid_web_research_run_schema_fixture"})
+    for provider_mode in ["pm_composed", "provider_autonomous"]:
+        if provider_mode not in seen_provider_modes:
+            failures.append({"path": rel(research_fixture_path), "provider_mode": provider_mode, "error": "missing_web_research_provider_mode_fixture"})
+    invalid_research_runs = research_fixtures.get("invalid_runs", []) if isinstance(research_fixtures, dict) else []
+    if not isinstance(invalid_research_runs, list) or not invalid_research_runs:
+        failures.append({"path": rel(research_fixture_path), "error": "missing_invalid_web_research_run_fixtures"})
+        invalid_research_runs = []
+    required_invalid_research_cases = {
+        "planning_research_missing_source_evidence",
+        "snippet_only_citation_rejected",
+        "research_runtime_target_leakage",
+        "deep_research_mode_mismatch",
+        "research_dangling_refs_rejected",
+        "research_mismatched_citation_url_rejected",
+    }
+    seen_invalid_research_cases = {case.get("case_id") for case in invalid_research_runs if isinstance(case, dict)}
+    for case_id in sorted(required_invalid_research_cases - seen_invalid_research_cases):
+        failures.append({"path": rel(research_fixture_path), "case_id": case_id, "error": "missing_invalid_web_research_run_fixture"})
+    for fixture in invalid_research_runs:
+        if not isinstance(fixture, dict):
+            continue
+        case_id = fixture.get("case_id")
+        schema_name = fixture.get("schema")
+        run = fixture.get("run", {})
+        if schema_name not in {"ResearchRun", "DeepResearchRun"} or not isinstance(run, dict):
+            failures.append({"path": rel(research_fixture_path), "case_id": case_id, "schema": schema_name, "error": "invalid_web_research_run_fixture_malformed"})
+            continue
+        schema_valid = validate_schema(run, web_defs.get(schema_name, {}), web_schema, f"$.invalid_runs[{case_id}]")
+        evidence_schema_valid = validate_schema(run, evidence_defs.get(schema_name, {}), evidence_schema, f"$.invalid_runs[{case_id}]")
+        semantic_errors = research_semantic_errors(run)
+        if not schema_valid and not semantic_errors:
+            failures.append({"path": rel(research_fixture_path), "case_id": case_id, "schema": schema_name, "error": "invalid_web_research_run_fixture_unexpectedly_valid"})
+        if not evidence_schema_valid and not semantic_errors:
+            failures.append({"path": rel(research_fixture_path), "case_id": case_id, "schema": schema_name, "error": "invalid_evidence_research_run_fixture_unexpectedly_valid"})
+    research_constraints_text = "\n".join(research_fixtures.get("negative_constraints", [])) if isinstance(research_fixtures, dict) else ""
+    for token in ["read or extract receipts", "ledger or plan source evidence", "WorkNodes", "NodeSeeds", "runtime queues", "mode=deep"]:
+        if token not in research_constraints_text:
+            failures.append({"path": rel(research_fixture_path), "token": token, "error": "web_research_fixture_negative_constraint_missing_token"})
+
+    shared_web_action_input = web_defs.get("WebActionInput", {})
+    shared_branches = shared_web_action_input.get("anyOf", []) if isinstance(shared_web_action_input, dict) else []
+    if not isinstance(shared_branches, list) or not shared_branches:
+        failures.append({"path": rel(web_schema_path), "definition": "WebActionInput", "error": "shared_web_action_input_not_validator_supported_anyof"})
+        shared_branches = []
+    shared_pairs = set()
+    for branch in shared_branches:
+        props = branch.get("properties", {}) if isinstance(branch, dict) else {}
+        operation_const = props.get("web_operation", {}).get("const")
+        tool_const = props.get("tool_id", {}).get("const")
+        if operation_const and tool_const:
+            shared_pairs.add((operation_const, tool_const))
+    for pair in [("crawl", "webcrawl"), ("map", "webmap"), ("research", "webresearch"), ("deep_research", "webresearch")]:
+        if pair not in shared_pairs:
+            failures.append({"path": rel(web_schema_path), "pair": list(pair), "error": "missing_shared_web_action_operation_tool_pair"})
+    for invalid_pair in [("crawl", "webmap"), ("map", "webcrawl")]:
+        if invalid_pair in shared_pairs:
+            failures.append({"path": rel(web_schema_path), "pair": list(invalid_pair), "error": "shared_web_action_invalid_operation_tool_pair"})
+
+    required_browser_actions = {
+        "open_tab",
+        "select_tab",
+        "close_tab",
+        "click",
+        "type",
+        "fill_form",
+        "select_option",
+        "hover",
+        "drag",
+        "press_key",
+        "upload_file",
+        "handle_dialog",
+        "wait_for",
+        "verify_text",
+        "verify_element",
+        "verify_value",
+        "snapshot",
+        "screenshot",
+        "console",
+        "network",
+        "set_viewport",
+    }
+    shared_browser_actions = set(
+        web_defs.get("BrowserActionInput", {})
+        .get("properties", {})
+        .get("action_type", {})
+        .get("enum", [])
+    )
+    for action_type in sorted(required_browser_actions - shared_browser_actions):
+        failures.append({"path": rel(web_schema_path), "definition": "BrowserActionInput", "action_type": action_type, "error": "missing_required_browser_action"})
+    shared_action_aliases = set(
+        web_defs.get("BrowserActionInput", {})
+        .get("properties", {})
+        .get("input_action_label", {})
+        .get("enum", [])
+    )
+    for alias in ["press key", "select option", "fill form", "file upload", "dialog handle", "verify visible text"]:
+        if alias not in shared_action_aliases:
+            failures.append({"path": rel(web_schema_path), "definition": "BrowserActionInput", "alias": alias, "error": "missing_browser_action_alias"})
+    shared_extract_branch = next(
+        (
+            branch for branch in shared_branches
+            if isinstance(branch, dict)
+            and branch.get("properties", {}).get("web_operation", {}).get("const") == "extract"
+        ),
+        {},
+    )
+    shared_extract_props = shared_extract_branch.get("properties", {}) if isinstance(shared_extract_branch, dict) else {}
+    shared_extract_actions = shared_extract_props.get("actions", {})
+    if shared_extract_actions.get("maxItems") != 10:
+        failures.append({"path": rel(web_schema_path), "definition": "WebActionInput.extract", "field": "actions.maxItems", "error": "shared_web_extract_actions_cap_missing"})
+    if shared_extract_actions.get("items", {}).get("$ref") != "#/$defs/BrowserActionInput":
+        failures.append({"path": rel(web_schema_path), "definition": "WebActionInput.extract", "field": "actions.items", "error": "shared_web_extract_actions_not_typed_browser_actions"})
+    if shared_extract_props.get("actions_total_timeout_ms", {}).get("maximum") != 30000:
+        failures.append({"path": rel(web_schema_path), "definition": "WebActionInput.extract", "field": "actions_total_timeout_ms.maximum", "error": "shared_web_extract_actions_timeout_cap_missing"})
+    for operation in ["research", "deep_research"]:
+        research_branch = next(
+            (
+                branch for branch in shared_branches
+                if isinstance(branch, dict)
+                and branch.get("properties", {}).get("web_operation", {}).get("const") == operation
+            ),
+            {},
+        )
+        starting_urls = research_branch.get("properties", {}).get("starting_urls", {}) if isinstance(research_branch, dict) else {}
+        if starting_urls.get("maxItems") != 5:
+            failures.append({"path": rel(web_schema_path), "definition": "WebActionInput", "web_operation": operation, "field": "starting_urls.maxItems", "error": "starting_urls_cap_missing"})
+
+    web_activity = evidence_schema.get("properties", {}).get("web_activity", {}).get("properties", {})
+    for evidence_key in ["websearch", "webfetch", "webextract", "webresearch", "deep_research", "webcrawl", "webmap"]:
+        if evidence_key not in web_activity:
+            failures.append({"path": rel(evidence_schema_path), "evidence_key": evidence_key, "error": "missing_web_activity_evidence_branch"})
+        branch_required = set(web_activity.get(evidence_key, {}).get("required", [])) if isinstance(web_activity.get(evidence_key), dict) else set()
+        if evidence_key in {"websearch", "webfetch", "webcrawl", "webmap"} and "invocation" not in branch_required:
+            failures.append({"path": rel(evidence_schema_path), "evidence_key": evidence_key, "field": "invocation", "error": "web_activity_branch_missing_invocation"})
+
+    api_payload = api_schema.get("$defs", {}).get("ApiWebCallPayload", {})
+    api_required = set(api_payload.get("required", []))
+    for field in ["web_operation", "tool_id", "operation_input", "invocation", "success", "provider_fallback_occurred"]:
+        if field not in api_required:
+            failures.append({"path": rel(api_schema_path), "field": field, "error": "api_web_call_payload_missing_required_field"})
+    api_payload_props = api_payload.get("properties", {})
+    if "job_ref" not in api_payload_props:
+        failures.append({"path": rel(api_schema_path), "definition": "ApiWebCallPayload", "field": "job_ref", "error": "api_web_call_payload_missing_job_ref"})
+    if api_payload_props.get("job", {}).get("$ref") != "#/$defs/WebOperationJob":
+        failures.append({"path": rel(api_schema_path), "definition": "ApiWebCallPayload", "field": "job", "error": "api_web_call_payload_job_not_typed"})
+    operation_input_schema = api_payload.get("properties", {}).get("operation_input", {})
+    if not isinstance(operation_input_schema, dict) or "$ref" not in operation_input_schema:
+        failures.append({"path": rel(api_schema_path), "field": "operation_input", "error": "api_web_call_operation_input_not_discriminated"})
+    web_action_input = api_schema.get("$defs", {}).get("WebActionInput", {})
+    if not isinstance(web_action_input, dict) or "anyOf" not in web_action_input:
+        failures.append({"path": rel(api_schema_path), "definition": "WebActionInput", "error": "api_web_call_missing_operation_input_branches"})
+    runtime_input_required_fields = {
+        "WebSearchInput": {"adapter_hint", "time_range"},
+        "WebFetchInput": {"adapter_hint"},
+        "WebExtractInput": {"adapter_hint", "actions", "schema_mode"},
+        "WebResearchInput": {"adapter_hint", "depth_hint", "schema_ref", "schema_mode"},
+        "WebTraversalInput": {"adapter_hint", "include_paths", "exclude_paths", "dedup", "search"},
+    }
+    for def_name, required_fields in runtime_input_required_fields.items():
+        properties = api_schema.get("$defs", {}).get(def_name, {}).get("properties", {})
+        for field in sorted(required_fields):
+            if field not in properties:
+                failures.append({"path": rel(api_schema_path), "definition": def_name, "field": field, "error": "api_web_call_input_field_dropped_from_replay_contract"})
+    api_browser_actions = set(
+        api_schema.get("$defs", {})
+        .get("BrowserActionInput", {})
+        .get("properties", {})
+        .get("action_type", {})
+        .get("enum", [])
+    )
+    for action_type in sorted(required_browser_actions - api_browser_actions):
+        failures.append({"path": rel(api_schema_path), "definition": "BrowserActionInput", "action_type": action_type, "error": "api_web_call_missing_required_browser_action"})
+    api_extract_actions = api_schema.get("$defs", {}).get("WebExtractInput", {}).get("properties", {}).get("actions", {})
+    if api_extract_actions.get("maxItems") != 10:
+        failures.append({"path": rel(api_schema_path), "definition": "WebExtractInput", "field": "actions.maxItems", "error": "api_web_call_extract_actions_cap_missing"})
+    if api_extract_actions.get("items", {}).get("$ref") != "#/$defs/BrowserActionInput":
+        failures.append({"path": rel(api_schema_path), "definition": "WebExtractInput", "field": "actions.items", "error": "api_web_call_extract_actions_not_typed_browser_actions"})
+    api_extract_timeout = api_schema.get("$defs", {}).get("WebExtractInput", {}).get("properties", {}).get("actions_total_timeout_ms", {})
+    if api_extract_timeout.get("maximum") != 30000:
+        failures.append({"path": rel(api_schema_path), "definition": "WebExtractInput", "field": "actions_total_timeout_ms.maximum", "error": "api_web_call_extract_actions_timeout_cap_missing"})
+    api_research_starting_urls = api_schema.get("$defs", {}).get("WebResearchInput", {}).get("properties", {}).get("starting_urls", {})
+    if api_research_starting_urls.get("maxItems") != 5:
+        failures.append({"path": rel(api_schema_path), "definition": "WebResearchInput", "field": "starting_urls.maxItems", "error": "api_web_call_research_starting_urls_cap_missing"})
+    payload_consistency = api_payload.get("allOf", [])
+    if not isinstance(payload_consistency, list) or not payload_consistency or "anyOf" not in payload_consistency[0]:
+        failures.append({"path": rel(api_schema_path), "definition": "ApiWebCallPayload", "error": "api_web_call_missing_top_level_input_consistency_branches"})
+
+    browser_payload = browser_schema.get("$defs", {}).get("BrowserRecordingPayload", {})
+    browser_required = set(browser_payload.get("required", []))
+    for field in ["browser_session_id", "invocation", "session_class", "state", "show_when_possible", "open_watch_state", "recording_ref", "runtime_state", "actions", "artifact_refs", "redaction_profile_id"]:
+        if field not in browser_required:
+            failures.append({"path": rel(browser_schema_path), "field": field, "error": "browser_recording_payload_missing_required_field"})
+    browser_states = set(browser_payload.get("properties", {}).get("state", {}).get("enum", []))
+    for state in ["collapsed", "detached", "background", "runtime_unavailable"]:
+        if state not in browser_states:
+            failures.append({"path": rel(browser_schema_path), "state": state, "error": "browser_recording_missing_state"})
+    browser_action = browser_schema.get("$defs", {}).get("BrowserActionResult", {})
+    browser_action_required = set(browser_action.get("required", []))
+    for field in ["browser_session_id", "action", "invocation"]:
+        if field not in browser_action_required:
+            failures.append({"path": rel(browser_schema_path), "field": f"BrowserActionResult.{field}", "error": "browser_action_result_missing_required_field"})
+    browser_recording_actions = set(
+        browser_schema.get("$defs", {})
+        .get("BrowserActionInput", {})
+        .get("properties", {})
+        .get("action_type", {})
+        .get("enum", [])
+    )
+    for action_type in sorted(required_browser_actions - browser_recording_actions):
+        failures.append({"path": rel(browser_schema_path), "definition": "BrowserActionInput", "action_type": action_type, "error": "browser_recording_missing_required_browser_action"})
+    if "action_type" in browser_action.get("properties", {}):
+        failures.append({"path": rel(browser_schema_path), "field": "BrowserActionResult.action_type", "error": "browser_action_result_legacy_action_type_field"})
+    if browser_action.get("properties", {}).get("page_representation", {}).get("$ref") != "#/$defs/PageRepresentation":
+        failures.append({"path": rel(browser_schema_path), "field": "BrowserActionResult.page_representation", "error": "browser_action_result_missing_inline_page_representation"})
+    page_representation_schema = browser_schema.get("$defs", {}).get("PageRepresentation", {})
+    page_representation_props = page_representation_schema.get("properties", {})
+    for field in ["observe_ref", "find_results_ref", "detail_ref", "accessibility_tree_ref", "layout_bounds_ref", "form_refs", "iframe_refs", "console_ref", "network_ref", "screenshot_artifact_ref", "pdf_artifact_ref", "prompt_injection_chips", "visible_card_ref", "redaction_profile_id"]:
+        if field not in page_representation_props:
+            failures.append({"path": rel(browser_schema_path), "definition": "PageRepresentation", "field": field, "error": "browser_page_representation_missing_field"})
+
+    artifact_kinds = set(
+        gui_manifest_schema.get("properties", {})
+        .get("artifacts", {})
+        .get("items", {})
+        .get("properties", {})
+        .get("kind", {})
+        .get("enum", [])
+    )
+    for artifact_kind in ["browser_screenshot", "browser_pdf", "console", "network"]:
+        if artifact_kind not in artifact_kinds:
+            failures.append({"path": rel(gui_manifest_schema_path), "artifact_kind": artifact_kind, "error": "gui_manifest_missing_browser_artifact_kind"})
+    if "browser_sessions" not in gui_manifest_schema.get("properties", {}):
+        failures.append({"path": rel(gui_manifest_schema_path), "error": "gui_manifest_missing_browser_sessions"})
+    if "browser_sessions" not in set(gui_manifest_schema.get("required", [])):
+        failures.append({"path": rel(gui_manifest_schema_path), "field": "browser_sessions", "error": "gui_manifest_browser_sessions_not_required"})
+    testing_manifest = gui_manifest_schema.get("$defs", {}).get("TestingBrowserManifest", {})
+    testing_required = set(testing_manifest.get("required", []))
+    for field in ["browser_session_id", "visibility_state", "open_watch_state", "evidence_refs", "redaction_manifest_ref"]:
+        if field not in testing_required:
+            failures.append({"path": rel(gui_manifest_schema_path), "field": f"TestingBrowserManifest.{field}", "error": "testing_browser_manifest_missing_required_field"})
+    if testing_manifest.get("properties", {}).get("evidence_refs", {}).get("minItems") != 1:
+        failures.append({"path": rel(gui_manifest_schema_path), "field": "TestingBrowserManifest.evidence_refs.minItems", "error": "testing_browser_manifest_evidence_refs_not_required_nonempty"})
+    shared_testing_manifest = web_defs.get("TestingBrowserManifest", {})
+    shared_testing_required = set(shared_testing_manifest.get("required", []))
+    for field in ["browser_session_id", "visibility_state", "open_watch_state", "evidence_refs", "redaction_manifest_ref"]:
+        if field not in shared_testing_required:
+            failures.append({"path": rel(web_schema_path), "field": f"TestingBrowserManifest.{field}", "error": "shared_testing_browser_manifest_missing_required_field"})
+    if shared_testing_manifest.get("properties", {}).get("evidence_refs", {}).get("minItems") != 1:
+        failures.append({"path": rel(web_schema_path), "field": "TestingBrowserManifest.evidence_refs.minItems", "error": "shared_testing_browser_manifest_evidence_refs_not_required_nonempty"})
+    shared_browser_session = web_defs.get("BrowserSession", {})
+    shared_session_required = set(shared_browser_session.get("required", []))
+    for field in ["browser_session_id", "session_class", "state", "show_when_possible", "open_watch_state", "created_at_utc", "redaction_profile_id"]:
+        if field not in shared_session_required:
+            failures.append({"path": rel(web_schema_path), "field": f"BrowserSession.{field}", "error": "shared_browser_session_missing_required_field"})
+    shared_browser_recording = web_defs.get("BrowserRecordingArtifact", {})
+    shared_recording_required = set(shared_browser_recording.get("required", []))
+    for field in ["session", "invocation", "actions", "runtime_state", "artifact_refs", "redaction_profile_id"]:
+        if field not in shared_recording_required:
+            failures.append({"path": rel(web_schema_path), "field": f"BrowserRecordingArtifact.{field}", "error": "shared_browser_recording_missing_required_field"})
+
+    registry_rows = provider_seed.get("registry_rows", []) if isinstance(provider_seed, dict) else []
+    if not isinstance(registry_rows, list) or not registry_rows:
+        failures.append({"path": rel(provider_seed_path), "error": "missing_provider_registry_seed_rows"})
+        registry_rows = []
+    registry_def = web_defs.get("WebProviderAdapterRegistry", {})
+    registry_required = set(registry_def.get("required", []))
+    for field in ["capability_source_refs", "capability_claim_state", "last_health_check_ref"]:
+        if field not in registry_required:
+            failures.append({"path": rel(web_schema_path), "definition": "WebProviderAdapterRegistry", "field": field, "error": "provider_registry_missing_provenance_or_health_required_field"})
+    registry_ids = {row.get("registry_id") for row in registry_rows if isinstance(row, dict)}
+    required_capability_source_refs = {
+        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+        "FINDINGS_MATRIX_V3.json",
+        "Plans/web_capability_source_packet_receipt.json",
+    }
+    for index, row in enumerate(registry_rows):
+        row_errors = validate_schema(row, registry_def, web_schema, f"$.registry_rows[{index}]")
+        for error in row_errors:
+            failures.append({"path": rel(provider_seed_path), "error": "invalid_provider_registry_seed_row", "detail": error})
+        source_refs = row.get("capability_source_refs", []) if isinstance(row, dict) else []
+        if not isinstance(source_refs, list) or not source_refs:
+            failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "error": "provider_seed_missing_capability_source_refs"})
+            source_refs = []
+        for source_ref in source_refs:
+            if not isinstance(source_ref, str) or source_ref.startswith("/") or "Downloads/" in source_ref or "/Users/" in source_ref:
+                failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "source_ref": source_ref, "error": "provider_seed_capability_source_ref_leaks_local_path"})
+        for required_source_ref in sorted(required_capability_source_refs - set(source_refs)):
+            failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "source_ref": required_source_ref, "error": "provider_seed_missing_packet_capability_source_ref"})
+        capability_claim_state = row.get("capability_claim_state") if isinstance(row, dict) else None
+        if provider_seed.get("status") == "canonical_seed_no_secrets" and capability_claim_state != "source_packet_seed_pending_live_health":
+            failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "claim_state": capability_claim_state, "error": "provider_seed_claim_state_not_marked_pending_live_health"})
+        capability_health_states = {
+            capability.get("health_state")
+            for capability in row.get("capabilities", []) if isinstance(row, dict) and isinstance(capability, dict)
+        }
+        if capability_claim_state == "source_packet_seed_pending_live_health":
+            health_ref = row.get("last_health_check_ref") if isinstance(row, dict) else None
+            if not (isinstance(health_ref, str) and health_ref.startswith("health:web.")):
+                failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "error": "provider_seed_pending_health_missing_health_ref"})
+            for health_state in sorted(state for state in capability_health_states if state != "unknown"):
+                failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "health_state": health_state, "error": "provider_seed_pending_health_claims_live_health"})
+        if capability_claim_state == "live_health_checked" and capability_health_states == {"unknown"}:
+            failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "error": "provider_seed_live_health_claim_without_materialized_health"})
+        credential_ref = row.get("credential_ref") if isinstance(row, dict) else None
+        if credential_ref is not None and not (isinstance(credential_ref, str) and credential_ref.startswith("secret_ref:")):
+            failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "error": "provider_seed_credential_not_secret_ref"})
+        capabilities = row.get("capabilities", []) if isinstance(row, dict) else []
+        capability_refs = {
+            capability.get("operation"): capability.get("ssrf_private_host_policy_ref")
+            for capability in capabilities
+            if isinstance(capability, dict)
+            and isinstance(capability.get("operation"), str)
+            and isinstance(capability.get("ssrf_private_host_policy_ref"), str)
+        }
+        row_policy_id = row.get("egress_policy", {}).get("policy_id") if isinstance(row.get("egress_policy"), dict) else None
+        capability_policy_values = set(capability_refs.values())
+        if len(capability_policy_values) > 1:
+            policy_map = row.get("capability_egress_policy_map")
+            if not isinstance(policy_map, dict):
+                failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "error": "mixed_capability_egress_without_policy_map"})
+            else:
+                for operation, policy_ref in sorted(capability_refs.items()):
+                    if policy_map.get(operation) != policy_ref:
+                        failures.append({
+                            "path": rel(provider_seed_path),
+                            "adapter_id": row.get("adapter_id"),
+                            "operation": operation,
+                            "expected": policy_ref,
+                            "actual": policy_map.get(operation),
+                            "error": "capability_egress_policy_map_mismatch",
+                        })
+        elif len(capability_policy_values) == 1 and row_policy_id and next(iter(capability_policy_values)) != row_policy_id:
+            failures.append({"path": rel(provider_seed_path), "adapter_id": row.get("adapter_id"), "error": "row_egress_policy_does_not_match_capability_policy"})
+    provider_seed_constraints_text = "\n".join(provider_seed.get("negative_constraints", [])) if isinstance(provider_seed, dict) else ""
+    for token in ["packet/receipt provenance", "health_state=unknown", "live health/projection sync"]:
+        if token not in provider_seed_constraints_text:
+            failures.append({"path": rel(provider_seed_path), "token": token, "error": "provider_seed_negative_constraint_missing_provenance_token"})
+    provider_ids = {row.get("provider_id") for row in registry_rows if isinstance(row, dict)}
+    required_provider_ids = {"pm_native", "exa", "tavily", "firecrawl", "duckduckgo", "google", "jina", "openai", "anthropic", "zai_coding_plan"}
+    for provider_id in sorted(required_provider_ids - provider_ids):
+        failures.append({"path": rel(provider_seed_path), "provider_id": provider_id, "error": "missing_provider_registry_seed_provider"})
+    seen_registry_operations: set[str] = set()
+    for row in registry_rows:
+        if not isinstance(row, dict):
+            continue
+        for capability in row.get("capabilities", []):
+            if isinstance(capability, dict) and isinstance(capability.get("operation"), str):
+                seen_registry_operations.add(capability["operation"])
+    for operation in ["search", "read", "extract", "research", "deep_research", "crawl", "map"]:
+        if operation not in seen_registry_operations:
+            failures.append({"path": rel(provider_seed_path), "web_operation": operation, "error": "missing_provider_registry_seed_operation"})
+    mcp_projection_def = web_defs.get("McpProjection", {})
+    mcp_projections = provider_seed.get("mcp_projection_examples", []) if isinstance(provider_seed, dict) else []
+    if not isinstance(mcp_projections, list) or not mcp_projections:
+        failures.append({"path": rel(provider_seed_path), "error": "missing_mcp_projection_examples"})
+        mcp_projections = []
+    for index, projection in enumerate(mcp_projections):
+        projection_errors = validate_schema(projection, mcp_projection_def, web_schema, f"$.mcp_projection_examples[{index}]")
+        for error in projection_errors:
+            failures.append({"path": rel(provider_seed_path), "error": "invalid_mcp_projection_example", "detail": error})
+        if isinstance(projection, dict) and projection.get("no_secret_serialization") is not True:
+            failures.append({"path": rel(provider_seed_path), "projection_id": projection.get("projection_id"), "error": "mcp_projection_allows_secret_serialization"})
+    coding_projections = provider_seed.get("coding_agent_projection_examples", []) if isinstance(provider_seed, dict) else []
+    coding_targets = {row.get("target_runtime") for row in coding_projections if isinstance(row, dict)}
+    required_coding_targets = {"claude_code_cli", "cursor_cli", "codex", "gemini_direct", "github_copilot", "zai_coding_plan", "opencode_server"}
+    for target in sorted(required_coding_targets - coding_targets):
+        failures.append({"path": rel(provider_seed_path), "target_runtime": target, "error": "missing_coding_agent_projection_example"})
+    for projection in coding_projections:
+        if not isinstance(projection, dict):
+            continue
+        for provider_id in projection.get("provider_ids", []):
+            if provider_id not in provider_ids:
+                failures.append({"path": rel(provider_seed_path), "provider_id": provider_id, "target_runtime": projection.get("target_runtime"), "error": "coding_projection_provider_missing_registry_row"})
+    coding_projection_by_target = {
+        row.get("target_runtime"): set(row.get("provider_ids", []))
+        for row in coding_projections if isinstance(row, dict)
+    }
+    required_coding_projection_providers = {
+        "claude_code_cli": {"firecrawl", "exa", "tavily", "jina"},
+        "cursor_cli": {"firecrawl", "exa", "tavily", "jina"},
+        "codex": {"pm_native", "openai", "zai_coding_plan"},
+        "zai_coding_plan": {"pm_native", "zai_coding_plan"},
+    }
+    for target_runtime, required_target_providers in required_coding_projection_providers.items():
+        observed_target_providers = coding_projection_by_target.get(target_runtime, set())
+        for provider_id in sorted(required_target_providers - observed_target_providers):
+            failures.append({
+                "path": rel(provider_seed_path),
+                "target_runtime": target_runtime,
+                "provider_id": provider_id,
+                "error": "missing_required_coding_agent_projection_provider",
+            })
+
+    projection_artifact_def = web_defs.get("ProviderProjectionArtifact", {})
+    projection_artifacts = projection_fixtures.get("projection_fixtures", []) if isinstance(projection_fixtures, dict) else []
+    if not isinstance(projection_artifacts, list) or not projection_artifacts:
+        failures.append({"path": rel(projection_fixture_path), "error": "missing_provider_projection_fixtures"})
+        projection_artifacts = []
+    projection_ids = {projection.get("projection_id") for projection in projection_artifacts if isinstance(projection, dict)}
+    seed_projection_ids = {projection.get("projection_id") for projection in mcp_projections if isinstance(projection, dict)}
+    for projection_id in sorted(seed_projection_ids - projection_ids):
+        failures.append({"path": rel(projection_fixture_path), "projection_id": projection_id, "error": "missing_projection_fixture_for_seed_projection"})
+    required_projection_targets = {".claude/mcp.json", ".cursor/mcp.json", ".codex/config.toml"}
+    seen_projection_targets = {projection.get("target_config_path") for projection in projection_artifacts if isinstance(projection, dict)}
+    for target_path in sorted(required_projection_targets - seen_projection_targets):
+        failures.append({"path": rel(projection_fixture_path), "target_config_path": target_path, "error": "missing_provider_projection_target_fixture"})
+    projected_provider_ids = {
+        provider_id
+        for projection in projection_artifacts if isinstance(projection, dict)
+        for provider_id in projection.get("provider_ids", [])
+    }
+    required_projected_provider_ids = {"pm_native", "firecrawl", "exa", "tavily", "jina", "openai", "anthropic", "zai_coding_plan"}
+    for provider_id in sorted(required_projected_provider_ids - projected_provider_ids):
+        failures.append({
+            "path": rel(projection_fixture_path),
+            "provider_id": provider_id,
+            "error": "missing_required_provider_projection_fixture",
+        })
+    projection_pairs = {
+        (projection.get("target_runtime"), provider_id)
+        for projection in projection_artifacts if isinstance(projection, dict)
+        for provider_id in projection.get("provider_ids", [])
+    }
+    required_projection_pairs = {
+        ("claude_code_cli", "firecrawl"),
+        ("claude_code_cli", "exa"),
+        ("claude_code_cli", "tavily"),
+        ("claude_code_cli", "jina"),
+        ("cursor_cli", "firecrawl"),
+        ("cursor_cli", "exa"),
+        ("cursor_cli", "tavily"),
+        ("cursor_cli", "jina"),
+        ("codex", "pm_native"),
+        ("codex", "openai"),
+        ("codex", "zai_coding_plan"),
+        ("claude_code_cli", "anthropic"),
+    }
+    for target_runtime, provider_id in sorted(required_projection_pairs - projection_pairs):
+        failures.append({
+            "path": rel(projection_fixture_path),
+            "target_runtime": target_runtime,
+            "provider_id": provider_id,
+            "error": "missing_required_provider_projection_pair",
+        })
+
+    def check_projection_secret_values(value: Any, value_path: str, projection_id: str | None) -> None:
+        if isinstance(value, dict):
+            for key, item in value.items():
+                key_lower = str(key).lower()
+                item_path = f"{value_path}.{key}"
+                if isinstance(item, str):
+                    sensitive_key = any(token in key_lower for token in ["api_key", "token", "authorization", "password", "cookie", "secret"])
+                    allowed_ref = item.startswith(("secret_ref:", "secret_env_ref:", "provider_account:", "redacted:"))
+                    forbidden_value = any(marker in item for marker in ["sk-", "AIza", "AKIA", "-----BEGIN", "Bearer ", "oauth_"])
+                    if (sensitive_key and not allowed_ref) or forbidden_value:
+                        failures.append({"path": rel(projection_fixture_path), "projection_id": projection_id, "field": item_path, "error": "raw_secret_in_provider_projection_fixture"})
+                check_projection_secret_values(item, item_path, projection_id)
+        elif isinstance(value, list):
+            for index, item in enumerate(value):
+                check_projection_secret_values(item, f"{value_path}[{index}]", projection_id)
+
+    for index, projection in enumerate(projection_artifacts):
+        projection_errors = validate_schema(projection, projection_artifact_def, web_schema, f"$.projection_fixtures[{index}]")
+        for error in projection_errors:
+            failures.append({"path": rel(projection_fixture_path), "error": "invalid_provider_projection_fixture", "detail": error})
+        if not isinstance(projection, dict):
+            continue
+        projection_id = projection.get("projection_id")
+        if projection.get("no_secret_serialization") is not True:
+            failures.append({"path": rel(projection_fixture_path), "projection_id": projection_id, "error": "provider_projection_allows_secret_serialization"})
+        for provider_id in projection.get("provider_ids", []):
+            if provider_id not in provider_ids:
+                failures.append({"path": rel(projection_fixture_path), "provider_id": provider_id, "projection_id": projection_id, "error": "provider_projection_provider_missing_registry_row"})
+        for capability_ref in projection.get("capability_refs", []):
+            if capability_ref not in registry_ids:
+                failures.append({"path": rel(projection_fixture_path), "capability_ref": capability_ref, "projection_id": projection_id, "error": "provider_projection_capability_missing_registry_row"})
+        for credential_ref in projection.get("credential_refs", []):
+            if isinstance(credential_ref, str) and not credential_ref.startswith("secret_ref:"):
+                failures.append({"path": rel(projection_fixture_path), "credential_ref": credential_ref, "projection_id": projection_id, "error": "provider_projection_credential_not_secret_ref"})
+        check_projection_secret_values(projection.get("projected_config", {}), "$.projected_config", projection_id)
+
+    card_def = web_defs.get("WebOperationCard", {})
+    valid_cards = card_fixtures.get("valid_cards", []) if isinstance(card_fixtures, dict) else []
+    if not isinstance(valid_cards, list) or not valid_cards:
+        failures.append({"path": rel(card_fixture_path), "error": "missing_web_operation_card_fixtures"})
+        valid_cards = []
+    seen_card_kinds = set()
+    for index, card in enumerate(valid_cards):
+        if isinstance(card, dict):
+            seen_card_kinds.add(card.get("card_kind"))
+            card_payload = {key: value for key, value in card.items() if key != "case_id"}
+        else:
+            card_payload = card
+        card_errors = validate_schema(card_payload, card_def, web_schema, f"$.valid_cards[{index}]")
+        for error in card_errors:
+            failures.append({"path": rel(card_fixture_path), "error": "invalid_web_operation_card_fixture", "detail": error})
+    for card_kind in ["operation", "progress", "refs", "denied", "partial", "fallback", "settings_health", "approval", "session", "batch"]:
+        if card_kind not in seen_card_kinds:
+            failures.append({"path": rel(card_fixture_path), "card_kind": card_kind, "error": "missing_web_operation_card_kind_fixture"})
+    invalid_card_case_ids = {
+        invalid.get("case_id")
+        for invalid in card_fixtures.get("invalid_cards", []) if isinstance(invalid, dict)
+    } if isinstance(card_fixtures, dict) else set()
+    if "command_operation_tool_mismatch" not in invalid_card_case_ids:
+        failures.append({"path": rel(card_fixture_path), "case_id": "command_operation_tool_mismatch", "error": "missing_invalid_web_operation_card_fixture"})
+    for invalid in card_fixtures.get("invalid_cards", []) if isinstance(card_fixtures, dict) else []:
+        if not isinstance(invalid, dict):
+            continue
+        card = invalid.get("card", {})
+        if not validate_schema(card, card_def, web_schema, "$.invalid_cards[*].card"):
+            failures.append({"path": rel(card_fixture_path), "case_id": invalid.get("case_id"), "error": "invalid_web_operation_card_fixture_unexpectedly_valid"})
+
+    intent_routes = intent_fixtures.get("valid_routes", []) if isinstance(intent_fixtures, dict) else []
+    browser_dispatch_invariant = intent_fixtures.get("browser_action_dispatch_invariant", {}) if isinstance(intent_fixtures, dict) else {}
+    expected_browser_dispatch_invariant = {
+        "parent_command_id": "cmd.chat.web.fetch",
+        "parent_web_operation": "read",
+        "parent_tool_id": "webfetch",
+        "browser_action_field": "browser_action",
+        "not_a_separate_slash_family": True,
+        "not_a_separate_browser_tool_id": True,
+    }
+    for field, expected in expected_browser_dispatch_invariant.items():
+        if not isinstance(browser_dispatch_invariant, dict) or browser_dispatch_invariant.get(field) != expected:
+            failures.append({
+                "path": rel(intent_fixture_path),
+                "field": f"browser_action_dispatch_invariant.{field}",
+                "expected": expected,
+                "actual": browser_dispatch_invariant.get(field) if isinstance(browser_dispatch_invariant, dict) else None,
+                "error": "browser_action_dispatch_invariant_mismatch",
+            })
+    if not isinstance(intent_routes, list) or not intent_routes:
+        failures.append({"path": rel(intent_fixture_path), "error": "missing_web_intent_routing_fixtures"})
+        intent_routes = []
+    route_operations = {route.get("web_operation") for route in intent_routes if isinstance(route, dict)}
+    route_sources = {route.get("invocation_source") for route in intent_routes if isinstance(route, dict)}
+    for operation in ["search", "read", "extract", "research", "deep_research", "crawl", "map"]:
+        if operation not in route_operations:
+            failures.append({"path": rel(intent_fixture_path), "web_operation": operation, "error": "missing_intent_route_operation"})
+    for source in sorted(required_sources):
+        if source not in route_sources:
+            failures.append({"path": rel(intent_fixture_path), "invocation_source": source, "error": "missing_intent_route_invocation_source"})
+    for route in intent_routes:
+        if not isinstance(route, dict):
+            continue
+        if route.get("agent_reason_required") is True and route.get("invocation_source") not in {"agent_initiated", "goal", "prd", "planning_wizard", "subagent"}:
+            failures.append({"path": rel(intent_fixture_path), "case_id": route.get("case_id"), "error": "agent_reason_required_on_non_agentic_source"})
+        if route.get("agent_reason_required") is True and not route.get("agent_reason"):
+            failures.append({"path": rel(intent_fixture_path), "case_id": route.get("case_id"), "error": "missing_agent_reason_for_agentic_intent_route"})
+        if route.get("web_operation") == "read" and route.get("tool_id") != "webfetch":
+            failures.append({"path": rel(intent_fixture_path), "case_id": route.get("case_id"), "error": "url_read_route_not_webfetch"})
+        if "browser_action" in route:
+            browser_action = route.get("browser_action")
+            if not isinstance(browser_action, dict):
+                failures.append({"path": rel(intent_fixture_path), "case_id": route.get("case_id"), "error": "browser_action_not_object"})
+            else:
+                for error in validate_schema(browser_action, web_defs.get("BrowserActionInput", {}), web_schema, "$.browser_action"):
+                    failures.append({"path": rel(intent_fixture_path), "case_id": route.get("case_id"), "error": "browser_action_invalid", "detail": error})
+    route_equivalence_groups = intent_fixtures.get("route_equivalence_groups", []) if isinstance(intent_fixtures, dict) else []
+    if not isinstance(route_equivalence_groups, list) or not route_equivalence_groups:
+        failures.append({"path": rel(intent_fixture_path), "error": "missing_route_equivalence_groups"})
+        route_equivalence_groups = []
+    required_equivalence_group_ids = {
+        "search_equivalence",
+        "read_equivalence",
+        "extract_equivalence",
+        "research_equivalence",
+        "deep_research_equivalence",
+        "crawl_equivalence",
+        "map_equivalence",
+        "browser_visual_evidence_equivalence",
+    }
+    seen_equivalence_group_ids = {
+        group.get("group_id")
+        for group in route_equivalence_groups
+        if isinstance(group, dict)
+    }
+    for group_id in sorted(required_equivalence_group_ids - seen_equivalence_group_ids):
+        failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "error": "missing_route_equivalence_group"})
+    required_equivalence_sources = {"slash", "palette", "nl_user", "agent_initiated"}
+    for group in route_equivalence_groups:
+        if not isinstance(group, dict):
+            failures.append({"path": rel(intent_fixture_path), "error": "invalid_route_equivalence_group"})
+            continue
+        group_id = group.get("group_id")
+        group_operation = group.get("web_operation")
+        group_command_id = group.get("command_id")
+        group_tool_id = group.get("tool_id")
+        declared_sources = set(group.get("required_invocation_sources", [])) if isinstance(group.get("required_invocation_sources"), list) else set()
+        if not required_equivalence_sources.issubset(declared_sources):
+            failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "missing_sources": sorted(required_equivalence_sources - declared_sources), "error": "route_equivalence_group_missing_required_sources"})
+        routes = group.get("routes", [])
+        if not isinstance(routes, list) or not routes:
+            failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "error": "route_equivalence_group_missing_routes"})
+            continue
+        seen_sources: set[str] = set()
+        for route in routes:
+            if not isinstance(route, dict):
+                failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "error": "invalid_route_equivalence_route"})
+                continue
+            case_id = route.get("case_id")
+            source = route.get("invocation_source")
+            if isinstance(source, str):
+                seen_sources.add(source)
+            for field, expected in [("command_id", group_command_id), ("web_operation", group_operation), ("tool_id", group_tool_id)]:
+                if route.get(field) != expected:
+                    failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "case_id": case_id, "field": field, "expected": expected, "actual": route.get(field), "error": "route_equivalence_mismatch"})
+            if route.get("agent_reason_required") is True and route.get("invocation_source") not in {"agent_initiated", "goal", "prd", "planning_wizard", "subagent"}:
+                failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "case_id": case_id, "error": "agent_reason_required_on_non_agentic_equivalence_route"})
+            if route.get("agent_reason_required") is True and not route.get("agent_reason"):
+                failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "case_id": case_id, "error": "missing_agent_reason_for_agentic_equivalence_route"})
+            if group.get("browser_action_required") is True and "browser_action" not in route:
+                failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "case_id": case_id, "error": "route_equivalence_missing_browser_action"})
+            if "browser_action" in route:
+                browser_action = route.get("browser_action")
+                if not isinstance(browser_action, dict):
+                    failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "case_id": case_id, "error": "route_equivalence_browser_action_not_object"})
+                else:
+                    for error in validate_schema(browser_action, web_defs.get("BrowserActionInput", {}), web_schema, "$.browser_action"):
+                        failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "case_id": case_id, "error": "route_equivalence_browser_action_invalid", "detail": error})
+        if not required_equivalence_sources.issubset(seen_sources):
+            failures.append({"path": rel(intent_fixture_path), "group_id": group_id, "missing_sources": sorted(required_equivalence_sources - seen_sources), "error": "route_equivalence_group_routes_missing_required_sources"})
+    invalid_intent_case_ids = {route.get("case_id") for route in intent_fixtures.get("invalid_routes", []) if isinstance(route, dict)} if isinstance(intent_fixtures, dict) else set()
+    for case_id in ["url_read_must_not_search", "bare_web_must_not_execute", "deep_research_not_seventh_slash_family", "agentic_route_missing_reason"]:
+        if case_id not in invalid_intent_case_ids:
+            failures.append({"path": rel(intent_fixture_path), "case_id": case_id, "error": "missing_invalid_intent_route_fixture"})
+    agentic_matrix = intent_fixtures.get("agentic_dispatch_matrix", []) if isinstance(intent_fixtures, dict) else []
+    if not isinstance(agentic_matrix, list) or not agentic_matrix:
+        failures.append({"path": rel(intent_fixture_path), "error": "missing_agentic_dispatch_matrix"})
+        agentic_matrix = []
+    expected_agentic_command_tool = {
+        "search": ("cmd.chat.web.search", "websearch"),
+        "read": ("cmd.chat.web.fetch", "webfetch"),
+        "extract": ("cmd.chat.web.extract", "webextract"),
+        "research": ("cmd.chat.web.research", "webresearch"),
+        "deep_research": ("cmd.chat.web.research", "webresearch"),
+        "crawl": ("cmd.chat.web.crawl", "webcrawl"),
+        "map": ("cmd.chat.web.map", "webmap"),
+    }
+    required_agentic_sources = {"agent_initiated", "goal", "prd", "planning_wizard", "subagent"}
+    matrix_ops = {row.get("web_operation") for row in agentic_matrix if isinstance(row, dict) and row.get("browser_action_required") is not True}
+    for operation in sorted(set(expected_agentic_command_tool) - matrix_ops):
+        failures.append({"path": rel(intent_fixture_path), "web_operation": operation, "error": "missing_agentic_dispatch_matrix_operation"})
+    browser_matrix_rows = [row for row in agentic_matrix if isinstance(row, dict) and row.get("browser_action_required") is True]
+    if not browser_matrix_rows:
+        failures.append({"path": rel(intent_fixture_path), "error": "missing_agentic_browser_visual_evidence_matrix_row"})
+    for row in agentic_matrix:
+        if not isinstance(row, dict):
+            failures.append({"path": rel(intent_fixture_path), "error": "invalid_agentic_dispatch_matrix_row"})
+            continue
+        operation = row.get("web_operation")
+        case_id = row.get("case_id")
+        expected_command_tool = expected_agentic_command_tool.get(operation)
+        if expected_command_tool is None:
+            failures.append({"path": rel(intent_fixture_path), "case_id": case_id, "web_operation": operation, "error": "unknown_agentic_dispatch_matrix_operation"})
+            continue
+        expected_command_id, expected_tool_id = expected_command_tool
+        if row.get("command_id") != expected_command_id or row.get("tool_id") != expected_tool_id:
+            failures.append({
+                "path": rel(intent_fixture_path),
+                "case_id": case_id,
+                "web_operation": operation,
+                "expected_command_id": expected_command_id,
+                "expected_tool_id": expected_tool_id,
+                "error": "agentic_dispatch_matrix_command_tool_mismatch",
+            })
+        observed_sources = set(row.get("invocation_sources", [])) if isinstance(row.get("invocation_sources"), list) else set()
+        if not required_agentic_sources.issubset(observed_sources):
+            failures.append({
+                "path": rel(intent_fixture_path),
+                "case_id": case_id,
+                "missing_sources": sorted(required_agentic_sources - observed_sources),
+                "error": "agentic_dispatch_matrix_missing_invocation_sources",
+            })
+        if row.get("agent_reason_required") is not True:
+            failures.append({"path": rel(intent_fixture_path), "case_id": case_id, "error": "agentic_dispatch_matrix_reason_not_required"})
+        evidence_destinations = set(row.get("source_evidence_destination_for", [])) if isinstance(row.get("source_evidence_destination_for"), list) else set()
+        for source in ["prd", "planning_wizard"]:
+            if source not in evidence_destinations:
+                failures.append({"path": rel(intent_fixture_path), "case_id": case_id, "invocation_source": source, "error": "agentic_dispatch_matrix_missing_source_evidence_destination"})
+
+    negative_cases = policy_fixtures.get("negative_cases", []) if isinstance(policy_fixtures, dict) else []
+    if not isinstance(negative_cases, list) or not negative_cases:
+        failures.append({"path": rel(policy_fixture_path), "error": "missing_web_policy_negative_fixtures"})
+        negative_cases = []
+    negative_case_ids = {case.get("case_id") for case in negative_cases if isinstance(case, dict)}
+    required_negative_case_ids = {
+        "no_raw_secret_projection",
+        "ssrf_private_host_denied",
+        "localhost_denied_without_explicit_private_host_approval",
+        "plan_mode_web_visible_ask_not_silent_deny",
+        "strict_no_network_denies_with_card",
+        "search_scope_wildcard_not_host",
+        "fetch_scope_host_scoped",
+        "crawl_robots_denial_recorded",
+        "crawl_fanout_depth_cap_recorded",
+        "cache_no_secret_and_ttl_required",
+        "browser_runtime_unavailable_remediation",
+        "prompt_injection_visible_chips_not_hidden",
+        "url_query_redaction_required",
+        "browser_artifact_missing_redaction_rejected",
+        "browser_artifact_failed_redaction_rejected",
+        "research_snippet_only_citation_rejected",
+        "prd_planning_research_source_evidence_required",
+        "evidence_agentic_invocation_missing_reason",
+        "api_web_call_agentic_invocation_missing_reason",
+        "browser_recording_agentic_invocation_missing_reason",
+        "evidence_planning_research_source_evidence_required",
+    }
+    for case_id in sorted(required_negative_case_ids - negative_case_ids):
+        failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "missing_web_policy_negative_fixture"})
+    negative_case_by_id = {case.get("case_id"): case for case in negative_cases if isinstance(case, dict)}
+    negative_case_required_fields = {
+        "no_raw_secret_projection": ["must_reject", "expected_error"],
+        "ssrf_private_host_denied": ["input_url", "expected_decision", "expected_reason"],
+        "localhost_denied_without_explicit_private_host_approval": ["input_url", "expected_decision", "expected_reason"],
+        "plan_mode_web_visible_ask_not_silent_deny": ["run_mode", "tool_id", "expected_decision", "must_show_card"],
+        "strict_no_network_denies_with_card": ["network_policy", "tool_id", "expected_decision", "expected_reason", "must_show_card"],
+        "search_scope_wildcard_not_host": ["tool_id", "expected_scope", "forbidden_scope"],
+        "fetch_scope_host_scoped": ["tool_id", "input_url", "expected_scope"],
+        "crawl_robots_denial_recorded": ["tool_id", "root_url", "respect_robots", "expected_reason", "must_record_evidence"],
+        "crawl_fanout_depth_cap_recorded": ["tool_id", "root_url", "max_pages", "max_depth", "expected_reason", "must_record_evidence"],
+        "cache_no_secret_and_ttl_required": ["tool_id", "cache_state", "must_require"],
+        "browser_runtime_unavailable_remediation": ["runtime_state", "must_require"],
+        "prompt_injection_visible_chips_not_hidden": ["input_kind", "must_require", "must_not"],
+        "url_query_redaction_required": ["input_url", "forbidden_tokens", "expected_error"],
+        "browser_artifact_missing_redaction_rejected": ["artifact_kind", "redaction_status", "expected_error"],
+        "browser_artifact_failed_redaction_rejected": ["artifact_kind", "redaction_status", "expected_error"],
+        "research_snippet_only_citation_rejected": ["evidence_kind", "snippet_only", "expected_error"],
+        "prd_planning_research_source_evidence_required": ["invocation_source", "tool_id", "must_require", "must_require_one_of", "must_not"],
+        "evidence_agentic_invocation_missing_reason": ["invocation_source", "must_require", "expected_error"],
+        "api_web_call_agentic_invocation_missing_reason": ["invocation_source", "must_require", "expected_error"],
+        "browser_recording_agentic_invocation_missing_reason": ["invocation_source", "must_require", "expected_error"],
+        "evidence_planning_research_source_evidence_required": ["invocation_source", "tool_id", "must_require_one_of", "must_not", "expected_error"],
+    }
+    for case_id, fields in negative_case_required_fields.items():
+        case = negative_case_by_id.get(case_id)
+        if not isinstance(case, dict):
+            continue
+        for field in fields:
+            if field not in case:
+                failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "field": field, "error": "web_policy_negative_case_missing_semantic_field"})
+    for case_id in ["ssrf_private_host_denied", "localhost_denied_without_explicit_private_host_approval", "strict_no_network_denies_with_card"]:
+        case = negative_case_by_id.get(case_id, {})
+        if isinstance(case, dict) and case.get("expected_decision") != "deny":
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "web_policy_negative_case_expected_decision_not_deny"})
+    plan_case = negative_case_by_id.get("plan_mode_web_visible_ask_not_silent_deny", {})
+    if isinstance(plan_case, dict) and plan_case.get("expected_decision") != "ask":
+        failures.append({"path": rel(policy_fixture_path), "case_id": "plan_mode_web_visible_ask_not_silent_deny", "error": "plan_mode_web_case_not_ask"})
+    planning_case = negative_case_by_id.get("prd_planning_research_source_evidence_required", {})
+    if isinstance(planning_case, dict):
+        if set(planning_case.get("must_require_one_of", [])) != {"ledger_source_evidence_ref", "plan_source_evidence_ref"}:
+            failures.append({"path": rel(policy_fixture_path), "case_id": "prd_planning_research_source_evidence_required", "error": "planning_source_evidence_case_uses_wrong_schema_fields"})
+        forbidden_targets = set(planning_case.get("must_not", []))
+        for forbidden in ["WorkNode", "NodeSeed", "runtime_queue"]:
+            if forbidden not in forbidden_targets:
+                failures.append({"path": rel(policy_fixture_path), "case_id": "prd_planning_research_source_evidence_required", "forbidden": forbidden, "error": "planning_source_evidence_case_missing_forbidden_runtime_target"})
+    evidence_planning_case = negative_case_by_id.get("evidence_planning_research_source_evidence_required", {})
+    if isinstance(evidence_planning_case, dict):
+        if set(evidence_planning_case.get("must_require_one_of", [])) != {"ledger_source_evidence_ref", "plan_source_evidence_ref"}:
+            failures.append({"path": rel(policy_fixture_path), "case_id": "evidence_planning_research_source_evidence_required", "error": "evidence_planning_source_case_uses_wrong_schema_fields"})
+        forbidden_targets = set(evidence_planning_case.get("must_not", []))
+        for forbidden in ["WorkNode", "NodeSeed", "runtime_queue"]:
+            if forbidden not in forbidden_targets:
+                failures.append({"path": rel(policy_fixture_path), "case_id": "evidence_planning_research_source_evidence_required", "forbidden": forbidden, "error": "evidence_planning_source_case_missing_forbidden_runtime_target"})
+    cache_case = negative_case_by_id.get("cache_no_secret_and_ttl_required", {})
+    if isinstance(cache_case, dict):
+        must_equal = cache_case.get("must_equal", {})
+        if not isinstance(must_equal, dict) or must_equal.get("no_secret_verified") is not True:
+            failures.append({"path": rel(policy_fixture_path), "case_id": "cache_no_secret_and_ttl_required", "error": "cache_no_secret_fixture_does_not_require_true"})
+    for case_id in [
+        "evidence_agentic_invocation_missing_reason",
+        "api_web_call_agentic_invocation_missing_reason",
+        "browser_recording_agentic_invocation_missing_reason",
+    ]:
+        case = negative_case_by_id.get(case_id, {})
+        if isinstance(case, dict) and "agent_reason" not in set(case.get("must_require", [])):
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "agentic_invocation_negative_case_missing_agent_reason_requirement"})
+
+    def host_class_for_url(raw_url: str) -> str:
+        parsed = urlparse(raw_url)
+        if parsed.scheme == "file":
+            return "file_scheme"
+        host = (parsed.hostname or "").lower()
+        if host in {"localhost", "ip6-localhost"}:
+            return "localhost"
+        try:
+            ip = ipaddress.ip_address(host)
+        except ValueError:
+            return "public"
+        if ip.is_loopback:
+            return "localhost"
+        if ip.is_private or ip.is_link_local or ip.is_reserved or ip.is_multicast or ip.is_unspecified:
+            return "private_or_metadata"
+        return "public"
+
+    def scope_for_url(raw_url: str) -> str:
+        parsed = urlparse(raw_url)
+        scheme = parsed.scheme or "https"
+        host = parsed.hostname or ""
+        return f"{scheme}://{registrable_domain_for_host(host)}/*"
+
+    def registrable_domain_for_host(host: str) -> str:
+        normalized = (host or "").strip(".").lower()
+        if not normalized:
+            return normalized
+        try:
+            ipaddress.ip_address(normalized)
+            return normalized
+        except ValueError:
+            pass
+        if normalized in {"localhost", "ip6-localhost"}:
+            return normalized
+        labels = [label for label in normalized.split(".") if label]
+        if len(labels) <= 2:
+            return normalized
+        # Fixture-grade approximation: owner docs require registrable-domain
+        # normalization; live implementation may use a public suffix list.
+        return ".".join(labels[-2:])
+
+    egress_assertions = policy_fixtures.get("egress_assertions", []) if isinstance(policy_fixtures, dict) else []
+    if not isinstance(egress_assertions, list) or not egress_assertions:
+        failures.append({"path": rel(policy_fixture_path), "error": "missing_executable_egress_assertions"})
+        egress_assertions = []
+    egress_case_ids = {assertion.get("case_id") for assertion in egress_assertions if isinstance(assertion, dict)}
+    required_egress_case_ids = {
+        "metadata_ip_denied",
+        "localhost_denied",
+        "loopback_ip_denied",
+        "ipv6_loopback_denied",
+        "ipv6_link_local_denied",
+        "rfc1918_private_ip_denied",
+        "file_url_denied",
+        "redirect_to_private_denied",
+        "dns_rebind_to_private_denied",
+        "public_https_allowed_for_fetch_preflight",
+    }
+    for case_id in sorted(required_egress_case_ids - egress_case_ids):
+        failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "missing_executable_egress_assertion_case"})
+    for assertion in egress_assertions:
+        if not isinstance(assertion, dict):
+            continue
+        case_id = assertion.get("case_id")
+        observed_class = host_class_for_url(assertion.get("input_url", ""))
+        if observed_class != assertion.get("expected_host_class"):
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "observed": observed_class, "expected": assertion.get("expected_host_class"), "error": "egress_host_class_mismatch"})
+        expected_decision = assertion.get("expected_decision")
+        redirect_target_url = assertion.get("redirect_target_url")
+        resolved_ip = assertion.get("resolved_ip")
+        dns_rebind_detected = assertion.get("dns_rebind_detected") is True
+        if isinstance(resolved_ip, str):
+            observed_resolved_class = host_class_for_url(f"http://{resolved_ip}")
+            if observed_resolved_class != assertion.get("expected_resolved_host_class"):
+                failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "observed": observed_resolved_class, "expected": assertion.get("expected_resolved_host_class"), "error": "egress_resolved_host_class_mismatch"})
+            if observed_class == "public" and observed_resolved_class in {"localhost", "private_or_metadata"}:
+                if not dns_rebind_detected:
+                    failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "dns_rebind_fixture_missing_detection_flag"})
+                if expected_decision != "deny":
+                    failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "dns_rebind_assertion_not_denied"})
+        if isinstance(redirect_target_url, str):
+            observed_redirect_class = host_class_for_url(redirect_target_url)
+            if observed_redirect_class != assertion.get("expected_redirect_host_class"):
+                failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "observed": observed_redirect_class, "expected": assertion.get("expected_redirect_host_class"), "error": "egress_redirect_host_class_mismatch"})
+            if observed_redirect_class in {"localhost", "private_or_metadata", "file_scheme"} and assertion.get("expected_redirect_decision") != "deny":
+                failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "private_redirect_assertion_not_denied"})
+        if observed_class in {"localhost", "private_or_metadata", "file_scheme"} and expected_decision != "deny":
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "private_host_assertion_not_denied"})
+        if observed_class == "public" and not redirect_target_url and not dns_rebind_detected and expected_decision not in {"ask", "allow"}:
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "public_host_assertion_not_ask_or_allow"})
+
+    permission_scope_assertions = policy_fixtures.get("permission_scope_assertions", []) if isinstance(policy_fixtures, dict) else []
+    if not isinstance(permission_scope_assertions, list) or not permission_scope_assertions:
+        failures.append({"path": rel(policy_fixture_path), "error": "missing_executable_permission_scope_assertions"})
+        permission_scope_assertions = []
+    for assertion in permission_scope_assertions:
+        if not isinstance(assertion, dict):
+            continue
+        tool_id = assertion.get("tool_id")
+        case_id = assertion.get("case_id")
+        if tool_id in {"websearch", "webresearch"}:
+            observed_scope = "*"
+        else:
+            observed_scope = scope_for_url(assertion.get("input_url") or assertion.get("root_url") or "")
+        if observed_scope != assertion.get("expected_scope"):
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "observed": observed_scope, "expected": assertion.get("expected_scope"), "error": "permission_scope_assertion_mismatch"})
+
+    run_mode_assertions = policy_fixtures.get("run_mode_assertions", []) if isinstance(policy_fixtures, dict) else []
+    if not isinstance(run_mode_assertions, list) or not run_mode_assertions:
+        failures.append({"path": rel(policy_fixture_path), "error": "missing_executable_run_mode_assertions"})
+        run_mode_assertions = []
+    for assertion in run_mode_assertions:
+        if not isinstance(assertion, dict):
+            continue
+        case_id = assertion.get("case_id")
+        if assertion.get("run_mode") not in {"ask", "plan", "regular", "yolo"}:
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "run_mode": assertion.get("run_mode"), "error": "run_mode_assertion_not_canonical_runtime_mode"})
+        if assertion.get("effective_overlay") == "deep_plan" and assertion.get("normalized_runtime_mode") != "plan":
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "deep_plan_overlay_not_normalized_to_plan"})
+        network_policy = assertion.get("network_policy")
+        observed_decision = "deny" if network_policy == "deny" else "ask"
+        if observed_decision != assertion.get("expected_decision"):
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "observed": observed_decision, "expected": assertion.get("expected_decision"), "error": "run_mode_assertion_decision_mismatch"})
+        if assertion.get("must_show_card") is not True:
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "run_mode_assertion_missing_visible_card"})
+
+    crawl_policy_assertions = policy_fixtures.get("crawl_policy_assertions", []) if isinstance(policy_fixtures, dict) else []
+    if not isinstance(crawl_policy_assertions, list) or not crawl_policy_assertions:
+        failures.append({"path": rel(policy_fixture_path), "error": "missing_executable_crawl_policy_assertions"})
+        crawl_policy_assertions = []
+    for assertion in crawl_policy_assertions:
+        if not isinstance(assertion, dict):
+            continue
+        case_id = assertion.get("case_id")
+        observed_reason = None
+        if assertion.get("respect_robots") is True and assertion.get("robots_allowed") is False:
+            observed_reason = "robots_denied"
+        elif assertion.get("requested_max_pages", 0) > assertion.get("policy_fanout_limit", 10**9):
+            observed_reason = "fanout_capped"
+        elif assertion.get("requested_max_depth", 0) > assertion.get("policy_max_depth", 10**9):
+            observed_reason = "depth_capped"
+        if observed_reason != assertion.get("expected_reason"):
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "observed": observed_reason, "expected": assertion.get("expected_reason"), "error": "crawl_policy_assertion_reason_mismatch"})
+
+    redaction_assertions = policy_fixtures.get("redaction_assertions", []) if isinstance(policy_fixtures, dict) else []
+    if not isinstance(redaction_assertions, list) or not redaction_assertions:
+        failures.append({"path": rel(policy_fixture_path), "error": "missing_executable_redaction_assertions"})
+        redaction_assertions = []
+    for assertion in redaction_assertions:
+        if not isinstance(assertion, dict):
+            continue
+        case_id = assertion.get("case_id")
+        surface = assertion.get("surface")
+        if surface == "url_query":
+            redacted = assertion.get("expected_redacted_url", "")
+            for token in assertion.get("forbidden_tokens", []):
+                if isinstance(token, str) and token and token in redacted:
+                    failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "token": token, "error": "redaction_assertion_leaks_forbidden_token"})
+            if "REDACTED" not in redacted:
+                failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "redaction_assertion_missing_redacted_marker"})
+        elif surface == "browser_artifact":
+            status = assertion.get("redaction_status")
+            expected_error = assertion.get("expected_error")
+            if expected_error == "missing_redaction_status" and status is not None:
+                failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "missing_redaction_assertion_has_status"})
+            if expected_error == "artifact_redaction_failed" and status != "failed":
+                failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "error": "failed_redaction_assertion_not_failed"})
+        else:
+            failures.append({"path": rel(policy_fixture_path), "case_id": case_id, "surface": surface, "error": "unknown_redaction_assertion_surface"})
+
+    fixture_path = ROOT / "tests/fixtures/runtime_artifacts/golden/runtime_artifact_fixtures.json"
+    if not fixture_path.exists():
+        failures.append({"path": rel(fixture_path), "error": "missing_runtime_artifact_fixture_matrix"})
+    else:
+        fixture_matrix = load_json(fixture_path)
+        valid_payloads = fixture_matrix.get("valid_payloads", []) if isinstance(fixture_matrix, dict) else []
+        seen_operations: set[str] = set()
+        seen_invocation_sources: set[str] = set()
+        for artifact in valid_payloads:
+            if not isinstance(artifact, dict) or artifact.get("artifact_type") != "api_web_call":
+                continue
+            payload = artifact.get("type_payload", {})
+            if not isinstance(payload, dict):
+                continue
+            operation = payload.get("web_operation")
+            if isinstance(operation, str):
+                seen_operations.add(operation)
+            invocation = payload.get("invocation", {})
+            if isinstance(invocation, dict):
+                invocation_source = invocation.get("invocation_source")
+                if isinstance(invocation_source, str):
+                    seen_invocation_sources.add(invocation_source)
+        for operation in ["search", "read", "extract", "research", "deep_research", "crawl", "map"]:
+            if operation not in seen_operations:
+                failures.append({"path": rel(fixture_path), "web_operation": operation, "error": "missing_api_web_call_fixture_for_operation"})
+        for invocation_source in sorted(required_sources):
+            if invocation_source not in seen_invocation_sources:
+                failures.append({"path": rel(fixture_path), "invocation_source": invocation_source, "error": "missing_api_web_call_fixture_for_invocation_source"})
+
+    doc_requirements = [
+        (PLANS / "00-plans-index.md", ["web_operation_contracts.schema.json", "web_provider_adapter_registry.seed.json", "web_provider_projection_fixtures.json", "web_capability_source_packet_receipt.json", "web_capability_findings_coverage.json", "web_capability_findings_coverage.schema.json", "web_operation_card_fixtures.json", "web_operation_job_fixtures.json", "web_agent_policy_fixtures.json", "web_research_run_fixtures.json", "web_intent_routing_fixtures.json", "web_policy_negative_fixtures.json", "web_policy_negative_fixtures.schema.json", "WebOperation", "BrowserActionResult"]),
+        (PLANS / "Commands_System.md", ["/web fetch <url>", "cmd.chat.web.fetch", "WebOperation / BrowserAction dispatcher", "invocation_source", "agent_reason", "webfetch"]),
+        (PLANS / "UI_Command_Catalog.md", ["/web fetch <url>", "cmd.chat.web.fetch", "invocation_source", "agent_reason"]),
+        (PLANS / "assistant-chat-design.md", ["/web fetch <url>", "cmd.chat.web.fetch", "operation_input", "denial_reason_code"]),
+        (PLANS / "Prompt_Pipeline.md", ["WebCapabilityAffordance", "websearch", "webfetch", "BrowserAction"]),
+        (PLANS / "Run_Modes.md", ["websearch", "webfetch", "webextract", "webresearch", "webcrawl", "webmap"]),
+        (PLANS / "Goal_Runtime_System.md", ["websearch", "webfetch", "webextract", "webresearch", "deep_research", "BrowserAction", "invocation_source"]),
+        (PLANS / "Personas.md", ["researcher", "deep-researcher", "websearch", "webfetch", "deep-research"]),
+        (PLANS / "PRD_Builder.md", ["websearch", "webfetch", "webcrawl", "webmap", "deep-research", "ledger"]),
+        (PLANS / "Planning_Wizard.md", ["websearch", "webfetch", "deep-research", "Planning Context"]),
+        (PLANS / "FinalGUISpec.md", ["operation_input", "legacy web_input", "Reading Site", "runtime_unavailable"]),
+        (PLANS / "Automated_Testing_System.md", ["SSRF", "robots/fanout/depth", "research/source citation", "runtime_unavailable"]),
+        (PLANS / "MCP_Integration.md", ["web_provider_projection_fixtures.json", "WebProviderAdapterRegistry", "no-secret projections"]),
+    ]
+    for path, tokens in doc_requirements:
+        if not path.exists():
+            failures.append({"path": rel(path), "error": "missing_web_capability_doc"})
+            continue
+        text = path.read_text(encoding="utf-8")
+        for token in tokens:
+            if token not in text:
+                failures.append({"path": rel(path), "token": token, "error": "missing_web_capability_doc_token"})
+
+    for path in PLANS.rglob("*"):
+        if not path.is_file():
+            continue
+        path_rel = rel(path)
+        if path_rel.startswith(("Plans/ledgers/", "Plans/_shards/", "Plans/.evidence/", "Plans/.plan_index/", "Plans/.plan_migration/")):
+            continue
+        if path.suffix.lower() not in {".md", ".json", ".jsonl", ".schema"} and ".schema." not in path.name:
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        if "Charlotte" in text or "charlotte" in text:
+            failures.append({"path": path_rel, "error": "charlotte_term_in_canonical_web_surface"})
+        for retired_marker in ["structured `web_input`", "structured web_input"]:
+            if retired_marker in text:
+                failures.append(
+                    {
+                        "path": path_rel,
+                        "token": retired_marker,
+                        "error": "active_web_input_alias_in_canonical_web_surface",
+                    }
+                )
+
+    return report_status(
+        "validate-web-capability-contracts",
+        failures,
+        required_definition_count=len(required_defs),
+        checked_doc_count=len(doc_requirements),
+    )
 
 
 FILES_SAFE_FENCE_MARKERS = (
@@ -3118,6 +5494,7 @@ def cmd_run_gates(args: argparse.Namespace) -> dict[str, Any]:
         ("validate_usage_gui_fixtures", cmd_validate_usage_gui_fixtures, argparse.Namespace()),
         ("validate_usage_contract_drift", cmd_validate_usage_contract_drift, argparse.Namespace()),
         ("validate_gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
+        ("validate_web_capability_contracts", cmd_validate_web_capability_contracts, argparse.Namespace()),
         ("validate_filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("validate_wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
         ("validate_audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
@@ -3163,6 +5540,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         ("usage_gui_fixtures", cmd_validate_usage_gui_fixtures, argparse.Namespace()),
         ("usage_contract_drift", cmd_validate_usage_contract_drift, argparse.Namespace()),
         ("gui_asset_policy", cmd_validate_gui_asset_policy, argparse.Namespace()),
+        ("web_capability_contracts", cmd_validate_web_capability_contracts, argparse.Namespace()),
         ("filesafe_security_policy", cmd_validate_filesafe_security_policy, argparse.Namespace()),
         ("wiring_matrix", cmd_validate_wiring_matrix, argparse.Namespace()),
         ("audit_closure", cmd_validate_audit_closure, argparse.Namespace()),
@@ -3197,6 +5575,7 @@ def cmd_audit_governance(args: argparse.Namespace) -> dict[str, Any]:
         usage_gui_fixtures=compact_gate_report(check_map["usage_gui_fixtures"]),
         usage_contract_drift=compact_gate_report(check_map["usage_contract_drift"]),
         gui_asset_policy=compact_gate_report(check_map["gui_asset_policy"]),
+        web_capability_contracts=compact_gate_report(check_map["web_capability_contracts"]),
         filesafe_security_policy=compact_gate_report(check_map["filesafe_security_policy"]),
         wiring_matrix=compact_gate_report(check_map["wiring_matrix"]),
         audit_closure=compact_gate_report(check_map["audit_closure"]),
@@ -3226,6 +5605,7 @@ COMMANDS = {
     "validate-usage-gui-fixtures": cmd_validate_usage_gui_fixtures,
     "validate-usage-contract-drift": cmd_validate_usage_contract_drift,
     "validate-gui-asset-policy": cmd_validate_gui_asset_policy,
+    "validate-web-capability-contracts": cmd_validate_web_capability_contracts,
     "validate-filesafe-security-policy": cmd_validate_filesafe_security_policy,
     "validate-wiring-matrix": cmd_validate_wiring_matrix,
     "validate-bootstrap-ledgers": cmd_validate_bootstrap_ledgers,

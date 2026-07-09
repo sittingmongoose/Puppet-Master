@@ -484,9 +484,10 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 **Tool access in wizard-generated plan mode:**
 - Web tools resolve through the normal permission stack (default `ask`), consistent with `Plans/Run_Modes.md` §9.2 and `Plans/Permissions_System.md` §7.
+- Compatibility/source-lineage only: any Chain Wizard-era Plan, Deep Plan, requirements, or review flow that needs current external evidence, URL reading, extraction, crawl/map context, research/deep-research, or visual/dynamic browser evidence routes through the active PM WebOperation / BrowserAction dispatcher defined by `Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/UI_Command_Catalog.md`. Slash commands remain optional entrypoints; natural-language wizard requests and autonomous subagent needs preserve `invocation_source` and `agent_reason`, use `webfetch` for URL reads, and cite only read/extract-backed receipts.
 - Mutating tools remain denied in plan mode regardless of wizard context.
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
 
 
 When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the user should **see the agents working** (similar to Assistant chat), not just a spinner or "Working..." label.
@@ -3659,7 +3660,7 @@ plan_unit_id: CWF-024
 unit_type: requirement
 status: retired
 owner_doc: Plans/chain-wizard-flexibility.md
-canonical_text: Wizard-produced Plan and Deep Plan artifacts use the normalized TODO schema, treat Plan and Deep Plan as intensity variants of plan runtime mode, may use read-only research subagents and web tools through normal permissions, and keep mutating tools denied in plan mode.
+canonical_text: Wizard-produced Plan and Deep Plan artifacts use the normalized TODO schema, treat Plan and Deep Plan as intensity variants of plan runtime mode, route any source-lineage web/browser/research/deep-research need through the active PM WebOperation / BrowserAction dispatcher with read/extract-backed receipts, and keep mutating tools denied in plan mode.
 gui_related: true
 gui_classification_reason: This unit covers wizard planning surfaces, questionnaire cards, runtime identity display, and user-visible Plan/Deep Plan/TODO handoff.
 split_recommended: true
@@ -3671,6 +3672,7 @@ acceptance_criteria:
   - Plan and Deep Plan are intensity variants, not categorical runtime modes.
   - Deep Plan may spawn read-only research subagents including web research.
   - Wizard questions render through the shared questionnaire card and preserve effective_persona.
+  - Web, browser, research, and deep-research needs use the active shared dispatcher with invocation_source, agent_reason, URL-read-to-webfetch normalization, and read/extract-backed citations.
   - Web tools use the normal permission stack and mutating tools remain denied in plan mode.
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
@@ -3684,6 +3686,8 @@ implementation_surfaces:
   - Plans/storage-plan.md
   - Plans/Run_Modes.md
   - Plans/Permissions_System.md
+  - Plans/Tools.md
+  - Plans/UI_Command_Catalog.md
 node_compile_hint:
   mode: chain_wizard_plan_deep_plan_todo_permission_boundary
   create_worknodes: false
@@ -3693,6 +3697,10 @@ preserved_exact_tokens:
   - "plan"
   - "/intensity"
   - "read-only research subagents"
+  - "WebOperation / BrowserAction dispatcher"
+  - "invocation_source"
+  - "agent_reason"
+  - "webfetch"
   - "TODO auto-use heuristic"
   - "/questionnaire"
   - "effective_persona"

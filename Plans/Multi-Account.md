@@ -529,7 +529,7 @@ Canonical Gemini usage/source expectations:
 - show one shared Gemini-family usage surface for active entries such as Gemini Direct and Antigravity CLI where they expose usage/account state; retired Gemini CLI terms may appear only as source-lineage or migration diagnostics, not as a top-level usage page
 - label OAuth-backed views as `Gemini quota` when authoritative quota semantics are available
 - label API-key/local-only views with source-qualified wording such as `Gemini (estimated)` when authoritative quota data is not available
-- expose `source_confidence` so users can tell whether quota pressure is authoritative, structured, heuristic, or local-only; legacy `signal_confidence` is an import/display alias only
+- expose `source_confidence` as the ordinal confidence value `high | medium | low | unknown`; authoritative, structured, heuristic, or local-only provenance belongs in `source_authority`, `source_class`, value/projection state, or display copy, and legacy `signal_confidence` is an import/display alias only
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
 
@@ -3037,8 +3037,9 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/Multi-Account.md
 canonical_text: Gemini Direct usage/source expectations preserve source-qualified labels. API-key/local-only views use
-  source-qualified estimated wording, and source_confidence exposes whether quota pressure is authoritative, structured,
-  heuristic, or local-only. Legacy Gemini CLI family-usage and signal_confidence wording is compatibility/source-lineage only.
+  source-qualified estimated wording, source_confidence uses only high, medium, low, or unknown ordinal confidence values,
+  and authoritative, structured, heuristic, or local-only provenance is carried by source_authority, source_class, value/projection
+  state, or display copy. Legacy Gemini CLI family-usage and signal_confidence wording is compatibility/source-lineage only.
 gui_related: true
 gui_classification_reason: The unit defines user-visible Gemini usage labels and confidence disclosure.
 split_recommended: true
