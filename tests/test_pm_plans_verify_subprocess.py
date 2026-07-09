@@ -10,6 +10,7 @@ import sys
 import tempfile
 import time
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from unittest import mock
 from pathlib import Path
 
@@ -71,6 +72,52 @@ class RunValidatorSubprocessTests(unittest.TestCase):
         self.assertEqual(failures[0]["timeout_seconds"], 1)
         # Must return promptly, not hang for the full 30s sleep.
         self.assertLess(elapsed, 8.0)
+
+    def test_post_kill_cleanup_never_uses_blocking_pipe_reads(self) -> None:
+        fake_proc = mock.Mock()
+        fake_proc.pid = 1234
+        fake_proc.returncode = None
+        fake_proc.stdout = mock.Mock()
+        fake_proc.stderr = mock.Mock()
+        fake_proc.stdout.read.side_effect = AssertionError("stdout.read() must not be called")
+        fake_proc.stderr.read.side_effect = AssertionError("stderr.read() must not be called")
+        fake_proc.communicate.side_effect = [
+            subprocess.TimeoutExpired(["validator"], 30),
+            subprocess.TimeoutExpired(
+                ["validator"],
+                1,
+                output=b"partial stdout",
+                stderr=b"partial stderr",
+            ),
+        ]
+        fake_proc.wait.return_value = -signal.SIGKILL
+
+        with (
+            mock.patch.object(pm_plans_verify.subprocess, "Popen", return_value=fake_proc),
+            mock.patch.object(
+                pm_plans_verify,
+                "_terminate_process_group",
+                return_value=(True, "os.killpg(1234, SIGKILL)"),
+            ),
+        ):
+            proc, timeout_report = pm_plans_verify.run_validator_subprocess(
+                "cleanup-check",
+                ["validator"],
+                timeout_seconds=30,
+            )
+
+        self.assertIsNone(proc)
+        assert timeout_report is not None
+        failure = timeout_report["failures"][0]
+        self.assertEqual(failure["error"], "subprocess_timeout")
+        self.assertEqual(failure["stdout_excerpt"], "partial stdout")
+        self.assertEqual(failure["stderr_excerpt"], "partial stderr")
+        fake_proc.communicate.assert_has_calls([mock.call(timeout=30), mock.call(timeout=1)])
+        fake_proc.stdout.close.assert_called_once_with()
+        fake_proc.stderr.close.assert_called_once_with()
+        fake_proc.stdout.read.assert_not_called()
+        fake_proc.stderr.read.assert_not_called()
+        fake_proc.wait.assert_called_once_with(timeout=1)
 
     def test_process_group_killed_when_child_holds_pipe(self) -> None:
         # Parent stub spawns a grandchild that inherits stdout/stderr and sleeps. Without
@@ -144,19 +191,31 @@ class RunValidatorSubprocessTests(unittest.TestCase):
         )
 
         started = time.monotonic()
-        proc, timeout_report = pm_plans_verify.run_validator_subprocess(
-            "aggregate-wrapper",
-            [sys.executable, str(wrapper)],
-            timeout_seconds=2,
-            aggregate_child=True,
-        )
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            result = executor.submit(
+                pm_plans_verify.run_validator_subprocess,
+                "aggregate-wrapper",
+                [sys.executable, str(wrapper)],
+                timeout_seconds=10,
+                aggregate_child=True,
+            )
+            readiness_deadline = time.monotonic() + 8
+            while (
+                time.monotonic() < readiness_deadline
+                and not nested_state.exists()
+                and not result.done()
+            ):
+                time.sleep(0.05)
+            nested_started_before_timeout = nested_state.exists()
+            proc, timeout_report = result.result(timeout=15)
         elapsed = time.monotonic() - started
 
         self.assertIsNone(proc)
         assert timeout_report is not None
         self.assertEqual(timeout_report["failures"][0]["error"], "subprocess_timeout")
         self.assertTrue(timeout_report["failures"][0]["process_group_killed"])
-        self.assertLess(elapsed, 8.0)
+        self.assertLess(elapsed, 20.0)
+        self.assertTrue(nested_started_before_timeout)
         self.assertTrue(wrapper_state.exists())
         self.assertTrue(nested_state.exists())
         wrapper_process = json.loads(wrapper_state.read_text(encoding="utf-8"))
